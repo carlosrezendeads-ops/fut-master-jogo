@@ -1975,7 +1975,7 @@ let aba="inicio",divTab=null,tabModo="tab",expandido=null,merc={pos:"",min:0,ori
 let W=null; // assistente de criação
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function novoW(){return {passo:1,nome:"",sigla:"",tec:"",pais:"BRA",estadio:"",
-  escudo:{forma:0,estampa:1,c1:"#1e6bd6",c2:"#ffffff",c3:"#0b1d3a",sigla:true,simbolo:0},
+  escudo:{forma:0,estampa:1,c1:"#1e6bd6",c2:"#ffffff",c3:"#0b1d3a",sigla:false,nomeOn:false,curva:0,tam:1,simbolo:0},
   unis:[{estilo:"listras",camisa:"#1e6bd6",detalhe:"#ffffff",mangas:"#1e6bd6",gola:"#ffffff",calcao:"#ffffff",meiao:"#1e6bd6",meiaoEst:"faixa"},
         {estilo:"faixa",camisa:"#ffffff",detalhe:"#1e6bd6",mangas:"#ffffff",gola:"#1e6bd6",calcao:"#1e6bd6",meiao:"#ffffff",meiaoEst:"faixa"}]}}
 let uniSel=0;
@@ -1987,6 +1987,7 @@ function migrar(g){
   if(!g.salLendaV){g.salLendaV=1;const G0=G;G=g;IDX=null;Object.values(g.players).forEach(p=>{if(p.lenda)p.sal=Math.max(Math.round(p.sal*1.2*10)/10,salarioLenda(p))});G=G0;IDX=null}
   if(g.perfil&&g.perfil.nivel>NIVEL_MAX){g.perfil.nivel=NIVEL_MAX;g.perfil.xp=0}
   if(!g.escV2){g.escV2=1;Object.values(g.clubs).forEach(c=>{const e=c.escudo;if(!e)return;e.estampa=ESTAMPA_ANTIGA[e.estampa]??0;e.simbolo=SIMBOLO_ANTIGO[e.simbolo||0]??0})}
+  if(!g.escV3){g.escV3=1;const e=g.user&&g.clubs[g.user.club]&&g.clubs[g.user.club].escudo;if(e&&e.nomeOn===undefined)e.nomeOn=false}
   if(!g.estV){g.estV=1;if((g.reformas||0)>=3)g.reformas--;}
   if(g.tecRen){const L=TECNICOS[g.country].split(",");Object.entries(g.tecRen).forEach(([a,b])=>{const i=L.findIndex(s=>s.split("|")[0]===a);if(i>=0)L[i]=b+"|"+L[i].split("|")[1]});TECNICOS[g.country]=L.join(",")}
   if(!g.perfil)g.perfil={xp:0,nivel:1,j:0,v:0,e:0,d:0,gp:0,gc:0,aviso:null,dica:false};
@@ -2044,7 +2045,7 @@ const SIMBOLOS=["Nenhum","Coroa","Estrela simples","Estrelas múltiplas","Estrel
 /* símbolo antigo (desenhado) -> novo (imagem); os sem parecido viram "Nenhum" */
 const SIMBOLO_ANTIGO=[0,2,32,0,1,3,31,33,3,0,5,5,39,40,0,0,0,0,37,0,28,35,36,0,0,0,0,0,0,0,0,0,34,0,0,0,0,0,0,0,1];
 let svgN=0;
-function escudoSVG(e,sigla,px){
+function escudoSVG(e,sigla,px,nome){
   const id="cl"+(++svgN),fi=e.forma%FORMAS.length,f=FORMAS[fi][1];
   const R=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${e.c2}"/>`,D=(y,h,ang)=>`<rect x="-40" y="${y}" width="180" height="${h}" fill="${e.c2}" transform="rotate(${ang} 50 60)"/>`;
   const pat=[
@@ -2069,15 +2070,19 @@ function escudoSVG(e,sigla,px){
     R(0,64,100,60),
     R(0,0,100,38)
   ][e.estampa%ESTAMPAS.length];
-  const t=e.sigla===false?"":esc((sigla||"").slice(0,4));
-  const ty=TEXTO_Y[fi]||70;
+  // texto: nome do clube (opção do dono: reto/arco, tamanho); escudos antigos da IA seguem com a sigla
+  const comNome=e.nomeOn&&nome,cv=comNome?(e.curva||0):0,tam=e.tam||1;
+  const t=comNome?esc(nome):e.nomeOn===undefined&&e.sigla!==false?esc((sigla||"").slice(0,4)):"";
+  const ty=cv===1?76:cv===-1?40:(TEXTO_Y[fi]||70);
   const si=e.simbolo||0,img=si&&typeof SIMBOLOS_IMG!=="undefined"&&SIMBOLOS_IMG[si-1];let simb="",fdef="";
-  if(img){const cx=50,cy=t?ty-40:ty-12,box=t?34:60,k=box/Math.max(img[1],img[2]),w=img[1]*k,h=img[2]*k,fid="sf"+id,cor=e.simCor==="time",sc=e.c4||e.c3;
+  if(img){const cx=50,cy=!t?ty-12:cv?ty:ty-40,box=!t?60:cv?40:34,k=box/Math.max(img[1],img[2]),w=img[1]*k,h=img[2]*k,fid="sf"+id,cor=e.simCor==="time",sc=e.c4||e.c3;
     fdef=`<filter id="${fid}" x="-20%" y="-20%" width="140%" height="140%"><feMorphology in="SourceAlpha" operator="dilate" radius="${t?.9:1.3}" result="d"/><feFlood flood-color="${contrasteHex(cor?sc:"#ffffff")}" flood-opacity="${cor?1:.55}"/><feComposite in2="d" operator="in" result="b"/>${cor?`<feFlood flood-color="${sc}"/><feComposite in2="SourceAlpha" operator="in" result="a"/>`:""}<feMerge><feMergeNode in="b"/><feMergeNode in="${cor?"a":"SourceGraphic"}"/></feMerge></filter>`;
     simb=`<image href="${img[0]}" x="${(cx-w/2).toFixed(1)}" y="${(cy-h/2).toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" filter="url(#${fid})"/>`}
-  return `<svg viewBox="-4 -2 108 124" width="${px}" height="${Math.round(px*1.15)}" aria-hidden="true" class="svg-escudo"><defs><clipPath id="${id}"><path d="${f}"/></clipPath>${fdef}</defs><g clip-path="url(#${id})"><rect x="-5" y="-5" width="110" height="130" fill="${e.c1}"/>${pat}</g><path d="${f}" fill="none" stroke="${e.c3}" stroke-width="5" stroke-linejoin="round"/>${simb}${t?`<text x="50" y="${ty}" text-anchor="middle" font-family="Saira Condensed,Arial Narrow,sans-serif" font-weight="800" font-size="${t.length>3?22:27}" fill="${e.c3}" stroke="${contrasteHex(e.c3)}" stroke-width="4" paint-order="stroke" letter-spacing="1">${t}</text>`:""}</svg>`;
+  return `<svg viewBox="-4 -2 108 124" width="${px}" height="${Math.round(px*1.15)}" aria-hidden="true" class="svg-escudo"><defs><clipPath id="${id}"><path d="${f}"/></clipPath>${fdef}</defs><g clip-path="url(#${id})"><rect x="-5" y="-5" width="110" height="130" fill="${e.c1}"/>${pat}</g><path d="${f}" fill="none" stroke="${e.c3}" stroke-width="5" stroke-linejoin="round"/>${simb}${t?(()=>{const tc=comNome?e.c5||e.c3:e.c3,fs=comNome?Math.min(24,150/Math.max(5,nome.length))*tam:t.length>3?22:27,at=`text-anchor="middle" font-family="Saira Condensed,Arial Narrow,sans-serif" font-weight="800" font-size="${fs.toFixed(1)}" fill="${tc}" stroke="${contrasteHex(tc)}" stroke-width="${Math.max(2,fs/7).toFixed(1)}" paint-order="stroke" letter-spacing="1"`;
+    if(!cv)return `<text x="50" y="${comNome?ty+fs*.3-8:ty}" ${at}>${t}</text>`;
+    const d=cv===1?"M-14 62Q50 0 114 62":"M-14 74Q50 124 114 74";return `<path id="tp${id}" d="${d}" fill="none"/><text ${at}><textPath href="#tp${id}" startOffset="50%">${t}</textPath></text>`})():""}</svg>`;
 }
-const escudoDe=(c,px)=>escudoSVG(c.escudo||{forma:0,estampa:1,c1:c.c1,c2:c.c2,c3:contrasteHex(c.c1)},c.short,px);
+const escudoDe=(c,px)=>escudoSVG(c.escudo||{forma:0,estampa:1,c1:c.c1,c2:c.c2,c3:contrasteHex(c.c1)},c.short,px,c.name);
 const ESTILOS_UNI=[["liso","Liso"],["listras","Listras"],["listras3","Listras 3 cores"],["aros3","Horizontais 3 cores"],["faixa2","Faixa dupla"],["listrasFinas","Listras finas"],["aros","Listras horizontais"],["diagonal","Faixa diagonal"],["metade","Metade"],["faixa","Faixa no peito"],["faixaV","Faixa vertical"],["duasFaixas","Duas faixas"],["chevron","V no peito"],["ombros","Ombros"],["lateral","Laterais"],["degrade","Degradê"],["xadrez","Xadrez"]];
 const TORSO="M60 30L80 22Q100 34 120 22L140 30V132H60Z";
 function padraoUni(u,id){
@@ -2895,7 +2900,7 @@ function renderCriacao(){
       <span class="pais-ok">${W.pais===k?"Selecionado":"Toque para escolher"}</span></button>`}).join("")}</div>
     <div class="pontos-car">${ks.map(k=>`<i class="${W.pais===k?"on":""}" data-k="${k}"></i>`).join("")}</div>`;
   }else if(p===3){
-    h+=editorEscudo(W.escudo,W.sigla||siglaDe(W.nome||"Clube"));
+    h+=editorEscudo(W.escudo,W.nome.trim()||"Seu Clube");
   }else if(p===4){
     h+=editorUniforme(W.unis,W.escudo);
   }else{
@@ -2944,14 +2949,17 @@ function selecionarPais(k){
   document.querySelectorAll(".pontos-car i").forEach(i=>i.classList.toggle("on",i.dataset.k===k));
 }
 
-function editorEscudo(e,sigla){
+function editorEscudo(e,nome){if(e.nomeOn===undefined)e.nomeOn=false;
   return `<h2 style="margin-top:0">Escudo</h2>
-  <div class="previa" id="prev-escudo">${escudoSVG(e,sigla,120)}</div>
+  <div class="previa" id="prev-escudo">${escudoSVG(e,"",120,nome)}</div>
   <div class="campo"><span>Formato</span><div class="grade8">${FORMAS.map((f,i)=>`<button data-a="eforma" data-v="${i}" aria-pressed="${e.forma===i}" aria-label="${f[0]}">${escudoSVG({...e,forma:i,simbolo:0},"",34)}<small>${f[0]}</small></button>`).join("")}</div></div>
   <div class="campo"><span>Desenho</span><div class="grade8">${ESTAMPAS.map((n,i)=>`<button data-a="eestampa" data-v="${i}" aria-pressed="${e.estampa===i}">${escudoSVG({...e,estampa:i,simbolo:0},"",30)}<small>${n}</small></button>`).join("")}</div></div>
   <div class="campo"><span>Símbolo</span><div class="grade8">${SIMBOLOS.map((s,i)=>`<button data-a="esimbolo" data-v="${i}" aria-pressed="${(e.simbolo||0)===i}">${escudoSVG({...e,simbolo:i,sigla:false},"",30)}<small>${s}</small></button>`).join("")}</div></div>
   ${e.simbolo?`<div class="campo"><span>Cor do símbolo</span><div class="seg" role="group">${[["orig","Cor original"],["time","Escolher cor"]].map(([k,n])=>`<button data-a="esimcor" data-v="${k}" aria-pressed="${(e.simCor==="time")===(k==="time")}">${n}</button>`).join("")}</div>${e.simCor==="time"?`<div class="cores-lista" style="margin-top:8px"><label class="cor-item"><input type="color" data-cor="escudo" data-k="c4" value="${e.c4||e.c3}"><span>Cor do símbolo</span><code>${(e.c4||e.c3).toUpperCase()}</code></label></div>`:""}</div>`:""}
-  <div class="campo"><span>Sigla no escudo</span><div class="seg" role="group">${[["1","Mostrar"],["0","Esconder"]].map(([k,n])=>`<button data-a="esigla" data-v="${k}" aria-pressed="${(e.sigla!==false)===(k==="1")}">${n}</button>`).join("")}</div></div>
+  <div class="campo"><span>Nome no escudo</span><div class="seg" role="group">${[["1","Mostrar"],["0","Esconder"]].map(([k,n])=>`<button data-a="enome" data-v="${k}" aria-pressed="${!!e.nomeOn===(k==="1")}">${n}</button>`).join("")}</div></div>
+  ${e.nomeOn?`<div class="campo"><span>Formato do nome</span><div class="seg" role="group">${[["0","Reto"],["1","Arco para cima"],["-1","Arco para baixo"]].map(([k,n])=>`<button data-a="ecurva" data-v="${k}" aria-pressed="${String(e.curva||0)===k}">${n}</button>`).join("")}</div></div>
+  <div class="campo"><span>Tamanho do nome</span><div class="seg" role="group"><button data-a="etam" data-v="-1" ${(e.tam||1)<=.5?"disabled":""}>Diminuir −</button><button aria-pressed="true" style="pointer-events:none">${Math.round((e.tam||1)*100)}%</button><button data-a="etam" data-v="1" ${(e.tam||1)>=1.8?"disabled":""}>Aumentar +</button></div></div>
+  <div class="campo"><span>Cor do nome</span><div class="cores-lista"><label class="cor-item"><input type="color" data-cor="escudo" data-k="c5" value="${e.c5||e.c3}"><span>Cor do nome</span><code>${(e.c5||e.c3).toUpperCase()}</code></label></div></div>`:""}
   <div class="campo"><span>Cores</span><div class="cores-lista">
     ${[["c1","Principal"],["c2","Secundária"],["c3","Borda e sigla"]].map(([k,n])=>`<label class="cor-item"><input type="color" data-cor="escudo" data-k="${k}" value="${e[k]}"><span>${n}</span><code>${e[k].toUpperCase()}</code></label>`).join("")}
   </div><p class="peq muted" style="margin:0">Toque numa cor para escolher qualquer tom.</p></div>`;
@@ -2989,8 +2997,8 @@ function previaUnis(unis,patro){
 function alvoVisual(){const unis=G?G.clubs[G.user.club].unis:W.unis;return {e:G?G.clubs[G.user.club].escudo:W.escudo,u:unis[uniSel],unis}}
 function atualizarPrevias(){
   const {e,u}=alvoVisual();
-  const sig=G?G.clubs[G.user.club].short:(W.sigla||siglaDe(W.nome||"Clube"));
-  const pe=$("#prev-escudo");if(pe)pe.innerHTML=escudoSVG(e,sig,120);
+  const nm=G?G.clubs[G.user.club].name:(W.nome.trim()||"Seu Clube");
+  const pe=$("#prev-escudo");if(pe)pe.innerHTML=escudoSVG(e,"",120,nm);
   const pu=$("#prev-uni");if(pu){const unis=alvoVisual().unis,pt=G&&G.patro?G.patro.nome:"";pu.innerHTML=previaUnis(unis,pt)}
 }
 
@@ -4142,7 +4150,7 @@ function telaVisual(){
   <div class="dupla"><label class="campo"><span>Nome do time</span><input type="text" id="v-nome" maxlength="28" value="${esc(c.name)}"></label><label class="campo"><span>Sigla</span><input type="text" id="v-sigla" maxlength="3" value="${esc(c.short)}" style="text-transform:uppercase"></label></div>
   <h2>Estádio</h2><div id="prev-estadio">${fotoEstadio(G.reformas||0,estadioDe(c),c.cap)}</div>
   <label class="campo"><span>Nome do estádio</span><input type="text" id="v-estadio" maxlength="30" value="${esc(estadioDe(c))}"></label>
-  ${editorEscudo(c.escudo,c.short)}${editorUniforme(c.unis,c.escudo,G.patro?G.patro.nome:"")}
+  ${editorEscudo(c.escudo,c.name)}${editorUniforme(c.unis,c.escudo,G.patro?G.patro.nome:"")}
   <button class="btn prim full" data-a="aba" data-v="clube">Pronto</button></div>`;
 }
 
@@ -4197,7 +4205,9 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "esimbolo":vis().e.simbolo=+v;if(G)salvar();break;
     case "esimcor":vis().e.simCor=v;if(G)salvar();break;
     case "infosigla":modal(`<h3>Sigla do clube</h3><p>São 3 letras que representam o seu time, como <b>FLA</b> ou <b>COR</b>.</p><p>Ela aparece:</p><ul class="lista-info"><li>No <b>placar</b> e na narração das partidas ao vivo (ex.: <b>${esc((W&&W.sigla)||"ECV")} 2 × 1 SAN</b>)</li><li>No <b>confronto do pré-jogo</b>, embaixo do escudo</li><li>No <b>escudo</b>, se você escolher mostrar</li><li>Na <b>escalação</b> do campinho</li></ul><p class="muted peq">Dá para mudar depois na aba Clube.</p><div class="botoes"><button class="btn prim" data-a="fechar">Entendi</button></div>`);return;
-    case "esigla":vis().e.sigla=v==="1";if(G)salvar();break;
+    case "enome":vis().e.nomeOn=v==="1";if(G)salvar();break;
+    case "ecurva":vis().e.curva=+v;if(G)salvar();break;
+    case "etam":{const e=vis().e;e.tam=Math.round(Math.min(1.8,Math.max(.5,(e.tam||1)+.1*v))*10)/10;if(G)salvar();break;}
     case "unisel":uniSel=+v;break;
     case "uinverter":{const {unis}=vis();unis[uniSel]=inverterUni(unis[1-uniSel]);if(G)salvar();break;}
     case "uestilo":vis().u.estilo=v;if(G)salvar();break;
