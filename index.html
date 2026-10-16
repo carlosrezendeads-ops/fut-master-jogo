@@ -1440,15 +1440,16 @@ function perfil(){if(!G.perfil)G.perfil={xp:0,nivel:1,j:0,v:0,e:0,d:0,gp:0,gc:0,
 const NIVEL_MAX=30;
 /* prêmio em dinheiro (em mil) ao chegar em cada nível: cresce aos poucos até 5 milhões no nível 30 (base Brasil; outros países ajustados pela economia do país, escalaFund) */
 const PREMIO_N30=5000;
+const CUPONS_NIVEL={10:5,20:10,30:30}; // cupons dourados extras nesses níveis
 function premioBase(n){const base=[0,0,5,8,12,18];let v;if(n<=5)v=base[n];else{v=18;let d=6;for(let k=6;k<=n;k++){d+=1;v+=d}}return v*1.3}
 function premioNivel(n){if(n<2)return 0;n=Math.min(n,NIVEL_MAX);const f=PREMIO_N30/premioBase(NIVEL_MAX)-1;const v=premioBase(n)*(1+f*((n-2)/(NIVEL_MAX-2))**2)*(G&&G.country?escalaFund(G.country):1);return v<100?Math.round(v):Math.round(v/10)*10}
 function somarXP(qtd){
-  const P=perfil(),antes=P.nivel;let dinheiroGanho=0;
+  const P=perfil(),antes=P.nivel;let dinheiroGanho=0,cuponsGanhos=0;
   if(P.nivel>=NIVEL_MAX){P.xp=0;return {antes,nivel:P.nivel,premio:0}}
   P.xp+=qtd;
-  while(P.nivel<NIVEL_MAX&&P.xp>=xpParaSubir(P.nivel)){P.xp-=xpParaSubir(P.nivel);P.nivel++;const pr=premioNivel(P.nivel);dinheiroGanho+=pr;G.cash+=pr}
+  while(P.nivel<NIVEL_MAX&&P.xp>=xpParaSubir(P.nivel)){P.xp-=xpParaSubir(P.nivel);P.nivel++;const pr=premioNivel(P.nivel);dinheiroGanho+=pr;G.cash+=pr;const cp=CUPONS_NIVEL[P.nivel]||0;if(cp){G.cupons=cupons()+cp;cuponsGanhos+=cp}}
   if(P.nivel>=NIVEL_MAX)P.xp=0;
-  if(P.nivel>antes){P.aviso=P.nivel;P.premioAviso=(P.premioAviso||0)+dinheiroGanho;G.inbox.unshift({t:"bom",m:`Nível ${P.nivel}! Você ganhou ${dinheiro(dinheiroGanho)} de bônus.`})}
+  if(P.nivel>antes){P.aviso=P.nivel;P.premioAviso=(P.premioAviso||0)+dinheiroGanho;P.cupomAviso=(P.cupomAviso||0)+cuponsGanhos;G.inbox.unshift({t:"bom",m:`Nível ${P.nivel}! Você ganhou ${dinheiro(dinheiroGanho)} de bônus${cuponsGanhos?` e ${cuponsGanhos} cupons dourados`:""}.`})}
   return {antes,nivel:P.nivel,premio:dinheiroGanho};
 }
 function ganharXP(gf,gs,dobro){
@@ -3335,14 +3336,14 @@ function telaPerfil(){
     <div><span>Contratar um técnico</span><span style="color:var(--ok)">+300 XP</span></div>
     <div><span>Fechar com patrocinador</span><span style="color:var(--ok)">+200 XP</span></div></div>
   <p class="muted peq">Do nível 1 para o 2 bastam ${xpParaSubir(1)} XP. Depois são ${xpParaSubir(2)} XP para o nível 3, ${xpParaSubir(3)} para o 4, ${xpParaSubir(4)} para o 5, e cada nível pede uns 65 XP a mais que o anterior, até o nível ${NIVEL_MAX}.</p>
-  <h2>Bônus por nível</h2><div class="cartao extrato num">${[2,3,4,5,10,15,20,25,30].map(n=>`<div${n<=P.nivel?' style="opacity:.55"':""}><span>Nível ${n}${n<=P.nivel?" · recebido":""}</span><span>${dinheiro(premioNivel(n))}</span></div>`).join("")}</div>`;
+  <h2>Bônus por nível</h2><div class="cartao extrato num">${[2,3,4,5,10,15,20,25,30].map(n=>`<div${n<=P.nivel?' style="opacity:.55"':""}><span>Nível ${n}${n<=P.nivel?" · recebido":""}</span><span>${dinheiro(premioNivel(n))}${CUPONS_NIVEL[n]?` + ${cupomTxt(CUPONS_NIVEL[n])}`:""}</span></div>`).join("")}</div>`;
   h+=blocoConquistas();
   return h;
 }
 function avisoNivel(){
   const P=G&&G.perfil;if(!P||!P.aviso||document.querySelector(".veu"))return;
-  const n=P.aviso,pr=P.premioAviso||0;P.aviso=null;setTimeout(somConquista,150);P.premioAviso=0;salvar();
-  const prTxt=pr?`<p class="premio-nivel">Bônus de nível: <b class="num">+${dinheiro(pr)}</b> no caixa</p>`:"";
+  const n=P.aviso,pr=P.premioAviso||0,cpA=P.cupomAviso||0;P.aviso=null;setTimeout(somConquista,150);P.premioAviso=0;P.cupomAviso=0;salvar();
+  const prTxt=(pr?`<p class="premio-nivel">Bônus de nível: <b class="num">+${dinheiro(pr)}</b> no caixa</p>`:"")+(cpA?`<p class="premio-nivel">+${cupomTxt(cpA)} cupons dourados</p>`:"");
   if(!P.dica){P.dica=true;salvar();
     modal(`<div style="text-align:center"><div class="nivel-selo grande" style="margin:4px auto 10px"><small>Nível</small><b class="num">${n}</b></div>
       <h3 style="margin:0 0 6px">Você subiu para o nível ${n}!</h3>${prTxt}
