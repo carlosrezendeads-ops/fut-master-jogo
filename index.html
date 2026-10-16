@@ -201,6 +201,10 @@ input[type=range]{width:100%;accent-color:var(--canario)}
 .grade8 button small{font-size:11px;color:var(--cal-2);line-height:1.2;text-align:center}
 .grade8 button[aria-pressed="true"]{border-color:var(--canario)}
 .grade8 button[aria-pressed="true"] small{color:var(--canario)}
+.fund.p3 .grade8 button{background:rgba(10,20,48,.12);border:1.5px solid rgba(255,255,255,.85)}
+.fund.p3 .grade8 button[aria-pressed="true"]{border-color:var(--canario);background:rgba(245,197,24,.12)}
+.fund.p3 .grade8 button small{color:#fff;text-shadow:0 1px 3px #000}
+.fund.p3 .previa{background:rgba(10,20,48,.15);border-color:rgba(255,255,255,.85)}
 .cores-lista{display:grid;grid-template-columns:1fr;gap:8px}
 @media (min-width:520px){.cores-lista{grid-template-columns:1fr 1fr}}
 .cor-item{display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:10px;background:var(--gramado-2);border:1px solid var(--gramado-3);border-radius:12px;padding:6px 10px 6px 6px;cursor:pointer}
@@ -681,23 +685,24 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js"></script>
-<script src="img/arte-capa.js"></script>
-<script src="img/fundo-criacao.js"></script>
-<script src="img/fundo-pais.js"></script>
-<script src="img/simbolos.js"></script>
-<script src="img/rostos.js"></script>
-<script src="img/estadio-fotos.js"></script>
-<script src="img/super-fotos.js"></script>
-<script src="img/trofeus.js"></script>
-<script src="img/medalhas.js"></script>
-<script src="img/fotos.js"></script>
-<script src="img/fotos-vs.js"></script>
-<script src="img/kit-homens.js"></script>
-<script src="img/tec-fotos.js"></script>
-<script src="dados/elencos.js"></script>
-<script src="img/rostos-reais.js"></script>
-<script src="img/escudos-img.js"></script>
+<script src="img/escudos-reais.js?v=1792187735"></script>
+<script src="img/arte-capa.js?v=1792187735"></script>
+<script src="img/fundo-criacao.js?v=1792187735"></script>
+<script src="img/fundo-pais.js?v=1792187735"></script>
+<script src="img/fundo-escudo.js?v=1792187735"></script>
+<script src="img/simbolos.js?v=1792187735"></script>
+<script src="img/rostos.js?v=1792187735"></script>
+<script src="img/estadio-fotos.js?v=1792187735"></script>
+<script src="img/super-fotos.js?v=1792187735"></script>
+<script src="img/trofeus.js?v=1792187735"></script>
+<script src="img/medalhas.js?v=1792187735"></script>
+<script src="img/fotos.js?v=1792187735"></script>
+<script src="img/fotos-vs.js?v=1792187735"></script>
+<script src="img/kit-homens.js?v=1792187735"></script>
+<script src="img/tec-fotos.js?v=1792187735"></script>
+<script src="dados/elencos.js?v=1792187735"></script>
+<script src="img/rostos-reais.js?v=1792187735"></script>
+<script src="img/escudos-img.js?v=1792187735"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2004,6 +2009,16 @@ function migrar(g){
 function inverterUni(u){return {...u,estilo:u.estilo==="liso"?"faixa":u.estilo,camisa:u.detalhe,detalhe:u.camisa,mangas:u.detalhe,gola:u.camisa,calcao:u.camisa,meiao:u.detalhe}}
 
 function salvar(){try{localStorage.setItem(CHAVE,JSON.stringify(G))}catch(e){}}
+/* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
+const VERSAO="1792187735";
+function checarVersao(){
+  if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
+  fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
+    const m=t.match(/const VERSAO="(\d+)"/);if(!m||m[1]===VERSAO)return;
+    if((G&&G.live)||(!G&&W&&W.passo>1))return; // não interrompe partida nem criação do clube
+    salvar();location.replace(location.pathname+"?v="+m[1])}).catch(()=>{})}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)checarVersao()});
+setInterval(checarVersao,5*60*1000);setTimeout(checarVersao,3000);
 function carregar(){try{const s=localStorage.getItem(CHAVE);if(s){const g=JSON.parse(s);if(g&&g.v===2){G=migrar(g);return true}}}catch(e){}return false}
 function toast(t){document.querySelectorAll(".toast").forEach(x=>x.remove());const d=document.createElement("div");d.className="toast";d.setAttribute("role","status");d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2800)}
 
@@ -2886,8 +2901,8 @@ function dinheiroPais(k,v){const m=PAISES[k].moeda;return v>=1000?`${m} ${(v/100
 function renderCriacao(){
   const p=W.passo;
   const cx0=caixaFundacao(W.pais),cxAgora=W.estComprado?cx0-precoEstadioFund(W.pais):cx0;
-  const fundo=p===2&&typeof FUNDO_PAIS!=="undefined"?FUNDO_PAIS:typeof FUNDO_CRIACAO!=="undefined"?FUNDO_CRIACAO:"";
-  let h=`${fundo?`<div class="fund-bg" style="background-image:url(${fundo})"></div>`:""}<div class="fund"><div class="caixa-fund num${W.estComprado?" baixou":""}"><small>Caixa</small>${dinheiroPais(W.pais,cxAgora)}</div>`;
+  const fundo=p===2&&typeof FUNDO_PAIS!=="undefined"?FUNDO_PAIS:p===3&&typeof FUNDO_ESCUDO!=="undefined"?FUNDO_ESCUDO:typeof FUNDO_CRIACAO!=="undefined"?FUNDO_CRIACAO:"";
+  let h=`${fundo?`<div class="fund-bg" style="background-image:url(${fundo})"></div>`:""}<div class="fund p${p}"><div class="caixa-fund num${W.estComprado?" baixou":""}"><small>Caixa</small>${dinheiroPais(W.pais,cxAgora)}</div>`;
   if(p===1)h+=`<div class="marca">Funde seu<br><em>clube</em></div><p>Funde um clube, comece na terceira divisão do seu país e suba até a elite. Lá em cima, dispute a Libertadores ou a Champions League.</p>`;
   h+=`<ol class="passos">${PASSOS.map((n,i)=>`<li aria-current="${i+1===p?"step":"false"}" class="${i+1<p?"feito":""}"><b>${i+1}</b>${n}</li>`).join("")}</ol>`;
   if(p===1){
