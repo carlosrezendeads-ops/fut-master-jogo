@@ -226,6 +226,7 @@ input[type=range]{width:100%;accent-color:var(--canario)}
 .sc-pino{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1.5px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.5);pointer-events:none}
 .sc-hue .sc-pino{top:50%}
 .sc-baixo{display:flex;align-items:center;gap:12px}.sc-amostra{width:44px;height:44px;border-radius:10px;border:2px solid #fff}.sc-hex{font-size:18px}
+.esc-cor .chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .linha-chip{display:flex;margin-top:8px}
 .nome-esc{display:flex;flex-direction:column;gap:8px;border:1.5px solid rgba(255,255,255,.5);border-radius:12px;padding:0 12px 12px;background:rgba(10,20,48,.25)}
 .nome-esc .campo{gap:4px}.nome-esc .campo>span{font-size:13px!important}.nome-esc .seg button{padding:6px;font-size:14px}.nome-esc input[type=text]{min-height:44px!important;font-size:17px!important}
@@ -717,24 +718,24 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792189195"></script>
-<script src="img/arte-capa.js?v=1792189195"></script>
-<script src="img/fundo-criacao.js?v=1792189195"></script>
-<script src="img/fundo-pais.js?v=1792189195"></script>
-<script src="img/fundo-escudo.js?v=1792189195"></script>
-<script src="img/simbolos.js?v=1792189195"></script>
-<script src="img/rostos.js?v=1792189195"></script>
-<script src="img/estadio-fotos.js?v=1792189195"></script>
-<script src="img/super-fotos.js?v=1792189195"></script>
-<script src="img/trofeus.js?v=1792189195"></script>
-<script src="img/medalhas.js?v=1792189195"></script>
-<script src="img/fotos.js?v=1792189195"></script>
-<script src="img/fotos-vs.js?v=1792189195"></script>
-<script src="img/kit-homens.js?v=1792189195"></script>
-<script src="img/tec-fotos.js?v=1792189195"></script>
-<script src="dados/elencos.js?v=1792189195"></script>
-<script src="img/rostos-reais.js?v=1792189195"></script>
-<script src="img/escudos-img.js?v=1792189195"></script>
+<script src="img/escudos-reais.js?v=1792189318"></script>
+<script src="img/arte-capa.js?v=1792189318"></script>
+<script src="img/fundo-criacao.js?v=1792189318"></script>
+<script src="img/fundo-pais.js?v=1792189318"></script>
+<script src="img/fundo-escudo.js?v=1792189318"></script>
+<script src="img/simbolos.js?v=1792189318"></script>
+<script src="img/rostos.js?v=1792189318"></script>
+<script src="img/estadio-fotos.js?v=1792189318"></script>
+<script src="img/super-fotos.js?v=1792189318"></script>
+<script src="img/trofeus.js?v=1792189318"></script>
+<script src="img/medalhas.js?v=1792189318"></script>
+<script src="img/fotos.js?v=1792189318"></script>
+<script src="img/fotos-vs.js?v=1792189318"></script>
+<script src="img/kit-homens.js?v=1792189318"></script>
+<script src="img/tec-fotos.js?v=1792189318"></script>
+<script src="dados/elencos.js?v=1792189318"></script>
+<script src="img/rostos-reais.js?v=1792189318"></script>
+<script src="img/escudos-img.js?v=1792189318"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2066,7 +2067,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792189195";
+const VERSAO="1792189318";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3033,13 +3034,13 @@ const chipCor=(k,cor,txt)=>`<label class="chip-cor"><input type="color" data-cor
 const barraEsc=(k,tit,min,max,v,a,b)=>{const p=Math.round((v-min)/(max-min)*100);return `<label class="campo barra-esc"><span>${tit} <b class="barra-num">${p}</b></span><input type="range" data-escr="${k}" data-min="${min}" data-max="${max}" min="0" max="100" step="1" value="${p}"><span class="barra-rot"><small>${a}</small><small>50</small><small>${b}</small></span></label>`};
 /* formato, desenho e símbolo ficam fechados; toca no título pra abrir a grade, Salvar (ou o título) fecha */
 let escAberto=null;
-function secEsc(k,tit,atual,grade,ck,cor){const ab=escAberto===k;
+function secEsc(k,tit,atual,grade,ck,cor,extra){const ab=escAberto===k;
   return `<div class="campo esc-sec${ab?" aberto":""}"><button type="button" class="esc-cab" data-a="escsec" data-v="${ab?"":k}"><span>${tit}</span><small>${esc(atual)}</small><b aria-hidden="true">${ab?"▲":"▼"}</b></button>${ab?grade+`<button type="button" class="btn prim full" data-a="escsec" data-v="">Salvar</button>`:""}
-  <div class="esc-cor"><span>Cores · personalizar</span>${chipCor(ck,cor,"Escolher cor")}</div></div>`}
+  <div class="esc-cor"><span>Cores · personalizar</span><span class="chips">${chipCor(ck,cor,"Escolher cor")}${extra||""}</span></div></div>`}
 function editorEscudo(e,nome){if(e.nomeOn===undefined)e.nomeOn=false;
   return `<h2 style="margin-top:0">Escudo</h2>
   <div class="previa" id="prev-escudo">${escudoSVG(e,"",120,nome)}</div>
-  ${secEsc("forma","Formato",FORMAS[e.forma%FORMAS.length][0],`<div class="grade8">${FORMAS.map((f,i)=>`<button data-a="eforma" data-v="${i}" aria-pressed="${e.forma===i}" aria-label="${f[0]}">${escudoSVG({...e,forma:i,simbolo:0},"",34)}<small>${f[0]}</small></button>`).join("")}</div>`,"c1",e.c1)}
+  ${secEsc("forma","Formato",FORMAS[e.forma%FORMAS.length][0],`<div class="grade8">${FORMAS.map((f,i)=>`<button data-a="eforma" data-v="${i}" aria-pressed="${e.forma===i}" aria-label="${f[0]}">${escudoSVG({...e,forma:i,simbolo:0},"",34)}<small>${f[0]}</small></button>`).join("")}</div>`,"c1",e.c1,chipCor("c3",e.c3,"Borda"))}
   ${secEsc("estampa","Desenho",ESTAMPAS[e.estampa%ESTAMPAS.length],`<div class="grade8">${ESTAMPAS.map((n,i)=>`<button data-a="eestampa" data-v="${i}" aria-pressed="${e.estampa===i}">${escudoSVG({...e,estampa:i,simbolo:0},"",30)}<small>${n}</small></button>`).join("")}</div>`,"c2",e.c2)}
   ${secEsc("simbolo","Símbolo",SIMBOLOS[e.simbolo||0],`<div class="grade8">${SIMBOLOS.map((s,i)=>`<button data-a="esimbolo" data-v="${i}" aria-pressed="${(e.simbolo||0)===i}">${escudoSVG({...e,simbolo:i,sigla:false},"",30)}<small>${s}</small></button>`).join("")}</div>`,"c4",e.c4||e.c3)}
   ${e.simbolo?`<div class="campo"><span>Cor do símbolo</span><div class="seg" role="group">${[["orig","Cor original"],["time","Personalizada"]].map(([k,n])=>`<button data-a="esimcor" data-v="${k}" aria-pressed="${(e.simCor==="time")===(k==="time")}">${n}</button>`).join("")}</div>${e.simCor==="time"?`<div class="linha-chip">${chipCor("c4",e.c4||e.c3,"Escolher cor")}</div>`:""}</div>
@@ -3055,10 +3056,7 @@ function editorEscudo(e,nome){if(e.nomeOn===undefined)e.nomeOn=false;
   <div class="campo"><span>Cor do nome</span><div class="linha-chip">${chipCor("c5",e.c5||e.c3,"Escolher cor")}</div></div>
   <div class="campo"><span>Borda do nome</span><div class="seg" role="group">${[["1","Com borda"],["0","Sem borda"]].map(([k,n])=>`<button data-a="enomeborda" data-v="${k}" aria-pressed="${(e.nomeBorda!==false)===(k==="1")}">${n}</button>`).join("")}</div>${e.nomeBorda!==false?`<div class="linha-chip">${chipCor("nomeBordaCor",e.nomeBordaCor||contrasteHex(e.c5||e.c3),"Cor da borda")}</div>`:""}</div>
   <button type="button" class="btn prim full" data-a="escsalvar">Salvar</button>
-  </div>`:""}
-  <div class="campo"><span>Cores</span><div class="cores-lista">
-    ${[["c1","Principal"],["c2","Secundária"],["c3","Borda e sigla"]].map(([k,n])=>`<label class="cor-item"><input type="color" data-cor="escudo" data-k="${k}" value="${e[k]}"><span>${n}</span><code>${e[k].toUpperCase()}</code></label>`).join("")}
-  </div><p class="peq muted" style="margin:0">Toque numa cor para escolher qualquer tom.</p></div>`;
+  </div>`:""}`;
 }
 function editorUniforme(unis,e,patro){
   const u=unis[uniSel];
