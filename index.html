@@ -2213,10 +2213,14 @@ function rodaIniciar(r){
   if(!r)return;const its=[...r.children];
   const marca=()=>{const m=r.scrollTop+r.clientHeight/2;let melhor=null,d0=1e9;
     its.forEach(it=>{const d=Math.abs(it.offsetTop+it.offsetHeight/2-m);const k=Math.min(d/it.offsetHeight,1.5);it.style.setProperty("--k",k.toFixed(2));if(d<d0){d0=d;melhor=it}});
+    if(r._sel&&melhor!==r._sel)somRoleta();r._sel=melhor;
     its.forEach(it=>it.classList.toggle("sel",it===melhor))};
   let tq=0;r.addEventListener("scroll",()=>{marca();cancelAnimationFrame(tq);tq=requestAnimationFrame(marca)},{passive:true});
   requestAnimationFrame(()=>{const i0=its[0];r.scrollTop=i0.offsetTop+i0.offsetHeight/2-r.clientHeight/2;marca()});
 }
+/* tique de roleta ao trocar de opção na roda */
+function somRoleta(){if(!SOM.ctx||SOM.mudo)return;const t=SOM.ctx.currentTime;if(t-(SOM.ultRoleta||-1)<.035)return;SOM.ultRoleta=t;
+  ruidoCurto(t,.025,.5,3500,SOM.fx,2);nota(t,1900+Math.random()*150,.04,"square",.05,SOM.fx,5000)}
 function modalRegras(){
   const R=[["Objetivo","Você é o dono do clube: comece na terceira divisão e leve o time até a elite do seu país e às copas continentais."],
    ["Partidas","Vitória dá mais dinheiro e XP (50), empate 25 e derrota 10. Dá para assistir ao vivo, fazer substituições e mudar a formação, ou simular sem assistir."],
@@ -4169,7 +4173,8 @@ function guardarW(){const n=$("#w-nome"),t=$("#w-tec"),s=$("#w-sigla"),es=$("#w-
 function acao(a,v,el){
   const vis=()=>alvoVisual();
   switch(a){
-    case "aba":aba=v;expandido=null;if(v!=="tabela"){}window.scrollTo(0,0);break;
+    case "aba":aba=v;expandido=null;if(v==="inicio"&&el&&nav.contains(el))abertura=true; // Início na barra de baixo volta pra capa
+if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "wseguir":{
       guardarW();
       if(W.passo===1&&W.nome.trim().length<3){toastErro("Dê ao time um nome com pelo menos 3 letras.");return}
