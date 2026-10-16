@@ -218,6 +218,14 @@ input[type=range]{width:100%;accent-color:var(--canario)}
 .chip-cor{position:relative;display:flex;align-items:center;gap:8px;padding:6px 12px;border:1.5px solid rgba(255,255,255,.85);border-radius:999px;background:rgba(255,255,255,.08);color:#fff;font-weight:700;font-size:14px;cursor:pointer}
 .chip-cor input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
 .chip-cor em{width:18px;height:18px;border-radius:50%;border:1.5px solid #fff}
+.sc-fundo{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:16px}
+.sc-caixa{width:100%;max-width:380px;background:var(--gramado-2);border:1px solid var(--gramado-3);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.sc-tit{font-family:var(--f-display);font-size:22px;text-transform:uppercase}
+.sc-sv{position:relative;height:220px;border-radius:12px;touch-action:none;cursor:crosshair}
+.sc-hue{position:relative;height:26px;border-radius:13px;touch-action:none;cursor:pointer;background:linear-gradient(to right,red,#ff0,lime,cyan,blue,#f0f,red)}
+.sc-pino{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1.5px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.5);pointer-events:none}
+.sc-hue .sc-pino{top:50%}
+.sc-baixo{display:flex;align-items:center;gap:12px}.sc-amostra{width:44px;height:44px;border-radius:10px;border:2px solid #fff}.sc-hex{font-size:18px}
 .linha-chip{display:flex;margin-top:8px}
 .nome-esc{display:flex;flex-direction:column;gap:14px;border:1.5px solid rgba(255,255,255,.5);border-radius:12px;padding:12px;background:rgba(10,20,48,.25)}
 .barra-esc input[type=range]{width:100%;accent-color:var(--canario);min-height:32px}
@@ -705,24 +713,24 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792188721"></script>
-<script src="img/arte-capa.js?v=1792188721"></script>
-<script src="img/fundo-criacao.js?v=1792188721"></script>
-<script src="img/fundo-pais.js?v=1792188721"></script>
-<script src="img/fundo-escudo.js?v=1792188721"></script>
-<script src="img/simbolos.js?v=1792188721"></script>
-<script src="img/rostos.js?v=1792188721"></script>
-<script src="img/estadio-fotos.js?v=1792188721"></script>
-<script src="img/super-fotos.js?v=1792188721"></script>
-<script src="img/trofeus.js?v=1792188721"></script>
-<script src="img/medalhas.js?v=1792188721"></script>
-<script src="img/fotos.js?v=1792188721"></script>
-<script src="img/fotos-vs.js?v=1792188721"></script>
-<script src="img/kit-homens.js?v=1792188721"></script>
-<script src="img/tec-fotos.js?v=1792188721"></script>
-<script src="dados/elencos.js?v=1792188721"></script>
-<script src="img/rostos-reais.js?v=1792188721"></script>
-<script src="img/escudos-img.js?v=1792188721"></script>
+<script src="img/escudos-reais.js?v=1792188937"></script>
+<script src="img/arte-capa.js?v=1792188937"></script>
+<script src="img/fundo-criacao.js?v=1792188937"></script>
+<script src="img/fundo-pais.js?v=1792188937"></script>
+<script src="img/fundo-escudo.js?v=1792188937"></script>
+<script src="img/simbolos.js?v=1792188937"></script>
+<script src="img/rostos.js?v=1792188937"></script>
+<script src="img/estadio-fotos.js?v=1792188937"></script>
+<script src="img/super-fotos.js?v=1792188937"></script>
+<script src="img/trofeus.js?v=1792188937"></script>
+<script src="img/medalhas.js?v=1792188937"></script>
+<script src="img/fotos.js?v=1792188937"></script>
+<script src="img/fotos-vs.js?v=1792188937"></script>
+<script src="img/kit-homens.js?v=1792188937"></script>
+<script src="img/tec-fotos.js?v=1792188937"></script>
+<script src="dados/elencos.js?v=1792188937"></script>
+<script src="img/rostos-reais.js?v=1792188937"></script>
+<script src="img/escudos-img.js?v=1792188937"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2029,8 +2037,32 @@ function migrar(g){
 function inverterUni(u){return {...u,estilo:u.estilo==="liso"?"faixa":u.estilo,camisa:u.detalhe,detalhe:u.camisa,mangas:u.detalhe,gola:u.camisa,calcao:u.camisa,meiao:u.detalhe}}
 
 function salvar(){try{localStorage.setItem(CHAVE,JSON.stringify(G))}catch(e){}}
+/* seletor de cor próprio: abre direto no quadro de arrastar (sem a lista de cores prontas do celular) */
+function hexHsv(h){const n=parseInt((h||"#000000").slice(1),16),r=(n>>16)/255,g=(n>>8&255)/255,b=(n&255)/255,mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn;
+  let hh=0;if(d){hh=mx===r?((g-b)/d)%6:mx===g?(b-r)/d+2:(r-g)/d+4;hh*=60;if(hh<0)hh+=360}return [hh,mx?d/mx:0,mx]}
+function hsvHex(h,s,v){const f=n=>{const k=(n+h/60)%6;return Math.round(255*(v-v*s*Math.max(0,Math.min(k,4-k,1))))};return "#"+[f(5),f(3),f(1)].map(x=>x.toString(16).padStart(2,"0")).join("")}
+function abrirSeletorCor(inp){
+  const orig=inp.value;let [h,sa,va]=hexHsv(orig);
+  const ov=document.createElement("div");ov.className="sc-fundo";
+  ov.innerHTML=`<div class="sc-caixa" role="dialog" aria-label="Escolher cor"><b class="sc-tit">Escolha a cor</b>
+    <div class="sc-sv"><i class="sc-pino"></i></div><div class="sc-hue"><i class="sc-pino"></i></div>
+    <div class="sc-baixo"><span class="sc-amostra"></span><code class="sc-hex"></code></div>
+    <div class="botoes"><button class="btn" data-sc="nao">Cancelar</button><button class="btn prim" data-sc="ok">Definir</button></div></div>`;
+  document.body.appendChild(ov);
+  const sv=ov.querySelector(".sc-sv"),hu=ov.querySelector(".sc-hue"),p1=sv.firstElementChild,p2=hu.firstElementChild,am=ov.querySelector(".sc-amostra"),hx=ov.querySelector(".sc-hex");
+  const pinta=(avisa)=>{const c=hsvHex(h,sa,va);sv.style.background=`linear-gradient(to top,#000,transparent),linear-gradient(to right,#fff,hsl(${h},100%,50%))`;
+    p1.style.left=sa*100+"%";p1.style.top=(1-va)*100+"%";p1.style.background=c;p2.style.left=h/360*100+"%";p2.style.background=`hsl(${h},100%,50%)`;am.style.background=c;hx.textContent=c.toUpperCase();
+    if(avisa){inp.value=c;inp.dispatchEvent(new Event("input",{bubbles:true}))}};
+  const arrasta=(el,fn)=>{const mv=ev=>{const r=el.getBoundingClientRect();fn(Math.min(1,Math.max(0,(ev.clientX-r.left)/r.width)),Math.min(1,Math.max(0,(ev.clientY-r.top)/r.height)));pinta(true)};
+    el.addEventListener("pointerdown",ev=>{ev.preventDefault();el.setPointerCapture(ev.pointerId);mv(ev);el.onpointermove=mv});el.addEventListener("pointerup",()=>{el.onpointermove=null})};
+  arrasta(sv,(x,y)=>{sa=x;va=1-y});arrasta(hu,x=>{h=Math.min(359.9,x*360)});
+  const fecha=ok=>{if(!ok&&inp.value!==orig){inp.value=orig;inp.dispatchEvent(new Event("input",{bubbles:true}))}ov.remove();if(ok&&inp.value!==orig)inp.dispatchEvent(new Event("change",{bubbles:true}))};
+  ov.addEventListener("click",ev=>{const b=ev.target.closest("[data-sc]");if(b)fecha(b.dataset.sc==="ok");else if(ev.target===ov)fecha(false)});
+  pinta(false);
+}
+document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792188721";
+const VERSAO="1792188937";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
