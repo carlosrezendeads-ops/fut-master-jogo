@@ -2451,7 +2451,7 @@ function confete(){
   for(let i=0;i<90;i++){const s=document.createElement("i");s.style.left=Math.random()*100+"%";s.style.background=cores[i%cores.length];s.style.animationDelay=(Math.random()*.6)+"s";s.style.animationDuration=(1.8+Math.random()*1.6)+"s";s.style.transform=`rotate(${Math.random()*360}deg)`;if(i%3===0)s.style.borderRadius="50%";box.appendChild(s)}
   document.body.appendChild(box);setTimeout(()=>box.remove(),4200);
 }
-function custoReforma(i){const r=REFORMAS[i];return Math.round(r.custo*econ(G.tierBase[r.t])*(FREC[r.t]??1)/10)*10}
+function custoReforma(i){const r=REFORMAS[i];return Math.round(r.custo*econ(G.tierBase[r.t])*(FREC[r.t]??1)*([1,.9,.8][r.t]??1)/10)*10} // Série B -10%, Série C -20%
 function melhorTier(){if(G.melhorTier==null)G.melhorTier=userTier();G.melhorTier=Math.min(G.melhorTier,userTier());return G.melhorTier}
 function statusReforma(i){
   const feitas=G.reformas||0,r=REFORMAS[i];
