@@ -146,7 +146,12 @@ input[type=range]{width:100%;accent-color:var(--canario)}
 .fund{padding-block:28px 40px;display:flex;flex-direction:column;gap:18px}
 .fund .marca{font-family:var(--f-display);font-weight:800;font-size:clamp(44px,13vw,76px);line-height:.9;letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
 .fund .marca em{font-style:normal;color:var(--canario)}
-.fund p{margin:0;max-width:52ch;color:var(--cal-2)}
+.fund p{margin:0;max-width:52ch;color:var(--cal-2);font-size:18px}
+.fund .campo>span{font-size:15px}.fund input[type=text]{font-size:19px;min-height:54px}
+.fund .passos{grid-template-columns:repeat(5,1fr)}.fund .passos li{font-size:15px}.fund .passos li b{font-size:20px}
+.rot-info{display:flex;align-items:center;gap:8px}.rot-info label{cursor:pointer}
+.info-bt{all:unset;cursor:pointer;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--canario);color:var(--canario);font:italic 800 13px/22px Georgia,serif;text-align:center;text-transform:none;letter-spacing:0}
+.lista-info{margin:6px 0 10px;padding-left:20px;display:flex;flex-direction:column;gap:6px}
 .cores{display:flex;gap:8px;flex-wrap:wrap}
 .cores button{width:36px;height:36px;border-radius:50%;border:2px solid var(--gramado-3);cursor:pointer}
 .cores button[aria-pressed="true"]{border-color:var(--canario);box-shadow:0 0 0 3px var(--gramado),0 0 0 5px var(--canario)}
@@ -2886,7 +2891,7 @@ function renderCriacao(){
   if(p===1){
     h+=`<label class="campo"><span>Nome do time</span><input type="text" id="w-nome" maxlength="28" placeholder="Ex.: Esporte Clube Ventania" value="${esc(W.nome)}"></label>
     <div class="dupla"><label class="campo"><span>Seu nome (dono do clube)</span><input type="text" id="w-tec" maxlength="24" placeholder="Ex.: Carlos" value="${esc(W.tec)}"></label>
-    <label class="campo"><span>Sigla</span><input type="text" id="w-sigla" maxlength="4" placeholder="${esc(W.nome?siglaDe(W.nome):"ECV")}" value="${esc(W.sigla)}" style="text-transform:uppercase"></label></div>
+    <div class="campo"><span class="rot-info"><label for="w-sigla">Sigla</label><button type="button" class="info-bt" data-a="infosigla" aria-label="Para que serve a sigla">i</button></span><input type="text" id="w-sigla" maxlength="3" placeholder="${esc((W.nome?siglaDe(W.nome):"ECV").slice(0,3))}" value="${esc(W.sigla)}" style="text-transform:uppercase"></div></div>
 `;
   }else if(p===2){
     const ks=Object.keys(PAISES);
@@ -4141,7 +4146,7 @@ function telaClube(){
 function telaVisual(){
   const c=G.clubs[G.user.club];
   return `<div class="fund" style="padding-top:16px"><div class="linha" style="justify-content:space-between"><b style="font-family:var(--f-display);font-size:24px">Identidade do clube</b><button class="btn prim" data-a="aba" data-v="clube" style="font-size:16px;min-height:40px">Pronto</button></div>
-  <div class="dupla"><label class="campo"><span>Nome do time</span><input type="text" id="v-nome" maxlength="28" value="${esc(c.name)}"></label><label class="campo"><span>Sigla</span><input type="text" id="v-sigla" maxlength="4" value="${esc(c.short)}" style="text-transform:uppercase"></label></div>
+  <div class="dupla"><label class="campo"><span>Nome do time</span><input type="text" id="v-nome" maxlength="28" value="${esc(c.name)}"></label><label class="campo"><span>Sigla</span><input type="text" id="v-sigla" maxlength="3" value="${esc(c.short)}" style="text-transform:uppercase"></label></div>
   <h2>Estádio</h2><div id="prev-estadio">${fotoEstadio(G.reformas||0,estadioDe(c),c.cap)}</div>
   <label class="campo"><span>Nome do estádio</span><input type="text" id="v-estadio" maxlength="30" value="${esc(estadioDe(c))}"></label>
   ${editorEscudo(c.escudo,c.short)}${editorUniforme(c.unis,c.escudo,G.patro?G.patro.nome:"")}
@@ -4175,7 +4180,7 @@ function modalFim(){
 }
 
 /* ---------- ações ---------- */
-function guardarW(){const n=$("#w-nome"),t=$("#w-tec"),s=$("#w-sigla"),es=$("#w-estadio");if(es)W.estadio=es.value;if(n)W.nome=n.value;if(t)W.tec=t.value;if(s)W.sigla=s.value.toUpperCase().slice(0,4)}
+function guardarW(){const n=$("#w-nome"),t=$("#w-tec"),s=$("#w-sigla"),es=$("#w-estadio");if(es)W.estadio=es.value;if(n)W.nome=n.value;if(t)W.tec=t.value;if(s)W.sigla=s.value.toUpperCase().slice(0,3)}
 function acao(a,v,el){
   const vis=()=>alvoVisual();
   switch(a){
@@ -4185,7 +4190,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
       guardarW();
       if(W.passo===1&&W.nome.trim().length<3){toastErro("Dê ao time um nome com pelo menos 3 letras.");return}
       if(W.passo<5){W.passo++;window.scrollTo(0,0);break}
-      const sig=(W.sigla||siglaDe(W.nome)).trim().toUpperCase().slice(0,4);
+      const sig=(W.sigla||siglaDe(W.nome)).trim().toUpperCase().slice(0,3);
       novoJogo({pais:W.pais,name:W.nome.trim(),short:sig,coach:W.tec.trim()||"Professor",escudo:{...W.escudo},unis:W.unis.map(x=>({...x}))});uniSel=0;
       {const c=G.clubs[G.user.club];c.estadio=(W.estadio||"").trim()||`Arena ${c.name}`;c.cap=ESTADIO_INICIAL;G.reformas=0;G.cash=caixaFundacao(W.pais)-precoEstadioFund(W.pais);}
       aba="inicio";W=null;salvar();window.scrollTo(0,0);break;}
@@ -4195,6 +4200,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "eforma":vis().e.forma=+v;if(G)salvar();break;
     case "eestampa":vis().e.estampa=+v;if(G)salvar();break;
     case "esimbolo":vis().e.simbolo=+v;if(G)salvar();break;
+    case "infosigla":modal(`<h3>Sigla do clube</h3><p>São 3 letras que representam o seu time, como <b>FLA</b> ou <b>COR</b>.</p><p>Ela aparece:</p><ul class="lista-info"><li>No <b>placar</b> e na narração das partidas ao vivo (ex.: <b>${esc((W&&W.sigla)||"ECV")} 2 × 1 SAN</b>)</li><li>No <b>confronto do pré-jogo</b>, embaixo do escudo</li><li>No <b>escudo</b>, se você escolher mostrar</li><li>Na <b>escalação</b> do campinho</li></ul><p class="muted peq">Dá para mudar depois na aba Clube.</p><div class="botoes"><button class="btn prim" data-a="fechar">Entendi</button></div>`);return;
     case "esigla":vis().e.sigla=v==="1";if(G)salvar();break;
     case "unisel":uniSel=+v;break;
     case "uinverter":{const {unis}=vis();unis[uniSel]=inverterUni(unis[1-uniSel]);if(G)salvar();break;}
@@ -4331,7 +4337,7 @@ app.addEventListener("input",e=>{
   }
   if(t.id==="ed-busca"){edSel.busca=t.value;const r=$("#ed-res"),nv=$("#ed-nav");if(r)r.innerHTML=edResultados();if(nv)nv.hidden=semAc(t.value).length>=2;return}
   if(t.id==="v-estadio"){const c=G.clubs[G.user.club];if(t.value.trim())c.estadio=t.value.trim();return}
-  if(t.id==="v-nome"||t.id==="v-sigla"){const c=G.clubs[G.user.club];if(t.id==="v-nome"&&t.value.trim().length>=3)c.name=t.value.trim();if(t.id==="v-sigla"&&t.value.trim())c.short=t.value.trim().toUpperCase().slice(0,4);atualizarPrevias();return}
+  if(t.id==="v-nome"||t.id==="v-sigla"){const c=G.clubs[G.user.club];if(t.id==="v-nome"&&t.value.trim().length>=3)c.name=t.value.trim();if(t.id==="v-sigla"&&t.value.trim())c.short=t.value.trim().toUpperCase().slice(0,3);atualizarPrevias();return}
   if(["w-nome","w-tec","w-sigla","w-estadio"].includes(t.id))guardarW();
   if(t.id==="w-estadio"){const pe=$("#prev-estadio");}
   if(t.id==="v-estadio"){const pe=$("#prev-estadio");const c=G&&G.clubs[G.user.club];if(pe&&c)pe.innerHTML=fotoEstadio(G.reformas||0,t.value.trim()||estadioDe(c),c.cap)}
