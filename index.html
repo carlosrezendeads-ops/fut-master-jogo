@@ -683,6 +683,7 @@ nav.abas button{font-size:11px}
 <script src="img/escudos-reais.js"></script>
 <script src="img/arte-capa.js"></script>
 <script src="img/fundo-criacao.js"></script>
+<script src="img/simbolos.js"></script>
 <script src="img/rostos.js"></script>
 <script src="img/estadio-fotos.js"></script>
 <script src="img/super-fotos.js"></script>
@@ -842,7 +843,7 @@ function criarClube(o,pais,tier){
   const cap=Math.round(clamp(500*Math.pow(Math.max(o.rating-40,4),1.3),3000,80000)/500)*500;
   const h=[...o.name].reduce((a,c)=>a+c.charCodeAt(0),0);
   G.clubs[id]={id,name:o.name,short:siglaDe(o.name),rating:o.rating,rep:o.rating,pais,tier,c1:o.c1,c2:o.c2,cap,
-    form:pick(Object.keys(FORMACOES)),est:pick(["eq","eq","def","of"]),escudo:{forma:h%8,estampa:[0,3,1][h%3],c1:o.c1,c2:o.c2,c3:contrasteHex(o.c1)}};
+    form:pick(Object.keys(FORMACOES)),est:pick(["eq","eq","def","of"]),escudo:{forma:h%8,estampa:[0,9,1][h%3],c1:o.c1,c2:o.c2,c3:contrasteHex(o.c1)}};
   if(elencoReal(o.name))elencoReal(o.name).forEach(r=>jogadorReal(r,id));
   else{ELENCO_BASE.forEach(pos=>novoJogador(pos,o.rating-1,id));
   for(let i=0;i<2;i++)novoJogador(pick(["ZAG","MEI","ATA","LAT"]),o.rating-3,id);}
@@ -1985,6 +1986,7 @@ function migrar(g){
   if(!g.salV){g.salV=1;const G0=G;G=g;IDX=null;Object.values(g.players).forEach(p=>{p.sal=salarioJog(p)});G=G0;IDX=null}
   if(!g.salLendaV){g.salLendaV=1;const G0=G;G=g;IDX=null;Object.values(g.players).forEach(p=>{if(p.lenda)p.sal=Math.max(Math.round(p.sal*1.2*10)/10,salarioLenda(p))});G=G0;IDX=null}
   if(g.perfil&&g.perfil.nivel>NIVEL_MAX){g.perfil.nivel=NIVEL_MAX;g.perfil.xp=0}
+  if(!g.escV2){g.escV2=1;Object.values(g.clubs).forEach(c=>{const e=c.escudo;if(!e)return;e.estampa=ESTAMPA_ANTIGA[e.estampa]??0;e.simbolo=SIMBOLO_ANTIGO[e.simbolo||0]??0})}
   if(!g.estV){g.estV=1;if((g.reformas||0)>=3)g.reformas--;}
   if(g.tecRen){const L=TECNICOS[g.country].split(",");Object.entries(g.tecRen).forEach(([a,b])=>{const i=L.findIndex(s=>s.split("|")[0]===a);if(i>=0)L[i]=b+"|"+L[i].split("|")[1]});TECNICOS[g.country]=L.join(",")}
   if(!g.perfil)g.perfil={xp:0,nivel:1,j:0,v:0,e:0,d:0,gp:0,gc:0,aviso:null,dica:false};
@@ -2019,74 +2021,61 @@ const FORMAS=[
  ["Ponta dupla","M8 8H92V70L70 112L50 98L30 112L8 70Z"],
  ["Arco","M8 42A42 36 0 0 1 92 42V80C92 98 72 110 50 116C28 110 8 98 8 80Z"],
  ["Coroa","M8 30L24 8L38 26L50 4L62 26L76 8L92 30V70C92 94 72 108 50 116C28 108 8 94 8 70Z"],
- ["Quadrado","M8 12H92V108H8Z"]
+ ["Quadrado","M8 12H92V108H8Z"],
+ ["Arredondado","M10 22Q10 6 26 6H74Q90 6 90 22V64A40 50 0 0 1 10 64Z"],
+ ["Francês","M6 4Q28 12 50 10Q72 12 94 4V58C94 88 72 104 50 116C28 104 6 88 6 58Z"],
+ ["Espanhol","M8 6H92V22Q86 30 92 38V70Q92 100 50 116Q8 100 8 70V38Q14 30 8 22Z"],
+ ["Italiano","M6 6L28 14L50 2L72 14L94 6Q90 30 92 52C92 84 72 104 50 116C28 104 8 84 8 52Q10 30 6 6Z"],
+ ["Alemão","M8 6Q50 16 92 6V56C92 86 74 104 50 116C26 104 8 86 8 56Z"],
+ ["Inglês","M8 10Q30 16 50 4Q70 16 92 10V54C92 84 72 102 50 116C28 102 8 84 8 54Z"],
+ ["Americano","M20 6Q50 16 80 6Q84 24 96 30Q88 50 94 70Q74 90 50 116Q26 90 6 70Q12 50 4 30Q16 24 20 6Z"],
+ ["Cabo inferior","M8 8H92V58C92 80 76 96 58 106L50 118L42 106C24 96 8 80 8 58Z"],
+ ["Cabo superior","M8 20Q30 14 44 8L50 2L56 8Q70 14 92 20V60C92 88 72 104 50 116C28 104 8 88 8 60Z"],
+ ["Escudo antigo","M8 6Q20 18 8 30V60C8 90 28 104 50 116C72 104 92 90 92 60V30Q80 18 92 6Q71 14 50 6Q29 14 8 6Z"],
+ ["Polonês","M8 6Q50 14 92 6Q88 40 90 60C90 88 72 104 50 116C28 104 10 88 10 60Q12 40 8 6Z"],
+ ["Heráldico","M10 6Q30 14 50 4Q70 14 90 6Q86 18 96 26Q88 36 92 52C92 86 72 104 50 116C28 104 8 86 8 52Q12 36 4 26Q14 18 10 6Z"],
+ ["Contorno ondulado","M8 10Q18 2 29 10T50 10T71 10T92 10Q86 24 92 36Q86 48 92 60C90 88 72 104 50 116C28 104 10 88 8 60Q14 48 8 36Q14 24 8 10Z"],
+ ["Personalizado","M4 4Q28 16 50 6Q72 16 96 4Q88 30 92 56C92 88 72 104 50 116C28 104 8 88 8 56Q12 30 4 4Z"]
 ];
 const TEXTO_Y={7:62,9:82,10:50,14:76};
-const ESTAMPAS=["Liso","Metade","Listras","Faixa diagonal","Faixa horizontal","Quartos","Listras finas","Faixa vertical","Cruz","Chevron","Borda dupla","Xadrez"];
-const SIMBOLOS=[
- ["Nenhum",""],
- ["Estrela",(()=>{let p=[];for(let i=0;i<10;i++){const r=i%2?7.5:18,a=-Math.PI/2+i*Math.PI/5;p.push((r*Math.cos(a)).toFixed(1)+","+(r*Math.sin(a)).toFixed(1))}return `<polygon points="${p.join(" ")}"/>`})()],
- ["Bola",`<circle r="16"/><polygon points="0,-6 5.7,-1.9 3.5,4.9 -3.5,4.9 -5.7,-1.9" class="s2"/>`],
- ["Raio",`<polygon points="4,-20 -12,4 0,4 -6,22 14,-6 2,-6 10,-20"/>`],
- ["Coroa",`<path d="M-17 10V-8L-8 2L0-14L8 2L17-8V10Z"/>`],
- ["Duas estrelas",(()=>{const st=(cx)=>{let p=[];for(let i=0;i<10;i++){const r=i%2?4.5:11,a=-Math.PI/2+i*Math.PI/5;p.push((cx+r*Math.cos(a)).toFixed(1)+","+(r*Math.sin(a)).toFixed(1))}return `<polygon points="${p.join(" ")}"/>`};return st(-11)+st(11)})()],
- ["Âncora",`<path d="M-2-18h4v6h6v4h-6v18c6-1 10-5 11-10l4 2c-2 9-9 14-17 14s-15-5-17-14l4-2c1 5 5 9 11 10v-18h-6v-4h6z"/><circle cy="-19" r="4"/>`],
- ["Asas",`<path d="M-2 4C-8-6-16-10-22-10C-18-4-16 2-12 6C-9 8-5 8-2 4ZM2 4C8-6 16-10 22-10C18-4 16 2 12 6C9 8 5 8 2 4Z"/><circle r="4" cy="2"/>`],
- ["Três estrelas",(()=>{const st=(cx,cy,R)=>{let p=[];for(let i=0;i<10;i++){const r=i%2?R*.42:R,a=-Math.PI/2+i*Math.PI/5;p.push((cx+r*Math.cos(a)).toFixed(1)+","+(cy+r*Math.sin(a)).toFixed(1))}return `<polygon points="${p.join(" ")}"/>`};return st(-14,5,8)+st(0,-5,10)+st(14,5,8)})()],
- ["Coração",`<path d="M0 17C-24 2-17-17 0-7C17-17 24 2 0 17Z"/>`],
- ["Cruz",`<path d="M-5-19h10v14h14v10h-14v14h-10v-14h-14v-10h14Z"/>`],
- ["Cruz de Malta",`<path d="M0 0L-8-19H8Z M0 0L19-8V8Z M0 0L8 19H-8Z M0 0L-19 8V-8Z"/>`],
- ["Sol",`<circle r="9"/>${Array.from({length:10},(_,i)=>{const a=i*Math.PI/5,c=Math.cos(a),s=Math.sin(a);return `<polygon points="${(12*c-3*s).toFixed(1)},${(12*s+3*c).toFixed(1)} ${(20*c).toFixed(1)},${(20*s).toFixed(1)} ${(12*c+3*s).toFixed(1)},${(12*s-3*c).toFixed(1)}"/>`}).join("")}`],
- ["Lua",`<path d="M5-18A18 18 0 1 0 5 18A13 13 0 1 1 5-18Z"/>`],
- ["Chama",`<path d="M0-21C9-8 15-4 13 6C11 15 5 19 0 19C-5 19-11 15-13 6C-14-2-7-4-4-13C-2-7 2-7 0-21Z"/>`],
- ["Gota",`<path d="M0-21C8-7 14 2 14 7A14 14 0 0 1-14 7C-14 2-8-7 0-21Z"/>`],
- ["Folha",`<path d="M-15 15C-15-6 0-19 17-17C19 0 6 15-15 15Z"/>`],
- ["Pinheiro",`<path d="M0-21L12-5H6L16 8H4V17H-4V8H-16L-6-5H-12Z"/>`],
- ["Montanhas",`<path d="M-21 15L-7-11L1 1L8-7L21 15Z"/>`],
- ["Onda",`<path d="M-21 2Q-15-9-9 2T3 2T15 2Q18-3 21 2V15H-21Z"/>`],
- ["Torre",`<path d="M-14 17V-6V-15H-8V-9H-3V-15H3V-9H8V-15H14V-6V17H4V7A4 4 0 0 0-4 7V17Z"/>`],
- ["Espada",`<path d="M-2.5-21H2.5V7H9V11H2.5V19H-2.5V11H-9V7H-2.5Z"/>`],
- ["Espadas cruzadas",`<g transform="rotate(40)"><path d="M-2-21H2V7H8V10H2V18H-2V10H-8V7H-2Z"/></g><g transform="rotate(-40)"><path d="M-2-21H2V7H8V10H2V18H-2V10H-8V7H-2Z"/></g>`],
- ["Martelo",`<path d="M-13-17H13V-7H4V19H-4V-7H-13Z"/>`],
- ["Tridente",`<path d="M-2 19V-6H-12V-19H-8V-10H-2V-21H2V-10H8V-19H12V-6H2V19Z"/>`],
- ["Flecha",`<path d="M-18 17L7-9L2-13L19-19L13-2L9-7L-16 19Z"/>`],
- ["Alvo",`<circle r="18"/><circle r="12" class="s2"/><circle r="6"/>`],
- ["Diamante",`<path d="M-17-6L-9-17H9L17-6L0 19Z"/>`],
- ["Trevo",`<circle cy="-9" r="7.5"/><circle cx="-8.5" cy="3" r="7.5"/><circle cx="8.5" cy="3" r="7.5"/><path d="M-1.5 5h3l3 15h-3Z"/>`],
- ["Chave",`<circle cx="-8" cy="-8" r="9"/><circle cx="-8" cy="-8" r="3.5" class="s2"/><path d="M-3-3L17 17L13 21L10 18L7 21L4 18L7 15L-6 2Z"/>`],
- ["Ferradura",`<path d="M-15-16H-6V2A6 6 0 0 0 6 2V-16H15V2A15 15 0 0 1-15 2Z"/>`],
- ["Pegada",`<ellipse cy="8" rx="10" ry="8.5"/><circle cx="-12" cy="-4" r="4.6"/><circle cx="-5" cy="-12.5" r="4.6"/><circle cx="5" cy="-12.5" r="4.6"/><circle cx="12" cy="-4" r="4.6"/>`],
- ["Louros",Array.from({length:12},(_,i)=>{const lado=i<6?-1:1,k=i%6,a=(200-k*24)*Math.PI/180,x=lado*Math.abs(17*Math.cos(a)),y=-17*Math.sin(a);return `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="5.5" ry="2.6" transform="rotate(${(lado*(k*24-20)).toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})"/>`}).join("")],
- ["Hexágono",`<path d="M0-19L17-9.5V9.5L0 19L-17 9.5V-9.5Z"/><path d="M0-10L9-5V5L0 10L-9 5V-5Z" class="s2"/>`],
- ["Sino",`<path d="M0-19C-9-19-11-9-11 0L-16 11H16L11 0C11-9 9-19 0-19Z M-5 13A5 5 0 0 0 5 13Z"/>`],
- ["Pena",`<path d="M15-19C-6-13-15 4-15 19L-11 19C-9 9-3 1 6-6C0-2-6 4-9 11C-5-2 4-12 15-19Z"/>`],
- ["Triângulo",`<path d="M0-19L19 15H-19Z"/><path d="M0-6L8 9H-8Z" class="s2"/>`],
- ["Bandeira",`<path d="M-13 19V-19H-9V-17H15L9-8L15 1H-9V19Z"/>`],
- ["Escudo",`<path d="M-15-17H15V0C15 10 8 16 0 20C-8 16-15 10-15 0Z"/><path d="M-8-9H8V0C8 5 4 9 0 11C-4 9-8 5-8 0Z" class="s2"/>`],
- ["Coroa real",`<path d="M-18 12L-20-10L-10 0L0-18L10 0L20-10L18 12Z"/><rect x="-18" y="14" width="36" height="5"/>`]
-];
+const ESTAMPAS=["Liso","Metade","Três faixas verticais","Quatro faixas verticais","Cinco faixas verticais","Faixa vertical central","Três faixas horizontais","Quatro faixas horizontais","Faixa horizontal central","Faixa diagonal","Duas faixas diagonais","Cruz","Chevron (V)","Listras finas","Xadrez","Losango central","Faixa diagonal dupla","Borda","Faixa inferior","Faixa superior"];
+const ESTAMPA_ANTIGA=[0,1,3,9,8,1,13,5,11,12,17,14]; // save antigo -> lista nova
+const SIMBOLOS=["Nenhum","Coroa","Estrela simples","Estrelas múltiplas","Estrela contornada","Cruz","Faixa diagonal","Listras verticais","Listras horizontais","Leão","Águia","Tigre","Lobo","Pantera","Cavalo","Touro","Galo","Pássaro","Fênix","Dragão","Grifo","Cão","Elefante","Urso","Tubarão","Jacaré","Serpente","Polvo","Torre / Castelo","Flor de lis","Navio / Vela","Âncora","Bola de futebol","Asas","Ramos de louro","Espada","Espadas cruzadas","Montanha","Ponte","Sol","Lua"];
+/* símbolo antigo (desenhado) -> novo (imagem); os sem parecido viram "Nenhum" */
+const SIMBOLO_ANTIGO=[0,2,32,0,1,3,31,33,3,0,5,5,39,40,0,0,0,0,37,0,28,35,36,0,0,0,0,0,0,0,0,0,34,0,0,0,0,0,0,0,1];
 let svgN=0;
 function escudoSVG(e,sigla,px){
   const id="cl"+(++svgN),fi=e.forma%FORMAS.length,f=FORMAS[fi][1];
+  const R=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${e.c2}"/>`,D=(y,h,ang)=>`<rect x="-40" y="${y}" width="180" height="${h}" fill="${e.c2}" transform="rotate(${ang} 50 60)"/>`;
   const pat=[
     "",
-    `<rect x="50" y="0" width="50" height="120" fill="${e.c2}"/>`,
-    [15,35,55,75].map(x=>`<rect x="${x}" y="0" width="10" height="120" fill="${e.c2}"/>`).join(""),
+    R(50,0,50,120),
+    R(33.3,0,33.4,120),
+    R(25,0,25,120)+R(75,0,25,120),
+    R(20,0,20,120)+R(60,0,20,120),
+    R(40,0,20,120),
+    R(0,20,100,16)+R(0,52,100,16)+R(0,84,100,16),
+    R(0,14,100,13)+R(0,40,100,13)+R(0,66,100,13)+R(0,92,100,13),
+    R(0,46,100,26),
     `<polygon points="-10,24 22,-8 112,82 80,114" fill="${e.c2}"/>`,
-    `<rect x="0" y="46" width="100" height="26" fill="${e.c2}"/>`,
-    `<rect x="50" y="0" width="50" height="60" fill="${e.c2}"/><rect x="0" y="60" width="50" height="60" fill="${e.c2}"/>`,
-    [8,20,32,44,56,68,80,92].map(x=>`<rect x="${x}" y="0" width="5" height="120" fill="${e.c2}"/>`).join(""),
-    `<rect x="37" y="0" width="26" height="120" fill="${e.c2}"/>`,
-    `<rect x="40" y="0" width="20" height="120" fill="${e.c2}"/><rect x="0" y="48" width="100" height="20" fill="${e.c2}"/>`,
+    D(36,14,45)+D(64,14,45),
+    R(40,0,20,120)+R(0,48,100,20),
     `<polygon points="0,26 50,66 100,26 100,50 50,90 0,50" fill="${e.c2}"/>`,
+    [8,20,32,44,56,68,80,92].map(x=>R(x,0,5,120)).join(""),
+    (()=>{let r="";for(let y=0;y<120;y+=20)for(let x=0;x<100;x+=20)if((x/20+y/20)%2===0)r+=R(x,y,20,20);return r})(),
+    `<polygon points="50,22 78,62 50,102 22,62" fill="${e.c2}"/>`,
+    D(42,9,-45)+D(60,9,-45),
     `<path d="${f}" transform="translate(50 60) scale(.8) translate(-50 -60)" fill="none" stroke="${e.c2}" stroke-width="7"/>`,
-    (()=>{let r="";for(let y=0;y<120;y+=20)for(let x=0;x<100;x+=20)if((x/20+y/20)%2===0)r+=`<rect x="${x}" y="${y}" width="20" height="20" fill="${e.c2}"/>`;return r})()
+    R(0,64,100,60),
+    R(0,0,100,38)
   ][e.estampa%ESTAMPAS.length];
   const t=e.sigla===false?"":esc((sigla||"").slice(0,4));
   const ty=TEXTO_Y[fi]||70;
-  const sb=SIMBOLOS[e.simbolo||0]?SIMBOLOS[e.simbolo||0][1]:"";
-  const simb=sb?`<g transform="translate(50 ${t?ty-36:ty-10}) scale(${t?.7:1.55})" fill="${e.c3}" stroke="${contrasteHex(e.c3)}" stroke-width="${t?2.5:1.6}" paint-order="stroke" style="--s2:${e.c1}">${sb.replace(/class="s2"/g,`fill="${e.c1}" stroke="none"`)}</g>`:"";
-  return `<svg viewBox="-4 -2 108 124" width="${px}" height="${Math.round(px*1.15)}" aria-hidden="true" class="svg-escudo"><defs><clipPath id="${id}"><path d="${f}"/></clipPath></defs><g clip-path="url(#${id})"><rect x="-5" y="-5" width="110" height="130" fill="${e.c1}"/>${pat}</g><path d="${f}" fill="none" stroke="${e.c3}" stroke-width="5" stroke-linejoin="round"/>${simb}${t?`<text x="50" y="${ty}" text-anchor="middle" font-family="Saira Condensed,Arial Narrow,sans-serif" font-weight="800" font-size="${t.length>3?22:27}" fill="${e.c3}" stroke="${contrasteHex(e.c3)}" stroke-width="4" paint-order="stroke" letter-spacing="1">${t}</text>`:""}</svg>`;
+  const si=e.simbolo||0,img=si&&typeof SIMBOLOS_IMG!=="undefined"&&SIMBOLOS_IMG[si-1];let simb="",fdef="";
+  if(img){const cx=50,cy=t?ty-40:ty-12,box=t?34:60,k=box/Math.max(img[1],img[2]),w=img[1]*k,h=img[2]*k,fid="sf"+id,cor=e.simCor==="time";
+    fdef=`<filter id="${fid}" x="-20%" y="-20%" width="140%" height="140%"><feMorphology in="SourceAlpha" operator="dilate" radius="${t?.9:1.3}" result="d"/><feFlood flood-color="${contrasteHex(cor?e.c3:"#ffffff")}" flood-opacity="${cor?1:.55}"/><feComposite in2="d" operator="in" result="b"/>${cor?`<feFlood flood-color="${e.c3}"/><feComposite in2="SourceAlpha" operator="in" result="a"/>`:""}<feMerge><feMergeNode in="b"/><feMergeNode in="${cor?"a":"SourceGraphic"}"/></feMerge></filter>`;
+    simb=`<image href="${img[0]}" x="${(cx-w/2).toFixed(1)}" y="${(cy-h/2).toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" filter="url(#${fid})"/>`}
+  return `<svg viewBox="-4 -2 108 124" width="${px}" height="${Math.round(px*1.15)}" aria-hidden="true" class="svg-escudo"><defs><clipPath id="${id}"><path d="${f}"/></clipPath>${fdef}</defs><g clip-path="url(#${id})"><rect x="-5" y="-5" width="110" height="130" fill="${e.c1}"/>${pat}</g><path d="${f}" fill="none" stroke="${e.c3}" stroke-width="5" stroke-linejoin="round"/>${simb}${t?`<text x="50" y="${ty}" text-anchor="middle" font-family="Saira Condensed,Arial Narrow,sans-serif" font-weight="800" font-size="${t.length>3?22:27}" fill="${e.c3}" stroke="${contrasteHex(e.c3)}" stroke-width="4" paint-order="stroke" letter-spacing="1">${t}</text>`:""}</svg>`;
 }
 const escudoDe=(c,px)=>escudoSVG(c.escudo||{forma:0,estampa:1,c1:c.c1,c2:c.c2,c3:contrasteHex(c.c1)},c.short,px);
 const ESTILOS_UNI=[["liso","Liso"],["listras","Listras"],["listras3","Listras 3 cores"],["aros3","Horizontais 3 cores"],["faixa2","Faixa dupla"],["listrasFinas","Listras finas"],["aros","Listras horizontais"],["diagonal","Faixa diagonal"],["metade","Metade"],["faixa","Faixa no peito"],["faixaV","Faixa vertical"],["duasFaixas","Duas faixas"],["chevron","V no peito"],["ombros","Ombros"],["lateral","Laterais"],["degrade","Degradê"],["xadrez","Xadrez"]];
@@ -2960,7 +2949,8 @@ function editorEscudo(e,sigla){
   <div class="previa" id="prev-escudo">${escudoSVG(e,sigla,120)}</div>
   <div class="campo"><span>Formato</span><div class="grade8">${FORMAS.map((f,i)=>`<button data-a="eforma" data-v="${i}" aria-pressed="${e.forma===i}" aria-label="${f[0]}">${escudoSVG({...e,forma:i,simbolo:0},"",34)}<small>${f[0]}</small></button>`).join("")}</div></div>
   <div class="campo"><span>Desenho</span><div class="grade8">${ESTAMPAS.map((n,i)=>`<button data-a="eestampa" data-v="${i}" aria-pressed="${e.estampa===i}">${escudoSVG({...e,estampa:i,simbolo:0},"",30)}<small>${n}</small></button>`).join("")}</div></div>
-  <div class="campo"><span>Símbolo</span><div class="grade8">${SIMBOLOS.map((s,i)=>`<button data-a="esimbolo" data-v="${i}" aria-pressed="${(e.simbolo||0)===i}">${escudoSVG({...e,simbolo:i,sigla:false},"",30)}<small>${s[0]}</small></button>`).join("")}</div></div>
+  <div class="campo"><span>Símbolo</span><div class="grade8">${SIMBOLOS.map((s,i)=>`<button data-a="esimbolo" data-v="${i}" aria-pressed="${(e.simbolo||0)===i}">${escudoSVG({...e,simbolo:i,sigla:false},"",30)}<small>${s}</small></button>`).join("")}</div></div>
+  ${e.simbolo?`<div class="campo"><span>Cor do símbolo</span><div class="seg" role="group">${[["orig","Original"],["time","Cor do clube"]].map(([k,n])=>`<button data-a="esimcor" data-v="${k}" aria-pressed="${(e.simCor==="time")===(k==="time")}">${n}</button>`).join("")}</div></div>`:""}
   <div class="campo"><span>Sigla no escudo</span><div class="seg" role="group">${[["1","Mostrar"],["0","Esconder"]].map(([k,n])=>`<button data-a="esigla" data-v="${k}" aria-pressed="${(e.sigla!==false)===(k==="1")}">${n}</button>`).join("")}</div></div>
   <div class="campo"><span>Cores</span><div class="cores-lista">
     ${[["c1","Principal"],["c2","Secundária"],["c3","Borda e sigla"]].map(([k,n])=>`<label class="cor-item"><input type="color" data-cor="escudo" data-k="${k}" value="${e[k]}"><span>${n}</span><code>${e[k].toUpperCase()}</code></label>`).join("")}
@@ -4205,6 +4195,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "eforma":vis().e.forma=+v;if(G)salvar();break;
     case "eestampa":vis().e.estampa=+v;if(G)salvar();break;
     case "esimbolo":vis().e.simbolo=+v;if(G)salvar();break;
+    case "esimcor":vis().e.simCor=v;if(G)salvar();break;
     case "infosigla":modal(`<h3>Sigla do clube</h3><p>São 3 letras que representam o seu time, como <b>FLA</b> ou <b>COR</b>.</p><p>Ela aparece:</p><ul class="lista-info"><li>No <b>placar</b> e na narração das partidas ao vivo (ex.: <b>${esc((W&&W.sigla)||"ECV")} 2 × 1 SAN</b>)</li><li>No <b>confronto do pré-jogo</b>, embaixo do escudo</li><li>No <b>escudo</b>, se você escolher mostrar</li><li>Na <b>escalação</b> do campinho</li></ul><p class="muted peq">Dá para mudar depois na aba Clube.</p><div class="botoes"><button class="btn prim" data-a="fechar">Entendi</button></div>`);return;
     case "esigla":vis().e.sigla=v==="1";if(G)salvar();break;
     case "unisel":uniSel=+v;break;
