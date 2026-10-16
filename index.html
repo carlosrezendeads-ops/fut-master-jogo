@@ -1,6 +1,6 @@
 <!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>FUT Master</title><link rel="manifest" href="app/manifest.json"><link rel="apple-touch-icon" href="app/icon-180.png"><link rel="icon" href="app/icon-192.png"><meta name="theme-color" content="#0a1430"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="FUT Master"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,800;1,900&family=Permanent+Marker&family=Archivo:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,800;1,900&family=Permanent+Marker&family=Archivo:wght@400;500;600;700;800&family=Bebas+Neue&family=Roboto+Slab:wght@800&family=Russo+One&display=swap">
 <style>
 html{padding-top:env(safe-area-inset-top,0px)}body{margin:0;font-size:14px}[hidden]{display:none!important}img{max-width:100%}
 
@@ -153,6 +153,7 @@ input[type=range]{width:100%;accent-color:var(--canario)}
 .fund{z-index:1}
 .rot-info{display:flex;align-items:center;gap:8px}.rot-info label{cursor:pointer}
 .info-bt{all:unset;cursor:pointer;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--canario);color:var(--canario);font:italic 800 13px/22px Georgia,serif;text-align:center;text-transform:none;letter-spacing:0}
+.fontes-esc{flex-wrap:wrap}.fontes-esc button{flex:1 1 30%}
 .lista-info{margin:6px 0 10px;padding-left:20px;display:flex;flex-direction:column;gap:6px}
 .cores{display:flex;gap:8px;flex-wrap:wrap}
 .cores button{width:36px;height:36px;border-radius:50%;border:2px solid var(--gramado-3);cursor:pointer}
@@ -2039,6 +2040,8 @@ const FORMAS=[
  ["Personalizado","M4 4Q28 16 50 6Q72 16 96 4Q88 30 92 56C92 88 72 104 50 116C28 104 8 88 8 56Q12 30 4 4Z"]
 ];
 const TEXTO_Y={7:62,9:82,10:50,14:76};
+/* fontes do nome no escudo: [rótulo, família, peso, maiúsculas] */
+const FONTES_ESC=[["Clássica","Saira Condensed,Arial Narrow,sans-serif",800,0],["Maiúscula","Bebas Neue,Impact,sans-serif",400,1],["Básica","Archivo,Arial,sans-serif",800,0],["Serifada","Roboto Slab,Georgia,serif",800,0],["Moderna","Russo One,Arial Black,sans-serif",400,1]];
 const ESTAMPAS=["Liso","Metade","Três faixas verticais","Quatro faixas verticais","Cinco faixas verticais","Faixa vertical central","Três faixas horizontais","Quatro faixas horizontais","Faixa horizontal central","Faixa diagonal","Duas faixas diagonais","Cruz","Chevron (V)","Listras finas","Xadrez","Losango central","Faixa diagonal dupla","Borda","Faixa inferior","Faixa superior"];
 const ESTAMPA_ANTIGA=[0,1,3,9,8,1,13,5,11,12,17,14]; // save antigo -> lista nova
 const SIMBOLOS=["Nenhum","Coroa","Estrela simples","Estrelas múltiplas","Estrela contornada","Cruz","Faixa diagonal","Listras verticais","Listras horizontais","Leão","Águia","Tigre","Lobo","Pantera","Cavalo","Touro","Galo","Pássaro","Fênix","Dragão","Grifo","Cão","Elefante","Urso","Tubarão","Jacaré","Serpente","Polvo","Torre / Castelo","Flor de lis","Navio / Vela","Âncora","Bola de futebol","Asas","Ramos de louro","Espada","Espadas cruzadas","Montanha","Ponte","Sol","Lua"];
@@ -2078,9 +2081,9 @@ function escudoSVG(e,sigla,px,nome){
   if(img){const cx=50,cy=!t?ty-12:cv?ty:ty-40,box=!t?60:cv?40:34,k=box/Math.max(img[1],img[2]),w=img[1]*k,h=img[2]*k,fid="sf"+id,cor=e.simCor==="time",sc=e.c4||e.c3;
     fdef=`<filter id="${fid}" x="-20%" y="-20%" width="140%" height="140%"><feMorphology in="SourceAlpha" operator="dilate" radius="${t?.9:1.3}" result="d"/><feFlood flood-color="${contrasteHex(cor?sc:"#ffffff")}" flood-opacity="${cor?1:.55}"/><feComposite in2="d" operator="in" result="b"/>${cor?`<feFlood flood-color="${sc}"/><feComposite in2="SourceAlpha" operator="in" result="a"/>`:""}<feMerge><feMergeNode in="b"/><feMergeNode in="${cor?"a":"SourceGraphic"}"/></feMerge></filter>`;
     simb=`<image href="${img[0]}" x="${(cx-w/2).toFixed(1)}" y="${(cy-h/2).toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" filter="url(#${fid})"/>`}
-  return `<svg viewBox="-4 -2 108 124" width="${px}" height="${Math.round(px*1.15)}" aria-hidden="true" class="svg-escudo"><defs><clipPath id="${id}"><path d="${f}"/></clipPath>${fdef}</defs><g clip-path="url(#${id})"><rect x="-5" y="-5" width="110" height="130" fill="${e.c1}"/>${pat}</g><path d="${f}" fill="none" stroke="${e.c3}" stroke-width="5" stroke-linejoin="round"/>${simb}${t?(()=>{const tc=comNome?e.c5||e.c3:e.c3,fs=comNome?Math.min(24,150/Math.max(5,nome.length))*tam:t.length>3?22:27,at=`text-anchor="middle" font-family="Saira Condensed,Arial Narrow,sans-serif" font-weight="800" font-size="${fs.toFixed(1)}" fill="${tc}" stroke="${contrasteHex(tc)}" stroke-width="${Math.max(2,fs/7).toFixed(1)}" paint-order="stroke" letter-spacing="1"`;
-    if(!cv)return `<text x="50" y="${comNome?ty+fs*.3-8:ty}" ${at}>${t}</text>`;
-    const d=cv===1?"M-14 62Q50 0 114 62":"M-14 74Q50 124 114 74";return `<path id="tp${id}" d="${d}" fill="none"/><text ${at}><textPath href="#tp${id}" startOffset="50%">${t}</textPath></text>`})():""}</svg>`;
+  return `<svg viewBox="-4 -2 108 124" width="${px}" height="${Math.round(px*1.15)}" aria-hidden="true" class="svg-escudo"><defs><clipPath id="${id}"><path d="${f}"/></clipPath>${fdef}</defs><g clip-path="url(#${id})"><rect x="-5" y="-5" width="110" height="130" fill="${e.c1}"/>${pat}</g><path d="${f}" fill="none" stroke="${e.c3}" stroke-width="5" stroke-linejoin="round"/>${simb}${t?(()=>{const tc=comNome?e.c5||e.c3:e.c3,FT=FONTES_ESC[comNome?e.fonte||0:0]||FONTES_ESC[0],tx=FT[3]?t.toUpperCase():t,fs=comNome?Math.min(24,150/Math.max(5,nome.length))*tam:t.length>3?22:27,at=`text-anchor="middle" font-family="${FT[1]}" font-weight="${FT[2]}" font-size="${fs.toFixed(1)}" fill="${tc}" stroke="${contrasteHex(tc)}" stroke-width="${Math.max(2,fs/7).toFixed(1)}" paint-order="stroke" letter-spacing="1"`;
+    if(!cv)return `<text x="50" y="${comNome?ty+fs*.3-8:ty}" ${at}>${tx}</text>`;
+    const d=cv===1?"M-14 62Q50 0 114 62":"M-14 74Q50 124 114 74";return `<path id="tp${id}" d="${d}" fill="none"/><text ${at}><textPath href="#tp${id}" startOffset="50%">${tx}</textPath></text>`})():""}</svg>`;
 }
 const escudoDe=(c,px)=>escudoSVG(c.escudo||{forma:0,estampa:1,c1:c.c1,c2:c.c2,c3:contrasteHex(c.c1)},c.short,px,c.name);
 const ESTILOS_UNI=[["liso","Liso"],["listras","Listras"],["listras3","Listras 3 cores"],["aros3","Horizontais 3 cores"],["faixa2","Faixa dupla"],["listrasFinas","Listras finas"],["aros","Listras horizontais"],["diagonal","Faixa diagonal"],["metade","Metade"],["faixa","Faixa no peito"],["faixaV","Faixa vertical"],["duasFaixas","Duas faixas"],["chevron","V no peito"],["ombros","Ombros"],["lateral","Laterais"],["degrade","Degradê"],["xadrez","Xadrez"]];
@@ -2959,6 +2962,7 @@ function editorEscudo(e,nome){if(e.nomeOn===undefined)e.nomeOn=false;
   <div class="campo"><span>Nome no escudo</span><div class="seg" role="group">${[["1","Mostrar"],["0","Esconder"]].map(([k,n])=>`<button data-a="enome" data-v="${k}" aria-pressed="${!!e.nomeOn===(k==="1")}">${n}</button>`).join("")}</div></div>
   ${e.nomeOn?`<div class="campo"><span>Formato do nome</span><div class="seg" role="group">${[["0","Reto"],["1","Arco para cima"],["-1","Arco para baixo"]].map(([k,n])=>`<button data-a="ecurva" data-v="${k}" aria-pressed="${String(e.curva||0)===k}">${n}</button>`).join("")}</div></div>
   <div class="campo"><span>Tamanho do nome</span><div class="seg" role="group"><button data-a="etam" data-v="-1" ${(e.tam||1)<=.5?"disabled":""}>Diminuir −</button><button aria-pressed="true" style="pointer-events:none">${Math.round((e.tam||1)*100)}%</button><button data-a="etam" data-v="1" ${(e.tam||1)>=1.8?"disabled":""}>Aumentar +</button></div></div>
+  <div class="campo"><span>Fonte do nome</span><div class="seg fontes-esc" role="group">${FONTES_ESC.map(([n,f,w,up],i)=>`<button data-a="efonte" data-v="${i}" aria-pressed="${(e.fonte||0)===i}" style="font-family:${f};font-weight:${w};font-size:17px${up?";text-transform:uppercase":""}">${n}</button>`).join("")}</div></div>
   <div class="campo"><span>Cor do nome</span><div class="cores-lista"><label class="cor-item"><input type="color" data-cor="escudo" data-k="c5" value="${e.c5||e.c3}"><span>Cor do nome</span><code>${(e.c5||e.c3).toUpperCase()}</code></label></div></div>`:""}
   <div class="campo"><span>Cores</span><div class="cores-lista">
     ${[["c1","Principal"],["c2","Secundária"],["c3","Borda e sigla"]].map(([k,n])=>`<label class="cor-item"><input type="color" data-cor="escudo" data-k="${k}" value="${e[k]}"><span>${n}</span><code>${e[k].toUpperCase()}</code></label>`).join("")}
@@ -4207,6 +4211,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "infosigla":modal(`<h3>Sigla do clube</h3><p>São 3 letras que representam o seu time, como <b>FLA</b> ou <b>COR</b>.</p><p>Ela aparece:</p><ul class="lista-info"><li>No <b>placar</b> e na narração das partidas ao vivo (ex.: <b>${esc((W&&W.sigla)||"ECV")} 2 × 1 SAN</b>)</li><li>No <b>confronto do pré-jogo</b>, embaixo do escudo</li><li>No <b>escudo</b>, se você escolher mostrar</li><li>Na <b>escalação</b> do campinho</li></ul><p class="muted peq">Dá para mudar depois na aba Clube.</p><div class="botoes"><button class="btn prim" data-a="fechar">Entendi</button></div>`);return;
     case "enome":vis().e.nomeOn=v==="1";if(G)salvar();break;
     case "ecurva":vis().e.curva=+v;if(G)salvar();break;
+    case "efonte":vis().e.fonte=+v;if(G)salvar();break;
     case "etam":{const e=vis().e;e.tam=Math.round(Math.min(1.8,Math.max(.5,(e.tam||1)+.1*v))*10)/10;if(G)salvar();break;}
     case "unisel":uniSel=+v;break;
     case "uinverter":{const {unis}=vis();unis[uniSel]=inverterUni(unis[1-uniSel]);if(G)salvar();break;}
