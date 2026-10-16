@@ -649,7 +649,20 @@ nav.abas button{font-size:11px}
 .btn-sim:disabled .sim-preco{filter:grayscale(.6) brightness(.8)}
 
 .splash.arte{background:#0a2a9a}
-.splash.arte img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+
+.splash.arte img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center top}
+.splash.arte .capa-fundo{object-fit:cover;filter:blur(18px) brightness(.7);transform:scale(1.1)}
+.roda-sp{position:relative;z-index:1;width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.roda{--h:56px;width:100%;height:calc(var(--h)*3);overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none;padding-block:var(--h);box-sizing:border-box;-webkit-mask-image:linear-gradient(180deg,transparent,#000 30%,#000 70%,transparent);mask-image:linear-gradient(180deg,transparent,#000 30%,#000 70%,transparent)}
+.roda::-webkit-scrollbar{display:none}
+.roda-it{--k:1;all:unset;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:var(--h);scroll-snap-align:center;cursor:pointer;font-family:"Saira Condensed",sans-serif;font-style:italic;font-weight:800;font-size:22px;text-transform:uppercase;letter-spacing:.03em;color:rgba(255,255,255,.75);transform:scale(calc(1 - var(--k)*.18));opacity:calc(1 - var(--k)*.45);transition:color .15s,text-shadow .15s}
+.roda-it svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.roda-it[data-a=entrar] svg{fill:currentColor}
+.roda-it.sel{color:#fff;background:linear-gradient(90deg,transparent,rgba(25,195,255,.35) 20%,rgba(25,195,255,.35) 80%,transparent);text-shadow:0 0 12px #19c3ff,0 0 26px rgba(25,195,255,.8);border-block:1.5px solid rgba(25,195,255,.9)}
+.roda-it.sel svg{filter:drop-shadow(0 0 6px #19c3ff)}
+.roda-dica{font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.06em;text-shadow:0 1px 3px #000}
+.regras{display:flex;flex-direction:column;gap:10px;max-height:60vh;overflow-y:auto;text-align:left}
+.regras b{color:var(--canario)}.regras p{margin:2px 0 0;font-size:14px}
 .splash.arte::after{background:linear-gradient(180deg,rgba(4,13,51,0) 50%,rgba(4,13,51,.92) 100%)}
 .splash.arte .clube-sp{text-shadow:0 1px 3px #000}
 @media (min-aspect-ratio:3/4){.splash.arte img{object-fit:contain}}
@@ -2177,18 +2190,49 @@ function renderAbertura(){
   const arte=typeof ARTE_CAPA!=="undefined";
   sp.classList.toggle("arte",arte);
   const info=lerInfoBackup();
-  sp.innerHTML=`<button class="som-btn sp" data-a="som" aria-label="${SOM.mudo?"Ligar som":"Desligar som"}">${iconeSom()}</button>${arte?`<img src="${ARTE_CAPA}" alt="Capa do FUT Master">`:`<canvas aria-hidden="true"></canvas>`}
+  sp.innerHTML=`<button class="som-btn sp" data-a="som" aria-label="${SOM.mudo?"Ligar som":"Desligar som"}">${iconeSom()}</button>${arte?`<img class="capa-fundo" src="${ARTE_CAPA}" alt=""><img src="${ARTE_CAPA}" alt="Capa do FUT Master">`:`<canvas aria-hidden="true"></canvas>`}
   <div class="logo"${arte?" hidden":""}><svg class="coroa" viewBox="0 0 100 60" aria-hidden="true"><path d="M6 56L2 14L28 34L50 4L72 34L98 14L94 56Z" fill="none" stroke="#19c3ff" stroke-width="7" stroke-linejoin="round"/></svg>
     <div class="fut">FUT</div><div class="master">MASTER</div></div>
   ${arte?"":`<div class="lema"><b>FUT</b><span>Monte seu time.<br>Conquiste seu sonho.</span></div>`}
   ${c?`<div class="clube-sp"><b>${esc(c.name)}</b> · ${esc(nomeLiga(c.tier))} · ${G.year}${info?`<br>Arquivo de save: temporada ${info.ano}, ${esc(info.quando)}`:""}</div>`:""}
-  <div class="acoes-sp">
-    ${c?`<button class="btn prim" data-a="entrar"><span>Continuar carreira</span></button>`:""}
-    <button class="btn ${c?"sec":"prim"}" data-a="carregararq"><span>Carregar jogo</span></button>
-    <button class="btn sec" data-a="novacarreira"><span>Nova carreira</span></button>
-  </div>
+  <div class="roda-sp"><div class="roda" role="listbox" aria-label="Menu inicial">
+    ${MENU_SP.filter(o=>c||o[0]!=="entrar").map(([a,t,ic])=>`<button class="roda-it" data-a="${a}" role="option"><svg viewBox="0 0 24 24" aria-hidden="true">${ic}</svg><span>${t}</span></button>`).join("")}
+  </div><span class="roda-dica">Role para escolher · toque para entrar</span></div>
   <input type="file" id="arq-save" accept=".json,application/json,text/plain" hidden>`;
   const cv=sp.querySelector("canvas");if(cv)pincel(cv);
+  rodaIniciar(sp.querySelector(".roda"));
+}
+/* menu da capa em roda: rola pra cima/baixo, a opção do meio brilha e é a escolhida */
+const MENU_SP=[
+ ["entrar","Continuar carreira",'<path d="M8 5v14l11-7z"/>'],
+ ["carregararq","Carregar jogo",'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'],
+ ["novacarreira","Nova carreira",'<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>'],
+ ["splajustes","Ajustes",'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>'],
+ ["splregras","Regras do jogo",'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h7M8 11h7"/>']];
+function rodaIniciar(r){
+  if(!r)return;const its=[...r.children];
+  const marca=()=>{const m=r.scrollTop+r.clientHeight/2;let melhor=null,d0=1e9;
+    its.forEach(it=>{const d=Math.abs(it.offsetTop+it.offsetHeight/2-m);const k=Math.min(d/it.offsetHeight,1.5);it.style.setProperty("--k",k.toFixed(2));if(d<d0){d0=d;melhor=it}});
+    its.forEach(it=>it.classList.toggle("sel",it===melhor))};
+  let tq=0;r.addEventListener("scroll",()=>{marca();cancelAnimationFrame(tq);tq=requestAnimationFrame(marca)},{passive:true});
+  requestAnimationFrame(()=>{const i0=its[0];r.scrollTop=i0.offsetTop+i0.offsetHeight/2-r.clientHeight/2;marca()});
+}
+function modalRegras(){
+  const R=[["Objetivo","Você é o dono do clube: comece na terceira divisão e leve o time até a elite do seu país e às copas continentais."],
+   ["Partidas","Vitória dá mais dinheiro e XP (50), empate 25 e derrota 10. Dá para assistir ao vivo, fazer substituições e mudar a formação, ou simular sem assistir."],
+   ["Energia e lesões","Cada jogo cansa os jogadores. Faça rodízio: jogador cansado rende menos e se machuca mais."],
+   ["Mercado e loja","A loja renova a cada 2 horas. Às vezes aparece uma lenda, paga com cupons dourados ou com muito dinheiro. Na janela de transferências são até 3 contratações."],
+   ["Dinheiro","Bilheteria, prêmios e patrocínio entram no caixa; salários e custos saem todo mês. Se faltar, dá para pegar empréstimo, com juros."],
+   ["Níveis","Cada jogo dá XP. São 30 níveis, cada um com prêmio em dinheiro; nos níveis 10, 20 e 30 você também ganha cupons dourados."],
+   ["Estádio","Na aba Upgrades você amplia o estádio, aumentando o público e a renda."],
+   ["Salvar","O jogo salva sozinho neste aparelho. No fim da temporada, salve também o arquivo (Ajustes) para não perder a carreira."]];
+  modal(`<h3>Regras do jogo</h3><div class="regras">${R.map(([t,d])=>`<div><b>${t}</b><p>${d}</p></div>`).join("")}</div><div class="botoes"><button class="btn prim" data-a="fechar">Entendi</button></div>`);
+}
+function modalAjustesSp(){
+  modal(`<h3>Ajustes</h3><div class="secao">
+    <div class="linha" style="justify-content:space-between"><span>Som e música</span><button class="btn mini" data-a="splsom">${SOM.mudo?"Ligar som":"Desligar som"}</button></div>
+    ${G?`<div class="linha" style="justify-content:space-between"><span>Salvar a carreira num arquivo</span><button class="btn mini" data-a="salvararq">Salvar arquivo</button></div>`:""}
+  </div><div class="botoes"><button class="btn prim" data-a="fechar">Pronto</button></div>`);
 }
 /* ---------- arquivo de save ---------- */
 const CHAVE_BKP="fut-master-backup";
@@ -4238,6 +4282,9 @@ function acao(a,v,el){
     case "som":somIniciar();somMudo(!SOM.mudo);document.querySelectorAll(".som-btn").forEach(b=>{b.innerHTML=iconeSom();b.setAttribute("aria-label",SOM.mudo?"Ligar som":"Desligar som")});if(!SOM.mudo)somModo(modoDesejado());return;
     case "carregararq":{const i=$("#arq-save")||$("#arq-save2");if(i){i.value="";i.click()}return;}
     case "salvararq":salvarArquivo();return;
+    case "splregras":modalRegras();return;
+    case "splajustes":modalAjustesSp();return;
+    case "splsom":acao("som");modalAjustesSp();return;
     case "novacarreira":
       if(G){modal(`<h3>Começar nova carreira?</h3><p>A carreira atual (${esc(G.clubs[G.user.club].name)}, ${G.year}) será apagada deste aparelho. Para não perder, salve o arquivo antes.</p><div class="botoes" style="flex-wrap:wrap"><button class="btn" data-a="salvararq">Salvar arquivo</button><button class="btn" data-a="fechar">Cancelar</button><button class="btn perigo" data-a="novoconf">Apagar e começar</button></div>`);return}
       abertura=false;G=null;W=novoW();break;
@@ -4246,6 +4293,7 @@ function acao(a,v,el){
 }
 function handlers(root){
   root.addEventListener("click",e=>{const el=e.target.closest("[data-a]");if(!el||!root.contains(el)||el.disabled)return;e.stopPropagation();
+    if(el.classList.contains("roda-it")&&!el.classList.contains("sel")){const r=el.parentNode;r.scrollTo({top:el.offsetTop+el.offsetHeight/2-r.clientHeight/2,behavior:"smooth"});somClique();return}
     const a=el.dataset.a,r=el.getBoundingClientRect(),c0=G?G.cash:0,k0=G?cupons():0;
     acao(a,el.dataset.v,el);
     if(G&&DIN_ACOES.has(a)&&(G.cash!==c0||cupons()!==k0))efeitoDinheiro(r,G.cash-c0,cupons()-k0);
