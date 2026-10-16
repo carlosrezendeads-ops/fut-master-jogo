@@ -204,6 +204,12 @@ input[type=range]{width:100%;accent-color:var(--canario)}
 .fund.p3 .grade8 button{background:rgba(10,20,48,.12);border:1.5px solid rgba(255,255,255,.85)}
 .fund.p3 .grade8 button[aria-pressed="true"]{border-color:var(--canario);background:rgba(245,197,24,.12)}
 .fund.p3 .grade8 button small{color:#fff;text-shadow:0 1px 3px #000}
+.esc-cab{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:10px;width:100%;padding:14px 16px;border:1.5px solid rgba(255,255,255,.85);border-radius:12px;background:rgba(10,20,48,.25)}
+.esc-cab span{font-family:var(--f-display);font-weight:800;font-size:20px;text-transform:uppercase;letter-spacing:.04em;color:#fff}
+.esc-cab small{flex:1;text-align:right;color:var(--canario);font-weight:600;font-size:14px}
+.esc-cab b{color:#fff;font-size:14px}
+.esc-sec.aberto .esc-cab{border-color:var(--canario)}
+.esc-sec.aberto{gap:10px}
 .fund.p3 .previa{background:rgba(10,20,48,.15);border-color:rgba(255,255,255,.85)}
 .cores-lista{display:grid;grid-template-columns:1fr;gap:8px}
 @media (min-width:520px){.cores-lista{grid-template-columns:1fr 1fr}}
@@ -685,24 +691,24 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792187735"></script>
-<script src="img/arte-capa.js?v=1792187735"></script>
-<script src="img/fundo-criacao.js?v=1792187735"></script>
-<script src="img/fundo-pais.js?v=1792187735"></script>
-<script src="img/fundo-escudo.js?v=1792187735"></script>
-<script src="img/simbolos.js?v=1792187735"></script>
-<script src="img/rostos.js?v=1792187735"></script>
-<script src="img/estadio-fotos.js?v=1792187735"></script>
-<script src="img/super-fotos.js?v=1792187735"></script>
-<script src="img/trofeus.js?v=1792187735"></script>
-<script src="img/medalhas.js?v=1792187735"></script>
-<script src="img/fotos.js?v=1792187735"></script>
-<script src="img/fotos-vs.js?v=1792187735"></script>
-<script src="img/kit-homens.js?v=1792187735"></script>
-<script src="img/tec-fotos.js?v=1792187735"></script>
-<script src="dados/elencos.js?v=1792187735"></script>
-<script src="img/rostos-reais.js?v=1792187735"></script>
-<script src="img/escudos-img.js?v=1792187735"></script>
+<script src="img/escudos-reais.js?v=1792188056"></script>
+<script src="img/arte-capa.js?v=1792188056"></script>
+<script src="img/fundo-criacao.js?v=1792188056"></script>
+<script src="img/fundo-pais.js?v=1792188056"></script>
+<script src="img/fundo-escudo.js?v=1792188056"></script>
+<script src="img/simbolos.js?v=1792188056"></script>
+<script src="img/rostos.js?v=1792188056"></script>
+<script src="img/estadio-fotos.js?v=1792188056"></script>
+<script src="img/super-fotos.js?v=1792188056"></script>
+<script src="img/trofeus.js?v=1792188056"></script>
+<script src="img/medalhas.js?v=1792188056"></script>
+<script src="img/fotos.js?v=1792188056"></script>
+<script src="img/fotos-vs.js?v=1792188056"></script>
+<script src="img/kit-homens.js?v=1792188056"></script>
+<script src="img/tec-fotos.js?v=1792188056"></script>
+<script src="dados/elencos.js?v=1792188056"></script>
+<script src="img/rostos-reais.js?v=1792188056"></script>
+<script src="img/escudos-img.js?v=1792188056"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2010,7 +2016,7 @@ function inverterUni(u){return {...u,estilo:u.estilo==="liso"?"faixa":u.estilo,c
 
 function salvar(){try{localStorage.setItem(CHAVE,JSON.stringify(G))}catch(e){}}
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792187735";
+const VERSAO="1792188056";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -2969,12 +2975,16 @@ function selecionarPais(k){
   document.querySelectorAll(".pontos-car i").forEach(i=>i.classList.toggle("on",i.dataset.k===k));
 }
 
+/* formato, desenho e símbolo ficam fechados; toca no título pra abrir a grade, Salvar (ou o título) fecha */
+let escAberto=null;
+function secEsc(k,tit,atual,grade){const ab=escAberto===k;
+  return `<div class="campo esc-sec${ab?" aberto":""}"><button type="button" class="esc-cab" data-a="escsec" data-v="${ab?"":k}"><span>${tit}</span><small>${esc(atual)}</small><b aria-hidden="true">${ab?"▲":"▼"}</b></button>${ab?grade+`<button type="button" class="btn prim full" data-a="escsec" data-v="">Salvar</button>`:""}</div>`}
 function editorEscudo(e,nome){if(e.nomeOn===undefined)e.nomeOn=false;
   return `<h2 style="margin-top:0">Escudo</h2>
   <div class="previa" id="prev-escudo">${escudoSVG(e,"",120,nome)}</div>
-  <div class="campo"><span>Formato</span><div class="grade8">${FORMAS.map((f,i)=>`<button data-a="eforma" data-v="${i}" aria-pressed="${e.forma===i}" aria-label="${f[0]}">${escudoSVG({...e,forma:i,simbolo:0},"",34)}<small>${f[0]}</small></button>`).join("")}</div></div>
-  <div class="campo"><span>Desenho</span><div class="grade8">${ESTAMPAS.map((n,i)=>`<button data-a="eestampa" data-v="${i}" aria-pressed="${e.estampa===i}">${escudoSVG({...e,estampa:i,simbolo:0},"",30)}<small>${n}</small></button>`).join("")}</div></div>
-  <div class="campo"><span>Símbolo</span><div class="grade8">${SIMBOLOS.map((s,i)=>`<button data-a="esimbolo" data-v="${i}" aria-pressed="${(e.simbolo||0)===i}">${escudoSVG({...e,simbolo:i,sigla:false},"",30)}<small>${s}</small></button>`).join("")}</div></div>
+  ${secEsc("forma","Formato",FORMAS[e.forma%FORMAS.length][0],`<div class="grade8">${FORMAS.map((f,i)=>`<button data-a="eforma" data-v="${i}" aria-pressed="${e.forma===i}" aria-label="${f[0]}">${escudoSVG({...e,forma:i,simbolo:0},"",34)}<small>${f[0]}</small></button>`).join("")}</div>`)}
+  ${secEsc("estampa","Desenho",ESTAMPAS[e.estampa%ESTAMPAS.length],`<div class="grade8">${ESTAMPAS.map((n,i)=>`<button data-a="eestampa" data-v="${i}" aria-pressed="${e.estampa===i}">${escudoSVG({...e,estampa:i,simbolo:0},"",30)}<small>${n}</small></button>`).join("")}</div>`)}
+  ${secEsc("simbolo","Símbolo",SIMBOLOS[e.simbolo||0],`<div class="grade8">${SIMBOLOS.map((s,i)=>`<button data-a="esimbolo" data-v="${i}" aria-pressed="${(e.simbolo||0)===i}">${escudoSVG({...e,simbolo:i,sigla:false},"",30)}<small>${s}</small></button>`).join("")}</div>`)}
   ${e.simbolo?`<div class="campo"><span>Cor do símbolo</span><div class="seg" role="group">${[["orig","Cor original"],["time","Escolher cor"]].map(([k,n])=>`<button data-a="esimcor" data-v="${k}" aria-pressed="${(e.simCor==="time")===(k==="time")}">${n}</button>`).join("")}</div>${e.simCor==="time"?`<div class="cores-lista" style="margin-top:8px"><label class="cor-item"><input type="color" data-cor="escudo" data-k="c4" value="${e.c4||e.c3}"><span>Cor do símbolo</span><code>${(e.c4||e.c3).toUpperCase()}</code></label></div>`:""}</div>`:""}
   <div class="campo"><span>Nome no escudo</span><div class="seg" role="group">${[["1","Mostrar"],["0","Esconder"]].map(([k,n])=>`<button data-a="enome" data-v="${k}" aria-pressed="${!!e.nomeOn===(k==="1")}">${n}</button>`).join("")}</div></div>
   ${e.nomeOn?`<div class="campo"><span>Formato do nome</span><div class="seg" role="group">${[["0","Reto"],["1","Arco para cima"],["-1","Arco para baixo"]].map(([k,n])=>`<button data-a="ecurva" data-v="${k}" aria-pressed="${String(e.curva||0)===k}">${n}</button>`).join("")}</div></div>
@@ -4226,6 +4236,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "esimbolo":vis().e.simbolo=+v;if(G)salvar();break;
     case "esimcor":vis().e.simCor=v;if(G)salvar();break;
     case "infosigla":modal(`<h3>Sigla do clube</h3><p>São 3 letras que representam o seu time, como <b>FLA</b> ou <b>COR</b>.</p><p>Ela aparece:</p><ul class="lista-info"><li>No <b>placar</b> e na narração das partidas ao vivo (ex.: <b>${esc((W&&W.sigla)||"ECV")} 2 × 1 SAN</b>)</li><li>No <b>confronto do pré-jogo</b>, embaixo do escudo</li><li>No <b>escudo</b>, se você escolher mostrar</li><li>Na <b>escalação</b> do campinho</li></ul><p class="muted peq">Dá para mudar depois na aba Clube.</p><div class="botoes"><button class="btn prim" data-a="fechar">Entendi</button></div>`);return;
+    case "escsec":{const alvo=v||escAberto;escAberto=v||null;render();const b=[...document.querySelectorAll(".esc-cab")].find(x=>x.dataset.v===alvo||(x.dataset.v===""&&escAberto===alvo));if(b)b.scrollIntoView({block:"center"});return;}
     case "enome":vis().e.nomeOn=v==="1";if(G)salvar();break;
     case "ecurva":vis().e.curva=+v;if(G)salvar();break;
     case "efonte":vis().e.fonte=+v;if(G)salvar();break;
