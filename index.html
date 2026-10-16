@@ -705,24 +705,24 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792188620"></script>
-<script src="img/arte-capa.js?v=1792188620"></script>
-<script src="img/fundo-criacao.js?v=1792188620"></script>
-<script src="img/fundo-pais.js?v=1792188620"></script>
-<script src="img/fundo-escudo.js?v=1792188620"></script>
-<script src="img/simbolos.js?v=1792188620"></script>
-<script src="img/rostos.js?v=1792188620"></script>
-<script src="img/estadio-fotos.js?v=1792188620"></script>
-<script src="img/super-fotos.js?v=1792188620"></script>
-<script src="img/trofeus.js?v=1792188620"></script>
-<script src="img/medalhas.js?v=1792188620"></script>
-<script src="img/fotos.js?v=1792188620"></script>
-<script src="img/fotos-vs.js?v=1792188620"></script>
-<script src="img/kit-homens.js?v=1792188620"></script>
-<script src="img/tec-fotos.js?v=1792188620"></script>
-<script src="dados/elencos.js?v=1792188620"></script>
-<script src="img/rostos-reais.js?v=1792188620"></script>
-<script src="img/escudos-img.js?v=1792188620"></script>
+<script src="img/escudos-reais.js?v=1792188721"></script>
+<script src="img/arte-capa.js?v=1792188721"></script>
+<script src="img/fundo-criacao.js?v=1792188721"></script>
+<script src="img/fundo-pais.js?v=1792188721"></script>
+<script src="img/fundo-escudo.js?v=1792188721"></script>
+<script src="img/simbolos.js?v=1792188721"></script>
+<script src="img/rostos.js?v=1792188721"></script>
+<script src="img/estadio-fotos.js?v=1792188721"></script>
+<script src="img/super-fotos.js?v=1792188721"></script>
+<script src="img/trofeus.js?v=1792188721"></script>
+<script src="img/medalhas.js?v=1792188721"></script>
+<script src="img/fotos.js?v=1792188721"></script>
+<script src="img/fotos-vs.js?v=1792188721"></script>
+<script src="img/kit-homens.js?v=1792188721"></script>
+<script src="img/tec-fotos.js?v=1792188721"></script>
+<script src="dados/elencos.js?v=1792188721"></script>
+<script src="img/rostos-reais.js?v=1792188721"></script>
+<script src="img/escudos-img.js?v=1792188721"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2030,7 +2030,7 @@ function inverterUni(u){return {...u,estilo:u.estilo==="liso"?"faixa":u.estilo,c
 
 function salvar(){try{localStorage.setItem(CHAVE,JSON.stringify(G))}catch(e){}}
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792188620";
+const VERSAO="1792188721";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -2891,7 +2891,7 @@ function render(){
   nav.innerHTML=`<div class="wrap">${abasNav().map(k=>`<button data-a="aba" data-v="${k}" aria-current="${aba===k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES[k]}</svg>${k==="copa"?nomeCurtoCopa():ROTULOS[k]}</button>`).join("")}</div>`;
   const c=G.clubs[G.user.club];
   const topo=`<header class="topo"><span class="esc-topo">${escudoDe(c,40)}</span><div class="info"><h1>${esc(c.name)}</h1><div class="sub">${esc(nomeLiga(c.tier))} · ${G.year} · ${rotuloEtapa()}</div></div><div class="caixa num${G.cash<0?" neg":""}"><small>Caixa</small>${dinheiro(G.cash)}</div><button class="som-btn" data-a="som" aria-label="${SOM.mudo?"Ligar som":"Desligar som"}">${iconeSom()}</button></header>`;
-  const corpo={inicio:telaInicio,elenco:telaElenco,tabela:telaTabela,mercado:telaMercado,clube:telaClube,upgrades:telaUpgrades,copa:telaAbaCopa,jogar:telaJogar,perfil:telaPerfil,financas:telaFinancas,config:telaConfig,visual:telaVisual,prejogo:telaPreJogo,partida:telaPartida,resultado:telaResultado}[aba]();
+  const corpo={inicio:telaInicio,elenco:telaElenco,tabela:telaTabela,mercado:telaMercado,clube:telaClube,escudo:telaEscudo,upgrades:telaUpgrades,copa:telaAbaCopa,jogar:telaJogar,perfil:telaPerfil,financas:telaFinancas,config:telaConfig,visual:telaVisual,prejogo:telaPreJogo,partida:telaPartida,resultado:telaResultado}[aba]();
   app.innerHTML=(telaCheia?"":topo)+corpo;
   if(aba==="partida"){if(G.live&&G.live.est==="rodando")iniciarTimer();else pararTimer();const fd=$("#lv-feed");if(fd)fd.scrollTop=0}
   if(window._relLoja){clearInterval(window._relLoja);window._relLoja=null}
@@ -4174,7 +4174,7 @@ function telaMercado(){
 /* ---------- clube ---------- */
 function telaClube(){
   const uid=G.user.club,c=G.clubs[uid],f=G.lastFin,e=G.econ[c.tier];
-  let h=`<h2>Identidade</h2><div class="cartao linha" style="gap:16px;justify-content:center">${escudoDe(c,76)}${uniformeSVG(c.unis[0],G.patro?G.patro.nome:"",64)}${uniformeSVG(c.unis[1],G.patro?G.patro.nome:"",64)}<div style="min-width:0;flex:1"><b style="font-family:var(--f-display);font-size:20px">${esc(c.name)}</b><div class="muted peq">${esc(pais().nome)} · Dono: ${esc(G.user.coach)}<br>${esc(estadioDe(c))}</div><button class="btn mini" data-a="aba" data-v="visual" style="margin-top:8px">Editar escudo e uniforme</button></div></div>`;
+  let h=`<h2>Identidade</h2><div class="cartao linha" style="gap:16px;justify-content:center">${escudoDe(c,76)}${uniformeSVG(c.unis[0],G.patro?G.patro.nome:"",64)}${uniformeSVG(c.unis[1],G.patro?G.patro.nome:"",64)}<div style="min-width:0;flex:1"><b style="font-family:var(--f-display);font-size:20px">${esc(c.name)}</b><button class="btn mini" data-a="aba" data-v="escudo" style="display:block;margin:6px 0">✏️ Editar escudo</button><div class="muted peq">${esc(pais().nome)} · Dono: ${esc(G.user.coach)}<br>${esc(estadioDe(c))}</div><button class="btn mini" data-a="aba" data-v="visual" style="margin-top:8px">Editar escudo e uniforme</button></div></div>`;
   h+=`<h2>Finanças</h2><div class="kpis">
     <div class="cartao kpi"><small>Caixa</small><b class="num${G.cash<0?" neg":""}">${dinheiro(G.cash)}</b></div>
     <div class="cartao kpi" data-a="aba" data-v="financas" style="cursor:pointer"><small>Conta do mês ›</small><b class="num">${dinheiro(folhaMensal().tot)}</b></div>
@@ -4201,6 +4201,13 @@ function telaClube(){
     <div class="linha" style="flex-wrap:wrap"><button class="btn mini" data-a="exportar">Copiar código do jogo</button><button class="btn mini" data-a="importar">Colar código</button></div>
     <button class="btn perigo" data-a="novacarreira">Nova carreira</button><input type="file" id="arq-save2" accept=".json,application/json,text/plain" hidden></div>`;
   return h;
+}
+/* editar escudo pela aba Clube: mesma edição da criação, sem os passos da carreira */
+function telaEscudo(){
+  const c=G.clubs[G.user.club];
+  return `${typeof FUNDO_ESCUDO!=="undefined"?`<div class="fund-bg" style="background-image:url(${FUNDO_ESCUDO})"></div>`:""}<div class="fund p3" style="padding-top:16px"><div class="linha" style="justify-content:space-between"><button class="btn mini" data-a="aba" data-v="clube">‹ Clube</button><b style="font-family:var(--f-display);font-size:24px">Editar escudo</b></div>
+  ${editorEscudo(c.escudo,c.name)}
+  <button class="btn prim full" data-a="aba" data-v="clube">Salvar escudo</button></div>`;
 }
 function telaVisual(){
   const c=G.clubs[G.user.club];
