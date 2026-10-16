@@ -730,24 +730,24 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792190114"></script>
-<script src="img/arte-capa.js?v=1792190114"></script>
-<script src="img/fundo-criacao.js?v=1792190114"></script>
-<script src="img/fundo-pais.js?v=1792190114"></script>
-<script src="img/fundo-escudo.js?v=1792190114"></script>
-<script src="img/simbolos.js?v=1792190114"></script>
-<script src="img/rostos.js?v=1792190114"></script>
-<script src="img/estadio-fotos.js?v=1792190114"></script>
-<script src="img/super-fotos.js?v=1792190114"></script>
-<script src="img/trofeus.js?v=1792190114"></script>
-<script src="img/medalhas.js?v=1792190114"></script>
-<script src="img/fotos.js?v=1792190114"></script>
-<script src="img/fotos-vs.js?v=1792190114"></script>
-<script src="img/kit-homens.js?v=1792190114"></script>
-<script src="img/tec-fotos.js?v=1792190114"></script>
-<script src="dados/elencos.js?v=1792190114"></script>
-<script src="img/rostos-reais.js?v=1792190114"></script>
-<script src="img/escudos-img.js?v=1792190114"></script>
+<script src="img/escudos-reais.js?v=1792190264"></script>
+<script src="img/arte-capa.js?v=1792190264"></script>
+<script src="img/fundo-criacao.js?v=1792190264"></script>
+<script src="img/fundo-pais.js?v=1792190264"></script>
+<script src="img/fundo-escudo.js?v=1792190264"></script>
+<script src="img/simbolos.js?v=1792190264"></script>
+<script src="img/rostos.js?v=1792190264"></script>
+<script src="img/estadio-fotos.js?v=1792190264"></script>
+<script src="img/super-fotos.js?v=1792190264"></script>
+<script src="img/trofeus.js?v=1792190264"></script>
+<script src="img/medalhas.js?v=1792190264"></script>
+<script src="img/fotos.js?v=1792190264"></script>
+<script src="img/fotos-vs.js?v=1792190264"></script>
+<script src="img/kit-homens.js?v=1792190264"></script>
+<script src="img/tec-fotos.js?v=1792190264"></script>
+<script src="dados/elencos.js?v=1792190264"></script>
+<script src="img/rostos-reais.js?v=1792190264"></script>
+<script src="img/escudos-img.js?v=1792190264"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2079,7 +2079,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792190114";
+const VERSAO="1792190264";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -2164,9 +2164,9 @@ function escudoSVG(e,sigla,px,nome){if(e.nomeOn&&e.nomeTxt!=null&&e.nomeTxt.trim
   const ty=TEXTO_Y[fi]||70;
   const ny=e.nomeY??(cv===1?62:cv===-1?74:ty+2),nx=e.nomeX||0,arco=e.arco??(cv===1?62:cv===-1?-50:0);
   const si=e.simbolo||0,img=si&&typeof SIMBOLOS_IMG!=="undefined"&&SIMBOLOS_IMG[si-1];let simb="",fdef="";
-  if(img){const emCima=comNome&&ny-arco/2<55,cx=50,cy=!t?ty-12:!comNome?ty-40:emCima?74:38,box=!t?60:!comNome?34:emCima?40:36,k=box/Math.max(img[1],img[2]),w=img[1]*k,h=img[2]*k,fid="sf"+id,cor=e.simCor==="time",sc=e.c4||e.c3,bd=e.simBorda===true;
+  if(img){const emCima=comNome&&ny-arco/2<55,cx=50,cy=!t?ty-12:!comNome?ty-40:emCima?74:38,box=!t?60:!comNome?34:emCima?40:36,k=box*(e.simTam??1)/Math.max(img[1],img[2]),w=img[1]*k,h=img[2]*k,fid="sf"+id,cor=e.simCor==="time",sc=e.c4||e.c3,bd=e.simBorda===true;
     if(cor||bd)fdef=`<filter id="${fid}" x="-20%" y="-20%" width="140%" height="140%">${bd?`<feMorphology in="SourceAlpha" operator="dilate" radius="${(box/45).toFixed(2)}" result="d"/><feFlood flood-color="${e.simBordaCor||"#ffffff"}"/><feComposite in2="d" operator="in" result="b"/>`:""}${cor?`<feFlood flood-color="${sc}"/><feComposite in2="SourceAlpha" operator="in" result="a"/>`:""}<feMerge>${bd?`<feMergeNode in="b"/>`:""}<feMergeNode in="${cor?"a":"SourceGraphic"}"/></feMerge></filter>`;
-    simb=`<image href="${img[0]}" x="${(cx-w/2).toFixed(1)}" y="${(cy-h/2).toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}"${fdef?` filter="url(#${fid})"`:""}/>`}
+    simb=`<image href="${img[0]}" x="${(cx+(e.simX||0)-w/2).toFixed(1)}" y="${(cy+(e.simY||0)-h/2).toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}"${fdef?` filter="url(#${fid})"`:""}/>`}
   return `<svg viewBox="-4 -2 108 124" width="${px}" height="${Math.round(px*1.15)}" aria-hidden="true" class="svg-escudo"><defs><clipPath id="${id}"><path d="${f}"/></clipPath>${fdef}</defs><g clip-path="url(#${id})"><rect x="-5" y="-5" width="110" height="130" fill="${e.c1}"/>${pat}</g><path d="${f}" fill="none" stroke="${e.c3}" stroke-width="5" stroke-linejoin="round"/>${simb}${t?(()=>{const tc=comNome?e.c5||e.c3:e.c3,FT=FONTES_ESC[comNome?e.fonte||0:0]||FONTES_ESC[0],tx=FT[3]?t.toUpperCase():t,fs=comNome?Math.min(24,150/Math.max(5,nome.length))*tam:t.length>3?22:27,nb=!comNome||e.nomeBorda!==false,
       at=`text-anchor="middle" font-family="${FT[1]}" font-weight="${FT[2]}" font-size="${fs.toFixed(1)}" fill="${tc}"${nb?` stroke="${comNome&&e.nomeBordaCor||contrasteHex(tc)}" stroke-width="${(comNome?Math.max(1,fs/12):Math.max(2,fs/7)).toFixed(1)}" paint-order="stroke"`:""} letter-spacing="1"`;
     if(!comNome)return `<text x="50" y="${ty}" ${at}>${tx}</text>`;
@@ -3054,9 +3054,11 @@ function editorEscudo(e,nome){if(e.nomeOn===undefined)e.nomeOn=false;
   <div class="previa" id="prev-escudo">${escudoSVG(e,"",120,nome)}</div>
   ${secEsc("forma","Formato",FORMAS[e.forma%FORMAS.length][0],`<div class="grade8">${FORMAS.map((f,i)=>`<button data-a="eforma" data-v="${i}" aria-pressed="${e.forma===i}" aria-label="${f[0]}">${escudoSVG({...e,forma:i,simbolo:0},"",34)}<small>${f[0]}</small></button>`).join("")}</div>`,"c1",e.c1,chipCor("c3",e.c3,"Borda"))}
   ${secEsc("estampa","Desenho",ESTAMPAS[e.estampa%ESTAMPAS.length],`<div class="grade8">${ESTAMPAS.map((n,i)=>`<button data-a="eestampa" data-v="${i}" aria-pressed="${e.estampa===i}">${escudoSVG({...e,estampa:i,simbolo:0},"",30)}<small>${n}</small></button>`).join("")}</div>`,"c2",e.c2)}
-  ${secEsc("simbolo","Símbolo",SIMBOLOS[e.simbolo||0],`<div class="grade8">${SIMBOLOS.map((s,i)=>`<button data-a="esimbolo" data-v="${i}" aria-pressed="${(e.simbolo||0)===i}">${escudoSVG({...e,simbolo:i,sigla:false},"",30)}<small>${s}</small></button>`).join("")}</div>`,"c4",e.c4||e.c3)}
-  ${e.simbolo?`<div class="campo"><span>Cor do símbolo</span><div class="seg" role="group">${[["orig","Cor original"],["time","Personalizada"]].map(([k,n])=>`<button data-a="esimcor" data-v="${k}" aria-pressed="${(e.simCor==="time")===(k==="time")}">${n}</button>`).join("")}</div>${e.simCor==="time"?`<div class="linha-chip">${chipCor("c4",e.c4||e.c3,"Escolher cor")}</div>`:""}</div>
-  <div class="campo"><span>Borda do símbolo</span><div class="seg" role="group">${[["0","Sem borda"],["1","Com borda"]].map(([k,n])=>`<button data-a="esimborda" data-v="${k}" aria-pressed="${(e.simBorda===true)===(k==="1")}">${n}</button>`).join("")}</div>${e.simBorda?`<div class="linha-chip">${chipCor("simBordaCor",e.simBordaCor||"#ffffff","Cor da borda")}</div>`:""}</div>`:""}
+  ${secEsc("simbolo","Símbolo",SIMBOLOS[e.simbolo||0],`<div class="grade8">${SIMBOLOS.map((s,i)=>`<button data-a="esimbolo" data-v="${i}" aria-pressed="${(e.simbolo||0)===i}">${escudoSVG({...e,simbolo:i,sigla:false},"",30)}<small>${s}</small></button>`).join("")}</div>${e.simbolo?`<div class="nome-esc" style="margin-top:6px"><div class="previa-mini" id="prev-escudo-sim">${escudoSVG(e,"",96,nome)}</div><div class="campo"><span>Cor do símbolo</span><div class="seg" role="group">${[["orig","Cor original"],["time","Personalizada"]].map(([k,n])=>`<button data-a="esimcor" data-v="${k}" aria-pressed="${(e.simCor==="time")===(k==="time")}">${n}</button>`).join("")}</div>${e.simCor==="time"?`<div class="linha-chip">${chipCor("c4",e.c4||e.c3,"Escolher cor")}</div>`:""}</div>
+  <div class="campo"><span>Borda do símbolo</span><div class="seg" role="group">${[["0","Sem borda"],["1","Com borda"]].map(([k,n])=>`<button data-a="esimborda" data-v="${k}" aria-pressed="${(e.simBorda===true)===(k==="1")}">${n}</button>`).join("")}</div>${e.simBorda?`<div class="linha-chip">${chipCor("simBordaCor",e.simBordaCor||"#ffffff","Cor da borda")}</div>`:""}</div>
+  ${barraEsc("simTam","Tamanho",.4,1.6,e.simTam??1,"Menor","Maior")}
+  ${barraEsc("simY","Altura",-40,40,e.simY||0,"Em cima","Embaixo")}
+  ${barraEsc("simX","Lados",-30,30,e.simX||0,"Esquerda","Direita")}</div>`:""}`,"c4",e.c4||e.c3)}
   ${secEsc("nome","Nome no escudo",e.nomeOn?(e.nomeTxt||nome):"Escondido",`  <div class="campo"><span>Mostrar no escudo</span><div class="seg" role="group">${[["1","Mostrar"],["0","Esconder"]].map(([k,n])=>`<button data-a="enome" data-v="${k}" aria-pressed="${!!e.nomeOn===(k==="1")}">${n}</button>`).join("")}</div></div>
   ${e.nomeOn?`<div class="nome-esc"><div class="previa-mini" id="prev-escudo-nome">${escudoSVG(e,"",96,nome)}</div>
   <label class="campo"><span>Texto no escudo</span><input type="text" id="esc-txt" maxlength="28" value="${esc(e.nomeTxt??nome)}" placeholder="${esc(nome)}"><small class="peq muted">Pode ser o nome, uma sigla ou o que quiser. Só muda o escudo.</small></label>
@@ -3105,6 +3107,7 @@ function atualizarPrevias(){
   const nm=G?G.clubs[G.user.club].name:(W.nome.trim()||"Seu Clube");
   const pe=$("#prev-escudo");if(pe)pe.innerHTML=escudoSVG(e,"",120,nm);
   const pn=$("#prev-escudo-nome");if(pn)pn.innerHTML=escudoSVG(e,"",96,nm);
+  const ps=$("#prev-escudo-sim");if(ps)ps.innerHTML=escudoSVG(e,"",96,nm);
   const pu=$("#prev-uni");if(pu){const unis=alvoVisual().unis,pt=G&&G.patro?G.patro.nome:"";pu.innerHTML=previaUnis(unis,pt)}
 }
 
@@ -4460,7 +4463,7 @@ app.addEventListener("input",e=>{
     atualizarPrevias();return;
   }
   if(t.dataset.escr){const {e:es}=alvoVisual();let p=+t.value;if(p!==50&&Math.abs(p-50)<=4){p=50;t.value=50}
-    const mn=+t.dataset.min,mx=+t.dataset.max;es[t.dataset.escr]=Math.round((mn+(mx-mn)*p/100)*10)/10;const nb=t.parentElement.querySelector(".barra-num");if(nb)nb.textContent=p;atualizarPrevias();return}
+    const mn=+t.dataset.min,mx=+t.dataset.max;es[t.dataset.escr]=Math.round((mn+(mx-mn)*p/100)*100)/100;const nb=t.parentElement.querySelector(".barra-num");if(nb)nb.textContent=p;atualizarPrevias();return}
   if(t.id==="esc-txt"){const {e:es}=alvoVisual();es.nomeTxt=t.value;atualizarPrevias();return}
   if(t.id==="ed-busca"){edSel.busca=t.value;const r=$("#ed-res"),nv=$("#ed-nav");if(r)r.innerHTML=edResultados();if(nv)nv.hidden=semAc(t.value).length>=2;return}
   if(t.id==="v-estadio"){const c=G.clubs[G.user.club];if(t.value.trim())c.estadio=t.value.trim();return}
