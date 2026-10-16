@@ -1959,6 +1959,7 @@ function migrar(g){
   const orig={};Object.entries(PAISES).forEach(([k,p])=>[...p.t.flat(),...p.pool].forEach(x=>{const n=x.split("|")[0];orig[k+"|"+abreviar(n)]=n}));Object.values(EXTRAS).flat().forEach(x=>{const q=x.split("|");orig[q[4]+"|"+abreviar(q[0])]=q[0]});
   if(g.tecCand&&g.tecCand.length>2)g.tecCand=[g.tecCand[0],g.tecCand[2]];
   if(!g.salV){g.salV=1;const G0=G;G=g;IDX=null;Object.values(g.players).forEach(p=>{p.sal=salarioJog(p)});G=G0;IDX=null}
+  if(!g.salLendaV){g.salLendaV=1;const G0=G;G=g;IDX=null;Object.values(g.players).forEach(p=>{if(p.lenda)p.sal=Math.max(Math.round(p.sal*1.2*10)/10,salarioLenda(p))});G=G0;IDX=null}
   if(!g.estV){g.estV=1;if((g.reformas||0)>=3)g.reformas--;}
   if(g.tecRen){const L=TECNICOS[g.country].split(",");Object.entries(g.tecRen).forEach(([a,b])=>{const i=L.findIndex(s=>s.split("|")[0]===a);if(i>=0)L[i]=b+"|"+L[i].split("|")[1]});TECNICOS[g.country]=L.join(",")}
   if(!g.perfil)g.perfil={xp:0,nivel:1,j:0,v:0,e:0,d:0,gp:0,gc:0,aviso:null,dica:false};
@@ -3180,12 +3181,19 @@ let NOMES_LENDA=null;
 function ehLenda(p){if(!p)return false;if(p.lenda)return true;if(!NOMES_LENDA)NOMES_LENDA=new Set(LENDAS.map(l=>l[0]));return NOMES_LENDA.has(LENDA_ALIAS[p.n]||p.n)}
 const lendaCls=p=>ehLenda(p)?" lenda":"";
 function fotoLenda(n,pos){const f=typeof ROSTOS_REAIS!=="undefined"&&ROSTOS_REAIS["Lenda|"+n];return f?`<svg class="rosto" viewBox="0 0 100 112" width="46" height="52" aria-hidden="true"><image href="${f}" width="100" height="112"/></svg>`:`<span class="lenda-sel">★</span>`}
+LENDAS.forEach(l=>l[3]=Math.round(l[3]*1.2)); // lendas 20% mais caras (cupons e dinheiro)
 function precoLendaDin(l){return premioEmDinheiro(l[3]*1500)}
+/* salário de lenda: 20% acima do antigo e sempre acima do maior salário de quem não é lenda (varia pelo valor da lenda) */
+function salarioLenda(p){
+  const l=LENDAS.find(x=>x[0]===p.n),cp=l?l[3]:30;
+  const teto=Object.values(G.players).reduce((m,q)=>q.lenda||ehLenda(q)?m:Math.max(m,q.sal||0),0);
+  return Math.round(Math.max(salarioJog(p)*1.8,teto*(1.05+cp/250))*10)/10;
+}
 function comprarLenda(i,modo){
   const l=LENDAS[i];if(!l)return "Lenda inválida.";G.lendas=G.lendas||{};if(G.lendas[l[0]])return "Essa lenda já joga no seu clube.";
   if(modo==="c"){if(cupons()<l[3])return `Faltam ${l[3]-cupons()} cupons dourados.`;G.cupons-=l[3]}
   else{const v=precoLendaDin(l);if(G.cash<v)return `Faltam ${dinheiro(v-G.cash)}.`;G.cash-=v}
-  const uid=G.user.club,id=novoJogador(l[1],l[2],uid,l[4]);const p=G.players[id];p.n=l[0];p.ov=l[2];p.pot=l[4]<=23?Math.min(97,l[2]+3):l[2];p.age=l[4];p.ct=3;p.lenda=1;p.sal=Math.round(salarioJog(p)*1.5*10)/10;tocou();
+  const uid=G.user.club,id=novoJogador(l[1],l[2],uid,l[4]);const p=G.players[id];p.n=l[0];p.ov=l[2];p.pot=l[4]<=23?Math.min(97,l[2]+3):l[2];p.age=l[4];p.ct=3;p.lenda=1;p.sal=salarioLenda(p);tocou();
   G.lendas[l[0]]=id;G.inbox.unshift({t:"bom",m:`${l[0]} chegou! A lenda vai vestir a camisa do ${G.clubs[uid].name}.`});xpBonus(300,"lenda contratada");return null;
 }
 function telaLendas(){
