@@ -730,24 +730,24 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792190264"></script>
-<script src="img/arte-capa.js?v=1792190264"></script>
-<script src="img/fundo-criacao.js?v=1792190264"></script>
-<script src="img/fundo-pais.js?v=1792190264"></script>
-<script src="img/fundo-escudo.js?v=1792190264"></script>
-<script src="img/simbolos.js?v=1792190264"></script>
-<script src="img/rostos.js?v=1792190264"></script>
-<script src="img/estadio-fotos.js?v=1792190264"></script>
-<script src="img/super-fotos.js?v=1792190264"></script>
-<script src="img/trofeus.js?v=1792190264"></script>
-<script src="img/medalhas.js?v=1792190264"></script>
-<script src="img/fotos.js?v=1792190264"></script>
-<script src="img/fotos-vs.js?v=1792190264"></script>
-<script src="img/kit-homens.js?v=1792190264"></script>
-<script src="img/tec-fotos.js?v=1792190264"></script>
-<script src="dados/elencos.js?v=1792190264"></script>
-<script src="img/rostos-reais.js?v=1792190264"></script>
-<script src="img/escudos-img.js?v=1792190264"></script>
+<script src="img/escudos-reais.js?v=1792190487"></script>
+<script src="img/arte-capa.js?v=1792190487"></script>
+<script src="img/fundo-criacao.js?v=1792190487"></script>
+<script src="img/fundo-pais.js?v=1792190487"></script>
+<script src="img/fundo-escudo.js?v=1792190487"></script>
+<script src="img/simbolos.js?v=1792190487"></script>
+<script src="img/rostos.js?v=1792190487"></script>
+<script src="img/estadio-fotos.js?v=1792190487"></script>
+<script src="img/super-fotos.js?v=1792190487"></script>
+<script src="img/trofeus.js?v=1792190487"></script>
+<script src="img/medalhas.js?v=1792190487"></script>
+<script src="img/fotos.js?v=1792190487"></script>
+<script src="img/fotos-vs.js?v=1792190487"></script>
+<script src="img/kit-homens.js?v=1792190487"></script>
+<script src="img/tec-fotos.js?v=1792190487"></script>
+<script src="dados/elencos.js?v=1792190487"></script>
+<script src="img/rostos-reais.js?v=1792190487"></script>
+<script src="img/escudos-img.js?v=1792190487"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2079,7 +2079,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792190264";
+const VERSAO="1792190487";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -2165,10 +2165,10 @@ function escudoSVG(e,sigla,px,nome){if(e.nomeOn&&e.nomeTxt!=null&&e.nomeTxt.trim
   const ny=e.nomeY??(cv===1?62:cv===-1?74:ty+2),nx=e.nomeX||0,arco=e.arco??(cv===1?62:cv===-1?-50:0);
   const si=e.simbolo||0,img=si&&typeof SIMBOLOS_IMG!=="undefined"&&SIMBOLOS_IMG[si-1];let simb="",fdef="";
   if(img){const emCima=comNome&&ny-arco/2<55,cx=50,cy=!t?ty-12:!comNome?ty-40:emCima?74:38,box=!t?60:!comNome?34:emCima?40:36,k=box*(e.simTam??1)/Math.max(img[1],img[2]),w=img[1]*k,h=img[2]*k,fid="sf"+id,cor=e.simCor==="time",sc=e.c4||e.c3,bd=e.simBorda===true;
-    if(cor||bd)fdef=`<filter id="${fid}" x="-20%" y="-20%" width="140%" height="140%">${bd?`<feMorphology in="SourceAlpha" operator="dilate" radius="${(box/45).toFixed(2)}" result="d"/><feFlood flood-color="${e.simBordaCor||"#ffffff"}"/><feComposite in2="d" operator="in" result="b"/>`:""}${cor?`<feFlood flood-color="${sc}"/><feComposite in2="SourceAlpha" operator="in" result="a"/>`:""}<feMerge>${bd?`<feMergeNode in="b"/>`:""}<feMergeNode in="${cor?"a":"SourceGraphic"}"/></feMerge></filter>`;
+    if(cor||bd)fdef=`<filter id="${fid}" x="-20%" y="-20%" width="140%" height="140%">${bd?`<feMorphology in="SourceAlpha" operator="dilate" radius="${(box/45*(e.simBordaEsp??1)).toFixed(2)}" result="d"/><feFlood flood-color="${e.simBordaCor||"#ffffff"}"/><feComposite in2="d" operator="in" result="b"/>`:""}${cor?`<feFlood flood-color="${sc}"/><feComposite in2="SourceAlpha" operator="in" result="a"/>`:""}<feMerge>${bd?`<feMergeNode in="b"/>`:""}<feMergeNode in="${cor?"a":"SourceGraphic"}"/></feMerge></filter>`;
     simb=`<image href="${img[0]}" x="${(cx+(e.simX||0)-w/2).toFixed(1)}" y="${(cy+(e.simY||0)-h/2).toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}"${fdef?` filter="url(#${fid})"`:""}/>`}
-  return `<svg viewBox="-4 -2 108 124" width="${px}" height="${Math.round(px*1.15)}" aria-hidden="true" class="svg-escudo"><defs><clipPath id="${id}"><path d="${f}"/></clipPath>${fdef}</defs><g clip-path="url(#${id})"><rect x="-5" y="-5" width="110" height="130" fill="${e.c1}"/>${pat}</g><path d="${f}" fill="none" stroke="${e.c3}" stroke-width="5" stroke-linejoin="round"/>${simb}${t?(()=>{const tc=comNome?e.c5||e.c3:e.c3,FT=FONTES_ESC[comNome?e.fonte||0:0]||FONTES_ESC[0],tx=FT[3]?t.toUpperCase():t,fs=comNome?Math.min(24,150/Math.max(5,nome.length))*tam:t.length>3?22:27,nb=!comNome||e.nomeBorda!==false,
-      at=`text-anchor="middle" font-family="${FT[1]}" font-weight="${FT[2]}" font-size="${fs.toFixed(1)}" fill="${tc}"${nb?` stroke="${comNome&&e.nomeBordaCor||contrasteHex(tc)}" stroke-width="${(comNome?Math.max(1,fs/12):Math.max(2,fs/7)).toFixed(1)}" paint-order="stroke"`:""} letter-spacing="1"`;
+  return `<svg viewBox="-4 -2 108 124" width="${px}" height="${Math.round(px*1.15)}" aria-hidden="true" class="svg-escudo"><defs><clipPath id="${id}"><path d="${f}"/></clipPath>${fdef}</defs><g clip-path="url(#${id})"><rect x="-5" y="-5" width="110" height="130" fill="${e.c1}"/>${pat}</g><path d="${f}" fill="none" stroke="${e.c3}" stroke-width="${(5*(e.bordaEsp??1)).toFixed(2)}" stroke-linejoin="round"/>${simb}${t?(()=>{const tc=comNome?e.c5||e.c3:e.c3,FT=FONTES_ESC[comNome?e.fonte||0:0]||FONTES_ESC[0],tx=FT[3]?t.toUpperCase():t,fs=comNome?Math.min(24,150/Math.max(5,nome.length))*tam:t.length>3?22:27,nb=!comNome||e.nomeBorda!==false,
+      at=`text-anchor="middle" font-family="${FT[1]}" font-weight="${FT[2]}" font-size="${fs.toFixed(1)}" fill="${tc}"${nb?` stroke="${comNome&&e.nomeBordaCor||contrasteHex(tc)}" stroke-width="${(comNome?Math.max(1,fs/12)*(e.nomeBordaEsp??1):Math.max(2,fs/7)).toFixed(2)}" paint-order="stroke"`:""} letter-spacing="1"`;
     if(!comNome)return `<text x="50" y="${ty}" ${at}>${tx}</text>`;
     const by=ny+fs*.3-8,d=`M${-30+nx} ${by.toFixed(1)}Q${50+nx} ${(by-arco*.8).toFixed(1)} ${130+nx} ${by.toFixed(1)}`;
     return `<path id="tp${id}" d="${d}" fill="none"/><text ${at}><textPath href="#tp${id}" startOffset="50%">${tx}</textPath></text>`})():""}</svg>`;
@@ -3052,10 +3052,10 @@ function secEsc(k,tit,atual,grade,ck,cor,extra){const ab=escAberto===k;
 function editorEscudo(e,nome){if(e.nomeOn===undefined)e.nomeOn=false;
   return `<h2 style="margin-top:0">Escudo</h2>
   <div class="previa" id="prev-escudo">${escudoSVG(e,"",120,nome)}</div>
-  ${secEsc("forma","Formato",FORMAS[e.forma%FORMAS.length][0],`<div class="grade8">${FORMAS.map((f,i)=>`<button data-a="eforma" data-v="${i}" aria-pressed="${e.forma===i}" aria-label="${f[0]}">${escudoSVG({...e,forma:i,simbolo:0},"",34)}<small>${f[0]}</small></button>`).join("")}</div>`,"c1",e.c1,chipCor("c3",e.c3,"Borda"))}
+  ${secEsc("forma","Formato",FORMAS[e.forma%FORMAS.length][0],`<div class="grade8">${FORMAS.map((f,i)=>`<button data-a="eforma" data-v="${i}" aria-pressed="${e.forma===i}" aria-label="${f[0]}">${escudoSVG({...e,forma:i,simbolo:0},"",34)}<small>${f[0]}</small></button>`).join("")}</div>${barraEsc("bordaEsp","Grossura da borda do escudo",.1,1,e.bordaEsp??1,"Bem fina","Grossa")}`,"c1",e.c1,chipCor("c3",e.c3,"Borda"))}
   ${secEsc("estampa","Desenho",ESTAMPAS[e.estampa%ESTAMPAS.length],`<div class="grade8">${ESTAMPAS.map((n,i)=>`<button data-a="eestampa" data-v="${i}" aria-pressed="${e.estampa===i}">${escudoSVG({...e,estampa:i,simbolo:0},"",30)}<small>${n}</small></button>`).join("")}</div>`,"c2",e.c2)}
   ${secEsc("simbolo","Símbolo",SIMBOLOS[e.simbolo||0],`<div class="grade8">${SIMBOLOS.map((s,i)=>`<button data-a="esimbolo" data-v="${i}" aria-pressed="${(e.simbolo||0)===i}">${escudoSVG({...e,simbolo:i,sigla:false},"",30)}<small>${s}</small></button>`).join("")}</div>${e.simbolo?`<div class="nome-esc" style="margin-top:6px"><div class="previa-mini" id="prev-escudo-sim">${escudoSVG(e,"",96,nome)}</div><div class="campo"><span>Cor do símbolo</span><div class="seg" role="group">${[["orig","Cor original"],["time","Personalizada"]].map(([k,n])=>`<button data-a="esimcor" data-v="${k}" aria-pressed="${(e.simCor==="time")===(k==="time")}">${n}</button>`).join("")}</div>${e.simCor==="time"?`<div class="linha-chip">${chipCor("c4",e.c4||e.c3,"Escolher cor")}</div>`:""}</div>
-  <div class="campo"><span>Borda do símbolo</span><div class="seg" role="group">${[["0","Sem borda"],["1","Com borda"]].map(([k,n])=>`<button data-a="esimborda" data-v="${k}" aria-pressed="${(e.simBorda===true)===(k==="1")}">${n}</button>`).join("")}</div>${e.simBorda?`<div class="linha-chip">${chipCor("simBordaCor",e.simBordaCor||"#ffffff","Cor da borda")}</div>`:""}</div>
+  <div class="campo"><span>Borda do símbolo</span><div class="seg" role="group">${[["0","Sem borda"],["1","Com borda"]].map(([k,n])=>`<button data-a="esimborda" data-v="${k}" aria-pressed="${(e.simBorda===true)===(k==="1")}">${n}</button>`).join("")}</div>${e.simBorda?`<div class="linha-chip">${chipCor("simBordaCor",e.simBordaCor||"#ffffff","Cor da borda")}</div>${barraEsc("simBordaEsp","Grossura da borda",.1,1,e.simBordaEsp??1,"Bem fina","Grossa")}`:""}</div>
   ${barraEsc("simTam","Tamanho",.4,1.6,e.simTam??1,"Menor","Maior")}
   ${barraEsc("simY","Altura",-40,40,e.simY||0,"Em cima","Embaixo")}
   ${barraEsc("simX","Lados",-30,30,e.simX||0,"Esquerda","Direita")}</div>`:""}`,"c4",e.c4||e.c3)}
@@ -3068,7 +3068,7 @@ function editorEscudo(e,nome){if(e.nomeOn===undefined)e.nomeOn=false;
   ${barraEsc("nomeY","Altura",10,115,e.nomeY??({1:62,"-1":74}[e.curva]||(TEXTO_Y[e.forma%FORMAS.length]||70)+2),"Em cima","Embaixo")}
   ${barraEsc("nomeX","Lados",-30,30,e.nomeX||0,"Esquerda","Direita")}
   <div class="campo"><span>Cor do nome</span><div class="linha-chip">${chipCor("c5",e.c5||e.c3,"Escolher cor")}</div></div>
-  <div class="campo"><span>Borda do nome</span><div class="seg" role="group">${[["1","Com borda"],["0","Sem borda"]].map(([k,n])=>`<button data-a="enomeborda" data-v="${k}" aria-pressed="${(e.nomeBorda!==false)===(k==="1")}">${n}</button>`).join("")}</div>${e.nomeBorda!==false?`<div class="linha-chip">${chipCor("nomeBordaCor",e.nomeBordaCor||contrasteHex(e.c5||e.c3),"Cor da borda")}</div>`:""}</div>
+  <div class="campo"><span>Borda do nome</span><div class="seg" role="group">${[["1","Com borda"],["0","Sem borda"]].map(([k,n])=>`<button data-a="enomeborda" data-v="${k}" aria-pressed="${(e.nomeBorda!==false)===(k==="1")}">${n}</button>`).join("")}</div>${e.nomeBorda!==false?`<div class="linha-chip">${chipCor("nomeBordaCor",e.nomeBordaCor||contrasteHex(e.c5||e.c3),"Cor da borda")}</div>${barraEsc("nomeBordaEsp","Grossura da borda",.1,1,e.nomeBordaEsp??1,"Bem fina","Grossa")}`:""}</div>
   </div>`:""}`,"c5",e.c5||e.c3)}`;
 }
 function editorUniforme(unis,e,patro){
