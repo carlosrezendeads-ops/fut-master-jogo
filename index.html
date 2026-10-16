@@ -2649,6 +2649,12 @@ function trilhaModo(m){if(!SOM.el)return;const s=SOM.el[SOM.cur];
   else if(LISTAS[m]){if(s&&s.lista===m)trilhaRetomar(s,1.5);else trilhaProxima(m,s?2.5:1.5)}
   else if(s)trilhaParar(s,1)}
 // quando a música está acabando, a próxima já entra
+/* saiu do jogo (minimizou, trocou de app, bloqueou a tela): para toda a música; voltou: retoma */
+function somPausaFora(fora){if(!SOM.ctx)return;
+  if(fora){(SOM.el||[]).forEach(s=>{s.tocava=!s.a.paused;s.a.pause()});SOM.ctx.suspend().catch(()=>{})}
+  else{SOM.ctx.resume().catch(()=>{});(SOM.el||[]).forEach(s=>{if(s.tocava){s.tocava=false;s.a.play().catch(()=>{})}})}}
+document.addEventListener("visibilitychange",()=>somPausaFora(document.hidden));
+addEventListener("pagehide",()=>somPausaFora(true));addEventListener("pageshow",()=>{if(!document.hidden)somPausaFora(false)});
 function trilhaVigiar(){const s=SOM.el&&SOM.el[SOM.cur];if(!s||!LISTAS[s.lista]||s.fim||SOM.modo!==s.lista||s.a.paused)return;
   const d=s.a.duration;if(d&&isFinite(d)&&d-s.a.currentTime<TRILHA_FADE){s.fim=true;trilhaProxima(s.lista,TRILHA_FADE)}}
 // trilha eletrônica original (house), gerada no navegador
