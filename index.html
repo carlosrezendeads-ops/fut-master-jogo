@@ -4189,6 +4189,8 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "wseguir":{
       guardarW();
       if(W.passo===1&&W.nome.trim().length<3){toastErro("Dê ao time um nome com pelo menos 3 letras.");return}
+      if(W.passo===1&&W.tec.trim().length<2){toastErro("Preencha o seu nome (dono do clube).");return}
+      if(W.passo===1&&!/^[A-Z0-9]{3}$/.test(W.sigla.trim())){toastErro("A sigla precisa ter 3 letras.");return}
       if(W.passo<5){W.passo++;window.scrollTo(0,0);break}
       const sig=(W.sigla||siglaDe(W.nome)).trim().toUpperCase().slice(0,3);
       novoJogo({pais:W.pais,name:W.nome.trim(),short:sig,coach:W.tec.trim()||"Professor",escudo:{...W.escudo},unis:W.unis.map(x=>({...x}))});uniSel=0;
