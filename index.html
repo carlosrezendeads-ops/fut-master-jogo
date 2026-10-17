@@ -541,13 +541,15 @@ nav.abas button{font-size:11px}
 .cartao.tec-card.tec-clube{background:linear-gradient(135deg,#3a2a85,#22175c);border:1.5px solid #9b82ff;grid-template-columns:52px 1fr}
 .tec-clube .nm small{display:block;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#c9bbff}
 .tec-clube .nm span{color:#ddd5ff}.tec-clube .nm .tec-ef{color:#9ff0c0;font-weight:600}
-/* técnico no mercado: card prateado com brilho correndo (lendas continuam douradas) */
-.cartao.tec-card.livre{background:linear-gradient(120deg,#555b64,#8f97a2 30%,#dfe4ea 50%,#8f97a2 70%,#555b64);background-size:250% 100%;border:1.5px solid #e8ecf1;box-shadow:0 0 14px rgba(220,230,240,.28)}
-.cartao.tec-card.livre .nm b{color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.75)}
-.cartao.tec-card.livre .nm span{color:#f3f6f9;text-shadow:0 1px 2px rgba(0,0,0,.75)}
-.cartao.tec-card.livre .tec-nota{background:linear-gradient(135deg,#8a919b,#f6f8fa 50%,#8a919b);background-size:220% 220%;color:#1b1f24;border-color:#fff;box-shadow:0 0 8px rgba(255,255,255,.65)}
+/* técnico no mercado: cinza escuro liso; técnico de nível Série A prateado com brilho correndo (lendas seguem douradas) */
+.cartao.tec-card.livre{grid-template-columns:52px 1fr auto auto;background:#363a41;border:1.5px solid #555b64}
+.cartao.tec-card.livre .nm span{color:#d8dce2}
+.cartao.tec-card.tec-a{background:linear-gradient(120deg,#555b64,#8f97a2 30%,#dfe4ea 50%,#8f97a2 70%,#555b64);background-size:250% 100%;border-color:#e8ecf1;box-shadow:0 0 14px rgba(220,230,240,.28)}
+.cartao.tec-card.tec-a .nm b{color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.75)}
+.cartao.tec-card.tec-a .nm span{color:#f3f6f9;text-shadow:0 1px 2px rgba(0,0,0,.75)}
+.cartao.tec-card.tec-a .tec-ov{background:linear-gradient(135deg,#7d848e,#f6f8fa 50%,#7d848e);background-size:220% 220%;color:#1b1f24;box-shadow:inset 0 0 0 2px #fff,0 0 10px rgba(255,255,255,.6)}
 @keyframes prataCorre{from{background-position:100% 0}to{background-position:-150% 0}}
-@media (prefers-reduced-motion:no-preference){.cartao.tec-card.livre{animation:prataCorre 3.5s linear infinite}.cartao.tec-card.livre .tec-nota{animation:prataCorre 2.4s linear infinite}}
+@media (prefers-reduced-motion:no-preference){.cartao.tec-card.tec-a{animation:prataCorre 3.5s linear infinite}.cartao.tec-card.tec-a .tec-ov{animation:prataCorre 2.4s linear infinite}}
 .jog.lenda{position:relative;overflow:hidden;background:linear-gradient(120deg,#8a5d00,#ffd23f 30%,#fff1a8 45%,#e3a514 60%,#8a5d00);background-size:250% 100%;border:1px solid #fff1a8;border-radius:14px;padding:10px;margin:6px 0;box-shadow:0 0 18px rgba(255,210,63,.45)}
 .jog.lenda .nm b,.jog.lenda .nm span{color:#2a1b00}
 .jog.lenda::before{content:"LEGEND";position:absolute;right:56px;top:4px;font-family:var(--f-display);font-weight:900;font-size:11px;letter-spacing:.25em;color:#5a3a00;opacity:.85}
@@ -751,26 +753,26 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792234703"></script>
-<script src="img/arte-capa.js?v=1792234703"></script>
-<script src="img/fundo-criacao.js?v=1792234703"></script>
-<script src="img/fundo-pais.js?v=1792234703"></script>
-<script src="img/fundo-escudo.js?v=1792234703"></script>
-<script src="img/simbolos.js?v=1792234703"></script>
-<script src="img/kits-foto.js?v=1792234703"></script>
-<script src="img/fundo-vestiario.js?v=1792234703"></script>
-<script src="img/rostos.js?v=1792234703"></script>
-<script src="img/estadio-fotos.js?v=1792234703"></script>
-<script src="img/super-fotos.js?v=1792234703"></script>
-<script src="img/trofeus.js?v=1792234703"></script>
-<script src="img/medalhas.js?v=1792234703"></script>
-<script src="img/fotos.js?v=1792234703"></script>
-<script src="img/fotos-vs.js?v=1792234703"></script>
-<script src="img/kit-homens.js?v=1792234703"></script>
-<script src="img/tec-fotos.js?v=1792234703"></script>
-<script src="dados/elencos.js?v=1792234703"></script>
-<script src="img/rostos-reais.js?v=1792234703"></script>
-<script src="img/escudos-img.js?v=1792234703"></script>
+<script src="img/escudos-reais.js?v=1792235007"></script>
+<script src="img/arte-capa.js?v=1792235007"></script>
+<script src="img/fundo-criacao.js?v=1792235007"></script>
+<script src="img/fundo-pais.js?v=1792235007"></script>
+<script src="img/fundo-escudo.js?v=1792235007"></script>
+<script src="img/simbolos.js?v=1792235007"></script>
+<script src="img/kits-foto.js?v=1792235007"></script>
+<script src="img/fundo-vestiario.js?v=1792235007"></script>
+<script src="img/rostos.js?v=1792235007"></script>
+<script src="img/estadio-fotos.js?v=1792235007"></script>
+<script src="img/super-fotos.js?v=1792235007"></script>
+<script src="img/trofeus.js?v=1792235007"></script>
+<script src="img/medalhas.js?v=1792235007"></script>
+<script src="img/fotos.js?v=1792235007"></script>
+<script src="img/fotos-vs.js?v=1792235007"></script>
+<script src="img/kit-homens.js?v=1792235007"></script>
+<script src="img/tec-fotos.js?v=1792235007"></script>
+<script src="dados/elencos.js?v=1792235007"></script>
+<script src="img/rostos-reais.js?v=1792235007"></script>
+<script src="img/escudos-img.js?v=1792235007"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2153,7 +2155,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792234703";
+const VERSAO="1792235007";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4005,7 +4007,7 @@ function serieTag(p){if(p.club==null)return "Sem clube";const c=G.clubs[p.club];
 function fmtRelogio(ms){const s=Math.max(0,Math.floor(ms/1000)),hh=Math.floor(s/3600),mm=Math.floor(s%3600/60),ss=s%60;return `${hh}:${String(mm).padStart(2,"0")}:${String(ss).padStart(2,"0")}`}
 function linhaOferta(p){const meu=p.club===G.user.club,pr=precoPedido(p);
   return `<div class="jog of${lendaCls(p)}" ${meu?"":`data-a="comprar" data-v="${p.id}" style="cursor:pointer"`}>${linhaJog(p,"§T§").replace("§T§</span>",`</span><span class="time-of">${p.club!=null?`${G.clubs[p.club].user?escudoDe(G.clubs[p.club],18):marcaDe(G.clubs[p.club],18)}<b>${esc(G.clubs[p.club].name)}</b>`:"<b>Sem clube</b>"}</span>`)}<div class="of-dir"><span class="tag serie">${esc(meu?"Contratado":serieTag(p))}</span>${meu?"":`<b class="num peq">${pr?dinheiro(pr):"sem custo"}</b>`}</div></div>`}
-function cartaoTecOferta(c,i,fonte,pode){return `<div class="cartao tec-card livre">${tecFoto(c.n,c.q)}<div class="nm"><b>${esc(c.n)}</b><span>Nível ${nivelTec(c.q)} · ${dinheiro(c.sal)}/mês · luvas ${dinheiro(c.luvas)}</span><span>Efeito: ${((c.q-65)/8>=0?"+":"")}${((c.q-65)/8).toFixed(1)} em ataque e defesa</span></div><button class="btn mini${pode&&c.luvas<=G.cash?" prim-mini":""}" data-a="contratec" data-v="${i}" data-i="${fonte}" ${pode?"":"disabled"}>Contratar</button></div>`}
+function cartaoTecOferta(c,i,fonte,pode){return `<div class="cartao tec-card livre${c.q>=80?" tec-a":""}"><span class="tec-foto">${tecRosto(c.n,52)}</span><div class="nm"><b>${esc(c.n)}</b><span>Nível ${nivelTec(c.q)} · ${dinheiro(c.sal)}/mês · luvas ${dinheiro(c.luvas)}</span><span>Efeito: ${((c.q-65)/8>=0?"+":"")}${((c.q-65)/8).toFixed(1)} em ataque e defesa</span></div><b class="ov num tec-ov">${c.q}</b><button class="btn mini${pode&&c.luvas<=G.cash?" prim-mini":""}" data-a="contratec" data-v="${i}" data-i="${fonte}" ${pode?"":"disabled"}>Contratar</button></div>`}
 function destaques(){
   const uid=G.user.club,el=jogadoresDo(uid);const media={};
   ["GOL","LAT","ZAG","VOL","MEI","ATA"].forEach(pos=>{const ps=el.filter(p=>p.pos===pos).sort((a,b)=>b.ov-a.ov);media[pos]=ps.length?ps[0].ov:0});
