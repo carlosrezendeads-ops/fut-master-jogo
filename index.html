@@ -531,7 +531,6 @@ nav.abas button{font-size:11px}
 .jog.of .nm span,.jog.of .nm b{color:#fff}.jog.of .nm span{opacity:.9}
 .jog.of .ov{background:radial-gradient(circle at 35% 30%,#0b4d27,#06331a);box-shadow:inset 0 0 0 2px #7cf0ae,0 2px 6px rgba(0,0,0,.35)}
 .jog.of .tag.serie{background:#0b4d27;color:#c9ffe0}
-.cartao.tec-card.livre{background:linear-gradient(135deg,#4b5059,#30343b);border-color:#7c828c}
 .cartao.tec-card.tec-lenda{position:relative;background:linear-gradient(120deg,#5a3a00,#b8860b 35%,#ffd23f 50%,#b8860b 65%,#5a3a00);background-size:250% 100%;border:1.5px solid #fff1a8;box-shadow:0 0 16px rgba(255,210,63,.4);grid-template-columns:52px 1fr;margin-bottom:8px}
 @media (prefers-reduced-motion:no-preference){.cartao.tec-card.tec-lenda{animation:ouroCorre 4s linear infinite}}
 .tec-lenda .nm small{display:block;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#fff6c8}
@@ -542,8 +541,13 @@ nav.abas button{font-size:11px}
 .cartao.tec-card.tec-clube{background:linear-gradient(135deg,#3a2a85,#22175c);border:1.5px solid #9b82ff;grid-template-columns:52px 1fr}
 .tec-clube .nm small{display:block;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#c9bbff}
 .tec-clube .nm span{color:#ddd5ff}.tec-clube .nm .tec-ef{color:#9ff0c0;font-weight:600}
-.cartao.tec-card.livre{background:linear-gradient(135deg,#1f8a4c,#136b39);border-color:#4fd68a}
-.cartao.tec-card.livre .nm span{color:#e4ffef}
+/* técnico no mercado: card prateado com brilho correndo (lendas continuam douradas) */
+.cartao.tec-card.livre{background:linear-gradient(120deg,#555b64,#8f97a2 30%,#dfe4ea 50%,#8f97a2 70%,#555b64);background-size:250% 100%;border:1.5px solid #e8ecf1;box-shadow:0 0 14px rgba(220,230,240,.28)}
+.cartao.tec-card.livre .nm b{color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.75)}
+.cartao.tec-card.livre .nm span{color:#f3f6f9;text-shadow:0 1px 2px rgba(0,0,0,.75)}
+.cartao.tec-card.livre .tec-nota{background:linear-gradient(135deg,#8a919b,#f6f8fa 50%,#8a919b);background-size:220% 220%;color:#1b1f24;border-color:#fff;box-shadow:0 0 8px rgba(255,255,255,.65)}
+@keyframes prataCorre{from{background-position:100% 0}to{background-position:-150% 0}}
+@media (prefers-reduced-motion:no-preference){.cartao.tec-card.livre{animation:prataCorre 3.5s linear infinite}.cartao.tec-card.livre .tec-nota{animation:prataCorre 2.4s linear infinite}}
 .jog.lenda{position:relative;overflow:hidden;background:linear-gradient(120deg,#8a5d00,#ffd23f 30%,#fff1a8 45%,#e3a514 60%,#8a5d00);background-size:250% 100%;border:1px solid #fff1a8;border-radius:14px;padding:10px;margin:6px 0;box-shadow:0 0 18px rgba(255,210,63,.45)}
 .jog.lenda .nm b,.jog.lenda .nm span{color:#2a1b00}
 .jog.lenda::before{content:"LEGEND";position:absolute;right:56px;top:4px;font-family:var(--f-display);font-weight:900;font-size:11px;letter-spacing:.25em;color:#5a3a00;opacity:.85}
@@ -747,26 +751,26 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792234528"></script>
-<script src="img/arte-capa.js?v=1792234528"></script>
-<script src="img/fundo-criacao.js?v=1792234528"></script>
-<script src="img/fundo-pais.js?v=1792234528"></script>
-<script src="img/fundo-escudo.js?v=1792234528"></script>
-<script src="img/simbolos.js?v=1792234528"></script>
-<script src="img/kits-foto.js?v=1792234528"></script>
-<script src="img/fundo-vestiario.js?v=1792234528"></script>
-<script src="img/rostos.js?v=1792234528"></script>
-<script src="img/estadio-fotos.js?v=1792234528"></script>
-<script src="img/super-fotos.js?v=1792234528"></script>
-<script src="img/trofeus.js?v=1792234528"></script>
-<script src="img/medalhas.js?v=1792234528"></script>
-<script src="img/fotos.js?v=1792234528"></script>
-<script src="img/fotos-vs.js?v=1792234528"></script>
-<script src="img/kit-homens.js?v=1792234528"></script>
-<script src="img/tec-fotos.js?v=1792234528"></script>
-<script src="dados/elencos.js?v=1792234528"></script>
-<script src="img/rostos-reais.js?v=1792234528"></script>
-<script src="img/escudos-img.js?v=1792234528"></script>
+<script src="img/escudos-reais.js?v=1792234642"></script>
+<script src="img/arte-capa.js?v=1792234642"></script>
+<script src="img/fundo-criacao.js?v=1792234642"></script>
+<script src="img/fundo-pais.js?v=1792234642"></script>
+<script src="img/fundo-escudo.js?v=1792234642"></script>
+<script src="img/simbolos.js?v=1792234642"></script>
+<script src="img/kits-foto.js?v=1792234642"></script>
+<script src="img/fundo-vestiario.js?v=1792234642"></script>
+<script src="img/rostos.js?v=1792234642"></script>
+<script src="img/estadio-fotos.js?v=1792234642"></script>
+<script src="img/super-fotos.js?v=1792234642"></script>
+<script src="img/trofeus.js?v=1792234642"></script>
+<script src="img/medalhas.js?v=1792234642"></script>
+<script src="img/fotos.js?v=1792234642"></script>
+<script src="img/fotos-vs.js?v=1792234642"></script>
+<script src="img/kit-homens.js?v=1792234642"></script>
+<script src="img/tec-fotos.js?v=1792234642"></script>
+<script src="dados/elencos.js?v=1792234642"></script>
+<script src="img/rostos-reais.js?v=1792234642"></script>
+<script src="img/escudos-img.js?v=1792234642"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2149,7 +2153,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792234528";
+const VERSAO="1792234642";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4383,7 +4387,7 @@ function telaCopa(){
 function telaMercado(){
   const uid=G.user.club,ab=janelaAberta();
   if(merc.orig==="tec")return telaTecnicos();
-  if(merc.orig==="lendas")return telaLendas();
+  if(merc.orig==="lendas")merc.orig="pais"; // mercado mostra só o que está à venda agora
   let lista=Object.values(G.players).filter(p=>{
     if(p.club===uid)return false;
     if(merc.orig==="livres")return p.club==null;
@@ -4412,7 +4416,6 @@ function telaMercado(){
     h+=`<h2>3 jogadores</h2><p class="muted peq" style="margin:-4px 0 8px">Posições e séries sorteadas. Quanto mais forte o jogador e mais alta a divisão, mais caro. Para vender, toque no jogador no Elenco e use "Vender jogador".</p><div class="cartao" style="padding-block:4px">${D.jog.map(id=>G.players[id]).filter(Boolean).map(linhaOferta).join("")||'<p class="muted">Nenhum jogador agora.</p>'}</div>`;
     h+=`<h2>Técnico</h2><div class="secao">${tc?cartaoTecOferta(tc,0,"d",true):'<p class="muted">Você já contratou o técnico desta renovação.</p>'}</div>`;
   }else h+=`<div class="aviso-janela">Mercado fechado agora.</div>`;
-  h+=`<div class="linha" style="gap:8px;margin-top:12px"><button class="btn full" data-a="morig" data-v="tec">Técnicos ›</button><button class="btn full" data-a="morig" data-v="lendas">★ Lendas ›</button></div>`;
   return h;
 }
 
