@@ -255,6 +255,8 @@ input[type=range]{width:100%;accent-color:var(--canario)}
 .st-barra div{height:14px;border-radius:7px;background:var(--cal-2);overflow:hidden}.st-barra i{display:block;height:100%;background:var(--canario);border-right:2px solid var(--gramado)}
 .st-linha{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--gramado-3)}
 .st-linha span{font-size:12.5px;color:var(--cal-2);text-align:center;max-width:150px}.st-linha b:last-child{text-align:right}
+.patro-logo{display:flex;align-items:center;justify-content:center;background:#fff;border-radius:12px;padding:10px;height:84px;margin-bottom:8px}.patro-logo img{max-height:100%;max-width:100%;object-fit:contain}
+.patro-logo.mini{width:84px;height:52px;flex:0 0 84px;margin:0;padding:6px;border-radius:10px}
 .linha-chip{display:flex;margin-top:8px}
 .nome-esc{display:flex;flex-direction:column;gap:8px;border:1.5px solid rgba(255,255,255,.5);border-radius:12px;padding:0 12px 12px;background:rgba(10,20,48,.25)}
 .nome-esc .campo{gap:4px}.nome-esc .campo>span{font-size:13px!important}.nome-esc .seg button{padding:6px;font-size:14px}.nome-esc input[type=text]{min-height:44px!important;font-size:17px!important}
@@ -753,26 +755,27 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792235829"></script>
-<script src="img/arte-capa.js?v=1792235829"></script>
-<script src="img/fundo-criacao.js?v=1792235829"></script>
-<script src="img/fundo-pais.js?v=1792235829"></script>
-<script src="img/fundo-escudo.js?v=1792235829"></script>
-<script src="img/simbolos.js?v=1792235829"></script>
-<script src="img/kits-foto.js?v=1792235829"></script>
-<script src="img/fundo-vestiario.js?v=1792235829"></script>
-<script src="img/rostos.js?v=1792235829"></script>
-<script src="img/estadio-fotos.js?v=1792235829"></script>
-<script src="img/super-fotos.js?v=1792235829"></script>
-<script src="img/trofeus.js?v=1792235829"></script>
-<script src="img/medalhas.js?v=1792235829"></script>
-<script src="img/fotos.js?v=1792235829"></script>
-<script src="img/fotos-vs.js?v=1792235829"></script>
-<script src="img/kit-homens.js?v=1792235829"></script>
-<script src="img/tec-fotos.js?v=1792235829"></script>
-<script src="dados/elencos.js?v=1792235829"></script>
-<script src="img/rostos-reais.js?v=1792235829"></script>
-<script src="img/escudos-img.js?v=1792235829"></script>
+<script src="img/escudos-reais.js?v=1792239685"></script>
+<script src="img/arte-capa.js?v=1792239685"></script>
+<script src="img/fundo-criacao.js?v=1792239685"></script>
+<script src="img/fundo-pais.js?v=1792239685"></script>
+<script src="img/fundo-escudo.js?v=1792239685"></script>
+<script src="img/simbolos.js?v=1792239685"></script>
+<script src="img/kits-foto.js?v=1792239685"></script>
+<script src="img/fundo-vestiario.js?v=1792239685"></script>
+<script src="img/patro-logos.js?v=1792239685"></script>
+<script src="img/rostos.js?v=1792239685"></script>
+<script src="img/estadio-fotos.js?v=1792239685"></script>
+<script src="img/super-fotos.js?v=1792239685"></script>
+<script src="img/trofeus.js?v=1792239685"></script>
+<script src="img/medalhas.js?v=1792239685"></script>
+<script src="img/fotos.js?v=1792239685"></script>
+<script src="img/fotos-vs.js?v=1792239685"></script>
+<script src="img/kit-homens.js?v=1792239685"></script>
+<script src="img/tec-fotos.js?v=1792239685"></script>
+<script src="dados/elencos.js?v=1792239685"></script>
+<script src="img/rostos-reais.js?v=1792239685"></script>
+<script src="img/escudos-img.js?v=1792239685"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -1955,29 +1958,31 @@ function ampliar(){const c=G.clubs[G.user.club],v=custoAmpliacao();if(c.cap>=800
 /* ---------- patrocínio ---------- */
 /* patrocinadores reais por país: [Série A, Série B, Série C] + material esportivo [A, B] */
 const PATRO_REAIS={
- BRA:{p:[["Shopee","Red Bull","Jota.ai","Mercado Livre","BRB","Banrisul","Crefisa","Magazine Luiza","Assaí Atacadista","Brahma"],["Unicesumar","Magnum Bank","Banpará","Aurora Alimentos","FoxLux","Havan","Hapvida","Unimed","Sicredi","TIM"],["Asa Alumínio","Bebidas Poty","Sicoob","Cresol","Banese","Banestes","Uniasselvi","Anhanguera","Supermercados Bretas","Coop"]], // sem casas de apostas: proibidas no Brasil (MP 1.394/2026)
-  m:[["Puma","Adidas","Nike","Umbro","New Balance","Kappa","Reebok","Volt","Joma","Castore"],["Volt","Kappa","Umbro","Topper","Diadora","Reebok","Penalty","Lupo","Lotto","Joma"]]},
- ARG:{p:[["Betsson","Codere","Mercado Pago","YPF","Coca-Cola","Banco Macro","Tecno","Personal","Movistar","Quilmes"],["Bplay","Codere","Betsson","Banco Galicia","Andreani","Personal","Movistar","YPF Ruta","Mercado Pago","Naranja X"],["Codere","Bplay","Banco Provincia","Naranja X","Quilmes","Andreani","Telecentro","Sancor Seguros","La Segunda","Cabify"]],
-  m:[["Adidas","Nike","Puma","Umbro","Kappa","Le Coq Sportif","Hummel","Macron","Givova","Kelme"],["Kappa","Umbro","Le Coq Sportif","Hummel","Macron","Givova","Kelme","Joma","Puma","Adidas"]]},
- ENG:{p:[["Emirates","Etihad","Standard Chartered","Snapdragon","Qatar Airways","Sony","Stake","Betano","Visit Rwanda","Kaiyun"],["Sky Bet","BetMGM","Paddy Power","Bet365","Betway","Stake","Utilita","Rizla","Coinbase","Hays"],["Sky Bet","Paddy Power","Bet365","Betfred","Ladbrokes","Coral","Hays Travel","Utilita","Marathonbet","Vertu Motors"]],
+ BRA:{p:[["Shopee","Red Bull","Mercado Livre","Caixa","Itaú","Crefisa","Magazine Luiza","Assaí Atacadista","Brahma","Mastercard"],["Banco do Brasil","Santander","Claro","Havan","Hapvida","Unimed","Sicredi","TIM","Vivo","Coca-Cola"],["Sicoob","Correios","Bradesco","Sadia","Seara","Guaraná Antarctica","Positivo","Natura","Riachuelo","Petrobras"]], // sem casas de apostas: proibidas no Brasil (MP 1.394/2026)
+  m:[["Puma","Adidas","Nike","Umbro","New Balance","Kappa","Reebok","Joma","Castore","Mizuno"],["Kappa","Umbro","Topper","Diadora","Reebok","Penalty","Fila","Lotto","Joma","Mizuno"]]},
+ ARG:{p:[["Betsson","Codere","Mercado Pago","YPF","Banco Macro","Quilmes","Movistar","Toyota","Visa","Personal"],["Banco Galicia","Banco Nación","Fiat","Peugeot","Despegar","Cabify","Pepsi","Rappi","Samsung","LG"],["Arcor","La Serenísima","Banco Provincia","PedidosYa","Bimbo","Gatorade","Philips","Motorola","Lay's","Huawei"]],
+  m:[["Adidas","Nike","Puma","Umbro","Kappa","Le Coq Sportif","Hummel","Macron","Kelme","New Balance"],["Kappa","Umbro","Le Coq Sportif","Hummel","Macron","Kelme","Joma","Puma","Lotto","Errea"]]},
+ ENG:{p:[["Emirates","Etihad","Standard Chartered","Snapdragon","Qatar Airways","Sony","Stake","Betano","Visit Rwanda","TeamViewer"],["Sky Bet","BetMGM","Paddy Power","Bet365","Betway","Coinbase","Utilita","Carling","Vauxhall","Nationwide"],["Betfred","Ladbrokes","Coral","Marathonbet","William Hill","Betfair","Carabao","Greggs","Admiral","Domino's"]],
   m:[["Nike","Adidas","Puma","Umbro","Castore","New Balance","Hummel","Macron","Errea","Kappa"],["Umbro","Castore","Hummel","Macron","Errea","Kappa","Puma","Joma","New Balance","Adidas"]]},
- ESP:{p:[["Spotify","Emirates","Riyadh Air","Etihad","Kutxabank","Estrella Damm","Mahou","Abanca","Visit Málaga","Socios"],["Codere","Kirolbet","Estrella Galicia","Abanca","Cajasur","Kutxabank","Mahou","Ibercaja","Unicaja","Vithas"],["Codere","Kirolbet","Sportium","Estrella Galicia","Mahou","Damm","Cajasur","Abanca","Hyundai","Unicaja"]],
+ ESP:{p:[["Spotify","Emirates","Riyadh Air","Etihad","Estrella Damm","Mahou","Abanca","Socios","Iberia","Movistar"],["Codere","Estrella Galicia","Unicaja","Ibercaja","Kutxabank","Repsol","Seat","Cepsa","Cruzcampo","El Corte Inglés"],["Sportium","Kirolbet","Hyundai","Cajasur","Vithas","Mercadona","Telepizza","Mapfre","Bankinter","Pescanova"]],
   m:[["Adidas","Nike","Puma","Joma","Kelme","Castore","Macron","Hummel","Kappa","New Balance"],["Joma","Kelme","Macron","Hummel","Kappa","Puma","Adidas","Castore","Umbro","Nike"]]},
- GER:{p:[["Deutsche Telekom","Allianz","Evonik","Volkswagen","Mercedes-Benz","Audi","Vodafone","Wiesenhof","Wohninvest","Indeed"],["Tipico","Bwin","Krombacher","Veltins","AOK","Sparkasse","Evonik","Würth","Viessmann","Deutsche Bahn"],["Tipico","Bwin","Sachsen Energie","Veltins","Krombacher","AOK","Sparkasse","Würth","Ströer","Hörmann"]],
+ GER:{p:[["Telekom","Allianz","Evonik","Volkswagen","Mercedes-Benz","Audi","Vodafone","Indeed","Siemens","Lufthansa"],["Tipico","Bwin","Krombacher","Veltins","AOK","Sparkasse","Würth","Viessmann","Deutsche Bahn","Bitburger"],["Hörmann","Wiesenhof","Haribo","Lidl","Aldi","Rewe","Edeka","Warsteiner","Paulaner","Erdinger"]],
   m:[["Adidas","Nike","Puma","Jako","Hummel","Under Armour","Castore","Macron","Kappa","Erima"],["Jako","Hummel","Erima","Macron","Kappa","Puma","Adidas","Nike","Castore","Uhlsport"]]},
- FRA:{p:[["Qatar Airways","Emirates","Uber Eats","Betclic","Winamax","Parions Sport","Accor","Cazoo","Groupama","Crédit Agricole"],["Betclic","Winamax","Parions Sport","Crédit Agricole","Groupama","MAAF","Leclerc","Intermarché","Uber Eats","Kia"],["Betclic","Winamax","Parions Sport","Crédit Agricole","Leclerc","Intermarché","Groupama","Kia","Sodexo","BV Sport"]],
+ FRA:{p:[["Qatar Airways","Emirates","Uber Eats","Betclic","Winamax","Accor","Groupama","Crédit Agricole","Parions Sport","Orange"],["MAAF","Leclerc","Intermarché","Kia","Peugeot","Renault","Carrefour","Danone","TotalEnergies","BNP Paribas"],["Sodexo","Auchan","Michelin","Air France","La Poste","Société Générale","AXA","Leroy Merlin","Decathlon","Kronenbourg"]],
   m:[["Nike","Adidas","Puma","Kappa","Le Coq Sportif","Umbro","Macron","Hummel","Castore","New Balance"],["Kappa","Le Coq Sportif","Umbro","Macron","Hummel","Puma","Adidas","Nike","Castore","Kipsta"]]}};
+const logoPatro=(n,cls)=>typeof PATRO_LOGOS!=="undefined"&&PATRO_LOGOS[n]?`<span class="patro-logo${cls?" "+cls:""}"><img src="${PATRO_LOGOS[n]}" alt="${esc(n)}"></span>`:"";
 const tierPatro=()=>Math.min(2,Math.max(0,G.clubs[G.user.club].tier));
 function nomesPatro(qtd,usar){const L=(PATRO_REAIS[G.country]||PATRO_REAIS.BRA).p[tierPatro()].filter(n=>!(usar||[]).includes(n));return shuffle(L.slice()).slice(0,qtd)}
 // material esportivo (Série B e A): luvas maiores e um pouco por jogo
-function gerarMaterial(){const c=G.clubs[G.user.club],e=econ(G.tierBase[c.tier]),base=9*e*(FREC[c.tier]??1)*(.6+(c.fama||0)/80),f=()=>.88+rnd()*.24;
+const MULT_PATRO=[1.2,1.4,1]; // A, B, C: cada série paga claramente mais que a de baixo
+function gerarMaterial(){const c=G.clubs[G.user.club],e=econ(G.tierBase[c.tier]),base=9*e*(FREC[c.tier]??1)*(.6+(c.fama||0)/80)*(MULT_PATRO[c.tier]??1),f=()=>.88+rnd()*.24;
   const L=(PATRO_REAIS[G.country]||PATRO_REAIS.BRA).m[tierPatro()===0?0:1];
   return shuffle(L.slice()).slice(0,3).map(n=>({nome:n,tipo:"fixo",mat:1,porJogo:Math.round(base*.3*f()),luvas:Math.round(base*4.5*f()),desc:"Fornece o uniforme. Luvas altas na assinatura e um valor por jogo."}))}
 // patrocinador secundário (Série A): paga menos que o master
 function gerarSecundario(){return gerarPatrocinios(G.patro?[G.patro.nome]:[]).map(o=>({...o,sec:1,porJogo:Math.round(o.porJogo*.45),luvas:Math.round(o.luvas*.45),bonus:o.bonus&&Math.round(o.bonus*.45),bonusMeta:o.bonusMeta&&Math.round(o.bonusMeta*.45)}))}
 function gerarPatrocinios(usar){
   const c=G.clubs[G.user.club],e=econ(G.tierBase[c.tier]);
-  const base=9*e*(FREC[c.tier]??1)*(.6+(c.fama||0)/80);
+  const base=9*e*(FREC[c.tier]??1)*(.6+(c.fama||0)/80)*(MULT_PATRO[c.tier]??1);
   const nomes=nomesPatro(3,usar);while(nomes.length<3)nomes.push(pick(PATROCINIOS));
   const metaTxt=c.tier>0?`subir para a ${nomeLiga(c.tier-1)}`:`terminar entre os ${COPAS[pais().cont].mq} primeiros`;
   const f=()=>.88+rnd()*.24;
@@ -2184,7 +2189,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792235829";
+const VERSAO="1792239685";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3348,10 +3353,10 @@ function contadorJanela(){const J=G.janela;return `<div class="kpis"><div class=
 function cartaoPre(){
   let h=`<h2>Pré-temporada ${G.year}</h2>`;
   const ofs=(lst,qual,tit,txt)=>`<div class="cartao secao" style="margin-bottom:10px"><div><b class="etapa">${tit}</b><p class="muted peq" style="margin:4px 0 0">${txt}</p></div>
-    ${lst.map((o,i)=>`<div class="patro"><div class="linha" style="justify-content:space-between;align-items:flex-start"><div><b class="patro-nome">${esc(o.nome)}</b><div class="muted peq">${esc(o.desc)}</div></div></div>
+    ${lst.map((o,i)=>`<div class="patro">${logoPatro(o.nome)}<div class="linha" style="justify-content:space-between;align-items:flex-start"><div><b class="patro-nome">${esc(o.nome)}</b><div class="muted peq">${esc(o.desc)}</div></div></div>
       <div class="extrato num"><div><span>Luvas na assinatura</span><span>${dinheiro(o.luvas)}</span></div><div><span>Por jogo</span><span>${dinheiro(o.porJogo)}</span></div>${o.tipo==="vitoria"?`<div><span>Bônus por vitória</span><span>${dinheiro(o.bonus)}</span></div>`:""}${o.tipo==="meta"?`<div><span>Prêmio se ${esc(o.meta)}</span><span>${dinheiro(o.bonusMeta)}</span></div>`:""}</div>
       <button class="btn" data-a="patro" data-v="${i}" data-i="${qual}">Assinar com ${esc(o.nome)}</button></div>`).join("")}</div>`;
-  const resumo=(o,rot)=>`<div class="cartao linha" style="gap:14px;margin-bottom:10px">${rot==="Patrocinador master"?`<span>${uniformeSVG(G.clubs[G.user.club].unis[0],o.nome,54)}</span>`:""}<div><b class="etapa">${rot}: ${esc(o.nome)}</b><div class="muted peq">${dinheiro(o.porJogo)} por jogo${o.tipo==="vitoria"?` + ${dinheiro(o.bonus)} por vitória`:o.tipo==="meta"?` + ${dinheiro(o.bonusMeta)} se ${esc(o.meta)}`:""}</div></div></div>`;
+  const resumo=(o,rot)=>`<div class="cartao linha" style="gap:14px;margin-bottom:10px">${logoPatro(o.nome,"mini")||(rot==="Patrocinador master"?`<span>${uniformeSVG(G.clubs[G.user.club].unis[0],o.nome,54)}</span>`:"")}<div><b class="etapa">${rot}: ${esc(o.nome)}</b><div class="muted peq">${dinheiro(o.porJogo)} por jogo${o.tipo==="vitoria"?` + ${dinheiro(o.bonus)} por vitória`:o.tipo==="meta"?` + ${dinheiro(o.bonusMeta)} se ${esc(o.meta)}`:""}</div></div></div>`;
   const t=userTier();
   h+=G.patro?resumo(G.patro,"Patrocinador master"):ofs(G.ofertasPatro||[],"","1 · Patrocinador master","Empresas que querem estampar a camisa nesta temporada. O contrato vale por um ano, e as propostas melhoram conforme o clube cresce.");
   if(t===0)h+=G.patro2?resumo(G.patro2,"Patrocinador secundário"):G.ofertasPatro2?ofs(G.ofertasPatro2,"sec","1b · Patrocinador secundário","Na elite você tem um segundo patrocinador. Ele paga menos que o master."):(G.patro?"":`<p class="peq muted" style="margin:0 0 10px">Depois do master, você escolhe também um patrocinador secundário.</p>`);
@@ -4472,7 +4477,8 @@ function telaClube(){
     <div><span>Patrocínio</span><span>${dinheiro(f.patro+f.bonus)}</span></div>
     <div><span>Gastos da partida<small class="muted" style="display:block;font-size:11.5px">staff, arbitragem, segurança e estádio</small></span><span style="white-space:nowrap">${dinheiro((f.sal||0)+(f.man||0))}</span></div>
     <div><span>Saldo</span><span style="color:var(${f.tot>=0?"--ok":"--ruim"})">${dinheiro(f.tot)}</span></div></div>`;
-  h+=`<h2>Patrocínio</h2><div class="cartao">${G.patro?`<b>${esc(G.patro.nome)}</b><div class="muted peq">Contrato até o fim de ${G.patro.ano} · ${dinheiro(G.patro.porJogo)} por jogo${G.patro.tipo==="vitoria"?` + ${dinheiro(G.patro.bonus)} por vitória`:G.patro.tipo==="meta"?` + ${dinheiro(G.patro.bonusMeta)} se ${esc(G.patro.meta)}`:""}</div>`:'<span class="muted">Sem patrocinador. Escolha um na pré-temporada, na aba Início.</span>'}</div>`;
+  {const P=[[G.patro,"Master"],[G.patro2,"Secundário"],[G.material,"Material esportivo"]].filter(x=>x[0]);
+   h+=`<h2>Patrocínio</h2><div class="cartao secao">${P.length?P.map(([o,rot])=>`<div class="linha" style="gap:12px">${logoPatro(o.nome,"mini")}<div><b>${esc(o.nome)}</b> <span class="muted peq">· ${rot}</span><div class="muted peq">Até o fim de ${o.ano} · ${dinheiro(o.porJogo)} por jogo${o.tipo==="vitoria"?` + ${dinheiro(o.bonus)} por vitória`:o.tipo==="meta"?` + ${dinheiro(o.bonusMeta)} se ${esc(o.meta)}`:""}</div></div></div>`).join(""):'<span class="muted">Sem patrocinador. Escolha um na pré-temporada, no Início.</span>'}</div>`;}
   const ca=custoAmpliacao();
   h+=`<h2>Estádio</h2><div class="cartao secao"><p style="margin:0"><b>${esc(estadioDe(c))}</b> · ${c.cap.toLocaleString("pt-BR")} lugares · ${G.reformas||0} de ${REFORMAS.length} reformas.</p><button class="btn" data-a="aba" data-v="upgrades">Ver reformas em Upgrades</button></div>`;
   h+=`<h2>Técnico</h2><div class="cartao tec-card">${tecFoto(G.tec.n,G.tec.q)}<div class="nm"><b>${esc(G.tec.n)}</b><span>${G.tec.interino?"Interino":`${esc(nomeLiga(G.clubs[G.user.club].tier))} · ${dinheiro(G.tec.sal)}/mês`}</span></div><div class="acoes"><button class="btn mini" data-a="vertec">Trocar</button>${G.tec.interino?"":`<button class="btn mini perigo" data-a="demitec">Demitir</button>`}</div></div>`;
