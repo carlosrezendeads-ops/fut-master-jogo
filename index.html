@@ -753,26 +753,26 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792235007"></script>
-<script src="img/arte-capa.js?v=1792235007"></script>
-<script src="img/fundo-criacao.js?v=1792235007"></script>
-<script src="img/fundo-pais.js?v=1792235007"></script>
-<script src="img/fundo-escudo.js?v=1792235007"></script>
-<script src="img/simbolos.js?v=1792235007"></script>
-<script src="img/kits-foto.js?v=1792235007"></script>
-<script src="img/fundo-vestiario.js?v=1792235007"></script>
-<script src="img/rostos.js?v=1792235007"></script>
-<script src="img/estadio-fotos.js?v=1792235007"></script>
-<script src="img/super-fotos.js?v=1792235007"></script>
-<script src="img/trofeus.js?v=1792235007"></script>
-<script src="img/medalhas.js?v=1792235007"></script>
-<script src="img/fotos.js?v=1792235007"></script>
-<script src="img/fotos-vs.js?v=1792235007"></script>
-<script src="img/kit-homens.js?v=1792235007"></script>
-<script src="img/tec-fotos.js?v=1792235007"></script>
-<script src="dados/elencos.js?v=1792235007"></script>
-<script src="img/rostos-reais.js?v=1792235007"></script>
-<script src="img/escudos-img.js?v=1792235007"></script>
+<script src="img/escudos-reais.js?v=1792235068"></script>
+<script src="img/arte-capa.js?v=1792235068"></script>
+<script src="img/fundo-criacao.js?v=1792235068"></script>
+<script src="img/fundo-pais.js?v=1792235068"></script>
+<script src="img/fundo-escudo.js?v=1792235068"></script>
+<script src="img/simbolos.js?v=1792235068"></script>
+<script src="img/kits-foto.js?v=1792235068"></script>
+<script src="img/fundo-vestiario.js?v=1792235068"></script>
+<script src="img/rostos.js?v=1792235068"></script>
+<script src="img/estadio-fotos.js?v=1792235068"></script>
+<script src="img/super-fotos.js?v=1792235068"></script>
+<script src="img/trofeus.js?v=1792235068"></script>
+<script src="img/medalhas.js?v=1792235068"></script>
+<script src="img/fotos.js?v=1792235068"></script>
+<script src="img/fotos-vs.js?v=1792235068"></script>
+<script src="img/kit-homens.js?v=1792235068"></script>
+<script src="img/tec-fotos.js?v=1792235068"></script>
+<script src="dados/elencos.js?v=1792235068"></script>
+<script src="img/rostos-reais.js?v=1792235068"></script>
+<script src="img/escudos-img.js?v=1792235068"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2155,7 +2155,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792235007";
+const VERSAO="1792235068";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4023,7 +4023,7 @@ function destaques(){
 function telaTecnicos(){
   const ab=janelaAberta(),t=G.tec;
   let h=`<h2>Mercado</h2><div class="cartao secao"><div class="seg" role="group">${[["pais",pais().nome],["fora","Exterior"],["livres","Sem clube"],["tec","Técnicos"],["lendas","Lendas"]].map(([k,x])=>`<button data-a="morig" data-v="${k}" aria-pressed="${merc.orig===k}">${x}</button>`).join("")}</div></div>`;
-  h+=`<h2>Técnico atual</h2><div class="cartao tec-card">${tecFoto(t.n,t.q)}<div class="nm"><b>${esc(t.n)}</b><span>${t.interino?"Interino, sem custo":`Nível ${nivelTec(t.q)} · ${dinheiro(t.sal)}/mês`}</span><span>Efeito no time: ${bonusTec()>=0?"+":""}${bonusTec().toFixed(1)} em ataque e defesa · evolução dos jogadores ${Math.round((.55+t.q/150)*100)}%</span></div></div>`;
+  h+=`<h2>Técnico atual</h2><div class="cartao tec-card">${tecFoto(t.n,t.q)}<div class="nm"><b>${esc(t.n)}</b><span>${t.interino?"Interino, sem custo":`${esc(nomeLiga(G.clubs[G.user.club].tier))} · ${esc(G.clubs[G.user.club].name)} · ${dinheiro(t.sal)}/mês`}</span><span>Efeito no time: ${bonusTec()>=0?"+":""}${bonusTec().toFixed(1)} em ataque e defesa · evolução dos jogadores ${Math.round((.55+t.q/150)*100)}%</span></div></div>`;
   const dia=mercadoDia(),L=ab?(G.tecCand||[]):dia?diario().tec:[];
   h+=`<h2>${ab?"Técnicos da janela":"Técnico do dia"}</h2><p class="muted peq" style="margin:-4px 0 8px">${ab?"Dois técnicos disponíveis nesta janela.":dia?"Um técnico novo a cada renovação da loja (2 horas).":"Nenhum técnico no mercado agora."} Contrate pagando as luvas. Trocar de técnico custa 6 meses de salário do atual.</p>`;
   h+=`<div class="secao">${L.map((c,i)=>cartaoTecOferta(c,i,ab?"j":"d",true)).join("")||'<p class="muted">Nenhum técnico disponível agora.</p>'}</div>`;
@@ -4084,7 +4084,7 @@ const SECOES_ROSTO=[["c","Pele clara"],["a","Asiáticos"],["n","Negros"],["o","L
 function cartaoTecClube(cid){
   const c=G.clubs[cid],t=tecDoClube(cid);if(!t)return "";
   const ef=c.user?bonusTec():bonusIA(cid),efTxt=`${ef>=0?"+":""}${ef.toFixed(1)} em ataque e defesa`;
-  const info=c.user?(t.interino?"Interino, sem custo":`Nível ${nivelTec(t.q)} · ${dinheiro(t.sal)}/mês${t.desde?` · no clube desde ${t.desde}`:""}`):`Nível ${nivelTec(t.q)}${c.tier>=0&&c.tier<=2&&momento(cid)>.5?" · time em boa fase":""}`;
+  const info=c.user?(t.interino?"Interino, sem custo":`${esc(nomeLiga(c.tier))} · ${dinheiro(t.sal)}/mês${t.desde?` · no clube desde ${t.desde}`:""}`):`Nível ${nivelTec(t.q)}${c.tier>=0&&c.tier<=2&&momento(cid)>.5?" · time em boa fase":""}`;
   return `<div class="cartao tec-card ${c.user&&t.lenda?"tec-lenda":"tec-clube"}">${tecFoto(t.n,t.q)}<div class="nm"><small>${c.user&&t.lenda?"★ Técnico lenda":"Técnico"}</small><b>${esc(t.n)}</b><span>${info}</span><span class="tec-ef">Benefício: ${efTxt}</span></div></div>`;
 }
 function modalTime(cid){
@@ -4445,7 +4445,7 @@ function telaClube(){
   h+=`<h2>Patrocínio</h2><div class="cartao">${G.patro?`<b>${esc(G.patro.nome)}</b><div class="muted peq">Contrato até o fim de ${G.patro.ano} · ${dinheiro(G.patro.porJogo)} por jogo${G.patro.tipo==="vitoria"?` + ${dinheiro(G.patro.bonus)} por vitória`:G.patro.tipo==="meta"?` + ${dinheiro(G.patro.bonusMeta)} se ${esc(G.patro.meta)}`:""}</div>`:'<span class="muted">Sem patrocinador. Escolha um na pré-temporada, na aba Início.</span>'}</div>`;
   const ca=custoAmpliacao();
   h+=`<h2>Estádio</h2><div class="cartao secao"><p style="margin:0"><b>${esc(estadioDe(c))}</b> · ${c.cap.toLocaleString("pt-BR")} lugares · ${G.reformas||0} de ${REFORMAS.length} reformas.</p><button class="btn" data-a="aba" data-v="upgrades">Ver reformas em Upgrades</button></div>`;
-  h+=`<h2>Técnico</h2><div class="cartao tec-card">${tecFoto(G.tec.n,G.tec.q)}<div class="nm"><b>${esc(G.tec.n)}</b><span>${G.tec.interino?"Interino":`Nível ${nivelTec(G.tec.q)} · ${dinheiro(G.tec.sal)}/mês`}</span></div><div class="acoes"><button class="btn mini" data-a="vertec">Trocar</button>${G.tec.interino?"":`<button class="btn mini perigo" data-a="demitec">Demitir</button>`}</div></div>`;
+  h+=`<h2>Técnico</h2><div class="cartao tec-card">${tecFoto(G.tec.n,G.tec.q)}<div class="nm"><b>${esc(G.tec.n)}</b><span>${G.tec.interino?"Interino":`${esc(nomeLiga(G.clubs[G.user.club].tier))} · ${dinheiro(G.tec.sal)}/mês`}</span></div><div class="acoes"><button class="btn mini" data-a="vertec">Trocar</button>${G.tec.interino?"":`<button class="btn mini perigo" data-a="demitec">Demitir</button>`}</div></div>`;
   h+=salaTrofeus();
   h+=`<h2>Histórico</h2><div class="cartao">${G.titles.length?`<p style="margin:0 0 8px"><b>Títulos:</b> ${G.titles.map(esc).join(", ")}</p>`:""}${G.history.length?`<div class="rolar"><table class="hist"><thead><tr><th>Ano</th><th>Liga</th><th>Pos.</th><th>Pts</th></tr></thead><tbody>${G.history.map(x=>`<tr><td>${x.y}</td><td>${esc(x.l)}${x.copa?`<div class="muted peq">${esc(x.copa)}</div>`:""}${x.copaN?`<div class="muted peq">${esc(x.copaN)}</div>`:""}</td><td>${x.p}º</td><td>${x.pts}</td></tr>`).join("")}</tbody></table></div>`:'<p class="muted" style="margin:0">A primeira temporada ainda está em andamento.</p>'}</div>`;
   const bk=lerInfoBackup();
