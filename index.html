@@ -731,24 +731,24 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792194734"></script>
-<script src="img/arte-capa.js?v=1792194734"></script>
-<script src="img/fundo-criacao.js?v=1792194734"></script>
-<script src="img/fundo-pais.js?v=1792194734"></script>
-<script src="img/fundo-escudo.js?v=1792194734"></script>
-<script src="img/simbolos.js?v=1792194734"></script>
-<script src="img/rostos.js?v=1792194734"></script>
-<script src="img/estadio-fotos.js?v=1792194734"></script>
-<script src="img/super-fotos.js?v=1792194734"></script>
-<script src="img/trofeus.js?v=1792194734"></script>
-<script src="img/medalhas.js?v=1792194734"></script>
-<script src="img/fotos.js?v=1792194734"></script>
-<script src="img/fotos-vs.js?v=1792194734"></script>
-<script src="img/kit-homens.js?v=1792194734"></script>
-<script src="img/tec-fotos.js?v=1792194734"></script>
-<script src="dados/elencos.js?v=1792194734"></script>
-<script src="img/rostos-reais.js?v=1792194734"></script>
-<script src="img/escudos-img.js?v=1792194734"></script>
+<script src="img/escudos-reais.js?v=1792196627"></script>
+<script src="img/arte-capa.js?v=1792196627"></script>
+<script src="img/fundo-criacao.js?v=1792196627"></script>
+<script src="img/fundo-pais.js?v=1792196627"></script>
+<script src="img/fundo-escudo.js?v=1792196627"></script>
+<script src="img/simbolos.js?v=1792196627"></script>
+<script src="img/rostos.js?v=1792196627"></script>
+<script src="img/estadio-fotos.js?v=1792196627"></script>
+<script src="img/super-fotos.js?v=1792196627"></script>
+<script src="img/trofeus.js?v=1792196627"></script>
+<script src="img/medalhas.js?v=1792196627"></script>
+<script src="img/fotos.js?v=1792196627"></script>
+<script src="img/fotos-vs.js?v=1792196627"></script>
+<script src="img/kit-homens.js?v=1792196627"></script>
+<script src="img/tec-fotos.js?v=1792196627"></script>
+<script src="dados/elencos.js?v=1792196627"></script>
+<script src="img/rostos-reais.js?v=1792196627"></script>
+<script src="img/escudos-img.js?v=1792196627"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2090,7 +2090,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792194734";
+const VERSAO="1792196627";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -2324,7 +2324,7 @@ function rodaIniciar(r){
 }
 /* tique de roleta ao trocar de opção na roda */
 function somRoleta(){if(!SOM.ctx||SOM.mudo)return;const t=SOM.ctx.currentTime;if(t-(SOM.ultRoleta||-1)<.035)return;SOM.ultRoleta=t;
-  ruidoCurto(t,.025,.5,3500,SOM.fx,2);nota(t,1900+Math.random()*150,.04,"square",.05,SOM.fx,5000)}
+  ruidoCurto(t,.03,1.6,3000,SOM.fx,2);nota(t,1900+Math.random()*150,.05,"square",.32,SOM.fx,5000)}
 function modalRegras(){
   const R=[["Objetivo","Você é o dono do clube: comece na terceira divisão e leve o time até a elite do seu país e às copas continentais."],
    ["Partidas","Vitória dá mais dinheiro e XP (50), empate 25 e derrota 10. Dá para assistir ao vivo, fazer substituições e mudar a formação, ou simular sem assistir."],
@@ -2699,7 +2699,7 @@ function somIniciar(){
   SOM.mus=c.createGain();SOM.mus.gain.value=0;SOM.mus.connect(SOM.master);
   SOM.fx=c.createGain();SOM.fx.gain.value=1;SOM.fx.connect(SOM.master);
   trilhaIniciar();
-  SOM.buf={};["clique","erro","derrota","vitoria"].forEach(n=>fetch(`sons/${n}.mp3`).then(r=>r.arrayBuffer()).then(b=>new Promise((ok,er)=>c.decodeAudioData(b,ok,er))).then(buf=>SOM.buf[n]=buf).catch(()=>{}));
+  SOM.buf={};["clique","erro","derrota","vitoria","transicao"].forEach(n=>fetch(`sons/${n}.mp3`).then(r=>r.arrayBuffer()).then(b=>new Promise((ok,er)=>c.decodeAudioData(b,ok,er))).then(buf=>SOM.buf[n]=buf).catch(()=>{}));
   // ruído base
   const b=c.createBuffer(1,c.sampleRate*3,c.sampleRate),d=b.getChannelData(0);
   let last=0;for(let i=0;i<d.length;i++){const w=Math.random()*2-1;last=(last+.02*w)/1.02;d[i]=w*.6+last*3}
@@ -2731,7 +2731,7 @@ function somModo(m){
 }
 // trilha de fundo em mp3 (pasta musica/): na capa a música 3 em loop a 80%; nas telas do jogo as músicas se revezam a 60%, no pré-jogo as dele a 70%, com cruzamento (fade)
 const TRILHA_FADE=4;
-const LISTAS={musica:{faixas:[3,5,6,7,8,9,12].map(n=>`musica/musica${n}.mp3`),vol:.6},prejogo:{faixas:["musica/prejogo1.mp3","musica/prejogo2.mp3"],vol:.7}};
+const LISTAS={musica:{faixas:[3,5,6,7,8,9,12].map(n=>`musica/musica${n}.mp3`),vol:.6},prejogo:{faixas:["musica/prejogo1.mp3","musica/prejogo2.mp3"],vol:.8},torcida:{faixas:["musica/prejogo1.mp3","musica/prejogo2.mp3"],vol:.3}}; // partida ao vivo: músicas do pré-jogo bem baixas
 function trilhaIniciar(){const c=SOM.ctx;SOM.trilha=c.createGain();SOM.trilha.connect(SOM.master);SOM.cur=-1;SOM.ult={};
   SOM.el=[0,1].map(k=>{const a=new Audio();a.preload="auto";const g=c.createGain();g.gain.value=0;try{c.createMediaElementSource(a).connect(g)}catch(e){}g.connect(SOM.trilha);
     const s={a,g,id:0,vol:0};a.addEventListener("ended",()=>{if(SOM.el[SOM.cur]===s&&SOM.modo===s.lista&&LISTAS[s.lista])trilhaProxima(s.lista,1)});
@@ -2750,6 +2750,7 @@ function trilhaTocar(src,vol,seg,lista){const i=SOM.cur<0?0:1-SOM.cur,s=SOM.el[i
 function trilhaProxima(m,seg){const f=LISTAS[m].faixas;let i;do{i=Math.floor(Math.random()*f.length)}while(f.length>1&&i===SOM.ult[m]);SOM.ult[m]=i;trilhaTocar(f[i],LISTAS[m].vol,seg,m)}
 function trilhaModo(m){if(!SOM.el)return;const s=SOM.el[SOM.cur];
   if(m==="abertura"){if(s&&s.lista==="abertura")trilhaRetomar(s,1.5);else{SOM.ult.musica=0;trilhaTocar(LISTAS.musica.faixas[0],.8,1.5,"abertura")}}
+  else if(m==="torcida"&&s&&s.lista==="prejogo"&&!s.a.paused){s.lista="torcida";s.vol=LISTAS.torcida.vol;trilhaFade(s,s.vol,2.5)} // do pré-jogo pro jogo: mesma música, abaixando
   else if(LISTAS[m]){if(s&&s.lista===m)trilhaRetomar(s,1.5);else trilhaProxima(m,s?2.5:1.5)}
   else if(s)trilhaParar(s,1)}
 // quando a música está acabando, a próxima já entra
@@ -2842,7 +2843,7 @@ function somGol(nosso){
 function somVitoria(){if(!SOM.ctx||SOM.mudo)return;const t=SOM.ctx.currentTime;SOM.mus.gain.cancelScheduledValues(t);SOM.mus.gain.setTargetAtTime(.06,t,.1);SOM.mus.gain.setTargetAtTime(SOM.modo==="musica"?.2:0,t+4.5,.6);SOM.trilha.gain.cancelScheduledValues(t);SOM.trilha.gain.setTargetAtTime(.3,t,.1);SOM.trilha.gain.setTargetAtTime(1,t+4.5,.6);
   gritoTorcida(0,5,.5,true,false);torcidaOnda(.3,.4,2.8,2.2,[1000,800]);palmas(.3,5,30,.38);setTimeout(()=>gritoTorcida(0,2.5,.3,true,false),2400)}
 // efeitos em mp3 (pasta sons/): toca o arquivo; abafar = baixa a música de fundo enquanto ele toca
-function somArquivo(n,abafar){const b=SOM.ctx&&!SOM.mudo&&SOM.buf&&SOM.buf[n];if(!b)return false;const c=SOM.ctx,t=c.currentTime,s=c.createBufferSource();s.buffer=b;s.connect(SOM.fx);s.start(t);
+function somArquivo(n,abafar,vol){const b=SOM.ctx&&!SOM.mudo&&SOM.buf&&SOM.buf[n];if(!b)return false;const c=SOM.ctx,t=c.currentTime,s=c.createBufferSource();s.buffer=b;if(vol!=null&&vol!==1){const g=c.createGain();g.gain.value=vol;s.connect(g);g.connect(SOM.fx)}else s.connect(SOM.fx);s.start(t);
   if(abafar){SOM.trilha.gain.cancelScheduledValues(t);SOM.trilha.gain.setTargetAtTime(.2,t,.1);SOM.trilha.gain.setTargetAtTime(1,t+Math.max(1,b.duration-.5),.6)}return true}
 // erro: clicou em algo bloqueado ou que não pode (substitui o clique)
 function somErro(){SOM.errAt=Date.now();somArquivo("erro")}
@@ -2860,7 +2861,8 @@ function somClique(){if(!SOM.ctx||SOM.mudo||Date.now()-(SOM.errAt||0)<400)return
     hg.gain.value=.18;g.gain.setValueAtTime(.0001,t+d);g.gain.linearRampToValueAtTime(vol,t+d+.006);g.gain.exponentialRampToValueAtTime(.0005,t+d+dur);
     o.connect(g);h.connect(hg);hg.connect(g);g.connect(SOM.fx);o.start(t+d);h.start(t+d);o.stop(t+d+dur+.03);h.stop(t+d+dur+.03)})}
 // lançamento rápido (saída da abertura): whoosh subindo + impacto
-function somLancamento(){if(!SOM.ctx||SOM.mudo)return;const c=SOM.ctx,t=c.currentTime;
+function somLancamento(){if(!SOM.ctx||SOM.mudo)return;if(somArquivo("transicao",true,.85))return; // sons/transicao.mp3 (médio-alto, abaixa a música)
+  const c=SOM.ctx,t=c.currentTime;
   const s=c.createBufferSource();s.buffer=SOM.ruido;const bp=c.createBiquadFilter();bp.type="bandpass";bp.Q.value=2.5;bp.frequency.setValueAtTime(350,t);bp.frequency.exponentialRampToValueAtTime(6000,t+.5);
   const g=c.createGain();g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.9,t+.32);g.gain.exponentialRampToValueAtTime(.0005,t+.62);s.connect(bp);bp.connect(g);g.connect(SOM.fx);s.start(t,Math.random());s.stop(t+.7);
   const o=c.createOscillator(),og=c.createGain();o.type="sawtooth";o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(1600,t+.45);
