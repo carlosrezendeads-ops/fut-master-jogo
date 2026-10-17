@@ -731,24 +731,24 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792197567"></script>
-<script src="img/arte-capa.js?v=1792197567"></script>
-<script src="img/fundo-criacao.js?v=1792197567"></script>
-<script src="img/fundo-pais.js?v=1792197567"></script>
-<script src="img/fundo-escudo.js?v=1792197567"></script>
-<script src="img/simbolos.js?v=1792197567"></script>
-<script src="img/rostos.js?v=1792197567"></script>
-<script src="img/estadio-fotos.js?v=1792197567"></script>
-<script src="img/super-fotos.js?v=1792197567"></script>
-<script src="img/trofeus.js?v=1792197567"></script>
-<script src="img/medalhas.js?v=1792197567"></script>
-<script src="img/fotos.js?v=1792197567"></script>
-<script src="img/fotos-vs.js?v=1792197567"></script>
-<script src="img/kit-homens.js?v=1792197567"></script>
-<script src="img/tec-fotos.js?v=1792197567"></script>
-<script src="dados/elencos.js?v=1792197567"></script>
-<script src="img/rostos-reais.js?v=1792197567"></script>
-<script src="img/escudos-img.js?v=1792197567"></script>
+<script src="img/escudos-reais.js?v=1792199020"></script>
+<script src="img/arte-capa.js?v=1792199020"></script>
+<script src="img/fundo-criacao.js?v=1792199020"></script>
+<script src="img/fundo-pais.js?v=1792199020"></script>
+<script src="img/fundo-escudo.js?v=1792199020"></script>
+<script src="img/simbolos.js?v=1792199020"></script>
+<script src="img/rostos.js?v=1792199020"></script>
+<script src="img/estadio-fotos.js?v=1792199020"></script>
+<script src="img/super-fotos.js?v=1792199020"></script>
+<script src="img/trofeus.js?v=1792199020"></script>
+<script src="img/medalhas.js?v=1792199020"></script>
+<script src="img/fotos.js?v=1792199020"></script>
+<script src="img/fotos-vs.js?v=1792199020"></script>
+<script src="img/kit-homens.js?v=1792199020"></script>
+<script src="img/tec-fotos.js?v=1792199020"></script>
+<script src="dados/elencos.js?v=1792199020"></script>
+<script src="img/rostos-reais.js?v=1792199020"></script>
+<script src="img/escudos-img.js?v=1792199020"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2039,8 +2039,8 @@ let W=null; // assistente de criação
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function novoW(){return {passo:1,nome:"",sigla:"",tec:"",pais:"BRA",estadio:"",
   escudo:{forma:0,estampa:1,c1:"#1e6bd6",c2:"#ffffff",c3:"#0b1d3a",sigla:false,nomeOn:false,curva:0,tam:1,simbolo:0},
-  unis:[{estilo:"listras",camisa:"#1e6bd6",detalhe:"#ffffff",mangas:"#1e6bd6",gola:"#ffffff",calcao:"#ffffff",meiao:"#1e6bd6",meiaoEst:"faixa"},
-        {estilo:"faixa",camisa:"#ffffff",detalhe:"#1e6bd6",mangas:"#ffffff",gola:"#1e6bd6",calcao:"#1e6bd6",meiao:"#ffffff",meiaoEst:"faixa"}]}}
+  unis:[{estilo:"n1",camisa:"#1e6bd6",detalhe:"#ffffff",d2:"#151515",calcao:"#ffffff",calcaoF:"#1e6bd6",meiao:"#1e6bd6",meiaoF:"#ffffff",meiaoEst:"faixa"},
+        {estilo:"n6",camisa:"#ffffff",detalhe:"#1e6bd6",d2:"#151515",calcao:"#1e6bd6",calcaoF:"#ffffff",meiao:"#ffffff",meiaoF:"#1e6bd6",meiaoEst:"faixa"}]}}
 let uniSel=0;
 function migrar(g){
   if(!g||!g.clubs)return g;
@@ -2050,6 +2050,7 @@ function migrar(g){
   if(!g.salLendaV){g.salLendaV=1;const G0=G;G=g;IDX=null;Object.values(g.players).forEach(p=>{if(p.lenda)p.sal=Math.max(Math.round(p.sal*1.2*10)/10,salarioLenda(p))});G=G0;IDX=null}
   if(g.perfil&&g.perfil.nivel>NIVEL_MAX){g.perfil.nivel=NIVEL_MAX;g.perfil.xp=0}
   if(!g.escV2){g.escV2=1;Object.values(g.clubs).forEach(c=>{const e=c.escudo;if(!e)return;e.estampa=ESTAMPA_ANTIGA[e.estampa]??0;e.simbolo=SIMBOLO_ANTIGO[e.simbolo||0]??0})}
+  if(!g.uniV2){g.uniV2=1;const c=g.user&&g.clubs[g.user.club];if(c&&c.unis)c.unis.forEach(uniNovo)}
   if(!g.escV3){g.escV3=1;const e=g.user&&g.clubs[g.user.club]&&g.clubs[g.user.club].escudo;if(e&&e.nomeOn===undefined)e.nomeOn=false}
   if(!g.estV){g.estV=1;if((g.reformas||0)>=3)g.reformas--;}
   if(g.tecRen){const L=TECNICOS[g.country].split(",");Object.entries(g.tecRen).forEach(([a,b])=>{const i=L.findIndex(s=>s.split("|")[0]===a);if(i>=0)L[i]=b+"|"+L[i].split("|")[1]});TECNICOS[g.country]=L.join(",")}
@@ -2062,7 +2063,7 @@ function migrar(g){
   }});
   return g;
 }
-function inverterUni(u){return {...u,estilo:u.estilo==="liso"?"faixa":u.estilo,camisa:u.detalhe,detalhe:u.camisa,mangas:u.detalhe,gola:u.camisa,calcao:u.camisa,meiao:u.detalhe}}
+function inverterUni(u){if(MODELOS_UNI[u.estilo]){const n={...u,camisa:u.detalhe,detalhe:u.camisa};aplicarModeloUni(n,n.estilo);return n}return {...u,estilo:u.estilo==="liso"?"faixa":u.estilo,camisa:u.detalhe,detalhe:u.camisa,mangas:u.detalhe,gola:u.camisa,calcao:u.camisa,meiao:u.detalhe}}
 
 function salvar(){try{localStorage.setItem(CHAVE,JSON.stringify(G))}catch(e){}}
 /* seletor de cor próprio: abre direto no quadro de arrastar (sem a lista de cores prontas do celular) */
@@ -2090,7 +2091,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792197567";
+const VERSAO="1792199020";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -2187,8 +2188,40 @@ function escudoSVG(e,sigla,px,nome){if(e.nomeOn&&e.nomeTxt!=null&&e.nomeTxt.trim
 const escudoDe=(c,px)=>escudoSVG(c.escudo||{forma:0,estampa:1,c1:c.c1,c2:c.c2,c3:contrasteHex(c.c1)},c.short,px,c.name);
 const ESTILOS_UNI=[["liso","Liso"],["listras","Listras"],["listras3","Listras 3 cores"],["aros3","Horizontais 3 cores"],["faixa2","Faixa dupla"],["listrasFinas","Listras finas"],["aros","Listras horizontais"],["diagonal","Faixa diagonal"],["metade","Metade"],["faixa","Faixa no peito"],["faixaV","Faixa vertical"],["duasFaixas","Duas faixas"],["chevron","V no peito"],["ombros","Ombros"],["lateral","Laterais"],["degrade","Degradê"],["xadrez","Xadrez"]];
 const TORSO="M60 30L80 22Q100 34 120 22L140 30V132H60Z";
+/* 20 modelos de uniforme (arte do Carlos). Cores: 1=camisa (predominante), 2=detalhe, 3=d2 (terceira).
+   [nome, mangas, gola, calção, barra do calção, meião, faixa do meião, desenho(C1,C2,C3,id)] — números = qual das 3 cores */
+const UNI_R=(x,y,w,h,c)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}"/>`,UNI_P=(pt,c)=>`<polygon points="${pt}" fill="${c}"/>`;
+const MODELOS_UNI={
+ n1:["Listras",1,3,2,1,1,2,(a,b,c)=>[64,84,104,124].map(x=>UNI_R(x,0,10,140,b)).join("")],
+ n2:["Faixa central",2,3,1,2,2,1,(a,b,c)=>UNI_R(82,0,36,140,b)],
+ n3:["Horizontais 3 cores",3,3,3,2,2,1,(a,b,c)=>UNI_R(50,46,100,12,b)+UNI_R(50,58,100,12,c)+UNI_R(50,70,100,12,b)+UNI_R(50,98,100,12,b)],
+ n4:["Faixa diagonal",1,3,2,1,2,3,(a,b,c)=>UNI_P("52,26 64,20 150,112 150,128",c)+UNI_P("64,20 76,17 150,98 150,112",b)],
+ n5:["Metade",3,3,3,2,1,2,(a,b,c)=>UNI_R(100,0,60,140,b)],
+ n6:["Faixa no peito",1,2,3,2,1,2,(a,b,c)=>UNI_R(50,58,100,10,b)+UNI_R(50,68,100,10,c)],
+ n7:["Faixa e filete",1,3,2,3,1,2,(a,b,c)=>UNI_R(74,0,8,140,c)+UNI_R(82,0,22,140,b)],
+ n8:["Listras 3 cores",1,3,3,2,1,2,(a,b,c)=>{let r="";for(let x=64;x<140;x+=16)r+=UNI_R(x-2,0,2,140,b)+UNI_R(x,0,6,140,c)+UNI_R(x+6,0,2,140,b);return r}],
+ n9:["Faixa dupla no peito",1,3,2,3,2,1,(a,b,c)=>UNI_R(50,50,100,12,b)+UNI_R(50,62,100,12,c)+UNI_R(50,74,100,12,b)],
+ n10:["V no peito",1,3,3,2,1,2,(a,b,c)=>UNI_P("56,30 100,70 144,30 144,54 100,94 56,54",b)+UNI_P("56,36 100,76 144,36 144,49 100,88 56,49",c)],
+ n11:["Ombros",3,3,3,2,1,2,(a,b,c)=>`<path d="M50 0H150V44Q100 30 50 44Z" fill="${b}"/>`],
+ n12:["Painel lateral",3,3,2,3,2,1,(a,b,c)=>UNI_R(50,0,30,140,b)],
+ n13:["Listras escuras",1,3,3,2,1,2,(a,b,c)=>{let r="";for(let x=64;x<140;x+=18)r+=UNI_R(x-2,0,2,140,b)+UNI_R(x,0,10,140,c);return r}],
+ n14:["Degradê",3,3,3,2,1,2,(a,b,c,id)=>`<linearGradient id="${id}g" x1="0" y1="0" x2="0" y2="1"><stop offset=".35" stop-color="${a}"/><stop offset=".65" stop-color="${b}"/><stop offset="1" stop-color="${c}"/></linearGradient><rect x="50" y="0" width="100" height="140" fill="url(#${id}g)"/>`],
+ n15:["Faixa vertical fina",1,3,2,3,1,2,(a,b,c)=>UNI_R(88,0,4,140,b)+UNI_R(92,0,16,140,c)+UNI_R(108,0,4,140,b)+UNI_R(50,0,9,140,c)+UNI_R(141,0,9,140,c)],
+ n16:["Xadrez",2,1,3,2,1,2,(a,b,c)=>{let r="";for(let y=20;y<135;y+=14)for(let x=60;x<140;x+=14)if(((x-60)/14+(y-20)/14)%2===0)r+=UNI_R(x,y,14,14,b);return r}],
+ n17:["Diagonais",1,3,2,1,1,2,(a,b,c)=>`<g transform="rotate(-35 100 80)">${[-40,-14,12,38,64].map(d=>UNI_R(30,40+d,140,9,c)+UNI_R(30,49+d,140,5,b)).join("")}</g>`],
+ n18:["Faixa larga",1,3,3,2,1,2,(a,b,c)=>UNI_R(50,52,100,22,b)+UNI_R(50,74,100,10,c)],
+ n19:["Gola polo",3,2,2,3,2,3,(a,b,c)=>""],
+ n20:["Recortes laterais",2,3,3,2,1,2,(a,b,c)=>`<path d="M50 30Q76 80 72 140H50Z" fill="${c}"/><path d="M150 30Q124 80 128 140H150Z" fill="${c}"/><path d="M58 30Q80 80 76 140M142 30Q120 80 124 140" fill="none" stroke="${b}" stroke-width="3"/>`]
+};
+const ESTILO_ANTIGO_UNI={liso:"n19",listras:"n1",listras3:"n8",aros3:"n3",faixa2:"n9",listrasFinas:"n13",aros:"n3",diagonal:"n4",metade:"n5",faixa:"n6",faixaV:"n15",duasFaixas:"n7",chevron:"n10",ombros:"n11",lateral:"n20",degrade:"n14",xadrez:"n16"};
+/* cores efetivas de um uniforme de modelo novo: mangas e gola seguem o modelo; calção e meião têm cor própria (editável) */
+function efUni(u){const M=MODELOS_UNI[u.estilo];if(!M)return u;const C=[null,u.camisa,u.detalhe,u.d2||"#151515"];
+  return {...u,mangas:C[M[1]],gola:C[M[2]],calcao:u.calcao||C[M[3]],calcaoF:u.calcaoF||C[M[4]],meiao:u.meiao||C[M[5]],faixaM:u.meiaoF||C[M[6]]}}
+function uniNovo(u){if(u&&!MODELOS_UNI[u.estilo]){u.estilo=ESTILO_ANTIGO_UNI[u.estilo]||"n1";u.d2=u.d2||"#151515"}} // uniforme antigo -> modelo novo (mantém as cores)
+function aplicarModeloUni(u,k){const M=MODELOS_UNI[k];if(!M)return;const C=[null,u.camisa,u.detalhe,u.d2||"#151515"];u.estilo=k;u.calcao=C[M[3]];u.calcaoF=C[M[4]];u.meiao=C[M[5]];u.meiaoF=C[M[6]]}
 function padraoUni(u,id){
   const d2=u.d2||"#ffffff";
+  if(MODELOS_UNI[u.estilo])return {[u.estilo]:MODELOS_UNI[u.estilo][7](u.camisa,u.detalhe,u.d2||"#151515",id)};
   return {
     liso:"",
     listras:[62,82,102,122].map(x=>`<rect x="${x}" y="0" width="10" height="140" fill="${u.detalhe}"/>`).join(""),
@@ -2210,11 +2243,11 @@ function padraoUni(u,id){
   };
 }
 function uniformeSVG(u,patro,px,soCamisa){
-  const d2=u.d2||"#ffffff";
+  u=efUni(u);const d2=u.d2||"#ffffff";
   const id="cu"+(++svgN);
   const pats=padraoUni(u,id);
   const pt=patro?esc(patro.length>16?patro.slice(0,15)+"…":patro):"";
-  const meiaoFaixa=u.meiaoEst==="faixa"?`<rect x="68" y="190" width="20" height="7" fill="${u.detalhe}"/><rect x="112" y="190" width="20" height="7" fill="${u.detalhe}"/>`:"";
+  const meiaoFaixa=u.meiaoEst==="faixa"?`<rect x="68" y="190" width="20" height="7" fill="${u.faixaM||u.detalhe}"/><rect x="112" y="190" width="20" height="7" fill="${u.faixaM||u.detalhe}"/>`:"";
   if(soCamisa)return `<svg viewBox="24 14 152 122" width="${px}" height="${Math.round(px*122/152)}" aria-hidden="true">
   <defs><clipPath id="${id}"><path d="${TORSO}"/></clipPath></defs>
   <path d="M60 30L28 52L42 76L60 64Z" fill="${u.mangas}" stroke="rgba(0,0,0,.35)" stroke-width="2"/><path d="M140 30L172 52L158 76L140 64Z" fill="${u.mangas}" stroke="rgba(0,0,0,.35)" stroke-width="2"/>
@@ -2228,7 +2261,7 @@ function uniformeSVG(u,patro,px,soCamisa){
   <path d="${TORSO}" fill="none" stroke="rgba(0,0,0,.25)"/>
   <path d="M80 22Q100 44 120 22L115 21Q100 35 85 21Z" fill="${u.gola}" stroke="rgba(0,0,0,.25)"/>
   ${pt?`<text x="100" y="${u.estilo==="faixa"?104:76}" text-anchor="middle" font-family="Archivo,Arial,sans-serif" font-weight="700" font-size="9.5" fill="${contrasteHex(u.estilo==="metade"?u.camisa:u.camisa)}" stroke="${u.camisa}" stroke-width="2.5" paint-order="stroke">${pt}</text>`:""}
-  <path d="M62 134H138L142 180H106L100 162L94 180H58Z" fill="${u.calcao}" stroke="rgba(0,0,0,.25)"/>
+  <path d="M62 134H138L142 180H106L100 162L94 180H58Z" fill="${u.calcao}" stroke="rgba(0,0,0,.25)"/>${u.calcaoF?`<path d="M59 172H94L93 180H58ZM106 172H141L142 180H107Z" fill="${u.calcaoF}"/>`:""}
   <rect x="68" y="186" width="20" height="44" rx="3" fill="${u.meiao}" stroke="rgba(0,0,0,.25)"/><rect x="112" y="186" width="20" height="44" rx="3" fill="${u.meiao}" stroke="rgba(0,0,0,.25)"/>${meiaoFaixa}
   <path d="M66 228H90V240H60Q60 231 66 228Z" fill="#1b1b1b"/><path d="M110 228H134Q140 231 140 240H110Z" fill="#1b1b1b"/>
   <path d="M60 240H90M110 240H140" stroke="#d9d9d9" stroke-width="2"/></svg>`;
@@ -3073,7 +3106,7 @@ const barraEsc=(k,tit,min,max,v,a,b)=>{const p=Math.round((v-min)/(max-min)*100)
 let escAberto=null;
 function secEsc(k,tit,atual,grade,ck,cor,extra){const ab=escAberto===k;
   return `<div class="campo esc-sec${ab?" aberto":""}"><button type="button" class="esc-cab" data-a="escsec" data-v="${ab?"":k}"><span>${tit}</span><small>${esc(atual)}</small><b aria-hidden="true">${ab?"▲":"▼"}</b></button>${ab?grade+`<button type="button" class="btn prim full" data-a="escsec" data-v="">Salvar</button>`:""}
-  <div class="esc-cor"><span>Cores · personalizar</span><span class="chips">${chipCor(ck,cor,"Escolher cor")}${extra||""}</span></div></div>`}
+  ${ck||extra?`<div class="esc-cor"><span>Cores · personalizar</span><span class="chips">${ck?chipCor(ck,cor,"Escolher cor"):""}${extra||""}</span></div>`:""}</div>`}
 function editorEscudo(e,nome){if(e.nomeOn===undefined)e.nomeOn=false;
   return `<h2 style="margin-top:0">Escudo</h2>
   <div class="previa" id="prev-escudo">${escudoSVG(e,"",120,nome)}</div>
@@ -3096,29 +3129,29 @@ function editorEscudo(e,nome){if(e.nomeOn===undefined)e.nomeOn=false;
   <div class="campo"><span>Borda do nome</span><div class="seg" role="group">${[["1","Com borda"],["0","Sem borda"]].map(([k,n])=>`<button data-a="enomeborda" data-v="${k}" aria-pressed="${(e.nomeBorda!==false)===(k==="1")}">${n}</button>`).join("")}</div>${e.nomeBorda!==false?`<div class="linha-chip">${chipCor("nomeBordaCor",e.nomeBordaCor||contrasteHex(e.c5||e.c3),"Cor da borda")}</div>${barraEsc("nomeBordaEsp","Grossura da borda",.1,1,e.nomeBordaEsp??1,"Bem fina","Grossa")}`:""}</div>
   </div>`:""}`,"c5",e.c5||e.c3)}`;
 }
+const chipUni=(k,cor,txt)=>`<label class="chip-cor"><input type="color" data-cor="uni" data-k="${k}" value="${cor}"><i class="roda-cor" aria-hidden="true"></i><em style="background:${cor}"></em>${txt}</label>`;
 function editorUniforme(unis,e,patro){
-  const u=unis[uniSel];
+  unis.forEach(uniNovo);const u=unis[uniSel],ef=efUni(u);
   return `<h2 style="margin-top:0">Uniformes</h2>
   <div class="seg" role="group">${["Uniforme 1 (casa)","Uniforme 2 (fora)"].map((n,i)=>`<button data-a="unisel" data-v="${i}" aria-pressed="${uniSel===i}">${n}</button>`).join("")}</div>
   <div class="previa duas homens" id="prev-uni">${previaUnis(unis,patro)}</div>
-  <div class="campo"><span>Estilo da camisa</span><div class="grade8">${ESTILOS_UNI.map(([k,n])=>`<button data-a="uestilo" data-v="${k}" aria-pressed="${u.estilo===k}">${uniformeSVG({...u,estilo:k},"",30)}<small>${n}</small></button>`).join("")}</div></div>
-  <div class="campo"><span>Meião</span><div class="seg" role="group">${[["liso","Liso"],["faixa","Com faixa"]].map(([k,n])=>`<button data-a="umeiao" data-v="${k}" aria-pressed="${u.meiaoEst===k}">${n}</button>`).join("")}</div></div>
-  <div class="campo"><span>Cores de cada parte</span><div class="cores-lista">
-    ${[["camisa","Camisa"],["detalhe","Detalhes (listras, faixas)"],["mangas","Mangas"],["gola","Gola"],["calcao","Calção"],["meiao","Meião"],["d2","Terceira cor"]].map(([k,n])=>`<label class="cor-item"><input type="color" data-cor="uni" data-k="${k}" value="${u[k]||"#ffffff"}"><span>${n}</span><code>${(u[k]||"#ffffff").toUpperCase()}</code></label>`).join("")}
-  </div><div class="linha" style="flex-wrap:wrap">${e?`<button class="btn mini" data-a="ucores">Usar as cores do escudo</button>`:""}<button class="btn mini" data-a="uinverter">${uniSel===1?"Inverter cores do uniforme 1":"Copiar do uniforme 2 invertido"}</button></div>
-  <p class="peq muted" style="margin:0">A chuteira é padrão e não muda.</p></div>`;
+  ${secEsc("unimodelo","Camisa",MODELOS_UNI[u.estilo][0],`<div class="grade8">${Object.entries(MODELOS_UNI).map(([k,M])=>`<button data-a="uestilo" data-v="${k}" aria-pressed="${u.estilo===k}">${uniformeSVG({...u,estilo:k,calcao:"",calcaoF:"",meiao:"",meiaoF:""},"",30)}<small>${M[0]}</small></button>`).join("")}</div>`,null,null,chipUni("camisa",u.camisa,"Cor 1")+chipUni("detalhe",u.detalhe,"Cor 2")+chipUni("d2",u.d2||"#151515","Cor 3"))}
+  ${secEsc("unicalcao","Calção","2 cores",`<div class="linha-chip" style="gap:6px;flex-wrap:wrap">${chipUni("calcao",ef.calcao,"Cor do calção")}${chipUni("calcaoF",ef.calcaoF,"Cor da barra")}</div>`,null,null,"")}
+  ${secEsc("unimeiao","Meião",u.meiaoEst==="faixa"?"Com faixa":"Liso",`<div class="seg" role="group">${[["liso","Liso"],["faixa","Com faixa"]].map(([k,n])=>`<button data-a="umeiao" data-v="${k}" aria-pressed="${u.meiaoEst===k}">${n}</button>`).join("")}</div><div class="linha-chip" style="gap:6px;flex-wrap:wrap">${chipUni("meiao",ef.meiao,"Cor do meião")}${u.meiaoEst==="faixa"?chipUni("meiaoF",ef.faixaM,"Cor da faixa"):""}</div>`,null,null,"")}
+  <div class="linha" style="flex-wrap:wrap">${e?`<button class="btn mini" data-a="ucores">Usar as cores do escudo</button>`:""}<button class="btn mini" data-a="uinverter">${uniSel===1?"Inverter cores do uniforme 1":"Copiar do uniforme 2 invertido"}</button></div>
+  <p class="peq muted" style="margin:0">A chuteira é padrão e não muda.</p>`;
 }
 function homemUniforme(u,k,px){
-  const F=KIT_HOMENS[k%KIT_HOMENS.length],id="kh"+(++svgN),B=F.bb;
+  u=efUni(u);const F=KIT_HOMENS[k%KIT_HOMENS.length],id="kh"+(++svgN),B=F.bb;
   const pat=padraoUni(u,id+"p")[u.estilo]||"";const [x0,y0,x1,y1]=B.camisa,sx=(x1-x0)/100,sy=(y1-y0)/124;
   const mk=n=>`<mask id="${id}${n}" maskUnits="userSpaceOnUse" x="0" y="0" width="${F.w}" height="${F.h}"><image href="${F.m[n]}" width="${F.w}" height="${F.h}"/></mask>`;
   const g=(n,inner)=>`<g mask="url(#${id}${n})" style="mix-blend-mode:multiply">${inner}</g>`;
-  const mb=B.meiao,faixa=u.meiaoEst==="faixa"?`<rect x="0" y="${mb[1]+14}" width="${F.w}" height="${Math.round((mb[3]-mb[1])*.1)}" fill="${u.detalhe}"/>`:"";
+  const mb=B.meiao,faixa=u.meiaoEst==="faixa"?`<rect x="0" y="${mb[1]+14}" width="${F.w}" height="${Math.round((mb[3]-mb[1])*.1)}" fill="${u.faixaM||u.detalhe}"/>`:"",cb=B.calcao,friso=u.calcaoF&&cb?`<rect x="0" y="${Math.round(cb[3]-(cb[3]-cb[1])*.14)}" width="${F.w}" height="${Math.round((cb[3]-cb[1])*.14)}" fill="${u.calcaoF}"/>`:"";
   return `<svg viewBox="0 0 ${F.w} ${F.h}" width="${px}" height="${Math.round(px*F.h/F.w)}" aria-hidden="true"><defs>${["camisa","mangas","calcao","meiao"].map(mk).join("")}</defs>
   <image href="${F.src}" width="${F.w}" height="${F.h}"/>
   ${g("camisa",`<rect width="${F.w}" height="${F.h}" fill="${u.camisa}"/><g transform="translate(${x0} ${y0}) scale(${sx.toFixed(3)} ${sy.toFixed(3)}) translate(-50 -16)">${pat}</g>`)}
   ${g("mangas",`<rect width="${F.w}" height="${F.h}" fill="${u.mangas||u.camisa}"/>`)}
-  ${g("calcao",`<rect width="${F.w}" height="${F.h}" fill="${u.calcao}"/>`)}
+  ${g("calcao",`<rect width="${F.w}" height="${F.h}" fill="${u.calcao}"/>${friso}`)}
   ${g("meiao",`<rect width="${F.w}" height="${F.h}" fill="${u.meiao}"/>${faixa}`)}
   </svg>`;
 }
@@ -4359,9 +4392,9 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "etam":{const e=vis().e;e.tam=Math.round(Math.min(1.8,Math.max(.5,(e.tam||1)+.1*v))*10)/10;if(G)salvar();break;}
     case "unisel":uniSel=+v;break;
     case "uinverter":{const {unis}=vis();unis[uniSel]=inverterUni(unis[1-uniSel]);if(G)salvar();break;}
-    case "uestilo":vis().u.estilo=v;if(G)salvar();break;
+    case "uestilo":aplicarModeloUni(vis().u,v);if(G)salvar();break;
     case "umeiao":vis().u.meiaoEst=v;if(G)salvar();break;
-    case "ucores":{const {e,u}=vis();if(uniSel===0)Object.assign(u,{camisa:e.c1,detalhe:e.c2,mangas:e.c1,gola:e.c2,calcao:e.c2,meiao:e.c1});else Object.assign(u,{camisa:e.c2,detalhe:e.c1,mangas:e.c2,gola:e.c1,calcao:e.c1,meiao:e.c2});if(G)salvar();break;}
+    case "ucores":{const {e,u}=vis();if(uniSel===0)Object.assign(u,{camisa:e.c1,detalhe:e.c2,d2:e.c3});else Object.assign(u,{camisa:e.c2,detalhe:e.c1,d2:e.c3});aplicarModeloUni(u,u.estilo);if(G)salvar();break;}
     case "patro":{const er=escolherPatrocinio(+v);if(er)toastErro(er);salvar();break;}
     case "fecharjanela":{const er=fecharJanela();if(er){toastErro(er);return}salvar();toast(G.ev===0?"Bola rolando! Boa temporada.":"Janela fechada.");window.scrollTo(0,0);break;}
     case "iniciarjogo":{const er=iniciarAoVivo(false);if(er){toastErro(er);return}somIniciar();setTimeout(()=>apito(.9),250);painel=null;liveSel=null;aba="partida";salvar();window.scrollTo(0,0);break;}
