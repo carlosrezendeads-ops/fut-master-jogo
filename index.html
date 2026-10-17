@@ -731,24 +731,24 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792196927"></script>
-<script src="img/arte-capa.js?v=1792196927"></script>
-<script src="img/fundo-criacao.js?v=1792196927"></script>
-<script src="img/fundo-pais.js?v=1792196927"></script>
-<script src="img/fundo-escudo.js?v=1792196927"></script>
-<script src="img/simbolos.js?v=1792196927"></script>
-<script src="img/rostos.js?v=1792196927"></script>
-<script src="img/estadio-fotos.js?v=1792196927"></script>
-<script src="img/super-fotos.js?v=1792196927"></script>
-<script src="img/trofeus.js?v=1792196927"></script>
-<script src="img/medalhas.js?v=1792196927"></script>
-<script src="img/fotos.js?v=1792196927"></script>
-<script src="img/fotos-vs.js?v=1792196927"></script>
-<script src="img/kit-homens.js?v=1792196927"></script>
-<script src="img/tec-fotos.js?v=1792196927"></script>
-<script src="dados/elencos.js?v=1792196927"></script>
-<script src="img/rostos-reais.js?v=1792196927"></script>
-<script src="img/escudos-img.js?v=1792196927"></script>
+<script src="img/escudos-reais.js?v=1792197353"></script>
+<script src="img/arte-capa.js?v=1792197353"></script>
+<script src="img/fundo-criacao.js?v=1792197353"></script>
+<script src="img/fundo-pais.js?v=1792197353"></script>
+<script src="img/fundo-escudo.js?v=1792197353"></script>
+<script src="img/simbolos.js?v=1792197353"></script>
+<script src="img/rostos.js?v=1792197353"></script>
+<script src="img/estadio-fotos.js?v=1792197353"></script>
+<script src="img/super-fotos.js?v=1792197353"></script>
+<script src="img/trofeus.js?v=1792197353"></script>
+<script src="img/medalhas.js?v=1792197353"></script>
+<script src="img/fotos.js?v=1792197353"></script>
+<script src="img/fotos-vs.js?v=1792197353"></script>
+<script src="img/kit-homens.js?v=1792197353"></script>
+<script src="img/tec-fotos.js?v=1792197353"></script>
+<script src="dados/elencos.js?v=1792197353"></script>
+<script src="img/rostos-reais.js?v=1792197353"></script>
+<script src="img/escudos-img.js?v=1792197353"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2090,7 +2090,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792196927";
+const VERSAO="1792197353";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -2324,6 +2324,7 @@ function rodaIniciar(r){
 }
 /* tique de roleta ao trocar de opção na roda */
 function somRoleta(){if(!SOM.ctx||SOM.mudo)return;const t=SOM.ctx.currentTime;if(t-(SOM.ultRoleta||-1)<.035)return;SOM.ultRoleta=t;
+  if(somArquivo("roleta",false,VOL_BOTAO))return; // sons/roleta.mp3
   ruidoCurto(t,.03,1.6,3000,SOM.fx,2);nota(t,1900+Math.random()*150,.05,"square",.32,SOM.fx,5000)}
 function modalRegras(){
   const R=[["Objetivo","Você é o dono do clube: comece na terceira divisão e leve o time até a elite do seu país e às copas continentais."],
@@ -2699,7 +2700,7 @@ function somIniciar(){
   SOM.mus=c.createGain();SOM.mus.gain.value=0;SOM.mus.connect(SOM.master);
   SOM.fx=c.createGain();SOM.fx.gain.value=1;{const lim=c.createDynamicsCompressor();lim.threshold.value=-6;lim.knee.value=4;lim.ratio.value=12;lim.attack.value=.002;lim.release.value=.15;SOM.fx.connect(lim);lim.connect(SOM.master)} // limitador: efeitos altos sem estourar
   trilhaIniciar();
-  SOM.buf={};["clique","erro","derrota","vitoria","transicao"].forEach(n=>fetch(`sons/${n}.mp3`).then(r=>r.arrayBuffer()).then(b=>new Promise((ok,er)=>c.decodeAudioData(b,ok,er))).then(buf=>SOM.buf[n]=buf).catch(()=>{}));
+  SOM.buf={};["clique","erro","derrota","vitoria","transicao","roleta"].forEach(n=>fetch(`sons/${n}.mp3`).then(r=>r.arrayBuffer()).then(b=>new Promise((ok,er)=>c.decodeAudioData(b,ok,er))).then(buf=>SOM.buf[n]=buf).catch(()=>{}));
   // ruído base
   const b=c.createBuffer(1,c.sampleRate*3,c.sampleRate),d=b.getChannelData(0);
   let last=0;for(let i=0;i<d.length;i++){const w=Math.random()*2-1;last=(last+.02*w)/1.02;d[i]=w*.6+last*3}
