@@ -769,29 +769,29 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792277253"></script>
-<script src="img/arte-capa.js?v=1792277253"></script>
-<script src="img/fundo-criacao.js?v=1792277253"></script>
-<script src="img/fundo-pais.js?v=1792277253"></script>
-<script src="img/fundo-escudo.js?v=1792277253"></script>
-<script src="img/simbolos.js?v=1792277253"></script>
-<script src="img/kits-foto.js?v=1792277253"></script>
-<script src="img/fundo-vestiario.js?v=1792277253"></script>
-<script src="img/patro-logos.js?v=1792277253"></script>
-<script src="img/rostos.js?v=1792277253"></script>
-<script src="img/estadio-fotos.js?v=1792277253"></script>
-<script src="img/super-fotos.js?v=1792277253"></script>
-<script src="img/trofeus.js?v=1792277253"></script>
-<script src="img/medalhas.js?v=1792277253"></script>
-<script src="img/fotos.js?v=1792277253"></script>
-<script src="img/fotos-vs.js?v=1792277253"></script>
-<script src="img/kit-homens.js?v=1792277253"></script>
-<script src="img/tec-fotos.js?v=1792277253"></script>
-<script src="dados/elencos.js?v=1792277253"></script>
-<script src="img/rostos-reais.js?v=1792277253"></script>
-<script src="img/escudos-img.js?v=1792277253"></script>
-<script src="img/tradutores.js?v=1792277253"></script>
-<script src="dados/idiomas.js?v=1792277253"></script>
+<script src="img/escudos-reais.js?v=1792280201"></script>
+<script src="img/arte-capa.js?v=1792280201"></script>
+<script src="img/fundo-criacao.js?v=1792280201"></script>
+<script src="img/fundo-pais.js?v=1792280201"></script>
+<script src="img/fundo-escudo.js?v=1792280201"></script>
+<script src="img/simbolos.js?v=1792280201"></script>
+<script src="img/kits-foto.js?v=1792280201"></script>
+<script src="img/fundo-vestiario.js?v=1792280201"></script>
+<script src="img/patro-logos.js?v=1792280201"></script>
+<script src="img/rostos.js?v=1792280201"></script>
+<script src="img/estadio-fotos.js?v=1792280201"></script>
+<script src="img/super-fotos.js?v=1792280201"></script>
+<script src="img/trofeus.js?v=1792280201"></script>
+<script src="img/medalhas.js?v=1792280201"></script>
+<script src="img/fotos.js?v=1792280201"></script>
+<script src="img/fotos-vs.js?v=1792280201"></script>
+<script src="img/kit-homens.js?v=1792280201"></script>
+<script src="img/tec-fotos.js?v=1792280201"></script>
+<script src="dados/elencos.js?v=1792280201"></script>
+<script src="img/rostos-reais.js?v=1792280201"></script>
+<script src="img/escudos-img.js?v=1792280201"></script>
+<script src="img/tradutores.js?v=1792280201"></script>
+<script src="dados/idiomas.js?v=1792280201"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2214,7 +2214,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792277253";
+const VERSAO="1792280201";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3198,10 +3198,15 @@ const TRADUTORES={
   FRA:{nome:"Amélie Diallo",ola:"Bonjour, {n} ! Comment ça va ?",hist:"Meu nome é Amélie, sou professora de idiomas e tradutora. Sou de Marselha, filha de mãe baiana, e cresci falando português em casa. Morei dois anos em Salvador antes de voltar pra França.",extra:"Os franceses são exigentes com o idioma, e a imprensa daqui adora uma polêmica. Ter alguém do seu lado ajuda muito."}};
 const PAIS_NA={ARG:"na Argentina",ESP:"na Espanha",ENG:"na Inglaterra",GER:"na Alemanha",FRA:"na França"};
 function fotoTrad(i){const k=G.country,L=typeof TRADUTORES_IMG!=="undefined"&&TRADUTORES_IMG[k];return L?`<img class="trad-foto" src="${L[i]}" alt="">`:""}
-function modalTradutor(){const t=TRADUTORES[G.country];if(!t){G.tradOferta=false;return}
+function modalTradutor(volta){const t=TRADUTORES[G.country];if(!t){G.tradOferta=false;return}
   const n=esc((G.user.coach||"Professor").split(" ")[0]),m=pais().moeda,seta=`<button class="trad-seta" data-a="tradprox" aria-label="Próximo">›</button>`;
   const card=(i,txt,pe)=>`<div class="trad-card">${fotoTrad(i)}<div class="trad-bal">${txt}</div>${pe}</div>`;
   fecharModal();const v=document.createElement("div");v.className="veu trad-veu";v.setAttribute("data-notr","");
+  if(volta){ // chamado de novo em Ajustes: só um card de boas-vindas
+    v.innerHTML=`<div class="trad-box" role="dialog" aria-modal="true"><div class="trad-nome">${esc(t.nome)} <small>· tradutor</small></div><div class="trad-cards">
+    ${card(0,`<b class="trad-ola">${esc(t.ola.split("!")[0].replace("{n}",n))}!</b><p>Que bom que você voltou! Será um prazer trabalhar com você.</p><p>O valor continua o mesmo: <b>${m} 1.000 por mês</b>, e tudo no clube fica em português pra você.</p>`,`<div class="botoes"><button class="btn" data-a="tradfim">Agora não</button><button class="btn prim" data-a="tradsim">Contratar</button></div>`)}
+    </div></div>`;
+    document.body.appendChild(v);handlers(v);return}
   v.innerHTML=`<div class="trad-box" role="dialog" aria-modal="true"><div class="trad-nome">${esc(t.nome)} <small>· tradutor</small></div><div class="trad-cards">
     ${card(0,`<b class="trad-ola">${esc(t.ola.replace("{n}",n))}</b><p>${t.hist}</p>`,seta)}
     ${card(1,`<p>Fiquei sabendo que você é brasileiro e fundou um time aqui ${PAIS_NA[G.country]}, parabéns!</p><p>${t.extra}</p><p>Então pensei que talvez você precisasse de um tradutor pra te ajudar na comunicação...</p>`,seta)}
@@ -4771,7 +4776,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "tradprox":{const c=document.querySelector(".trad-cards");if(c)c.scrollBy({left:c.clientWidth,behavior:"smooth"});return}
     case "tradsim":case "tradnao":responderTradutor(a==="tradsim");return;
     case "tradfim":fecharModal();render();return;
-    case "tradcfg":if(G.tradutor){G.tradutor=false;salvar();render();toast(TRADUTORES[G.country].nome+" foi dispensado.")}else{G.tradOferta=true;salvar();render()}return;
+    case "tradcfg":if(G.tradutor){G.tradutor=false;salvar();render();toast(TRADUTORES[G.country].nome+" foi dispensado.")}else modalTradutor(true);return;
     case "vib":VIB_ON=!VIB_ON;try{localStorage.setItem("fut-vib",VIB_ON?"1":"0")}catch(e){}if(VIB_ON)vibrar("premio");if($("#splash")&&!$("#splash").hidden&&document.querySelector(".veu [data-a=vib]"))modalAjustesSp();else render();return;
     case "venda":fecharModal();modalVenda(+v);return;
     case "vpreco":{const p=G.players[+el.dataset.i],inp=$("#venda-preco");if(!p||!inp)return;const pas=Math.max(5,Math.round(valorJusto(p)*.05/5)*5);inp.value=Math.max(5,(+inp.value||0)+pas*(+v));inp.dispatchEvent(new Event("input",{bubbles:true}));return;}
