@@ -731,24 +731,24 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792197353"></script>
-<script src="img/arte-capa.js?v=1792197353"></script>
-<script src="img/fundo-criacao.js?v=1792197353"></script>
-<script src="img/fundo-pais.js?v=1792197353"></script>
-<script src="img/fundo-escudo.js?v=1792197353"></script>
-<script src="img/simbolos.js?v=1792197353"></script>
-<script src="img/rostos.js?v=1792197353"></script>
-<script src="img/estadio-fotos.js?v=1792197353"></script>
-<script src="img/super-fotos.js?v=1792197353"></script>
-<script src="img/trofeus.js?v=1792197353"></script>
-<script src="img/medalhas.js?v=1792197353"></script>
-<script src="img/fotos.js?v=1792197353"></script>
-<script src="img/fotos-vs.js?v=1792197353"></script>
-<script src="img/kit-homens.js?v=1792197353"></script>
-<script src="img/tec-fotos.js?v=1792197353"></script>
-<script src="dados/elencos.js?v=1792197353"></script>
-<script src="img/rostos-reais.js?v=1792197353"></script>
-<script src="img/escudos-img.js?v=1792197353"></script>
+<script src="img/escudos-reais.js?v=1792197567"></script>
+<script src="img/arte-capa.js?v=1792197567"></script>
+<script src="img/fundo-criacao.js?v=1792197567"></script>
+<script src="img/fundo-pais.js?v=1792197567"></script>
+<script src="img/fundo-escudo.js?v=1792197567"></script>
+<script src="img/simbolos.js?v=1792197567"></script>
+<script src="img/rostos.js?v=1792197567"></script>
+<script src="img/estadio-fotos.js?v=1792197567"></script>
+<script src="img/super-fotos.js?v=1792197567"></script>
+<script src="img/trofeus.js?v=1792197567"></script>
+<script src="img/medalhas.js?v=1792197567"></script>
+<script src="img/fotos.js?v=1792197567"></script>
+<script src="img/fotos-vs.js?v=1792197567"></script>
+<script src="img/kit-homens.js?v=1792197567"></script>
+<script src="img/tec-fotos.js?v=1792197567"></script>
+<script src="dados/elencos.js?v=1792197567"></script>
+<script src="img/rostos-reais.js?v=1792197567"></script>
+<script src="img/escudos-img.js?v=1792197567"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -1395,7 +1395,7 @@ function lesionar(s,i,jogos,motivo,txt){
   const eu=L.cid===G.user.club;
   p.inj=Math.max(p.inj||0,jogos+1);V.les.push(id);L.xi[i]=null;if(L.part[id])L.part[id].fim=V.min;(L.saiu=L.saiu||{})[id]="les";
   (p.lesoes=p.lesoes||[]).push([G.year,jogos,motivo]);if(p.lesoes.length>12)p.lesoes.shift();
-  narrar("lesao",txt);
+  narrar("lesao",txt);V.feed[V.feed.length-1].eu=eu;
   if(eu&&!V.auto&&V.cmd==="manual"&&L.subs<MAX_SUBS&&V.est==="rodando"){V.est="pausa";V.motivo="lesao";V.vaga=i}
   else if(L.subs<MAX_SUBS){const q=melhorReserva(s,FORMACOES[L.form].s[i]);if(q)substituir(s,i,q.id,false,"lesão")}
 }
@@ -1403,7 +1403,7 @@ function vitimaFalta(s){const o=s==="h"?"a":"h",L=G.live.L[o],sl=FORMACOES[L.for
 function expulsar(s,i,txt){
   const V=G.live,L=V.L[s],id=L.xi[i],p=G.players[id];
   L.xi[i]=null;L.bloq[i]=true;if(L.part[id])L.part[id].fim=V.min;(L.saiu=L.saiu||{})[id]="exp";
-  narrar("vermelho",txt);
+  narrar("vermelho",txt);if(L.cid===G.user.club)V.feed[V.feed.length-1].eu=true;
   if(p&&p.club===G.user.club)p.susp=(p.susp||0)+1;
   // goleiro expulso: entra o reserva no lugar de um atacante
   if(FORMACOES[L.form].s[i]==="GOL"&&L.subs<MAX_SUBS){
@@ -2090,7 +2090,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792197353";
+const VERSAO="1792197567";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -2317,7 +2317,7 @@ function rodaIniciar(r){
   if(!r)return;const its=[...r.children];
   const marca=()=>{const m=r.scrollTop+r.clientHeight/2;let melhor=null,d0=1e9;
     its.forEach(it=>{const d=Math.abs(it.offsetTop+it.offsetHeight/2-m);const k=Math.min(d/it.offsetHeight,1.5);it.style.setProperty("--k",k.toFixed(2));if(d<d0){d0=d;melhor=it}});
-    if(r._sel&&melhor!==r._sel)somRoleta();r._sel=melhor;
+    if(r._sel&&melhor!==r._sel){somRoleta();vibrar("roleta")}r._sel=melhor;
     its.forEach(it=>it.classList.toggle("sel",it===melhor))};
   let tq=0;r.addEventListener("scroll",()=>{marca();cancelAnimationFrame(tq);tq=requestAnimationFrame(marca)},{passive:true});
   requestAnimationFrame(()=>{const i0=its[0];r.scrollTop=i0.offsetTop+i0.offsetHeight/2-r.clientHeight/2;marca()});
@@ -2339,6 +2339,7 @@ function modalRegras(){
 }
 function modalAjustesSp(){
   modal(`<h3>Ajustes</h3><div class="secao">
+    <div class="linha" style="justify-content:space-between"><span>Vibração (Android)</span><button class="btn mini" data-a="vib">${VIB_ON?"Desligar vibração":"Ligar vibração"}</button></div>
     <div class="linha" style="justify-content:space-between"><span>Som e música</span><button class="btn mini" data-a="splsom">${SOM.mudo?"Ligar som":"Desligar som"}</button></div>
     ${G?`<div class="linha" style="justify-content:space-between"><span>Salvar a carreira num arquivo</span><button class="btn mini" data-a="salvararq">Salvar arquivo</button></div>`:""}
   </div><div class="botoes"><button class="btn prim" data-a="fechar">Pronto</button></div>`);
@@ -2847,12 +2848,12 @@ function somVitoria(){if(!SOM.ctx||SOM.mudo)return;const t=SOM.ctx.currentTime;S
 function somArquivo(n,abafar,vol){const b=SOM.ctx&&!SOM.mudo&&SOM.buf&&SOM.buf[n];if(!b)return false;const c=SOM.ctx,t=c.currentTime,s=c.createBufferSource();s.buffer=b;if(vol!=null&&vol!==1){const g=c.createGain();g.gain.value=vol;s.connect(g);g.connect(SOM.fx)}else s.connect(SOM.fx);s.start(t);
   if(abafar){SOM.trilha.gain.cancelScheduledValues(t);SOM.trilha.gain.setTargetAtTime(.2,t,.1);SOM.trilha.gain.setTargetAtTime(1,t+Math.max(1,b.duration-.5),.6)}return true}
 // erro: clicou em algo bloqueado ou que não pode (substitui o clique)
-function somErro(){SOM.errAt=Date.now();somArquivo("erro",false,VOL_BOTAO)}
+function somErro(){vibrar("erro");SOM.errAt=Date.now();somArquivo("erro",false,VOL_BOTAO)}
 const VOL_BOTAO=1.8; // cliques, compra e erro: médio-alto, por cima da música
 function toastErro(t){somErro();toast(t)}
 // fim de partida: vitória ou derrota
 function perdeuUltimo(){const r=G.last,uid=G.user.club;if(!r)return false;const gu=r.h===uid?r.gh:r.ga,go=r.h===uid?r.ga:r.gh;return gu<go||(r.ko&&!r.passou&&gu===go)}
-function somResultado(){if(venceuUltimo())somArquivo("vitoria",true);else if(perdeuUltimo())somArquivo("derrota",true)}
+function somResultado(){vibrar(venceuUltimo()?"vitoria":perdeuUltimo()?"derrota":"premio");if(venceuUltimo())somArquivo("vitoria",true);else if(perdeuUltimo())somArquivo("derrota",true)}
 // clique dos botões
 function somClique(){if(!SOM.ctx||SOM.mudo||Date.now()-(SOM.errAt||0)<400)return;const c=SOM.ctx,t=c.currentTime;
   if(somArquivo("clique",false,VOL_BOTAO))return; // sons/clique.mp3; enquanto não carrega, usa o toque gerado abaixo
@@ -2877,14 +2878,14 @@ function somDinheiro(){if(!SOM.ctx||SOM.mudo)return;const c=SOM.ctx,t=c.currentT
   [[0,2093],[0,2637],[.09,3136],[.09,4186]].forEach(([d,f])=>nota(t+d,f,.55,"triangle",.2,SOM.fx));
   for(let i=0;i<6;i++)nota(t+.16+i*.045+Math.random()*.02,3200+Math.random()*2200,.12,"sine",.1,SOM.fx)}
 // conquista: fanfarra curta + torcida
-function somConquista(){if(!SOM.ctx||SOM.mudo)return;const c=SOM.ctx,t=c.currentTime;if(t-(SOM.ultConq||-9)<3)return;SOM.ultConq=t;
+function somConquista(){vibrar("premio");if(!SOM.ctx||SOM.mudo)return;const c=SOM.ctx,t=c.currentTime;if(t-(SOM.ultConq||-9)<3)return;SOM.ultConq=t;
   // conquista/nível/prêmio: alto, por cima da música
   [72,76,79].forEach((n,i)=>{nota(t+i*.1,mtof(n),.18,"square",.18,SOM.fx,3200);nota(t+i*.1,mtof(n+12),.18,"triangle",.1,SOM.fx)});
   [84,79,76,72].forEach(n=>nota(t+.32,mtof(n),1.1,"sawtooth",.12,SOM.fx,2800));
   ruidoCurto(t+.32,.5,.45,6000,SOM.fx);
   if(typeof gritoTorcida==="function")gritoTorcida(.1,2,.25)}
 /* moedas voando + valor subindo do botão */
-function efeitoDinheiro(r,dc,dk){
+function efeitoDinheiro(r,dc,dk){vibrar("premio");
   somDinheiro();
   const x=r&&r.width?r.left+r.width/2:innerWidth/2,y=r&&r.height?r.top+r.height/2:innerHeight/2,ganho=dc>0||(!dc&&dk>0);
   const t=document.createElement("div");t.className="fx-din"+(ganho?" ganho":"");
@@ -2896,7 +2897,15 @@ function efeitoDinheiro(r,dc,dk){
     document.body.appendChild(m);setTimeout(()=>m.remove(),1200)}
 }
 const DIN_ACOES=new Set(["teclenda","simularjogo","compconf","reforma","ampliar","lenda","invcompra","contratec","renovconf","dispconf","demiteconf","quitaremp","empconf","aceitar","patro"]);
+/* vibração (só Android): liga/desliga em Ajustes */
+let VIB_ON=true;try{VIB_ON=localStorage.getItem("fut-vib")!=="0"}catch(e){}
+const VIB={golNosso:[120,60,120,60,260],golContra:[180],vitoria:[80,50,80,50,80,50,300],derrota:[260],roleta:8,erro:[40,50,40],premio:[60,40,140],alerta:[110],capa:20};
+function vibrar(k){if(!VIB_ON||!navigator.vibrate)return;try{navigator.vibrate(VIB[k]??k)}catch(e){}}
+function vibEventos(lista,V,antes){const meu=V.lado,gm=meu==="h"?V.gh:V.ga,go=meu==="h"?V.ga:V.gh;
+  if(antes){if(gm>antes.gm)return vibrar("golNosso");if(go>antes.go)return vibrar("golContra")}
+  if(lista.some(f=>(f.t==="vermelho"||f.t==="lesao")&&f.eu))vibrar("alerta")}
 function somEventos(lista,V,antes){
+  vibEventos(lista,V,antes);
   if(!SOM.ctx||SOM.mudo)return;
   const meu=V.lado,gm=meu==="h"?V.gh:V.ga,go=meu==="h"?V.ga:V.gh;
   if(antes){if(gm>antes.gm)somGol(true);else if(go>antes.go)somGol(false)}
@@ -2945,7 +2954,7 @@ function render(){
   if(G)tocou();
   if(SOM.ctx)somModo(modoDesejado());
   if(abertura)return renderAbertura();
-  {const sp=$("#splash");if(!sp.hidden&&!sp.classList.contains("saindo")){sp.classList.add("saindo");somLancamento();setTimeout(()=>{sp.classList.remove("saindo");if(!abertura)sp.hidden=true},620)}
+  {const sp=$("#splash");if(!sp.hidden&&!sp.classList.contains("saindo")){sp.classList.add("saindo");somLancamento();vibrar("capa");setTimeout(()=>{sp.classList.remove("saindo");if(!abertura)sp.hidden=true},620)}
    else if(!sp.classList.contains("saindo"))sp.hidden=true}
   app.hidden=false;
   if(!G){nav.hidden=true;if(!W)W=novoW();return renderCriacao()}
@@ -3402,6 +3411,7 @@ let editorOn=false,edSel={grupo:null,clube:null,busca:""};
 try{editorOn=sessionStorage.getItem("fut-editor")==="1"}catch(e){}
 function telaConfig(){
   let h=`<h2>Configurações</h2><div class="cartao secao">
+    <div class="linha" style="justify-content:space-between"><span>Vibração (Android)</span><button class="btn mini" data-a="vib">${VIB_ON?"Desligar vibração":"Ligar vibração"}</button></div>
     <div class="linha" style="justify-content:space-between"><span>Som do jogo</span><button class="btn mini" data-a="som">${SOM.mudo?"Ligar som":"Desligar som"}</button></div>
     <div class="linha" style="justify-content:space-between"><span>Salvar a carreira num arquivo</span><button class="btn mini" data-a="salvararq">Salvar arquivo</button></div>
   </div>`;
@@ -4444,6 +4454,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "som":somIniciar();somMudo(!SOM.mudo);document.querySelectorAll(".som-btn").forEach(b=>{b.innerHTML=iconeSom();b.setAttribute("aria-label",SOM.mudo?"Ligar som":"Desligar som")});if(!SOM.mudo)somModo(modoDesejado());return;
     case "carregararq":{const i=$("#arq-save")||$("#arq-save2");if(i){i.value="";i.click()}return;}
     case "salvararq":salvarArquivo();return;
+    case "vib":VIB_ON=!VIB_ON;try{localStorage.setItem("fut-vib",VIB_ON?"1":"0")}catch(e){}if(VIB_ON)vibrar("premio");if($("#splash")&&!$("#splash").hidden&&document.querySelector(".veu [data-a=vib]"))modalAjustesSp();else render();return;
     case "splregras":modalRegras();return;
     case "splajustes":modalAjustesSp();return;
     case "splsom":acao("som");modalAjustesSp();return;
