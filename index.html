@@ -753,26 +753,26 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792235365"></script>
-<script src="img/arte-capa.js?v=1792235365"></script>
-<script src="img/fundo-criacao.js?v=1792235365"></script>
-<script src="img/fundo-pais.js?v=1792235365"></script>
-<script src="img/fundo-escudo.js?v=1792235365"></script>
-<script src="img/simbolos.js?v=1792235365"></script>
-<script src="img/kits-foto.js?v=1792235365"></script>
-<script src="img/fundo-vestiario.js?v=1792235365"></script>
-<script src="img/rostos.js?v=1792235365"></script>
-<script src="img/estadio-fotos.js?v=1792235365"></script>
-<script src="img/super-fotos.js?v=1792235365"></script>
-<script src="img/trofeus.js?v=1792235365"></script>
-<script src="img/medalhas.js?v=1792235365"></script>
-<script src="img/fotos.js?v=1792235365"></script>
-<script src="img/fotos-vs.js?v=1792235365"></script>
-<script src="img/kit-homens.js?v=1792235365"></script>
-<script src="img/tec-fotos.js?v=1792235365"></script>
-<script src="dados/elencos.js?v=1792235365"></script>
-<script src="img/rostos-reais.js?v=1792235365"></script>
-<script src="img/escudos-img.js?v=1792235365"></script>
+<script src="img/escudos-reais.js?v=1792235829"></script>
+<script src="img/arte-capa.js?v=1792235829"></script>
+<script src="img/fundo-criacao.js?v=1792235829"></script>
+<script src="img/fundo-pais.js?v=1792235829"></script>
+<script src="img/fundo-escudo.js?v=1792235829"></script>
+<script src="img/simbolos.js?v=1792235829"></script>
+<script src="img/kits-foto.js?v=1792235829"></script>
+<script src="img/fundo-vestiario.js?v=1792235829"></script>
+<script src="img/rostos.js?v=1792235829"></script>
+<script src="img/estadio-fotos.js?v=1792235829"></script>
+<script src="img/super-fotos.js?v=1792235829"></script>
+<script src="img/trofeus.js?v=1792235829"></script>
+<script src="img/medalhas.js?v=1792235829"></script>
+<script src="img/fotos.js?v=1792235829"></script>
+<script src="img/fotos-vs.js?v=1792235829"></script>
+<script src="img/kit-homens.js?v=1792235829"></script>
+<script src="img/tec-fotos.js?v=1792235829"></script>
+<script src="dados/elencos.js?v=1792235829"></script>
+<script src="img/rostos-reais.js?v=1792235829"></script>
+<script src="img/escudos-img.js?v=1792235829"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -1024,7 +1024,7 @@ function novaTemporada(){
   montarCopaN();
   G.tecCand=gerarTecnicos(2);G.ofertaJ=ofertaJanela();
   G.janela={compras:0,negocios:0,listados:[]};
-  G.ofertasPatro=gerarPatrocinios();G.patro=null;
+  G.ofertasPatro=gerarPatrocinios();G.patro=null;G.patro2=null;G.material=null;G.ofertasPatro2=null;G.ofertasMat=userTier()<=1?gerarMaterial():null;
 }
 
 function disponivel(p){return p.inj<=0&&!(p.susp>0)}
@@ -1193,7 +1193,7 @@ function receitaPartida(r,e,ehCopa){
   const fBil=[.27,.36,.27][c.tier]??.6;
   if(casa||neutro){fin.pub=neutro?Math.round(pub/2):pub;fin.bil=Math.round(fin.pub*preco/1000*fBil)}
   else{fin.bil=Math.round(pub*preco/1000*.1);fin.cota=true}
-  if(G.patro){fin.patro=G.patro.porJogo;if(G.patro.tipo==="vitoria"&&res==="v")fin.bonus=G.patro.bonus}
+  {const P=[G.patro,G.patro2,G.material].filter(Boolean);if(P.length){fin.patro=P.reduce((x,o)=>x+o.porJogo,0);if(res==="v"){const b=P.reduce((x,o)=>x+(o.tipo==="vitoria"?o.bonus||0:0),0);if(b)fin.bonus=b}}}
   return fin;
 }
 function aplicarFin(fin,ehRodadaLiga){
@@ -1863,7 +1863,7 @@ function abrirJanelaMeio(msgs){
     if(pos<=Math.ceil(n/4)){const novo=Math.round(G.patro.porJogo*1.2);msgs.push({t:"bom",m:`A ${G.patro.nome} gostou da campanha e aumentou o patrocínio de ${dinheiro(G.patro.porJogo)} para ${dinheiro(novo)} por jogo.`});G.patro.porJogo=novo}}
 }
 function fecharJanela(){
-  if(G.fase==="pre"&&!G.patro)return "Escolha um patrocinador antes de começar a temporada.";
+  if(G.fase==="pre"&&faltaPatro())return faltaPatro();
   G.janela.listados.forEach(id=>{const p=G.players[id];if(p)delete p.ofertas});
   G.janela.listados=[];
   G.inbox=G.inbox.filter(m=>!m.of);
@@ -1953,10 +1953,32 @@ function custoAmpliacao(){const c=G.clubs[G.user.club];return Math.round((60+c.c
 function ampliar(){const c=G.clubs[G.user.club],v=custoAmpliacao();if(c.cap>=80000)return "O estádio já está no tamanho máximo.";if(v>G.cash)return "Caixa insuficiente para a obra.";G.cash-=v;c.cap+=2000;return null}
 
 /* ---------- patrocínio ---------- */
-function gerarPatrocinios(){
+/* patrocinadores reais por país: [Série A, Série B, Série C] + material esportivo [A, B] */
+const PATRO_REAIS={
+ BRA:{p:[["Shopee","Red Bull","Jota.ai","Mercado Livre","BRB","Banrisul","Crefisa","Magazine Luiza","Assaí Atacadista","Brahma"],["Unicesumar","Magnum Bank","Banpará","Aurora Alimentos","FoxLux","Havan","Hapvida","Unimed","Sicredi","TIM"],["Asa Alumínio","Bebidas Poty","Sicoob","Cresol","Banese","Banestes","Uniasselvi","Anhanguera","Supermercados Bretas","Coop"]], // sem casas de apostas: proibidas no Brasil (MP 1.394/2026)
+  m:[["Puma","Adidas","Nike","Umbro","New Balance","Kappa","Reebok","Volt","Joma","Castore"],["Volt","Kappa","Umbro","Topper","Diadora","Reebok","Penalty","Lupo","Lotto","Joma"]]},
+ ARG:{p:[["Betsson","Codere","Mercado Pago","YPF","Coca-Cola","Banco Macro","Tecno","Personal","Movistar","Quilmes"],["Bplay","Codere","Betsson","Banco Galicia","Andreani","Personal","Movistar","YPF Ruta","Mercado Pago","Naranja X"],["Codere","Bplay","Banco Provincia","Naranja X","Quilmes","Andreani","Telecentro","Sancor Seguros","La Segunda","Cabify"]],
+  m:[["Adidas","Nike","Puma","Umbro","Kappa","Le Coq Sportif","Hummel","Macron","Givova","Kelme"],["Kappa","Umbro","Le Coq Sportif","Hummel","Macron","Givova","Kelme","Joma","Puma","Adidas"]]},
+ ENG:{p:[["Emirates","Etihad","Standard Chartered","Snapdragon","Qatar Airways","Sony","Stake","Betano","Visit Rwanda","Kaiyun"],["Sky Bet","BetMGM","Paddy Power","Bet365","Betway","Stake","Utilita","Rizla","Coinbase","Hays"],["Sky Bet","Paddy Power","Bet365","Betfred","Ladbrokes","Coral","Hays Travel","Utilita","Marathonbet","Vertu Motors"]],
+  m:[["Nike","Adidas","Puma","Umbro","Castore","New Balance","Hummel","Macron","Errea","Kappa"],["Umbro","Castore","Hummel","Macron","Errea","Kappa","Puma","Joma","New Balance","Adidas"]]},
+ ESP:{p:[["Spotify","Emirates","Riyadh Air","Etihad","Kutxabank","Estrella Damm","Mahou","Abanca","Visit Málaga","Socios"],["Codere","Kirolbet","Estrella Galicia","Abanca","Cajasur","Kutxabank","Mahou","Ibercaja","Unicaja","Vithas"],["Codere","Kirolbet","Sportium","Estrella Galicia","Mahou","Damm","Cajasur","Abanca","Hyundai","Unicaja"]],
+  m:[["Adidas","Nike","Puma","Joma","Kelme","Castore","Macron","Hummel","Kappa","New Balance"],["Joma","Kelme","Macron","Hummel","Kappa","Puma","Adidas","Castore","Umbro","Nike"]]},
+ GER:{p:[["Deutsche Telekom","Allianz","Evonik","Volkswagen","Mercedes-Benz","Audi","Vodafone","Wiesenhof","Wohninvest","Indeed"],["Tipico","Bwin","Krombacher","Veltins","AOK","Sparkasse","Evonik","Würth","Viessmann","Deutsche Bahn"],["Tipico","Bwin","Sachsen Energie","Veltins","Krombacher","AOK","Sparkasse","Würth","Ströer","Hörmann"]],
+  m:[["Adidas","Nike","Puma","Jako","Hummel","Under Armour","Castore","Macron","Kappa","Erima"],["Jako","Hummel","Erima","Macron","Kappa","Puma","Adidas","Nike","Castore","Uhlsport"]]},
+ FRA:{p:[["Qatar Airways","Emirates","Uber Eats","Betclic","Winamax","Parions Sport","Accor","Cazoo","Groupama","Crédit Agricole"],["Betclic","Winamax","Parions Sport","Crédit Agricole","Groupama","MAAF","Leclerc","Intermarché","Uber Eats","Kia"],["Betclic","Winamax","Parions Sport","Crédit Agricole","Leclerc","Intermarché","Groupama","Kia","Sodexo","BV Sport"]],
+  m:[["Nike","Adidas","Puma","Kappa","Le Coq Sportif","Umbro","Macron","Hummel","Castore","New Balance"],["Kappa","Le Coq Sportif","Umbro","Macron","Hummel","Puma","Adidas","Nike","Castore","Kipsta"]]}};
+const tierPatro=()=>Math.min(2,Math.max(0,G.clubs[G.user.club].tier));
+function nomesPatro(qtd,usar){const L=(PATRO_REAIS[G.country]||PATRO_REAIS.BRA).p[tierPatro()].filter(n=>!(usar||[]).includes(n));return shuffle(L.slice()).slice(0,qtd)}
+// material esportivo (Série B e A): luvas maiores e um pouco por jogo
+function gerarMaterial(){const c=G.clubs[G.user.club],e=econ(G.tierBase[c.tier]),base=9*e*(FREC[c.tier]??1)*(.6+(c.fama||0)/80),f=()=>.88+rnd()*.24;
+  const L=(PATRO_REAIS[G.country]||PATRO_REAIS.BRA).m[tierPatro()===0?0:1];
+  return shuffle(L.slice()).slice(0,3).map(n=>({nome:n,tipo:"fixo",mat:1,porJogo:Math.round(base*.3*f()),luvas:Math.round(base*4.5*f()),desc:"Fornece o uniforme. Luvas altas na assinatura e um valor por jogo."}))}
+// patrocinador secundário (Série A): paga menos que o master
+function gerarSecundario(){return gerarPatrocinios(G.patro?[G.patro.nome]:[]).map(o=>({...o,sec:1,porJogo:Math.round(o.porJogo*.45),luvas:Math.round(o.luvas*.45),bonus:o.bonus&&Math.round(o.bonus*.45),bonusMeta:o.bonusMeta&&Math.round(o.bonusMeta*.45)}))}
+function gerarPatrocinios(usar){
   const c=G.clubs[G.user.club],e=econ(G.tierBase[c.tier]);
   const base=9*e*(FREC[c.tier]??1)*(.6+(c.fama||0)/80);
-  const nomes=shuffle(PATROCINIOS.slice()).slice(0,3);
+  const nomes=nomesPatro(3,usar);while(nomes.length<3)nomes.push(pick(PATROCINIOS));
   const metaTxt=c.tier>0?`subir para a ${nomeLiga(c.tier-1)}`:`terminar entre os ${COPAS[pais().cont].mq} primeiros`;
   const f=()=>.88+rnd()*.24;
   return [
@@ -1965,10 +1987,15 @@ function gerarPatrocinios(){
     {nome:nomes[2],tipo:"meta",porJogo:Math.round(base*.7*f()),bonusMeta:Math.round(base*18*f()),meta:metaTxt,luvas:Math.round(base*1.5*f()),desc:`Prêmio grande se o clube ${metaTxt}.`}
   ];
 }
-function escolherPatrocinio(i){
-  const o=G.ofertasPatro&&G.ofertasPatro[i];if(!o)return "Proposta indisponível.";
-  G.patro={...o,ano:G.year};G.cash+=o.luvas;G.ofertasPatro=null;
-  G.inbox.unshift({t:"bom",m:`Contrato assinado com ${o.nome} para ${G.year}. Luvas de ${dinheiro(o.luvas)} já estão no caixa.`});
+function faltaPatro(){const t=userTier();if(!G.patro)return "Escolha o patrocinador master antes de começar a temporada.";
+  if(t<=1&&!G.material&&G.ofertasMat)return "Escolha a marca de material esportivo antes de começar.";
+  if(t===0&&!G.patro2&&G.ofertasPatro2)return "Escolha o patrocinador secundário antes de começar.";return ""}
+function escolherPatrocinio(i,qual){
+  const lst=qual==="mat"?G.ofertasMat:qual==="sec"?G.ofertasPatro2:G.ofertasPatro,o=lst&&lst[i];if(!o)return "Proposta indisponível.";
+  if(qual==="mat"){G.material={...o,ano:G.year};G.ofertasMat=null}else if(qual==="sec"){G.patro2={...o,ano:G.year};G.ofertasPatro2=null}
+  else{G.patro={...o,ano:G.year};G.ofertasPatro=null;if(userTier()===0&&!G.patro2)G.ofertasPatro2=gerarSecundario()}
+  G.cash+=o.luvas;
+  G.inbox.unshift({t:"bom",m:`Contrato assinado com ${o.nome}${qual==="mat"?" (material esportivo)":qual==="sec"?" (patrocinador secundário)":""} para ${G.year}. Luvas de ${dinheiro(o.luvas)} já estão no caixa.`});
   xpBonus(200,"novo patrocinador");
   return null;
 }
@@ -1986,10 +2013,8 @@ function fecharTemporada(){
   if(pos===1)G.titles.push(`${nomeLiga(t)} ${G.year}`);
   if(G.copaN&&G.history[0])G.history[0].copaN=`${G.copaN.nome}: ${G.copaN.champ===uid?"campeão":G.copaN.out?"caiu "+G.copaN.out:"—"}`;
   // bônus de meta do patrocinador
-  if(G.patro&&G.patro.tipo==="meta"){
-    const ok=t>0?pos<=k:pos<=C.mq;
-    if(ok){G.cash+=G.patro.bonusMeta;r.bonusMeta=G.patro.bonusMeta}
-  }
+  {const ok=t>0?pos<=k:pos<=C.mq,bm=[G.patro,G.patro2].filter(o=>o&&o.tipo==="meta").reduce((x,o)=>x+(o.bonusMeta||0),0);
+    if(ok&&bm){G.cash+=bm;r.bonusMeta=bm}}
   // copas do ano seguinte (qualificação pela primeira divisão)
   const t0=cl[0];
   const main=t0.slice(0,C.mq),sec=t0.slice(C.mq,C.mq+C.sq);
@@ -2159,7 +2184,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792235365";
+const VERSAO="1792235829";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3322,17 +3347,18 @@ function telaInicio(){
 function contadorJanela(){const J=G.janela;return `<div class="kpis"><div class="cartao kpi"><small>Contratações</small><b class="num">${J.compras} de ${MAX_COMPRAS}</b></div><div class="cartao kpi"><small>Negócios</small><b class="num">${J.negocios} de ${MAX_NEGOCIOS}</b></div></div>`}
 function cartaoPre(){
   let h=`<h2>Pré-temporada ${G.year}</h2>`;
-  if(!G.patro){
-    h+=`<div class="cartao secao"><div><b class="etapa">1 · Patrocinador</b><p class="muted peq" style="margin:4px 0 0">Três empresas querem estampar a camisa nesta temporada. O contrato vale por um ano, e as propostas melhoram conforme o clube cresce.</p></div>
-    ${G.ofertasPatro.map((o,i)=>`<div class="patro"><div class="linha" style="justify-content:space-between;align-items:flex-start"><div><b class="patro-nome">${esc(o.nome)}</b><div class="muted peq">${esc(o.desc)}</div></div></div>
+  const ofs=(lst,qual,tit,txt)=>`<div class="cartao secao" style="margin-bottom:10px"><div><b class="etapa">${tit}</b><p class="muted peq" style="margin:4px 0 0">${txt}</p></div>
+    ${lst.map((o,i)=>`<div class="patro"><div class="linha" style="justify-content:space-between;align-items:flex-start"><div><b class="patro-nome">${esc(o.nome)}</b><div class="muted peq">${esc(o.desc)}</div></div></div>
       <div class="extrato num"><div><span>Luvas na assinatura</span><span>${dinheiro(o.luvas)}</span></div><div><span>Por jogo</span><span>${dinheiro(o.porJogo)}</span></div>${o.tipo==="vitoria"?`<div><span>Bônus por vitória</span><span>${dinheiro(o.bonus)}</span></div>`:""}${o.tipo==="meta"?`<div><span>Prêmio se ${esc(o.meta)}</span><span>${dinheiro(o.bonusMeta)}</span></div>`:""}</div>
-      <button class="btn" data-a="patro" data-v="${i}">Assinar com ${esc(o.nome)}</button></div>`).join("")}</div>`;
-  }else{
-    h+=`<div class="cartao linha" style="gap:14px"><span>${uniformeSVG(G.clubs[G.user.club].unis[0],G.patro.nome,54)}</span><div><b class="etapa">Patrocinador: ${esc(G.patro.nome)}</b><div class="muted peq">${dinheiro(G.patro.porJogo)} por jogo${G.patro.tipo==="vitoria"?` + ${dinheiro(G.patro.bonus)} por vitória`:G.patro.tipo==="meta"?` + ${dinheiro(G.patro.bonusMeta)} se ${esc(G.patro.meta)}`:""}</div></div></div>`;
-  }
+      <button class="btn" data-a="patro" data-v="${i}" data-i="${qual}">Assinar com ${esc(o.nome)}</button></div>`).join("")}</div>`;
+  const resumo=(o,rot)=>`<div class="cartao linha" style="gap:14px;margin-bottom:10px">${rot==="Patrocinador master"?`<span>${uniformeSVG(G.clubs[G.user.club].unis[0],o.nome,54)}</span>`:""}<div><b class="etapa">${rot}: ${esc(o.nome)}</b><div class="muted peq">${dinheiro(o.porJogo)} por jogo${o.tipo==="vitoria"?` + ${dinheiro(o.bonus)} por vitória`:o.tipo==="meta"?` + ${dinheiro(o.bonusMeta)} se ${esc(o.meta)}`:""}</div></div></div>`;
+  const t=userTier();
+  h+=G.patro?resumo(G.patro,"Patrocinador master"):ofs(G.ofertasPatro||[],"","1 · Patrocinador master","Empresas que querem estampar a camisa nesta temporada. O contrato vale por um ano, e as propostas melhoram conforme o clube cresce.");
+  if(t===0)h+=G.patro2?resumo(G.patro2,"Patrocinador secundário"):G.ofertasPatro2?ofs(G.ofertasPatro2,"sec","1b · Patrocinador secundário","Na elite você tem um segundo patrocinador. Ele paga menos que o master."):(G.patro?"":`<p class="peq muted" style="margin:0 0 10px">Depois do master, você escolhe também um patrocinador secundário.</p>`);
+  if(t<=1&&(G.material||G.ofertasMat))h+=G.material?resumo(G.material,"Material esportivo"):ofs(G.ofertasMat,"mat",t===0?"1c · Material esportivo":"1b · Material esportivo","A marca que fornece o uniforme. Paga luvas altas na assinatura e um valor por jogo.");
   h+=`<div class="cartao secao" style="margin-top:10px"><div><b class="etapa">2 · Janela de transferências</b><p class="muted peq" style="margin:4px 0 0">Contrate até 3 jogadores no Mercado e coloque até 3 do seu elenco para negócio na aba Elenco.</p></div>${contadorJanela()}
   <div class="linha"><button class="btn" data-a="aba" data-v="mercado" style="flex:1">Ir ao mercado</button><button class="btn" data-a="aba" data-v="elenco" style="flex:1">Ver elenco</button></div>
-  <button class="btn prim full" data-a="fecharjanela" ${G.patro?"":"disabled"}>${G.patro?"Começar campeonato":"Escolha o patrocinador primeiro"}</button></div>`;
+  <button class="btn prim full" data-a="fecharjanela" ${faltaPatro()?"disabled":""}>${faltaPatro()?"Escolha os patrocínios primeiro":"Começar campeonato"}</button></div>`;
   return h;
 }
 function cartaoJanelaMeio(){
@@ -4547,7 +4573,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "uestilo":aplicarModeloUni(vis().u,v);if(G)salvar();break;
     case "umeiao":vis().u.meiaoEst=v;if(G)salvar();break;
     case "ucores":{const {e,u}=vis();if(uniSel===0)Object.assign(u,{camisa:e.c1,detalhe:e.c2,d2:e.c3});else Object.assign(u,{camisa:e.c2,detalhe:e.c1,d2:e.c3});aplicarModeloUni(u,u.estilo);if(G)salvar();break;}
-    case "patro":{const er=escolherPatrocinio(+v);if(er)toastErro(er);salvar();break;}
+    case "patro":{const er=escolherPatrocinio(+v,el.dataset.i||"");if(er)toastErro(er);salvar();break;}
     case "fecharjanela":{const er=fecharJanela();if(er){toastErro(er);return}salvar();toast(G.ev===0?"Bola rolando! Boa temporada.":"Janela fechada.");window.scrollTo(0,0);break;}
     case "iniciarjogo":{const er=iniciarAoVivo(false);if(er){toastErro(er);return}somIniciar();setTimeout(()=>apito(.9),250);painel=null;liveSel=null;aba="partida";salvar();window.scrollTo(0,0);break;}
     case "simularjogo":{if(!partidaAtual()){toastErro("Não há partida agora.");return}const ep=pagarSimulacao();if(ep){toastErro(ep);return}const er=iniciarAoVivo(true);if(er){toastErro(er);return}simularRestante();concluirAoVivo();G.ultimoJogo.pendente=true;aba="resultado";salvar();window.scrollTo(0,0);somIniciar();setTimeout(somResultado,300);break;}
