@@ -731,24 +731,24 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792196627"></script>
-<script src="img/arte-capa.js?v=1792196627"></script>
-<script src="img/fundo-criacao.js?v=1792196627"></script>
-<script src="img/fundo-pais.js?v=1792196627"></script>
-<script src="img/fundo-escudo.js?v=1792196627"></script>
-<script src="img/simbolos.js?v=1792196627"></script>
-<script src="img/rostos.js?v=1792196627"></script>
-<script src="img/estadio-fotos.js?v=1792196627"></script>
-<script src="img/super-fotos.js?v=1792196627"></script>
-<script src="img/trofeus.js?v=1792196627"></script>
-<script src="img/medalhas.js?v=1792196627"></script>
-<script src="img/fotos.js?v=1792196627"></script>
-<script src="img/fotos-vs.js?v=1792196627"></script>
-<script src="img/kit-homens.js?v=1792196627"></script>
-<script src="img/tec-fotos.js?v=1792196627"></script>
-<script src="dados/elencos.js?v=1792196627"></script>
-<script src="img/rostos-reais.js?v=1792196627"></script>
-<script src="img/escudos-img.js?v=1792196627"></script>
+<script src="img/escudos-reais.js?v=1792196927"></script>
+<script src="img/arte-capa.js?v=1792196927"></script>
+<script src="img/fundo-criacao.js?v=1792196927"></script>
+<script src="img/fundo-pais.js?v=1792196927"></script>
+<script src="img/fundo-escudo.js?v=1792196927"></script>
+<script src="img/simbolos.js?v=1792196927"></script>
+<script src="img/rostos.js?v=1792196927"></script>
+<script src="img/estadio-fotos.js?v=1792196927"></script>
+<script src="img/super-fotos.js?v=1792196927"></script>
+<script src="img/trofeus.js?v=1792196927"></script>
+<script src="img/medalhas.js?v=1792196927"></script>
+<script src="img/fotos.js?v=1792196927"></script>
+<script src="img/fotos-vs.js?v=1792196927"></script>
+<script src="img/kit-homens.js?v=1792196927"></script>
+<script src="img/tec-fotos.js?v=1792196927"></script>
+<script src="dados/elencos.js?v=1792196927"></script>
+<script src="img/rostos-reais.js?v=1792196927"></script>
+<script src="img/escudos-img.js?v=1792196927"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2090,7 +2090,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792196627";
+const VERSAO="1792196927";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -2697,7 +2697,7 @@ function somIniciar(){
   const c=SOM.ctx=new AC();
   SOM.master=c.createGain();SOM.master.gain.value=SOM.mudo?0:1;SOM.master.connect(c.destination);
   SOM.mus=c.createGain();SOM.mus.gain.value=0;SOM.mus.connect(SOM.master);
-  SOM.fx=c.createGain();SOM.fx.gain.value=1;SOM.fx.connect(SOM.master);
+  SOM.fx=c.createGain();SOM.fx.gain.value=1;{const lim=c.createDynamicsCompressor();lim.threshold.value=-6;lim.knee.value=4;lim.ratio.value=12;lim.attack.value=.002;lim.release.value=.15;SOM.fx.connect(lim);lim.connect(SOM.master)} // limitador: efeitos altos sem estourar
   trilhaIniciar();
   SOM.buf={};["clique","erro","derrota","vitoria","transicao"].forEach(n=>fetch(`sons/${n}.mp3`).then(r=>r.arrayBuffer()).then(b=>new Promise((ok,er)=>c.decodeAudioData(b,ok,er))).then(buf=>SOM.buf[n]=buf).catch(()=>{}));
   // ruído base
@@ -2846,14 +2846,15 @@ function somVitoria(){if(!SOM.ctx||SOM.mudo)return;const t=SOM.ctx.currentTime;S
 function somArquivo(n,abafar,vol){const b=SOM.ctx&&!SOM.mudo&&SOM.buf&&SOM.buf[n];if(!b)return false;const c=SOM.ctx,t=c.currentTime,s=c.createBufferSource();s.buffer=b;if(vol!=null&&vol!==1){const g=c.createGain();g.gain.value=vol;s.connect(g);g.connect(SOM.fx)}else s.connect(SOM.fx);s.start(t);
   if(abafar){SOM.trilha.gain.cancelScheduledValues(t);SOM.trilha.gain.setTargetAtTime(.2,t,.1);SOM.trilha.gain.setTargetAtTime(1,t+Math.max(1,b.duration-.5),.6)}return true}
 // erro: clicou em algo bloqueado ou que não pode (substitui o clique)
-function somErro(){SOM.errAt=Date.now();somArquivo("erro")}
+function somErro(){SOM.errAt=Date.now();somArquivo("erro",false,VOL_BOTAO)}
+const VOL_BOTAO=1.8; // cliques, compra e erro: médio-alto, por cima da música
 function toastErro(t){somErro();toast(t)}
 // fim de partida: vitória ou derrota
 function perdeuUltimo(){const r=G.last,uid=G.user.club;if(!r)return false;const gu=r.h===uid?r.gh:r.ga,go=r.h===uid?r.ga:r.gh;return gu<go||(r.ko&&!r.passou&&gu===go)}
 function somResultado(){if(venceuUltimo())somArquivo("vitoria",true);else if(perdeuUltimo())somArquivo("derrota",true)}
 // clique dos botões
 function somClique(){if(!SOM.ctx||SOM.mudo||Date.now()-(SOM.errAt||0)<400)return;const c=SOM.ctx,t=c.currentTime;
-  if(somArquivo("clique"))return; // sons/clique.mp3; enquanto não carrega, usa o toque gerado abaixo
+  if(somArquivo("clique",false,VOL_BOTAO))return; // sons/clique.mp3; enquanto não carrega, usa o toque gerado abaixo
   // toque digital "tu-dim": duas notas senoidais curtas subindo, com um brilho leve e cauda curta
   [[1046,1175,0,.13,.09],[1568,1760,.055,.17,.075]].forEach(([f0,f1,d,dur,vol])=>{
     const o=c.createOscillator(),h=c.createOscillator(),g=c.createGain(),hg=c.createGain();o.type="sine";h.type="triangle";
@@ -2871,14 +2872,15 @@ function somLancamento(){if(!SOM.ctx||SOM.mudo)return;if(somArquivo("transicao",
   bumbo(t+.42,.7,SOM.fx);nota(t+.42,mtof(84),.5,"triangle",.06,SOM.fx);nota(t+.42,mtof(91),.5,"triangle",.04,SOM.fx)}
 // dinheiro: "cha-ching" de caixa + moedinhas
 function somDinheiro(){if(!SOM.ctx||SOM.mudo)return;const c=SOM.ctx,t=c.currentTime;
-  ruidoCurto(t,.07,.35,2500,SOM.fx,1.5);
-  [[0,2093],[0,2637],[.09,3136],[.09,4186]].forEach(([d,f])=>nota(t+d,f,.55,"triangle",.1,SOM.fx));
-  for(let i=0;i<6;i++)nota(t+.16+i*.045+Math.random()*.02,3200+Math.random()*2200,.12,"sine",.05,SOM.fx)}
+  ruidoCurto(t,.07,.7,2500,SOM.fx,1.5);
+  [[0,2093],[0,2637],[.09,3136],[.09,4186]].forEach(([d,f])=>nota(t+d,f,.55,"triangle",.2,SOM.fx));
+  for(let i=0;i<6;i++)nota(t+.16+i*.045+Math.random()*.02,3200+Math.random()*2200,.12,"sine",.1,SOM.fx)}
 // conquista: fanfarra curta + torcida
 function somConquista(){if(!SOM.ctx||SOM.mudo)return;const c=SOM.ctx,t=c.currentTime;if(t-(SOM.ultConq||-9)<3)return;SOM.ultConq=t;
-  [72,76,79].forEach((n,i)=>{nota(t+i*.1,mtof(n),.18,"square",.07,SOM.fx,3200);nota(t+i*.1,mtof(n+12),.18,"triangle",.04,SOM.fx)});
-  [84,79,76,72].forEach(n=>nota(t+.32,mtof(n),1.1,"sawtooth",.05,SOM.fx,2800));
-  ruidoCurto(t+.32,.5,.2,6000,SOM.fx);
+  // conquista/nível/prêmio: alto, por cima da música
+  [72,76,79].forEach((n,i)=>{nota(t+i*.1,mtof(n),.18,"square",.18,SOM.fx,3200);nota(t+i*.1,mtof(n+12),.18,"triangle",.1,SOM.fx)});
+  [84,79,76,72].forEach(n=>nota(t+.32,mtof(n),1.1,"sawtooth",.12,SOM.fx,2800));
+  ruidoCurto(t+.32,.5,.45,6000,SOM.fx);
   if(typeof gritoTorcida==="function")gritoTorcida(.1,2,.25)}
 /* moedas voando + valor subindo do botão */
 function efeitoDinheiro(r,dc,dk){
