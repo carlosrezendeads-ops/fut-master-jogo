@@ -175,6 +175,20 @@ input[type=range]{width:100%;accent-color:var(--canario)}
 .folha .botoes{display:flex;gap:8px;margin-top:16px}
 .folha .botoes .btn{flex:1}
 @media (min-width:700px){.veu{align-items:center}.folha{border-radius:18px}}
+.trad-veu{align-items:center;padding:16px}
+.trad-box{width:100%;max-width:360px;background:linear-gradient(180deg,var(--gramado-2),var(--gramado-3));border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:14px 0 12px;box-shadow:0 18px 50px rgba(0,0,0,.55);animation:tradEntra .35s ease-out}
+@keyframes tradEntra{from{transform:translateY(24px) scale(.96);opacity:0}to{transform:none;opacity:1}}
+.trad-nome{font-family:var(--f-display);font-size:18px;text-align:center;margin-bottom:6px}.trad-nome small{font-family:inherit;font-size:12px;opacity:.65;font-weight:400}
+.trad-cards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}.trad-cards::-webkit-scrollbar{display:none}
+.trad-card{flex:0 0 100%;scroll-snap-align:center;padding:0 16px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box}
+.trad-foto{height:190px;max-width:100%;object-fit:contain;filter:drop-shadow(0 6px 14px rgba(0,0,0,.45))}
+.trad-bal{position:relative;background:#fff;color:#14203a;border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.45;margin-top:-6px;width:100%;box-sizing:border-box}
+.trad-bal:before{content:"";position:absolute;top:-8px;left:50%;margin-left:-8px;border:8px solid transparent;border-top:0;border-bottom-color:#fff}
+.trad-bal p{margin:0 0 8px}.trad-bal p:last-child{margin:0}.trad-ola{display:block;font-size:17px;margin-bottom:6px;color:#0b5d2a}
+.trad-seta{margin-top:10px;width:44px;height:44px;border-radius:50%;border:0;background:var(--ouro,#f5c518);color:#14203a;font-size:28px;line-height:1;font-weight:700;cursor:pointer;animation:tradPulsa 1.4s ease-in-out infinite}
+@keyframes tradPulsa{50%{transform:translateX(5px)}}
+.trad-card .botoes{width:100%;margin-top:10px;display:flex;gap:8px}.trad-card .botoes .btn{flex:1}
+.trad-pontos{display:flex;justify-content:center;gap:6px;margin-top:10px}.trad-pontos i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3)}.trad-pontos i.on{background:#fff}
 
 .kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .kpi small{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--cal-2);font-weight:600}
@@ -755,27 +769,29 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792240889"></script>
-<script src="img/arte-capa.js?v=1792240889"></script>
-<script src="img/fundo-criacao.js?v=1792240889"></script>
-<script src="img/fundo-pais.js?v=1792240889"></script>
-<script src="img/fundo-escudo.js?v=1792240889"></script>
-<script src="img/simbolos.js?v=1792240889"></script>
-<script src="img/kits-foto.js?v=1792240889"></script>
-<script src="img/fundo-vestiario.js?v=1792240889"></script>
-<script src="img/patro-logos.js?v=1792240889"></script>
-<script src="img/rostos.js?v=1792240889"></script>
-<script src="img/estadio-fotos.js?v=1792240889"></script>
-<script src="img/super-fotos.js?v=1792240889"></script>
-<script src="img/trofeus.js?v=1792240889"></script>
-<script src="img/medalhas.js?v=1792240889"></script>
-<script src="img/fotos.js?v=1792240889"></script>
-<script src="img/fotos-vs.js?v=1792240889"></script>
-<script src="img/kit-homens.js?v=1792240889"></script>
-<script src="img/tec-fotos.js?v=1792240889"></script>
-<script src="dados/elencos.js?v=1792240889"></script>
-<script src="img/rostos-reais.js?v=1792240889"></script>
-<script src="img/escudos-img.js?v=1792240889"></script>
+<script src="img/escudos-reais.js?v=1792277253"></script>
+<script src="img/arte-capa.js?v=1792277253"></script>
+<script src="img/fundo-criacao.js?v=1792277253"></script>
+<script src="img/fundo-pais.js?v=1792277253"></script>
+<script src="img/fundo-escudo.js?v=1792277253"></script>
+<script src="img/simbolos.js?v=1792277253"></script>
+<script src="img/kits-foto.js?v=1792277253"></script>
+<script src="img/fundo-vestiario.js?v=1792277253"></script>
+<script src="img/patro-logos.js?v=1792277253"></script>
+<script src="img/rostos.js?v=1792277253"></script>
+<script src="img/estadio-fotos.js?v=1792277253"></script>
+<script src="img/super-fotos.js?v=1792277253"></script>
+<script src="img/trofeus.js?v=1792277253"></script>
+<script src="img/medalhas.js?v=1792277253"></script>
+<script src="img/fotos.js?v=1792277253"></script>
+<script src="img/fotos-vs.js?v=1792277253"></script>
+<script src="img/kit-homens.js?v=1792277253"></script>
+<script src="img/tec-fotos.js?v=1792277253"></script>
+<script src="dados/elencos.js?v=1792277253"></script>
+<script src="img/rostos-reais.js?v=1792277253"></script>
+<script src="img/escudos-img.js?v=1792277253"></script>
+<script src="img/tradutores.js?v=1792277253"></script>
+<script src="dados/idiomas.js?v=1792277253"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -848,6 +864,7 @@ const SOBRENOMES={
  kr:["Kim","Lee","Park","Choi","Jung","Kang","Cho","Yoon","Jang","Lim","Han","Oh"],
  fr:["Martin","Bernard","Dubois","Thomas","Robert","Richard","Petit","Durand","Leroy","Moreau","Simon","Laurent","Lefebvre","Michel","Garcia","Fontaine","Rousseau","Vincent","Muller","Lefèvre","Faure","André","Mercier","Diallo","Traoré","Camara","Koné","Sylla","Bakayoko","Cissé","Mbemba","Touré"]
 };
+const IDIOMA_PAIS={ARG:"es",ESP:"es",ENG:"en",GER:"de",FRA:"fr"}; // língua da tela na carreira (Brasil = português)
 const LINGUA={BRA:"pt",ARG:"es",ENG:"en",ESP:"es",GER:"de",FRA:"fr",URU:"es",COL:"es",CHI:"es",PAR:"es",EQU:"es",PER:"es",BOL:"es",VEN:"es",ITA:"es",POR:"pt",NED:"de",TUR:"de",BEL:"fr",SCO:"en",AUT:"de",GRE:"fr",UCR:"de",TCH:"de",SER:"de",DIN:"de",CRO:"de",SUI:"fr"};
 
 let G=null;
@@ -986,6 +1003,7 @@ function novoJogo(opts){
   G.cash=Math.round(40*econ(G.tierBase[2]));
   autoEscalar();
   novaTemporada();
+  if(IDIOMA_PAIS[G.country])G.tradOferta=true;
   G.inbox.unshift({t:"bom",m:`Bem-vindo, ${G.user.coach}! O ${opts.name} vai disputar a ${nomeLiga(2)} de ${G.year}. Escolha um patrocinador e reforce o elenco na janela de transferências antes da estreia.`});
 }
 const pais=()=>PAISES[G.country];
@@ -1145,7 +1163,7 @@ function escalaPais(t){
   if(!ECON_BR){ECON_BR=PAISES.BRA.t.map(l=>{const r=l.map(s=>+s.split("|")[1]).filter(isFinite);return econ(Math.round(r.reduce((a,b)=>a+b,0)/r.length))})}
   if(G.country==="BRA")return 1;const k=(G.econ[t]||1)/(ECON_BR[t]||1);return clamp(isFinite(k)?k:1,.5,6);
 }
-function custoFixo(){const t=userTier();return Math.round((CUSTO_FIXO[t]??80)*escalaPais(t))}
+function custoFixo(){const t=userTier();return Math.round((CUSTO_FIXO[t]??80)*escalaPais(t))+(G.tradutor?1:0)} // tradutor: 1 mil/mês
 function parcelasEmp(){return (G.emp||[]).reduce((s,e)=>s+e.parc,0)}
 function folhaMensal(){const j=Math.round(folhaSalarial(G.user.club)*10)/10,t=G.tec&&!G.tec.interino?G.tec.sal:0,f=custoFixo(),e=Math.round(parcelasEmp()*10)/10;return {j,t,f,e,tot:Math.round((j+t+f+e)*10)/10}}
 const JURO_MES=.029;
@@ -2122,11 +2140,14 @@ function proximaTemporada(){
   G.inbox=msgs.concat(G.inbox.filter(m=>!m.of)).slice(0,40);
 }
 
+/* sufixos de milhão/mil e formato de número por idioma da tela */
+const FMT_LG={pt:["pt-BR","mi","mil"],es:["es-ES","M","mil"],en:["en-GB","m","k"],fr:["fr-FR","M","k"],de:["de-DE","Mio.","Tsd."]};
+function fmtGrana(m,k){const [loc,mi,mil]=FMT_LG[typeof idioma==="function"?idioma():"pt"];
+  return k>=1000?`${m} ${(k/1000).toLocaleString(loc,{minimumFractionDigits:1,maximumFractionDigits:1})} ${mi}`:`${m} ${Math.round(k).toLocaleString(loc)} ${mil}`}
 function dinheiro(k){
   const m=G?pais().moeda:"R$";
   const neg=k<0;k=Math.abs(k);
-  const s=k>=1000?`${m} ${(k/1000).toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})} mi`:`${m} ${Math.round(k).toLocaleString("pt-BR")} mil`;
-  return (neg?"−":"")+s;
+  return (neg?"−":"")+fmtGrana(m,k);
 }
 /*ENGINE END*/
 
@@ -2155,6 +2176,7 @@ function migrar(g){
   if(!g.escV3){g.escV3=1;const e=g.user&&g.clubs[g.user.club]&&g.clubs[g.user.club].escudo;if(e&&e.nomeOn===undefined)e.nomeOn=false}
   if(!g.estV){g.estV=1;if((g.reformas||0)>=3)g.reformas--;}
   if(g.tecRen){const L=TECNICOS[g.country].split(",");Object.entries(g.tecRen).forEach(([a,b])=>{const i=L.findIndex(s=>s.split("|")[0]===a);if(i>=0)L[i]=b+"|"+L[i].split("|")[1]});TECNICOS[g.country]=L.join(",")}
+  if(g.tradOferta===undefined&&g.tradutor===undefined&&g.country&&IDIOMA_PAIS[g.country])g.tradOferta=true;
   if(!g.perfil)g.perfil={xp:0,nivel:1,j:0,v:0,e:0,d:0,gp:0,gc:0,aviso:null,dica:false};
   if(!g.tec)g.tec=TEC_INTERINO();if(!g.news)g.news=[];if(g.tut==null)g.tut=TUTORIAL.length;IDX=null;
   {const G0=G;G=g;IDX=null;aplicarElencosReais();G=G0;IDX=null}
@@ -2192,7 +2214,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792240889";
+const VERSAO="1792277253";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3110,7 +3132,8 @@ function render(){try{if(G&&G.user)garantirContratos()}catch(e){}
   if(aba==="jogar"&&$("#sim-relogio")){window._relLoja=setInterval(()=>{const el=$("#sim-relogio");if(!el){clearInterval(window._relLoja);return}const ms=(G.simUso&&G.simUso.bloq||0)-Date.now();if(ms<=0){clearInterval(window._relLoja);render();return}el.textContent=fmtRelogio(ms)},1000)}
   if(aba==="mercado"&&$("#loja-relogio")){const k0=G.diario&&G.diario.dia;window._relLoja=setInterval(()=>{const el=$("#loja-relogio");if(!el){clearInterval(window._relLoja);return}el.textContent=fmtRelogio(msParaRenovar());if(cicloLoja()!==k0){clearInterval(window._relLoja);render()}},1000)}
   if(aba==="partida"||aba==="resultado")return;
-  if(!G.over&&(G.tut??TUTORIAL.length)<TUTORIAL.length&&aba==="inicio"&&!document.querySelector(".veu"))mostrarTutorial();
+  if(!telaCheia&&!G.over&&G.tradOferta&&!document.querySelector(".veu"))modalTradutor();
+  if(!G.over&&!G.tradOferta&&(G.tut??TUTORIAL.length)<TUTORIAL.length&&aba==="inicio"&&!document.querySelector(".veu"))mostrarTutorial();
   if(G.over)modalFim();
   else if(G.seasonEnd&&!document.querySelector(".veu")&&!G.seasonEnd.visto){G.seasonEnd.visto=true;if(G.seasonEnd.pos<=5&&!G.seasonEnd.podioVisto)celebrarPodio();else modalTemporada()}
   {const ab=document.querySelector('nav [aria-current="true"]');if(ab&&ab.scrollIntoView)ab.scrollIntoView({block:"nearest",inline:"nearest"})}
@@ -3126,13 +3149,83 @@ function render(){try{if(G&&G.user)garantirContratos()}catch(e){}
   if(aba==="perfil"){const b=document.querySelector('nav [data-v="perfil"]');if(b)b.classList.remove("brilha")}
 }
 
+/* ---------- idiomas: a tela fica na língua do país da carreira (dicionário em dados/idiomas.js) ---------- */
+function idioma(){return G&&!G.tradutor&&IDIOMA_PAIS[G.country]||"pt"}
+const TR_CACHE={};
+function trIndice(lg){if(TR_CACHE[lg])return TR_CACHE[lg];
+  const ex=new Map(),pats=[],frags=[],P=IDIOMAS.pt,T=IDIOMAS[lg];
+  P.forEach((pt,i)=>{const t=T[i];if(!t||t===pt)return;
+    if(!/\{\d+\}/.test(pt)){ex.set(pt,t);if(/^[a-zà-ú]/.test(pt)&&pt.includes(" ")&&pt.length>=10)frags.push([pt,t]);return}
+    const ord=[],partes=pt.replace(/(\{\d+\})(?:\{\d+\})+/g,"$1").split(/\{(\d+)\}/);let re="^",chave="";
+    partes.forEach((s,j)=>{if(j%2){ord.push(s);re+="(.*?)"}else{re+=s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");if(s.trim().length>chave.length)chave=s.trim()}});
+    if(chave.length<2)return;const tam=partes.filter((s,j)=>!(j%2)).join("").length;
+    pats.push({re:new RegExp(re+"$"),ord,t,chave,tam,solto:tam<6&&partes[0]===""})});
+  pats.sort((x,y)=>y.tam-x.tam); // frase com mais texto fixo primeiro
+  frags.push([", passe de ",{es:", pase de ",en:", assist by ",fr:", passe de ",de:", Vorlage von "}[lg]],[", no ",{es:", en el ",en:", at ",fr:", au ",de:", im "}[lg]]);
+  frags.sort((a,b)=>b[0].length-a[0].length);
+  return TR_CACHE[lg]={ex,pats,frags}}
+function trTexto(s,lg,fundo){const I=trIndice(lg),d=I.ex.get(s);if(d!==undefined)return d;
+  if(fundo>1)return trFrags(s,I);
+  for(const p of I.pats){if(!s.includes(p.chave))continue;const m=s.match(p.re);if(!m)continue;
+    if(p.solto&&m.slice(1).some(g=>/[a-zà-ÿ]{3,}/.test(g)))continue; // padrão curto tipo "{0} de {1}" só com números
+    const val={};p.ord.forEach((n,i)=>{const g=m[i+1];val[n]=g.trim()?(trTexto(g.trim(),lg,(fundo||0)+1)??g):g;if(val[n]!==g&&/^\s/.test(g))val[n]=" "+val[n]});
+    return p.t.replace(/\{(\d+)\}/g,(_,n)=>val[n]??"")}
+  const em=s.match(/^([^\p{L}\d]+)(\p{L}.*)$/u);if(em){const t=trTexto(em[2],lg,fundo);if(t!=null)return em[1]+t} // emoji ou símbolo na frente
+  for(const sep of [" · ",": "])if(s.includes(sep)){let mudou=false;const r=s.split(sep).map(x=>{const t=trTexto(x,lg,fundo);if(t!=null){mudou=true;return t}return x});if(mudou)return r.join(sep)}
+  return trFrags(s,I)}
+function trFrags(s,I){let r=s;for(const [a,b] of I.frags)if(r.includes(a))r=r.split(a).join(b);return r===s?null:r}
+const TR_ATTR=["placeholder","aria-label","title"];
+function traduzirNo(raiz,lg){
+  const pular=el=>el.closest&&el.closest("[data-notr],script,style,textarea,text");
+  if(raiz.nodeType===3){const el=raiz.parentElement;if(!el||pular(el))return;trNoTexto(raiz,lg);return}
+  if(raiz.nodeType!==1||pular(raiz))return;
+  const w=document.createTreeWalker(raiz,NodeFilter.SHOW_TEXT|NodeFilter.SHOW_ELEMENT,{acceptNode:n=>n.nodeType===1?(n.matches("[data-notr],script,style,textarea,svg")?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_SKIP):NodeFilter.FILTER_ACCEPT});
+  let n;while((n=w.nextNode()))trNoTexto(n,lg);
+  [raiz,...raiz.querySelectorAll("[placeholder],[aria-label],[title]")].forEach(el=>{if(el.closest("[data-notr]"))return;TR_ATTR.forEach(a=>{const v=el.getAttribute&&el.getAttribute(a);if(!v)return;const t=trTexto(v.replace(/\s+/g," ").trim(),lg,0);if(t!=null)el.setAttribute(a,t)})})}
+function trNoTexto(n,lg){const v=n.nodeValue;if(!v||!/[A-Za-zÀ-ÿ]/.test(v))return;
+  const s=v.replace(/\s+/g," ").trim();const t=trTexto(s,lg,0);if(t==null)return;
+  const a=v.match(/^\s*/)[0],b=v.match(/\s*$/)[0];n.nodeValue=(a?" ":"")+t+(b?" ":"")}
+const TR_OBS=new MutationObserver(ms=>{const lg=idioma();if(lg==="pt"||typeof IDIOMAS==="undefined")return;
+  ms.forEach(m=>{if(m.type==="characterData")traduzirNo(m.target,lg);else m.addedNodes.forEach(n=>traduzirNo(n,lg))});TR_OBS.takeRecords()});
+TR_OBS.observe(document.body,{childList:true,subtree:true,characterData:true});
+
+/* tradutor: aviso com 4 cards quando a carreira é fora do Brasil */
+const TRADUTORES={
+  ARG:{nome:"Ramón Etchegaray",ola:"¡Hola, {n}! ¿Cómo andás?",hist:"Meu nome é Ramón, sou professor de idiomas e tradutor. Nasci em Rosário, dei aula de espanhol por 15 anos em Porto Alegre e voltei pra Buenos Aires com o coração meio gaúcho.",extra:"Aqui o futebol é religião, e a torcida não perdoa ninguém! Mas o povo argentino adora quem chega com coragem."},
+  ESP:{nome:"Lucía Ferrer",ola:"¡Hola, {n}! ¿Qué tal estás?",hist:"Meu nome é Lucía, sou professora de idiomas e tradutora. Nasci em Valência, morei seis anos em Florianópolis e hoje vivo em Madri traduzindo de tudo: contratos, entrevistas e até discurso de técnico.",extra:"Os espanhóis amam futebol bonito, com a bola no chão. Se o seu time jogar bem, a torcida vai te adotar rapidinho."},
+  ENG:{nome:"Harry Whitmore",ola:"Hello, {n}! How are you doing?",hist:"Meu nome é Harry, sou professor de idiomas e tradutor. Sou de Liverpool, morei oito anos no Rio de Janeiro (aprendi português jogando futevôlei em Copacabana!) e hoje dou aula em Londres.",extra:"Aqui na terra do futebol, a imprensa é dura e as entrevistas são em inglês rápido, cheio de gíria. Não é fácil pra quem chega."},
+  GER:{nome:"Lukas Brandt",ola:"Hallo, {n}! Wie geht's dir?",hist:"Meu nome é Lukas, sou professor de idiomas e tradutor. Nasci em Munique, fiz intercâmbio em Blumenau, em Santa Catarina, e me apaixonei pelo Brasil. Até hoje não vivo sem pão de queijo.",extra:"O alemão assusta no começo, com essas palavras enormes. E aqui tudo é muito organizado: contrato, reunião, horário... tudo no detalhe."},
+  FRA:{nome:"Amélie Diallo",ola:"Bonjour, {n} ! Comment ça va ?",hist:"Meu nome é Amélie, sou professora de idiomas e tradutora. Sou de Marselha, filha de mãe baiana, e cresci falando português em casa. Morei dois anos em Salvador antes de voltar pra França.",extra:"Os franceses são exigentes com o idioma, e a imprensa daqui adora uma polêmica. Ter alguém do seu lado ajuda muito."}};
+const PAIS_NA={ARG:"na Argentina",ESP:"na Espanha",ENG:"na Inglaterra",GER:"na Alemanha",FRA:"na França"};
+function fotoTrad(i){const k=G.country,L=typeof TRADUTORES_IMG!=="undefined"&&TRADUTORES_IMG[k];return L?`<img class="trad-foto" src="${L[i]}" alt="">`:""}
+function modalTradutor(){const t=TRADUTORES[G.country];if(!t){G.tradOferta=false;return}
+  const n=esc((G.user.coach||"Professor").split(" ")[0]),m=pais().moeda,seta=`<button class="trad-seta" data-a="tradprox" aria-label="Próximo">›</button>`;
+  const card=(i,txt,pe)=>`<div class="trad-card">${fotoTrad(i)}<div class="trad-bal">${txt}</div>${pe}</div>`;
+  fecharModal();const v=document.createElement("div");v.className="veu trad-veu";v.setAttribute("data-notr","");
+  v.innerHTML=`<div class="trad-box" role="dialog" aria-modal="true"><div class="trad-nome">${esc(t.nome)} <small>· tradutor</small></div><div class="trad-cards">
+    ${card(0,`<b class="trad-ola">${esc(t.ola.replace("{n}",n))}</b><p>${t.hist}</p>`,seta)}
+    ${card(1,`<p>Fiquei sabendo que você é brasileiro e fundou um time aqui ${PAIS_NA[G.country]}, parabéns!</p><p>${t.extra}</p><p>Então pensei que talvez você precisasse de um tradutor pra te ajudar na comunicação...</p>`,seta)}
+    ${card(1,`<p>Caso tenha interesse, cobro <b>${m} 1.000 por mês</b>. Com isso, tudo no clube fica em português pra você. Vamos fechar?</p>`,`<div class="botoes"><button class="btn" data-a="tradnao">Recusar</button><button class="btn prim" data-a="tradsim">Contratar</button></div>`)}
+  </div><div class="trad-pontos"><i class="on"></i><i></i><i></i></div></div>`;
+  document.body.appendChild(v);handlers(v);
+  const c=v.querySelector(".trad-cards"),pts=v.querySelectorAll(".trad-pontos i");
+  c.addEventListener("scroll",()=>{const i=Math.round(c.scrollLeft/c.clientWidth);pts.forEach((p,j)=>p.classList.toggle("on",j===i))},{passive:true})}
+function responderTradutor(sim){const t=TRADUTORES[G.country],c=G.clubs[G.user.club],n=esc((G.user.coach||"Professor").split(" ")[0]);
+  G.tradOferta=false;G.tradutor=sim;salvar();
+  const box=document.querySelector(".trad-box");if(!box)return;
+  box.innerHTML=`<div class="trad-nome">${esc(t.nome)} <small>· tradutor</small></div><div class="trad-cards"><div class="trad-card">${fotoTrad(sim?2:3)}<div class="trad-bal">${sim
+    ?`<p><b>Fechado!</b> Muito obrigado pela confiança, ${n}. A partir de agora eu traduzo tudo pra você, e o clube fica todo em português.</p><p>E olha, o ${esc(c.name)} tem tudo pra ganhar o campeonato. Boa sorte!</p>`
+    :`<p><b>Sem problemas!</b> Fica tranquilo, ${n}. Se mudar de ideia, é só me chamar em Ajustes.</p><p>Boa sorte com o ${esc(c.name)}!</p>`}</div>
+    <div class="botoes"><button class="btn prim" data-a="tradfim">${sim?"Valeu!":"Até mais!"}</button></div></div></div>`;
+  if(sim)somDinheiro()}
+
 /* ---------- criação do clube ---------- */
 const PASSOS=["Nome","País","Escudo","Uniforme","Estádio"];
 function econPaisC(k){const r=PAISES[k].t[2].map(s=>+s.split("|")[1]).filter(isFinite);return econ(Math.round(r.reduce((a,b)=>a+b,0)/r.length))}
 function escalaFund(k){return k==="BRA"?1:econPaisC(k)/econPaisC("BRA")}
 function caixaFundacao(k){return Math.round(700*escalaFund(k)/10)*10}
 function precoEstadioFund(k){return Math.round(650*escalaFund(k)/10)*10}
-function dinheiroPais(k,v){const m=PAISES[k].moeda;return v>=1000?`${m} ${(v/1000).toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})} mi`:`${m} ${Math.round(v).toLocaleString("pt-BR")} mil`}
+function dinheiroPais(k,v){return fmtGrana(PAISES[k].moeda,v)}
 function renderCriacao(){
   const p=W.passo;
   const cx0=caixaFundacao(W.pais),cxAgora=W.estComprado?cx0-precoEstadioFund(W.pais):cx0;
@@ -3618,6 +3711,7 @@ function telaConfig(){
     <div class="linha" style="justify-content:space-between"><span>Vibração (Android)</span><button class="btn mini" data-a="vib">${VIB_ON?"Desligar vibração":"Ligar vibração"}</button></div>
     <div class="linha" style="justify-content:space-between"><span>Som do jogo</span><button class="btn mini" data-a="som">${SOM.mudo?"Ligar som":"Desligar som"}</button></div>
     <div class="linha" style="justify-content:space-between"><span>Salvar a carreira num arquivo</span><button class="btn mini" data-a="salvararq">Salvar arquivo</button></div>
+    ${IDIOMA_PAIS[G.country]?`<div class="linha" style="justify-content:space-between"><span>Tradutor · ${esc(TRADUTORES[G.country].nome)}</span><button class="btn mini" data-a="tradcfg">${G.tradutor?"Dispensar tradutor":"Contratar tradutor"}</button></div>`:""}
   </div>`;
   if(!editorOn){
     h+=`<h2>Modo editor</h2><div class="cartao secao"><p class="muted peq" style="margin:0">Acesso do editor do jogo: edite nomes, dados e rostos de qualquer jogador ou técnico, de todas as divisões.</p>
@@ -4674,6 +4768,10 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "som":somIniciar();somMudo(!SOM.mudo);document.querySelectorAll(".som-btn").forEach(b=>{b.innerHTML=iconeSom();b.setAttribute("aria-label",SOM.mudo?"Ligar som":"Desligar som")});if(!SOM.mudo)somModo(modoDesejado());return;
     case "carregararq":{const i=$("#arq-save")||$("#arq-save2");if(i){i.value="";i.click()}return;}
     case "salvararq":salvarArquivo();return;
+    case "tradprox":{const c=document.querySelector(".trad-cards");if(c)c.scrollBy({left:c.clientWidth,behavior:"smooth"});return}
+    case "tradsim":case "tradnao":responderTradutor(a==="tradsim");return;
+    case "tradfim":fecharModal();render();return;
+    case "tradcfg":if(G.tradutor){G.tradutor=false;salvar();render();toast(TRADUTORES[G.country].nome+" foi dispensado.")}else{G.tradOferta=true;salvar();render()}return;
     case "vib":VIB_ON=!VIB_ON;try{localStorage.setItem("fut-vib",VIB_ON?"1":"0")}catch(e){}if(VIB_ON)vibrar("premio");if($("#splash")&&!$("#splash").hidden&&document.querySelector(".veu [data-a=vib]"))modalAjustesSp();else render();return;
     case "venda":fecharModal();modalVenda(+v);return;
     case "vpreco":{const p=G.players[+el.dataset.i],inp=$("#venda-preco");if(!p||!inp)return;const pas=Math.max(5,Math.round(valorJusto(p)*.05/5)*5);inp.value=Math.max(5,(+inp.value||0)+pas*(+v));inp.dispatchEvent(new Event("input",{bubbles:true}));return;}
