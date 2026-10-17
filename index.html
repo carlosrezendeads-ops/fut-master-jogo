@@ -240,6 +240,7 @@ input[type=range]{width:100%;accent-color:var(--canario)}
 .esc-sec .chip-cor .roda-cor{width:16px;height:16px}.esc-sec .chip-cor em{width:14px;height:14px}
 .fund .esc-sec+.esc-sec,.fund .previa+.esc-sec{margin-top:-6px}
 .fala-jog{font-style:italic;font-size:17px;line-height:1.5;border-left:3px solid var(--canario);padding-left:12px}
+.kit-foto{position:relative;display:inline-block}.kit-foto img{display:block;filter:drop-shadow(0 6px 10px rgba(0,0,0,.45))}.kit-esc{position:absolute}.kit-esc svg{width:100%;height:auto;display:block}
 .linha-chip{display:flex;margin-top:8px}
 .nome-esc{display:flex;flex-direction:column;gap:8px;border:1.5px solid rgba(255,255,255,.5);border-radius:12px;padding:0 12px 12px;background:rgba(10,20,48,.25)}
 .nome-esc .campo{gap:4px}.nome-esc .campo>span{font-size:13px!important}.nome-esc .seg button{padding:6px;font-size:14px}.nome-esc input[type=text]{min-height:44px!important;font-size:17px!important}
@@ -731,24 +732,25 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792199264"></script>
-<script src="img/arte-capa.js?v=1792199264"></script>
-<script src="img/fundo-criacao.js?v=1792199264"></script>
-<script src="img/fundo-pais.js?v=1792199264"></script>
-<script src="img/fundo-escudo.js?v=1792199264"></script>
-<script src="img/simbolos.js?v=1792199264"></script>
-<script src="img/rostos.js?v=1792199264"></script>
-<script src="img/estadio-fotos.js?v=1792199264"></script>
-<script src="img/super-fotos.js?v=1792199264"></script>
-<script src="img/trofeus.js?v=1792199264"></script>
-<script src="img/medalhas.js?v=1792199264"></script>
-<script src="img/fotos.js?v=1792199264"></script>
-<script src="img/fotos-vs.js?v=1792199264"></script>
-<script src="img/kit-homens.js?v=1792199264"></script>
-<script src="img/tec-fotos.js?v=1792199264"></script>
-<script src="dados/elencos.js?v=1792199264"></script>
-<script src="img/rostos-reais.js?v=1792199264"></script>
-<script src="img/escudos-img.js?v=1792199264"></script>
+<script src="img/escudos-reais.js?v=1792205899"></script>
+<script src="img/arte-capa.js?v=1792205899"></script>
+<script src="img/fundo-criacao.js?v=1792205899"></script>
+<script src="img/fundo-pais.js?v=1792205899"></script>
+<script src="img/fundo-escudo.js?v=1792205899"></script>
+<script src="img/simbolos.js?v=1792205899"></script>
+<script src="img/kits-foto.js?v=1792205899"></script>
+<script src="img/rostos.js?v=1792205899"></script>
+<script src="img/estadio-fotos.js?v=1792205899"></script>
+<script src="img/super-fotos.js?v=1792205899"></script>
+<script src="img/trofeus.js?v=1792205899"></script>
+<script src="img/medalhas.js?v=1792205899"></script>
+<script src="img/fotos.js?v=1792205899"></script>
+<script src="img/fotos-vs.js?v=1792205899"></script>
+<script src="img/kit-homens.js?v=1792205899"></script>
+<script src="img/tec-fotos.js?v=1792205899"></script>
+<script src="dados/elencos.js?v=1792205899"></script>
+<script src="img/rostos-reais.js?v=1792205899"></script>
+<script src="img/escudos-img.js?v=1792205899"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2091,7 +2093,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792199264";
+const VERSAO="1792205899";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -2218,9 +2220,11 @@ const ESTILO_ANTIGO_UNI={liso:"n19",listras:"n1",listras3:"n8",aros3:"n3",faixa2
 function efUni(u){const M=MODELOS_UNI[u.estilo];if(!M)return u;const C=[null,u.camisa,u.detalhe,u.d2||"#151515"];
   return {...u,mangas:C[M[1]],gola:C[M[2]],calcao:u.calcao||C[M[3]],calcaoF:u.calcaoF||C[M[4]],meiao:u.meiao||C[M[5]],faixaM:u.meiaoF||C[M[6]]}}
 /* quais das 3 cores o modelo de camisa usa de verdade (desenho + mangas + gola) */
-function coresDoModelo(k){const M=MODELOS_UNI[k];if(!M)return [1,2,3];const d=M[7]("#a00001","#b00002","#c00003","t");const u=new Set([1,M[1],M[2]]);if(d.includes("#b00002"))u.add(2);if(d.includes("#c00003"))u.add(3);return [...u].sort()}
+function coresDoModelo(k){if(typeof KITS_FOTO!=="undefined"&&KITS_FOTO[k])return KITS_FOTO[k].cores.camisa.slice().sort();const M=MODELOS_UNI[k];if(!M)return [1,2,3];const d=M[7]("#a00001","#b00002","#c00003","t");const u=new Set([1,M[1],M[2]]);if(d.includes("#b00002"))u.add(2);if(d.includes("#c00003"))u.add(3);return [...u].sort()}
 function uniNovo(u){if(u&&!MODELOS_UNI[u.estilo]){u.estilo=ESTILO_ANTIGO_UNI[u.estilo]||"n1";u.d2=u.d2||"#151515"}} // uniforme antigo -> modelo novo (mantém as cores)
-function aplicarModeloUni(u,k){const M=MODELOS_UNI[k];if(!M)return;const C=[null,u.camisa,u.detalhe,u.d2||"#151515"];u.estilo=k;u.calcao=C[M[3]];u.calcaoF=C[M[4]];u.meiao=C[M[5]];u.meiaoF=C[M[6]]}
+function aplicarModeloUni(u,k){const M=MODELOS_UNI[k];if(!M)return;const C=[null,u.camisa,u.detalhe,u.d2||"#151515"];u.estilo=k;
+  const F=typeof KITS_FOTO!=="undefined"&&KITS_FOTO[k];if(F){const a=F.cores.calcao,b=F.cores.meiao;u.calcao=C[a[0]];u.calcaoF=C[a[1]||a[0]];u.calcaoF2=C[a[2]||a[1]||a[0]];u.meiao=C[b[0]];u.meiaoF=C[b[1]||b[0]];u.meiaoF2=C[b[2]||b[1]||b[0]];return}
+  u.calcao=C[M[3]];u.calcaoF=C[M[4]];u.meiao=C[M[5]];u.meiaoF=C[M[6]]}
 function padraoUni(u,id){
   const d2=u.d2||"#ffffff";
   if(MODELOS_UNI[u.estilo])return {[u.estilo]:MODELOS_UNI[u.estilo][7](u.camisa,u.detalhe,u.d2||"#151515",id)};
@@ -3137,12 +3141,42 @@ function editorUniforme(unis,e,patro){
   return `<h2 style="margin-top:0">Uniformes</h2>
   <div class="seg" role="group">${["Uniforme 1 (casa)","Uniforme 2 (fora)"].map((n,i)=>`<button data-a="unisel" data-v="${i}" aria-pressed="${uniSel===i}">${n}</button>`).join("")}</div>
   <div class="previa duas homens" id="prev-uni">${previaUnis(unis,patro)}</div>
-  ${secEsc("unimodelo","Camisa",MODELOS_UNI[u.estilo][0],`<div class="grade8">${Object.entries(MODELOS_UNI).map(([k,M])=>`<button data-a="uestilo" data-v="${k}" aria-pressed="${u.estilo===k}">${uniformeSVG({...u,estilo:k,calcao:"",calcaoF:"",meiao:"",meiaoF:""},"",30)}<small>${M[0]}</small></button>`).join("")}</div>`,null,null,coresDoModelo(u.estilo).map(n=>n===1?chipUni("camisa",u.camisa,"Cor 1"):n===2?chipUni("detalhe",u.detalhe,"Cor 2"):chipUni("d2",u.d2||"#151515","Cor 3")).join(""))}
-  ${secEsc("unicalcao","Calção",ef.calcaoF&&ef.calcaoF!==ef.calcao?"2 cores":"1 cor",`<div class="linha-chip" style="gap:6px;flex-wrap:wrap">${chipUni("calcao",ef.calcao,"Cor do calção")}${chipUni("calcaoF",ef.calcaoF,"Cor da barra")}</div>`,null,null,"")}
-  ${secEsc("unimeiao","Meião",u.meiaoEst==="faixa"?"Com faixa":"Liso",`<div class="seg" role="group">${[["liso","Liso"],["faixa","Com faixa"]].map(([k,n])=>`<button data-a="umeiao" data-v="${k}" aria-pressed="${u.meiaoEst===k}">${n}</button>`).join("")}</div><div class="linha-chip" style="gap:6px;flex-wrap:wrap">${chipUni("meiao",ef.meiao,"Cor do meião")}${u.meiaoEst==="faixa"?chipUni("meiaoF",ef.faixaM,"Cor da faixa"):""}</div>`,null,null,"")}
+  ${secEsc("unimodelo","Camisa",MODELOS_UNI[u.estilo][0],`<div class="grade8">${Object.entries(MODELOS_UNI).map(([k,M])=>`<button data-a="uestilo" data-v="${k}" aria-pressed="${u.estilo===k}">${kitsProntos&&KITS_FOTO[k]?`<img src="${fotoKit({...u,estilo:k,calcao:"",calcaoF:"",calcaoF2:"",meiao:"",meiaoF:"",meiaoF2:""},"t")}" alt="" height="84" style="height:84px;width:auto">`:uniformeSVG({...u,estilo:k,calcao:"",calcaoF:"",meiao:"",meiaoF:""},"",30)}<small>${M[0]}</small></button>`).join("")}</div>`,null,null,coresDoModelo(u.estilo).map(n=>n===1?chipUni("camisa",u.camisa,"Cor 1"):n===2?chipUni("detalhe",u.detalhe,"Cor 2"):chipUni("d2",u.d2||"#151515","Cor 3")).join(""))}
+  ${(()=>{const F=typeof KITS_FOTO!=="undefined"&&KITS_FOTO[u.estilo],nc=F?F.cores.calcao.length:2,cr=F?coresKit(u)[2]:null,cc=F?F.cores.calcao.map(c=>cr[c]):[ef.calcao,ef.calcaoF];
+    return secEsc("unicalcao","Calção",nc>1?nc+" cores":"1 cor",`<div class="linha-chip" style="gap:6px;flex-wrap:wrap">${["calcao","calcaoF","calcaoF2"].slice(0,nc).map((k,i)=>chipUni(k,cc[i],["Cor do calção","Cor 2 do calção","Cor 3 do calção"][i])).join("")}</div>`,null,null,"")})()}
+  ${secEsc("unimeiao","Meião",u.meiaoEst==="faixa"?"Com faixa":"Liso",`<div class="seg" role="group">${[["liso","Liso"],["faixa","Com faixa"]].map(([k,n])=>`<button data-a="umeiao" data-v="${k}" aria-pressed="${u.meiaoEst===k}">${n}</button>`).join("")}</div><div class="linha-chip" style="gap:6px;flex-wrap:wrap">${(()=>{const F=typeof KITS_FOTO!=="undefined"&&KITS_FOTO[u.estilo];if(!F)return chipUni("meiao",ef.meiao,"Cor do meião")+(u.meiaoEst==="faixa"?chipUni("meiaoF",ef.faixaM,"Cor da faixa"):"");
+    const cr=coresKit(u)[3],n=u.meiaoEst==="liso"?1:F.cores.meiao.length;return ["meiao","meiaoF","meiaoF2"].slice(0,n).map((k,i)=>chipUni(k,cr[F.cores.meiao[i]],["Cor do meião","Cor da faixa","Cor 3 do meião"][i])).join("")})()}</div>`,null,null,"")}
   <div class="linha" style="flex-wrap:wrap">${e?`<button class="btn mini" data-a="ucores">Usar as cores do escudo</button>`:""}<button class="btn mini" data-a="uinverter">${uniSel===1?"Inverter cores do uniforme 1":"Copiar do uniforme 2 invertido"}</button></div>
   <p class="peq muted" style="margin:0">A chuteira é padrão e não muda.</p>`;
 }
+/* ---------- uniformes em foto (KITS_FOTO): cada pixel guarda sombra (R), cor original (G: 1 azul, 2 branco, 3 preto, 4 degradê) e parte (B: 1 camisa, 2 calção, 3 meião, 4 chuteira) ---------- */
+const KIT_PX={};let kitsProntos=false;
+function carregarKits(){if(typeof KITS_FOTO==="undefined")return;const ks=Object.keys(KITS_FOTO);let falta=ks.length*2;
+  ks.forEach(k=>["g","t"].forEach(t=>{const im=new Image();im.onload=()=>{const c=document.createElement("canvas");c.width=im.width;c.height=im.height;const x=c.getContext("2d");x.drawImage(im,0,0);
+    (KIT_PX[k]=KIT_PX[k]||{})[t]={w:im.width,h:im.height,d:x.getImageData(0,0,im.width,im.height).data};if(--falta===0){kitsProntos=true;KIT_CACHE_FOTO.clear();if(typeof atualizarPrevias==="function"&&$("#prev-uni"))render()}};im.src=KITS_FOTO[k][t]}))}
+const KIT_CACHE_FOTO=new Map();
+const hexRgb=h=>{const n=parseInt((h||"#000000").slice(1),16);return [n>>16,n>>8&255,n&255]};
+// cores do calção e do meião seguem a ordem das cores da foto (dominante, 2ª, 3ª)
+function coresKit(u){const M=KITS_FOTO[u.estilo].cores,C={1:u.camisa,2:u.detalhe,3:u.d2||"#151515"};
+  const cal=[u.calcao||C[M.calcao[0]],u.calcaoF||C[M.calcao[1]]||u.calcao,u.calcaoF2||C[M.calcao[2]]||u.calcaoF],
+    mei=u.meiaoEst==="liso"?[u.meiao,u.meiao,u.meiao]:[u.meiao||C[M.meiao[0]],u.meiaoF||C[M.meiao[1]]||u.meiao,u.meiaoF2||C[M.meiao[2]]||u.meiaoF];
+  const reg={1:{1:C[1],2:C[2],3:C[3]},2:{},3:{}};M.calcao.forEach((c,i)=>reg[2][c]=cal[i]);M.meiao.forEach((c,i)=>reg[3][c]=mei[i]);
+  [1,2,3].forEach(c=>{if(!reg[2][c])reg[2][c]=cal[0];if(!reg[3][c])reg[3][c]=mei[0]});return reg}
+function fotoKit(u,tam){
+  const K=KITS_FOTO[u.estilo],P=KIT_PX[u.estilo]&&KIT_PX[u.estilo][tam];if(!K||!P)return "";
+  const reg=coresKit(u),chave=u.estilo+tam+JSON.stringify(reg)+(u.meiaoEst||"");if(KIT_CACHE_FOTO.has(chave))return KIT_CACHE_FOTO.get(chave);
+  const R={};[1,2,3].forEach(g=>{R[g]={};[1,2,3].forEach(c=>R[g][c]=hexRgb(reg[g][c]))});
+  const gr=K.grad,g1=hexRgb(u.camisa),g2=hexRgb(u.detalhe),g3=hexRgb(u.d2||"#151515"),mix=(a,b,t)=>a.map((v,i)=>v+(b[i]-v)*t);
+  const {w,h,d}=P,c=document.createElement("canvas");c.width=w;c.height=h;const x=c.getContext("2d"),o=x.createImageData(w,h),od=o.data;
+  for(let i=0;i<d.length;i+=4){const al=d[i+3];if(!al)continue;const sh=d[i]/127.5,rg=Math.min(4,Math.max(1,Math.round(d[i+2]/50)));let cl=Math.round(d[i+1]/60),col;if(cl<1||cl>4||(cl===4&&!gr))cl=Math.min(3,Math.max(1,cl));
+    if(rg>=4)col=[22,22,24];else if(cl===4&&gr){const y=(i/4/w|0)/h,t=Math.max(0,Math.min(1,(y-gr[0])/(gr[1]-gr[0])));col=t<.5?mix(g1,g2,t*2):mix(g2,g3,(t-.5)*2)}
+    else col=(R[rg]||R[1])[cl]||R[1][1];
+    for(let k=0;k<3;k++){const v=col[k];od[i+k]=sh<=1?v*sh:v+(255-v)*(sh-1)*.8}od[i+3]=al}
+  x.putImageData(o,0,0);const url=c.toDataURL();if(KIT_CACHE_FOTO.size>80)KIT_CACHE_FOTO.clear();KIT_CACHE_FOTO.set(chave,url);return url}
+// prévia grande com o escudo no peito (lado esquerdo do jogador)
+function kitComEscudo(u,px,e,nome){const K=KITS_FOTO[u.estilo],url=fotoKit(u,"g");if(!url)return homemUniforme(u,0,px);
+  const [x0,y0,x1,y1]=K.cam,lx=(x0+(x1-x0)*.64)/K.gw*100,ty=(y0+(y1-y0)*.21)/K.gh*100,lw=(x1-x0)*.13/K.gw*100;
+  return `<div class="kit-foto" style="width:${Math.round(px*K.gw/K.gh)}px;height:${px}px"><img src="${url}" alt="" width="${Math.round(px*K.gw/K.gh)}" height="${px}">${e?`<div class="kit-esc" style="left:${(lx-lw/2).toFixed(1)}%;top:${ty.toFixed(1)}%;width:${lw.toFixed(1)}%">${escudoSVG({...e,nomeOn:false},"",40,nome)}</div>`:""}</div>`}
 function homemUniforme(u,k,px){
   u=efUni(u);const F=KIT_HOMENS[k%KIT_HOMENS.length],id="kh"+(++svgN),B=F.bb;
   const pat=padraoUni(u,id+"p")[u.estilo]||"";const [x0,y0,x1,y1]=B.camisa,sx=(x1-x0)/100,sy=(y1-y0)/124;
@@ -3159,7 +3193,7 @@ function homemUniforme(u,k,px){
 }
 function previaUnis(unis,patro){
   return unis.map((x,i)=>{const ativo=i===uniSel;return `<div class="kit-homem${ativo?" ativo":""}" data-a="unisel" data-v="${i}">
-    <div class="kh-foto">${homemUniforme(x,i,ativo?150:104)}</div>
+    <div class="kh-foto">${typeof KITS_FOTO!=="undefined"&&KITS_FOTO[x.estilo]&&kitsProntos?kitComEscudo(x,ativo?260:190,alvoVisual().e,""):homemUniforme(x,i,ativo?150:104)}</div>
     <small class="kh-rot">Uniforme ${i+1}</small></div>`}).join("")}
 function alvoVisual(){const unis=G?G.clubs[G.user.club].unis:W.unis;return {e:G?G.clubs[G.user.club].escudo:W.escudo,u:unis[uniSel],unis}}
 function atualizarPrevias(){
@@ -4553,6 +4587,7 @@ function iniciar(d){if(d&&(d.G||d.W)){G=migrar(d.G)||null;W=d.W&&d.W.unis?d.W:nu
 window.claude?.hot?.ready?window.claude.hot.ready(iniciar):iniciar(window.claude?.hot?.data??{});
 // tenta já abrir com a música da capa (se o navegador barrar, começa no primeiro toque)
 try{somIniciar();somModo(modoDesejado())}catch(e){}
+try{carregarKits()}catch(e){}
 
 </script>
 
