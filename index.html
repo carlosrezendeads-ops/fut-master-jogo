@@ -120,6 +120,7 @@ tr.meu td{color:var(--canario)}
 .tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:5px;margin-left:4px;vertical-align:1px}
 .tag.les{background:rgba(255,107,91,.18);color:var(--ruim)}
 .tag.venda{background:rgba(255,210,63,.16);color:var(--canario)}
+.jog.slot.sel{outline:2.5px solid var(--canario);outline-offset:-2px;border-radius:10px;background:rgba(245,197,24,.08)}
 .slot{cursor:pointer;background:none;border:0;border-bottom:1px solid var(--gramado-3);width:100%;text-align:left;color:inherit}
 .slot:hover .nm b{color:var(--canario)}
 .acoes{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
@@ -241,6 +242,11 @@ input[type=range]{width:100%;accent-color:var(--canario)}
 .fund .esc-sec+.esc-sec,.fund .previa+.esc-sec{margin-top:-6px}
 .fala-jog{font-style:italic;font-size:17px;line-height:1.5;border-left:3px solid var(--canario);padding-left:12px}
 .kit-foto{position:relative;display:inline-block}.kit-foto img{display:block;filter:drop-shadow(0 6px 10px rgba(0,0,0,.45))}.kit-esc{position:absolute}.kit-esc svg{width:100%;height:auto;display:block}
+.card-venda{border:1.5px solid var(--canario)!important;color:var(--canario)!important;font-weight:800}
+.venda-on{display:flex;flex-direction:column;gap:2px;border:1.5px solid var(--canario);border-radius:10px;padding:8px 12px;margin-bottom:10px}.venda-on span{font-size:13px;color:var(--cal-2)}
+.aviso-box{display:flex;flex-direction:column;gap:6px;border-left:4px solid var(--aviso);padding:4px 0 4px 12px}.aviso-box b{font-size:18px}.aviso-box p{margin:0}
+.up-esc{display:flex;flex-direction:column;gap:8px}.up-esc label.btn{cursor:pointer;justify-content:center}
+.prompt-linha{gap:8px;align-items:center}.prompt-card{flex:1;border:1.5px dashed rgba(255,255,255,.7)!important;justify-content:center}
 .linha-chip{display:flex;margin-top:8px}
 .nome-esc{display:flex;flex-direction:column;gap:8px;border:1.5px solid rgba(255,255,255,.5);border-radius:12px;padding:0 12px 12px;background:rgba(10,20,48,.25)}
 .nome-esc .campo{gap:4px}.nome-esc .campo>span{font-size:13px!important}.nome-esc .seg button{padding:6px;font-size:14px}.nome-esc input[type=text]{min-height:44px!important;font-size:17px!important}
@@ -517,6 +523,7 @@ nav.abas button{font-size:11px}
 .jog.of .nm span,.jog.of .nm b{color:#fff}.jog.of .nm span{opacity:.9}
 .jog.of .ov{background:radial-gradient(circle at 35% 30%,#0b4d27,#06331a);box-shadow:inset 0 0 0 2px #7cf0ae,0 2px 6px rgba(0,0,0,.35)}
 .jog.of .tag.serie{background:#0b4d27;color:#c9ffe0}
+.cartao.tec-card.livre{background:linear-gradient(135deg,#4b5059,#30343b);border-color:#7c828c}
 .cartao.tec-card.tec-lenda{position:relative;background:linear-gradient(120deg,#5a3a00,#b8860b 35%,#ffd23f 50%,#b8860b 65%,#5a3a00);background-size:250% 100%;border:1.5px solid #fff1a8;box-shadow:0 0 16px rgba(255,210,63,.4);grid-template-columns:52px 1fr;margin-bottom:8px}
 @media (prefers-reduced-motion:no-preference){.cartao.tec-card.tec-lenda{animation:ouroCorre 4s linear infinite}}
 .tec-lenda .nm small{display:block;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#fff6c8}
@@ -732,26 +739,26 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792206387"></script>
-<script src="img/arte-capa.js?v=1792206387"></script>
-<script src="img/fundo-criacao.js?v=1792206387"></script>
-<script src="img/fundo-pais.js?v=1792206387"></script>
-<script src="img/fundo-escudo.js?v=1792206387"></script>
-<script src="img/simbolos.js?v=1792206387"></script>
-<script src="img/kits-foto.js?v=1792206387"></script>
-<script src="img/fundo-vestiario.js?v=1792206387"></script>
-<script src="img/rostos.js?v=1792206387"></script>
-<script src="img/estadio-fotos.js?v=1792206387"></script>
-<script src="img/super-fotos.js?v=1792206387"></script>
-<script src="img/trofeus.js?v=1792206387"></script>
-<script src="img/medalhas.js?v=1792206387"></script>
-<script src="img/fotos.js?v=1792206387"></script>
-<script src="img/fotos-vs.js?v=1792206387"></script>
-<script src="img/kit-homens.js?v=1792206387"></script>
-<script src="img/tec-fotos.js?v=1792206387"></script>
-<script src="dados/elencos.js?v=1792206387"></script>
-<script src="img/rostos-reais.js?v=1792206387"></script>
-<script src="img/escudos-img.js?v=1792206387"></script>
+<script src="img/escudos-reais.js?v=1792233605"></script>
+<script src="img/arte-capa.js?v=1792233605"></script>
+<script src="img/fundo-criacao.js?v=1792233605"></script>
+<script src="img/fundo-pais.js?v=1792233605"></script>
+<script src="img/fundo-escudo.js?v=1792233605"></script>
+<script src="img/simbolos.js?v=1792233605"></script>
+<script src="img/kits-foto.js?v=1792233605"></script>
+<script src="img/fundo-vestiario.js?v=1792233605"></script>
+<script src="img/rostos.js?v=1792233605"></script>
+<script src="img/estadio-fotos.js?v=1792233605"></script>
+<script src="img/super-fotos.js?v=1792233605"></script>
+<script src="img/trofeus.js?v=1792233605"></script>
+<script src="img/medalhas.js?v=1792233605"></script>
+<script src="img/fotos.js?v=1792233605"></script>
+<script src="img/fotos-vs.js?v=1792233605"></script>
+<script src="img/kit-homens.js?v=1792233605"></script>
+<script src="img/tec-fotos.js?v=1792233605"></script>
+<script src="dados/elencos.js?v=1792233605"></script>
+<script src="img/rostos-reais.js?v=1792233605"></script>
+<script src="img/escudos-img.js?v=1792233605"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -1245,6 +1252,7 @@ function avancar(meuRes){
        if(meuRes&&G.lastFin){G.lastFin.folha=-F.tot;G.lastFin.tot-=F.tot}
        G.pag.prox=maisUmMes(G.pag.prox,G.pag.dia)}}}}
   G.ev++;
+  try{garantirContratos();checarContratos();processarVendas()}catch(e){}
   {// lesão só conta partida quando o clube do jogador joga; energia volta a 100% antes de cada partida (lesionado fica como está)
    const d0=dataEv(G.ev-1),d1=dataEv(G.ev),dias=d0&&d1?clamp(Math.round((d1-d0)/864e5),1,10):4,uid=G.user.club;
    Object.values(G.players).forEach(p=>{
@@ -1593,11 +1601,49 @@ function demitirTec(){
   G.inbox.unshift({t:"msg",m:`${G.tec.n} foi demitido. Multa rescisória: ${dinheiro(multa)}.`});
   G.tec=TEC_INTERINO();return null;
 }
+/* ---------- contratos com data (calendário do jogo) ---------- */
+const DIA_MS=864e5;
+function hojeJogo(){const d=dataEv(G.ev)||dataEv(Math.max(0,G.ev-1));return d?d.getTime():new Date(G.year,11,20).getTime()}
+function fmtDataLonga(ms){const d=new Date(ms);return fmtData(d)+"/"+d.getFullYear()}
+function novoFimContrato(mMin,mMax){return hojeJogo()+Math.round((mMin+Math.random()*(mMax-mMin))*30.4*DIA_MS)}
+// todo jogador do seu clube tem data de fim de contrato (mínimo 6 meses); quem chega sem data ganha uma aleatória
+function garantirContratos(){if(!G||!G.user)return;jogadoresDo(G.user.club).forEach(p=>{if(!p.ctFim){p.ctFim=novoFimContrato(6,Math.max(7,(p.ct||2)*12));delete p.ctAcabou}})}
+const contratoAcabou=p=>p.ctFim&&p.ctFim<=hojeJogo();
+const fimContratoTxt=p=>p.ctFim?fmtDataLonga(p.ctFim):String(G.year+(p.ct??2)-1);
+function checarContratos(){const h=hojeJogo();jogadoresDo(G.user.club).forEach(p=>{if(p.ctFim&&p.ctFim<=h&&!p.ctAcabou){p.ctAcabou=1;
+  G.inbox.unshift({t:"ruim",m:`O contrato de ${p.n} terminou. Ele sai no fim da temporada se não renovar. Se quiser vender, agora não há multa rescisória.`});addNoticia(`Contrato de ${p.n} com o ${G.clubs[G.user.club].name} chegou ao fim.`,"clube")}})}
+/* ---------- venda de jogador ---------- */
+const valorJusto=p=>Math.max(10,Math.round(valor(p)/5)*5);
+function multaVenda(p){if(!p.ctFim||contratoAcabou(p))return 0;const meses=(p.ctFim-hojeJogo())/(30.4*DIA_MS);return Math.round(valorJusto(p)*Math.min(.4,meses/60))} // até 40% do valor, maior quanto mais contrato falta
+// dias até vender: preço justo 5 dias; mais caro até 9; mais barato até 2
+function diasVenda(p,preco){const r=preco/valorJusto(p);if(r<=.75)return 2;if(r>=1.4)return 9;return Math.round(r<1?2+(r-.75)/.25*3:5+(r-1)/.4*4)}
+const precoBaixo=(p,preco)=>preco/valorJusto(p)<=.75;
+function modalVenda(id){const p=G.players[id];if(!p||p.club!==G.user.club)return;
+  const pr=p.vendaPreco??valorJusto(p),mu=multaVenda(p),ja=p.venda;
+  modal(`<h3>Vender ${esc(p.n)}</h3>
+  ${ja?`<div class="venda-on"><b>À venda por ${dinheiro(ja.preco)}</b><span>Deve ser vendido em uns ${Math.max(0,Math.ceil((ja.desde+ja.dias*DIA_MS-hojeJogo())/DIA_MS))} dia(s) do calendário.</span></div>`:""}
+  <div class="extrato num"><div><span>Contrato</span><span>${contratoAcabou(p)?"Encerrado":"até "+fimContratoTxt(p)}</span></div>
+  <div><span>Multa rescisória</span><span>${mu?dinheiro(mu):"Sem multa"}</span></div></div>
+  ${contratoAcabou(p)?`<p class="peq" style="color:var(--ok);margin:6px 0 0">O contrato dele já terminou: a venda não tem multa.</p>`:`<p class="peq muted" style="margin:6px 0 0">Quanto mais tempo de contrato falta, maior a multa. Ela é descontada quando a venda acontecer.</p>`}
+  ${ja?"":`<div class="campo" style="margin-top:10px"><span>Preço de venda</span><div class="linha" style="gap:6px"><button class="btn mini" data-a="vpreco" data-v="-1" data-i="${id}">−</button><input type="number" id="venda-preco" inputmode="numeric" min="1" step="5" value="${pr}" style="flex:1;text-align:center"><button class="btn mini" data-a="vpreco" data-v="1" data-i="${id}">+</button></div><small class="peq muted" id="venda-info">${dinheiro(pr)} · venda em uns ${diasVenda(p,pr)} dias · você recebe ${dinheiro(Math.max(0,pr-mu))}</small></div>
+  <button class="btn prim full" data-a="vsalvar" data-v="${id}">Salvar</button>
+  ${p.vendaPreco!=null?`<button class="btn full card-venda" data-a="vcolocar" data-v="${id}">🏷️ Colocar à venda por ${dinheiro(p.vendaPreco)}</button>`:""}`}
+  <div class="botoes">${ja?`<button class="btn" data-a="vtirar" data-v="${id}">Tirar da venda</button>`:""}<button class="btn" data-a="fechar">Fechar</button></div>`)}
+// quadro de aviso/recomendação (sempre com botão Fechar)
+function aviso(tit,txt){modal(`<div class="aviso-box"><b>⚠️ ${tit}</b><p>${txt}</p></div><div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`)}
+function processarVendas(){const uid=G.user.club,h=hojeJogo();
+  jogadoresDo(uid).filter(p=>p.venda&&h>=p.venda.desde+p.venda.dias*DIA_MS).forEach(p=>{
+    if(jogadoresDo(uid).length<=16){p.venda.desde=h;return}
+    const mu=multaVenda(p),pr=p.venda.preco,cands=G.tiers.flat().filter(id=>id!==uid),comp=pick(cands);
+    G.cash+=pr-mu;p.club=comp;tocou();delete p.venda;delete p.vendaPreco;delete p.ctFim;delete p.ctAcabou;
+    G.user.lineup=G.user.lineup.map(id=>id===p.id?null:id);validarEscalacao();
+    G.inbox.unshift({t:"bom",m:`${p.n} foi vendido ao ${G.clubs[comp].name} por ${dinheiro(pr)}${mu?` (multa rescisória de ${dinheiro(mu)} descontada)`:""}.`});xpBonus(150,"venda de jogador")})}
+function avisoElencoCheio(){if(jogadoresDo(G.user.club).length>=26)setTimeout(()=>aviso("Elenco muito grande",`Seu clube já tem ${jogadoresDo(G.user.club).length} jogadores. Muitos jogadores deixam a folha salarial mensal bem mais pesada. Venda alguns para equilibrar as contas e melhorar o lucro.`),400)}
 function pedidoRenovacao(p,anos){const s=Math.round(Math.max(p.sal,salarioDe(p.ov))*(1.05+.04*anos)*10)/10;return {sal:s,luvas:Math.round(s*2)}}
 function renovar(pid,anos){
   const p=G.players[pid];if(!p||p.club!==G.user.club)return "Jogador indisponível.";
   const r=pedidoRenovacao(p,anos);if(r.luvas>G.cash)return "Caixa insuficiente para as luvas da renovação.";
-  G.cash-=r.luvas;p.sal=r.sal;p.ct=anos;
+  G.cash-=r.luvas;p.sal=r.sal;p.ct=anos;p.ctFim=Math.max(p.ctFim||0,hojeJogo())+Math.round(anos*365*DIA_MS);delete p.ctAcabou;
   G.inbox.unshift({t:"bom",m:`${p.n} renovou por ${anos} temporada${anos>1?"s":""}. Novo salário: ${dinheiro(r.sal)}/mês.`});
   return null;
 }
@@ -1963,7 +2009,8 @@ function proximaTemporada(){
   const saidas=[];
   Object.values(G.players).forEach(p=>{
     if(p.club===uid){p.tg=(p.tg||0)+(p.g||0);p.ta=(p.ta||0)+(p.as||0);p.tj=(p.tj||0)+(p.j||0);(p.hist=p.hist||[]).push([G.year,p.ov,p.j||0,p.g||0,p.as||0,p.nn?Math.round(p.nt/p.nn*10)/10:null]);
-      p.ct=(p.ct??2)-1;if(p.ct<=0){saidas.push(p.n);p.club=null;delete p.ct}}
+      if(p.ctFim){if(p.ctFim<=new Date(G.year,11,31,23).getTime()){saidas.push(p.n);p.club=null;delete p.ct;delete p.ctFim;delete p.ctAcabou;delete p.venda;delete p.vendaPreco}else p.ct=Math.max(1,new Date(p.ctFim).getFullYear()-G.year)}
+      else{p.ct=(p.ct??2)-1;if(p.ct<=0){saidas.push(p.n);p.club=null;delete p.ct}}}
   });tocou();
   Object.values(G.players).forEach(p=>{
     p.age++;
@@ -2094,7 +2141,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792206387";
+const VERSAO="1792233605";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -2148,7 +2195,7 @@ const SIMBOLOS=["Nenhum","Coroa","Estrela simples","Estrelas múltiplas","Estrel
 /* símbolo antigo (desenhado) -> novo (imagem); os sem parecido viram "Nenhum" */
 const SIMBOLO_ANTIGO=[0,2,32,0,1,3,31,33,3,0,5,5,39,40,0,0,0,0,37,0,28,35,36,0,0,0,0,0,0,0,0,0,34,0,0,0,0,0,0,0,1];
 let svgN=0;
-function escudoSVG(e,sigla,px,nome){if(e.nomeOn&&e.nomeTxt!=null&&e.nomeTxt.trim())nome=e.nomeTxt.trim();
+function escudoSVG(e,sigla,px,nome){if(e&&e.img)return `<svg viewBox="-4 -2 108 124" width="${px}" height="${Math.round(px*1.15)}" aria-hidden="true" class="svg-escudo"><image href="${e.img}" x="-4" y="-2" width="108" height="124" preserveAspectRatio="xMidYMid meet"/></svg>`;if(e.nomeOn&&e.nomeTxt!=null&&e.nomeTxt.trim())nome=e.nomeTxt.trim();
   const id="cl"+(++svgN),fi=e.forma%FORMAS.length,f=FORMAS[fi][1];
   const R=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${e.c2}"/>`,D=(y,h,ang)=>`<rect x="-40" y="${y}" width="180" height="${h}" fill="${e.c2}" transform="rotate(${ang} 50 60)"/>`;
   const pat=[
@@ -2990,7 +3037,7 @@ function rotuloEtapa(){
   return ev.k==="L"?`Rodada ${ev.r+1} de ${nRodadas()}`:ev.k==="N"?G.copaN.nome:G.cup.nome;
 }
 
-function render(){
+function render(){try{if(G&&G.user)garantirContratos()}catch(e){}
   if(G)tocou();
   if(SOM.ctx)somModo(modoDesejado());
   if(abertura)return renderAbertura();
@@ -3114,9 +3161,44 @@ let escAberto=null;
 function secEsc(k,tit,atual,grade,ck,cor,extra){const ab=escAberto===k;
   return `<div class="campo esc-sec${ab?" aberto":""}"><button type="button" class="esc-cab" data-a="escsec" data-v="${ab?"":k}"><span>${tit}</span><small>${esc(atual)}</small><b aria-hidden="true">${ab?"▲":"▼"}</b></button>${ab?grade+`<button type="button" class="btn prim full" data-a="escsec" data-v="">Salvar</button>`:""}
   ${ck||extra?`<div class="esc-cor"><span>Cores · personalizar</span><span class="chips">${ck?chipCor(ck,cor,"Escolher cor"):""}${extra||""}</span></div>`:""}</div>`}
+const PROMPT_ESCUDO=`Crie o escudo de um time de futebol fictício para usar num jogo de celular.
+
+DESIGN DO ESCUDO (preencha):
+- Nome do time: [escreva aqui]
+- Cores principais: [ex.: azul-marinho e dourado]
+- Símbolo ou mascote: [ex.: tubarão, leão, estrela, nenhum]
+- Formato do escudo: [ex.: clássico, redondo, moderno]
+- Estilo: [ex.: moderno e minimalista, tradicional, agressivo]
+- Texto dentro do escudo (opcional): [ex.: sigla, ano de fundação]
+
+ENQUADRAMENTO E EXIGÊNCIAS (não altere):
+- Imagem quadrada, 1024 x 1024 pixels.
+- Somente o escudo, centralizado, ocupando cerca de 90% da imagem, sem cortar nenhuma borda.
+- Fundo totalmente transparente (PNG). Se não for possível, fundo branco liso, sem textura e sem sombra.
+- Escudo de frente e plano, estilo emblema/vetor, sem 3D exagerado, sem mockup, sem camisa, sem parede e sem reflexos.
+- Contornos nítidos e cores sólidas e fortes, para ficar legível mesmo bem pequeno.
+- Sem marca d'água, sem assinatura e sem nenhum texto fora do escudo.`;
+function copiarTexto(t){const ok=()=>toast("Prompt copiado! Cole no ChatGPT.");
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,()=>copiarAntigo(t,ok));else copiarAntigo(t,ok)}
+function copiarAntigo(t,ok){const a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();try{document.execCommand("copy");ok()}catch(e){toastErro("Não deu para copiar.")}a.remove()}
+// recebe a imagem: tira fundo liso (cor dos cantos), recorta e encaixa no formato do escudo
+function processarEscudoUpload(f){return new Promise((ok,er)=>{if(!f||!/^image\//.test(f.type))return er("Escolha uma imagem.");const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{
+  const M=420,k=Math.min(1,M/Math.max(im.width,im.height)),w=Math.round(im.width*k),h=Math.round(im.height*k),c=document.createElement("canvas");c.width=w;c.height=h;const x=c.getContext("2d");x.drawImage(im,0,0,w,h);
+  const D=x.getImageData(0,0,w,h),d=D.data,px=(i,j)=>(j*w+i)*4,cs=[px(0,0),px(w-1,0),px(0,h-1),px(w-1,h-1)];
+  const opaco=cs.every(i=>d[i+3]>240),ref=[d[cs[0]],d[cs[0]+1],d[cs[0]+2]],perto=i=>Math.abs(d[i]-ref[0])+Math.abs(d[i+1]-ref[1])+Math.abs(d[i+2]-ref[2])<60;
+  if(opaco&&cs.every(perto)){const vis=new Uint8Array(w*h),pil=[];for(let i=0;i<w;i++){pil.push(i,0,i,h-1)}for(let j=0;j<h;j++){pil.push(0,j,w-1,j)}
+    while(pil.length){const j=pil.pop(),i=pil.pop();if(i<0||j<0||i>=w||j>=h)continue;const q=j*w+i;if(vis[q])continue;vis[q]=1;if(!perto(q*4))continue;d[q*4+3]=0;pil.push(i+1,j,i-1,j,i,j+1,i,j-1)}x.putImageData(D,0,0)}
+  let x0=w,y0=h,x1=0,y1=0;for(let j=0;j<h;j++)for(let i=0;i<w;i++)if(d[px(i,j)+3]>20){if(i<x0)x0=i;if(i>x1)x1=i;if(j<y0)y0=j;if(j>y1)y1=j}
+  if(x1<=x0||y1<=y0)return er("A imagem parece vazia.");
+  const W=216,H=248,cw=x1-x0+1,ch=y1-y0+1,s2=Math.min(W/cw,H/ch),o=document.createElement("canvas");o.width=W;o.height=H;
+  o.getContext("2d").drawImage(c,x0,y0,cw,ch,(W-cw*s2)/2,(H-ch*s2)/2,cw*s2,ch*s2);ok(o.toDataURL("image/png"))};im.onerror=()=>er("Não consegui abrir essa imagem.");im.src=rd.result};rd.readAsDataURL(f)})}
 function editorEscudo(e,nome){if(e.nomeOn===undefined)e.nomeOn=false;
   return `<h2 style="margin-top:0">Escudo</h2>
   <div class="previa" id="prev-escudo">${escudoSVG(e,"",120,nome)}</div>
+  <div class="up-esc"><label class="btn full card-venda">📤 ${e.img?"Trocar imagem do escudo":"Fazer upload do escudo"}<input type="file" id="esc-up" accept="image/*" hidden></label>
+  ${e.img?`<button class="btn mini" data-a="escupremover">Voltar ao escudo desenhado</button>`:""}
+  <div class="linha prompt-linha"><button class="btn mini prompt-card" data-a="escprompt">📋 Prompt para criação/enquadramento</button><button type="button" class="info-bt" data-a="escpromptinfo" aria-label="O que é isso">i</button></div></div>
+  ${e.img?`<p class="peq muted" style="margin:0">Você está usando um escudo enviado. As opções de desenho abaixo voltam a valer se você voltar ao escudo desenhado.</p>`:""}
   ${secEsc("forma","Formato",FORMAS[e.forma%FORMAS.length][0],`<div class="grade8">${FORMAS.map((f,i)=>`<button data-a="eforma" data-v="${i}" aria-pressed="${e.forma===i}" aria-label="${f[0]}">${escudoSVG({...e,forma:i,simbolo:0},"",34)}<small>${f[0]}</small></button>`).join("")}</div>${barraEsc("bordaEsp","Grossura da borda do escudo",.1,1,e.bordaEsp??1,"Bem fina","Grossa")}`,"c1",e.c1,chipCor("c3",e.c3,"Borda"))}
   ${secEsc("estampa","Desenho",ESTAMPAS[e.estampa%ESTAMPAS.length],`<div class="grade8">${ESTAMPAS.map((n,i)=>`<button data-a="eestampa" data-v="${i}" aria-pressed="${e.estampa===i}">${escudoSVG({...e,estampa:i,simbolo:0},"",30)}<small>${n}</small></button>`).join("")}</div>`,"c2",e.c2)}
   ${secEsc("simbolo","Símbolo",SIMBOLOS[e.simbolo||0],`<div class="grade8">${SIMBOLOS.map((s,i)=>`<button data-a="esimbolo" data-v="${i}" aria-pressed="${(e.simbolo||0)===i}">${escudoSVG({...e,simbolo:i,sigla:false},"",30)}<small>${s}</small></button>`).join("")}</div>${e.simbolo?`<div class="nome-esc" style="margin-top:6px"><div class="previa-mini" id="prev-escudo-sim">${escudoSVG(e,"",96,nome)}</div><div class="campo"><span>Cor do símbolo</span><div class="seg" role="group">${[["orig","Cor original"],["time","Personalizada"]].map(([k,n])=>`<button data-a="esimcor" data-v="${k}" aria-pressed="${(e.simCor==="time")===(k==="time")}">${n}</button>`).join("")}</div>${e.simCor==="time"?`<div class="linha-chip">${chipCor("c4",e.c4||e.c3,"Escolher cor")}</div>`:""}</div>
@@ -3703,11 +3785,12 @@ function linhaJog(p,extra,comXp){
   const xp=comXp?`<div class="xp" title="Pontos de evolução"><i style="width:${clamp((p.xp||0)/xpNecessario(p)*100,0,100)}%"></i></div>`:"";
   return `${fotoPos(p,p.pos)}<div class="nm"><b>${esc(p.n)}${st}</b><span>${p.age} anos · ${dinheiro(valor(p))}${extra||""}</span>${xp}${p.club===G.user.club?barraFis(p):""}</div><div class="ov num${p.lenda?" ov-lenda":""}">${p.ov}</div>`;
 }
+let slotAberto=null;
 function blocoTitulares(){
   const u=G.user,slots=FORMACOES[u.form].s;
   return `<h2>Titulares</h2><div class="cartao" style="padding-block:4px">${slots.map((s,i)=>{const p=G.players[u.lineup[i]];const fora=p&&p.pos!==s?` · <span style="color:var(--aviso)">improvisado</span>`:"";
     const tg=p?((p.am||0)>=2?' <span class="tag am">Pendurado</span>':""):"";
-    return p?`<button class="jog slot" data-a="slot" data-v="${i}">${fotoPos(p,s)}<div class="nm"><b>${esc(p.n)}${tg}</b><span>${p.pos}${fora} · ${p.age} anos</span>${barraFis(p)}</div><div class="ov num">${Math.round(ovF(p)*eficiencia(p,s))}</div></button>`
+    return p?`<button class="jog slot${slotAberto===i?" sel":""}" data-a="slot" data-v="${i}">${fotoPos(p,s)}<div class="nm"><b>${esc(p.n)}${tg}</b><span>${p.pos}${fora} · ${p.age} anos</span>${barraFis(p)}</div><div class="ov num">${Math.round(ovF(p)*eficiencia(p,s))}</div></button>`
     :`<button class="jog slot" data-a="slot" data-v="${i}">${fotoPos(null,s)}<div class="nm"><b class="muted">Vazio, toque para escolher</b></div><div></div></button>`}).join("")}</div>`;
 }
 function telaElenco(){
@@ -3726,14 +3809,14 @@ function telaElenco(){
   h+=`<h2>Técnico</h2>${cartaoTecClube(u.club)}`;
   h+=`<h2>Elenco · ${el.length} jogadores</h2><p class="muted peq" style="margin:-4px 0 8px">Toque na foto de um jogador para ver o perfil completo. A barra amarela mostra os pontos de evolução. A barra colorida é a energia: ela volta a 100% antes de cada partida. Folha: ${dinheiro(folhaSalarial(u.club))} por mês.${ab?` Negócios usados: ${G.janela.negocios} de ${MAX_NEGOCIOS}.`:""}</p>
   <div class="cartao" style="padding-block:4px">${el.map(p=>{const lst2=G.janela.listados.includes(p.id);
-    return `<div class="jog${lendaCls(p)}" data-a="exp" data-v="${p.id}" style="cursor:pointer">${linhaJog(p,` · ${p.g} gol${p.g===1?"":"s"}`+(tit.has(p.id)?" · titular":""),true)}${expandido===p.id?`<div class="expand"><span class="muted peq" style="flex-basis:100%">Salário ${dinheiro(p.sal)}/mês · contrato até ${G.year+(p.ct??2)-1} · ${p.j} jogos, ${p.g} gols, ${p.as||0} assistências${p.nn?` · nota média ${(p.nt/p.nn).toFixed(1)}`:""}</span><button class="btn mini" data-a="perfil" data-v="${p.id}">Ver perfil</button><button class="btn mini" data-a="renovar" data-v="${p.id}">Renovar contrato</button>${lst2?`<button class="btn mini" data-a="aba" data-v="inicio">Ver propostas</button>`:ab?`<button class="btn mini" data-a="negociar" data-v="${p.id}" ${G.janela.negocios>=MAX_NEGOCIOS?"disabled":""}>Colocar para negócio</button>`:mercadoDia()?`<button class="btn mini" data-a="negociar" data-v="${p.id}" ${diario().vendas>=1?"disabled":""}>${diario().vendas>=1?"Venda já usada nesta renovação":"Colocar à venda (1 por renovação)"}</button>`:`<span class="peq muted">Mercado fechado agora.</span>`}<button class="btn mini perigo" data-a="dispensar" data-v="${p.id}">Dispensar</button></div>`:""}</div>`}).join("")}</div>`;
+    return `<div class="jog${lendaCls(p)}" data-a="exp" data-v="${p.id}" style="cursor:pointer">${linhaJog(p,` · ${p.g} gol${p.g===1?"":"s"}`+(tit.has(p.id)?" · titular":""),true)}${expandido===p.id?`<div class="expand"><span class="muted peq" style="flex-basis:100%">Salário ${dinheiro(p.sal)}/mês · ${contratoAcabou(p)?"contrato encerrado":"contrato até "+fimContratoTxt(p)}${p.venda?` · <b style="color:var(--canario)">à venda</b>`:""} · ${p.j} jogos, ${p.g} gols, ${p.as||0} assistências${p.nn?` · nota média ${(p.nt/p.nn).toFixed(1)}`:""}</span><button class="btn mini" data-a="perfil" data-v="${p.id}">Ver perfil</button><button class="btn mini" data-a="renovar" data-v="${p.id}">Renovar contrato</button><button class="btn mini card-venda" data-a="venda" data-v="${p.id}">🏷️ ${p.venda?"À venda":"Vender jogador"}</button><button class="btn mini perigo" data-a="dispensar" data-v="${p.id}">Dispensar</button></div>`:""}</div>`}).join("")}</div>`;
   return h;
 }
 function pickerSlot(i){
   const u=G.user,s=FORMACOES[u.form].s[i],atual=u.lineup[i];
   const el=jogadoresDo(u.club).filter(disponivel).sort((a,b)=>(b.pos===s)-(a.pos===s)||ovF(b)*eficiencia(b,s)-ovF(a)*eficiencia(a,s));
   modal(`<h3>Escolher ${s}</h3><p class="muted peq" style="margin:0 0 8px">O número mostra a força do jogador nessa posição. Quem já é titular troca de lugar.</p>
-  <div>${el.map(p=>`<button class="jog slot" data-a="escolher" data-v="${i}" data-p="${p.id}">${fotoPos(p,p.pos,true)}<div class="nm"><b>${esc(p.n)}${p.id===atual?' <span class="tag venda">Atual</span>':""}</b><span>${u.lineup.includes(p.id)?"Titular · ":""}${p.age} anos</span>${barraFis(p)}</div><div class="ov num">${Math.round(ovF(p)*eficiencia(p,s))}</div></button>`).join("")}</div>
+  <div>${el.map(p=>`<button class="jog slot${p.id===atual?" sel":""}" data-a="escolher" data-v="${i}" data-p="${p.id}">${fotoPos(p,p.pos,true)}<div class="nm"><b>${esc(p.n)}${p.id===atual?' <span class="tag venda">Atual</span>':""}</b><span>${u.lineup.includes(p.id)?"Titular · ":""}${p.age} anos</span>${barraFis(p)}</div><div class="ov num">${Math.round(ovF(p)*eficiencia(p,s))}</div></button>`).join("")}</div>
   <div class="botoes"><button class="btn" data-a="fechar">Cancelar</button></div>`);
 }
 
@@ -4018,17 +4101,17 @@ function perfilJogador(id){
       <div><span>Condição física</span><span>${Math.round(p.fis??100)}%</span></div>
       <div><span>Valor de mercado</span><span>${dinheiro(valor(p))}</span></div>
       <div><span>Salário</span><span>${dinheiro(p.sal)}/mês</span></div>
-      ${meu?`<div><span>Contrato</span><span>até ${G.year+(p.ct??2)-1}</span></div>`:""}
+      ${meu?`<div><span>Contrato</span><span>${contratoAcabou(p)?"Encerrado":"até "+fimContratoTxt(p)}</span></div>`:""}
     </div>
     <h2>Histórico de lesões</h2>${(p.lesoes||[]).length?`<div class="extrato num">${p.lesoes.slice().reverse().map(([a,j,m])=>`<div><span>${a} · ${esc(m)}</span><span>${j} jogo${j>1?"s":""} fora</span></div>`).join("")}</div>`:'<p class="muted peq" style="margin:0">Nenhuma lesão registrada.</p>'}
     <h2>Temporada ${G.year}</h2><div class="kpis"><div class="cartao kpi"><small>Jogos</small><b class="num">${p.j||0}</b></div><div class="cartao kpi"><small>Gols</small><b class="num">${p.g||0}</b></div><div class="cartao kpi"><small>Assistências</small><b class="num">${p.as||0}</b></div><div class="cartao kpi"><small>Nota média</small><b class="num">${media}</b></div></div>
     ${meu?`<h2>Carreira no clube</h2><div class="kpis"><div class="cartao kpi"><small>Jogos</small><b class="num">${(p.tj||0)+(p.j||0)}</b></div><div class="cartao kpi"><small>Gols</small><b class="num">${(p.tg||0)+(p.g||0)}</b></div></div>`:""}
     ${hist.length?`<h2>Evolução</h2><div class="rolar"><table><thead><tr><th>Ano</th><th>Força</th><th>J</th><th>G</th><th>A</th><th>Nota</th></tr></thead><tbody>${hist.map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td><td>${x[2]}</td><td>${x[3]}</td><td>${x[4]}</td><td>${x[5]??"—"}</td></tr>`).join("")}</tbody></table></div>`:""}
-    <div class="botoes">${c&&!meu?`<button class="btn" data-a="vertime" data-v="${c.id}">‹ Elenco do ${esc(c.short||c.name)}</button>`:""}${editorOn?`<button class="btn" data-a="trocarosto" data-v="${p.id}">Trocar rosto</button>`:""}${meu?`<button class="btn" data-a="renovar" data-v="${p.id}">Renovar</button>`:""}<button class="btn prim" data-a="fechar">Fechar</button></div>`);
+    ${meu?`<button class="btn full card-venda" style="margin-top:12px" data-a="venda" data-v="${p.id}">🏷️ ${p.venda?"À venda · ver":"Vender jogador"}</button>`:""}<div class="botoes">${c&&!meu?`<button class="btn" data-a="vertime" data-v="${c.id}">‹ Elenco do ${esc(c.short||c.name)}</button>`:""}${editorOn?`<button class="btn" data-a="trocarosto" data-v="${p.id}">Trocar rosto</button>`:""}${meu?`<button class="btn" data-a="renovar" data-v="${p.id}">Renovar</button>`:""}<button class="btn prim" data-a="fechar">Fechar</button></div>`);
 }
 function modalRenovar(id){
   const p=G.players[id];if(!p)return;
-  modal(`<h3>Renovar com ${esc(p.n)}</h3><p class="muted peq">Contrato atual até ${G.year+(p.ct??2)-1}, salário de ${dinheiro(p.sal)}/mês. Escolha por quantas temporadas renovar. As luvas são pagas na hora.</p>
+  modal(`<h3>Renovar com ${esc(p.n)}</h3><p class="muted peq">Contrato atual até ${fimContratoTxt(p)}, salário de ${dinheiro(p.sal)}/mês. Escolha por quantas temporadas renovar. As luvas são pagas na hora.</p>
   <div class="secao">${[1,2,3,4].map(a=>{const r=pedidoRenovacao(p,a);return `<button class="btn" data-a="renovconf" data-v="${id}" data-i="${a}" style="display:flex;justify-content:space-between;text-align:left"><span>${a} temporada${a>1?"s":""} (até ${G.year+a})</span><span class="num">${dinheiro(r.sal)}/mês · luvas ${dinheiro(r.luvas)}</span></button>`}).join("")}</div>
   <div class="botoes"><button class="btn" data-a="fechar">Cancelar</button></div>`);
 }
@@ -4305,18 +4388,10 @@ function telaMercado(){
     if(D.lenda!=null){const l=LENDAS[D.lenda],ja=G.lendas&&G.lendas[l[0]]!=null,v=precoLendaDin(l);
       h+=`<h2>★ Lenda da vez</h2><div class="cartao lenda-vez"><div class="jog lenda"><div class="jfoto">${fotoLenda(l[0],l[1])}<span class="posb ${l[1]}">${l[1]}</span></div><div class="nm"><b>${esc(l[0])}</b><span>${l[4]} anos · ${ja?"Contratado!":`${cupomTxt(l[3])} ou ${dinheiro(v)}`}</span></div>
         <div class="of-dir"><b class="ov num">${l[2]}</b>${ja?"":`<div class="linha" style="gap:4px"><button class="btn mini prim-mini" data-a="lenda" data-v="${D.lenda}" data-i="c" ${cupons()>=l[3]?"":"disabled"}>Cupons</button><button class="btn mini" data-a="lenda" data-v="${D.lenda}" data-i="d" ${G.cash>=v?"":"disabled"}>${dinheiro(v)}</button></div>`}</div></div></div>`}
-    h+=`<h2>3 jogadores</h2><p class="muted peq" style="margin:-4px 0 8px">Posições e séries sorteadas. Quanto mais forte o jogador e mais alta a divisão, mais caro. Para vender, coloque 1 jogador por renovação para negócio no Elenco.</p><div class="cartao" style="padding-block:4px">${D.jog.map(id=>G.players[id]).filter(Boolean).map(linhaOferta).join("")||'<p class="muted">Nenhum jogador agora.</p>'}</div>`;
+    h+=`<h2>3 jogadores</h2><p class="muted peq" style="margin:-4px 0 8px">Posições e séries sorteadas. Quanto mais forte o jogador e mais alta a divisão, mais caro. Para vender, toque no jogador no Elenco e use "Vender jogador".</p><div class="cartao" style="padding-block:4px">${D.jog.map(id=>G.players[id]).filter(Boolean).map(linhaOferta).join("")||'<p class="muted">Nenhum jogador agora.</p>'}</div>`;
     h+=`<h2>Técnico</h2><div class="secao">${tc?cartaoTecOferta(tc,0,"d",true):'<p class="muted">Você já contratou o técnico desta renovação.</p>'}</div>`;
   }else h+=`<div class="aviso-janela">Mercado fechado agora.</div>`;
-  h+=`<h2>Observar jogadores</h2><p class="muted peq" style="margin:-4px 0 8px">Lista completa para acompanhar. Só dá para contratar quem aparece nas ofertas acima.</p>`;
-  h+=`<div class="cartao secao" style="margin-top:10px">
-    <div class="seg" role="group">${[["pais",pais().nome],["fora","Exterior"],["livres","Sem clube"],["tec","Técnicos"],["lendas","Lendas"]].map(([k,t])=>`<button data-a="morig" data-v="${k}" aria-pressed="${merc.orig===k}">${t}</button>`).join("")}</div>
-    <div class="campo-sel"><label>Posição<select id="m-pos"><option value="">Todas</option>${["GOL","LAT","ZAG","VOL","MEI","ATA"].map(x=>`<option ${merc.pos===x?"selected":""}>${x}</option>`).join("")}</select></label>
-    <label>Força mínima<select id="m-min">${[0,50,55,60,65,70,75,80].map(x=>`<option value="${x}" ${merc.min==x?"selected":""}>${x?x+"+":"Qualquer"}</option>`).join("")}</select></label></div>
-    <p class="muted peq" style="margin:0">Mostrando ${lista.length} de ${tot} jogadores dentro do seu alcance. Toque num jogador para ver preço e salário.</p></div>
-  <div class="cartao" style="margin-top:10px;padding-block:4px">${lista.map(p=>{const pr=precoPedido(p),fc=fonteCompra(p.id),pode=fc&&pr<=G.cash&&(fc==="d"||G.janela.compras<MAX_COMPRAS);
-    const c=p.club?G.clubs[p.club]:null;
-    return `<div class="jog${lendaCls(p)}" data-a="exp" data-v="${p.id}" style="cursor:pointer">${linhaJog(p,` · ${c?esc(c.name)+(c.tier===-1?` (${PAIS_NOME[c.pais]||""})`:""):"livre"}`)}${expandido===p.id?`<div class="expand"><span class="muted peq" style="flex-basis:100%">Preço ${pr?dinheiro(pr):"sem custo"} · Salário ${dinheiro(salarioPedido(p))}/mês</span><button class="btn mini" data-a="comprar" data-v="${p.id}" ${pode?"":"disabled"}>${!fc?"Fora das ofertas":fc==="j"&&G.janela.compras>=MAX_COMPRAS?"Limite da janela atingido":pr>G.cash?"Caixa insuficiente":"Contratar"}</button></div>`:""}</div>`}).join("")||'<p class="muted">Nenhum jogador com esses filtros.</p>'}</div>`;
+  h+=`<div class="linha" style="gap:8px;margin-top:12px"><button class="btn full" data-a="morig" data-v="tec">Técnicos ›</button><button class="btn full" data-a="morig" data-v="lendas">★ Lendas ›</button></div>`;
   return h;
 }
 
@@ -4370,7 +4445,7 @@ function telaVisual(){
 
 /* ---------- modais ---------- */
 function modal(html){fecharModal();const v=document.createElement("div");v.className="veu";v.innerHTML=`<div class="folha" role="dialog" aria-modal="true">${html}</div>`;v.addEventListener("click",e=>{if(e.target===v&&!(G&&G.over))fecharModal()});document.body.appendChild(v);handlers(v)}
-function fecharModal(){document.querySelectorAll(".veu").forEach(v=>v.remove())}
+function fecharModal(){if(typeof slotAberto!=="undefined"&&slotAberto!=null){slotAberto=null;setTimeout(()=>{if(G&&!document.querySelector(".veu"))render()},0)}document.querySelectorAll(".veu").forEach(v=>v.remove())}
 function modalTemporada(){
   const r=G.seasonEnd,uid=G.user.club,P=pais();
   const nm=id=>esc(G.clubs[id].name);
@@ -4423,6 +4498,9 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "esimcor":vis().e.simCor=v;if(G)salvar();break;
     case "infosigla":modal(`<h3>Sigla do clube</h3><p>São 3 letras que representam o seu time, como <b>FLA</b> ou <b>COR</b>.</p><p>Ela aparece:</p><ul class="lista-info"><li>No <b>placar</b> e na narração das partidas ao vivo (ex.: <b>${esc((W&&W.sigla)||"ECV")} 2 × 1 SAN</b>)</li><li>No <b>confronto do pré-jogo</b>, embaixo do escudo</li><li>No <b>escudo</b>, se você escolher mostrar</li><li>Na <b>escalação</b> do campinho</li></ul><p class="muted peq">Dá para mudar depois na aba Clube.</p><div class="botoes"><button class="btn prim" data-a="fechar">Entendi</button></div>`);return;
     case "escsec":{if(G)salvar();const alvo=v||escAberto;escAberto=v||null;render();const b=[...document.querySelectorAll(".esc-cab")].find(x=>x.dataset.v===alvo||(x.dataset.v===""&&escAberto===alvo));if(b)b.scrollIntoView({block:"center"});return;}
+    case "escprompt":copiarTexto(PROMPT_ESCUDO);return;
+    case "escpromptinfo":modal(`<h3>Prompt para criar seu escudo</h3><p>Tocando no card, o jogo copia um texto pronto pra você colar no ChatGPT (ou outra IA de imagem) e criar o escudo do seu time.</p><p>No texto, preencha a parte <b>DESIGN DO ESCUDO</b> (nome, cores, símbolo, estilo). A parte de <b>enquadramento</b> já diz o tamanho e o fundo certos pra o escudo ficar bonito no jogo.</p><p>Depois é só baixar a imagem e usar <b>Fazer upload do escudo</b>.</p><div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`);return;
+    case "escupremover":delete vis().e.img;if(G)salvar();break;
     case "escsalvar":if(G)salvar();toast("Escudo salvo!");return;
     case "esimborda":vis().e.simBorda=v==="1";if(G)salvar();break;
     case "enomeborda":vis().e.nomeBorda=v==="1";if(G)salvar();break;
@@ -4463,13 +4541,13 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "reofertar":{const er=novasOfertas(+v);if(er)toastErro(er);salvar();break;}
     case "cancelarneg":retirarNegocio(+v);salvar();break;
     case "auto":autoEscalar();salvar();toast("Escalação com os melhores disponíveis.");break;
-    case "slot":pickerSlot(+v);return;
-    case "escolher":{const i=+v,pid=+el.dataset.p,u=G.user;const j=u.lineup.indexOf(pid);if(j>=0)u.lineup[j]=u.lineup[i];u.lineup[i]=pid;fecharModal();salvar();break;}
+    case "slot":pickerSlot(+v);slotAberto=+v;return;
+    case "escolher":{slotAberto=null;const i=+v,pid=+el.dataset.p,u=G.user;const j=u.lineup.indexOf(pid);if(j>=0)u.lineup[j]=u.lineup[i];u.lineup[i]=pid;fecharModal();salvar();break;}
     case "exp":expandido=expandido===+v?null:+v;break;
     case "dispensar":{const p=G.players[+v];modal(`<h3>Dispensar ${esc(p.n)}?</h3><p>O clube paga 3 meses de salário de rescisão: ${dinheiro(p.sal*3)}.</p><div class="botoes"><button class="btn" data-a="fechar">Cancelar</button><button class="btn perigo" data-a="dispconf" data-v="${p.id}">Dispensar</button></div>`);return;}
     case "dispconf":{fecharModal();const er=dispensar(+v);if(er)toastErro(er);expandido=null;salvar();break;}
     case "comprar":{const p=G.players[+v],pr=precoPedido(p);modal(`<h3>Contratar ${esc(p.n)}?</h3><p>${p.pos}, ${p.age} anos, força ${p.ov}.</p><div class="extrato num"><div><span>Pagamento ao clube</span><span>${pr?dinheiro(pr):"sem custo"}</span></div><div><span>Salário</span><span>${dinheiro(salarioPedido(p))}/mês</span></div><div><span>Caixa depois</span><span>${dinheiro(G.cash-pr)}</span></div>${fonteCompra(p.id)==="j"?`<div><span>Contratações nesta janela</span><span>${G.janela.compras+1} de ${MAX_COMPRAS}</span></div>`:""}</div><div class="botoes"><button class="btn" data-a="fechar">Cancelar</button><button class="btn prim" data-a="compconf" data-v="${p.id}">Contratar</button></div>`);return;}
-    case "compconf":{fecharModal();const er=contratar(+v);if(er){if(er!==RECUSA)toastErro(er)}else{toast("Contratado! Já está no elenco.");expandido=null}salvar();break;}
+    case "compconf":{fecharModal();const er=contratar(+v);if(er){if(er!==RECUSA)toastErro(er)}else{avisoElencoCheio();toast("Contratado! Já está no elenco.");expandido=null}salvar();break;}
     case "div":divTab=+v;if(tabModo==="copa"||tabModo==="copan")tabModo="tab";break;
     case "tabmodo":tabModo=v;break;
     case "morig":merc.orig=v;break;
@@ -4498,7 +4576,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "edtecsalvar":salvarEditorTec(el.dataset.n);fecharModal();salvar();toast("Técnico atualizado.");break;
     case "podiook":fecharModal();modalTemporada();return;
     case "teclenda":{const er=contratarTecLenda(+v,el.dataset.i);if(er){toastErro(er);return}salvar();confete();toast(`${TEC_LENDAS[+v][0]} contratado!`);break;}
-    case "lenda":{const er=comprarLenda(+v,el.dataset.i);if(er){if(er!==RECUSA)toastErro(er);return}salvar();confete();toast(`${LENDAS[+v][0]} contratado!`);break;}
+    case "lenda":{const er=comprarLenda(+v,el.dataset.i);if(er){if(er!==RECUSA)toastErro(er);return}avisoElencoCheio();salvar();confete();toast(`${LENDAS[+v][0]} contratado!`);break;}
     case "tecrosto":if(!editorOn)return;modalRostoTec(el.dataset.n);return;
     case "tecescolhe":{G.tecFotos=G.tecFotos||{};G.tecFotos[el.dataset.n]={rf:+v};salvar();const sy=scrollY;render();scrollTo(0,sy);modalRostoTec(el.dataset.n);return;}
     case "tecremupl":{if(G.tecFotos)delete G.tecFotos[el.dataset.n];salvar();const sy=scrollY;render();scrollTo(0,sy);modalRostoTec(el.dataset.n);return;}
@@ -4528,6 +4606,12 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "carregararq":{const i=$("#arq-save")||$("#arq-save2");if(i){i.value="";i.click()}return;}
     case "salvararq":salvarArquivo();return;
     case "vib":VIB_ON=!VIB_ON;try{localStorage.setItem("fut-vib",VIB_ON?"1":"0")}catch(e){}if(VIB_ON)vibrar("premio");if($("#splash")&&!$("#splash").hidden&&document.querySelector(".veu [data-a=vib]"))modalAjustesSp();else render();return;
+    case "venda":fecharModal();modalVenda(+v);return;
+    case "vpreco":{const p=G.players[+el.dataset.i],inp=$("#venda-preco");if(!p||!inp)return;const pas=Math.max(5,Math.round(valorJusto(p)*.05/5)*5);inp.value=Math.max(5,(+inp.value||0)+pas*(+v));inp.dispatchEvent(new Event("input",{bubbles:true}));return;}
+    case "vsalvar":{const p=G.players[+v],inp=$("#venda-preco");if(!p||!inp)return;const pr=Math.round(+inp.value);if(!(pr>0)){toastErro("Coloque um preço válido.");return}
+      p.vendaPreco=Math.min(pr,valorJusto(p)*3);salvar();if(precoBaixo(p,p.vendaPreco)){aviso("Preço muito baixo",`${dinheiro(p.vendaPreco)} está bem abaixo do que ${esc(p.n)} vale. Ele vende rápido, mas você pode negociar por um preço melhor.`);return}modalVenda(+v);return;}
+    case "vcolocar":{const p=G.players[+v];if(!p||p.vendaPreco==null)return;p.venda={preco:p.vendaPreco,dias:diasVenda(p,p.vendaPreco),desde:hojeJogo()};salvar();fecharModal();toast(`${p.n} está à venda. Venda em uns ${p.venda.dias} dias.`);break;}
+    case "vtirar":{const p=G.players[+v];if(p){delete p.venda;salvar()}fecharModal();toast("Jogador tirado da venda.");break;}
     case "splregras":modalRegras();return;
     case "splajustes":modalAjustesSp();return;
     case "splsom":acao("som");modalAjustesSp();return;
@@ -4546,6 +4630,8 @@ function handlers(root){
     else if(!(abertura===false&&(a==="entrar"||a==="novacarreira")))somClique()});
 }
 handlers(app);handlers(nav);handlers($("#splash"));
+document.addEventListener("change",e=>{if(e.target.id!=="esc-up")return;const f=e.target.files&&e.target.files[0];
+  processarEscudoUpload(f).then(url=>{const {e:es}=alvoVisual();es.img=url;if(G)salvar();render();toast("Escudo enviado!")}).catch(m=>toastErro(m))});
 document.addEventListener("change",e=>{if(e.target.id==="arq-save"||e.target.id==="arq-save2")lerArquivo(e.target.files&&e.target.files[0])});
 document.addEventListener("change",e=>{if(e.target.id!=="ed-arq"||!editorOn)return;const pid=+e.target.dataset.pid,f=e.target.files&&e.target.files[0];
   processarRostoUpload(f,pid).then(r=>{G.rostosUp=G.rostosUp||{};G.rostosUp[pid]=r;const p=G.players[pid];if(p)delete p.rf;salvar();toast("Foto atualizada em todo o jogo!");render();modalEditorJog(pid)}).catch(m=>toast(m))});
@@ -4566,6 +4652,7 @@ app.addEventListener("input",e=>{
   }
   if(t.dataset.escr){const {e:es}=alvoVisual();let p=+t.value;if(p!==50&&Math.abs(p-50)<=4){p=50;t.value=50}
     const mn=+t.dataset.min,mx=+t.dataset.max;es[t.dataset.escr]=Math.round((mn+(mx-mn)*p/100)*100)/100;const nb=t.parentElement.querySelector(".barra-num");if(nb)nb.textContent=p;atualizarPrevias();return}
+  if(t.id==="venda-preco"){const b=document.querySelector('[data-a="vsalvar"]'),p=b&&G.players[+b.dataset.v],inf=$("#venda-info");if(p&&inf){const pr=+t.value||0,mu=multaVenda(p);inf.textContent=`${dinheiro(pr)} · venda em uns ${diasVenda(p,pr)} dias · você recebe ${dinheiro(Math.max(0,pr-mu))}`}return}
   if(t.id==="esc-txt"){const {e:es}=alvoVisual();es.nomeTxt=t.value;atualizarPrevias();return}
   if(t.id==="ed-busca"){edSel.busca=t.value;const r=$("#ed-res"),nv=$("#ed-nav");if(r)r.innerHTML=edResultados();if(nv)nv.hidden=semAc(t.value).length>=2;return}
   if(t.id==="v-estadio"){const c=G.clubs[G.user.club];if(t.value.trim())c.estadio=t.value.trim();return}
