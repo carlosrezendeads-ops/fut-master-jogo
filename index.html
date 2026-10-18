@@ -767,6 +767,11 @@ nav.abas button{font-size:11px}
 .atalhos button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;font:inherit;font-size:12px;font-weight:700;color:inherit;cursor:pointer}
 .atalhos svg{width:24px;height:24px;color:var(--canario)}
 .avatar-dono{position:relative;flex:none;width:76px;height:76px;border-radius:50%;overflow:hidden;background:var(--cal-2,#333);display:grid;place-items:center;cursor:pointer;border:2px solid var(--canario)}
+.avatares{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:6px 0 12px}
+.avatares button{padding:0;border:2px solid transparent;border-radius:50%;overflow:hidden;background:none;cursor:pointer;aspect-ratio:1}
+.avatares button[aria-pressed="true"]{border-color:var(--canario)}
+.avatares img{width:100%;height:100%;object-fit:cover;display:block}
+.avatar-dono{padding:0;font:inherit;color:inherit}
 .avatar-dono img{width:100%;height:100%;object-fit:cover}
 .avatar-dono svg{width:44px;height:44px;opacity:.7}
 .avatar-dono span{position:absolute;bottom:0;left:0;right:0;font-size:12px;text-align:center;background:rgba(0,0,0,.55)}
@@ -778,29 +783,30 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792292184"></script>
-<script src="img/arte-capa.js?v=1792292184"></script>
-<script src="img/fundo-criacao.js?v=1792292184"></script>
-<script src="img/fundo-pais.js?v=1792292184"></script>
-<script src="img/fundo-escudo.js?v=1792292184"></script>
-<script src="img/simbolos.js?v=1792292184"></script>
-<script src="img/kits-foto.js?v=1792292184"></script>
-<script src="img/fundo-vestiario.js?v=1792292184"></script>
-<script src="img/patro-logos.js?v=1792292184"></script>
-<script src="img/rostos.js?v=1792292184"></script>
-<script src="img/estadio-fotos.js?v=1792292184"></script>
-<script src="img/super-fotos.js?v=1792292184"></script>
-<script src="img/trofeus.js?v=1792292184"></script>
-<script src="img/medalhas.js?v=1792292184"></script>
-<script src="img/fotos.js?v=1792292184"></script>
-<script src="img/fotos-vs.js?v=1792292184"></script>
-<script src="img/kit-homens.js?v=1792292184"></script>
-<script src="img/tec-fotos.js?v=1792292184"></script>
-<script src="dados/elencos.js?v=1792292184"></script>
-<script src="img/rostos-reais.js?v=1792292184"></script>
-<script src="img/escudos-img.js?v=1792292184"></script>
-<script src="img/tradutores.js?v=1792292184"></script>
-<script src="dados/idiomas.js?v=1792292184"></script>
+<script src="img/escudos-reais.js?v=1792292536"></script>
+<script src="img/arte-capa.js?v=1792292536"></script>
+<script src="img/fundo-criacao.js?v=1792292536"></script>
+<script src="img/fundo-pais.js?v=1792292536"></script>
+<script src="img/fundo-escudo.js?v=1792292536"></script>
+<script src="img/simbolos.js?v=1792292536"></script>
+<script src="img/kits-foto.js?v=1792292536"></script>
+<script src="img/fundo-vestiario.js?v=1792292536"></script>
+<script src="img/patro-logos.js?v=1792292536"></script>
+<script src="img/rostos.js?v=1792292536"></script>
+<script src="img/estadio-fotos.js?v=1792292536"></script>
+<script src="img/super-fotos.js?v=1792292536"></script>
+<script src="img/trofeus.js?v=1792292536"></script>
+<script src="img/medalhas.js?v=1792292536"></script>
+<script src="img/fotos.js?v=1792292536"></script>
+<script src="img/fotos-vs.js?v=1792292536"></script>
+<script src="img/kit-homens.js?v=1792292536"></script>
+<script src="img/tec-fotos.js?v=1792292536"></script>
+<script src="dados/elencos.js?v=1792292536"></script>
+<script src="img/rostos-reais.js?v=1792292536"></script>
+<script src="img/escudos-img.js?v=1792292536"></script>
+<script src="img/tradutores.js?v=1792292536"></script>
+<script src="img/avatares.js?v=1792292536"></script>
+<script src="dados/idiomas.js?v=1792292536"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -1572,7 +1578,7 @@ const NIVEL_MAX=30;
 const PREMIO_N30=5000;
 const CUPONS_NIVEL={10:5,20:10,30:30}; // cupons dourados extras nesses níveis
 function premioBase(n){const base=[0,0,5,8,12,18];let v;if(n<=5)v=base[n];else{v=18;let d=6;for(let k=6;k<=n;k++){d+=1;v+=d}}return v*1.3}
-function premioNivel(n){if(n<2)return 0;n=Math.min(n,NIVEL_MAX);const f=PREMIO_N30/premioBase(NIVEL_MAX)-1;const v=premioBase(n)*(1+f*((n-2)/(NIVEL_MAX-2))**2)*(G&&G.country?escalaFund(G.country):1)*1.5; // +50% no prêmioreturn v<100?Math.round(v):Math.round(v/10)*10}
+function premioNivel(n){if(n<2)return 0;n=Math.min(n,NIVEL_MAX);const f=PREMIO_N30/premioBase(NIVEL_MAX)-1;const v=premioBase(n)*(1+f*((n-2)/(NIVEL_MAX-2))**2)*(G&&G.country?escalaFund(G.country):1)*1.5; /* +50% no prêmio */return v<100?Math.round(v):Math.round(v/10)*10}
 function somarXP(qtd){
   const P=perfil(),antes=P.nivel;let dinheiroGanho=0,cuponsGanhos=0;
   if(P.nivel>=NIVEL_MAX){P.xp=0;return {antes,nivel:P.nivel,premio:0}}
@@ -2242,7 +2248,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792292184";
+const VERSAO="1792292536";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3492,6 +3498,7 @@ function telaInicio(){
 function contadorJanela(){const J=G.janela;return `<div class="kpis"><div class="cartao kpi"><small>Contratações</small><b class="num">${J.compras} de ${MAX_COMPRAS}</b></div><div class="cartao kpi"><small>Negócios</small><b class="num">${J.negocios} de ${MAX_NEGOCIOS}</b></div></div>`}
 function cartaoPre(){
   let h=`<h2>Pré-temporada ${G.year}</h2>`;
+  if(G.tradOferta&&TRADUTORES[G.country])return h+`<div class="cartao secao"><b class="etapa">Antes dos patrocínios: seu tradutor</b><p class="muted peq" style="margin:4px 0 0">${esc(TRADUTORES[G.country].nome)} quer se apresentar antes de você negociar com os patrocinadores.</p><button class="btn prim full" data-a="tradver">Conhecer o tradutor</button></div>`; // tradutor vem antes dos patrocínios
   const ofs=(lst,qual,tit,txt)=>`<div class="cartao secao" style="margin-bottom:10px"><div><b class="etapa">${tit}</b><p class="muted peq" style="margin:4px 0 0">${txt}</p></div>
     ${lst.map((o,i)=>`<div class="patro">${logoPatro(o.nome)}<div class="linha" style="justify-content:space-between;align-items:flex-start"><div><b class="patro-nome">${esc(o.nome)}</b><div class="muted peq">${esc(o.desc)}</div></div></div>
       <div class="extrato num"><div><span>Luvas na assinatura</span><span>${dinheiro(o.luvas)}</span></div><div><span>Por jogo</span><span>${dinheiro(o.porJogo)}</span></div>${o.tipo==="vitoria"?`<div><span>Bônus por vitória</span><span>${dinheiro(o.bonus)}</span></div>`:""}${o.tipo==="meta"?`<div><span>Prêmio se ${esc(o.meta)}</span><span>${dinheiro(o.bonusMeta)}</span></div>`:""}</div>
@@ -3852,7 +3859,7 @@ function telaPerfil(){
   const P=perfil(),c=G.clubs[G.user.club],prox=xpParaSubir(P.nivel),pct=Math.round(P.xp/prox*100);
   const ap=P.j?Math.round((P.v*3+P.e)/(P.j*3)*100):0;
   const temp=G.history.length+1;
-  let h=`<div class="perfil-topo cartao" style="position:relative"><span style="position:absolute;top:10px;right:12px">${cupomTxt(cupons())}</span><label class="avatar-dono" title="Trocar foto">${G.user.avatar?`<img src="${G.user.avatar}" alt="">`:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">${ICONES.perfil}</svg>`}<span>📷</span><input type="file" id="avatar-arq" accept="image/*" hidden></label>
+  let h=`<div class="perfil-topo cartao" style="position:relative"><span style="position:absolute;top:10px;right:12px">${cupomTxt(cupons())}</span><button class="avatar-dono" data-a="avatar" aria-label="Trocar foto">${avatarSrc()?`<img src="${avatarSrc()}" alt="">`:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">${ICONES.perfil}</svg>`}<span>📷</span></button>
     <div class="nm"><div class="nivel-selo mini"><small>Nível</small><b class="num">${P.nivel}</b></div><h2 style="margin:0">${esc(G.user.coach||"Dono do clube")}</h2><span class="muted">Dono do ${esc(c.name)}</span>
     <div class="xp-barra"><i style="width:${P.nivel>=NIVEL_MAX?100:pct}%"></i></div><span class="peq muted num">${P.nivel>=NIVEL_MAX?"Nível máximo alcançado!":`${P.xp} de ${prox} XP · faltam ${prox-P.xp} para o nível ${P.nivel+1}`}</span>
     ${P.nivel<NIVEL_MAX?`<span class="peq num" style="color:var(--canario)">Bônus do nível ${P.nivel+1}: ${dinheiro(premioNivel(P.nivel+1))}</span>`:""}</div></div>`;
@@ -3881,6 +3888,11 @@ function telaPerfil(){
   <h2>Bônus por nível</h2><div class="cartao extrato num">${[2,3,4,5,10,15,20,25,30].map(n=>`<div${n<=P.nivel?' style="opacity:.55"':""}><span>Nível ${n}${n<=P.nivel?" · recebido":""}</span><span>${dinheiro(premioNivel(n))}${CUPONS_NIVEL[n]?` + ${cupomTxt(CUPONS_NIVEL[n])}`:""}</span></div>`).join("")}</div>`;
   return h;
 }
+/* foto do dono: "a:N" = um dos 20 AVATARES (img/avatares.js) ou imagem enviada (dataURL) */
+function avatarSrc(){const a=G.user.avatar;if(!a)return "";if(a.startsWith("a:"))return typeof AVATARES!=="undefined"?AVATARES[+a.slice(2)]||"":"";return a}
+function modalAvatar(){const temA=typeof AVATARES!=="undefined";
+  modal(`<h3>Foto do dono</h3><div class="avatares">${temA?AVATARES.map((u,i)=>`<button data-a="avsel" data-v="${i}" aria-pressed="${G.user.avatar==="a:"+i}"><img src="${u}" alt=""></button>`).join(""):""}</div>
+  <div class="botoes" style="flex-wrap:wrap"><label class="btn">📤 Enviar foto<input type="file" id="avatar-arq" accept="image/*" hidden></label><button class="btn prim" data-a="fechar">Fechar</button></div>`)}
 function avisoNivel(){
   const P=G&&G.perfil;if(!P||!P.aviso||document.querySelector(".veu"))return;
   const n=P.aviso,pr=P.premioAviso||0,cpA=P.cupomAviso||0;P.aviso=null;setTimeout(somConquista,150);P.premioAviso=0;P.cupomAviso=0;salvar();
@@ -4770,6 +4782,9 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "importar":modal(`<h3>Carregar código</h3><p class="muted peq">Cole o código copiado de outro aparelho. O jogo atual será substituído.</p><textarea id="imp-t"></textarea><div class="botoes"><button class="btn" data-a="fechar">Cancelar</button><button class="btn prim" data-a="impconf">Carregar</button></div>`);return;
     case "impconf":{try{const n=JSON.parse($("#imp-t").value);if(!n.clubs||!n.user||n.v!==2)throw 0;G=migrar(n);fecharModal();salvar();toast("Jogo carregado.");aba="inicio"}catch(e){toastErro("Código inválido. Confira se copiou o texto inteiro.");return}break;}
     case "novo":modal(`<h3>Começar novo jogo?</h3><p>O jogo atual será apagado deste navegador. Se quiser guardar, copie o código antes.</p><div class="botoes"><button class="btn" data-a="fechar">Cancelar</button><button class="btn perigo" data-a="novoconf">Apagar e recomeçar</button></div>`);return;
+    case "avatar":modalAvatar();return;
+    case "avsel":G.user.avatar="a:"+v;salvar();fecharModal();toast("Foto do dono escolhida!");break;
+    case "tradver":modalTradutor();return;
     case "excluircar":modal(`<h3>Excluir carreira?</h3><p>A carreira do ${esc(G.clubs[G.user.club].name)} (${G.year}) será apagada deste aparelho, com tudo que foi salvo nela. Não dá para desfazer.</p><div class="botoes" style="flex-wrap:wrap"><button class="btn" data-a="fechar">Cancelar</button><button class="btn perigo" data-a="excluirconf">Excluir</button></div>`);return;
     case "excluirconf":fecharModal();pararTimer();G=null;W=novoW();try{localStorage.removeItem(CHAVE);localStorage.removeItem(CHAVE_BKP)}catch(e){}aba="inicio";abertura=true;setTimeout(()=>modal(`<h3>Carreira excluída</h3><p>Sua carreira foi excluída. Agora você pode começar uma nova ou carregar outra carreira salva.</p><div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`),50);break;
     case "novoconf":fecharModal();pararTimer();G=null;W=novoW();try{localStorage.removeItem(CHAVE);localStorage.removeItem(CHAVE_BKP)}catch(e){}aba="inicio";abertura=false;break;
@@ -4862,7 +4877,7 @@ document.addEventListener("change",e=>{if(e.target.id!=="avatar-arq")return;cons
   if(!f||!/^image\//.test(f.type)){toastErro("Escolha uma imagem.");return}
   const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{const L=220,cv=document.createElement("canvas");cv.width=cv.height=L; // avatar do dono: recorte quadrado do meio
     const t=Math.min(im.width,im.height);cv.getContext("2d").drawImage(im,(im.width-t)/2,(im.height-t)/2,t,t,0,0,L,L);
-    G.user.avatar=cv.toDataURL("image/jpeg",.85);salvar();toast("Foto do dono enviada!");render()};im.src=rd.result};rd.readAsDataURL(f)});
+    G.user.avatar=cv.toDataURL("image/jpeg",.85);salvar();fecharModal();toast("Foto do dono enviada!");render()};im.src=rd.result};rd.readAsDataURL(f)});
 document.addEventListener("change",e=>{if(e.target.id!=="rosto-arq")return;const pid=+e.target.dataset.pid,f=e.target.files&&e.target.files[0];
   processarRostoUpload(f,pid).then(r=>{G.rostosUp=G.rostosUp||{};G.rostosUp[pid]=r;salvar();toast("Rosto enviado!");const sy=scrollY;render();scrollTo(0,sy);perfilJogador(pid)}).catch(m=>toast(m))});
 window.addEventListener("resize",()=>{if(abertura){const cv=document.querySelector("#splash canvas");if(cv)pincel(cv)}});
