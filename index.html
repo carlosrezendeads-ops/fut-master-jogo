@@ -738,6 +738,9 @@ nav.abas button{font-size:11px}
 .vs-t small{font-size:11px;color:#cdbdff;font-weight:700}
 .vs-x2{font-family:var(--f-display);font-weight:900;font-size:30px;color:#fff;text-shadow:0 0 18px rgba(25,195,255,.7);padding:0 4px}
 .vs-pre .vs-info{border-bottom:0;padding-top:10px}
+.le-prev{position:relative;border-radius:14px;overflow:hidden;background:radial-gradient(ellipse at 50% 20%,#1e5fbf,#0a1f3d 75%)}
+.le-prev canvas{display:block;width:100%;max-width:360px;height:auto;margin:0 auto;cursor:grab}
+.logo-ed .le-abas{margin:8px 0 10px}
 .vs-pre{background:linear-gradient(135deg,#0d47a1,#1565c0,#0a1f3d,#2a3036,#0b3c8c,#061a3a);background-size:400% 400%;animation:vsFundo 16s ease-in-out infinite}
 @keyframes vsFundo{0%,100%{background-position:0% 30%}50%{background-position:100% 70%}}
 .vs-pre::before{background:repeating-linear-gradient(115deg,rgba(130,200,255,.07) 0 2px,transparent 2px 22px);background-size:200% 100%;animation:vsLinhas 9s linear infinite}
@@ -835,30 +838,30 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792338468"></script>
-<script src="img/arte-capa.js?v=1792338468"></script>
-<script src="img/fundo-criacao.js?v=1792338468"></script>
-<script src="img/fundo-pais.js?v=1792338468"></script>
-<script src="img/fundo-escudo.js?v=1792338468"></script>
-<script src="img/simbolos.js?v=1792338468"></script>
-<script src="img/kits-foto.js?v=1792338468"></script>
-<script src="img/fundo-vestiario.js?v=1792338468"></script>
-<script src="img/patro-logos.js?v=1792338468"></script>
-<script src="img/rostos.js?v=1792338468"></script>
-<script src="img/estadio-fotos.js?v=1792338468"></script>
-<script src="img/super-fotos.js?v=1792338468"></script>
-<script src="img/trofeus.js?v=1792338468"></script>
-<script src="img/medalhas.js?v=1792338468"></script>
-<script src="img/fotos.js?v=1792338468"></script>
-<script src="img/fotos-vs.js?v=1792338468"></script>
-<script src="img/kit-homens.js?v=1792338468"></script>
-<script src="img/tec-fotos.js?v=1792338468"></script>
-<script src="dados/elencos.js?v=1792338468"></script>
-<script src="img/rostos-reais.js?v=1792338468"></script>
-<script src="img/escudos-img.js?v=1792338468"></script>
-<script src="img/tradutores.js?v=1792338468"></script>
-<script src="img/avatares.js?v=1792338468"></script>
-<script src="dados/idiomas.js?v=1792338468"></script>
+<script src="img/escudos-reais.js?v=1792340509"></script>
+<script src="img/arte-capa.js?v=1792340509"></script>
+<script src="img/fundo-criacao.js?v=1792340509"></script>
+<script src="img/fundo-pais.js?v=1792340509"></script>
+<script src="img/fundo-escudo.js?v=1792340509"></script>
+<script src="img/simbolos.js?v=1792340509"></script>
+<script src="img/kits-foto.js?v=1792340509"></script>
+<script src="img/fundo-vestiario.js?v=1792340509"></script>
+<script src="img/patro-logos.js?v=1792340509"></script>
+<script src="img/rostos.js?v=1792340509"></script>
+<script src="img/estadio-fotos.js?v=1792340509"></script>
+<script src="img/super-fotos.js?v=1792340509"></script>
+<script src="img/trofeus.js?v=1792340509"></script>
+<script src="img/medalhas.js?v=1792340509"></script>
+<script src="img/fotos.js?v=1792340509"></script>
+<script src="img/fotos-vs.js?v=1792340509"></script>
+<script src="img/kit-homens.js?v=1792340509"></script>
+<script src="img/tec-fotos.js?v=1792340509"></script>
+<script src="dados/elencos.js?v=1792340509"></script>
+<script src="img/rostos-reais.js?v=1792340509"></script>
+<script src="img/escudos-img.js?v=1792340509"></script>
+<script src="img/tradutores.js?v=1792340509"></script>
+<script src="img/avatares.js?v=1792340509"></script>
+<script src="dados/idiomas.js?v=1792340509"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2303,7 +2306,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792338468";
+const VERSAO="1792340509";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4242,45 +4245,55 @@ function blocoVideoVS(m){const uid=G.user.club,H=G.clubs[m.h],A=G.clubs[m.a];
   const u=efUni(m.h===uid?unisDe(H)[0]:unisDe(A)[kitVisitante(H,A)]);
   return `<div class="vs-fx" aria-hidden="true"><i></i><i></i><i></i></div><div class="vs-video"><canvas width="480" height="456" data-vid="${(G.year*7+G.ev)%VIDEOS_VS.length}" data-uni="${esc(JSON.stringify(u))}"></canvas></div>`}
 function videoVS(){const cv=document.querySelector(".vs-video canvas");if(!cv||cv._ok)return;cv._ok=1;
+  camisaViva(cv,+cv.dataset.vid||0,efUni(JSON.parse(cv.dataset.uni)),cfgLogo,true)}
+/* logos na camisa: posição (x,y em larguras de camisa a partir do centro da gola), tamanho t, borda b (cor bc, grossura be) — salvo em G.logos */
+const LOGO_PADRAO={master:{x:0,y:.8,t:1,b:0,bc:"#ffffff",be:1.5},mat:{x:-.19,y:.33,t:1,b:0,bc:"#ffffff",be:1.5},sec:{x:.435,y:.2,t:1,b:0,bc:"#ffffff",be:1.5}};
+const LOGO_CAIXA={master:[.69,.27],mat:[.1,.065],sec:[.2,.06]};
+function cfgLogo(k){return {...LOGO_PADRAO[k],...(G&&G.logos&&G.logos[k]||{})}}
+/* desenha o vídeo do jogador num canvas: tira o verde e veste a camisa u com escudo e logos; cfg(k) dá a posição de cada logo */
+function camisaViva(cv,vid,u,cfg,tocarJa){
   const W=cv.width,H=cv.height,c=G.clubs[G.user.club],rgb=h=>{h=(h||"#ffffff").replace("#","");if(h.length===3)h=[...h].map(x=>x+x).join("");const n=parseInt(h,16);return [n>>16&255,n>>8&255,n&255]};
   const v=document.createElement("video");v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute("playsinline","");v.setAttribute("muted","");v.preload="auto";
-  v.style.cssText="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none";v.src=VIDEOS_VS[+cv.dataset.vid||0];cv.parentNode.appendChild(v);
-  const tocar=()=>{const p=v.play();if(p&&p.catch)p.catch(()=>{})};tocar();cv.parentNode.addEventListener("click",tocar);
+  v.style.cssText="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none";v.src=VIDEOS_VS[vid];cv.parentNode.appendChild(v);
+  const tocar=()=>{const p=v.play();if(p&&p.catch)p.catch(()=>{})};if(tocarJa){tocar();cv.parentNode.addEventListener("click",tocar)}
   const ctx=cv.getContext("2d",{willReadFrequently:true}),lg=document.createElement("canvas");lg.width=W;lg.height=H;const lx=lg.getContext("2d",{willReadFrequently:true});
+  let t0=-1;const ctl={v,tocar,redesenhar(){t0=-1}};
   // camisa do clube: cor + desenho (mesmo espaço do padraoUni: tronco x 50–150, ombro em y 16), mangas e gola
-  const u=efUni(JSON.parse(cv.dataset.uni)),cCam=rgb(u.camisa),cMang=rgb(u.mangas||u.camisa),cGola=rgb(u.gola||u.detalhe||u.camisa);
-  let des=null;{const im=new Image(),id="vsu"+(++svgN);im.onload=()=>des=im;
+  const cCam=rgb(u.camisa),cMang=rgb(u.mangas||u.camisa),cGola=rgb(u.gola||u.detalhe||u.camisa);
+  let des=null;{const im=new Image(),id="vsu"+(++svgN);im.onload=()=>{des=im;ctl.redesenhar()};
     im.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 170" width="400" height="340"><rect width="200" height="170" fill="${u.camisa}"/>${padraoUni(u,id)[u.estilo]||""}</svg>`)}
   // logos: fundo branco vira transparente; sem logo = nome escrito
   const fazLogo=n=>{if(!n)return null;const o={c:null};
     if(typeof PATRO_LOGOS!=="undefined"&&PATRO_LOGOS[n]){const im=new Image();im.onload=()=>{const k=document.createElement("canvas");k.width=im.naturalWidth;k.height=im.naturalHeight;const kx=k.getContext("2d");kx.drawImage(im,0,0);
-      try{const d=kx.getImageData(0,0,k.width,k.height),p=d.data;for(let i=0;i<p.length;i+=4){const mn=Math.min(p[i],p[i+1],p[i+2]);if(mn>200)p[i+3]=Math.round(p[i+3]*Math.max(0,(245-mn)/45))}kx.putImageData(d,0,0)}catch(e){}o.c=k};im.src=PATRO_LOGOS[n]}
+      try{const d=kx.getImageData(0,0,k.width,k.height),p=d.data;for(let i=0;i<p.length;i+=4){const mn=Math.min(p[i],p[i+1],p[i+2]);if(mn>200)p[i+3]=Math.round(p[i+3]*Math.max(0,(245-mn)/45))}kx.putImageData(d,0,0)}catch(e){}o.c=k;ctl.redesenhar()};im.src=PATRO_LOGOS[n]}
     else{const k=document.createElement("canvas"),kx=k.getContext("2d"),t=n.toUpperCase();kx.font="900 60px Arial, sans-serif";k.width=Math.ceil(kx.measureText(t).width)+8;k.height=68;
-      const cc=rgb(u.camisa),cl=cc[0]*.299+cc[1]*.587+cc[2]*.114>150?"#111":"#fff";kx.font="900 60px Arial, sans-serif";kx.fillStyle=cl;kx.textBaseline="middle";kx.fillText(t,4,36);o.c=k}
+      const cl=cCam[0]*.299+cCam[1]*.587+cCam[2]*.114>150?"#111":"#fff";kx.font="900 60px Arial, sans-serif";kx.fillStyle=cl;kx.textBaseline="middle";kx.fillText(t,4,36);o.c=k}
     return o};
-  let escI=null;const svg=escudoDe(c,160);if(/^\s*<svg/.test(svg)){const im=new Image();im.onload=()=>escI=im;im.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(/xmlns=/.test(svg)?svg:svg.replace("<svg",'<svg xmlns="http://www.w3.org/2000/svg"'))}
-  const lMaster=fazLogo(G.patro&&G.patro.nome),lMat=fazLogo(G.material&&G.material.nome),lSec=fazLogo(G.patro2&&G.patro2.nome);
+  let escI=null;const svg=escudoDe(c,160);if(/^\s*<svg/.test(svg)){const im=new Image();im.onload=()=>{escI=im;ctl.redesenhar()};im.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(/xmlns=/.test(svg)?svg:svg.replace("<svg",'<svg xmlns="http://www.w3.org/2000/svg"'))}
+  const LG={master:fazLogo(G.patro&&G.patro.nome),mat:fazLogo(G.material&&G.material.nome),sec:fazLogo(G.patro2&&G.patro2.nome)};
   let camada=true;
   const SH=new Float32Array(256);for(let i=0;i<256;i++)SH[i]=Math.min(1.2,Math.pow(i/225,1.5)*1.1);
   // posição da camisa no 1º quadro + movimento dela em cada quadro (RASTRO_VS, medido antes no vídeo)
-  const R=RASTRO_VS[+cv.dataset.vid||0],NQ=R.M.length/6,scx=R.cx,sy=R.y0,ssw=R.sw;
-  const wA=new Float32Array(W*H);let t0=-1,mt=0;
-  // logo dentro de uma caixa (centro x,y; largura e altura máximas); rot = giro em graus
-  const poe=(g,img,x,y,mw,mh,rot)=>{if(!img)return;let w=mw,h=w*img.height/img.width;if(h>mh){h=mh;w=h*img.width/img.height}
-    g.save();g.translate(x,y);if(rot)g.rotate(rot*Math.PI/180);g.drawImage(img,-w/2,-h/2,w,h);g.restore()};
+  const R=RASTRO_VS[vid],NQ=R.M.length/6,scx=R.cx,sy=R.y0,ssw=R.sw;Object.assign(ctl,{scx,sy,ssw});
+  const wA=new Float32Array(W*H);
+  // silhueta colorida do logo (para a borda), guardada por cor
+  const silh=(img,cor)=>{img._s=img._s||{};if(img._s[cor])return img._s[cor];const k=document.createElement("canvas");k.width=img.width;k.height=img.height;const kx=k.getContext("2d");kx.drawImage(img,0,0);kx.globalCompositeOperation="source-in";kx.fillStyle=cor;kx.fillRect(0,0,k.width,k.height);return img._s[cor]=k};
+  // logo dentro de uma caixa (centro x,y; largura e altura máximas); rot = giro em graus; f = config com borda
+  const poe=(g,img,x,y,mw,mh,rot,f)=>{if(!img)return;let w=mw,h=w*img.height/img.width;if(h>mh){h=mh;w=h*img.width/img.height}
+    g.save();g.translate(x,y);if(rot)g.rotate(rot*Math.PI/180);
+    if(f&&f.b){const s=silh(img,f.bc),e=f.be;for(let a=0;a<16;a++){const an=a*Math.PI/8;g.drawImage(s,-w/2+Math.cos(an)*e,-h/2+Math.sin(an)*e,w,h)}}
+    g.drawImage(img,-w/2,-h/2,w,h);g.restore()};
+  const poeLogo=(g,k)=>{const o=LG[k];if(!o||!o.c)return;const f=cfg(k),[bw,bh]=LOGO_CAIXA[k];
+    if(k==="sec"){poe(g,o.c,scx-ssw*f.x,sy+ssw*f.y,ssw*bw*f.t,ssw*bh*f.t,-90,f);poe(g,o.c,scx+ssw*f.x,sy+ssw*f.y,ssw*bw*f.t,ssw*bh*f.t,90,f)}
+    else poe(g,o.c,scx+ssw*f.x,sy+ssw*f.y,ssw*bw*f.t,ssw*bh*f.t,0,f)};
   function desenhaCamisa(g,soLogos,T){const k=ssw*.74/100,tx=scx-100*k,ty=sy-16*k;g.setTransform(T[0],T[1],T[2],T[3],T[4],T[5]);
-    if(!soLogos){g.fillStyle=u.camisa;g.fillRect(0,0,W,H);if(des)g.drawImage(des,tx,ty,200*k,170*k);
-      g.fillStyle=u.mangas||u.camisa;const xm=ssw*.37;g.fillRect(0,0,scx-xm,H);g.fillRect(scx+xm,0,W,H)}
+    if(!soLogos){g.fillStyle=u.camisa;g.fillRect(-W,-H,3*W,3*H);if(des)g.drawImage(des,tx,ty,200*k,170*k);
+      g.fillStyle=u.mangas||u.camisa;const xm=ssw*.37;g.fillRect(-W,-H,scx-xm+W,3*H);g.fillRect(scx+xm,-H,2*W,3*H)}
     poe(g,escI,scx+ssw*.19,sy+ssw*.33,ssw*.18,ssw*.18);
-    poe(g,lMat&&lMat.c,scx-ssw*.19,sy+ssw*.33,ssw*.1,ssw*.065);
-    poe(g,lMaster&&lMaster.c,scx,Math.min(sy+ssw*.8,H*.88-ssw*.14),ssw*.69,ssw*.27);
-    if(lSec&&lSec.c){poe(g,lSec.c,scx-ssw*.435,sy+ssw*.2,ssw*.2,ssw*.06,-90);poe(g,lSec.c,scx+ssw*.435,sy+ssw*.2,ssw*.2,ssw*.06,90)}
+    poeLogo(g,"mat");poeLogo(g,"master");poeLogo(g,"sec");
     g.setTransform(1,0,0,1,0,0)}
-  function quadro(){
-    if(!cv.isConnected){v.pause();v.removeAttribute("src");v.load();v.remove();return}
-    if(!v.requestVideoFrameCallback){requestAnimationFrame(quadro);if(v.readyState<2||v.currentTime===t0)return;t0=mt=v.currentTime}
-    else{v.requestVideoFrameCallback((n,md)=>{mt=md.mediaTime;quadro()});if(v.readyState<2||mt===t0)return;t0=mt}
-    const fi=Math.min(NQ-1,Math.round(mt*24)%NQ),T=R.M.slice(fi*6,fi*6+6);
+  function pinta(){
+    const fi=Math.min(NQ-1,Math.floor(v.currentTime*24+.001)%NQ),T=R.M.slice(fi*6,fi*6+6);
     ctx.clearRect(0,0,W,H);ctx.drawImage(v,0,0,W,H);
     let d;try{d=ctx.getImageData(0,0,W,H)}catch(e){return}
     const p=d.data;
@@ -4294,10 +4307,10 @@ function videoVS(){const cv=document.querySelector(".vs-video canvas");if(!cv||c
     let lp=null;
     if(camada){lx.clearRect(0,0,W,H);desenhaCamisa(lx,false,T);try{lp=lx.getImageData(0,0,W,H).data}catch(e){camada=false}}
     // gola: primeiras linhas de camisa abaixo do pescoço (centro da gola levado para este quadro)
-    const gx=T[0]*scx+T[2]*sy+T[4],gy=T[1]*scx+T[3]*sy+T[5],esc2=Math.hypot(T[0],T[1]),sw2=ssw*esc2;
+    const gx=T[0]*scx+T[2]*sy+T[4],gy=T[1]*scx+T[3]*sy+T[5],sw2=ssw*Math.hypot(T[0],T[1]);
     const gl=new Uint16Array(W),xg=sw2*.22;for(let x=Math.max(0,Math.round(gx-xg));x<Math.min(W,gx+xg);x++){for(let y=Math.max(0,Math.round(gy-20));y<Math.min(H,gy+sw2*.35);y++)if(wA[y*W+x]>.5){gl[x]=y;break}}
     const gEsp=Math.max(3,Math.round(sw2*.018));
-    // 4) pinta: cor da camada × sombra do vídeo original
+    // 3) pinta: cor da camada × sombra do vídeo original
     const yc=gy-16;
     for(let y=Math.max(0,Math.floor(yc));y<H;y++){const rampa=Math.min(1,(y-yc)/8);
       for(let x=0,i=y*W,k=i*4;x<W;x++,i++,k+=4){let w=wA[i];if(!w)continue;w*=rampa;
@@ -4307,9 +4320,50 @@ function videoVS(){const cv=document.querySelector(".vs-video canvas");if(!cv||c
         else{const m=Math.abs(x-gx)>sw2*.37?cMang:cCam;r=m[0];g=m[1];b=m[2]}
         p[k]+=(r*s-p[k])*w;p[k+1]+=(g*s-p[k+1])*w;p[k+2]+=(b*s-p[k+2])*w}}
     ctx.putImageData(d,0,0);
-    if(!camada)desenhaCamisa(ctx,true,T);
-  }
-  if(v.requestVideoFrameCallback)v.requestVideoFrameCallback((n,md)=>{mt=md.mediaTime;quadro()});else requestAnimationFrame(quadro)}
+    if(!camada)desenhaCamisa(ctx,true,T)}
+  function quadro(){
+    if(!cv.isConnected){v.pause();v.removeAttribute("src");v.load();v.remove();return}
+    requestAnimationFrame(quadro);
+    if(v.readyState<2||v.currentTime===t0)return;t0=v.currentTime;pinta()}
+  requestAnimationFrame(quadro);return ctl}
+/* editor das logos na camisa: escolhe a logo, arrasta, muda tamanho e borda; salva em G.logos (vale para o vídeo do pré-jogo) */
+let LED=null;
+function modalLogos(k){
+  const tem={master:G.patro,mat:G.material,sec:G.patro2},ks=["master","mat","sec"].filter(x=>tem[x]);if(!ks.length)return;
+  LED={k:ks.includes(k)?k:ks[0],vid:0,cfg:{},mov:false};ks.forEach(x=>LED.cfg[x]=cfgLogo(x));
+  const nomes={master:"Patrocínio master",mat:"Material",sec:"Patrocínio 2"};
+  modal(`<div class="logo-ed"><b class="etapa">Logos na camisa</b>
+    <div class="seg le-abas" role="group">${ks.map(x=>`<button data-le="aba" data-v="${x}" aria-pressed="${x===LED.k}">${nomes[x]}</button>`).join("")}</div>
+    <div class="le-prev"><canvas width="480" height="456" aria-label="Prévia da camisa"></canvas></div>
+    <p class="muted peq" style="margin:4px 0 8px;text-align:center">Arraste na camisa para mudar a logo de lugar.</p>
+    <div id="le-ctl"></div>
+    <div class="botoes" style="flex-wrap:wrap"><button class="btn mini" data-le="jog">Trocar jogador</button><button class="btn mini" data-le="mov">▶ Ver em movimento</button><button class="btn mini" data-le="pad">Posição padrão</button></div>
+    <div class="botoes"><button class="btn" data-le="sair">Cancelar</button><button class="btn prim" data-le="ok">Salvar</button></div></div>`);
+  const box=document.querySelector(".veu .logo-ed");if(!box)return;
+  const u=efUni(unisDe(G.clubs[G.user.club])[0]);let ctl=null;
+  const arrastar=cv=>{cv.style.touchAction="none";let ini=null;
+    cv.addEventListener("pointerdown",e=>{const r=cv.getBoundingClientRect(),sc=cv.width/r.width,f=LED.cfg[LED.k];ini={x:e.clientX,y:e.clientY,sc,fx:f.x,fy:f.y,lado:(e.clientX-r.left)*sc<ctl.scx?-1:1};cv.setPointerCapture(e.pointerId)});
+    cv.addEventListener("pointermove",e=>{if(!ini)return;const f=LED.cfg[LED.k],dx=(e.clientX-ini.x)*ini.sc/ctl.ssw,dy=(e.clientY-ini.y)*ini.sc/ctl.ssw;
+      f.x=Math.round((ini.fx+(LED.k==="sec"?dx*ini.lado:dx))*1000)/1000;f.y=Math.round((ini.fy+dy)*1000)/1000;ctl.redesenhar()});
+    const solta=()=>{ini=null};cv.addEventListener("pointerup",solta);cv.addEventListener("pointercancel",solta)};
+  const liga=()=>{const old=box.querySelector(".le-prev canvas"),cv=document.createElement("canvas");cv.width=480;cv.height=456;cv.setAttribute("aria-label","Prévia da camisa");old.replaceWith(cv);box.querySelectorAll(".le-prev video").forEach(x=>x.remove());
+    ctl=camisaViva(cv,LED.vid,u,x=>LED.cfg[x]||cfgLogo(x),false);if(LED.mov)ctl.tocar();arrastar(cv)};
+  const bar=(id,tit,mn,mx,val,a,b)=>{const p=Math.round((val-mn)/(mx-mn)*100);return `<label class="campo barra-esc"><span>${tit} <b class="barra-num">${p}</b></span><input type="range" data-ler="${id}" data-min="${mn}" data-max="${mx}" min="0" max="100" step="1" value="${p}"><span class="barra-rot"><small>${a}</small><small>50</small><small>${b}</small></span></label>`};
+  const ctlR=()=>{const f=LED.cfg[LED.k];box.querySelector("#le-ctl").innerHTML=`${bar("t","Tamanho",.3,1.7,f.t,"Pequena","Grande")}
+    <div class="campo"><span>Borda da logo</span><div class="seg" role="group">${[["1","Com borda"],["0","Sem borda"]].map(([v,n])=>`<button data-le="borda" data-v="${v}" aria-pressed="${(!!f.b)===(v==="1")}">${n}</button>`).join("")}</div>
+    ${f.b?`<div class="linha-chip"><label class="chip-cor"><input type="color" data-lecor="1" value="${f.bc}"><i class="roda-cor" aria-hidden="true"></i><em style="background:${f.bc}"></em>Cor da borda</label></div>${bar("be","Grossura da borda",.5,6,f.be,"Bem fina","Grossa")}`:""}</div>`};
+  box.addEventListener("click",e=>{const b=e.target.closest("[data-le]");if(!b)return;const a=b.dataset.le;somClique();
+    if(a==="aba"){LED.k=b.dataset.v;box.querySelectorAll(".le-abas button").forEach(x=>x.setAttribute("aria-pressed",x.dataset.v===LED.k));ctlR()}
+    else if(a==="borda"){LED.cfg[LED.k].b=b.dataset.v==="1"?1:0;ctlR();ctl.redesenhar()}
+    else if(a==="pad"){LED.cfg[LED.k]={...LOGO_PADRAO[LED.k]};ctlR();ctl.redesenhar()}
+    else if(a==="jog"){LED.vid=(LED.vid+1)%VIDEOS_VS.length;liga()}
+    else if(a==="mov"){LED.mov=!LED.mov;b.textContent=LED.mov?"⏸ Parar":"▶ Ver em movimento";if(LED.mov)ctl.tocar();else{ctl.v.pause();ctl.v.currentTime=0}}
+    else if(a==="sair")fecharModal();
+    else if(a==="ok"){G.logos={...(G.logos||{}),...LED.cfg};salvar();fecharModal();toast("Logos salvas! É assim que vão aparecer no pré-jogo.")}});
+  box.addEventListener("input",e=>{const t=e.target,f=LED.cfg[LED.k];
+    if(t.dataset.ler){let p=+t.value;if(p!==50&&Math.abs(p-50)<=4){p=50;t.value=50}const mn=+t.dataset.min,mx=+t.dataset.max;f[t.dataset.ler]=Math.round((mn+(mx-mn)*p/100)*100)/100;const nb=t.parentElement.querySelector(".barra-num");if(nb)nb.textContent=p;ctl.redesenhar()}
+    else if(t.dataset.lecor){f.bc=t.value;const em=t.parentElement.querySelector("em");if(em)em.style.background=t.value;ctl.redesenhar()}});
+  ctlR();liga()}
 function versus(m,semLista){
   const H=G.clubs[m.h],A=G.clubs[m.a],uid=G.user.club;
   const xiDe=c=>c.id===uid?{xi:G.user.lineup,form:G.user.form}:{xi:melhorXI(c.id,c.form),form:c.form};
@@ -4790,7 +4844,7 @@ function telaClube(){
     <div><span>Gastos da partida<small class="muted" style="display:block;font-size:11.5px">staff, arbitragem, segurança e estádio</small></span><span style="white-space:nowrap">${dinheiro((f.sal||0)+(f.man||0))}</span></div>
     <div><span>Saldo</span><span style="color:var(${f.tot>=0?"--ok":"--ruim"})">${dinheiro(f.tot)}</span></div></div>`;
   {const P=[[G.patro,"Master"],[G.patro2,"Secundário"],[G.material,"Material esportivo"]].filter(x=>x[0]);
-   h+=`<h2>Patrocínio</h2><div class="cartao secao">${P.length?P.map(([o,rot])=>`<div class="linha" style="gap:12px">${logoPatro(o.nome,"mini")}<div><b>${esc(o.nome)}</b> <span class="muted peq">· ${rot}</span><div class="muted peq">Até o fim de ${o.ano} · ${dinheiro(o.porJogo)} por jogo${o.tipo==="vitoria"?` + ${dinheiro(o.bonus)} por vitória`:o.tipo==="meta"?` + ${dinheiro(o.bonusMeta)} se ${esc(o.meta)}`:""}</div></div></div>`).join(""):'<span class="muted">Sem patrocinador. Escolha um na pré-temporada, no Início.</span>'}</div>`;}
+   h+=`<h2>Patrocínio</h2><div class="cartao secao">${P.length?P.map(([o,rot])=>`<div class="linha" style="gap:12px">${logoPatro(o.nome,"mini")}<div><b>${esc(o.nome)}</b> <span class="muted peq">· ${rot}</span><div class="muted peq">Até o fim de ${o.ano} · ${dinheiro(o.porJogo)} por jogo${o.tipo==="vitoria"?` + ${dinheiro(o.bonus)} por vitória`:o.tipo==="meta"?` + ${dinheiro(o.bonusMeta)} se ${esc(o.meta)}`:""}</div></div></div>`).join(""):'<span class="muted">Sem patrocinador. Escolha um na pré-temporada, no Início.</span>'}${P.length?`<button class="btn full" data-a="logos" data-v="master">👕 Ajustar logos na camisa</button>`:""}</div>`;}
   const ca=custoAmpliacao();
   h+=`<h2>Estádio</h2><div class="cartao secao"><p style="margin:0"><b>${esc(estadioDe(c))}</b> · ${c.cap.toLocaleString("pt-BR")} lugares · ${G.reformas||0} de ${REFORMAS.length} reformas.</p><button class="btn" data-a="aba" data-v="upgrades">Ver reformas em Upgrades</button></div>`;
   h+=`<h2>Técnico</h2><div class="cartao tec-card">${tecFoto(G.tec.n,G.tec.q)}<div class="nm"><b>${esc(G.tec.n)}</b><span>${G.tec.interino?"Interino":`${esc(nomeLiga(G.clubs[G.user.club].tier))} · ${dinheiro(G.tec.sal)}/mês`}</span></div><div class="acoes"><button class="btn mini" data-a="vertec">Trocar</button>${G.tec.interino?"":`<button class="btn mini perigo" data-a="demitec">Demitir</button>`}</div></div>`;
@@ -4891,7 +4945,8 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "uestilo":aplicarModeloUni(vis().u,v);if(G)salvar();break;
     case "umeiao":vis().u.meiaoEst=v;if(G)salvar();break;
     case "ucores":{const {e,u}=vis();if(uniSel===0)Object.assign(u,{camisa:e.c1,detalhe:e.c2,d2:e.c3});else Object.assign(u,{camisa:e.c2,detalhe:e.c1,d2:e.c3});aplicarModeloUni(u,u.estilo);if(G)salvar();break;}
-    case "patro":{const er=escolherPatrocinio(+v,el.dataset.i||"");if(er)toastErro(er);salvar();break;}
+    case "patro":{const qu=el.dataset.i||"",er=escolherPatrocinio(+v,qu);if(er)toastErro(er);salvar();if(!er)setTimeout(()=>modalLogos(qu==="mat"?"mat":qu==="sec"?"sec":"master"),350);break;}
+    case "logos":modalLogos(v);break;
     case "fecharjanela":{const er=fecharJanela();if(er){toastErro(er);return}salvar();toast(G.ev===0?"Bola rolando! Boa temporada.":"Janela fechada.");window.scrollTo(0,0);break;}
     case "iniciarjogo":{const er=iniciarAoVivo(false);if(er){toastErro(er);return}somIniciar();setTimeout(()=>apito(.9),250);painel=null;liveSel=null;aba="partida";salvar();window.scrollTo(0,0);break;}
     case "simularjogo":{if(!partidaAtual()){toastErro("Não há partida agora.");return}const ep=pagarSimulacao();if(ep){toastErro(ep);return}const er=iniciarAoVivo(true);if(er){toastErro(er);return}simularRestante();concluirAoVivo();G.ultimoJogo.pendente=true;aba="resultado";salvar();window.scrollTo(0,0);somIniciar();setTimeout(somResultado,300);break;}
