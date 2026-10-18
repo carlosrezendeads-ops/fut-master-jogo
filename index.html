@@ -789,30 +789,30 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792320823"></script>
-<script src="img/arte-capa.js?v=1792320823"></script>
-<script src="img/fundo-criacao.js?v=1792320823"></script>
-<script src="img/fundo-pais.js?v=1792320823"></script>
-<script src="img/fundo-escudo.js?v=1792320823"></script>
-<script src="img/simbolos.js?v=1792320823"></script>
-<script src="img/kits-foto.js?v=1792320823"></script>
-<script src="img/fundo-vestiario.js?v=1792320823"></script>
-<script src="img/patro-logos.js?v=1792320823"></script>
-<script src="img/rostos.js?v=1792320823"></script>
-<script src="img/estadio-fotos.js?v=1792320823"></script>
-<script src="img/super-fotos.js?v=1792320823"></script>
-<script src="img/trofeus.js?v=1792320823"></script>
-<script src="img/medalhas.js?v=1792320823"></script>
-<script src="img/fotos.js?v=1792320823"></script>
-<script src="img/fotos-vs.js?v=1792320823"></script>
-<script src="img/kit-homens.js?v=1792320823"></script>
-<script src="img/tec-fotos.js?v=1792320823"></script>
-<script src="dados/elencos.js?v=1792320823"></script>
-<script src="img/rostos-reais.js?v=1792320823"></script>
-<script src="img/escudos-img.js?v=1792320823"></script>
-<script src="img/tradutores.js?v=1792320823"></script>
-<script src="img/avatares.js?v=1792320823"></script>
-<script src="dados/idiomas.js?v=1792320823"></script>
+<script src="img/escudos-reais.js?v=1792328102"></script>
+<script src="img/arte-capa.js?v=1792328102"></script>
+<script src="img/fundo-criacao.js?v=1792328102"></script>
+<script src="img/fundo-pais.js?v=1792328102"></script>
+<script src="img/fundo-escudo.js?v=1792328102"></script>
+<script src="img/simbolos.js?v=1792328102"></script>
+<script src="img/kits-foto.js?v=1792328102"></script>
+<script src="img/fundo-vestiario.js?v=1792328102"></script>
+<script src="img/patro-logos.js?v=1792328102"></script>
+<script src="img/rostos.js?v=1792328102"></script>
+<script src="img/estadio-fotos.js?v=1792328102"></script>
+<script src="img/super-fotos.js?v=1792328102"></script>
+<script src="img/trofeus.js?v=1792328102"></script>
+<script src="img/medalhas.js?v=1792328102"></script>
+<script src="img/fotos.js?v=1792328102"></script>
+<script src="img/fotos-vs.js?v=1792328102"></script>
+<script src="img/kit-homens.js?v=1792328102"></script>
+<script src="img/tec-fotos.js?v=1792328102"></script>
+<script src="dados/elencos.js?v=1792328102"></script>
+<script src="img/rostos-reais.js?v=1792328102"></script>
+<script src="img/escudos-img.js?v=1792328102"></script>
+<script src="img/tradutores.js?v=1792328102"></script>
+<script src="img/avatares.js?v=1792328102"></script>
+<script src="dados/idiomas.js?v=1792328102"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2257,7 +2257,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792320823";
+const VERSAO="1792328102";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -2507,7 +2507,7 @@ function renderAbertura(){
   ${arte?"":`<div class="lema"><b>FUT</b><span>Monte seu time.<br>Conquiste seu sonho.</span></div>`}
   ${c?`<div class="clube-sp"><b>${esc(c.name)}</b> · ${esc(nomeLiga(c.tier))} · ${G.year}${info?`<br>Arquivo de save: temporada ${info.ano}, ${esc(info.quando)}`:""}</div>`:""}
   <div class="roda-sp"><div class="roda" role="listbox" aria-label="Menu inicial">
-    ${MENU_SP.filter(o=>c||o[0]!=="entrar"||(!G&&lerW())).map(([a,t,ic])=>`<button class="roda-it" data-a="${a}" role="option"><svg viewBox="0 0 24 24" aria-hidden="true">${ic}</svg><span>${a==="entrar"&&!c?"Continuar criação":t}</span></button>`).join("")}
+    ${MENU_SP.filter(o=>c||(o[0]!=="entrar"&&o[0]!=="sploja")||(o[0]==="entrar"&&!G&&lerW())).map(([a,t,ic])=>`<button class="roda-it" data-a="${a}" role="option"><svg viewBox="0 0 24 24" aria-hidden="true">${ic}</svg><span>${a==="entrar"&&!c?"Continuar criação":t}</span></button>`).join("")}
   </div><span class="roda-dica">Role para escolher · toque para entrar</span></div>
   <input type="file" id="arq-save" accept=".json,application/json,text/plain" hidden>`;
   const cv=sp.querySelector("canvas");if(cv)pincel(cv);
@@ -2516,6 +2516,7 @@ function renderAbertura(){
 /* menu da capa em roda: rola pra cima/baixo, a opção do meio brilha e é a escolhida */
 const MENU_SP=[
  ["entrar","Continuar carreira",'<path d="M8 5v14l11-7z"/>'],
+ ["sploja","Loja",'<path d="M7 8h13l-2 8H8L6 4H3"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/>'],
  ["carregararq","Carregar jogo",'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'],
  ["novacarreira","Nova carreira",'<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>'],
  ["splajustes","Ajustes",'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>'],
@@ -3493,7 +3494,7 @@ function atualizarPrevias(){
 
 /* ---------- início ---------- */
 function telaInicio(){
-  let h=`<div class="atalhos">${ATALHOS.map(k=>`<button class="cartao" data-a="aba" data-v="${k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES[k]}</svg><span>${k==="upgrades"?"Estádio":ROTULOS[k]}</span></button>`).join("")}</div>`;
+  let h=`<div class="atalhos">${ATALHOS.map(k=>`<button class="cartao" data-a="aba" data-v="${k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES[k]}</svg><span>${k==="upgrades"?"Estádio":k==="mercado"?"Loja":ROTULOS[k]}</span></button>`).join("")}</div>`;
   if(G.fase==="pre"&&!G.seasonEnd)h+=cartaoPre();
   else if(G.fase==="janela")h+=cartaoJanelaMeio();
   h+=cartaoNegocios();
@@ -4838,6 +4839,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "demiteconf":{fecharModal();const er=demitirTec();if(er)toastErro(er);salvar();break;}
     case "tutprox":G.tut=(G.tut||0)+1;salvar();if(G.tut<TUTORIAL.length){mostrarTutorial();return}fecharModal();return;
     case "tutpular":G.tut=TUTORIAL.length;salvar();fecharModal();return;
+    case "sploja":abertura=false;aba="mercado";merc={pos:"",min:0,orig:"pais"};break;
     case "entrar":if(!G)W=lerW()||W||novoW();abertura=false;aba="inicio";break;
     case "som":somIniciar();somMudo(!SOM.mudo);if(aba==="config"&&G)render();document.querySelectorAll(".som-btn").forEach(b=>{b.innerHTML=iconeSom();b.setAttribute("aria-label",SOM.mudo?"Ligar som":"Desligar som")});if(!SOM.mudo)somModo(modoDesejado());return;
     case "carregararq":{const i=$("#arq-save")||$("#arq-save2");if(i){i.value="";i.click()}return;}
