@@ -788,6 +788,15 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 .dono-foto b{position:absolute;right:-5px;bottom:-4px;min-width:20px;height:20px;padding:0 4px;border-radius:999px;background:var(--canario);color:#1a1300;font-size:11px;font-weight:800;display:grid;place-items:center;border:2px solid var(--gramado)}
 .topo h1.dono-nome{font-size:18px;color:var(--cal)}
 .xp-barra.dono-xp{height:6px;max-width:150px;margin-top:5px}
+.campinho circle.cp-eu{transition:transform .65s cubic-bezier(.35,1.25,.5,1)}
+.dd{position:relative;flex:1;min-width:120px;display:flex;flex-direction:column;gap:4px}
+.dd-rot{font-size:12px;color:var(--cal-2);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.dd-btn{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:8px 12px;border-radius:10px;border:1px solid var(--gramado-3);background:var(--gramado);color:var(--cal);font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.dd.aberto .dd-btn svg{transform:rotate(180deg)}
+.dd-lista{display:none;position:absolute;top:100%;left:0;right:0;z-index:4;margin-top:4px;padding:4px;border-radius:10px;border:1px solid var(--gramado-3);background:var(--gramado-2);box-shadow:0 8px 20px rgba(0,0,0,.4)}
+.dd.aberto .dd-lista{display:flex;flex-direction:column}
+.dd-lista button{background:none;border:0;color:var(--cal);font:inherit;font-size:13px;text-align:left;padding:6px 10px;border-radius:7px;cursor:pointer}
+.dd-lista button[aria-pressed="true"]{color:var(--canario);font-weight:800;background:rgba(255,210,63,.1)}
 </style>
 
 </head><body>
@@ -795,30 +804,30 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792329035"></script>
-<script src="img/arte-capa.js?v=1792329035"></script>
-<script src="img/fundo-criacao.js?v=1792329035"></script>
-<script src="img/fundo-pais.js?v=1792329035"></script>
-<script src="img/fundo-escudo.js?v=1792329035"></script>
-<script src="img/simbolos.js?v=1792329035"></script>
-<script src="img/kits-foto.js?v=1792329035"></script>
-<script src="img/fundo-vestiario.js?v=1792329035"></script>
-<script src="img/patro-logos.js?v=1792329035"></script>
-<script src="img/rostos.js?v=1792329035"></script>
-<script src="img/estadio-fotos.js?v=1792329035"></script>
-<script src="img/super-fotos.js?v=1792329035"></script>
-<script src="img/trofeus.js?v=1792329035"></script>
-<script src="img/medalhas.js?v=1792329035"></script>
-<script src="img/fotos.js?v=1792329035"></script>
-<script src="img/fotos-vs.js?v=1792329035"></script>
-<script src="img/kit-homens.js?v=1792329035"></script>
-<script src="img/tec-fotos.js?v=1792329035"></script>
-<script src="dados/elencos.js?v=1792329035"></script>
-<script src="img/rostos-reais.js?v=1792329035"></script>
-<script src="img/escudos-img.js?v=1792329035"></script>
-<script src="img/tradutores.js?v=1792329035"></script>
-<script src="img/avatares.js?v=1792329035"></script>
-<script src="dados/idiomas.js?v=1792329035"></script>
+<script src="img/escudos-reais.js?v=1792329712"></script>
+<script src="img/arte-capa.js?v=1792329712"></script>
+<script src="img/fundo-criacao.js?v=1792329712"></script>
+<script src="img/fundo-pais.js?v=1792329712"></script>
+<script src="img/fundo-escudo.js?v=1792329712"></script>
+<script src="img/simbolos.js?v=1792329712"></script>
+<script src="img/kits-foto.js?v=1792329712"></script>
+<script src="img/fundo-vestiario.js?v=1792329712"></script>
+<script src="img/patro-logos.js?v=1792329712"></script>
+<script src="img/rostos.js?v=1792329712"></script>
+<script src="img/estadio-fotos.js?v=1792329712"></script>
+<script src="img/super-fotos.js?v=1792329712"></script>
+<script src="img/trofeus.js?v=1792329712"></script>
+<script src="img/medalhas.js?v=1792329712"></script>
+<script src="img/fotos.js?v=1792329712"></script>
+<script src="img/fotos-vs.js?v=1792329712"></script>
+<script src="img/kit-homens.js?v=1792329712"></script>
+<script src="img/tec-fotos.js?v=1792329712"></script>
+<script src="dados/elencos.js?v=1792329712"></script>
+<script src="img/rostos-reais.js?v=1792329712"></script>
+<script src="img/escudos-img.js?v=1792329712"></script>
+<script src="img/tradutores.js?v=1792329712"></script>
+<script src="img/avatares.js?v=1792329712"></script>
+<script src="dados/idiomas.js?v=1792329712"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2263,7 +2272,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792329035";
+const VERSAO="1792329712";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4034,10 +4043,7 @@ function blocoTitulares(){
 function telaElenco(){
   const u=G.user,slots=FORMACOES[u.form].s;
   validarEscalacao();
-  let h=`<h2>Tática</h2><div class="cartao secao"><div class="campo-sel">
-    <label>Formação<select id="sel-form">${Object.keys(FORMACOES).map(f=>`<option ${f===u.form?"selected":""}>${f}</option>`).join("")}</select></label>
-    <label>Estilo<select id="sel-est">${Object.entries(ESTILOS).map(([k,v])=>`<option value="${k}" ${k===u.est?"selected":""}>${v.n}</option>`).join("")}</select></label>
-  </div><button class="btn" data-a="auto">Escalar os melhores</button></div>`;
+  let h=`<h2>Tática</h2><div class="cartao secao">${seletorTatica()}<button class="btn" data-a="auto">Escalar os melhores</button></div>`;
   h+=blocoTitulares();
 
   const tit=new Set(u.lineup);
@@ -4144,20 +4150,31 @@ function jogadorFoto(u,lado,px){
   </svg>`;
 }
 function fsNome(n){const w=Math.max(...n.split(/[\s-]/).map(x=>x.length));return `font-size:${w>10?13:w>8?15:w>6?17:19}px;overflow-wrap:normal;word-break:normal;hyphens:none`}
+/* posição de cada vaga no campo (time da esquerda): x = profundidade (0 = gol, .5 = meio), y = 0 em cima, 1 embaixo; mesma ordem de FORMACOES[f].s */
+const POS_FORM={
+  "4-4-2":[[.045,.5],[.17,.12],[.15,.37],[.15,.63],[.17,.88],[.29,.37],[.29,.63],[.31,.12],[.31,.88],[.43,.37],[.43,.63]],
+  "4-3-3":[[.045,.5],[.17,.12],[.15,.37],[.15,.63],[.17,.88],[.26,.5],[.33,.28],[.33,.72],[.42,.14],[.45,.5],[.42,.86]],
+  "4-2-3-1":[[.045,.5],[.17,.12],[.15,.37],[.15,.63],[.17,.88],[.25,.37],[.25,.63],[.35,.14],[.35,.5],[.35,.86],[.45,.5]],
+  "3-5-2":[[.045,.5],[.15,.25],[.15,.5],[.15,.75],[.3,.08],[.3,.92],[.25,.5],[.34,.32],[.34,.68],[.44,.37],[.44,.63]],
+  "5-3-2":[[.045,.5],[.2,.08],[.15,.28],[.15,.5],[.15,.72],[.2,.92],[.28,.3],[.28,.7],[.33,.5],[.43,.37],[.43,.63]]
+};
 function posicoesForm(form,esq){
-  const s=FORMACOES[form].s,lin={GOL:[],DEF:[],VOL:[],MEI:[],ATA:[]};
-  s.forEach((p,i)=>lin[p==="LAT"||p==="ZAG"?"DEF":p].push(i));
-  const prof={GOL:.045,DEF:.17,VOL:.27,MEI:.355,ATA:.445};
-  if(!lin.VOL.length)prof.MEI=.31;if(!lin.MEI.length)prof.VOL=.3;
-  const out=[];
-  for(const k in lin){const L=lin[k],n=L.length;L.forEach((i,j)=>{const sp=Math.min(.78,.26*(n-1)),y=n===1?.5:.5-sp/2+sp*j/(n-1);const x=prof[k];out[i]={x:esq?x:1-x,y:esq?y:1-y}})}
-  return out;
+  return (POS_FORM[form]||POS_FORM["4-4-2"]).map(([x,y])=>({x:esq?x:1-x,y:esq?y:1-y}));
 }
+const cpXY=pt=>`translate(${(8+pt.x*324).toFixed(1)}px,${(8+pt.y*204).toFixed(1)}px)`;
+/* troca de formação: as bolinhas do seu time andam até as novas posições, depois redesenha a tela */
+function animarForm(){const cs=document.querySelectorAll(".campinho .cp-eu");if(!cs.length)return false;const pE=posicoesForm(G.user.form,true);
+  cs.forEach(c=>{const pt=pE[+c.dataset.i];if(pt)c.style.transform=cpXY(pt)});const lg=document.querySelector(".cp-leg span");if(lg)lg.lastChild.textContent=`${G.clubs[G.user.club].short} · ${G.user.form}`;return true}
+document.addEventListener("click",e=>{if(!e.target.closest(".dd"))document.querySelectorAll(".dd.aberto").forEach(x=>x.classList.remove("aberto"))});
+/* formação e estilo: menu próprio que abre para baixo */
+function seletorTatica(){const u=G.user;
+  const dd=(rot,acao,atual,ops)=>`<div class="dd"><span class="dd-rot">${rot}</span><button class="dd-btn" data-a="ddabre">${esc(atual)}<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></button><div class="dd-lista">${ops.map(([v,n])=>`<button data-a="${acao}" data-v="${v}" aria-pressed="${n===atual}">${esc(n)}</button>`).join("")}</div></div>`;
+  return `<div class="campo-sel">${dd("Formação","ddform",u.form,Object.keys(FORMACOES).map(f=>[f,f]))}${dd("Estilo","ddest",ESTILOS[u.est].n,Object.entries(ESTILOS).map(([k,v])=>[k,v.n]))}</div>`}
 function campinho(m){
   const uid=G.user.club,H=G.clubs[m.h],A=G.clubs[m.a],eu=G.clubs[uid],ad=m.h===uid?A:H;
   const kv=kitVisitante(H,A),uEu=m.h===uid?unisDe(H)[0]:unisDe(A)[kv],uAd=m.h===uid?unisDe(A)[kv]:unisDe(H)[0];
   const W=340,Hh=220,pad=8,fw=W-2*pad,fh=Hh-2*pad;
-  const bola=(pt,u,id)=>{const p=id===true||(id!=null&&G.players[id]);return `<circle cx="${(pad+pt.x*fw).toFixed(1)}" cy="${(pad+pt.y*fh).toFixed(1)}" r="8.5" fill="${u.camisa}" stroke="${u.detalhe&&distCor(u.detalhe,u.camisa)>60?u.detalhe:"#ffffff"}" stroke-width="2.6"${p?"":` opacity=".35"`}/>`};
+  const bola=(pt,u,id,i)=>{const p=id===true||(id!=null&&G.players[id]);return `<circle${i!=null?` class="cp-eu" data-i="${i}"`:""} cx="0" cy="0" style="transform:${cpXY(pt)}" r="8.5" fill="${u.camisa}" stroke="${u.detalhe&&distCor(u.detalhe,u.camisa)>60?u.detalhe:"#ffffff"}" stroke-width="2.6"${p?"":` opacity=".35"`}/>`};
   const pE=posicoesForm(G.user.form,true),pD=posicoesForm(ad.form,false);
   const lc="rgba(255,255,255,.55)";
   return `<div class="campinho"><div class="cp-leg"><span><i style="background:${uEu.camisa}"></i>${esc(eu.short)} · ${G.user.form}</span><span>${ad.form} · ${esc(ad.short)}<i style="background:${uAd.camisa}"></i></span></div>
@@ -4169,7 +4186,7 @@ function campinho(m){
     <circle cx="${W/2}" cy="${Hh/2}" r="26" fill="none" stroke="${lc}" stroke-width="1.5"/><circle cx="${W/2}" cy="${Hh/2}" r="2" fill="${lc}"/>
     <rect x="${pad}" y="${Hh/2-46}" width="44" height="92" fill="none" stroke="${lc}" stroke-width="1.5"/><rect x="${pad}" y="${Hh/2-20}" width="15" height="40" fill="none" stroke="${lc}" stroke-width="1.5"/>
     <rect x="${W-pad-44}" y="${Hh/2-46}" width="44" height="92" fill="none" stroke="${lc}" stroke-width="1.5"/><rect x="${W-pad-15}" y="${Hh/2-20}" width="15" height="40" fill="none" stroke="${lc}" stroke-width="1.5"/>
-    ${pE.map((pt,i)=>bola(pt,uEu,G.user.lineup[i])).join("")}
+    ${pE.map((pt,i)=>bola(pt,uEu,G.user.lineup[i],i)).join("")}
     ${pD.map(pt=>bola(pt,uAd,true)).join("")}
   </svg></div>`;
 }
@@ -4392,10 +4409,7 @@ function telaPreJogo(){
   let h=`<div class="tela-cheia"><div class="linha" style="justify-content:space-between;padding-top:14px"><button class="btn mini" data-a="aba" data-v="inicio">Voltar</button><span class="comp" style="margin:0">Pré-jogo</span></div>`;
   h+=`<div style="margin-top:12px">${versus(m,true).replace('class="versus"','class="versus so-topo"')}</div>
   <button class="cartao card-stats" data-a="stats" style="margin-top:12px"><span>📊 Estatísticas</span><small>Força, idade e valor dos dois times ›</small></button>`;
-  h+=`<h2>Formação</h2><div class="cartao secao">${campinho(m)}<div class="campo-sel">
-    <label>Formação<select id="sel-form">${Object.keys(FORMACOES).map(f=>`<option ${f===u.form?"selected":""}>${f}</option>`).join("")}</select></label>
-    <label>Estilo<select id="sel-est">${Object.entries(ESTILOS).map(([k,v])=>`<option value="${k}" ${k===u.est?"selected":""}>${v.n}</option>`).join("")}</select></label>
-  </div><button class="btn" data-a="auto">Escalar os melhores</button></div>`;
+  h+=`<h2>Formação</h2><div class="cartao secao">${campinho(m)}${seletorTatica()}<button class="btn" data-a="auto">Escalar os melhores</button></div>`;
   h+=`<h2>Situação do elenco</h2><div class="cartao secao">`;
   if(!fora.length&&!pend.length&&!el.some(p=>disponivel(p)&&(p.fis??100)<65&&tit.has(p.id)))h+=`<p style="margin:0">Todos os jogadores estão disponíveis e descansados.</p>`;
   fora.forEach(p=>h+=`<div class="sit"><span class="posb ${p.pos}">${p.pos}</span><b>${esc(p.n)}</b><span class="tag les">${p.susp>0?"Suspenso":`Lesionado · ${p.inj} jogo${p.inj>1?"s":""}`}</span></div>`);
@@ -4847,6 +4861,9 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "tutprox":G.tut=(G.tut||0)+1;salvar();if(G.tut<TUTORIAL.length){mostrarTutorial();return}fecharModal();return;
     case "tutpular":G.tut=TUTORIAL.length;salvar();fecharModal();return;
     case "sploja":abertura=false;aba="mercado";merc={pos:"",min:0,orig:"pais"};break;
+    case "ddabre":{const d=el.closest(".dd"),ab=!d.classList.contains("aberto");document.querySelectorAll(".dd.aberto").forEach(x=>x.classList.remove("aberto"));d.classList.toggle("aberto",ab);return}
+    case "ddform":if(v===G.user.form){el.closest(".dd").classList.remove("aberto");return}G.user.form=v;autoEscalar();salvar();el.closest(".dd").classList.remove("aberto");if(animarForm()){setTimeout(()=>{if(G&&!G.live)render()},700);return}break;
+    case "ddest":G.user.est=v;salvar();break;
     case "entrar":if(!G)W=lerW()||W||novoW();abertura=false;aba="inicio";break;
     case "som":somIniciar();somMudo(!SOM.mudo);if(aba==="config"&&G)render();document.querySelectorAll(".som-btn").forEach(b=>{b.innerHTML=iconeSom();b.setAttribute("aria-label",SOM.mudo?"Ligar som":"Desligar som")});if(!SOM.mudo)somModo(modoDesejado());return;
     case "carregararq":{const i=$("#arq-save")||$("#arq-save2");if(i){i.value="";i.click()}return;}
