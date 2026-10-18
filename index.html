@@ -778,29 +778,29 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792291989"></script>
-<script src="img/arte-capa.js?v=1792291989"></script>
-<script src="img/fundo-criacao.js?v=1792291989"></script>
-<script src="img/fundo-pais.js?v=1792291989"></script>
-<script src="img/fundo-escudo.js?v=1792291989"></script>
-<script src="img/simbolos.js?v=1792291989"></script>
-<script src="img/kits-foto.js?v=1792291989"></script>
-<script src="img/fundo-vestiario.js?v=1792291989"></script>
-<script src="img/patro-logos.js?v=1792291989"></script>
-<script src="img/rostos.js?v=1792291989"></script>
-<script src="img/estadio-fotos.js?v=1792291989"></script>
-<script src="img/super-fotos.js?v=1792291989"></script>
-<script src="img/trofeus.js?v=1792291989"></script>
-<script src="img/medalhas.js?v=1792291989"></script>
-<script src="img/fotos.js?v=1792291989"></script>
-<script src="img/fotos-vs.js?v=1792291989"></script>
-<script src="img/kit-homens.js?v=1792291989"></script>
-<script src="img/tec-fotos.js?v=1792291989"></script>
-<script src="dados/elencos.js?v=1792291989"></script>
-<script src="img/rostos-reais.js?v=1792291989"></script>
-<script src="img/escudos-img.js?v=1792291989"></script>
-<script src="img/tradutores.js?v=1792291989"></script>
-<script src="dados/idiomas.js?v=1792291989"></script>
+<script src="img/escudos-reais.js?v=1792292184"></script>
+<script src="img/arte-capa.js?v=1792292184"></script>
+<script src="img/fundo-criacao.js?v=1792292184"></script>
+<script src="img/fundo-pais.js?v=1792292184"></script>
+<script src="img/fundo-escudo.js?v=1792292184"></script>
+<script src="img/simbolos.js?v=1792292184"></script>
+<script src="img/kits-foto.js?v=1792292184"></script>
+<script src="img/fundo-vestiario.js?v=1792292184"></script>
+<script src="img/patro-logos.js?v=1792292184"></script>
+<script src="img/rostos.js?v=1792292184"></script>
+<script src="img/estadio-fotos.js?v=1792292184"></script>
+<script src="img/super-fotos.js?v=1792292184"></script>
+<script src="img/trofeus.js?v=1792292184"></script>
+<script src="img/medalhas.js?v=1792292184"></script>
+<script src="img/fotos.js?v=1792292184"></script>
+<script src="img/fotos-vs.js?v=1792292184"></script>
+<script src="img/kit-homens.js?v=1792292184"></script>
+<script src="img/tec-fotos.js?v=1792292184"></script>
+<script src="dados/elencos.js?v=1792292184"></script>
+<script src="img/rostos-reais.js?v=1792292184"></script>
+<script src="img/escudos-img.js?v=1792292184"></script>
+<script src="img/tradutores.js?v=1792292184"></script>
+<script src="dados/idiomas.js?v=1792292184"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -1565,14 +1565,14 @@ function concluirAoVivo(){
 
 /* ---------- perfil do dono: experiência e nível ---------- */
 const XP_RES={v:50,e:25,d:10};
-function xpParaSubir(n){return Math.round((n<=1?50:200+50*(n-2))*1.3/5)*5} // +30% de XP por nível
+function xpParaSubir(n){return Math.round((n<=1?50:200+50*(n-2))*1.3*2/5)*5} // +30% e depois x2 de XP por nível
 function perfil(){if(!G.perfil)G.perfil={xp:0,nivel:1,j:0,v:0,e:0,d:0,gp:0,gc:0,aviso:null,dica:false};return G.perfil}
 const NIVEL_MAX=30;
 /* prêmio em dinheiro (em mil) ao chegar em cada nível: cresce aos poucos até 5 milhões no nível 30 (base Brasil; outros países ajustados pela economia do país, escalaFund) */
 const PREMIO_N30=5000;
 const CUPONS_NIVEL={10:5,20:10,30:30}; // cupons dourados extras nesses níveis
 function premioBase(n){const base=[0,0,5,8,12,18];let v;if(n<=5)v=base[n];else{v=18;let d=6;for(let k=6;k<=n;k++){d+=1;v+=d}}return v*1.3}
-function premioNivel(n){if(n<2)return 0;n=Math.min(n,NIVEL_MAX);const f=PREMIO_N30/premioBase(NIVEL_MAX)-1;const v=premioBase(n)*(1+f*((n-2)/(NIVEL_MAX-2))**2)*(G&&G.country?escalaFund(G.country):1);return v<100?Math.round(v):Math.round(v/10)*10}
+function premioNivel(n){if(n<2)return 0;n=Math.min(n,NIVEL_MAX);const f=PREMIO_N30/premioBase(NIVEL_MAX)-1;const v=premioBase(n)*(1+f*((n-2)/(NIVEL_MAX-2))**2)*(G&&G.country?escalaFund(G.country):1)*1.5; // +50% no prêmioreturn v<100?Math.round(v):Math.round(v/10)*10}
 function somarXP(qtd){
   const P=perfil(),antes=P.nivel;let dinheiroGanho=0,cuponsGanhos=0;
   if(P.nivel>=NIVEL_MAX){P.xp=0;return {antes,nivel:P.nivel,premio:0}}
@@ -2242,7 +2242,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792291989";
+const VERSAO="1792292184";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3877,7 +3877,7 @@ function telaPerfil(){
     <div><span>Vender um jogador</span><span style="color:var(--ok)">+150 XP</span></div>
     <div><span>Contratar um técnico</span><span style="color:var(--ok)">+300 XP</span></div>
     <div><span>Fechar com patrocinador</span><span style="color:var(--ok)">+200 XP</span></div></div>
-  <p class="muted peq">Do nível 1 para o 2 bastam ${xpParaSubir(1)} XP. Depois são ${xpParaSubir(2)} XP para o nível 3, ${xpParaSubir(3)} para o 4, ${xpParaSubir(4)} para o 5, e cada nível pede uns 65 XP a mais que o anterior, até o nível ${NIVEL_MAX}.</p>
+  <p class="muted peq">Do nível 1 para o 2 bastam ${xpParaSubir(1)} XP. Depois são ${xpParaSubir(2)} XP para o nível 3, ${xpParaSubir(3)} para o 4, ${xpParaSubir(4)} para o 5, e cada nível pede uns 130 XP a mais que o anterior, até o nível ${NIVEL_MAX}.</p>
   <h2>Bônus por nível</h2><div class="cartao extrato num">${[2,3,4,5,10,15,20,25,30].map(n=>`<div${n<=P.nivel?' style="opacity:.55"':""}><span>Nível ${n}${n<=P.nivel?" · recebido":""}</span><span>${dinheiro(premioNivel(n))}${CUPONS_NIVEL[n]?` + ${cupomTxt(CUPONS_NIVEL[n])}`:""}</span></div>`).join("")}</div>`;
   return h;
 }
