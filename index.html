@@ -797,7 +797,12 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 .dd.aberto .dd-lista{display:flex;flex-direction:column}
 .dd-lista button{background:none;border:0;color:var(--cal);font:inherit;font-size:13px;text-align:left;padding:6px 10px;border-radius:7px;cursor:pointer}
 .dd-lista button[aria-pressed="true"]{color:var(--canario);font-weight:800;background:rgba(255,210,63,.1)}
-.ult-jogos{display:flex;flex-direction:column;gap:6px}
+.ult-jogos{display:flex;flex-direction:column;gap:6px;max-height:150px;overflow-y:auto;scrollbar-width:none;padding-right:2px}.ult-jogos::-webkit-scrollbar{display:none}
+.ult-jogos>*{flex:0 0 auto}
+.card-rodada{display:flex;align-items:center;gap:10px;width:100%;margin-top:12px;padding:12px 14px;font:inherit;color:inherit;cursor:pointer;text-align:left}
+.card-rodada span{flex:1}.card-rodada small{color:var(--cal-2);font-size:12px}
+.card-rodada svg{color:var(--canario);animation:setaBrilho 1.2s ease-in-out infinite}
+@keyframes setaBrilho{0%,100%{transform:translateX(0);filter:drop-shadow(0 0 0 rgba(255,210,63,0))}50%{transform:translateX(4px);filter:drop-shadow(0 0 6px rgba(255,210,63,.95))}}
 .ult-jogo{display:grid;grid-template-columns:26px 1fr 26px auto;align-items:center;gap:10px;padding:6px 12px;font:inherit;color:inherit;cursor:pointer;text-align:center;border-left:4px solid var(--cal-2)}
 .ult-jogo.v{border-left-color:var(--ok)}.ult-jogo.d{border-left-color:var(--ruim)}
 .ult-jogo b{font-family:var(--f-display);font-size:18px}.ult-jogo .x{font-size:12px;margin:0 6px;opacity:.6}
@@ -809,30 +814,30 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792329995"></script>
-<script src="img/arte-capa.js?v=1792329995"></script>
-<script src="img/fundo-criacao.js?v=1792329995"></script>
-<script src="img/fundo-pais.js?v=1792329995"></script>
-<script src="img/fundo-escudo.js?v=1792329995"></script>
-<script src="img/simbolos.js?v=1792329995"></script>
-<script src="img/kits-foto.js?v=1792329995"></script>
-<script src="img/fundo-vestiario.js?v=1792329995"></script>
-<script src="img/patro-logos.js?v=1792329995"></script>
-<script src="img/rostos.js?v=1792329995"></script>
-<script src="img/estadio-fotos.js?v=1792329995"></script>
-<script src="img/super-fotos.js?v=1792329995"></script>
-<script src="img/trofeus.js?v=1792329995"></script>
-<script src="img/medalhas.js?v=1792329995"></script>
-<script src="img/fotos.js?v=1792329995"></script>
-<script src="img/fotos-vs.js?v=1792329995"></script>
-<script src="img/kit-homens.js?v=1792329995"></script>
-<script src="img/tec-fotos.js?v=1792329995"></script>
-<script src="dados/elencos.js?v=1792329995"></script>
-<script src="img/rostos-reais.js?v=1792329995"></script>
-<script src="img/escudos-img.js?v=1792329995"></script>
-<script src="img/tradutores.js?v=1792329995"></script>
-<script src="img/avatares.js?v=1792329995"></script>
-<script src="dados/idiomas.js?v=1792329995"></script>
+<script src="img/escudos-reais.js?v=1792330132"></script>
+<script src="img/arte-capa.js?v=1792330132"></script>
+<script src="img/fundo-criacao.js?v=1792330132"></script>
+<script src="img/fundo-pais.js?v=1792330132"></script>
+<script src="img/fundo-escudo.js?v=1792330132"></script>
+<script src="img/simbolos.js?v=1792330132"></script>
+<script src="img/kits-foto.js?v=1792330132"></script>
+<script src="img/fundo-vestiario.js?v=1792330132"></script>
+<script src="img/patro-logos.js?v=1792330132"></script>
+<script src="img/rostos.js?v=1792330132"></script>
+<script src="img/estadio-fotos.js?v=1792330132"></script>
+<script src="img/super-fotos.js?v=1792330132"></script>
+<script src="img/trofeus.js?v=1792330132"></script>
+<script src="img/medalhas.js?v=1792330132"></script>
+<script src="img/fotos.js?v=1792330132"></script>
+<script src="img/fotos-vs.js?v=1792330132"></script>
+<script src="img/kit-homens.js?v=1792330132"></script>
+<script src="img/tec-fotos.js?v=1792330132"></script>
+<script src="dados/elencos.js?v=1792330132"></script>
+<script src="img/rostos-reais.js?v=1792330132"></script>
+<script src="img/escudos-img.js?v=1792330132"></script>
+<script src="img/tradutores.js?v=1792330132"></script>
+<script src="img/avatares.js?v=1792330132"></script>
+<script src="dados/idiomas.js?v=1792330132"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2277,7 +2282,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792329995";
+const VERSAO="1792330132";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3983,9 +3988,13 @@ function ultimasPartidas(){
   if(G.last){const r={...G.last,ano:G.last.ano||G.year};G.last.ano=r.ano;G.jogos=G.jogos||[];
     if(!G.jogos.length||chaveJogo(G.jogos[0].r)!==chaveJogo(r)){G.jogos.unshift({r,f:G.lastFin?{...G.lastFin}:null});G.jogos=G.jogos.slice(0,8);salvar()}}
   if(!G.jogos||!G.jogos.length)return "";const uid=G.user.club;
-  return `<h2>Últimas partidas</h2><div class="ult-jogos">${G.jogos.slice(0,5).map(({r},i)=>{const H=G.clubs[r.h],A=G.clubs[r.a];if(!H||!A)return "";
+  return `<h2>Últimas partidas</h2><div class="ult-jogos">${G.jogos.map(({r},i)=>{const H=G.clubs[r.h],A=G.clubs[r.a];if(!H||!A)return "";
     const gu=r.h===uid?r.gh:r.ga,go=r.h===uid?r.ga:r.gh;let res=gu>go?"v":gu<go?"d":"e";if(r.pen)res=(r.pen==="h")===(r.h===uid)?"v":"d";
-    return `<button class="cartao ult-jogo ${res}" data-a="verjogo" data-v="${i}">${marcaDe(H,26)}<b class="num">${r.gh}<span class="x">×</span>${r.ga}</b>${marcaDe(A,26)}<small>${r.tipo==="L"?`Rod. ${r.rodada}`:esc(r.copa)}</small></button>`}).join("")}</div>`}
+    return `<button class="cartao ult-jogo ${res}" data-a="verjogo" data-v="${i}">${marcaDe(H,26)}<b class="num">${r.gh}<span class="x">×</span>${r.ga}</b>${marcaDe(A,26)}<small>${r.tipo==="L"?`Rod. ${r.rodada}`:esc(r.copa)}</small></button>`}).join("")}</div>${cartaoRodada()}`}
+/* card da última rodada da liga (abre os resultados) */
+function ultimaRodada(){const j=(G.jogos||[]).find(x=>x.r.tipo==="L"&&x.r.ano===G.year);return j?j.r.rodada:0}
+function cartaoRodada(){const n=ultimaRodada();if(!n)return "";
+  return `<button class="cartao card-rodada" data-a="verrodada"><span><b>Rodada ${n}</b> · ${esc(nomeLiga(userTier()))}</span><small>Ver resultados</small><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>`}
 function cartaoUltimo(r=G.last,f=G.lastFin){
   const uid=G.user.club,H=G.clubs[r.h],A=G.clubs[r.a];
   const nome=([id,m])=>`${esc(G.players[id]?G.players[id].n:"—")} ${m}'`;
@@ -4878,6 +4887,8 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "ddform":if(v===G.user.form){el.closest(".dd").classList.remove("aberto");return}G.user.form=v;autoEscalar();salvar();el.closest(".dd").classList.remove("aberto");if(animarForm()){setTimeout(()=>{if(G&&!G.live)render()},700);return}break;
     case "ddest":G.user.est=v;salvar();break;
     case "verjogo":{const j=G.jogos&&G.jogos[+v];if(!j)return;modal(cartaoUltimo(j.r,j.f).replace(/<h2>/g,'<h3 style="margin:0 0 8px">').replace(/<\/h2>/g,"</h3>")+`<div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`);return}
+    case "verrodada":{const n=ultimaRodada();if(!n)return;const t=userTier(),uid=G.user.club,rs=G.res[t][n-1]||[];
+      modal(`<h3 style="margin:0 0 8px">Rodada ${n} · ${esc(nomeLiga(t))}</h3><div style="padding-block:4px">${rs.map(([a,b,x,y])=>`<div class="res${a===uid||b===uid?" meu":""}"><span>${esc(G.clubs[a].name)}</span><span class="c num">${x} × ${y}</span><span>${esc(G.clubs[b].name)}</span></div>`).join("")||'<p class="muted">Sem resultados.</p>'}</div><div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`);return}
     case "entrar":if(!G)W=lerW()||W||novoW();abertura=false;aba="inicio";break;
     case "som":somIniciar();somMudo(!SOM.mudo);if(aba==="config"&&G)render();document.querySelectorAll(".som-btn").forEach(b=>{b.innerHTML=iconeSom();b.setAttribute("aria-label",SOM.mudo?"Ligar som":"Desligar som")});if(!SOM.mudo)somModo(modoDesejado());return;
     case "carregararq":{const i=$("#arq-save")||$("#arq-save2");if(i){i.value="";i.click()}return;}
