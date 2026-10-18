@@ -813,6 +813,33 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 .topo-clube{display:flex;align-items:center;gap:10px;min-width:0;flex:1;background:none;border:0;padding:0;color:var(--cal);cursor:pointer;text-align:left}
 .topo-clube .tc-esc{flex:0 0 auto;display:grid;place-items:center;width:46px;height:46px}
 .topo-clube .tc-nome{font-family:var(--f-display);font-weight:800;font-size:19px;line-height:1.05;text-transform:uppercase;min-width:0;overflow-wrap:normal;word-break:normal}
+.heroi-clube{border-radius:18px;overflow:hidden;background:linear-gradient(160deg,color-mix(in srgb,var(--hc1) 55%,#0a1630) 0%,#0c1a33 45%,color-mix(in srgb,var(--hc2) 35%,#08101f) 100%);border:1px solid rgba(255,255,255,.12);color:#fff}
+.hc-topo{position:relative;text-align:center;padding:22px 16px 16px;background:radial-gradient(circle at 50% 30%,rgba(255,255,255,.18),transparent 60%)}
+.hc-esc{display:flex;justify-content:center;filter:drop-shadow(0 10px 18px rgba(0,0,0,.5))}
+.hc-nome{font-family:var(--f-display);font-weight:900;font-size:30px;line-height:1.05;text-transform:uppercase;margin:12px 0 4px;letter-spacing:.02em;text-wrap:balance}
+.hc-fund{font-size:13px;color:#d6e4ff;font-style:italic}
+.hc-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:12px}
+.hc-chips span{font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16)}
+.hc-cores{display:inline-flex;gap:4px;align-items:center}.hc-cores i{width:12px;height:12px;border-radius:50%;border:1.5px solid #fff}
+.hc-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.1);border-block:1px solid rgba(255,255,255,.1)}
+.hc-kpi{background:rgba(8,16,34,.75);padding:12px 6px;text-align:center;display:flex;flex-direction:column;gap:3px}
+.hc-kpi b{font-family:var(--f-display);font-size:18px;color:var(--canario);line-height:1.1}
+.hc-kpi small{font-size:11px;color:#b9c8e6}
+.hc-sec{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#b9c8e6;padding:14px 16px 6px}
+.hc-jogs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 12px}
+.hc-jog{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px;border-radius:12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#fff;cursor:pointer;font:inherit;min-width:0}
+.hc-rosto{width:52px;height:52px;border-radius:50%;overflow:hidden;background:rgba(255,255,255,.1);display:grid;place-items:center}
+.hc-jog small{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--canario);margin-top:4px}
+.hc-jog b{font-size:13px;line-height:1.15;text-align:center;overflow-wrap:anywhere}
+.hc-jog em{font-style:normal;font-size:11px;color:#b9c8e6}
+.hc-linhas{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 12px 4px}
+.hc-linhas>div{padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;flex-direction:column;gap:2px;min-width:0}
+.hc-linhas small{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#b9c8e6}
+.hc-linhas b{font-size:14px;line-height:1.2;overflow-wrap:anywhere}
+.hc-linhas span{font-size:11.5px;color:#b9c8e6}
+.hc-rival{display:flex;align-items:center;gap:6px}
+.hc-unis{display:flex;align-items:flex-end;justify-content:center;gap:14px;padding:12px 12px 16px}
+.hc-unis small{font-size:11px;color:#b9c8e6;align-self:center}
 .sanf{padding:0;margin-top:10px}
 .sanf summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;cursor:pointer}
 .sanf summary::-webkit-details-marker{display:none}
@@ -858,30 +885,30 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792354290"></script>
-<script src="img/arte-capa.js?v=1792354290"></script>
-<script src="img/fundo-criacao.js?v=1792354290"></script>
-<script src="img/fundo-pais.js?v=1792354290"></script>
-<script src="img/fundo-escudo.js?v=1792354290"></script>
-<script src="img/simbolos.js?v=1792354290"></script>
-<script src="img/kits-foto.js?v=1792354290"></script>
-<script src="img/fundo-vestiario.js?v=1792354290"></script>
-<script src="img/patro-logos.js?v=1792354290"></script>
-<script src="img/rostos.js?v=1792354290"></script>
-<script src="img/estadio-fotos.js?v=1792354290"></script>
-<script src="img/super-fotos.js?v=1792354290"></script>
-<script src="img/trofeus.js?v=1792354290"></script>
-<script src="img/medalhas.js?v=1792354290"></script>
-<script src="img/fotos.js?v=1792354290"></script>
-<script src="img/fotos-vs.js?v=1792354290"></script>
-<script src="img/kit-homens.js?v=1792354290"></script>
-<script src="img/tec-fotos.js?v=1792354290"></script>
-<script src="dados/elencos.js?v=1792354290"></script>
-<script src="img/rostos-reais.js?v=1792354290"></script>
-<script src="img/escudos-img.js?v=1792354290"></script>
-<script src="img/tradutores.js?v=1792354290"></script>
-<script src="img/avatares.js?v=1792354290"></script>
-<script src="dados/idiomas.js?v=1792354290"></script>
+<script src="img/escudos-reais.js?v=1792354460"></script>
+<script src="img/arte-capa.js?v=1792354460"></script>
+<script src="img/fundo-criacao.js?v=1792354460"></script>
+<script src="img/fundo-pais.js?v=1792354460"></script>
+<script src="img/fundo-escudo.js?v=1792354460"></script>
+<script src="img/simbolos.js?v=1792354460"></script>
+<script src="img/kits-foto.js?v=1792354460"></script>
+<script src="img/fundo-vestiario.js?v=1792354460"></script>
+<script src="img/patro-logos.js?v=1792354460"></script>
+<script src="img/rostos.js?v=1792354460"></script>
+<script src="img/estadio-fotos.js?v=1792354460"></script>
+<script src="img/super-fotos.js?v=1792354460"></script>
+<script src="img/trofeus.js?v=1792354460"></script>
+<script src="img/medalhas.js?v=1792354460"></script>
+<script src="img/fotos.js?v=1792354460"></script>
+<script src="img/fotos-vs.js?v=1792354460"></script>
+<script src="img/kit-homens.js?v=1792354460"></script>
+<script src="img/tec-fotos.js?v=1792354460"></script>
+<script src="dados/elencos.js?v=1792354460"></script>
+<script src="img/rostos-reais.js?v=1792354460"></script>
+<script src="img/escudos-img.js?v=1792354460"></script>
+<script src="img/tradutores.js?v=1792354460"></script>
+<script src="img/avatares.js?v=1792354460"></script>
+<script src="dados/idiomas.js?v=1792354460"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2326,7 +2353,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792354290";
+const VERSAO="1792354460";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4846,9 +4873,49 @@ function telaMercado(){
 }
 
 /* ---------- clube ---------- */
+/* cartão principal da aba Clube: escudo grande, fundação, números e destaques do elenco */
+const MESES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+function fundacao(){const c=G.clubs[G.user.club];
+  if(!G.fundado){const h=[...c.name].reduce((a,x)=>a*31+x.charCodeAt(0),7)>>>0,ano=(G.history&&G.history[0]&&G.history[0].y)||G.year;G.fundado={d:1+h%28,m:(h>>>5)%12,a:ano};salvar()}
+  const f=G.fundado;return `${f.d} de ${MESES[f.m]} de ${f.a}`}
+function rivalDe(c){const L=(G.tiers[c.tier]||[]).filter(id=>id!==c.id);if(!L.length)return null;
+  if(!G.rival||!L.includes(G.rival)){const h=[...c.name].reduce((a,x)=>a*17+x.charCodeAt(0),3)>>>0;G.rival=L.slice().sort()[h%L.length]}
+  return G.clubs[G.rival]}
+function heroiClube(){
+  const uid=G.user.club,c=G.clubs[uid],e=c.escudo||{},el=jogadoresDo(uid);
+  const c1=e.c1||c.c1||"#1e6bd6",c2=e.c2||c.c2||"#0b1d3a";
+  const valorEl=el.reduce((x,p)=>x+valor(p),0),idade=el.length?(el.reduce((x,p)=>x+p.age,0)/el.length).toFixed(1).replace(".",","):"–";
+  const xi=(G.user.lineup||[]).map(id=>G.players[id]).filter(Boolean),forca=xi.length?Math.round(xi.reduce((x,p)=>x+p.ov,0)/xi.length):0;
+  const fama=c.fama||0,torcida=Math.round(c.cap*(6+fama/6)),socios=Math.round(c.cap*(.25+fama/180));
+  const nT=(G.titles||[]).length,temp=(G.history||[]).length+1;
+  const mascote=e.simbolo&&SIMBOLOS[e.simbolo]&&SIMBOLOS[e.simbolo]!=="Nenhum"?SIMBOLOS[e.simbolo].split(" /")[0]:null;
+  const num=n=>n>=1e6?(n/1e6).toFixed(1).replace(".",",")+" mi":n>=1e3?Math.round(n/1e3)+" mil":String(n);
+  const top=(lst,f)=>lst.slice().sort((a,b)=>f(b)-f(a))[0];
+  const craque=top(el,p=>p.ov),art=top(el.filter(p=>p.g>0),p=>p.g),caro=top(el.filter(p=>p!==craque&&p!==art),p=>valor(p)),prom=top(el.filter(p=>p.age<=21&&p!==craque&&p!==caro),p=>(p.pot||p.ov)*2+p.ov);
+  const dest=(p,rot,info)=>p?`<button class="hc-jog" data-a="perfil" data-v="${p.id}"><span class="hc-rosto">${rostoSVG(p,52)}</span><small>${rot}</small><b>${esc(nomeCurto(p.n))}</b><em>${info}</em></button>`:"";
+  const rv=rivalDe(c);
+  const kpi=(n,v)=>`<div class="hc-kpi"><b class="num">${v}</b><small>${n}</small></div>`;
+  return `<h2>Identidade</h2><div class="heroi-clube" style="--hc1:${c1};--hc2:${c2}">
+    <div class="hc-topo">
+      <div class="hc-esc">${escudoDe(c,150)}</div>
+      <h3 class="hc-nome">${esc(c.name)}</h3>
+      <div class="hc-fund">Fundado em ${fundacao()}</div>
+      <div class="hc-chips"><span>${esc(c.short)}</span><span>${esc(nomeLiga(c.tier))}</span><span>${esc(pais().nome)}</span>${mascote?`<span>Mascote: ${esc(mascote)}</span>`:""}<span class="hc-cores"><i style="background:${c1}"></i><i style="background:${c2}"></i>${e.c3?`<i style="background:${e.c3}"></i>`:""}</span></div>
+    </div>
+    <div class="hc-kpis">${kpi("Valor do elenco",dinheiro(valorEl))}${kpi("Força do time",forca)}${kpi("Idade média",idade)}${kpi("Torcedores",num(torcida))}${kpi("Sócios",num(socios))}${kpi(nT===1?"Título":"Títulos",nT)}</div>
+    <div class="hc-sec">Destaques do elenco</div>
+    <div class="hc-jogs">${dest(craque,"Craque",`${craque&&craque.ov} de força`)}${art?dest(art,"Artilheiro",`${art.g} gol${art.g>1?"s":""}`):""}${dest(caro,"Mais valioso",caro?dinheiro(valor(caro)):"")}${!art?dest(prom,"Promessa",prom?`${prom.age} anos`:""):""}</div>
+    <div class="hc-linhas">
+      <div><small>Estádio</small><b>${esc(estadioDe(c))}</b><span>${c.cap.toLocaleString("pt-BR")} lugares</span></div>
+      <div><small>Dono</small><b>${esc(G.user.coach||"—")}</b><span>${temp}ª temporada</span></div>
+      ${rv?`<div data-a="vertime" data-v="${rv.id}" style="cursor:pointer"><small>Maior rival</small><b class="hc-rival">${marcaDe(rv,22)} ${esc(rv.name)}</b><span>Clássico da ${esc(nomeLiga(c.tier))}</span></div>`:""}
+      <div><small>Técnico</small><b>${esc(G.tec.n)}</b><span>${G.tec.interino?"Interino":"Nível "+nivelTec(G.tec.q)}</span></div>
+    </div>
+    <div class="hc-unis">${uniformeSVG(c.unis[0],G.patro?G.patro.nome:"",58)}${uniformeSVG(c.unis[1],G.patro?G.patro.nome:"",58)}<small>Uniformes 1 e 2</small></div>
+  </div>`}
 function telaClube(){
   const uid=G.user.club,c=G.clubs[uid],f=G.lastFin,e=G.econ[c.tier];
-  let h=`<h2>Identidade</h2><div class="cartao linha" style="gap:16px;justify-content:center">${escudoDe(c,76)}${uniformeSVG(c.unis[0],G.patro?G.patro.nome:"",64)}${uniformeSVG(c.unis[1],G.patro?G.patro.nome:"",64)}<div style="min-width:0;flex:1"><b style="font-family:var(--f-display);font-size:20px">${esc(c.name)}</b><div class="muted peq">Sigla ${esc(c.short)} · ${esc(pais().nome)} · Dono: ${esc(G.user.coach)}<br>${esc(estadioDe(c))}</div></div></div>`;
+  let h=heroiClube();
   h+=`<h2>Visual do clube</h2><div class="cards-visual">
     <button class="cartao cv-card" data-a="aba" data-v="escudo"><span class="cv-ic">${escudoDe(c,40)}</span><b>Editar escudo</b><small>Forma, cores, símbolo e nome</small></button>
     <button class="cartao cv-card" data-a="aba" data-v="visual"><span class="cv-ic">${uniformeSVG(c.unis[0],"",40)}</span><b>Editar uniforme</b><small>Modelo e cores das camisas</small></button>
