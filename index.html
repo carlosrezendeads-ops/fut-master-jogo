@@ -739,7 +739,7 @@ nav.abas button{font-size:11px}
 .vs-x2{font-family:var(--f-display);font-weight:900;font-size:30px;color:#fff;text-shadow:0 0 18px rgba(25,195,255,.7);padding:0 4px}
 .vs-pre .vs-info{border-bottom:0;padding-top:10px}
 .le-prev{position:relative;border-radius:14px;overflow:hidden;background:radial-gradient(ellipse at 50% 20%,#1e5fbf,#0a1f3d 75%)}
-.le-prev canvas{display:block;width:100%;max-width:360px;height:auto;margin:0 auto;cursor:grab}
+.le-prev canvas{touch-action:none;-webkit-user-select:none;user-select:none;display:block;width:100%;max-width:360px;height:auto;margin:0 auto;cursor:grab}
 .logo-ed .le-abas{margin:8px 0 10px}
 .vs-pre{background:linear-gradient(135deg,#0d47a1,#1565c0,#0a1f3d,#2a3036,#0b3c8c,#061a3a);background-size:400% 400%;animation:vsFundo 16s ease-in-out infinite}
 @keyframes vsFundo{0%,100%{background-position:0% 30%}50%{background-position:100% 70%}}
@@ -838,30 +838,30 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792340509"></script>
-<script src="img/arte-capa.js?v=1792340509"></script>
-<script src="img/fundo-criacao.js?v=1792340509"></script>
-<script src="img/fundo-pais.js?v=1792340509"></script>
-<script src="img/fundo-escudo.js?v=1792340509"></script>
-<script src="img/simbolos.js?v=1792340509"></script>
-<script src="img/kits-foto.js?v=1792340509"></script>
-<script src="img/fundo-vestiario.js?v=1792340509"></script>
-<script src="img/patro-logos.js?v=1792340509"></script>
-<script src="img/rostos.js?v=1792340509"></script>
-<script src="img/estadio-fotos.js?v=1792340509"></script>
-<script src="img/super-fotos.js?v=1792340509"></script>
-<script src="img/trofeus.js?v=1792340509"></script>
-<script src="img/medalhas.js?v=1792340509"></script>
-<script src="img/fotos.js?v=1792340509"></script>
-<script src="img/fotos-vs.js?v=1792340509"></script>
-<script src="img/kit-homens.js?v=1792340509"></script>
-<script src="img/tec-fotos.js?v=1792340509"></script>
-<script src="dados/elencos.js?v=1792340509"></script>
-<script src="img/rostos-reais.js?v=1792340509"></script>
-<script src="img/escudos-img.js?v=1792340509"></script>
-<script src="img/tradutores.js?v=1792340509"></script>
-<script src="img/avatares.js?v=1792340509"></script>
-<script src="dados/idiomas.js?v=1792340509"></script>
+<script src="img/escudos-reais.js?v=1792340717"></script>
+<script src="img/arte-capa.js?v=1792340717"></script>
+<script src="img/fundo-criacao.js?v=1792340717"></script>
+<script src="img/fundo-pais.js?v=1792340717"></script>
+<script src="img/fundo-escudo.js?v=1792340717"></script>
+<script src="img/simbolos.js?v=1792340717"></script>
+<script src="img/kits-foto.js?v=1792340717"></script>
+<script src="img/fundo-vestiario.js?v=1792340717"></script>
+<script src="img/patro-logos.js?v=1792340717"></script>
+<script src="img/rostos.js?v=1792340717"></script>
+<script src="img/estadio-fotos.js?v=1792340717"></script>
+<script src="img/super-fotos.js?v=1792340717"></script>
+<script src="img/trofeus.js?v=1792340717"></script>
+<script src="img/medalhas.js?v=1792340717"></script>
+<script src="img/fotos.js?v=1792340717"></script>
+<script src="img/fotos-vs.js?v=1792340717"></script>
+<script src="img/kit-homens.js?v=1792340717"></script>
+<script src="img/tec-fotos.js?v=1792340717"></script>
+<script src="dados/elencos.js?v=1792340717"></script>
+<script src="img/rostos-reais.js?v=1792340717"></script>
+<script src="img/escudos-img.js?v=1792340717"></script>
+<script src="img/tradutores.js?v=1792340717"></script>
+<script src="img/avatares.js?v=1792340717"></script>
+<script src="dados/idiomas.js?v=1792340717"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2306,7 +2306,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792340509";
+const VERSAO="1792340717";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4247,8 +4247,8 @@ function blocoVideoVS(m){const uid=G.user.club,H=G.clubs[m.h],A=G.clubs[m.a];
 function videoVS(){const cv=document.querySelector(".vs-video canvas");if(!cv||cv._ok)return;cv._ok=1;
   camisaViva(cv,+cv.dataset.vid||0,efUni(JSON.parse(cv.dataset.uni)),cfgLogo,true)}
 /* logos na camisa: posição (x,y em larguras de camisa a partir do centro da gola), tamanho t, borda b (cor bc, grossura be) — salvo em G.logos */
-const LOGO_PADRAO={master:{x:0,y:.8,t:1,b:0,bc:"#ffffff",be:1.5},mat:{x:-.19,y:.33,t:1,b:0,bc:"#ffffff",be:1.5},sec:{x:.435,y:.2,t:1,b:0,bc:"#ffffff",be:1.5}};
-const LOGO_CAIXA={master:[.69,.27],mat:[.1,.065],sec:[.2,.06]};
+const LOGO_PADRAO={esc:{x:.19,y:.33,t:1,b:0,bc:"#ffffff",be:1.5},master:{x:0,y:.8,t:1,b:0,bc:"#ffffff",be:1.5},mat:{x:-.19,y:.33,t:1,b:0,bc:"#ffffff",be:1.5},sec:{x:.435,y:.2,t:1,b:0,bc:"#ffffff",be:1.5}};
+const LOGO_CAIXA={esc:[.18,.18],master:[.69,.27],mat:[.1,.065],sec:[.2,.06]};
 function cfgLogo(k){return {...LOGO_PADRAO[k],...(G&&G.logos&&G.logos[k]||{})}}
 /* desenha o vídeo do jogador num canvas: tira o verde e veste a camisa u com escudo e logos; cfg(k) dá a posição de cada logo */
 function camisaViva(cv,vid,u,cfg,tocarJa){
@@ -4270,7 +4270,7 @@ function camisaViva(cv,vid,u,cfg,tocarJa){
       const cl=cCam[0]*.299+cCam[1]*.587+cCam[2]*.114>150?"#111":"#fff";kx.font="900 60px Arial, sans-serif";kx.fillStyle=cl;kx.textBaseline="middle";kx.fillText(t,4,36);o.c=k}
     return o};
   let escI=null;const svg=escudoDe(c,160);if(/^\s*<svg/.test(svg)){const im=new Image();im.onload=()=>{escI=im;ctl.redesenhar()};im.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(/xmlns=/.test(svg)?svg:svg.replace("<svg",'<svg xmlns="http://www.w3.org/2000/svg"'))}
-  const LG={master:fazLogo(G.patro&&G.patro.nome),mat:fazLogo(G.material&&G.material.nome),sec:fazLogo(G.patro2&&G.patro2.nome)};
+  const LG={esc:{get c(){return escI}},master:fazLogo(G.patro&&G.patro.nome),mat:fazLogo(G.material&&G.material.nome),sec:fazLogo(G.patro2&&G.patro2.nome)};
   let camada=true;
   const SH=new Float32Array(256);for(let i=0;i<256;i++)SH[i]=Math.min(1.2,Math.pow(i/225,1.5)*1.1);
   // posição da camisa no 1º quadro + movimento dela em cada quadro (RASTRO_VS, medido antes no vídeo)
@@ -4289,8 +4289,7 @@ function camisaViva(cv,vid,u,cfg,tocarJa){
   function desenhaCamisa(g,soLogos,T){const k=ssw*.74/100,tx=scx-100*k,ty=sy-16*k;g.setTransform(T[0],T[1],T[2],T[3],T[4],T[5]);
     if(!soLogos){g.fillStyle=u.camisa;g.fillRect(-W,-H,3*W,3*H);if(des)g.drawImage(des,tx,ty,200*k,170*k);
       g.fillStyle=u.mangas||u.camisa;const xm=ssw*.37;g.fillRect(-W,-H,scx-xm+W,3*H);g.fillRect(scx+xm,-H,2*W,3*H)}
-    poe(g,escI,scx+ssw*.19,sy+ssw*.33,ssw*.18,ssw*.18);
-    poeLogo(g,"mat");poeLogo(g,"master");poeLogo(g,"sec");
+    poeLogo(g,"esc");poeLogo(g,"mat");poeLogo(g,"master");poeLogo(g,"sec");
     g.setTransform(1,0,0,1,0,0)}
   function pinta(){
     const fi=Math.min(NQ-1,Math.floor(v.currentTime*24+.001)%NQ),T=R.M.slice(fi*6,fi*6+6);
@@ -4329,10 +4328,10 @@ function camisaViva(cv,vid,u,cfg,tocarJa){
 /* editor das logos na camisa: escolhe a logo, arrasta, muda tamanho e borda; salva em G.logos (vale para o vídeo do pré-jogo) */
 let LED=null;
 function modalLogos(k){
-  const tem={master:G.patro,mat:G.material,sec:G.patro2},ks=["master","mat","sec"].filter(x=>tem[x]);if(!ks.length)return;
+  const tem={esc:1,master:G.patro,mat:G.material,sec:G.patro2},ks=["esc","master","mat","sec"].filter(x=>tem[x]);
   LED={k:ks.includes(k)?k:ks[0],vid:0,cfg:{},mov:false};ks.forEach(x=>LED.cfg[x]=cfgLogo(x));
-  const nomes={master:"Patrocínio master",mat:"Material",sec:"Patrocínio 2"};
-  modal(`<div class="logo-ed"><b class="etapa">Logos na camisa</b>
+  const nomes={esc:"Escudo",master:"Patrocínio",mat:"Material",sec:"Patrocínio 2"};
+  modal(`<div class="logo-ed"><b class="etapa">Escudo e logos na camisa</b>
     <div class="seg le-abas" role="group">${ks.map(x=>`<button data-le="aba" data-v="${x}" aria-pressed="${x===LED.k}">${nomes[x]}</button>`).join("")}</div>
     <div class="le-prev"><canvas width="480" height="456" aria-label="Prévia da camisa"></canvas></div>
     <p class="muted peq" style="margin:4px 0 8px;text-align:center">Arraste na camisa para mudar a logo de lugar.</p>
@@ -4342,8 +4341,8 @@ function modalLogos(k){
   const box=document.querySelector(".veu .logo-ed");if(!box)return;
   const u=efUni(unisDe(G.clubs[G.user.club])[0]);let ctl=null;
   const arrastar=cv=>{cv.style.touchAction="none";let ini=null;
-    cv.addEventListener("pointerdown",e=>{const r=cv.getBoundingClientRect(),sc=cv.width/r.width,f=LED.cfg[LED.k];ini={x:e.clientX,y:e.clientY,sc,fx:f.x,fy:f.y,lado:(e.clientX-r.left)*sc<ctl.scx?-1:1};cv.setPointerCapture(e.pointerId)});
-    cv.addEventListener("pointermove",e=>{if(!ini)return;const f=LED.cfg[LED.k],dx=(e.clientX-ini.x)*ini.sc/ctl.ssw,dy=(e.clientY-ini.y)*ini.sc/ctl.ssw;
+    cv.addEventListener("pointerdown",e=>{e.preventDefault();const r=cv.getBoundingClientRect(),sc=cv.width/r.width,f=LED.cfg[LED.k];ini={x:e.clientX,y:e.clientY,sc,fx:f.x,fy:f.y,lado:(e.clientX-r.left)*sc<ctl.scx?-1:1};try{cv.setPointerCapture(e.pointerId)}catch(er){}});
+    cv.addEventListener("pointermove",e=>{if(!ini)return;e.preventDefault();const f=LED.cfg[LED.k],dx=(e.clientX-ini.x)*ini.sc/ctl.ssw,dy=(e.clientY-ini.y)*ini.sc/ctl.ssw;
       f.x=Math.round((ini.fx+(LED.k==="sec"?dx*ini.lado:dx))*1000)/1000;f.y=Math.round((ini.fy+dy)*1000)/1000;ctl.redesenhar()});
     const solta=()=>{ini=null};cv.addEventListener("pointerup",solta);cv.addEventListener("pointercancel",solta)};
   const liga=()=>{const old=box.querySelector(".le-prev canvas"),cv=document.createElement("canvas");cv.width=480;cv.height=456;cv.setAttribute("aria-label","Prévia da camisa");old.replaceWith(cv);box.querySelectorAll(".le-prev video").forEach(x=>x.remove());
@@ -4844,7 +4843,7 @@ function telaClube(){
     <div><span>Gastos da partida<small class="muted" style="display:block;font-size:11.5px">staff, arbitragem, segurança e estádio</small></span><span style="white-space:nowrap">${dinheiro((f.sal||0)+(f.man||0))}</span></div>
     <div><span>Saldo</span><span style="color:var(${f.tot>=0?"--ok":"--ruim"})">${dinheiro(f.tot)}</span></div></div>`;
   {const P=[[G.patro,"Master"],[G.patro2,"Secundário"],[G.material,"Material esportivo"]].filter(x=>x[0]);
-   h+=`<h2>Patrocínio</h2><div class="cartao secao">${P.length?P.map(([o,rot])=>`<div class="linha" style="gap:12px">${logoPatro(o.nome,"mini")}<div><b>${esc(o.nome)}</b> <span class="muted peq">· ${rot}</span><div class="muted peq">Até o fim de ${o.ano} · ${dinheiro(o.porJogo)} por jogo${o.tipo==="vitoria"?` + ${dinheiro(o.bonus)} por vitória`:o.tipo==="meta"?` + ${dinheiro(o.bonusMeta)} se ${esc(o.meta)}`:""}</div></div></div>`).join(""):'<span class="muted">Sem patrocinador. Escolha um na pré-temporada, no Início.</span>'}${P.length?`<button class="btn full" data-a="logos" data-v="master">👕 Ajustar logos na camisa</button>`:""}</div>`;}
+   h+=`<h2>Patrocínio</h2><div class="cartao secao">${P.length?P.map(([o,rot])=>`<div class="linha" style="gap:12px">${logoPatro(o.nome,"mini")}<div><b>${esc(o.nome)}</b> <span class="muted peq">· ${rot}</span><div class="muted peq">Até o fim de ${o.ano} · ${dinheiro(o.porJogo)} por jogo${o.tipo==="vitoria"?` + ${dinheiro(o.bonus)} por vitória`:o.tipo==="meta"?` + ${dinheiro(o.bonusMeta)} se ${esc(o.meta)}`:""}</div></div></div>`).join(""):'<span class="muted">Sem patrocinador. Escolha um na pré-temporada, no Início.</span>'}<button class="btn full" data-a="logos" data-v="${P.length?"master":"esc"}">👕 Ajustar escudo e logos na camisa</button></div>`;}
   const ca=custoAmpliacao();
   h+=`<h2>Estádio</h2><div class="cartao secao"><p style="margin:0"><b>${esc(estadioDe(c))}</b> · ${c.cap.toLocaleString("pt-BR")} lugares · ${G.reformas||0} de ${REFORMAS.length} reformas.</p><button class="btn" data-a="aba" data-v="upgrades">Ver reformas em Upgrades</button></div>`;
   h+=`<h2>Técnico</h2><div class="cartao tec-card">${tecFoto(G.tec.n,G.tec.q)}<div class="nm"><b>${esc(G.tec.n)}</b><span>${G.tec.interino?"Interino":`${esc(nomeLiga(G.clubs[G.user.club].tier))} · ${dinheiro(G.tec.sal)}/mês`}</span></div><div class="acoes"><button class="btn mini" data-a="vertec">Trocar</button>${G.tec.interino?"":`<button class="btn mini perigo" data-a="demitec">Demitir</button>`}</div></div>`;
