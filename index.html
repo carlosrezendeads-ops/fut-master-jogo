@@ -729,6 +729,27 @@ nav.abas button{font-size:11px}
 .vs-grandes b{font-family:var(--f-display);font-weight:800;line-height:1.02;text-transform:uppercase;color:#fff;overflow-wrap:normal;word-break:normal;text-wrap:balance}
 .vs-grandes small{font-size:11px;color:#cdbdff;font-weight:700;letter-spacing:.05em}
 .versus.so-topo .vs-info{border-bottom:0}
+.vs-video{position:relative;padding-top:8px}
+.vs-video canvas{display:block;width:100%;max-width:360px;height:auto;margin:0 auto;-webkit-mask-image:linear-gradient(180deg,#000 90%,transparent);mask-image:linear-gradient(180deg,#000 90%,transparent);filter:drop-shadow(0 10px 14px rgba(0,0,0,.45))}
+.vs-card{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:6px;margin:-6px 12px 0;padding:12px 8px;border-radius:14px;background:rgba(20,8,60,.55);border:1px solid rgba(255,255,255,.14)}
+.vs-t{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;text-align:center;cursor:pointer}
+.vs-esc2{display:flex;justify-content:center;align-items:center;height:60px}
+.vs-t b{font-family:var(--f-display);font-weight:800;line-height:1.05;text-transform:uppercase;color:#fff;overflow-wrap:normal;word-break:normal;text-wrap:balance}
+.vs-t small{font-size:11px;color:#cdbdff;font-weight:700}
+.vs-x2{font-family:var(--f-display);font-weight:900;font-size:30px;color:#fff;text-shadow:0 0 18px rgba(25,195,255,.7);padding:0 4px}
+.vs-pre .vs-info{border-bottom:0;padding-top:10px}
+.vs-pre{background:linear-gradient(135deg,#0d47a1,#1565c0,#0a1f3d,#2a3036,#0b3c8c,#061a3a);background-size:400% 400%;animation:vsFundo 16s ease-in-out infinite}
+@keyframes vsFundo{0%,100%{background-position:0% 30%}50%{background-position:100% 70%}}
+.vs-pre::before{background:repeating-linear-gradient(115deg,rgba(130,200,255,.07) 0 2px,transparent 2px 22px);background-size:200% 100%;animation:vsLinhas 9s linear infinite}
+@keyframes vsLinhas{to{background-position:-46.6px 0}}
+.vs-fx{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.vs-fx i{position:absolute;inset:0;opacity:0;mix-blend-mode:screen;background-repeat:no-repeat;background-size:100% 100%}
+.vs-fx i:nth-child(1){background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 600' preserveAspectRatio='none'%3E%3Cdefs%3E%3Cfilter id='g'%3E%3CfeGaussianBlur stdDeviation='4'/%3E%3C/filter%3E%3C/defs%3E%3Cg fill='none' stroke-linejoin='round'%3E%3Cpath d='M70 0L100 80L78 92L125 200L100 208L150 320M100 80L60 150M125 200L170 240' stroke='%2366ccff' stroke-width='9' filter='url(%23g)'/%3E%3Cpath d='M70 0L100 80L78 92L125 200L100 208L150 320M100 80L60 150M125 200L170 240' stroke='%23e8f8ff' stroke-width='2.2'/%3E%3C/g%3E%3C/svg%3E");animation:vsRaio 7s infinite}
+.vs-fx i:nth-child(2){background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 600' preserveAspectRatio='none'%3E%3Cdefs%3E%3Cfilter id='g'%3E%3CfeGaussianBlur stdDeviation='4'/%3E%3C/filter%3E%3C/defs%3E%3Cg fill='none' stroke-linejoin='round'%3E%3Cpath d='M360 0L325 110L350 118L300 250L326 256L280 380M325 110L370 170M300 250L250 290' stroke='%2366ccff' stroke-width='9' filter='url(%23g)'/%3E%3Cpath d='M360 0L325 110L350 118L300 250L326 256L280 380M325 110L370 170M300 250L250 290' stroke='%23e8f8ff' stroke-width='2.2'/%3E%3C/g%3E%3C/svg%3E");animation:vsRaio 9s 3.2s infinite}
+.vs-fx i:nth-child(3){opacity:1;mix-blend-mode:normal;background:radial-gradient(circle at 50% 50%,rgba(90,180,255,.45),transparent 60%);width:70%;height:50%;inset:auto;left:15%;top:8%;animation:vsBrilho 8s ease-in-out infinite}
+@keyframes vsRaio{0%,60%,100%{opacity:0}61%{opacity:.95}62%{opacity:.15}63.5%{opacity:1}67%{opacity:0}}
+@keyframes vsBrilho{0%,100%{transform:translate(-18%,0) scale(1);opacity:.5}50%{transform:translate(18%,12%) scale(1.25);opacity:1}}
+@media (prefers-reduced-motion:reduce){.vs-pre,.vs-pre::before,.vs-fx i{animation:none}}
 .vs-nomes{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:8px 12px 10px;border-bottom:1px solid rgba(255,255,255,.15)}
 .vs-nomes>div{display:flex;align-items:center;gap:6px;min-width:0}
 .vs-nomes>div:last-child{justify-content:flex-end;text-align:right}
@@ -814,30 +835,30 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792330132"></script>
-<script src="img/arte-capa.js?v=1792330132"></script>
-<script src="img/fundo-criacao.js?v=1792330132"></script>
-<script src="img/fundo-pais.js?v=1792330132"></script>
-<script src="img/fundo-escudo.js?v=1792330132"></script>
-<script src="img/simbolos.js?v=1792330132"></script>
-<script src="img/kits-foto.js?v=1792330132"></script>
-<script src="img/fundo-vestiario.js?v=1792330132"></script>
-<script src="img/patro-logos.js?v=1792330132"></script>
-<script src="img/rostos.js?v=1792330132"></script>
-<script src="img/estadio-fotos.js?v=1792330132"></script>
-<script src="img/super-fotos.js?v=1792330132"></script>
-<script src="img/trofeus.js?v=1792330132"></script>
-<script src="img/medalhas.js?v=1792330132"></script>
-<script src="img/fotos.js?v=1792330132"></script>
-<script src="img/fotos-vs.js?v=1792330132"></script>
-<script src="img/kit-homens.js?v=1792330132"></script>
-<script src="img/tec-fotos.js?v=1792330132"></script>
-<script src="dados/elencos.js?v=1792330132"></script>
-<script src="img/rostos-reais.js?v=1792330132"></script>
-<script src="img/escudos-img.js?v=1792330132"></script>
-<script src="img/tradutores.js?v=1792330132"></script>
-<script src="img/avatares.js?v=1792330132"></script>
-<script src="dados/idiomas.js?v=1792330132"></script>
+<script src="img/escudos-reais.js?v=1792335199"></script>
+<script src="img/arte-capa.js?v=1792335199"></script>
+<script src="img/fundo-criacao.js?v=1792335199"></script>
+<script src="img/fundo-pais.js?v=1792335199"></script>
+<script src="img/fundo-escudo.js?v=1792335199"></script>
+<script src="img/simbolos.js?v=1792335199"></script>
+<script src="img/kits-foto.js?v=1792335199"></script>
+<script src="img/fundo-vestiario.js?v=1792335199"></script>
+<script src="img/patro-logos.js?v=1792335199"></script>
+<script src="img/rostos.js?v=1792335199"></script>
+<script src="img/estadio-fotos.js?v=1792335199"></script>
+<script src="img/super-fotos.js?v=1792335199"></script>
+<script src="img/trofeus.js?v=1792335199"></script>
+<script src="img/medalhas.js?v=1792335199"></script>
+<script src="img/fotos.js?v=1792335199"></script>
+<script src="img/fotos-vs.js?v=1792335199"></script>
+<script src="img/kit-homens.js?v=1792335199"></script>
+<script src="img/tec-fotos.js?v=1792335199"></script>
+<script src="dados/elencos.js?v=1792335199"></script>
+<script src="img/rostos-reais.js?v=1792335199"></script>
+<script src="img/escudos-img.js?v=1792335199"></script>
+<script src="img/tradutores.js?v=1792335199"></script>
+<script src="img/avatares.js?v=1792335199"></script>
+<script src="dados/idiomas.js?v=1792335199"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2282,7 +2303,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792330132";
+const VERSAO="1792335199";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3205,6 +3226,7 @@ function render(){try{if(G&&G.user)garantirContratos()}catch(e){}
   const topo=`<header class="topo"><button class="dono-foto" data-a="aba" data-v="perfil" aria-label="Perfil do dono">${avatarSrc()?`<img src="${avatarSrc()}" alt="">`:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">${ICONES.perfil}</svg>`}<b class="num">${Pf.nivel}</b></button><div class="info" data-a="aba" data-v="perfil" style="cursor:pointer"><h1 class="dono-nome">${esc(G.user.coach||"Dono do clube")}</h1><div class="xp-barra dono-xp"><i style="width:${xpPct}%"></i></div></div><div class="caixa num${G.cash<0?" neg":""}"><small>Caixa</small>${dinheiro(G.cash)}</div><button class="som-btn" data-a="aba" data-v="config" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES.config}</svg></button></header>`;
   const corpo={inicio:telaInicio,elenco:telaElenco,tabela:telaTabela,mercado:telaMercado,clube:telaClube,escudo:telaEscudo,upgrades:telaUpgrades,copa:telaAbaCopa,jogar:telaJogar,perfil:telaPerfil,financas:telaFinancas,config:telaConfig,visual:telaVisual,prejogo:telaPreJogo,partida:telaPartida,resultado:telaResultado}[aba]();
   app.innerHTML=(telaCheia?"":topo)+corpo;
+  videoVS();
   if(aba==="partida"){if(G.live&&G.live.est==="rodando")iniciarTimer();else pararTimer();const fd=$("#lv-feed");if(fd)fd.scrollTop=0}
   if(window._relLoja){clearInterval(window._relLoja);window._relLoja=null}
   if((aba==="jogar"||aba==="prejogo")&&$("#sim-relogio")){window._relLoja=setInterval(()=>{const el=$("#sim-relogio");if(!el){clearInterval(window._relLoja);return}const ms=(G.simUso&&G.simUso.bloq||0)-Date.now();if(ms<=0){clearInterval(window._relLoja);render();return}el.textContent=fmtRelogio(ms)},1000)}
@@ -4213,6 +4235,82 @@ function campinho(m){
   </svg></div>`;
 }
 function nomeCurto(n){const p=n.split(" ");return p.length>1?(p[0][0]+". "+p.slice(1).join(" ")):n}
+/* vídeo do pré-jogo: jogador de camisa branca no fundo verde → tira o verde e pinta a camisa com o uniforme, escudo e patrocinador do clube (canvas, quadro a quadro) */
+const VIDEOS_VS=["video/jogador1.mp4","video/jogador2.mp4"];
+function blocoVideoVS(m){const uid=G.user.club,H=G.clubs[m.h],A=G.clubs[m.a];
+  const u=efUni(m.h===uid?unisDe(H)[0]:unisDe(A)[kitVisitante(H,A)]);
+  return `<div class="vs-fx" aria-hidden="true"><i></i><i></i><i></i></div><div class="vs-video"><canvas width="480" height="456" data-vid="${(G.year*7+G.ev)%VIDEOS_VS.length}" data-uni="${esc(JSON.stringify(u))}"></canvas></div>`}
+function videoVS(){const cv=document.querySelector(".vs-video canvas");if(!cv||cv._ok)return;cv._ok=1;
+  const W=cv.width,H=cv.height,c=G.clubs[G.user.club],rgb=h=>{h=(h||"#ffffff").replace("#","");if(h.length===3)h=[...h].map(x=>x+x).join("");const n=parseInt(h,16);return [n>>16&255,n>>8&255,n&255]};
+  const v=document.createElement("video");v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute("playsinline","");v.setAttribute("muted","");v.preload="auto";
+  v.style.cssText="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none";v.src=VIDEOS_VS[+cv.dataset.vid||0];cv.parentNode.appendChild(v);
+  const tocar=()=>{const p=v.play();if(p&&p.catch)p.catch(()=>{})};tocar();cv.parentNode.addEventListener("click",tocar);
+  const ctx=cv.getContext("2d",{willReadFrequently:true}),lg=document.createElement("canvas");lg.width=W;lg.height=H;const lx=lg.getContext("2d",{willReadFrequently:true});
+  // camisa do clube: cor + desenho (mesmo espaço do padraoUni: tronco x 50–150, ombro em y 16), mangas e gola
+  const u=efUni(JSON.parse(cv.dataset.uni)),cCam=rgb(u.camisa),cMang=rgb(u.mangas||u.camisa),cGola=rgb(u.gola||u.detalhe||u.camisa);
+  let des=null;{const im=new Image(),id="vsu"+(++svgN);im.onload=()=>des=im;
+    im.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 170" width="400" height="340"><rect width="200" height="170" fill="${u.camisa}"/>${padraoUni(u,id)[u.estilo]||""}</svg>`)}
+  // logos: fundo branco vira transparente; sem logo = nome escrito
+  const fazLogo=n=>{if(!n)return null;const o={c:null};
+    if(typeof PATRO_LOGOS!=="undefined"&&PATRO_LOGOS[n]){const im=new Image();im.onload=()=>{const k=document.createElement("canvas");k.width=im.naturalWidth;k.height=im.naturalHeight;const kx=k.getContext("2d");kx.drawImage(im,0,0);
+      try{const d=kx.getImageData(0,0,k.width,k.height),p=d.data;for(let i=0;i<p.length;i+=4){const mn=Math.min(p[i],p[i+1],p[i+2]);if(mn>200)p[i+3]=Math.round(p[i+3]*Math.max(0,(245-mn)/45))}kx.putImageData(d,0,0)}catch(e){}o.c=k};im.src=PATRO_LOGOS[n]}
+    else{const k=document.createElement("canvas"),kx=k.getContext("2d"),t=n.toUpperCase();kx.font="900 60px Arial, sans-serif";k.width=Math.ceil(kx.measureText(t).width)+8;k.height=68;
+      const cc=rgb(u.camisa),cl=cc[0]*.299+cc[1]*.587+cc[2]*.114>150?"#111":"#fff";kx.font="900 60px Arial, sans-serif";kx.fillStyle=cl;kx.textBaseline="middle";kx.fillText(t,4,36);o.c=k}
+    return o};
+  let escI=null;const svg=escudoDe(c,160);if(/^\s*<svg/.test(svg)){const im=new Image();im.onload=()=>escI=im;im.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(/xmlns=/.test(svg)?svg:svg.replace("<svg",'<svg xmlns="http://www.w3.org/2000/svg"'))}
+  const lMaster=fazLogo(G.patro&&G.patro.nome),lMat=fazLogo(G.material&&G.material.nome),lSec=fazLogo(G.patro2&&G.patro2.nome);
+  let camada=true;
+  const SH=new Float32Array(256);for(let i=0;i<256;i++)SH[i]=Math.min(1.2,Math.pow(i/225,1.5)*1.1);
+  const wA=new Float32Array(W*H);let t0=-1,sy=0,scx=W/2,ssw=W/2;
+  // logo dentro de uma caixa (centro x,y; largura e altura máximas); rot = giro em graus
+  const poe=(g,img,x,y,mw,mh,rot)=>{if(!img)return;let w=mw,h=w*img.height/img.width;if(h>mh){h=mh;w=h*img.width/img.height}
+    g.save();g.translate(x,y);if(rot)g.rotate(rot*Math.PI/180);g.drawImage(img,-w/2,-h/2,w,h);g.restore()};
+  function desenhaCamisa(g,soLogos){const k=ssw*.74/100,tx=scx-100*k,ty=sy-16*k;
+    if(!soLogos){g.fillStyle=u.camisa;g.fillRect(0,0,W,H);if(des)g.drawImage(des,tx,ty,200*k,170*k);
+      g.fillStyle=u.mangas||u.camisa;const xm=ssw*.37;g.fillRect(0,0,scx-xm,H);g.fillRect(scx+xm,0,W,H)}
+    poe(g,escI,scx+ssw*.19,sy+ssw*.33,ssw*.12,ssw*.12);
+    poe(g,lMat&&lMat.c,scx-ssw*.19,sy+ssw*.33,ssw*.1,ssw*.065);
+    poe(g,lMaster&&lMaster.c,scx,sy+ssw*.8,ssw*.46,ssw*.18);
+    if(lSec&&lSec.c){poe(g,lSec.c,scx-ssw*.435,sy+ssw*.2,ssw*.2,ssw*.06,-90);poe(g,lSec.c,scx+ssw*.435,sy+ssw*.2,ssw*.2,ssw*.06,90)}}
+  function quadro(){
+    if(!cv.isConnected){v.pause();v.removeAttribute("src");v.load();v.remove();return}
+    requestAnimationFrame(quadro);
+    if(v.readyState<2||v.currentTime===t0)return;const pri=t0<0;t0=v.currentTime;
+    ctx.clearRect(0,0,W,H);ctx.drawImage(v,0,0,W,H);
+    let d;try{d=ctx.getImageData(0,0,W,H)}catch(e){return}
+    const p=d.data;
+    // 1) tira o verde e mede o quanto cada pixel é "camisa branca"
+    for(let i=0,k=0;k<p.length;i++,k+=4){const r=p[k],b=p[k+2];let g=p[k+1];const mx=r>b?r:b,sp=g-mx;
+      p[k+3]=sp<=12?255:sp>=50?0:Math.round(255*(1-(sp-12)/38));
+      if(g>mx+6)g=p[k+1]=mx+6;
+      const L=(r+g+b)/3,sat=Math.max(r,g,b)-Math.min(r,g,b);
+      wA[i]=L<=55||sat>=40||p[k+3]<128?0:Math.min(1,(L-55)/30)*Math.min(1,(40-sat)/14)}
+    // 2) acha a gola (topo da camisa) e o centro/largura dos ombros
+    let y0=0;for(let y=0;y<H;y+=2){let n=0;for(let x=120;x<360;x+=2)if(wA[y*W+x]>.5)n++;if(n>42){y0=y;break}}
+    // largura: trecho contínuo de camisa a partir do meio (não conta os braços)
+    const ym=Math.min(H-1,y0+40),ok=x=>wA[ym*W+x]>.5;let xc=-1;for(let d=0;d<80&&xc<0;d++){if(ok(W/2+d))xc=W/2+d;else if(ok(W/2-d))xc=W/2-d}
+    let xa=-1,xb=-1;if(xc>=0){xa=xb=xc;for(let x=xc,g=0;x>0&&g<6;x--){if(ok(x)){xa=x;g=0}else g++}for(let x=xc,g=0;x<W-1&&g<6;x++){if(ok(x)){xb=x;g=0}else g++}}
+    if(xa<0){xa=W/4;xb=W*3/4}
+    const f=pri?1:.6;sy+=(y0-sy)*f;scx+=((xa+xb)/2-scx)*f;ssw+=((xb-xa)-ssw)*f;
+    // 3) monta a camisa do clube numa camada (cor, desenho, mangas, logos)
+    let lp=null;
+    if(camada){lx.clearRect(0,0,W,H);desenhaCamisa(lx);try{lp=lx.getImageData(0,0,W,H).data}catch(e){camada=false}}
+    // gola: primeiras linhas de camisa abaixo do pescoço
+    const gl=new Uint8Array(W),xg=ssw*.22;for(let x=Math.max(0,Math.round(scx-xg));x<Math.min(W,scx+xg);x++){for(let y=Math.max(0,Math.round(sy-20));y<Math.min(H,sy+ssw*.35);y++)if(wA[y*W+x]>.5){gl[x]=Math.min(255,y);break}}
+    const gEsp=Math.max(3,Math.round(ssw*.018));
+    // 4) pinta: cor da camada × sombra do vídeo original
+    const yc=sy-16;
+    for(let y=Math.max(0,Math.floor(yc));y<H;y++){const rampa=Math.min(1,(y-yc)/8);
+      for(let x=0,i=y*W,k=i*4;x<W;x++,i++,k+=4){let w=wA[i];if(!w)continue;w*=rampa;
+        const L=(p[k]+p[k+1]+p[k+2])/3|0,s=SH[L];let r,g,b;
+        if(gl[x]&&y>=gl[x]&&y<gl[x]+gEsp){r=cGola[0];g=cGola[1];b=cGola[2]}
+        else if(lp&&lp[k+3]){r=lp[k];g=lp[k+1];b=lp[k+2]}
+        else{const m=Math.abs(x-scx)>ssw*.37?cMang:cCam;r=m[0];g=m[1];b=m[2]}
+        p[k]+=(r*s-p[k])*w;p[k+1]+=(g*s-p[k+1])*w;p[k+2]+=(b*s-p[k+2])*w}}
+    ctx.putImageData(d,0,0);
+    if(!camada)desenhaCamisa(ctx,true);
+  }
+  requestAnimationFrame(quadro)}
 function versus(m,semLista){
   const H=G.clubs[m.h],A=G.clubs[m.a],uid=G.user.club;
   const xiDe=c=>c.id===uid?{xi:G.user.lineup,form:G.user.form}:{xi:melhorXI(c.id,c.form),form:c.form};
@@ -4236,6 +4334,11 @@ function versus(m,semLista){
   const posL=id=>ev&&ev.k==="L"&&G.ev>0?posicaoDe(id)+"º lugar":G.clubs[id].tier===-1?PAIS_NOME[G.clubs[id].pais]||"":"";
   const grande0=(c,f,id)=>{const L=Math.max(...c.name.split(/[\s-]+/).map(w=>w.length));const fs=Math.max(17,Math.min(38,Math.floor(176/(L*.72))));return `<div><span class="vs-esc">${c.user?escudoDe(c,78):marcaDe(c,78)}</span><b style="font-size:${fs}px">${esc(c.name)}</b><small>${[posL(id),f].filter(Boolean).join(" · ")}</small></div>`};
   const grande=(c,f,id)=>grande0(c,f,id).replace('<div>',`<div data-a="vertime" data-v="${id}" style="cursor:pointer">`);
+  if(semLista){ // pré-jogo: vídeo de um jogador do seu clube + card do confronto
+    const lado=(c,id)=>{const L=Math.max(...c.name.split(/[\s-]+/).map(w=>w.length));return `<div class="vs-t" data-a="vertime" data-v="${id}"><span class="vs-esc2">${c.user?escudoDe(c,58):marcaDe(c,58)}</span><b style="font-size:${Math.max(13,Math.min(20,Math.floor(120/(L*.62))))}px">${esc(c.name)}</b><small>${esc(posL(id))}</small></div>`};
+    return `<div class="versus vs-pre">${blocoVideoVS(m)}
+    <div class="vs-card">${lado(H,m.h)}<div class="vs-x2">X</div>${lado(A,m.a)}</div>
+    <div class="vs-info"><span class="vs-comp">${esc(m.rot)}</span>${ag?`<b>${ag.dia} · ${ag.hora}</b><span>🏟️ ${esc(localDoJogo(ev,H))}</span>`:""}</div></div>`}
   return `<div class="versus">
     <div class="vs-topo">
       <div class="vs-lado" style="--vt:${vsVirar(fh,"esq").replace("transform:","")||"none"}">${jogadorFoto(unisDe(H)[0],fh,190)}</div>
