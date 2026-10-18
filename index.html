@@ -770,29 +770,29 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792280784"></script>
-<script src="img/arte-capa.js?v=1792280784"></script>
-<script src="img/fundo-criacao.js?v=1792280784"></script>
-<script src="img/fundo-pais.js?v=1792280784"></script>
-<script src="img/fundo-escudo.js?v=1792280784"></script>
-<script src="img/simbolos.js?v=1792280784"></script>
-<script src="img/kits-foto.js?v=1792280784"></script>
-<script src="img/fundo-vestiario.js?v=1792280784"></script>
-<script src="img/patro-logos.js?v=1792280784"></script>
-<script src="img/rostos.js?v=1792280784"></script>
-<script src="img/estadio-fotos.js?v=1792280784"></script>
-<script src="img/super-fotos.js?v=1792280784"></script>
-<script src="img/trofeus.js?v=1792280784"></script>
-<script src="img/medalhas.js?v=1792280784"></script>
-<script src="img/fotos.js?v=1792280784"></script>
-<script src="img/fotos-vs.js?v=1792280784"></script>
-<script src="img/kit-homens.js?v=1792280784"></script>
-<script src="img/tec-fotos.js?v=1792280784"></script>
-<script src="dados/elencos.js?v=1792280784"></script>
-<script src="img/rostos-reais.js?v=1792280784"></script>
-<script src="img/escudos-img.js?v=1792280784"></script>
-<script src="img/tradutores.js?v=1792280784"></script>
-<script src="dados/idiomas.js?v=1792280784"></script>
+<script src="img/escudos-reais.js?v=1792282186"></script>
+<script src="img/arte-capa.js?v=1792282186"></script>
+<script src="img/fundo-criacao.js?v=1792282186"></script>
+<script src="img/fundo-pais.js?v=1792282186"></script>
+<script src="img/fundo-escudo.js?v=1792282186"></script>
+<script src="img/simbolos.js?v=1792282186"></script>
+<script src="img/kits-foto.js?v=1792282186"></script>
+<script src="img/fundo-vestiario.js?v=1792282186"></script>
+<script src="img/patro-logos.js?v=1792282186"></script>
+<script src="img/rostos.js?v=1792282186"></script>
+<script src="img/estadio-fotos.js?v=1792282186"></script>
+<script src="img/super-fotos.js?v=1792282186"></script>
+<script src="img/trofeus.js?v=1792282186"></script>
+<script src="img/medalhas.js?v=1792282186"></script>
+<script src="img/fotos.js?v=1792282186"></script>
+<script src="img/fotos-vs.js?v=1792282186"></script>
+<script src="img/kit-homens.js?v=1792282186"></script>
+<script src="img/tec-fotos.js?v=1792282186"></script>
+<script src="dados/elencos.js?v=1792282186"></script>
+<script src="img/rostos-reais.js?v=1792282186"></script>
+<script src="img/escudos-img.js?v=1792282186"></script>
+<script src="img/tradutores.js?v=1792282186"></script>
+<script src="dados/idiomas.js?v=1792282186"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2234,14 +2234,16 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792280784";
+const VERSAO="1792282186";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
     const m=t.match(/const VERSAO="(\d+)"/);if(!m||m[1]===VERSAO)return;
     if((G&&G.live)||(!G&&W&&W.passo>1))return; // não interrompe partida nem criação do clube
     salvar();location.replace(location.pathname+"?v="+m[1])}).catch(()=>{})}
-document.addEventListener("visibilitychange",()=>{if(!document.hidden)checarVersao()});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)checarVersao();else if(G)salvar()}); // saiu da tela (fechou ou segundo plano): salva
+addEventListener("pagehide",()=>{if(G)salvar()});
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){} // pede pro navegador não apagar o save sozinho
 // modo offline (só no site publicado): sw.js guarda os arquivos para jogar sem internet
 if(!VERSAO.startsWith("__")&&"serviceWorker" in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register("sw.js").catch(()=>{});
 setInterval(checarVersao,5*60*1000);setTimeout(checarVersao,3000);
