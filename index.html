@@ -763,6 +763,14 @@ nav.abas button{font-size:11px}
 .splash.arte::after{background:linear-gradient(180deg,rgba(4,13,51,0) 50%,rgba(4,13,51,.92) 100%)}
 .splash.arte .clube-sp{text-shadow:0 1px 3px #000}
 @media (min-aspect-ratio:3/4){.splash.arte img{object-fit:contain}}
+.atalhos{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.atalhos button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;font:inherit;font-size:12px;font-weight:700;color:inherit;cursor:pointer}
+.atalhos svg{width:24px;height:24px;color:var(--canario)}
+.avatar-dono{position:relative;flex:none;width:76px;height:76px;border-radius:50%;overflow:hidden;background:var(--cal-2,#333);display:grid;place-items:center;cursor:pointer;border:2px solid var(--canario)}
+.avatar-dono img{width:100%;height:100%;object-fit:cover}
+.avatar-dono svg{width:44px;height:44px;opacity:.7}
+.avatar-dono span{position:absolute;bottom:0;left:0;right:0;font-size:12px;text-align:center;background:rgba(0,0,0,.55)}
+.nivel-selo.mini{float:right;transform:scale(.7);transform-origin:top right;margin:-6px -6px 0 0}
 </style>
 
 </head><body>
@@ -770,29 +778,29 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792288966"></script>
-<script src="img/arte-capa.js?v=1792288966"></script>
-<script src="img/fundo-criacao.js?v=1792288966"></script>
-<script src="img/fundo-pais.js?v=1792288966"></script>
-<script src="img/fundo-escudo.js?v=1792288966"></script>
-<script src="img/simbolos.js?v=1792288966"></script>
-<script src="img/kits-foto.js?v=1792288966"></script>
-<script src="img/fundo-vestiario.js?v=1792288966"></script>
-<script src="img/patro-logos.js?v=1792288966"></script>
-<script src="img/rostos.js?v=1792288966"></script>
-<script src="img/estadio-fotos.js?v=1792288966"></script>
-<script src="img/super-fotos.js?v=1792288966"></script>
-<script src="img/trofeus.js?v=1792288966"></script>
-<script src="img/medalhas.js?v=1792288966"></script>
-<script src="img/fotos.js?v=1792288966"></script>
-<script src="img/fotos-vs.js?v=1792288966"></script>
-<script src="img/kit-homens.js?v=1792288966"></script>
-<script src="img/tec-fotos.js?v=1792288966"></script>
-<script src="dados/elencos.js?v=1792288966"></script>
-<script src="img/rostos-reais.js?v=1792288966"></script>
-<script src="img/escudos-img.js?v=1792288966"></script>
-<script src="img/tradutores.js?v=1792288966"></script>
-<script src="dados/idiomas.js?v=1792288966"></script>
+<script src="img/escudos-reais.js?v=1792290979"></script>
+<script src="img/arte-capa.js?v=1792290979"></script>
+<script src="img/fundo-criacao.js?v=1792290979"></script>
+<script src="img/fundo-pais.js?v=1792290979"></script>
+<script src="img/fundo-escudo.js?v=1792290979"></script>
+<script src="img/simbolos.js?v=1792290979"></script>
+<script src="img/kits-foto.js?v=1792290979"></script>
+<script src="img/fundo-vestiario.js?v=1792290979"></script>
+<script src="img/patro-logos.js?v=1792290979"></script>
+<script src="img/rostos.js?v=1792290979"></script>
+<script src="img/estadio-fotos.js?v=1792290979"></script>
+<script src="img/super-fotos.js?v=1792290979"></script>
+<script src="img/trofeus.js?v=1792290979"></script>
+<script src="img/medalhas.js?v=1792290979"></script>
+<script src="img/fotos.js?v=1792290979"></script>
+<script src="img/fotos-vs.js?v=1792290979"></script>
+<script src="img/kit-homens.js?v=1792290979"></script>
+<script src="img/tec-fotos.js?v=1792290979"></script>
+<script src="dados/elencos.js?v=1792290979"></script>
+<script src="img/rostos-reais.js?v=1792290979"></script>
+<script src="img/escudos-img.js?v=1792290979"></script>
+<script src="img/tradutores.js?v=1792290979"></script>
+<script src="dados/idiomas.js?v=1792290979"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2234,7 +2242,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792288966";
+const VERSAO="1792290979";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3125,7 +3133,8 @@ const ICONES={
   clube:'<path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/>'
 };
 const ROTULOS={inicio:"Início",elenco:"Elenco",jogar:"Jogar",tabela:"Tabela",copa:"Copa",mercado:"Mercado",financas:"Finanças",upgrades:"Upgrades",clube:"Clube",perfil:"Perfil",config:"Ajustes"};
-function abasNav(){return Object.keys(ROTULOS).filter(k=>k!=="copa"||(G&&G.cup))}
+function abasNav(){return ["inicio","tabela","jogar","financas","perfil"]} // elenco, mercado, clube e estádio: atalhos no Início; ajustes: engrenagem no topo; copas: dentro da Tabela
+const ATALHOS=["elenco","mercado","clube","upgrades"];
 function nomeCurtoCopa(){const n=G.cup.nome;return n==="Champions League"?"Champions":n==="Europa League"?"Europa L.":n==="Sul-Americana"?"Sul-Americana":n}
 function rotuloEtapa(){
   if(G.seasonEnd)return "Temporada encerrada";
@@ -3145,16 +3154,18 @@ function render(){try{if(G&&G.user)garantirContratos()}catch(e){}
   if(!G){nav.hidden=true;if(!W)W=novoW();return renderCriacao()}
   if(G.live&&aba!=="partida")aba="partida";
   if(!G.live&&aba==="partida")aba=G.ultimoJogo&&G.ultimoJogo.pendente?"resultado":"inicio";
+  if(aba==="jogar"&&partidaAtual())aba="prejogo"; // Jogar vai direto pro pré-jogo
+  if(aba==="copa")aba="tabela";
   const telaCheia=["visual","partida","resultado","prejogo"].includes(aba);
   nav.hidden=telaCheia;
   nav.innerHTML=`<div class="wrap">${abasNav().map(k=>`<button data-a="aba" data-v="${k}" aria-current="${aba===k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES[k]}</svg>${k==="copa"?nomeCurtoCopa():ROTULOS[k]}</button>`).join("")}</div>`;
   const c=G.clubs[G.user.club];
-  const topo=`<header class="topo"><span class="esc-topo">${escudoDe(c,40)}</span><div class="info"><h1>${esc(c.name)}</h1><div class="sub">${esc(nomeLiga(c.tier))} · ${G.year} · ${rotuloEtapa()}</div></div><div class="caixa num${G.cash<0?" neg":""}"><small>Caixa</small>${dinheiro(G.cash)}</div><button class="som-btn" data-a="som" aria-label="${SOM.mudo?"Ligar som":"Desligar som"}">${iconeSom()}</button></header>`;
+  const topo=`<header class="topo"><span class="esc-topo">${escudoDe(c,40)}</span><div class="info"><h1>${esc(c.name)}</h1><div class="sub">${esc(nomeLiga(c.tier))} · ${G.year} · ${rotuloEtapa()}</div></div><div class="caixa num${G.cash<0?" neg":""}"><small>Caixa</small>${dinheiro(G.cash)}</div><button class="som-btn" data-a="som" aria-label="${SOM.mudo?"Ligar som":"Desligar som"}">${iconeSom()}</button><button class="som-btn" data-a="aba" data-v="config" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES.config}</svg></button></header>`;
   const corpo={inicio:telaInicio,elenco:telaElenco,tabela:telaTabela,mercado:telaMercado,clube:telaClube,escudo:telaEscudo,upgrades:telaUpgrades,copa:telaAbaCopa,jogar:telaJogar,perfil:telaPerfil,financas:telaFinancas,config:telaConfig,visual:telaVisual,prejogo:telaPreJogo,partida:telaPartida,resultado:telaResultado}[aba]();
   app.innerHTML=(telaCheia?"":topo)+corpo;
   if(aba==="partida"){if(G.live&&G.live.est==="rodando")iniciarTimer();else pararTimer();const fd=$("#lv-feed");if(fd)fd.scrollTop=0}
   if(window._relLoja){clearInterval(window._relLoja);window._relLoja=null}
-  if(aba==="jogar"&&$("#sim-relogio")){window._relLoja=setInterval(()=>{const el=$("#sim-relogio");if(!el){clearInterval(window._relLoja);return}const ms=(G.simUso&&G.simUso.bloq||0)-Date.now();if(ms<=0){clearInterval(window._relLoja);render();return}el.textContent=fmtRelogio(ms)},1000)}
+  if((aba==="jogar"||aba==="prejogo")&&$("#sim-relogio")){window._relLoja=setInterval(()=>{const el=$("#sim-relogio");if(!el){clearInterval(window._relLoja);return}const ms=(G.simUso&&G.simUso.bloq||0)-Date.now();if(ms<=0){clearInterval(window._relLoja);render();return}el.textContent=fmtRelogio(ms)},1000)}
   if(aba==="mercado"&&$("#loja-relogio")){const k0=G.diario&&G.diario.dia;window._relLoja=setInterval(()=>{const el=$("#loja-relogio");if(!el){clearInterval(window._relLoja);return}el.textContent=fmtRelogio(msParaRenovar());if(cicloLoja()!==k0){clearInterval(window._relLoja);render()}},1000)}
   if(aba==="partida"||aba==="resultado")return;
   if(!telaCheia&&!G.over&&G.tradOferta&&!document.querySelector(".veu")&&!window._tradTimer) // espera 3s: a pessoa vê a tela na outra língua antes
@@ -3467,7 +3478,7 @@ function atualizarPrevias(){
 
 /* ---------- início ---------- */
 function telaInicio(){
-  let h="";
+  let h=`<div class="atalhos">${ATALHOS.map(k=>`<button class="cartao" data-a="aba" data-v="${k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES[k]}</svg><span>${k==="upgrades"?"Estádio":ROTULOS[k]}</span></button>`).join("")}</div>`;
   if(G.fase==="pre"&&!G.seasonEnd)h+=cartaoPre();
   else if(G.fase==="janela")h+=cartaoJanelaMeio();
   h+=cartaoNegocios();
@@ -3841,8 +3852,8 @@ function telaPerfil(){
   const P=perfil(),c=G.clubs[G.user.club],prox=xpParaSubir(P.nivel),pct=Math.round(P.xp/prox*100);
   const ap=P.j?Math.round((P.v*3+P.e)/(P.j*3)*100):0;
   const temp=G.history.length+1;
-  let h=`<div class="perfil-topo cartao" style="position:relative"><span style="position:absolute;top:10px;right:12px">${cupomTxt(cupons())}</span><div class="nivel-selo"><small>Nível</small><b class="num">${P.nivel}</b></div>
-    <div class="nm"><h2 style="margin:0">${esc(G.user.coach||"Dono do clube")}</h2><span class="muted">Dono do ${esc(c.name)}</span>
+  let h=`<div class="perfil-topo cartao" style="position:relative"><span style="position:absolute;top:10px;right:12px">${cupomTxt(cupons())}</span><label class="avatar-dono" title="Trocar foto">${G.user.avatar?`<img src="${G.user.avatar}" alt="">`:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">${ICONES.perfil}</svg>`}<span>📷</span><input type="file" id="avatar-arq" accept="image/*" hidden></label>
+    <div class="nm"><div class="nivel-selo mini"><small>Nível</small><b class="num">${P.nivel}</b></div><h2 style="margin:0">${esc(G.user.coach||"Dono do clube")}</h2><span class="muted">Dono do ${esc(c.name)}</span>
     <div class="xp-barra"><i style="width:${P.nivel>=NIVEL_MAX?100:pct}%"></i></div><span class="peq muted num">${P.nivel>=NIVEL_MAX?"Nível máximo alcançado!":`${P.xp} de ${prox} XP · faltam ${prox-P.xp} para o nível ${P.nivel+1}`}</span>
     ${P.nivel<NIVEL_MAX?`<span class="peq num" style="color:var(--canario)">Bônus do nível ${P.nivel+1}: ${dinheiro(premioNivel(P.nivel+1))}</span>`:""}</div></div>`;
   h+=`<h2>Estatísticas</h2><div class="kpis">
@@ -3853,7 +3864,9 @@ function telaPerfil(){
     <div class="cartao kpi"><small>Aproveitamento</small><b class="num">${ap}%</b></div>
     <div class="cartao kpi"><small>Gols pró / contra</small><b class="num">${P.gp} / ${P.gc}</b></div>
     <div class="cartao kpi"><small>Títulos</small><b class="num">${G.titles.length}</b></div>
-    <div class="cartao kpi"><small>Temporada</small><b class="num">${temp}ª</b></div></div>`;
+    <div class="cartao kpi"><small>Temporada</small><b class="num">${temp}ª</b></div>
+    <div class="cartao kpi" style="grid-column:1/-1"><small>Valor do elenco</small><b class="num">${dinheiro(jogadoresDo(G.user.club).reduce((x,p)=>x+valor(p),0))}</b></div></div>`;
+  h+=blocoConquistas();
   h+=`<h2>Como ganhar experiência</h2><div class="cartao extrato num">
     <div><span>Vitória</span><span style="color:var(--ok)">+${XP_RES.v} XP</span></div>
     <div><span>Empate</span><span>+${XP_RES.e} XP</span></div>
@@ -3866,7 +3879,6 @@ function telaPerfil(){
     <div><span>Fechar com patrocinador</span><span style="color:var(--ok)">+200 XP</span></div></div>
   <p class="muted peq">Do nível 1 para o 2 bastam ${xpParaSubir(1)} XP. Depois são ${xpParaSubir(2)} XP para o nível 3, ${xpParaSubir(3)} para o 4, ${xpParaSubir(4)} para o 5, e cada nível pede uns 65 XP a mais que o anterior, até o nível ${NIVEL_MAX}.</p>
   <h2>Bônus por nível</h2><div class="cartao extrato num">${[2,3,4,5,10,15,20,25,30].map(n=>`<div${n<=P.nivel?' style="opacity:.55"':""}><span>Nível ${n}${n<=P.nivel?" · recebido":""}</span><span>${dinheiro(premioNivel(n))}${CUPONS_NIVEL[n]?` + ${cupomTxt(CUPONS_NIVEL[n])}`:""}</span></div>`).join("")}</div>`;
-  h+=blocoConquistas();
   return h;
 }
 function avisoNivel(){
@@ -4330,8 +4342,8 @@ function telaCopaN(){
 const TUTORIAL=[
  ["Bem-vindo, dono!","Você comanda tudo no clube: dinheiro, elenco, técnico e estádio. O objetivo é sair da terceira divisão e chegar à elite."],
  ["Antes de cada temporada","Escolha um patrocinador e use a janela de transferências: até 3 contratações e 3 negócios. No Mercado também dá para contratar um técnico melhor."],
- ["Dia de jogo","Toque em Jogar, na barra de baixo. Em Editar escalação, confira quem está cansado, suspenso ou machucado e acompanhe o jogo ao vivo. Dá para substituir e mudar a formação a qualquer momento."],
- ["Cuide do clube","Renove contratos antes que acabem e amplie o estádio na aba Upgrades. No fim de cada temporada, salve o arquivo do jogo."]
+ ["Dia de jogo","Toque em Jogar, na barra de baixo. No pré-jogo, confira quem está cansado, suspenso ou machucado e acompanhe o jogo ao vivo. Dá para substituir e mudar a formação a qualquer momento."],
+ ["Cuide do clube","Renove contratos antes que acabem e amplie o estádio no atalho Estádio, no Início. No fim de cada temporada, salve o arquivo do jogo."]
 ];
 function mostrarTutorial(){
   const i=G.tut||0;if(i>=TUTORIAL.length)return;
@@ -4348,7 +4360,9 @@ function telaPreJogo(){
   const tit=new Set(u.lineup);
   const ordem={GOL:0,LAT:1,ZAG:2,VOL:3,MEI:4,ATA:5};
   const res=el.filter(p=>!tit.has(p.id)).sort((a,b)=>disponivel(b)-disponivel(a)||ordem[a.pos]-ordem[b.pos]||b.ov-a.ov);
-  let h=`<div class="tela-cheia"><div class="linha" style="justify-content:space-between;padding-top:14px"><button class="btn mini" data-a="aba" data-v="jogar">Voltar</button><span class="comp" style="margin:0">Editar escalação</span></div>`;
+  let h=`<div class="tela-cheia"><div class="linha" style="justify-content:space-between;padding-top:14px"><button class="btn mini" data-a="aba" data-v="inicio">Voltar</button><span class="comp" style="margin:0">Pré-jogo</span></div>`;
+  h+=`<div style="margin-top:12px">${versus(m,true).replace('class="versus"','class="versus so-topo"')}</div>
+  <button class="cartao card-stats" data-a="stats" style="margin-top:12px"><span>📊 Estatísticas</span><small>Força, idade e valor dos dois times ›</small></button>`;
   h+=`<h2>Formação</h2><div class="cartao secao">${campinho(m)}<div class="campo-sel">
     <label>Formação<select id="sel-form">${Object.keys(FORMACOES).map(f=>`<option ${f===u.form?"selected":""}>${f}</option>`).join("")}</select></label>
     <label>Estilo<select id="sel-est">${Object.entries(ESTILOS).map(([k,v])=>`<option value="${k}" ${k===u.est?"selected":""}>${v.n}</option>`).join("")}</select></label>
@@ -4362,7 +4376,7 @@ function telaPreJogo(){
   h+=`</div>`;
   h+=blocoTitulares().replace("<h2>Titulares</h2>",`<h2>Titulares</h2><p class="muted peq" style="margin:-4px 0 8px">Toque num titular para substituí-lo por um reserva.</p>`);
   h+=`<h2>Reservas</h2><div class="cartao" style="padding-block:4px">${res.map(p=>`<div class="jog${disponivel(p)?"":" off"}${lendaCls(p)}">${linhaJog(p,"")}</div>`).join("")}</div>`;
-  h+=`<div class="secao" style="margin-top:18px"><button class="btn prim full" data-a="aba" data-v="jogar">Pronto, voltar ao jogo</button></div></div>`;
+  h+=`<div class="secao" style="margin-top:18px"><button class="btn prim full" data-a="iniciarjogo">Começar partida</button>${botaoSimular()}</div></div>`;
   return h;
 }
 
@@ -4844,6 +4858,11 @@ document.addEventListener("change",e=>{if(e.target.id!=="edt-arq"||!editorOn)ret
   processarRostoUpload(f,0).then(r=>{G.tecFotos=G.tecFotos||{};G.tecFotos[n]={s:r.s};salvar();toast("Foto atualizada em todo o jogo!");render();modalEditorTec(n)}).catch(m=>toast(m))});
 document.addEventListener("change",e=>{if(e.target.id!=="tec-arq")return;const n=e.target.dataset.n,f=e.target.files&&e.target.files[0];
   processarRostoUpload(f,0).then(r=>{G.tecFotos=G.tecFotos||{};G.tecFotos[n]={s:r.s};salvar();toast("Foto enviada!");const sy=scrollY;render();scrollTo(0,sy);modalRostoTec(n)}).catch(m=>toast(m))});
+document.addEventListener("change",e=>{if(e.target.id!=="avatar-arq")return;const f=e.target.files&&e.target.files[0];
+  if(!f||!/^image\//.test(f.type)){toastErro("Escolha uma imagem.");return}
+  const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{const L=220,cv=document.createElement("canvas");cv.width=cv.height=L; // avatar do dono: recorte quadrado do meio
+    const t=Math.min(im.width,im.height);cv.getContext("2d").drawImage(im,(im.width-t)/2,(im.height-t)/2,t,t,0,0,L,L);
+    G.user.avatar=cv.toDataURL("image/jpeg",.85);salvar();toast("Foto do dono enviada!");render()};im.src=rd.result};rd.readAsDataURL(f)});
 document.addEventListener("change",e=>{if(e.target.id!=="rosto-arq")return;const pid=+e.target.dataset.pid,f=e.target.files&&e.target.files[0];
   processarRostoUpload(f,pid).then(r=>{G.rostosUp=G.rostosUp||{};G.rostosUp[pid]=r;salvar();toast("Rosto enviado!");const sy=scrollY;render();scrollTo(0,sy);perfilJogador(pid)}).catch(m=>toast(m))});
 window.addEventListener("resize",()=>{if(abertura){const cv=document.querySelector("#splash canvas");if(cv)pincel(cv)}});
