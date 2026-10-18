@@ -838,30 +838,30 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792340717"></script>
-<script src="img/arte-capa.js?v=1792340717"></script>
-<script src="img/fundo-criacao.js?v=1792340717"></script>
-<script src="img/fundo-pais.js?v=1792340717"></script>
-<script src="img/fundo-escudo.js?v=1792340717"></script>
-<script src="img/simbolos.js?v=1792340717"></script>
-<script src="img/kits-foto.js?v=1792340717"></script>
-<script src="img/fundo-vestiario.js?v=1792340717"></script>
-<script src="img/patro-logos.js?v=1792340717"></script>
-<script src="img/rostos.js?v=1792340717"></script>
-<script src="img/estadio-fotos.js?v=1792340717"></script>
-<script src="img/super-fotos.js?v=1792340717"></script>
-<script src="img/trofeus.js?v=1792340717"></script>
-<script src="img/medalhas.js?v=1792340717"></script>
-<script src="img/fotos.js?v=1792340717"></script>
-<script src="img/fotos-vs.js?v=1792340717"></script>
-<script src="img/kit-homens.js?v=1792340717"></script>
-<script src="img/tec-fotos.js?v=1792340717"></script>
-<script src="dados/elencos.js?v=1792340717"></script>
-<script src="img/rostos-reais.js?v=1792340717"></script>
-<script src="img/escudos-img.js?v=1792340717"></script>
-<script src="img/tradutores.js?v=1792340717"></script>
-<script src="img/avatares.js?v=1792340717"></script>
-<script src="dados/idiomas.js?v=1792340717"></script>
+<script src="img/escudos-reais.js?v=1792354070"></script>
+<script src="img/arte-capa.js?v=1792354070"></script>
+<script src="img/fundo-criacao.js?v=1792354070"></script>
+<script src="img/fundo-pais.js?v=1792354070"></script>
+<script src="img/fundo-escudo.js?v=1792354070"></script>
+<script src="img/simbolos.js?v=1792354070"></script>
+<script src="img/kits-foto.js?v=1792354070"></script>
+<script src="img/fundo-vestiario.js?v=1792354070"></script>
+<script src="img/patro-logos.js?v=1792354070"></script>
+<script src="img/rostos.js?v=1792354070"></script>
+<script src="img/estadio-fotos.js?v=1792354070"></script>
+<script src="img/super-fotos.js?v=1792354070"></script>
+<script src="img/trofeus.js?v=1792354070"></script>
+<script src="img/medalhas.js?v=1792354070"></script>
+<script src="img/fotos.js?v=1792354070"></script>
+<script src="img/fotos-vs.js?v=1792354070"></script>
+<script src="img/kit-homens.js?v=1792354070"></script>
+<script src="img/tec-fotos.js?v=1792354070"></script>
+<script src="dados/elencos.js?v=1792354070"></script>
+<script src="img/rostos-reais.js?v=1792354070"></script>
+<script src="img/escudos-img.js?v=1792354070"></script>
+<script src="img/tradutores.js?v=1792354070"></script>
+<script src="img/avatares.js?v=1792354070"></script>
+<script src="dados/idiomas.js?v=1792354070"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2306,7 +2306,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792340717";
+const VERSAO="1792354070";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4843,7 +4843,7 @@ function telaClube(){
     <div><span>Gastos da partida<small class="muted" style="display:block;font-size:11.5px">staff, arbitragem, segurança e estádio</small></span><span style="white-space:nowrap">${dinheiro((f.sal||0)+(f.man||0))}</span></div>
     <div><span>Saldo</span><span style="color:var(${f.tot>=0?"--ok":"--ruim"})">${dinheiro(f.tot)}</span></div></div>`;
   {const P=[[G.patro,"Master"],[G.patro2,"Secundário"],[G.material,"Material esportivo"]].filter(x=>x[0]);
-   h+=`<h2>Patrocínio</h2><div class="cartao secao">${P.length?P.map(([o,rot])=>`<div class="linha" style="gap:12px">${logoPatro(o.nome,"mini")}<div><b>${esc(o.nome)}</b> <span class="muted peq">· ${rot}</span><div class="muted peq">Até o fim de ${o.ano} · ${dinheiro(o.porJogo)} por jogo${o.tipo==="vitoria"?` + ${dinheiro(o.bonus)} por vitória`:o.tipo==="meta"?` + ${dinheiro(o.bonusMeta)} se ${esc(o.meta)}`:""}</div></div></div>`).join(""):'<span class="muted">Sem patrocinador. Escolha um na pré-temporada, no Início.</span>'}<button class="btn full" data-a="logos" data-v="${P.length?"master":"esc"}">👕 Ajustar escudo e logos na camisa</button></div>`;}
+   h+=`<h2>Patrocínio</h2><div class="cartao secao">${P.length?P.map(([o,rot])=>`<div class="linha" style="gap:12px">${logoPatro(o.nome,"mini")}<div><b>${esc(o.nome)}</b> <span class="muted peq">· ${rot}</span><div class="muted peq">Até o fim de ${o.ano} · ${dinheiro(o.porJogo)} por jogo${o.tipo==="vitoria"?` + ${dinheiro(o.bonus)} por vitória`:o.tipo==="meta"?` + ${dinheiro(o.bonusMeta)} se ${esc(o.meta)}`:""}</div></div></div>`).join(""):'<span class="muted">Sem patrocinador. Escolha um na pré-temporada, no Início.</span>'}${P.length?`<button class="btn full" data-a="logos" data-v="master">👕 Ajustar logos na camisa</button>`:""}</div>`;}
   const ca=custoAmpliacao();
   h+=`<h2>Estádio</h2><div class="cartao secao"><p style="margin:0"><b>${esc(estadioDe(c))}</b> · ${c.cap.toLocaleString("pt-BR")} lugares · ${G.reformas||0} de ${REFORMAS.length} reformas.</p><button class="btn" data-a="aba" data-v="upgrades">Ver reformas em Upgrades</button></div>`;
   h+=`<h2>Técnico</h2><div class="cartao tec-card">${tecFoto(G.tec.n,G.tec.q)}<div class="nm"><b>${esc(G.tec.n)}</b><span>${G.tec.interino?"Interino":`${esc(nomeLiga(G.clubs[G.user.club].tier))} · ${dinheiro(G.tec.sal)}/mês`}</span></div><div class="acoes"><button class="btn mini" data-a="vertec">Trocar</button>${G.tec.interino?"":`<button class="btn mini perigo" data-a="demitec">Demitir</button>`}</div></div>`;
