@@ -776,6 +776,12 @@ nav.abas button{font-size:11px}
 .avatar-dono svg{width:44px;height:44px;opacity:.7}
 .avatar-dono span{position:absolute;bottom:0;left:0;right:0;font-size:12px;text-align:center;background:rgba(0,0,0,.55)}
 .nivel-selo.mini{float:right;transform:scale(.7);transform-origin:top right;margin:-6px -6px 0 0}
+nav.abas .wrap{justify-content:space-between;align-items:flex-end;overflow:visible;max-width:560px}
+nav.abas .wrap button{flex:1 1 0;min-width:0;font-size:12px;gap:3px;padding:6px 0}
+nav.abas .wrap button svg{width:28px;height:28px}
+nav.abas .wrap button[data-v="jogar"]{flex:1.3 1 0;color:var(--canario);font-weight:800;margin-top:-22px}
+nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;border-radius:50%;background:var(--gramado-2);border:2px solid var(--canario);box-sizing:border-box;animation:jogarVivo 1.4s ease-in-out infinite}
+@keyframes jogarVivo{0%,100%{transform:scale(1) rotate(0);box-shadow:0 0 8px rgba(255,210,63,.45)}10%{transform:scale(1.06) rotate(-6deg)}20%{transform:scale(1.06) rotate(6deg)}30%{transform:scale(1.04) rotate(-3deg)}40%{transform:scale(1) rotate(0)}55%{box-shadow:0 0 22px 4px rgba(255,210,63,.85)}}
 </style>
 
 </head><body>
@@ -783,30 +789,30 @@ nav.abas button{font-size:11px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792292536"></script>
-<script src="img/arte-capa.js?v=1792292536"></script>
-<script src="img/fundo-criacao.js?v=1792292536"></script>
-<script src="img/fundo-pais.js?v=1792292536"></script>
-<script src="img/fundo-escudo.js?v=1792292536"></script>
-<script src="img/simbolos.js?v=1792292536"></script>
-<script src="img/kits-foto.js?v=1792292536"></script>
-<script src="img/fundo-vestiario.js?v=1792292536"></script>
-<script src="img/patro-logos.js?v=1792292536"></script>
-<script src="img/rostos.js?v=1792292536"></script>
-<script src="img/estadio-fotos.js?v=1792292536"></script>
-<script src="img/super-fotos.js?v=1792292536"></script>
-<script src="img/trofeus.js?v=1792292536"></script>
-<script src="img/medalhas.js?v=1792292536"></script>
-<script src="img/fotos.js?v=1792292536"></script>
-<script src="img/fotos-vs.js?v=1792292536"></script>
-<script src="img/kit-homens.js?v=1792292536"></script>
-<script src="img/tec-fotos.js?v=1792292536"></script>
-<script src="dados/elencos.js?v=1792292536"></script>
-<script src="img/rostos-reais.js?v=1792292536"></script>
-<script src="img/escudos-img.js?v=1792292536"></script>
-<script src="img/tradutores.js?v=1792292536"></script>
-<script src="img/avatares.js?v=1792292536"></script>
-<script src="dados/idiomas.js?v=1792292536"></script>
+<script src="img/escudos-reais.js?v=1792320823"></script>
+<script src="img/arte-capa.js?v=1792320823"></script>
+<script src="img/fundo-criacao.js?v=1792320823"></script>
+<script src="img/fundo-pais.js?v=1792320823"></script>
+<script src="img/fundo-escudo.js?v=1792320823"></script>
+<script src="img/simbolos.js?v=1792320823"></script>
+<script src="img/kits-foto.js?v=1792320823"></script>
+<script src="img/fundo-vestiario.js?v=1792320823"></script>
+<script src="img/patro-logos.js?v=1792320823"></script>
+<script src="img/rostos.js?v=1792320823"></script>
+<script src="img/estadio-fotos.js?v=1792320823"></script>
+<script src="img/super-fotos.js?v=1792320823"></script>
+<script src="img/trofeus.js?v=1792320823"></script>
+<script src="img/medalhas.js?v=1792320823"></script>
+<script src="img/fotos.js?v=1792320823"></script>
+<script src="img/fotos-vs.js?v=1792320823"></script>
+<script src="img/kit-homens.js?v=1792320823"></script>
+<script src="img/tec-fotos.js?v=1792320823"></script>
+<script src="dados/elencos.js?v=1792320823"></script>
+<script src="img/rostos-reais.js?v=1792320823"></script>
+<script src="img/escudos-img.js?v=1792320823"></script>
+<script src="img/tradutores.js?v=1792320823"></script>
+<script src="img/avatares.js?v=1792320823"></script>
+<script src="dados/idiomas.js?v=1792320823"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2193,6 +2199,9 @@ const CHAVE="rumo-serie-a-v2";
 let aba="inicio",divTab=null,tabModo="tab",expandido=null,merc={pos:"",min:0,orig:"pais"};
 let W=null; // assistente de criação
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const CHAVE_W="fut-criacao"; // rascunho da criação do clube (salvo ao sair da tela)
+function salvarW(){try{if(!G&&W)localStorage.setItem(CHAVE_W,JSON.stringify(W))}catch(e){}}
+function lerW(){try{const w=JSON.parse(localStorage.getItem(CHAVE_W)||"null");return w&&w.escudo&&w.unis?w:null}catch(e){return null}}
 function novoW(){return {passo:1,nome:"",sigla:"",tec:"",pais:"BRA",estadio:"",
   escudo:{forma:0,estampa:1,c1:"#1e6bd6",c2:"#ffffff",c3:"#0b1d3a",sigla:false,nomeOn:false,curva:0,tam:1,simbolo:0},
   unis:[{estilo:"n1",camisa:"#1e6bd6",detalhe:"#ffffff",d2:"#151515",calcao:"#ffffff",calcaoF:"#1e6bd6",meiao:"#1e6bd6",meiaoF:"#ffffff",meiaoEst:"faixa"},
@@ -2248,15 +2257,15 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792292536";
+const VERSAO="1792320823";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
     const m=t.match(/const VERSAO="(\d+)"/);if(!m||m[1]===VERSAO)return;
     if((G&&G.live)||(!G&&W&&W.passo>1))return; // não interrompe partida nem criação do clube
     salvar();location.replace(location.pathname+"?v="+m[1])}).catch(()=>{})}
-document.addEventListener("visibilitychange",()=>{if(!document.hidden)checarVersao();else if(G)salvar()}); // saiu da tela (fechou ou segundo plano): salva
-addEventListener("pagehide",()=>{if(G)salvar()});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)checarVersao();else if(G)salvar();else if(W){try{guardarW()}catch(e){}salvarW()}}); // saiu da tela (fechou ou segundo plano): salva
+addEventListener("pagehide",()=>{if(G)salvar();else if(W){try{guardarW()}catch(e){}salvarW()}});
 try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){} // pede pro navegador não apagar o save sozinho
 // modo offline (só no site publicado): sw.js guarda os arquivos para jogar sem internet
 if(!VERSAO.startsWith("__")&&"serviceWorker" in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register("sw.js").catch(()=>{});
@@ -2492,13 +2501,13 @@ function renderAbertura(){
   const arte=typeof ARTE_CAPA!=="undefined";
   sp.classList.toggle("arte",arte);
   const info=lerInfoBackup();
-  sp.innerHTML=`<button class="som-btn sp" data-a="som" aria-label="${SOM.mudo?"Ligar som":"Desligar som"}">${iconeSom()}</button>${arte?`<img class="capa-fundo" src="${ARTE_CAPA}" alt=""><img src="${ARTE_CAPA}" alt="Capa do FUT Master">`:`<canvas aria-hidden="true"></canvas>`}
+  sp.innerHTML=`${arte?`<img class="capa-fundo" src="${ARTE_CAPA}" alt=""><img src="${ARTE_CAPA}" alt="Capa do FUT Master">`:`<canvas aria-hidden="true"></canvas>`}
   <div class="logo"${arte?" hidden":""}><svg class="coroa" viewBox="0 0 100 60" aria-hidden="true"><path d="M6 56L2 14L28 34L50 4L72 34L98 14L94 56Z" fill="none" stroke="#19c3ff" stroke-width="7" stroke-linejoin="round"/></svg>
     <div class="fut">FUT</div><div class="master">MASTER</div></div>
   ${arte?"":`<div class="lema"><b>FUT</b><span>Monte seu time.<br>Conquiste seu sonho.</span></div>`}
   ${c?`<div class="clube-sp"><b>${esc(c.name)}</b> · ${esc(nomeLiga(c.tier))} · ${G.year}${info?`<br>Arquivo de save: temporada ${info.ano}, ${esc(info.quando)}`:""}</div>`:""}
   <div class="roda-sp"><div class="roda" role="listbox" aria-label="Menu inicial">
-    ${MENU_SP.filter(o=>c||o[0]!=="entrar").map(([a,t,ic])=>`<button class="roda-it" data-a="${a}" role="option"><svg viewBox="0 0 24 24" aria-hidden="true">${ic}</svg><span>${t}</span></button>`).join("")}
+    ${MENU_SP.filter(o=>c||o[0]!=="entrar"||(!G&&lerW())).map(([a,t,ic])=>`<button class="roda-it" data-a="${a}" role="option"><svg viewBox="0 0 24 24" aria-hidden="true">${ic}</svg><span>${a==="entrar"&&!c?"Continuar criação":t}</span></button>`).join("")}
   </div><span class="roda-dica">Role para escolher · toque para entrar</span></div>
   <input type="file" id="arq-save" accept=".json,application/json,text/plain" hidden>`;
   const cv=sp.querySelector("canvas");if(cv)pincel(cv);
@@ -3157,7 +3166,7 @@ function render(){try{if(G&&G.user)garantirContratos()}catch(e){}
   {const sp=$("#splash");if(!sp.hidden&&!sp.classList.contains("saindo")){sp.classList.add("saindo");somLancamento();vibrar("capa");setTimeout(()=>{sp.classList.remove("saindo");if(!abertura)sp.hidden=true},620)}
    else if(!sp.classList.contains("saindo"))sp.hidden=true}
   app.hidden=false;
-  if(!G){nav.hidden=true;if(!W)W=novoW();return renderCriacao()}
+  if(!G){nav.hidden=true;if(!W)W=lerW()||novoW();salvarW();return renderCriacao()}
   if(G.live&&aba!=="partida")aba="partida";
   if(!G.live&&aba==="partida")aba=G.ultimoJogo&&G.ultimoJogo.pendente?"resultado":"inicio";
   if(aba==="jogar"&&partidaAtual())aba="prejogo"; // Jogar vai direto pro pré-jogo
@@ -3166,7 +3175,7 @@ function render(){try{if(G&&G.user)garantirContratos()}catch(e){}
   nav.hidden=telaCheia;
   nav.innerHTML=`<div class="wrap">${abasNav().map(k=>`<button data-a="aba" data-v="${k}" aria-current="${aba===k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES[k]}</svg>${k==="copa"?nomeCurtoCopa():ROTULOS[k]}</button>`).join("")}</div>`;
   const c=G.clubs[G.user.club];
-  const topo=`<header class="topo"><span class="esc-topo" data-a="aba" data-v="clube" style="cursor:pointer" title="Ir para o Clube">${escudoDe(c,40)}</span><div class="info"><h1>${esc(c.name)}</h1><div class="sub">${esc(nomeLiga(c.tier))} · ${G.year} · ${rotuloEtapa()}</div></div><div class="caixa num${G.cash<0?" neg":""}"><small>Caixa</small>${dinheiro(G.cash)}</div><button class="som-btn" data-a="som" aria-label="${SOM.mudo?"Ligar som":"Desligar som"}">${iconeSom()}</button><button class="som-btn" data-a="aba" data-v="config" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES.config}</svg></button></header>`;
+  const topo=`<header class="topo"><span class="esc-topo" data-a="aba" data-v="clube" style="cursor:pointer" title="Ir para o Clube">${escudoDe(c,40)}</span><div class="info"><h1>${esc(c.name)}</h1><div class="sub">${esc(nomeLiga(c.tier))} · ${G.year} · ${rotuloEtapa()}</div></div><div class="caixa num${G.cash<0?" neg":""}"><small>Caixa</small>${dinheiro(G.cash)}</div><button class="som-btn" data-a="aba" data-v="config" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES.config}</svg></button></header>`;
   const corpo={inicio:telaInicio,elenco:telaElenco,tabela:telaTabela,mercado:telaMercado,clube:telaClube,escudo:telaEscudo,upgrades:telaUpgrades,copa:telaAbaCopa,jogar:telaJogar,perfil:telaPerfil,financas:telaFinancas,config:telaConfig,visual:telaVisual,prejogo:telaPreJogo,partida:telaPartida,resultado:telaResultado}[aba]();
   app.innerHTML=(telaCheia?"":topo)+corpo;
   if(aba==="partida"){if(G.live&&G.live.est==="rodando")iniciarTimer();else pararTimer();const fd=$("#lv-feed");if(fd)fd.scrollTop=0}
@@ -4422,7 +4431,7 @@ function atualizarLive(n0){
 function telaPartida(){
   const V=G.live;if(!V){return telaInicio()}
   const H=G.clubs[V.m.h],A=G.clubs[V.m.a];
-  let h=`<div class="tela-cheia ao-vivo"><div class="linha" style="justify-content:space-between;padding-top:10px"><span></span><p class="comp" style="margin:0">${esc(V.m.rot)}</p><button class="som-btn" data-a="som" aria-label="${SOM.mudo?"Ligar som":"Desligar som"}">${iconeSom()}</button></div>
+  let h=`<div class="tela-cheia ao-vivo"><div class="linha" style="justify-content:space-between;padding-top:10px"><span></span><p class="comp" style="margin:0">${esc(V.m.rot)}</p><span></span></div>
   <div class="placar-vivo"><div class="time">${marcaDe(H,44)}<b>${esc(H.name)}</b></div>
     <div class="centro"><div class="placar num" id="lv-placar">${V.gh}<span class="x">×</span>${V.ga}</div><div class="relogio num" id="lv-rel">${relogio(V)}</div></div>
     <div class="time">${marcaDe(A,44)}<b>${esc(A.name)}</b></div></div>
@@ -4709,7 +4718,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
         Object.assign(u2,{camisa:e.c2,detalhe:e.c1,d2:e.c3});aplicarModeloUni(u2,u2.estilo)}
       if(W.passo<5){W.passo++;window.scrollTo(0,0);break}
       const sig=(W.sigla||siglaDe(W.nome)).trim().toUpperCase().slice(0,3);
-      novoJogo({pais:W.pais,name:W.nome.trim(),short:sig,coach:W.tec.trim()||"Professor",escudo:{...W.escudo},unis:W.unis.map(x=>({...x}))});uniSel=0;
+      try{localStorage.removeItem(CHAVE_W)}catch(e){}novoJogo({pais:W.pais,name:W.nome.trim(),short:sig,coach:W.tec.trim()||"Professor",escudo:{...W.escudo},unis:W.unis.map(x=>({...x}))});uniSel=0;
       {const c=G.clubs[G.user.club];c.estadio=(W.estadio||"").trim()||`Arena ${c.name}`;c.cap=ESTADIO_INICIAL;G.reformas=0;G.cash=caixaFundacao(W.pais)-precoEstadioFund(W.pais);}
       aba="inicio";W=null;salvar();window.scrollTo(0,0);break;}
     case "wvoltar":guardarW();W.passo--;window.scrollTo(0,0);break;
@@ -4786,8 +4795,8 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "avsel":G.user.avatar="a:"+v;salvar();fecharModal();toast("Foto do dono escolhida!");break;
     case "tradver":modalTradutor();return;
     case "excluircar":modal(`<h3>Excluir carreira?</h3><p>A carreira do ${esc(G.clubs[G.user.club].name)} (${G.year}) será apagada deste aparelho, com tudo que foi salvo nela. Não dá para desfazer.</p><div class="botoes" style="flex-wrap:wrap"><button class="btn" data-a="fechar">Cancelar</button><button class="btn perigo" data-a="excluirconf">Excluir</button></div>`);return;
-    case "excluirconf":fecharModal();pararTimer();G=null;W=novoW();try{localStorage.removeItem(CHAVE);localStorage.removeItem(CHAVE_BKP)}catch(e){}aba="inicio";abertura=true;setTimeout(()=>modal(`<h3>Carreira excluída</h3><p>Sua carreira foi excluída. Agora você pode começar uma nova ou carregar outra carreira salva.</p><div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`),50);break;
-    case "novoconf":fecharModal();pararTimer();G=null;W=novoW();try{localStorage.removeItem(CHAVE);localStorage.removeItem(CHAVE_BKP)}catch(e){}aba="inicio";abertura=false;break;
+    case "excluirconf":fecharModal();pararTimer();G=null;W=novoW();try{localStorage.removeItem(CHAVE_W);localStorage.removeItem(CHAVE);localStorage.removeItem(CHAVE_BKP)}catch(e){}aba="inicio";abertura=true;setTimeout(()=>modal(`<h3>Carreira excluída</h3><p>Sua carreira foi excluída. Agora você pode começar uma nova ou carregar outra carreira salva.</p><div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`),50);break;
+    case "novoconf":fecharModal();pararTimer();G=null;W=novoW();try{localStorage.removeItem(CHAVE_W);localStorage.removeItem(CHAVE);localStorage.removeItem(CHAVE_BKP)}catch(e){}aba="inicio";abertura=false;break;
     case "fechar":fecharModal();return;
     case "perfil":perfilJogador(+v);return;
     case "vertime":modalTime(v);return;
@@ -4829,8 +4838,8 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "demiteconf":{fecharModal();const er=demitirTec();if(er)toastErro(er);salvar();break;}
     case "tutprox":G.tut=(G.tut||0)+1;salvar();if(G.tut<TUTORIAL.length){mostrarTutorial();return}fecharModal();return;
     case "tutpular":G.tut=TUTORIAL.length;salvar();fecharModal();return;
-    case "entrar":abertura=false;aba="inicio";break;
-    case "som":somIniciar();somMudo(!SOM.mudo);document.querySelectorAll(".som-btn").forEach(b=>{b.innerHTML=iconeSom();b.setAttribute("aria-label",SOM.mudo?"Ligar som":"Desligar som")});if(!SOM.mudo)somModo(modoDesejado());return;
+    case "entrar":if(!G)W=lerW()||W||novoW();abertura=false;aba="inicio";break;
+    case "som":somIniciar();somMudo(!SOM.mudo);if(aba==="config"&&G)render();document.querySelectorAll(".som-btn").forEach(b=>{b.innerHTML=iconeSom();b.setAttribute("aria-label",SOM.mudo?"Ligar som":"Desligar som")});if(!SOM.mudo)somModo(modoDesejado());return;
     case "carregararq":{const i=$("#arq-save")||$("#arq-save2");if(i){i.value="";i.click()}return;}
     case "salvararq":salvarArquivo();return;
     case "lembsalvar":fecharModal();salvarArquivo();return;
@@ -4851,7 +4860,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "splsom":acao("som");modalAjustesSp();return;
     case "novacarreira":
       if(G){modal(`<h3>Começar nova carreira?</h3><p>A carreira atual (${esc(G.clubs[G.user.club].name)}, ${G.year}) será apagada deste aparelho. Para não perder, salve o arquivo antes.</p><div class="botoes" style="flex-wrap:wrap"><button class="btn" data-a="salvararq">Salvar arquivo</button><button class="btn" data-a="fechar">Cancelar</button><button class="btn perigo" data-a="novoconf">Apagar e começar</button></div>`);return}
-      abertura=false;G=null;W=novoW();break;
+      abertura=false;G=null;W=lerW()||novoW();break;
   }
   render();
 }
