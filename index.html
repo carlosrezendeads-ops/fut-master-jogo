@@ -810,6 +810,26 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 .dono-foto img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .dono-foto svg{width:28px;height:28px;opacity:.75}
 .dono-foto b{position:absolute;right:-5px;bottom:-4px;min-width:20px;height:20px;padding:0 4px;border-radius:999px;background:var(--canario);color:#1a1300;font-size:11px;font-weight:800;display:grid;place-items:center;border:2px solid var(--gramado)}
+.topo-clube{display:flex;align-items:center;gap:10px;min-width:0;flex:1;background:none;border:0;padding:0;color:var(--cal);cursor:pointer;text-align:left}
+.topo-clube .tc-esc{flex:0 0 auto;display:grid;place-items:center;width:46px;height:46px}
+.topo-clube .tc-nome{font-family:var(--f-display);font-weight:800;font-size:19px;line-height:1.05;text-transform:uppercase;min-width:0;overflow-wrap:normal;word-break:normal}
+.sanf{padding:0;margin-top:10px}
+.sanf summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;cursor:pointer}
+.sanf summary::-webkit-details-marker{display:none}
+.sanf summary span,.sanf-link span{display:flex;flex-direction:column;gap:2px;min-width:0;text-align:left}
+.sanf summary b,.sanf-link b{font-family:var(--f-display);font-size:17px;color:var(--cal)}
+.sanf summary small,.sanf-link small{font-size:12px;color:var(--cal-2)}
+.sanf summary svg{flex:0 0 auto;color:var(--canario);transition:transform .25s}
+.sanf[open] summary svg{transform:rotate(180deg)}
+.sanf-corpo{padding:0 12px 12px}
+.sanf-corpo>.cartao{background:transparent;border:0;padding-inline:4px;box-shadow:none}
+.sanf-link{display:flex;width:100%;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;margin-top:10px;cursor:pointer;font:inherit;color:var(--cal)}
+.sanf-link i{font-style:normal;font-size:26px;line-height:1;color:var(--canario)}
+.cards-visual{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.cv-card{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:14px 8px;cursor:pointer;color:var(--cal);font:inherit}
+.cv-card .cv-ic{height:44px;display:grid;place-items:center}
+.cv-card b{font-family:var(--f-display);font-size:15px;line-height:1.1}
+.cv-card small{font-size:11px;color:var(--cal-2);line-height:1.25}
 .topo h1.dono-nome{font-size:18px;color:var(--cal)}
 .xp-barra.dono-xp{height:6px;max-width:150px;margin-top:5px}
 .campinho circle.cp-eu{transition:transform .65s cubic-bezier(.35,1.25,.5,1)}
@@ -838,30 +858,30 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792354070"></script>
-<script src="img/arte-capa.js?v=1792354070"></script>
-<script src="img/fundo-criacao.js?v=1792354070"></script>
-<script src="img/fundo-pais.js?v=1792354070"></script>
-<script src="img/fundo-escudo.js?v=1792354070"></script>
-<script src="img/simbolos.js?v=1792354070"></script>
-<script src="img/kits-foto.js?v=1792354070"></script>
-<script src="img/fundo-vestiario.js?v=1792354070"></script>
-<script src="img/patro-logos.js?v=1792354070"></script>
-<script src="img/rostos.js?v=1792354070"></script>
-<script src="img/estadio-fotos.js?v=1792354070"></script>
-<script src="img/super-fotos.js?v=1792354070"></script>
-<script src="img/trofeus.js?v=1792354070"></script>
-<script src="img/medalhas.js?v=1792354070"></script>
-<script src="img/fotos.js?v=1792354070"></script>
-<script src="img/fotos-vs.js?v=1792354070"></script>
-<script src="img/kit-homens.js?v=1792354070"></script>
-<script src="img/tec-fotos.js?v=1792354070"></script>
-<script src="dados/elencos.js?v=1792354070"></script>
-<script src="img/rostos-reais.js?v=1792354070"></script>
-<script src="img/escudos-img.js?v=1792354070"></script>
-<script src="img/tradutores.js?v=1792354070"></script>
-<script src="img/avatares.js?v=1792354070"></script>
-<script src="dados/idiomas.js?v=1792354070"></script>
+<script src="img/escudos-reais.js?v=1792354290"></script>
+<script src="img/arte-capa.js?v=1792354290"></script>
+<script src="img/fundo-criacao.js?v=1792354290"></script>
+<script src="img/fundo-pais.js?v=1792354290"></script>
+<script src="img/fundo-escudo.js?v=1792354290"></script>
+<script src="img/simbolos.js?v=1792354290"></script>
+<script src="img/kits-foto.js?v=1792354290"></script>
+<script src="img/fundo-vestiario.js?v=1792354290"></script>
+<script src="img/patro-logos.js?v=1792354290"></script>
+<script src="img/rostos.js?v=1792354290"></script>
+<script src="img/estadio-fotos.js?v=1792354290"></script>
+<script src="img/super-fotos.js?v=1792354290"></script>
+<script src="img/trofeus.js?v=1792354290"></script>
+<script src="img/medalhas.js?v=1792354290"></script>
+<script src="img/fotos.js?v=1792354290"></script>
+<script src="img/fotos-vs.js?v=1792354290"></script>
+<script src="img/kit-homens.js?v=1792354290"></script>
+<script src="img/tec-fotos.js?v=1792354290"></script>
+<script src="dados/elencos.js?v=1792354290"></script>
+<script src="img/rostos-reais.js?v=1792354290"></script>
+<script src="img/escudos-img.js?v=1792354290"></script>
+<script src="img/tradutores.js?v=1792354290"></script>
+<script src="img/avatares.js?v=1792354290"></script>
+<script src="dados/idiomas.js?v=1792354290"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2306,7 +2326,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792354070";
+const VERSAO="1792354290";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3226,7 +3246,7 @@ function render(){try{if(G&&G.user)garantirContratos()}catch(e){}
   nav.innerHTML=`<div class="wrap">${abasNav().map(k=>`<button data-a="aba" data-v="${k}" aria-current="${aba===k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES[k]}</svg>${k==="copa"?nomeCurtoCopa():ROTULOS[k]}</button>`).join("")}</div>`;
   const c=G.clubs[G.user.club];
   const Pf=perfil(),xpPct=Pf.nivel>=NIVEL_MAX?100:Math.round(Pf.xp/xpParaSubir(Pf.nivel)*100); // topo: foto do dono + nível + nome + XP (leva ao Perfil)
-  const topo=`<header class="topo"><button class="dono-foto" data-a="aba" data-v="perfil" aria-label="Perfil do dono">${avatarSrc()?`<img src="${avatarSrc()}" alt="">`:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">${ICONES.perfil}</svg>`}<b class="num">${Pf.nivel}</b></button><div class="info" data-a="aba" data-v="perfil" style="cursor:pointer"><h1 class="dono-nome">${esc(G.user.coach||"Dono do clube")}</h1><div class="xp-barra dono-xp"><i style="width:${xpPct}%"></i></div></div><div class="caixa num${G.cash<0?" neg":""}"><small>Caixa</small>${dinheiro(G.cash)}</div><button class="som-btn" data-a="aba" data-v="config" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES.config}</svg></button></header>`;
+  const topo=`<header class="topo"><button class="topo-clube" data-a="aba" data-v="clube" aria-label="Abrir o clube"><span class="tc-esc">${escudoDe(c,44)}</span><b class="tc-nome">${esc(c.name)}</b></button><div class="caixa num${G.cash<0?" neg":""}"><small>Caixa</small>${dinheiro(G.cash)}</div><button class="som-btn" data-a="aba" data-v="config" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES.config}</svg></button></header>`;
   const corpo={inicio:telaInicio,elenco:telaElenco,tabela:telaTabela,mercado:telaMercado,clube:telaClube,escudo:telaEscudo,upgrades:telaUpgrades,copa:telaAbaCopa,jogar:telaJogar,perfil:telaPerfil,financas:telaFinancas,config:telaConfig,visual:telaVisual,prejogo:telaPreJogo,partida:telaPartida,resultado:telaResultado}[aba]();
   app.innerHTML=(telaCheia?"":topo)+corpo;
   videoVS();
@@ -4828,7 +4848,11 @@ function telaMercado(){
 /* ---------- clube ---------- */
 function telaClube(){
   const uid=G.user.club,c=G.clubs[uid],f=G.lastFin,e=G.econ[c.tier];
-  let h=`<h2>Identidade</h2><div class="cartao linha" style="gap:16px;justify-content:center">${escudoDe(c,76)}${uniformeSVG(c.unis[0],G.patro?G.patro.nome:"",64)}${uniformeSVG(c.unis[1],G.patro?G.patro.nome:"",64)}<div style="min-width:0;flex:1"><b style="font-family:var(--f-display);font-size:20px">${esc(c.name)}</b><button class="btn mini" data-a="aba" data-v="escudo" style="display:block;margin:6px 0">✏️ Editar escudo</button><div class="muted peq">${esc(pais().nome)} · Dono: ${esc(G.user.coach)}<br>${esc(estadioDe(c))}</div><button class="btn mini" data-a="aba" data-v="visual" style="margin-top:8px">Editar escudo e uniforme</button></div></div>`;
+  let h=`<h2>Identidade</h2><div class="cartao linha" style="gap:16px;justify-content:center">${escudoDe(c,76)}${uniformeSVG(c.unis[0],G.patro?G.patro.nome:"",64)}${uniformeSVG(c.unis[1],G.patro?G.patro.nome:"",64)}<div style="min-width:0;flex:1"><b style="font-family:var(--f-display);font-size:20px">${esc(c.name)}</b><div class="muted peq">Sigla ${esc(c.short)} · ${esc(pais().nome)} · Dono: ${esc(G.user.coach)}<br>${esc(estadioDe(c))}</div></div></div>`;
+  h+=`<h2>Visual do clube</h2><div class="cards-visual">
+    <button class="cartao cv-card" data-a="aba" data-v="escudo"><span class="cv-ic">${escudoDe(c,40)}</span><b>Editar escudo</b><small>Forma, cores, símbolo e nome</small></button>
+    <button class="cartao cv-card" data-a="aba" data-v="visual"><span class="cv-ic">${uniformeSVG(c.unis[0],"",40)}</span><b>Editar uniforme</b><small>Modelo e cores das camisas</small></button>
+    <button class="cartao cv-card" data-a="logos" data-v="${G.patro?"master":"esc"}"><span class="cv-ic" style="font-size:30px">👕</span><b>Camisa e logos</b><small>Posição, tamanho e borda do escudo e patrocínios</small></button></div>`;
   h+=`<h2>Finanças</h2><div class="kpis">
     <div class="cartao kpi"><small>Caixa</small><b class="num${G.cash<0?" neg":""}">${dinheiro(G.cash)}</b></div>
     <div class="cartao kpi" data-a="aba" data-v="financas" style="cursor:pointer"><small>Conta do mês ›</small><b class="num">${dinheiro(folhaMensal().tot)}</b></div>
@@ -4855,7 +4879,13 @@ function telaClube(){
     <div class="linha" style="flex-wrap:wrap"><button class="btn prim" data-a="salvararq" style="font-size:16px">Salvar arquivo no aparelho</button><button class="btn" data-a="carregararq">Carregar arquivo</button></div>
     <div class="linha" style="flex-wrap:wrap"><button class="btn mini" data-a="exportar">Copiar código do jogo</button><button class="btn mini" data-a="importar">Colar código</button></div>
     <button class="btn perigo" data-a="novacarreira">Nova carreira</button><input type="file" id="arq-save2" accept=".json,application/json,text/plain" hidden></div>`;
-  return h;
+  // aba compacta: dados do clube e troféus abertos; o resto em cards que abrem ao tocar (seta para baixo)
+  const SUB={"Visual do clube":"Escudo, uniforme e logos na camisa","Finanças":"Caixa, conta do mês e prêmios","Último jogo":"Quanto entrou e saiu","Patrocínio":"Contratos do clube","Estádio":"Lugares e reformas","Técnico":"Quem comanda o time","Histórico":"Temporadas e títulos","Salvar jogo":"Arquivo de save e nova carreira"};
+  const abertos=["Identidade","Sala de troféus"],partes=h.split(/(?=<h2>)/);
+  const elenco=`<button class="cartao sanf-link" data-a="aba" data-v="elenco"><span><b>Ver elenco</b><small>${jogadoresDo(uid).length} jogadores · titulares e reservas</small></span><i>›</i></button>`;
+  return partes.map(p=>{const m=p.match(/^<h2>(.*?)<\/h2>/);if(!m)return p;const t=m[1],corpo=p.slice(m[0].length);
+    if(abertos.includes(t))return (t==="Identidade"?p.replace("<h2>Identidade</h2>","<h2>Clube</h2>"):p)+(t==="Identidade"?elenco:"");
+    return `<details class="cartao sanf"><summary><span><b>${t}</b>${SUB[t]?`<small>${SUB[t]}</small>`:""}</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></summary><div class="sanf-corpo">${corpo}</div></details>`}).join("");
 }
 /* editar escudo pela aba Clube: mesma edição da criação, sem os passos da carreira */
 function telaEscudo(){
