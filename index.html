@@ -956,6 +956,16 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 .cal-pag{padding-block:4px}.cp-l{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--gramado-3)}.cp-l:last-child{border-bottom:0}
 .cp-d{display:flex;flex-direction:column;align-items:center;width:42px;padding:4px 0;border-radius:10px;background:var(--gramado-3);line-height:1}.cp-d b{font-size:18px}.cp-d small{font-size:10px;text-transform:uppercase;color:var(--cal-2)}
 .cp-n{flex:1;font-size:13.5px}.cal-pag .neg{color:var(--ruim)}.cal-pag .pos{color:var(--ok)}
+.cb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cb-card{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:16px 6px 12px;cursor:pointer;color:var(--cal);font:inherit;text-align:center;min-width:0}
+.cb-card.off{opacity:.45}
+.cb-card b{font-family:var(--f-display);font-size:16px;line-height:1.1}.cb-card small{font-size:12px;color:var(--canario);font-weight:700}
+.cb-tag{position:absolute;top:6px;right:6px;font-size:10.5px;font-weight:800;padding:2px 6px;border-radius:999px;background:var(--ok);color:#04220f}
+.cb-ic{height:46px;display:flex;align-items:center}
+.ico-grana{width:58px;height:44px}
+.ico-cupons{position:relative;display:inline-block;width:calc(30px + (var(--n) - 1) * 7px);height:calc(20px + (var(--n) - 1) * 5px)}
+.ico-cupons .cupom-ico{position:absolute;width:30px;height:20px}
+.ico-cupons .cupom-ico:nth-child(2){left:7px;top:5px}.ico-cupons .cupom-ico:nth-child(3){left:14px;top:10px}.ico-cupons .cupom-ico:nth-child(4){left:21px;top:15px}
 .sanf{padding:0;margin-top:10px}
 .sanf summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;cursor:pointer}
 .sanf summary::-webkit-details-marker{display:none}
@@ -1001,30 +1011,30 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792432855"></script>
-<script src="img/arte-capa.js?v=1792432855"></script>
-<script src="img/fundo-criacao.js?v=1792432855"></script>
-<script src="img/fundo-pais.js?v=1792432855"></script>
-<script src="img/fundo-escudo.js?v=1792432855"></script>
-<script src="img/simbolos.js?v=1792432855"></script>
-<script src="img/kits-foto.js?v=1792432855"></script>
-<script src="img/fundo-vestiario.js?v=1792432855"></script>
-<script src="img/patro-logos.js?v=1792432855"></script>
-<script src="img/rostos.js?v=1792432855"></script>
-<script src="img/estadio-fotos.js?v=1792432855"></script>
-<script src="img/super-fotos.js?v=1792432855"></script>
-<script src="img/trofeus.js?v=1792432855"></script>
-<script src="img/medalhas.js?v=1792432855"></script>
-<script src="img/fotos.js?v=1792432855"></script>
-<script src="img/fotos-vs.js?v=1792432855"></script>
-<script src="img/kit-homens.js?v=1792432855"></script>
-<script src="img/tec-fotos.js?v=1792432855"></script>
-<script src="dados/elencos.js?v=1792432855"></script>
-<script src="img/rostos-reais.js?v=1792432855"></script>
-<script src="img/escudos-img.js?v=1792432855"></script>
-<script src="img/tradutores.js?v=1792432855"></script>
-<script src="img/avatares.js?v=1792432855"></script>
-<script src="dados/idiomas.js?v=1792432855"></script>
+<script src="img/escudos-reais.js?v=1792433013"></script>
+<script src="img/arte-capa.js?v=1792433013"></script>
+<script src="img/fundo-criacao.js?v=1792433013"></script>
+<script src="img/fundo-pais.js?v=1792433013"></script>
+<script src="img/fundo-escudo.js?v=1792433013"></script>
+<script src="img/simbolos.js?v=1792433013"></script>
+<script src="img/kits-foto.js?v=1792433013"></script>
+<script src="img/fundo-vestiario.js?v=1792433013"></script>
+<script src="img/patro-logos.js?v=1792433013"></script>
+<script src="img/rostos.js?v=1792433013"></script>
+<script src="img/estadio-fotos.js?v=1792433013"></script>
+<script src="img/super-fotos.js?v=1792433013"></script>
+<script src="img/trofeus.js?v=1792433013"></script>
+<script src="img/medalhas.js?v=1792433013"></script>
+<script src="img/fotos.js?v=1792433013"></script>
+<script src="img/fotos-vs.js?v=1792433013"></script>
+<script src="img/kit-homens.js?v=1792433013"></script>
+<script src="img/tec-fotos.js?v=1792433013"></script>
+<script src="dados/elencos.js?v=1792433013"></script>
+<script src="img/rostos-reais.js?v=1792433013"></script>
+<script src="img/escudos-img.js?v=1792433013"></script>
+<script src="img/tradutores.js?v=1792433013"></script>
+<script src="img/avatares.js?v=1792433013"></script>
+<script src="dados/idiomas.js?v=1792433013"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2498,7 +2508,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792432855";
+const VERSAO="1792433013";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3346,7 +3356,7 @@ function efeitoDinheiro(r,dc,dk){vibrar("premio");
     m.style.cssText=`left:${x}px;top:${y}px;--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px;--r:${Math.random()*540-270}deg;animation-delay:${i*.025}s`;
     document.body.appendChild(m);setTimeout(()=>m.remove(),1200)}
 }
-const DIN_ACOES=new Set(["teclenda","simularjogo","compconf","reforma","ampliar","lenda","invcompra","contratec","renovconf","dispconf","demiteconf","quitaremp","empconf","aceitar","patro"]);
+const DIN_ACOES=new Set(["cambioconf","teclenda","simularjogo","compconf","reforma","ampliar","lenda","invcompra","contratec","renovconf","dispconf","demiteconf","quitaremp","empconf","aceitar","patro"]);
 /* vibração (só Android): liga/desliga em Ajustes */
 let VIB_ON=true;try{VIB_ON=localStorage.getItem("fut-vib")!=="0"}catch(e){}
 const VIB={golNosso:[120,60,120,60,260],golContra:[180],vitoria:[80,50,80,50,80,50,300],derrota:[260],roleta:8,erro:[40,50,40],premio:[60,40,140],alerta:[110],capa:20};
@@ -5153,6 +5163,17 @@ function telaCopa(){
 }
 
 /* ---------- mercado ---------- */
+/* câmbio da loja: 1 cupom dourado = R$ 500 mil; pacotes maiores dão desconto (comprar cupons) ou bônus (trocar cupons por dinheiro) */
+const CAMBIO_CUP=[[1,500],[3,1500],[5,2500],[10,4750],[25,11250],[50,21250]],CAMBIO_DIN=[[1,500],[3,1550],[5,2625],[10,5500],[25,14375],[50,30000]];
+const ICO_GRANA=n=>`<svg class="ico-grana" viewBox="0 0 64 48" aria-hidden="true">${[...Array(Math.min(n,4))].map((_,i)=>`<g transform="translate(${4+i*4} ${18-i*5})"><rect width="44" height="24" rx="4" fill="#2e9b57" stroke="#bff0cf" stroke-width="1.6"/><circle cx="22" cy="12" r="6" fill="none" stroke="#bff0cf" stroke-width="1.6"/><text x="22" y="15.5" text-anchor="middle" font-size="9" font-weight="800" fill="#e6ffef">$</text></g>`).join("")}<g transform="translate(40 30)"><circle r="9" cx="9" cy="9" fill="#ffcc33" stroke="#a87400" stroke-width="1.6"/><text x="9" y="12.5" text-anchor="middle" font-size="10" font-weight="900" fill="#7a5200">$</text></g></svg>`;
+const icoCupons=n=>`<span class="ico-cupons" style="--n:${Math.min(n,4)}">${[...Array(Math.min(n,4))].map(()=>ICO_CUPOM).join("")}</span>`;
+function telaCambio(){const cp=cupons();
+  const card=(tipo,i,ico,tit,sub,tag,ok)=>`<button class="cartao cb-card${ok?"":" off"}" data-a="cambio" data-v="${tipo}${i}"${ok?"":" disabled"}>${tag?`<span class="cb-tag">${tag}</span>`:""}<span class="cb-ic">${ico}</span><b>${tit}</b><small>${sub}</small></button>`;
+  const pct=x=>Math.round(x*100);
+  return `<h2>Comprar cupons dourados</h2><p class="muted peq" style="margin:-4px 0 8px">1 cupom dourado vale ${dinheiro(500)}. Pacotes maiores saem mais baratos.</p>
+  <div class="cb-grid">${CAMBIO_CUP.map(([n,v],i)=>{const d=1-v/(n*500);return card("c",i,icoCupons(n),`${n} cupo${n>1?"ns":"m"}`,dinheiro(v),d>0?`−${pct(d)}%`:"",G.cash>=v)}).join("")}</div>
+  <h2>Trocar cupons por dinheiro</h2><p class="muted peq" style="margin:-4px 0 8px">Você tem ${cp} cupo${cp===1?"m":"ns"} dourado${cp===1?"":"s"}. Trocando mais de uma vez, ganha bônus.</p>
+  <div class="cb-grid">${CAMBIO_DIN.map(([n,v],i)=>{const b=v/(n*500)-1;return card("d",i,ICO_GRANA(i+1),dinheiro(v),`${n} cupo${n>1?"ns":"m"}`,b>0?`+${pct(b)}%`:"",cp>=n)}).join("")}</div>`}
 function telaMercado(){
   const uid=G.user.club,ab=janelaAberta();
   if(merc.orig==="tec")return telaTecnicos();
@@ -5185,7 +5206,7 @@ function telaMercado(){
     h+=`<h2>3 jogadores</h2><p class="muted peq" style="margin:-4px 0 8px">Posições e séries sorteadas. Quanto mais forte o jogador e mais alta a divisão, mais caro. Para vender, toque no jogador no Elenco e use "Vender jogador".</p><div class="cartao" style="padding-block:4px">${D.jog.map(id=>G.players[id]).filter(Boolean).map(linhaOferta).join("")||'<p class="muted">Nenhum jogador agora.</p>'}</div>`;
     h+=`<h2>Técnico</h2><div class="secao">${tc?cartaoTecOferta(tc,0,"d",true):'<p class="muted">Você já contratou o técnico desta renovação.</p>'}</div>`;
   }else h+=`<div class="aviso-janela">Mercado fechado agora.</div>`;
-  return h;
+  return h+telaCambio();
 }
 
 /* ---------- clube ---------- */
@@ -5421,6 +5442,11 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "compconf":{fecharModal();const er=contratar(+v);if(er){if(er!==RECUSA)toastErro(er)}else{avisoElencoCheio();toast("Contratado! Já está no elenco.");expandido=null}salvar();break;}
     case "div":divTab=+v;if(tabModo==="copa"||tabModo==="copan")tabModo="tab";break;
     case "tabmodo":tabModo=v;break;
+    case "cambio":{const c=v[0]==="c",[n,val]=(c?CAMBIO_CUP:CAMBIO_DIN)[+v.slice(1)];
+      modal(`<div class="aviso-box" style="text-align:center"><div class="cb-ic" style="justify-content:center">${c?icoCupons(n):ICO_GRANA(4)}</div><b>${c?`Comprar ${n} cupo${n>1?"ns":"m"} dourado${n>1?"s":""}?`:`Trocar ${n} cupo${n>1?"ns":"m"} por ${dinheiro(val)}?`}</b><p>${c?`Sai ${dinheiro(val)} do caixa.`:`Entra ${dinheiro(val)} no caixa.`}</p><div class="botoes"><button class="btn" data-a="fechar">Cancelar</button><button class="btn prim" data-a="cambioconf" data-v="${v}">Confirmar</button></div></div>`);return}
+    case "cambioconf":{fecharModal();const c=v[0]==="c",[n,val]=(c?CAMBIO_CUP:CAMBIO_DIN)[+v.slice(1)];
+      if(c){if(G.cash<val){toastErro("Dinheiro insuficiente.");return}G.cash-=val;G.cupons=cupons()+n;toast(`+${n} cupo${n>1?"ns":"m"} dourado${n>1?"s":""}!`)}
+      else{if(cupons()<n){toastErro("Cupons insuficientes.");return}G.cupons=cupons()-n;G.cash+=val;toast(`+${dinheiro(val)} no caixa!`)}salvar();break;}
     case "ligaaba":ligaAba=v;break;
     case "ligasel":modalLigaSel();return;
     case "ligat":fecharModal();if(v==="copa"||v==="copan")ligaCopa=v;else{ligaCopa=null;ligaT=+v;tabModo="tab"}window.scrollTo(0,0);break;
