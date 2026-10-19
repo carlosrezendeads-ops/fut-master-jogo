@@ -1001,30 +1001,30 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792432547"></script>
-<script src="img/arte-capa.js?v=1792432547"></script>
-<script src="img/fundo-criacao.js?v=1792432547"></script>
-<script src="img/fundo-pais.js?v=1792432547"></script>
-<script src="img/fundo-escudo.js?v=1792432547"></script>
-<script src="img/simbolos.js?v=1792432547"></script>
-<script src="img/kits-foto.js?v=1792432547"></script>
-<script src="img/fundo-vestiario.js?v=1792432547"></script>
-<script src="img/patro-logos.js?v=1792432547"></script>
-<script src="img/rostos.js?v=1792432547"></script>
-<script src="img/estadio-fotos.js?v=1792432547"></script>
-<script src="img/super-fotos.js?v=1792432547"></script>
-<script src="img/trofeus.js?v=1792432547"></script>
-<script src="img/medalhas.js?v=1792432547"></script>
-<script src="img/fotos.js?v=1792432547"></script>
-<script src="img/fotos-vs.js?v=1792432547"></script>
-<script src="img/kit-homens.js?v=1792432547"></script>
-<script src="img/tec-fotos.js?v=1792432547"></script>
-<script src="dados/elencos.js?v=1792432547"></script>
-<script src="img/rostos-reais.js?v=1792432547"></script>
-<script src="img/escudos-img.js?v=1792432547"></script>
-<script src="img/tradutores.js?v=1792432547"></script>
-<script src="img/avatares.js?v=1792432547"></script>
-<script src="dados/idiomas.js?v=1792432547"></script>
+<script src="img/escudos-reais.js?v=1792432855"></script>
+<script src="img/arte-capa.js?v=1792432855"></script>
+<script src="img/fundo-criacao.js?v=1792432855"></script>
+<script src="img/fundo-pais.js?v=1792432855"></script>
+<script src="img/fundo-escudo.js?v=1792432855"></script>
+<script src="img/simbolos.js?v=1792432855"></script>
+<script src="img/kits-foto.js?v=1792432855"></script>
+<script src="img/fundo-vestiario.js?v=1792432855"></script>
+<script src="img/patro-logos.js?v=1792432855"></script>
+<script src="img/rostos.js?v=1792432855"></script>
+<script src="img/estadio-fotos.js?v=1792432855"></script>
+<script src="img/super-fotos.js?v=1792432855"></script>
+<script src="img/trofeus.js?v=1792432855"></script>
+<script src="img/medalhas.js?v=1792432855"></script>
+<script src="img/fotos.js?v=1792432855"></script>
+<script src="img/fotos-vs.js?v=1792432855"></script>
+<script src="img/kit-homens.js?v=1792432855"></script>
+<script src="img/tec-fotos.js?v=1792432855"></script>
+<script src="dados/elencos.js?v=1792432855"></script>
+<script src="img/rostos-reais.js?v=1792432855"></script>
+<script src="img/escudos-img.js?v=1792432855"></script>
+<script src="img/tradutores.js?v=1792432855"></script>
+<script src="img/avatares.js?v=1792432855"></script>
+<script src="dados/idiomas.js?v=1792432855"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2498,7 +2498,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792432547";
+const VERSAO="1792432855";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3745,9 +3745,7 @@ function telaInicio(){
   h+=cartaoNegocios();
   if(G.fase==="jogo"&&!G.seasonEnd)h+=cartaoProximo();
   if(G.seasonEnd)h+=`<h2>Temporada encerrada</h2><div class="cartao"><button class="btn prim full" data-a="vertemporada">Ver resumo e ir para ${G.year+1}</button></div>`;
-  h+=ultimasPartidas();
-  h+=cartaoNoticias();
-  h+=`<h2>Caixa de entrada</h2><div class="cartao secao">${G.inbox.length?G.inbox.slice(0,14).map(m=>`<div class="msg ${m.t}">${esc(m.m)}</div>`).join(""):'<span class="muted">Nenhuma mensagem.</span>'}</div>`;
+  ultimasPartidas(); // só guarda o último jogo; a lista aparece na aba Clube
   return h;
 }
 function contadorJanela(){const J=G.janela;return `<div class="kpis"><div class="cartao kpi"><small>Contratações</small><b class="num">${J.compras} de ${MAX_COMPRAS}</b></div><div class="cartao kpi"><small>Negócios</small><b class="num">${J.negocios} de ${MAX_NEGOCIOS}</b></div></div>`}
@@ -5065,7 +5063,16 @@ function ligaClass(t,D){const P=pais(),C=COPAS[P.cont],k=P.k,cl=classificacao(t)
     <div class="lg-leg"><b>Classificação/Rebaixamento</b>${t===0?`<span><i class="z1"></i>Fase de grupos da ${esc(C.main)}</span><span><i class="z2"></i>Fase de grupos da ${esc(C.sec)}</span>`:`<span><i class="z2"></i>Acesso para a ${esc(P.ligas[t-1])}</span>`}${t<2?`<span><i class="z4"></i>Rebaixamento</span>`:""}
     <b style="margin-top:8px">Últimas 5 partidas</b><span><i class="u5 v">✓</i>Vitórias</span><span><i class="u5 e">–</i>Empates</span><span><i class="u5 d">✕</i>Derrota</span></div></div>`}
 /* mais partidas: confrontos entre os dois times do destaque e os jogos da última rodada */
+/* próximos jogos do seu time: o próximo de qualquer competição + as próximas rodadas da liga */
+function proximasPartidas(){const uid=G.user.club,t=userTier(),out=[];if(G.seasonEnd)return out;const m=partidaAtual();
+  for(let i=G.ev;i<G.cal.length&&out.length<5;i++){const ev=G.cal[i],d=dataEv(i);
+    if(i===G.ev&&m&&ev.k!=="L"){out.push({h:m.h,a:m.a,d,rot:m.rot});continue}
+    if(ev.k!=="L")continue;const p=(G.fix[t][ev.r]||[]).find(([h,a])=>h===uid||a===uid);if(p)out.push({h:p[0],a:p[1],d,rot:`Rodada ${ev.r+1}`})}
+  return out}
 function ligaMais(t,D){const uid=G.user.club;let h="";
+  if(t===userTier()){const px=proximasPartidas();
+    if(px.length)h+=`<h2>Próximas partidas</h2>`+px.map(j=>{const A=G.clubs[j.h],B=G.clubs[j.a];return `<div class="cartao lg-jogo"><div class="lg-jl"><div>${marcaDe(A,24)}<span class="lg-nm">${esc(A.name)}</span></div><div>${marcaDe(B,24)}<span class="lg-nm">${esc(B.name)}</span></div></div><div class="lg-jr"><b>${j.d?DIAS_SEM[j.d.getDay()].slice(0,3):""}</b><small>${j.d?fmtData(j.d):""}</small><small>${esc(j.rot.replace(/^.* · /,""))}</small></div></div>`}).join("");
+    h+=ultimasPartidas().replace("<h2>Últimas partidas</h2>","<h2>Partidas anteriores</h2>")}
   const card=(a,b,x,y,quando)=>{const A=G.clubs[a],B=G.clubs[b];return `<div class="cartao lg-jogo"><div class="lg-jl"><div class="${x<y?"perde":""}">${marcaDe(A,24)}<span class="lg-nm">${esc(A.name)}</span><b class="num">${x}</b>${x>y?'<i>◀</i>':""}</div><div class="${y<x?"perde":""}">${marcaDe(B,24)}<span class="lg-nm">${esc(B.name)}</span><b class="num">${y}</b>${y>x?'<i>◀</i>':""}</div></div><div class="lg-jr"><b>FIM</b><small>${quando}</small></div></div>`};
   const par=D&&(D.r||D.prox);
   if(par){const conf=[];(G.history||[]).length;(G.jogos||[]).forEach(({r})=>{if((r.h===par.h&&r.a===par.a)||(r.h===par.a&&r.a===par.h))conf.push(r)});
@@ -5274,7 +5281,13 @@ function telaClube(){
     card('<span style="font-size:28px">📋</span>',"Técnico",esc(G.tec.n),"clubsec","Técnico",1),
     card('<span style="font-size:28px">📜</span>',"Histórico",`${(G.history||[]).length} temporada${(G.history||[]).length===1?"":"s"}`,"clubsec","Histórico",0),
     card('<span style="font-size:28px">💾</span>',"Salvar jogo","Arquivo e nova carreira","clubsec","Salvar jogo",1)].join("");
-  return heroi+`<h2>Gestão do clube</h2><div class="cg-grid">${grade}</div>`+trof;
+  // últimas partidas, notícias e caixa de entrada (vieram da tela Jogar)
+  const seta='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>';
+  const sanf=(tit,sub,corpo,ab)=>`<details class="cartao sanf"${ab?" open":""}><summary><span><b>${tit}</b><small>${sub}</small></span>${seta}</summary><div class="sanf-corpo">${corpo}</div></details>`;
+  const nt=cartaoNoticias().replace(/^\s*<h2>[^<]*<\/h2>/,"");
+  const cx=`<div class="secao">${G.inbox.length?G.inbox.slice(0,14).map(m=>`<div class="msg ${m.t}">${esc(m.m)}</div>`).join(""):'<span class="muted">Nenhuma mensagem.</span>'}</div>`;
+  const extra=sanf("Notícias","O que acontece na liga e no clube",nt,0)+sanf("Caixa de entrada",`${G.inbox.length} mensage${G.inbox.length===1?"m":"ns"}`,cx,0);
+  return heroi+`<h2>Gestão do clube</h2><div class="cg-grid">${grade}</div>`+extra+trof;
 }
 /* editar escudo pela aba Clube: mesma edição da criação, sem os passos da carreira */
 function telaEscudo(){
