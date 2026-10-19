@@ -398,6 +398,7 @@ nav.abas[hidden]{display:none}
 .fis{display:flex;align-items:center;gap:6px;margin-top:4px;max-width:170px;--c:var(--ok)}
 .fis.m{--c:var(--aviso)}.fis.r{--c:var(--ruim)}
 .fis .trilho i{transition:width .4s}
+.btn-sair-jogo{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:6;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(200,40,40,.85);color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.4)}
 .cmd-sel .cmd-pausa{width:42px;border:0;border-radius:9px;background:rgba(255,255,255,.1);color:var(--cal);display:grid;place-items:center;cursor:pointer;padding:0}
 .cmd-sel{display:grid;grid-template-columns:1fr auto 1fr;gap:4px;padding:4px;border-radius:12px;background:var(--gramado-2);border:1px solid var(--gramado-3);margin-top:10px}
 .cmd-sel button{border:0;border-radius:9px;padding:9px 6px;font:inherit;font-weight:700;font-size:13.5px;background:none;color:var(--cal-2);cursor:pointer}
@@ -886,30 +887,30 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792375317"></script>
-<script src="img/arte-capa.js?v=1792375317"></script>
-<script src="img/fundo-criacao.js?v=1792375317"></script>
-<script src="img/fundo-pais.js?v=1792375317"></script>
-<script src="img/fundo-escudo.js?v=1792375317"></script>
-<script src="img/simbolos.js?v=1792375317"></script>
-<script src="img/kits-foto.js?v=1792375317"></script>
-<script src="img/fundo-vestiario.js?v=1792375317"></script>
-<script src="img/patro-logos.js?v=1792375317"></script>
-<script src="img/rostos.js?v=1792375317"></script>
-<script src="img/estadio-fotos.js?v=1792375317"></script>
-<script src="img/super-fotos.js?v=1792375317"></script>
-<script src="img/trofeus.js?v=1792375317"></script>
-<script src="img/medalhas.js?v=1792375317"></script>
-<script src="img/fotos.js?v=1792375317"></script>
-<script src="img/fotos-vs.js?v=1792375317"></script>
-<script src="img/kit-homens.js?v=1792375317"></script>
-<script src="img/tec-fotos.js?v=1792375317"></script>
-<script src="dados/elencos.js?v=1792375317"></script>
-<script src="img/rostos-reais.js?v=1792375317"></script>
-<script src="img/escudos-img.js?v=1792375317"></script>
-<script src="img/tradutores.js?v=1792375317"></script>
-<script src="img/avatares.js?v=1792375317"></script>
-<script src="dados/idiomas.js?v=1792375317"></script>
+<script src="img/escudos-reais.js?v=1792375449"></script>
+<script src="img/arte-capa.js?v=1792375449"></script>
+<script src="img/fundo-criacao.js?v=1792375449"></script>
+<script src="img/fundo-pais.js?v=1792375449"></script>
+<script src="img/fundo-escudo.js?v=1792375449"></script>
+<script src="img/simbolos.js?v=1792375449"></script>
+<script src="img/kits-foto.js?v=1792375449"></script>
+<script src="img/fundo-vestiario.js?v=1792375449"></script>
+<script src="img/patro-logos.js?v=1792375449"></script>
+<script src="img/rostos.js?v=1792375449"></script>
+<script src="img/estadio-fotos.js?v=1792375449"></script>
+<script src="img/super-fotos.js?v=1792375449"></script>
+<script src="img/trofeus.js?v=1792375449"></script>
+<script src="img/medalhas.js?v=1792375449"></script>
+<script src="img/fotos.js?v=1792375449"></script>
+<script src="img/fotos-vs.js?v=1792375449"></script>
+<script src="img/kit-homens.js?v=1792375449"></script>
+<script src="img/tec-fotos.js?v=1792375449"></script>
+<script src="dados/elencos.js?v=1792375449"></script>
+<script src="img/rostos-reais.js?v=1792375449"></script>
+<script src="img/escudos-img.js?v=1792375449"></script>
+<script src="img/tradutores.js?v=1792375449"></script>
+<script src="img/avatares.js?v=1792375449"></script>
+<script src="dados/idiomas.js?v=1792375449"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2354,7 +2355,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792375317";
+const VERSAO="1792375449";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4684,6 +4685,7 @@ function telaPartida(){
     <div class="time">${marcaDe(A,44)}<b>${esc(A.name)}</b></div></div>
   <div class="prog" aria-hidden="true"><i id="lv-prog" style="width:${Math.min(V.min,90)/90*100}%"></i><span></span></div>`;
   if(V.est!=="fim"){const tec=(V.cmd||"tec")==="tec";
+    h+=`<button class="btn-sair-jogo" data-a="lvsair" aria-label="Desistir da partida"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg></button>`;
     h+=`<div class="cmd-sel" role="radiogroup" aria-label="Quem comanda as trocas"><button role="radio" aria-checked="${tec}" class="${tec?"on":""}" data-a="lvcmd" data-v="tec">Comando do técnico</button>${V.est==="rodando"?`<button class="cmd-pausa" data-a="lvpausar" aria-label="Pausar o jogo"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>`:`<button class="cmd-pausa" data-a="lvretomar" aria-label="Continuar o jogo"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg></button>`}<button role="radio" aria-checked="${!tec}" class="${tec?"":"on"}" data-a="lvcmd" data-v="manual">Comando manual</button></div>
     <p class="muted peq cmd-dica">${tec?"O técnico faz as trocas sozinho (cansaço, lesão e tática) sem parar o jogo.":"Você decide as trocas. Se alguém se machucar, o jogo para para você escolher."}</p>`}
   if(V.est==="rodando"){
@@ -5061,6 +5063,12 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "lvmelhor":{const V=G.live;if(V.L[V.lado].subs>=MAX_SUBS){toastErro("Já foram feitas as 5 substituições.");return}const n=melhorarTime(V.lado);toast(n?`${n} troca${n>1?"s":""} feita${n>1?"s":""}.`:"O time em campo já é o melhor possível.");if(n)V.ultSub=null;salvar();break;}
     case "lvform":trocarFormacao(G.live.lado,v,null);salvar();break;
     case "lvest":trocarFormacao(G.live.lado,null,v);salvar();break;
+    case "lvsair":modal(`<div class="aviso-box"><b>Desistir da partida?</b><p>Se sair agora, seu time perde por W.O. (0 × 3) e os 3 pontos vão para o adversário.</p><div class="botoes"><button class="btn" data-a="fechar">Continuar jogando</button><button class="btn perigo" data-a="lvdesistir">Desistir</button></div></div>`);return;
+    case "lvdesistir":{fecharModal();const V=G.live;if(!V||V.est==="fim")break;pararTimer();
+      const meu=V.lado,adv=meu==="h"?"a":"h",ga=Math.max(3,adv==="h"?V.gh:V.ga);
+      if(meu==="h"){V.gh=0;V.sh=[];V.ga=ga}else{V.ga=0;V.sa=[];V.gh=ga}V.pen=null;
+      narrar("info",`${G.clubs[G.user.club].name} abandona a partida. Vitória do adversário por W.O.`);
+      V.min=Math.max(V.min,90);V.est="fim";concluirAoVivo();if(G.ultimoJogo)G.ultimoJogo.pendente=true;aba="resultado";salvar();window.scrollTo(0,0);setTimeout(somResultado,300);break;}
     case "lvpausar":{if(G.live.est==="rodando"){G.live.est="pausa";G.live.motivo=null}painel=null;liveSel=null;pararTimer();salvar();break;}
     case "lvvel":velocidade=velocidade>1?1:2;if(G.live&&G.live.est==="rodando")iniciarTimer();break;
     case "lvconcluir":{pararTimer();concluirAoVivo();if(G.ultimoJogo)G.ultimoJogo.pendente=true;aba="resultado";salvar();window.scrollTo(0,0);setTimeout(somResultado,300);break;}
