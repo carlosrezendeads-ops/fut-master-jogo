@@ -1012,30 +1012,30 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792435686"></script>
-<script src="img/arte-capa.js?v=1792435686"></script>
-<script src="img/fundo-criacao.js?v=1792435686"></script>
-<script src="img/fundo-pais.js?v=1792435686"></script>
-<script src="img/fundo-escudo.js?v=1792435686"></script>
-<script src="img/simbolos.js?v=1792435686"></script>
-<script src="img/kits-foto.js?v=1792435686"></script>
-<script src="img/fundo-vestiario.js?v=1792435686"></script>
-<script src="img/patro-logos.js?v=1792435686"></script>
-<script src="img/rostos.js?v=1792435686"></script>
-<script src="img/estadio-fotos.js?v=1792435686"></script>
-<script src="img/super-fotos.js?v=1792435686"></script>
-<script src="img/trofeus.js?v=1792435686"></script>
-<script src="img/medalhas.js?v=1792435686"></script>
-<script src="img/fotos.js?v=1792435686"></script>
-<script src="img/fotos-vs.js?v=1792435686"></script>
-<script src="img/kit-homens.js?v=1792435686"></script>
-<script src="img/tec-fotos.js?v=1792435686"></script>
-<script src="dados/elencos.js?v=1792435686"></script>
-<script src="img/rostos-reais.js?v=1792435686"></script>
-<script src="img/escudos-img.js?v=1792435686"></script>
-<script src="img/tradutores.js?v=1792435686"></script>
-<script src="img/avatares.js?v=1792435686"></script>
-<script src="dados/idiomas.js?v=1792435686"></script>
+<script src="img/escudos-reais.js?v=1792453623"></script>
+<script src="img/arte-capa.js?v=1792453623"></script>
+<script src="img/fundo-criacao.js?v=1792453623"></script>
+<script src="img/fundo-pais.js?v=1792453623"></script>
+<script src="img/fundo-escudo.js?v=1792453623"></script>
+<script src="img/simbolos.js?v=1792453623"></script>
+<script src="img/kits-foto.js?v=1792453623"></script>
+<script src="img/fundo-vestiario.js?v=1792453623"></script>
+<script src="img/patro-logos.js?v=1792453623"></script>
+<script src="img/rostos.js?v=1792453623"></script>
+<script src="img/estadio-fotos.js?v=1792453623"></script>
+<script src="img/super-fotos.js?v=1792453623"></script>
+<script src="img/trofeus.js?v=1792453623"></script>
+<script src="img/medalhas.js?v=1792453623"></script>
+<script src="img/fotos.js?v=1792453623"></script>
+<script src="img/fotos-vs.js?v=1792453623"></script>
+<script src="img/kit-homens.js?v=1792453623"></script>
+<script src="img/tec-fotos.js?v=1792453623"></script>
+<script src="dados/elencos.js?v=1792453623"></script>
+<script src="img/rostos-reais.js?v=1792453623"></script>
+<script src="img/escudos-img.js?v=1792453623"></script>
+<script src="img/tradutores.js?v=1792453623"></script>
+<script src="img/avatares.js?v=1792453623"></script>
+<script src="dados/idiomas.js?v=1792453623"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2510,7 +2510,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792435686";
+const VERSAO="1792453623";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3795,10 +3795,10 @@ function cartaoProximo(){
   const ev=proximoEvento();if(!ev)return "";
   const mp=partidaAtual();if(!mp)return "";
   const H=G.clubs[mp.h],A=G.clubs[mp.a],ag=agendaJogo(ev,mp.h,mp.a);
-  return `<h2>Próximo jogo</h2><div class="cartao prox-mini" data-a="aba" data-v="jogar" style="cursor:pointer">
+  return `<h2>Próximo jogo</h2><div class="cartao prox-mini" data-a="aba" data-v="prejogo" style="cursor:pointer">
     <div class="pm-times">${marcaDe(H,30)}<b>${esc(H.name)}</b><span class="x">×</span><b>${esc(A.name)}</b>${marcaDe(A,30)}</div>
     <p class="muted peq" style="margin:6px 0 10px;text-align:center">${esc(mp.rot)} · ${ag.dia} · ${ag.hora}</p>
-    <button class="btn prim full" data-a="aba" data-v="jogar">Próximo jogo</button></div>`;
+    <button class="btn prim full" data-a="aba" data-v="prejogo">Próximo jogo</button></div>`;
 }
 /* histórico do caixa (um ponto por jogo) para o gráfico de Finanças */
 function regCaixa(){const d=dataEv(G.ev)||dataEv(Math.max(0,G.ev-1));(G.finHist=G.finHist||[]).push({d:d?d.getTime():Date.now(),cx:Math.round(G.cash)});if(G.finHist.length>60)G.finHist=G.finHist.slice(-60)}
