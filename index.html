@@ -987,6 +987,8 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 .topo h1.dono-nome{font-size:18px;color:var(--cal)}
 .xp-barra.dono-xp{height:6px;max-width:150px;margin-top:5px}
 .campinho .cp-eu{transition:transform .65s cubic-bezier(.35,1.25,.5,1);cursor:grab;touch-action:none}.campinho .cp-eu.arrasta{transition:none;cursor:grabbing}
+.trava-rolagem,.trava-rolagem body{overflow:hidden;overscroll-behavior:none;touch-action:none}
+.campinho svg{touch-action:pan-y}
 .campo-txt{box-sizing:border-box;padding:12px;border-radius:10px;border:1px solid var(--gramado-3);background:var(--gramado);color:var(--cal);font:inherit;font-size:16px}
 .cp-salvar{display:block;margin:0 auto 8px}.cp-salvar[hidden]{display:none}
 .cp-salvas{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 8px}.cp-salvas>small{width:100%;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--cal-2)}
@@ -1016,30 +1018,30 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792454898"></script>
-<script src="img/arte-capa.js?v=1792454898"></script>
-<script src="img/fundo-criacao.js?v=1792454898"></script>
-<script src="img/fundo-pais.js?v=1792454898"></script>
-<script src="img/fundo-escudo.js?v=1792454898"></script>
-<script src="img/simbolos.js?v=1792454898"></script>
-<script src="img/kits-foto.js?v=1792454898"></script>
-<script src="img/fundo-vestiario.js?v=1792454898"></script>
-<script src="img/patro-logos.js?v=1792454898"></script>
-<script src="img/rostos.js?v=1792454898"></script>
-<script src="img/estadio-fotos.js?v=1792454898"></script>
-<script src="img/super-fotos.js?v=1792454898"></script>
-<script src="img/trofeus.js?v=1792454898"></script>
-<script src="img/medalhas.js?v=1792454898"></script>
-<script src="img/fotos.js?v=1792454898"></script>
-<script src="img/fotos-vs.js?v=1792454898"></script>
-<script src="img/kit-homens.js?v=1792454898"></script>
-<script src="img/tec-fotos.js?v=1792454898"></script>
-<script src="dados/elencos.js?v=1792454898"></script>
-<script src="img/rostos-reais.js?v=1792454898"></script>
-<script src="img/escudos-img.js?v=1792454898"></script>
-<script src="img/tradutores.js?v=1792454898"></script>
-<script src="img/avatares.js?v=1792454898"></script>
-<script src="dados/idiomas.js?v=1792454898"></script>
+<script src="img/escudos-reais.js?v=1792454984"></script>
+<script src="img/arte-capa.js?v=1792454984"></script>
+<script src="img/fundo-criacao.js?v=1792454984"></script>
+<script src="img/fundo-pais.js?v=1792454984"></script>
+<script src="img/fundo-escudo.js?v=1792454984"></script>
+<script src="img/simbolos.js?v=1792454984"></script>
+<script src="img/kits-foto.js?v=1792454984"></script>
+<script src="img/fundo-vestiario.js?v=1792454984"></script>
+<script src="img/patro-logos.js?v=1792454984"></script>
+<script src="img/rostos.js?v=1792454984"></script>
+<script src="img/estadio-fotos.js?v=1792454984"></script>
+<script src="img/super-fotos.js?v=1792454984"></script>
+<script src="img/trofeus.js?v=1792454984"></script>
+<script src="img/medalhas.js?v=1792454984"></script>
+<script src="img/fotos.js?v=1792454984"></script>
+<script src="img/fotos-vs.js?v=1792454984"></script>
+<script src="img/kit-homens.js?v=1792454984"></script>
+<script src="img/tec-fotos.js?v=1792454984"></script>
+<script src="dados/elencos.js?v=1792454984"></script>
+<script src="img/rostos-reais.js?v=1792454984"></script>
+<script src="img/escudos-img.js?v=1792454984"></script>
+<script src="img/tradutores.js?v=1792454984"></script>
+<script src="img/avatares.js?v=1792454984"></script>
+<script src="dados/idiomas.js?v=1792454984"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2514,7 +2516,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792454898";
+const VERSAO="1792454984";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4455,11 +4457,13 @@ const cpXY=pt=>`translate(${(8+pt.x*324).toFixed(1)}px,${(8+pt.y*204).toFixed(1)
 function posicoesEu(){const pa=G.user.posAjuste;return pa&&pa.form===G.user.form&&pa.pts&&pa.pts.length===11?pa.pts.map(p=>({...p})):posicoesForm(G.user.form,true)}
 /* arrastar as bolinhas do seu time com o dedo; depois aparece "Salvar esta formação" */
 function ligarCampinho(){const sv=document.querySelector(".campinho svg");if(!sv)return;
+  sv.addEventListener("touchstart",e=>{if(e.target.closest(".cp-eu"))e.preventDefault()},{passive:false});
+  sv.addEventListener("touchmove",e=>{if(document.querySelector(".cp-eu.arrasta"))e.preventDefault()},{passive:false});
   sv.querySelectorAll(".cp-eu").forEach(g=>{let ativo=false;
-    g.addEventListener("pointerdown",e=>{e.preventDefault();ativo=true;g._p=null;g.classList.add("arrasta");try{g.setPointerCapture(e.pointerId)}catch(er){}});
+    g.addEventListener("pointerdown",e=>{e.preventDefault();ativo=true;g._p=null;g.classList.add("arrasta");document.documentElement.classList.add("trava-rolagem");try{g.setPointerCapture(e.pointerId)}catch(er){}});
     g.addEventListener("pointermove",e=>{if(!ativo)return;const pt=sv.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const q=pt.matrixTransform(sv.getScreenCTM().inverse());
       const p={x:Math.round(clamp((q.x-8)/324,.02,.98)*1000)/1000,y:Math.round(clamp((q.y-8)/204,.03,.97)*1000)/1000};g.style.transform=cpXY(p);g._p=p});
-    const solta=()=>{if(!ativo)return;ativo=false;g.classList.remove("arrasta");if(!g._p)return;const pts=posicoesEu();pts[+g.dataset.i]=g._p;G.user.posAjuste={form:G.user.form,pts,salvo:false};salvar();const b=$("#cp-salvar");if(b)b.hidden=false};
+    const solta=()=>{if(!ativo)return;ativo=false;g.classList.remove("arrasta");document.documentElement.classList.remove("trava-rolagem");if(!g._p)return;const pts=posicoesEu();pts[+g.dataset.i]=g._p;G.user.posAjuste={form:G.user.form,pts,salvo:false};salvar();const b=$("#cp-salvar");if(b)b.hidden=false};
     g.addEventListener("pointerup",solta);g.addEventListener("pointercancel",solta)})}
 function animarForm(){const cs=document.querySelectorAll(".campinho .cp-eu");if(!cs.length)return false;const pE=posicoesEu();
   cs.forEach(c=>{const pt=pE[+c.dataset.i];if(pt)c.style.transform=cpXY(pt)});const lg=document.querySelector(".cp-leg span");if(lg)lg.lastChild.textContent=`${G.clubs[G.user.club].short} · ${G.user.form}`;return true}
@@ -5539,7 +5543,8 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "tutpular":G.tut=TUTORIAL.length;salvar();fecharModal();return;
     case "sploja":abertura=false;aba="mercado";merc={pos:"",min:0,orig:"pais"};break;
     case "ddabre":{const d=el.closest(".dd"),ab=!d.classList.contains("aberto");document.querySelectorAll(".dd.aberto").forEach(x=>x.classList.remove("aberto"));d.classList.toggle("aberto",ab);return}
-    case "ddform":if(v===G.user.form){el.closest(".dd").classList.remove("aberto");return}G.user.form=v;autoEscalar();salvar();el.closest(".dd").classList.remove("aberto");if(animarForm()){setTimeout(()=>{if(G&&!G.live)render()},700);return}break;
+    case "ddform":if(v===G.user.form){el.closest(".dd").classList.remove("aberto");return}G.user.form=v;G.user.posAjuste=null; // posições arrastadas só ficam se a formação for salva
+autoEscalar();salvar();el.closest(".dd").classList.remove("aberto");if(animarForm()){setTimeout(()=>{if(G&&!G.live)render()},700);return}break;
     case "ddest":G.user.est=v;salvar();break;
     case "formsalvar":{const FS=G.formSalvas||[];if(FS.length>=3){toastErro("Você já tem 3 formações salvas. Apague uma para salvar outra.");return}
       modal(`<b class="etapa">Salvar esta formação</b><p class="muted peq">${esc(G.user.form)} · ${esc(ESTILOS[G.user.est].n)} · com as posições que você ajustou.</p><input id="form-nome" class="campo-txt" maxlength="20" placeholder="Nome da formação" style="width:100%;margin:6px 0 12px"><div class="botoes"><button class="btn" data-a="fechar">Cancelar</button><button class="btn prim" data-a="formsalvarok">Salvar</button></div>`);setTimeout(()=>{const i=$("#form-nome");if(i)i.focus()},100);return}
