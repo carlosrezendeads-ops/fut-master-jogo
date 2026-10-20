@@ -1009,6 +1009,15 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 .simb-grade button img{width:44px;height:44px;object-fit:contain;display:block;margin:0 auto 2px}
 .simb-lista{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}.simb-chip{display:inline-flex;align-items:center;border-radius:12px;background:var(--gramado-3);border:2px solid transparent}.simb-chip.sel{border-color:var(--canario)}
 .simb-chip button{display:flex;align-items:center;gap:6px;border:0;background:none;color:var(--cal);font:inherit;font-size:12.5px;font-weight:700;padding:5px 8px;cursor:pointer}.simb-chip img{width:26px;height:26px;object-fit:contain}.simb-chip .x{padding-left:2px;color:var(--cal-2);font-size:16px}
+.esc-fixo{position:sticky;top:0;z-index:4;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:8px;padding:6px 0;margin-bottom:6px;background:var(--gramado);border-bottom:1px solid var(--gramado-3)}
+body:has(header.topo) .esc-fixo{top:72px}
+.esc-fixo .previa{min-height:0;padding:6px}
+.esc-hist{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--canario);background:var(--gramado-2);color:var(--canario);display:grid;place-items:center;cursor:pointer}.esc-hist:disabled{opacity:.3;border-color:var(--cal-2);color:var(--cal-2)}
+.esc-sec .grade8{max-height:258px;overflow-y:auto;overscroll-behavior:contain;padding-right:2px}
+.esc-sec .previa-mini{display:none}
+.esc-sec .nome-esc{gap:2px;padding:4px 10px 8px}
+.esc-sec .campo{gap:2px}.esc-sec .barra-esc input[type=range]{min-height:20px}.esc-sec .barra-rot small{font-size:10.5px}.esc-sec .barra-esc>span:first-child{font-size:12px}
+.esc-sec .seg button{padding:5px 6px;font-size:13px}.esc-sec .linha-chip{margin:2px 0}
 .campo-txt{box-sizing:border-box;padding:12px;border-radius:10px;border:1px solid var(--gramado-3);background:var(--gramado);color:var(--cal);font:inherit;font-size:16px}
 .cp-salvar{display:block;margin:0 auto 8px}.cp-salvar[hidden]{display:none}
 .cp-salvas{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 8px}.cp-salvas>small{width:100%;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--cal-2)}
@@ -1038,31 +1047,31 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792500380"></script>
-<script src="img/arte-capa.js?v=1792500380"></script>
-<script src="img/fundo-criacao.js?v=1792500380"></script>
-<script src="img/fundo-pais.js?v=1792500380"></script>
-<script src="img/fundo-escudo.js?v=1792500380"></script>
-<script src="img/simbolos.js?v=1792500380"></script>
-<script src="img/molduras.js?v=1792500380"></script>
-<script src="img/kits-foto.js?v=1792500380"></script>
-<script src="img/fundo-vestiario.js?v=1792500380"></script>
-<script src="img/patro-logos.js?v=1792500380"></script>
-<script src="img/rostos.js?v=1792500380"></script>
-<script src="img/estadio-fotos.js?v=1792500380"></script>
-<script src="img/super-fotos.js?v=1792500380"></script>
-<script src="img/trofeus.js?v=1792500380"></script>
-<script src="img/medalhas.js?v=1792500380"></script>
-<script src="img/fotos.js?v=1792500380"></script>
-<script src="img/fotos-vs.js?v=1792500380"></script>
-<script src="img/kit-homens.js?v=1792500380"></script>
-<script src="img/tec-fotos.js?v=1792500380"></script>
-<script src="dados/elencos.js?v=1792500380"></script>
-<script src="img/rostos-reais.js?v=1792500380"></script>
-<script src="img/escudos-img.js?v=1792500380"></script>
-<script src="img/tradutores.js?v=1792500380"></script>
-<script src="img/avatares.js?v=1792500380"></script>
-<script src="dados/idiomas.js?v=1792500380"></script>
+<script src="img/escudos-reais.js?v=1792501144"></script>
+<script src="img/arte-capa.js?v=1792501144"></script>
+<script src="img/fundo-criacao.js?v=1792501144"></script>
+<script src="img/fundo-pais.js?v=1792501144"></script>
+<script src="img/fundo-escudo.js?v=1792501144"></script>
+<script src="img/simbolos.js?v=1792501144"></script>
+<script src="img/molduras.js?v=1792501144"></script>
+<script src="img/kits-foto.js?v=1792501144"></script>
+<script src="img/fundo-vestiario.js?v=1792501144"></script>
+<script src="img/patro-logos.js?v=1792501144"></script>
+<script src="img/rostos.js?v=1792501144"></script>
+<script src="img/estadio-fotos.js?v=1792501144"></script>
+<script src="img/super-fotos.js?v=1792501144"></script>
+<script src="img/trofeus.js?v=1792501144"></script>
+<script src="img/medalhas.js?v=1792501144"></script>
+<script src="img/fotos.js?v=1792501144"></script>
+<script src="img/fotos-vs.js?v=1792501144"></script>
+<script src="img/kit-homens.js?v=1792501144"></script>
+<script src="img/tec-fotos.js?v=1792501144"></script>
+<script src="dados/elencos.js?v=1792501144"></script>
+<script src="img/rostos-reais.js?v=1792501144"></script>
+<script src="img/escudos-img.js?v=1792501144"></script>
+<script src="img/tradutores.js?v=1792501144"></script>
+<script src="img/avatares.js?v=1792501144"></script>
+<script src="dados/idiomas.js?v=1792501144"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2620,7 +2629,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792500380";
+const VERSAO="1792501144";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3754,6 +3763,13 @@ const chipCor=(k,cor,txt)=>`<label class="chip-cor"><input type="color" data-cor
 const barraEsc=(k,tit,min,max,v,a,b)=>{const p=Math.round((v-min)/(max-min)*100);return `<label class="campo barra-esc"><span>${tit} <b class="barra-num">${p}</b></span><input type="range" data-escr="${k}" data-min="${min}" data-max="${max}" min="0" max="100" step="1" value="${p}"><span class="barra-rot"><small>${a}</small><small>50</small><small>${b}</small></span></label>`};
 /* formato, desenho e símbolo ficam fechados; toca no título pra abrir a grade, Salvar (ou o título) fecha */
 let escAberto=null,simSel=0;
+/* desfazer/refazer do editor de escudo: guarda cópias do escudo a cada alteração (até 60) */
+const ESC_H={p:[],i:-1,alvo:null};
+function escGuardar(e){e=e||alvoVisual().e;if(ESC_H.alvo!==e){ESC_H.alvo=e;ESC_H.p=[];ESC_H.i=-1}const j=JSON.stringify(e);if(ESC_H.p[ESC_H.i]===j)return;
+  ESC_H.p=ESC_H.p.slice(0,ESC_H.i+1);ESC_H.p.push(j);if(ESC_H.p.length>60)ESC_H.p.shift();ESC_H.i=ESC_H.p.length-1;escHistBotoes()}
+function escHistBotoes(){const d=document.querySelector("[data-a=escdesfaz]"),r=document.querySelector("[data-a=escrefaz]");if(d)d.disabled=ESC_H.i<=0;if(r)r.disabled=ESC_H.i>=ESC_H.p.length-1}
+function escVoltar(passo){const n=ESC_H.i+passo;if(n<0||n>=ESC_H.p.length)return;ESC_H.i=n;const e=alvoVisual().e,v=JSON.parse(ESC_H.p[n]);Object.keys(e).forEach(k=>delete e[k]);Object.assign(e,v);
+  if(G){const c=G.clubs[G.user.club];c.c1=e.c1;c.c2=e.c2;salvar()}else if(typeof salvarW==="function")salvarW();const y=scrollY;render();scrollTo(0,y)}
 function secEsc(k,tit,atual,grade,ck,cor,extra){const ab=escAberto===k;
   return `<div class="campo esc-sec${ab?" aberto":""}"><button type="button" class="esc-cab" data-a="escsec" data-v="${ab?"":k}"><span>${tit}</span><small>${esc(atual)}</small><b aria-hidden="true">${ab?"▲":"▼"}</b></button>${ab?grade+`<button type="button" class="btn prim full" data-a="escsec" data-v="">Salvar</button>`:""}
   ${ck||extra?`<div class="esc-cor"><span>Cores · personalizar</span><span class="chips">${ck?chipCor(ck,cor,"Escolher cor"):""}${extra||""}</span></div>`:""}</div>`}
@@ -3788,9 +3804,9 @@ function processarEscudoUpload(f){return new Promise((ok,er)=>{if(!f||!/^image\/
   if(x1<=x0||y1<=y0)return er("A imagem parece vazia.");
   const W=216,H=248,cw=x1-x0+1,ch=y1-y0+1,s2=Math.min(W/cw,H/ch),o=document.createElement("canvas");o.width=W;o.height=H;
   o.getContext("2d").drawImage(c,x0,y0,cw,ch,(W-cw*s2)/2,(H-ch*s2)/2,cw*s2,ch*s2);ok(o.toDataURL("image/png"))};im.onerror=()=>er("Não consegui abrir essa imagem.");im.src=rd.result};rd.readAsDataURL(f)})}
-function editorEscudo(e,nome){if(e.nomeOn===undefined)e.nomeOn=false;
+function editorEscudo(e,nome){if(e.nomeOn===undefined)e.nomeOn=false;escGuardar(e);
   return `<h2 style="margin-top:0">Escudo</h2>
-  <div class="previa" id="prev-escudo">${escudoSVG(e,"",120,nome)}</div>
+  <div class="esc-fixo"><button type="button" class="esc-hist" data-a="escdesfaz" aria-label="Desfazer" ${ESC_H.i>0?"":"disabled"}><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg></button><div class="previa" id="prev-escudo">${escudoSVG(e,"",110,nome)}</div><button type="button" class="esc-hist" data-a="escrefaz" aria-label="Refazer" ${ESC_H.i<ESC_H.p.length-1?"":"disabled"}><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14l5-5-5-5"/><path d="M20 9H10a6 6 0 0 0 0 12h3"/></svg></button></div>
   <div class="up-esc"><label class="btn full card-venda">📤 ${e.img?"Trocar imagem do escudo":"Fazer upload do escudo"}<input type="file" id="esc-up" accept="image/*" hidden></label>
   ${e.img?`<button class="btn mini" data-a="escupremover">Voltar ao escudo desenhado</button>`:""}
   <div class="linha prompt-linha"><button class="btn mini prompt-card" data-a="escprompt">📋 Prompt para criação/enquadramento</button><button type="button" class="info-bt" data-a="escpromptinfo" aria-label="O que é isso">i</button></div></div>
@@ -5556,6 +5572,8 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "esimadd":{const e=vis().e,SB=simbsDe(e);if(SB.length>=MAX_SIMB){toastErro(`No máximo ${MAX_SIMB} símbolos.`);return}const I=SIMBOLOS_IMG[+v];
       SB.push({s:+v,cor:"orig",c1:e.c3||"#ffffff",c2:e.c2||"#ffffff",x:SB.length?((SB.length%2)?-18:18):0,y:SB.length?-14:0,t:SB.length?.55:1});simSel=SB.length-1;toast(`${I[0]} no escudo. Ajuste embaixo.`);if(G)salvar();break}
     case "esimsel":simSel=+v;break;
+    case "escdesfaz":escVoltar(-1);return;
+    case "escrefaz":escVoltar(1);return;
     case "esimdel":{const SB=simbsDe(vis().e);SB.splice(+v,1);simSel=Math.max(0,Math.min(simSel,SB.length-1));if(G)salvar();break}
     case "esimmodo":{const q=simbsDe(vis().e)[simSel];if(q)q.cor=v;if(G)salvar();break}
     case "esimcor":vis().e.simCor=v;if(G)salvar();break;
@@ -5778,8 +5796,8 @@ app.addEventListener("input",e=>{
 });
 app.addEventListener("change",e=>{
   const t=e.target;
-  if(t.dataset.escr||t.id==="esc-txt"){if(G)salvar();return}
-  if(t.dataset.cor||t.id==="v-nome"||t.id==="v-sigla"||t.id==="v-estadio"){if(G)salvar();render();return}
+  if(t.dataset.escr||t.id==="esc-txt"){if(G)salvar();escGuardar();return}
+  if(t.dataset.cor||t.id==="v-nome"||t.id==="v-sigla"||t.id==="v-estadio"){if(G)salvar();if(t.dataset.cor==="escudo")escGuardar();render();return}
   if(t.id==="sel-form"){G.user.form=t.value;autoEscalar();salvar();render()}
   else if(t.id==="sel-est"){G.user.est=t.value;salvar();render()}
   else if(t.id==="m-pos"){merc.pos=t.value;render()}
