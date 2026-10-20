@@ -1072,31 +1072,31 @@ body:has(header.topo) .esc-fixo{top:72px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792535929"></script>
-<script src="img/arte-capa.js?v=1792535929"></script>
-<script src="img/fundo-criacao.js?v=1792535929"></script>
-<script src="img/fundo-pais.js?v=1792535929"></script>
-<script src="img/fundo-escudo.js?v=1792535929"></script>
-<script src="img/simbolos.js?v=1792535929"></script>
-<script src="img/molduras.js?v=1792535929"></script>
-<script src="img/kits-foto.js?v=1792535929"></script>
-<script src="img/fundo-vestiario.js?v=1792535929"></script>
-<script src="img/patro-logos.js?v=1792535929"></script>
-<script src="img/rostos.js?v=1792535929"></script>
-<script src="img/estadio-fotos.js?v=1792535929"></script>
-<script src="img/super-fotos.js?v=1792535929"></script>
-<script src="img/trofeus.js?v=1792535929"></script>
-<script src="img/medalhas.js?v=1792535929"></script>
-<script src="img/fotos.js?v=1792535929"></script>
-<script src="img/fotos-vs.js?v=1792535929"></script>
-<script src="img/kit-homens.js?v=1792535929"></script>
-<script src="img/tec-fotos.js?v=1792535929"></script>
-<script src="dados/elencos.js?v=1792535929"></script>
-<script src="img/rostos-reais.js?v=1792535929"></script>
-<script src="img/escudos-img.js?v=1792535929"></script>
-<script src="img/tradutores.js?v=1792535929"></script>
-<script src="img/avatares.js?v=1792535929"></script>
-<script src="dados/idiomas.js?v=1792535929"></script>
+<script src="img/escudos-reais.js?v=1792536715"></script>
+<script src="img/arte-capa.js?v=1792536715"></script>
+<script src="img/fundo-criacao.js?v=1792536715"></script>
+<script src="img/fundo-pais.js?v=1792536715"></script>
+<script src="img/fundo-escudo.js?v=1792536715"></script>
+<script src="img/simbolos.js?v=1792536715"></script>
+<script src="img/molduras.js?v=1792536715"></script>
+<script src="img/kits-foto.js?v=1792536715"></script>
+<script src="img/fundo-vestiario.js?v=1792536715"></script>
+<script src="img/patro-logos.js?v=1792536715"></script>
+<script src="img/rostos.js?v=1792536715"></script>
+<script src="img/estadio-fotos.js?v=1792536715"></script>
+<script src="img/super-fotos.js?v=1792536715"></script>
+<script src="img/trofeus.js?v=1792536715"></script>
+<script src="img/medalhas.js?v=1792536715"></script>
+<script src="img/fotos.js?v=1792536715"></script>
+<script src="img/fotos-vs.js?v=1792536715"></script>
+<script src="img/kit-homens.js?v=1792536715"></script>
+<script src="img/tec-fotos.js?v=1792536715"></script>
+<script src="dados/elencos.js?v=1792536715"></script>
+<script src="img/rostos-reais.js?v=1792536715"></script>
+<script src="img/escudos-img.js?v=1792536715"></script>
+<script src="img/tradutores.js?v=1792536715"></script>
+<script src="img/avatares.js?v=1792536715"></script>
+<script src="dados/idiomas.js?v=1792536715"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -1901,7 +1901,7 @@ function passoMinuto(){
       if(L.am[id]&&rnd()<.85){/* jogador pendurado evita a falta */}
       else if(rnd()<.03){expulsar(s,i,`CARTÃO VERMELHO! ${p.n} (${nomeT}) ${pick(FR_FALTA)} e é expulso direto.`);
         const vt=vitimaFalta(s);if(vt){const q=G.players[V.L[vt[0]].xi[vt[1]]],j=3;lesionar(vt[0],vt[1],j,"Lesão grave após entrada violenta",`${q.n} (${nomeLado(vt[0])}) sofre lesão grave na entrada e sai de maca. Desfalque por ${j} jogos.`)}}
-      else{
+      else if(rnd()<.65){ // amarelo 35% menos frequente
         L.am[id]=(L.am[id]||0)+1;
         if(L.am[id]>=2)expulsar(s,i,`Segundo amarelo para ${p.n} (${nomeT}). Expulso!`);
         else{
@@ -2812,7 +2812,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792535929";
+const VERSAO="1792536715";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
