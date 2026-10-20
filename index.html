@@ -473,7 +473,24 @@ nav.abas[hidden]{display:none}
 .noticia{display:flex;flex-direction:column;gap:2px;font-size:14px;padding-left:10px;border-left:3px solid var(--gramado-3)}
 .noticia.clube{border-left-color:var(--canario)}.noticia.mercado{border-left-color:var(--azul)}
 .noticia.tecnico{border-left-color:#e5484d}.noticia.rumor{border-left-color:#8e4ec6}.noticia.polemica{border-left-color:#f76b15}.noticia.exterior{border-left-color:var(--azul)}
-.lg-news{display:flex;flex-direction:column;gap:8px;width:100%;text-align:left;margin-top:12px;font:inherit;color:inherit;cursor:pointer}
+.lg-news{display:flex;flex-direction:column;gap:10px;width:100%;text-align:left;margin-top:12px;font:inherit;color:inherit;cursor:pointer}
+.nt-lista{display:flex;flex-direction:column;gap:10px}
+.nt-card{--tc:var(--gramado-3);position:relative;background:var(--gramado-2);border:1px solid var(--gramado-3);border-left:5px solid var(--tc);border-radius:12px;padding:10px 12px 11px;overflow:hidden}
+.nt-card.tecnico{--tc:#e5484d}.nt-card.rumor{--tc:#8e4ec6}.nt-card.polemica{--tc:#f76b15}.nt-card.exterior,.nt-card.mercado{--tc:#3e8ef7}.nt-card.clube{--tc:var(--canario)}.nt-card.geral{--tc:#30a46c}
+.nt-card.com-time{border:2px solid var(--t1);border-left-width:6px;box-shadow:inset -4px 0 0 var(--t2)}
+.nt-top{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:11px;color:var(--cal-2)}
+.nt-top .nt-tag{color:var(--tc)}.nt-card.com-time .nt-top .nt-tag{color:var(--cal-2)}
+.nt-ico{font-size:17px;line-height:1}
+.nt-data{margin-left:auto;font-variant-numeric:tabular-nums}
+.nt-hoje{display:inline-block;background:var(--canario);color:#1a1a1a;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:2px 7px;vertical-align:middle}
+.nt-time{display:inline-flex;align-items:center;gap:6px;margin:8px 0 2px;padding:4px 20px 4px 6px;border-radius:8px;background:linear-gradient(90deg,var(--t1) calc(100% - 12px),var(--t2) calc(100% - 12px) calc(100% - 6px),var(--t1) calc(100% - 6px));font-size:13px;font-weight:800;letter-spacing:.02em;max-width:100%}
+.nt-time b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nt-card p{margin:6px 0 0;font-size:14px;line-height:1.4}
+.nt-card.nova{animation:ntBrilho 2.6s ease-in-out infinite}
+.nt-card.nova::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.14) 50%,transparent 70%);transform:translateX(-100%);animation:ntReflexo 3.2s ease-in-out infinite;pointer-events:none}
+@keyframes ntBrilho{0%,100%{box-shadow:0 0 0 rgba(255,210,63,0)}50%{box-shadow:0 0 14px 1px rgba(255,210,63,.45)}}
+@keyframes ntReflexo{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
+@media (prefers-reduced-motion:reduce){.nt-card.nova,.nt-card.nova::after{animation:none}}
 .lg-news-cab{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.lg-news-cab small{color:var(--cal-2);font-size:12px}
 .lg-news-it{display:flex;flex-direction:column;gap:1px;font-size:13.5px;line-height:1.35;padding-left:9px;border-left:3px solid var(--gramado-3)}
 .lg-news-it i{font-style:normal;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--cal-2)}
@@ -1054,31 +1071,31 @@ body:has(header.topo) .esc-fixo{top:72px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792531245"></script>
-<script src="img/arte-capa.js?v=1792531245"></script>
-<script src="img/fundo-criacao.js?v=1792531245"></script>
-<script src="img/fundo-pais.js?v=1792531245"></script>
-<script src="img/fundo-escudo.js?v=1792531245"></script>
-<script src="img/simbolos.js?v=1792531245"></script>
-<script src="img/molduras.js?v=1792531245"></script>
-<script src="img/kits-foto.js?v=1792531245"></script>
-<script src="img/fundo-vestiario.js?v=1792531245"></script>
-<script src="img/patro-logos.js?v=1792531245"></script>
-<script src="img/rostos.js?v=1792531245"></script>
-<script src="img/estadio-fotos.js?v=1792531245"></script>
-<script src="img/super-fotos.js?v=1792531245"></script>
-<script src="img/trofeus.js?v=1792531245"></script>
-<script src="img/medalhas.js?v=1792531245"></script>
-<script src="img/fotos.js?v=1792531245"></script>
-<script src="img/fotos-vs.js?v=1792531245"></script>
-<script src="img/kit-homens.js?v=1792531245"></script>
-<script src="img/tec-fotos.js?v=1792531245"></script>
-<script src="dados/elencos.js?v=1792531245"></script>
-<script src="img/rostos-reais.js?v=1792531245"></script>
-<script src="img/escudos-img.js?v=1792531245"></script>
-<script src="img/tradutores.js?v=1792531245"></script>
-<script src="img/avatares.js?v=1792531245"></script>
-<script src="dados/idiomas.js?v=1792531245"></script>
+<script src="img/escudos-reais.js?v=1792532780"></script>
+<script src="img/arte-capa.js?v=1792532780"></script>
+<script src="img/fundo-criacao.js?v=1792532780"></script>
+<script src="img/fundo-pais.js?v=1792532780"></script>
+<script src="img/fundo-escudo.js?v=1792532780"></script>
+<script src="img/simbolos.js?v=1792532780"></script>
+<script src="img/molduras.js?v=1792532780"></script>
+<script src="img/kits-foto.js?v=1792532780"></script>
+<script src="img/fundo-vestiario.js?v=1792532780"></script>
+<script src="img/patro-logos.js?v=1792532780"></script>
+<script src="img/rostos.js?v=1792532780"></script>
+<script src="img/estadio-fotos.js?v=1792532780"></script>
+<script src="img/super-fotos.js?v=1792532780"></script>
+<script src="img/trofeus.js?v=1792532780"></script>
+<script src="img/medalhas.js?v=1792532780"></script>
+<script src="img/fotos.js?v=1792532780"></script>
+<script src="img/fotos-vs.js?v=1792532780"></script>
+<script src="img/kit-homens.js?v=1792532780"></script>
+<script src="img/tec-fotos.js?v=1792532780"></script>
+<script src="dados/elencos.js?v=1792532780"></script>
+<script src="img/rostos-reais.js?v=1792532780"></script>
+<script src="img/escudos-img.js?v=1792532780"></script>
+<script src="img/tradutores.js?v=1792532780"></script>
+<script src="img/avatares.js?v=1792532780"></script>
+<script src="dados/idiomas.js?v=1792532780"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2356,7 +2373,8 @@ function rodadaCopaN(d,msgs,meuRes){
 }
 
 /* ---------- notícias ---------- */
-function addNoticia(t,tipo,s){G.news=G.news||[];s=s==null?userTier():s;if(s<0||s>2)return;G.news.unshift({t,tipo,s,ano:G.year,ev:G.ev,rd:rodadasJogadas(s)});const n=[0,0,0];G.news=G.news.filter(x=>{const k=x.s==null?s:x.s;return ++n[k]<=80})}
+function addNoticia(t,tipo,s,cid){G.news=G.news||[];s=s==null?userTier():s;if(s<0||s>2)return;const dt=dataEv(G.ev)||dataEv(Math.max(0,G.ev-1));
+  G.news.unshift({t,tipo,s,ano:G.year,ev:G.ev,rd:rodadasJogadas(s),d:dt?dt.getTime():null,c:cid!=null?cid:clubeNoticia(t)});const n=[0,0,0];G.news=G.news.filter(x=>{const k=x.s==null?s:x.s;return ++n[k]<=80})}
 function noticiasRodada(r){
   const uid=G.user.club,t=userTier(),rs=G.res[t][r]||[];
   const cl=classificacao(t),lider=G.clubs[cl[0]];
@@ -2793,7 +2811,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792531245";
+const VERSAO="1792532780";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -5149,16 +5167,40 @@ function modalRenovar(id){
 }
 const NT_TAG={mercado:"Mercado",clube:"Seu clube",geral:"Liga",tecnico:"Técnicos",rumor:"Rumor",polemica:"Polêmica",exterior:"Exterior"};
 const noticiasDa=t=>(G.news||[]).filter(x=>(x.s==null?userTier():x.s)===t);
-function linhaNoticia(x){return `<div class="noticia ${x.tipo}"><span class="nt-tag">${NT_TAG[x.tipo]||"Liga"}${x.rd!=null?` · ${x.rd?"rodada "+x.rd:"pré-temporada"} ${x.ano}`:""}</span><span>${esc(x.t)}</span></div>`}
+/* clube principal da notícia: o primeiro nome de clube que aparece no texto (depois de "do", "o", ":", "," ...) */
+let NT_RE=null,NT_MAP=null,NT_N=0;
+function clubeNoticia(t){const cs=Object.values(G.clubs);
+  if(!NT_RE||NT_N!==cs.length){NT_N=cs.length;NT_MAP={};cs.forEach(c=>{if(NT_MAP[c.name]==null||c.user||(c.tier>=0&&c.tier<=3))NT_MAP[c.name]=c.id});
+    const ns=Object.keys(NT_MAP).sort((a,b)=>b.length-a.length).map(n=>n.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"));
+    NT_RE=new RegExp("(^|(?:\\b(?:do|da|o|a|ao|pelo|pela|no|na|em|contra o|para o)|[:,.])\\s)("+ns.join("|")+")(?![A-Za-zÀ-ÿ0-9])")}
+  const m=String(t).match(NT_RE);return m?NT_MAP[m[2]]:null}
+const NT_ICO={mercado:"🤝",clube:"⭐",geral:"📊",tecnico:"📋",rumor:"👀",polemica:"🔥",exterior:"✈️"};
+function icoNoticia(x){const t=x.t;
+  if(x.tipo==="polemica")return /Arbitragem/.test(t)?"📺":/Torcida/.test(t)?"📢":"🔥";
+  if(/vende |proposta|Negócio fechado|paga a multa/.test(t))return "💰";
+  if(/demite|saída|rescindem|derruba|não segue|não renova|perde o técnico|perde .* para o/.test(t))return "🚪";
+  if(/renova/.test(t))return "✍️";
+  if(/contrata|acerta com|anuncia|Reforço|troca o/.test(t))return "🤝";
+  if(/Ingressos/.test(t))return "🏟️";
+  if(/artilharia|gols|Goleada|vence|liderança/.test(t))return "⚽";
+  return NT_ICO[x.tipo]||"📰"}
+function dataNoticia(x){const d=x.d?new Date(x.d):null;
+  return (d?`${DIAS_SEM[d.getDay()].slice(0,3)}, ${d.getDate()} ${MESES[d.getMonth()].slice(0,3)} ${d.getFullYear()}`:String(x.ano))+(x.rd==null?"":x.rd?` · Rodada ${x.rd}`:" · Pré-temporada")}
+const novaNoticia=x=>x.ano===G.year&&x.ev!=null&&x.ev>=G.ev-1&&!G.seasonEnd||(G.seasonEnd&&x.ano===G.year&&x.rd>=nRodadas()&&x.ev>=G.ev-1);
+function linhaNoticia(x){if(x.c===undefined)x.c=clubeNoticia(x.t);
+  const c=x.c!=null&&G.clubs[x.c],nova=novaNoticia(x),t1=c?(c.user&&unisDe(c)[0]?unisDe(c)[0].camisa:c.c1)||"#555":"",t2=c?(c.user&&unisDe(c)[0]?unisDe(c)[0].detalhe:c.c2)||"#fff":"";
+  return `<div class="nt-card ${x.tipo}${nova?" nova":""}${c?" com-time":""}"${c?` style="--t1:${t1};--t2:${t2}"`:""}>
+    <div class="nt-top"><span class="nt-ico">${icoNoticia(x)}</span><span class="nt-tag">${NT_TAG[x.tipo]||"Liga"}</span>${nova?`<span class="nt-hoje">Hoje</span>`:""}<span class="nt-data">${dataNoticia(x)}</span></div>
+    ${c?`<div class="nt-time" style="color:${contrasteHex(t1)}">${marcaDe(c,20)}<b>${esc(c.name)}</b></div>`:""}<p>${esc(x.t)}</p></div>`}
 function cartaoNoticias(){
   const n=noticiasDa(userTier()).slice(0,6);if(!n.length)return "";
-  return `<h2>Notícias</h2><div class="cartao secao noticias">${n.map(linhaNoticia).join("")}</div>`;
+  return `<h2>Notícias</h2><div class="nt-lista">${n.map(linhaNoticia).join("")}</div>`;
 }
 /* Liga: card com as últimas notícias da série escolhida + aba com todas */
-function cartaoNoticiasLiga(t){const n=noticiasDa(t).slice(0,3);
-  return `<button class="cartao lg-news" data-a="ligaaba" data-v="noticias"><span class="lg-news-cab"><b>📰 Notícias</b><small>${esc(pais().ligas[t])} · ver todas ›</small></span>${n.length?n.map(x=>`<span class="lg-news-it ${x.tipo}"><i>${NT_TAG[x.tipo]||"Liga"}</i>${esc(x.t)}</span>`).join(""):`<span class="lg-news-it"><i>Liga</i>As notícias da ${esc(pais().ligas[t])} aparecem aqui conforme as rodadas acontecem.</span>`}</button>`}
+function cartaoNoticiasLiga(t){const n=noticiasDa(t).slice(0,3),novas=noticiasDa(t).filter(novaNoticia).length;
+  return `<div class="cartao lg-news" data-a="ligaaba" data-v="noticias" role="button" tabindex="0"><span class="lg-news-cab"><b>📰 Notícias${novas?` <span class="nt-hoje">${novas} nova${novas>1?"s":""}</span>`:""}</b><small>${esc(pais().ligas[t])} · ver todas ›</small></span>${n.length?`<div class="nt-lista">${n.map(linhaNoticia).join("")}</div>`:`<p class="muted" style="margin:0">As notícias da ${esc(pais().ligas[t])} aparecem aqui conforme as rodadas acontecem.</p>`}</div>`}
 function ligaNoticias(t){const n=noticiasDa(t);
-  return n.length?`<div class="cartao secao noticias">${n.map(linhaNoticia).join("")}</div>`:`<div class="cartao lg-vazio">Ainda não há notícias da ${esc(pais().ligas[t])}. Jogue as primeiras rodadas.</div>`}
+  return n.length?`<div class="nt-lista">${n.map(linhaNoticia).join("")}</div>`:`<div class="cartao lg-vazio">Ainda não há notícias da ${esc(pais().ligas[t])}. Jogue as primeiras rodadas.</div>`}
 function salaTrofeus(){
   const t=G.titles||[];
   return `<h2>Sala de troféus</h2>${t.length?`<div class="trofeus">${t.slice().reverse().map(x=>{const m=x.match(/^(.*) (\d{4})$/);return `<div class="trofeu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 6h3a3 3 0 0 1-3 4M7 6H4a3 3 0 0 0 3 4"/></svg><b>${esc(m?m[1]:x)}</b><small>${m?m[2]:""}</small></div>`}).join("")}</div>`:'<div class="cartao"><p class="muted" style="margin:0">A estante ainda está vazia. O primeiro título vai aparecer aqui.</p></div>'}`;
