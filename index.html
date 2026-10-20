@@ -1018,30 +1018,30 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792454984"></script>
-<script src="img/arte-capa.js?v=1792454984"></script>
-<script src="img/fundo-criacao.js?v=1792454984"></script>
-<script src="img/fundo-pais.js?v=1792454984"></script>
-<script src="img/fundo-escudo.js?v=1792454984"></script>
-<script src="img/simbolos.js?v=1792454984"></script>
-<script src="img/kits-foto.js?v=1792454984"></script>
-<script src="img/fundo-vestiario.js?v=1792454984"></script>
-<script src="img/patro-logos.js?v=1792454984"></script>
-<script src="img/rostos.js?v=1792454984"></script>
-<script src="img/estadio-fotos.js?v=1792454984"></script>
-<script src="img/super-fotos.js?v=1792454984"></script>
-<script src="img/trofeus.js?v=1792454984"></script>
-<script src="img/medalhas.js?v=1792454984"></script>
-<script src="img/fotos.js?v=1792454984"></script>
-<script src="img/fotos-vs.js?v=1792454984"></script>
-<script src="img/kit-homens.js?v=1792454984"></script>
-<script src="img/tec-fotos.js?v=1792454984"></script>
-<script src="dados/elencos.js?v=1792454984"></script>
-<script src="img/rostos-reais.js?v=1792454984"></script>
-<script src="img/escudos-img.js?v=1792454984"></script>
-<script src="img/tradutores.js?v=1792454984"></script>
-<script src="img/avatares.js?v=1792454984"></script>
-<script src="dados/idiomas.js?v=1792454984"></script>
+<script src="img/escudos-reais.js?v=1792455663"></script>
+<script src="img/arte-capa.js?v=1792455663"></script>
+<script src="img/fundo-criacao.js?v=1792455663"></script>
+<script src="img/fundo-pais.js?v=1792455663"></script>
+<script src="img/fundo-escudo.js?v=1792455663"></script>
+<script src="img/simbolos.js?v=1792455663"></script>
+<script src="img/kits-foto.js?v=1792455663"></script>
+<script src="img/fundo-vestiario.js?v=1792455663"></script>
+<script src="img/patro-logos.js?v=1792455663"></script>
+<script src="img/rostos.js?v=1792455663"></script>
+<script src="img/estadio-fotos.js?v=1792455663"></script>
+<script src="img/super-fotos.js?v=1792455663"></script>
+<script src="img/trofeus.js?v=1792455663"></script>
+<script src="img/medalhas.js?v=1792455663"></script>
+<script src="img/fotos.js?v=1792455663"></script>
+<script src="img/fotos-vs.js?v=1792455663"></script>
+<script src="img/kit-homens.js?v=1792455663"></script>
+<script src="img/tec-fotos.js?v=1792455663"></script>
+<script src="dados/elencos.js?v=1792455663"></script>
+<script src="img/rostos-reais.js?v=1792455663"></script>
+<script src="img/escudos-img.js?v=1792455663"></script>
+<script src="img/tradutores.js?v=1792455663"></script>
+<script src="img/avatares.js?v=1792455663"></script>
+<script src="dados/idiomas.js?v=1792455663"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2516,7 +2516,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792454984";
+const VERSAO="1792455663";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4480,7 +4480,7 @@ function campinho(m){
   const pE=posicoesEu(),pD=posicoesForm(ad.form,false);
   // jogador no campinho: rosto dentro da bolinha (cor da camisa na borda) e a posição embaixo
   const CORP={GOL:["#5b4a12","#ffe08a"],LAT:["#14405e","#a8dcff"],ZAG:["#14405e","#a8dcff"],VOL:["#1f5a33","#b9f5cc"],MEI:["#1f5a33","#b9f5cc"],ATA:["#5e1f1a","#ffb8ad"]};
-  const bolaJ=(pt,u,id,i,eu,pos)=>{const p=id!=null&&G.players[id],[bg,fg]=CORP[pos]||CORP.MEI;return `<g${eu?` class="cp-eu" data-i="${i}"`:""} style="transform:${cpXY(pt)}"><circle r="11.5" fill="${u.camisa}" stroke="${u.detalhe&&distCor(u.detalhe,u.camisa)>60?u.detalhe:"#ffffff"}" stroke-width="2.2"${p?"":` opacity=".35"`}/>${p?`<g clip-path="url(#cpClip)">${rostoSVG(p,22).replace("<svg",'<svg x="-11" y="-9.5"')}</g>`:""}<g transform="translate(0 15.5)"><rect x="-10.5" y="-4.6" width="21" height="9.2" rx="2.6" fill="${bg}" stroke="rgba(0,0,0,.35)" stroke-width=".6"/><text y="2.5" text-anchor="middle" font-size="6.6" font-weight="800" fill="${fg}" font-family="Archivo,Arial,sans-serif">${pos}</text></g></g>`};
+  const bolaJ=(pt,u,id,i,eu,pos)=>{const p=id!=null&&G.players[id],[bg,fg]=CORP[pos]||CORP.MEI;return `<g${eu?` class="cp-eu" data-i="${i}"`:""} style="transform:${cpXY(pt)}"><circle r="13.2" fill="${u.camisa}" stroke="${u.detalhe&&distCor(u.detalhe,u.camisa)>60?u.detalhe:"#ffffff"}" stroke-width="2.4"${p?"":` opacity=".35"`}/>${p?`<g clip-path="url(#cpClip)">${rostoSVG(p,25).replace("<svg",'<svg x="-12.5" y="-10.8"')}</g>`:""}<g transform="translate(0 17.6)"><rect x="-11.8" y="-5.2" width="23.6" height="10.4" rx="2.9" fill="${bg}" stroke="rgba(0,0,0,.35)" stroke-width=".6"/><text y="2.8" text-anchor="middle" font-size="7.4" font-weight="800" fill="${fg}" font-family="Archivo,Arial,sans-serif">${pos}</text></g></g>`};
   const xiAd=melhorXI(ad.id,ad.form),slE=FORMACOES[G.user.form].s,slA=FORMACOES[ad.form].s;
   const lc="rgba(255,255,255,.55)";
   return `<div class="campinho"><div class="cp-leg"><span><i style="background:${uEu.camisa}"></i>${esc(eu.short)} · ${G.user.form}</span><span>${ad.form} · ${esc(ad.short)}<i style="background:${uAd.camisa}"></i></span></div>
@@ -4492,7 +4492,7 @@ function campinho(m){
     <circle cx="${W/2}" cy="${Hh/2}" r="26" fill="none" stroke="${lc}" stroke-width="1.5"/><circle cx="${W/2}" cy="${Hh/2}" r="2" fill="${lc}"/>
     <rect x="${pad}" y="${Hh/2-46}" width="44" height="92" fill="none" stroke="${lc}" stroke-width="1.5"/><rect x="${pad}" y="${Hh/2-20}" width="15" height="40" fill="none" stroke="${lc}" stroke-width="1.5"/>
     <rect x="${W-pad-44}" y="${Hh/2-46}" width="44" height="92" fill="none" stroke="${lc}" stroke-width="1.5"/><rect x="${W-pad-15}" y="${Hh/2-20}" width="15" height="40" fill="none" stroke="${lc}" stroke-width="1.5"/>
-    <defs><clipPath id="cpClip"><circle r="10.2"/></clipPath></defs>${pE.map((pt,i)=>bolaJ(pt,uEu,G.user.lineup[i],i,true,slE[i])).join("")}
+    <defs><clipPath id="cpClip"><circle r="11.8"/></clipPath></defs>${pE.map((pt,i)=>bolaJ(pt,uEu,G.user.lineup[i],i,true,slE[i])).join("")}
     ${pD.map((pt,i)=>bolaJ(pt,uAd,xiAd[i],i,false,slA[i])).join("")}
   </svg></div>`;
 }
