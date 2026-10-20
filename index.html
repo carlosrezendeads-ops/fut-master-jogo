@@ -1077,31 +1077,31 @@ body:has(header.topo) .esc-fixo{top:72px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792538407"></script>
-<script src="img/arte-capa.js?v=1792538407"></script>
-<script src="img/fundo-criacao.js?v=1792538407"></script>
-<script src="img/fundo-pais.js?v=1792538407"></script>
-<script src="img/fundo-escudo.js?v=1792538407"></script>
-<script src="img/simbolos.js?v=1792538407"></script>
-<script src="img/molduras.js?v=1792538407"></script>
-<script src="img/kits-foto.js?v=1792538407"></script>
-<script src="img/fundo-vestiario.js?v=1792538407"></script>
-<script src="img/patro-logos.js?v=1792538407"></script>
-<script src="img/rostos.js?v=1792538407"></script>
-<script src="img/estadio-fotos.js?v=1792538407"></script>
-<script src="img/super-fotos.js?v=1792538407"></script>
-<script src="img/trofeus.js?v=1792538407"></script>
-<script src="img/medalhas.js?v=1792538407"></script>
-<script src="img/fotos.js?v=1792538407"></script>
-<script src="img/fotos-vs.js?v=1792538407"></script>
-<script src="img/kit-homens.js?v=1792538407"></script>
-<script src="img/tec-fotos.js?v=1792538407"></script>
-<script src="dados/elencos.js?v=1792538407"></script>
-<script src="img/rostos-reais.js?v=1792538407"></script>
-<script src="img/escudos-img.js?v=1792538407"></script>
-<script src="img/tradutores.js?v=1792538407"></script>
-<script src="img/avatares.js?v=1792538407"></script>
-<script src="dados/idiomas.js?v=1792538407"></script>
+<script src="img/escudos-reais.js?v=1792538493"></script>
+<script src="img/arte-capa.js?v=1792538493"></script>
+<script src="img/fundo-criacao.js?v=1792538493"></script>
+<script src="img/fundo-pais.js?v=1792538493"></script>
+<script src="img/fundo-escudo.js?v=1792538493"></script>
+<script src="img/simbolos.js?v=1792538493"></script>
+<script src="img/molduras.js?v=1792538493"></script>
+<script src="img/kits-foto.js?v=1792538493"></script>
+<script src="img/fundo-vestiario.js?v=1792538493"></script>
+<script src="img/patro-logos.js?v=1792538493"></script>
+<script src="img/rostos.js?v=1792538493"></script>
+<script src="img/estadio-fotos.js?v=1792538493"></script>
+<script src="img/super-fotos.js?v=1792538493"></script>
+<script src="img/trofeus.js?v=1792538493"></script>
+<script src="img/medalhas.js?v=1792538493"></script>
+<script src="img/fotos.js?v=1792538493"></script>
+<script src="img/fotos-vs.js?v=1792538493"></script>
+<script src="img/kit-homens.js?v=1792538493"></script>
+<script src="img/tec-fotos.js?v=1792538493"></script>
+<script src="dados/elencos.js?v=1792538493"></script>
+<script src="img/rostos-reais.js?v=1792538493"></script>
+<script src="img/escudos-img.js?v=1792538493"></script>
+<script src="img/tradutores.js?v=1792538493"></script>
+<script src="img/avatares.js?v=1792538493"></script>
+<script src="dados/idiomas.js?v=1792538493"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2355,7 +2355,10 @@ function diario(){
     if(G.lojaN%5===0){if(rnd()<.5){const f=jogadorExterior();if(f!=null)jog[0]=f}else{const t=tecExterior();if(t)tec=[t]}} // a cada 5 renovações: alguém de outro país do jogo
     // a cada 3 trocas da loja: um jogador um pouco melhor, da série de cima, com bom preço (lendas não entram)
     let promo=null;if(G.lojaN%3===0){const t=minhaSerie(),de=Math.max(0,t-1),b=G.tierBase[t],lim=t>=2?75:t===1?80:999,res=reservadosMercado();
-      const c=candidatosSerie(de,b+3,Math.min(b+9,lim)).filter(p=>!p.lenda&&!jog.includes(p.id)&&!res.has(p.id)&&jogadoresDo(p.club).length>18);
+      const ok=p=>!p.lenda&&!jog.includes(p.id)&&!res.has(p.id)&&p.inj<=0&&jogadoresDo(p.club).length>18&&p.ov>=b+3&&p.ov<=Math.min(b+9,lim);
+      // 40% das vezes: jogador de outro país (clubes de fora que existem no jogo)
+      const fora=rnd()<.4?[...(G.foreign||[]),...(G.exterior||[])].filter(id=>G.clubs[id]&&G.clubs[id].pais!==G.country).flatMap(id=>jogadoresDo(id)).filter(ok):[];
+      const c=fora.length?fora:candidatosSerie(de,b+3,Math.min(b+9,lim)).filter(ok);
       if(c.length){promo=pick(c).id;jog.unshift(promo)}}
     G.diario={dia:k,jog,tec,comprados:[],vendas:0,lenda,promo};
   }
@@ -2581,7 +2584,7 @@ function precoPedido(p){
   const el=jogadoresDo(p.club).sort((a,b)=>b.ov-a.ov);
   const top=el.indexOf(p)<4;
   const t=G.clubs[p.club].tier,fs=t===-1?1.35:t===0?1.04:t===1?1.12:t===2?1:.9;
-  const promo=!p.lenda&&G.diario&&G.diario.promo===p.id&&p.club!==G.user.club?.72:1; // oferta especial da loja: bom preço
+  const promo=!p.lenda&&G.diario&&G.diario.promo===p.id&&p.club!==G.user.club?(t===-1?.55:.72):1; // oferta especial da loja: bom preço
   return Math.round(valor(p)*(top?1.5:1.2)*fs*promo/5)*5;
 }
 function salarioPedido(p){return Math.round(Math.max(p.sal,salarioJog({...p,club:null}))*1.15*10)/10}
@@ -2866,7 +2869,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792538407";
+const VERSAO="1792538493";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
