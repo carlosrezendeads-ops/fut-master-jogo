@@ -1054,31 +1054,31 @@ body:has(header.topo) .esc-fixo{top:72px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792530511"></script>
-<script src="img/arte-capa.js?v=1792530511"></script>
-<script src="img/fundo-criacao.js?v=1792530511"></script>
-<script src="img/fundo-pais.js?v=1792530511"></script>
-<script src="img/fundo-escudo.js?v=1792530511"></script>
-<script src="img/simbolos.js?v=1792530511"></script>
-<script src="img/molduras.js?v=1792530511"></script>
-<script src="img/kits-foto.js?v=1792530511"></script>
-<script src="img/fundo-vestiario.js?v=1792530511"></script>
-<script src="img/patro-logos.js?v=1792530511"></script>
-<script src="img/rostos.js?v=1792530511"></script>
-<script src="img/estadio-fotos.js?v=1792530511"></script>
-<script src="img/super-fotos.js?v=1792530511"></script>
-<script src="img/trofeus.js?v=1792530511"></script>
-<script src="img/medalhas.js?v=1792530511"></script>
-<script src="img/fotos.js?v=1792530511"></script>
-<script src="img/fotos-vs.js?v=1792530511"></script>
-<script src="img/kit-homens.js?v=1792530511"></script>
-<script src="img/tec-fotos.js?v=1792530511"></script>
-<script src="dados/elencos.js?v=1792530511"></script>
-<script src="img/rostos-reais.js?v=1792530511"></script>
-<script src="img/escudos-img.js?v=1792530511"></script>
-<script src="img/tradutores.js?v=1792530511"></script>
-<script src="img/avatares.js?v=1792530511"></script>
-<script src="dados/idiomas.js?v=1792530511"></script>
+<script src="img/escudos-reais.js?v=1792531245"></script>
+<script src="img/arte-capa.js?v=1792531245"></script>
+<script src="img/fundo-criacao.js?v=1792531245"></script>
+<script src="img/fundo-pais.js?v=1792531245"></script>
+<script src="img/fundo-escudo.js?v=1792531245"></script>
+<script src="img/simbolos.js?v=1792531245"></script>
+<script src="img/molduras.js?v=1792531245"></script>
+<script src="img/kits-foto.js?v=1792531245"></script>
+<script src="img/fundo-vestiario.js?v=1792531245"></script>
+<script src="img/patro-logos.js?v=1792531245"></script>
+<script src="img/rostos.js?v=1792531245"></script>
+<script src="img/estadio-fotos.js?v=1792531245"></script>
+<script src="img/super-fotos.js?v=1792531245"></script>
+<script src="img/trofeus.js?v=1792531245"></script>
+<script src="img/medalhas.js?v=1792531245"></script>
+<script src="img/fotos.js?v=1792531245"></script>
+<script src="img/fotos-vs.js?v=1792531245"></script>
+<script src="img/kit-homens.js?v=1792531245"></script>
+<script src="img/tec-fotos.js?v=1792531245"></script>
+<script src="dados/elencos.js?v=1792531245"></script>
+<script src="img/rostos-reais.js?v=1792531245"></script>
+<script src="img/escudos-img.js?v=1792531245"></script>
+<script src="img/tradutores.js?v=1792531245"></script>
+<script src="img/avatares.js?v=1792531245"></script>
+<script src="dados/idiomas.js?v=1792531245"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2061,6 +2061,7 @@ function mundoRodada(r){
           :pick([`${c.name} e ${tc.n} rescindem em comum acordo.`,`Pressionado pela torcida, ${c.name} demite ${tc.n}.`]))}
       else if(risco>=.12&&!press&&rnd()<.35&&++press)addNoticia(pick([`Pressão no ${c.name}: diretoria se reúne e ${tc.n} pode cair se não vencer o próximo jogo.`,`Presidente do ${c.name} banca ${tc.n}: "Ele fica, confiamos no trabalho".`,`Torcida do ${c.name} protesta no CT e pede a saída de ${tc.n}.`,`Bastidores: ${c.name} já sonda substitutos para ${tc.n}.`]),"tecnico",t);
     });
+    if(t===0)reporSaidas(false);
     const daRodada=(G.news||[]).filter(x=>x.s===t&&x.ano===G.year&&x.rd===r+1),usados=new Set(daRodada.map(x=>x.tipo));
     noticiasMundo(t,r,Math.max(0,ri(2,4)-daRodada.length),usados);
   }
@@ -2091,20 +2092,20 @@ function mundoJanela(){
   // rumores da temporada: alguns se confirmam
   const loja0=new Set([...(G.diario&&G.diario.jog||[]),...(Array.isArray(G.ofertaJ)?G.ofertaJ:[])]);
   (G.rumores||[]).forEach(x=>{const p=G.players[x.pid];if(!p||loja0.has(p.id)||p.club==null||p.club===uid||rnd()>.5)return;
-    if(x.k==="sai"&&p.club===x.de){const c=G.clubs[p.club];addNoticia(`Negócio fechado: ${p.n} deixa o ${c.name} e vai para o ${x.para} por ${dinheiro(x.v)}.`,"exterior",c.tier);delete G.players[p.id];feitos++}
+    if(x.k==="sai"&&p.club===x.de){const c=G.clubs[p.club];addNoticia(`Negócio fechado: ${p.n} deixa o ${c.name} e vai para o ${x.para} por ${dinheiro(x.v)}.`,"exterior",c.tier);registrarSaida(c,p);delete G.players[p.id];feitos++}
     else if(x.k==="chega"&&p.club===x.de&&G.clubs[x.para]&&podeTransferir(p,G.clubs[x.para],loja0)){const c=G.clubs[x.para],o=G.clubs[p.club];p.club=c.id;addNoticia(`${c.name} anuncia ${p.n} (${p.pos}), ex-${o.name}. Chega com contrato até dezembro de ${G.year+ri(2,4)}.`,"exterior",c.tier);feitos++}});
   G.rumores=[];tocou();
   // vendas extras para o exterior (craques e jovens promissores)
   const loja=new Set([...(G.diario&&G.diario.jog||[]),...(Array.isArray(G.ofertaJ)?G.ofertaJ:[])]);
   const cand=G.tiers[0].concat(G.tiers[1]).filter(id=>id!==uid).flatMap(id=>jogadoresDo(id)).filter(p=>!loja.has(p.id)&&jogadoresDo(p.club).length>18&&p.age<=29&&!p.lenda&&(p.ov>=G.tierBase[0]+6||(p.age<=21&&p.pot>=G.tierBase[0]+8)));
   shuffle(cand).slice(0,Math.max(0,ri(1,3)-Math.floor(feitos/2))).forEach(p=>{const c=G.clubs[p.club],forte=p.ov>=G.tierBase[0]+9,dest=pick(clubesFora(forte)),v=Math.round(valor(p)*(1.1+rnd()*.7));
-    addNoticia(`${c.name} vende ${p.n} ao ${dest} por ${dinheiro(v)}${p.age<=21?", a maior venda da base do clube nos últimos anos":""}.`,"exterior",c.tier);delete G.players[p.id]});
+    addNoticia(`${c.name} vende ${p.n} ao ${dest} por ${dinheiro(v)}${p.age<=21?", a maior venda da base do clube nos últimos anos":""}.`,"exterior",c.tier);registrarSaida(c,p);delete G.players[p.id]});
   // reforços estrangeiros (dos clubes de fora que existem no jogo)
   const grandes=G.tiers[0].concat(G.tiers[1]).filter(id=>id!==uid).map(id=>G.clubs[id]);
   for(let k=ri(1,3);k>0;k--){const c=pick(grandes),fora=(G.foreign||[]).filter(id=>G.clubs[id]&&G.clubs[id].pais!==G.country&&jogadoresDo(id).length>20).flatMap(id=>jogadoresDo(id)).filter(p=>p.age<=30&&p.ov>=c.rating-1&&p.ov<=c.rating+5&&podeTransferir(p,c,loja));
     const p=pick(fora);if(!p||jogadoresDo(c.id).length>=30)continue;const o=G.clubs[p.club];p.club=c.id;tocou();
     addNoticia(`Reforço estrangeiro: ${c.name} acerta com ${p.n} (${p.pos}, ${PAIS_NOME[o.pais]||""}), que estava no ${o.name}.`,"exterior",c.tier)}
-  tocou();
+  tocou();reporSaidas(true);
 }
 /* notícias do dia a dia da série (rumores, polêmicas, bastidores, artilharia...) — completa 2 a 4 notícias por rodada, variando o tipo; rumores podem virar fato na janela */
 function noticiasMundo(t,r,qtd,usados){
@@ -2119,15 +2120,15 @@ function noticiasMundo(t,r,qtd,usados){
     if(t<2&&jovem&&jovem.pot>=c.rating+4)op.push(["rumor",()=>`Joia da base: ${jovem.n}, ${jovem.age} anos, desperta interesse de clubes europeus. ${c.name} quer renovar e aumentar a multa.`]);
     op.push(["exterior",()=>{const res=reservadosMercado(),fora=(G.foreign||[]).filter(id=>G.clubs[id]&&jogadoresDo(id).length>20).flatMap(id=>jogadoresDo(id)).filter(p=>!p.lenda&&!res.has(p.id)&&p.age<=30&&p.ov>=c.rating&&p.ov<=c.rating+5),p=pick(fora);if(!p)return null;
       (G.rumores=G.rumores||[]).push({k:"chega",pid:p.id,de:p.club,para:c.id});return `${c.name} abre conversas pelo ${posNome(p)} ${p.n}, do ${G.clubs[p.club].name}, para a próxima janela.`}]);
-    op.push(["polemica",()=>pick([`${qq.n} posta indireta nas redes e irrita a diretoria do ${c.name}.`,`${qq.n}, do ${c.name}, é flagrado em festa na véspera de jogo; clube vai multar o jogador.`,`Bate-boca no treino: ${qq.n} discute com ${tc.n} e é afastado por dois dias no ${c.name}.`,`Empresário de ${qq.n} pede aumento e ameaça levar o jogador de graça no fim do contrato.`])]);
+    op.push(["polemica",()=>pick([`${qq.n} posta indireta nas redes e irrita a diretoria do ${c.name}.`,`${qq.n}, do ${c.name}, é flagrado em festa na véspera de jogo; clube vai multar o jogador.`,`Bate-boca no treino: ${qq.n} discute com ${tc.n} no ${c.name}, e a diretoria vai conversar com o jogador.`,`Empresário de ${qq.n} pede aumento e ameaça levar o jogador de graça no fim do contrato.`])]);
     if(semVencer)op.push(["polemica",()=>pick([`Torcida do ${c.name} protesta no CT após ${u5.filter(x=>x!=="v").length} jogos sem vencer.`,`Crise no ${c.name}: elenco faz reunião fechada para cobrar postura.`])]);
     if(perdeu1)op.push(["polemica",()=>`Arbitragem na mira: ${c.name} reclama de pênalti não marcado e pede o áudio do VAR à federação.`]);
-    if(top.ov>=c.rating+2)op.push(["mercado",()=>`${top.n} renova com o ${c.name} até dezembro de ${G.year+ri(2,4)} e ganha aumento.`]);
+    if(top.ov>=c.rating+2&&(top.ct??2)<=2)op.push(["mercado",()=>{const ate=G.year+ri(2,4);top.ct=ate-G.year+1;return `${top.n} renova com o ${c.name} até dezembro de ${ate} e ganha aumento.`}]);
     if(embalado&&!tc.interino)op.push(["tecnico",()=>pick([`${tc.n} elogia o elenco do ${c.name}: "Estamos no caminho certo, mas ainda não ganhamos nada".`,`Embalado, ${c.name} vence a terceira seguida e ${tc.n} ganha moral com a diretoria.`])]);
     op.push(["geral",()=>{const art=G.tiers[t].flatMap(id=>jogadoresDo(id)).filter(p=>p.g>0).sort((a,b)=>b.g-a.g)[0];if(!art)return null;return `${art.n}, do ${G.clubs[art.club].name}, lidera a artilharia da ${liga} com ${art.g} gol${art.g>1?"s":""}.`}]);
-    if(t===0&&top.ov>=G.tierBase[0]+6)op.push(["geral",()=>`${top.n}, do ${c.name}, é convocado para os próximos jogos da seleção.`]);
-    if(t>0)op.push(["geral",()=>pick([`${c.name} atrasa salários e jogadores cobram a diretoria.`,`${c.name} fecha patrocínio novo e promete reforços para brigar pelo acesso.`,`Ingressos esgotados: ${c.name} terá casa cheia na próxima rodada.`])]);
-    else op.push(["geral",()=>`Ingressos esgotados: ${c.name} terá casa cheia na próxima rodada da ${liga}.`]);
+    const prox=(G.fix[t][r+1]||[]).find(([a,b])=>a===c.id); // só se o próximo jogo for em casa
+    if(prox)op.push(["geral",()=>`Ingressos esgotados: ${c.name} terá casa cheia contra o ${G.clubs[prox[1]].name} na próxima rodada.`]);
+    if(t>0)op.push(["geral",()=>pick([`${c.name} atrasa salários e jogadores cobram a diretoria.`,`${c.name} fecha patrocínio novo para o restante da temporada.`])]);
     const novos=op.filter(o=>!usados.has(o[0])),o=pick(novos.length?novos:op),txt=o[1]();if(!txt)continue;
     addNoticia(txt,o[0],t);usados.add(o[0]);i++}
   if(G.rumores&&G.rumores.length>12)G.rumores=G.rumores.slice(-12);
@@ -2222,13 +2223,28 @@ function podeTransferir(p,dest,res){
   const topo=o&&(o.tier===0||(o.tier===-1&&!(o.tierExt>0))),lim=dest.tier>=2?75:dest.tier===1?80:999;
   if(topo&&p.ov>lim)return false;                     // jogador da 1ª divisão não desce para time pequeno
   return true}
+/* clube que perdeu um jogador vai atrás de outro da mesma posição: na janela compra de outro clube (ou do exterior), fora dela só sem clube */
+const POS_EXT={GOL:"goleiro",LAT:"lateral",ZAG:"zagueiro",VOL:"volante",MEI:"meia",ATA:"atacante"};
+function registrarSaida(c,p){if(!c||c.user||!(c.tier>=0&&c.tier<=2))return;(G.repor=G.repor||[]).push({cid:c.id,pos:p.pos,ov:p.ov,n:p.n,ev:G.ev})}
+function reporSaidas(janela){
+  const res=reservadosMercado(),pend=G.repor||[];G.repor=[];
+  pend.forEach(x=>{const c=G.clubs[x.cid];if(!c||c.user)return;
+    if(jogadoresDo(c.id).filter(p=>p.pos===x.pos).length>=4)return; // já tem gente na posição
+    const ok=p=>p.pos===x.pos&&p.ov>=x.ov-4&&p.ov<=x.ov+3&&podeTransferir(p,c,res);
+    let cand=Object.values(G.players).filter(p=>p.club==null&&!p.lenda&&ok(p));
+    if(janela)cand=cand.concat(G.tiers.flat().concat(G.foreign||[]).filter(id=>id!==c.id&&G.clubs[id]&&!G.clubs[id].user&&G.clubs[id].rating<=c.rating+1).flatMap(id=>jogadoresDo(id)).filter(ok));
+    cand.sort((a,b)=>b.ov-a.ov);const p=cand[Math.floor(rnd()*Math.min(3,cand.length))];
+    if(!p){if(G.ev-x.ev<40)G.repor.push(x);return}
+    const o=p.club!=null&&G.clubs[p.club];p.club=c.id;tocou();if(o)registrarSaida(o,p);
+    addNoticia(`Para repor a saída de ${x.n}, ${c.name} contrata o ${POS_EXT[p.pos]||"jogador"} ${p.n}${o?`, que estava no ${o.name}`:", que estava sem clube"}.`,"mercado",c.tier)});
+}
 function mercadoIA(n){
   const clubes=G.tiers.flat().filter(id=>!G.clubs[id].user).map(id=>G.clubs[id]);const neg=[],res=reservadosMercado(),compras={};
   for(let k=0;k<n;k++){
     const comp=pick(clubes),vend=pick(clubes);if(!vend||vend===comp||vend.rating>comp.rating+1||(compras[comp.id]||0)>=MAX_COMPRAS)continue;
     const el=jogadoresDo(vend.id);if(el.length<=20)continue;
     const p=el.filter(x=>x.ov>=comp.rating-2&&x.ov<=comp.rating+5&&podeTransferir(x,comp,res)).sort((a,b)=>b.ov-a.ov)[0];if(!p)continue;
-    p.club=comp.id;tocou();compras[comp.id]=(compras[comp.id]||0)+1;neg.push({p,de:vend,para:comp,v:valor(p)});
+    p.club=comp.id;tocou();registrarSaida(vend,p);compras[comp.id]=(compras[comp.id]||0)+1;neg.push({p,de:vend,para:comp,v:valor(p)});
     const ec=jogadoresDo(comp.id);if(ec.length>30){ec.sort((a,b)=>a.ov-b.ov)[0].club=null;tocou()}
   }
   return neg.sort((a,b)=>b.v-a.v).slice(0,3);
@@ -2509,7 +2525,7 @@ function contratar(pid){
   const preco=precoPedido(p);
   if(preco>G.cash)return "Caixa insuficiente para essa contratação.";
   if(p.club&&jogadoresDo(p.club).length<=18)return `O ${G.clubs[p.club].name} não quer vender: elenco curto.`;
-  const de=p.club?G.clubs[p.club].name:null;
+  const de=p.club?G.clubs[p.club].name:null;if(p.club!=null)registrarSaida(G.clubs[p.club],p);
   G.cash-=preco;p.sal=salarioPedido(p);p.club=uid;p.ct=3;tocou();if(fonte==="j")G.janela.compras++;else diario().comprados.push(pid);
   xpBonus(200,"contratação");
   G.inbox.unshift({t:"bom",m:`${p.n} (${p.pos}, ${p.ov}) chegou${de?` do ${de}`:""} por ${preco?dinheiro(preco):"custo zero"}.`});
@@ -2777,7 +2793,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792530511";
+const VERSAO="1792531245";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3210,15 +3226,35 @@ function rostoIdx(p){
 }
 /* fotos reais (img/rostos-reais.js, gerado por fotos-jogadores.py): chave "Clube de origem|Nome" */
 let RR_NOME=null;
-function rostoReal(p){if(typeof ROSTOS_REAIS==="undefined")return null;
-  if(!p.real)return ehLenda(p)&&ROSTOS_REAIS["Lenda|"+(LENDA_ALIAS[p.n]||p.n)]||null;
-  if(p.oc&&ROSTOS_REAIS[p.oc+"|"+p.n])return ROSTOS_REAIS[p.oc+"|"+p.n];
+/* chave da foto real do jogador em ROSTOS_REAIS ("Clube|Nome" ou "Lenda|Nome") */
+function rostoRealK(p){if(typeof ROSTOS_REAIS==="undefined")return null;
+  const lk=ehLenda(p)?"Lenda|"+(LENDA_ALIAS[p.n]||p.n):null,lok=lk&&ROSTOS_REAIS[lk]?lk:null;
+  if(!p.real)return lok;
+  if(p.oc&&ROSTOS_REAIS[p.oc+"|"+p.n])return p.oc+"|"+p.n;
   // save antigo (sem clube de origem) ou jogador transferido: acha pelo nome, se só existir um
-  if(!RR_NOME){RR_NOME={};for(const k in ROSTOS_REAIS){const n=k.slice(k.indexOf("|")+1);RR_NOME[n]=RR_NOME[n]===undefined?ROSTOS_REAIS[k]:null}}
-  return RR_NOME[p.n]||(ehLenda(p)&&ROSTOS_REAIS["Lenda|"+(LENDA_ALIAS[p.n]||p.n)])||null}
+  if(!RR_NOME){RR_NOME={};for(const k in ROSTOS_REAIS){const n=k.slice(k.indexOf("|")+1);RR_NOME[n]=RR_NOME[n]===undefined?k:null}}
+  return RR_NOME[p.n]||lok}
+function rostoReal(p){const k=rostoRealK(p);return k?ROSTOS_REAIS[k]:null}
+/* jogador fora do clube da foto: a camisa vem recortada da foto de alguém do time novo (ROSTOS_CAMISA = topo da camisa por coluna + goleiro);
+   time novo sem fotos: camisa pintada com o uniforme do clube */
+function fotoComCamisa(p,k){const img=ROSTOS_REAIS[k],b=typeof ROSTOS_CAMISA!=="undefined"&&ROSTOS_CAMISA[k],c=G&&p.club!=null&&G.clubs[p.club];
+  if(!b||!c||k.slice(0,k.indexOf("|"))===c.name)return `<image href="${img}" width="100" height="112"/>`;
+  const id="rc"+(++svgN),pt=b.slice(0,21).map((y,i)=>[Math.min(100,i*5),y]),pesc=x=>x>=30&&x<=70;
+  const acima="M0 0H100"+pt.slice().reverse().map(([x,y])=>`L${x} ${y+(pesc(x)?.5:-1.5)}`).join("")+"Z";
+  const doad=Object.keys(ROSTOS_CAMISA).filter(x=>x!==k&&x.slice(0,x.indexOf("|"))===c.name),gk=p.pos==="GOL"?1:0,pref=doad.filter(x=>ROSTOS_CAMISA[x][21]===gk),L=pref.length?pref:doad;
+  let fundo,dp=0; // gola alinhada: desce a camisa doadora, ou desce o jogador (assim não sobra buraco embaixo)
+  if(L.length){const dk=L[[...String(p.id)].reduce((a,ch)=>a+ch.charCodeAt(0),0)%L.length],db=ROSTOS_CAMISA[dk],bp=b[10],bd=db[10],dd=Math.max(0,bp-bd);dp=Math.max(0,bd-bp);
+    const abaixo="M0 112"+db.slice(0,21).map((y,i)=>`L${Math.min(100,i*5)} ${y}`).join("")+"L100 112Z";
+    fundo=`<clipPath id="${id}d"><path d="${abaixo}"/></clipPath><g transform="translate(0 ${dd})"><image href="${ROSTOS_REAIS[dk]}" width="100" height="112" clip-path="url(#${id}d)"/></g>`}
+  else{const u=unisDe(c)[0]||{camisa:c.c1||"#888",detalhe:c.c2||"#fff",estilo:"liso"},pat=padraoUni(u,id+"p")[u.estilo]||"";
+    const cam="M0 112"+pt.map(([x,y])=>`L${x} ${y}`).join("")+"L100 112Z",gola=pt.filter(([x])=>pesc(x)).map(([x,y],i)=>`${i?"L":"M"}${x} ${y+1}`).join("");
+    fundo=`<clipPath id="${id}c"><path d="${cam}"/></clipPath><linearGradient id="${id}g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#000" stop-opacity=".38"/></linearGradient>
+      <g clip-path="url(#${id}c)"><rect x="0" y="60" width="100" height="52" fill="${u.camisa}"/><g transform="translate(0 76) scale(1 .34) translate(-50 -16)">${pat}</g><rect x="0" y="60" width="100" height="52" fill="url(#${id}g)"/></g>
+      <path d="${gola}" fill="none" stroke="${u.detalhe||"#fff"}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`}
+  return `<clipPath id="${id}a"><path d="${acima}"/></clipPath>${fundo}<g transform="translate(0 ${dp})"><image href="${img}" width="100" height="112" clip-path="url(#${id}a)"/></g>`}
 function rostoSVG(p,px){
   const up=G&&G.rostosUp&&G.rostosUp[p.id];
-  if(!up&&p.rf==null){const rr=rostoReal(p);if(rr)return `<svg class="rosto" viewBox="0 0 100 112" width="${px}" height="${Math.round(px*1.12)}" aria-hidden="true"><image href="${rr}" width="100" height="112"/></svg>`}
+  if(!up&&p.rf==null){const k=rostoRealK(p);if(k)return `<svg class="rosto" viewBox="0 0 100 112" width="${px}" height="${Math.round(px*1.12)}" aria-hidden="true">${fotoComCamisa(p,k)}</svg>`}
   if(up){const id="ru"+(++svgN),c=p.club!=null&&G.clubs[p.club];const u=c?unisDe(c)[0]:{camisa:"#e9e9e9",estilo:"liso",detalhe:"#ffffff",d2:"#ffffff"};const pat=padraoUni(u,id+"p")[u.estilo]||"";
     return `<svg class="rosto" viewBox="0 0 100 112" width="${px}" height="${Math.round(px*1.12)}" aria-hidden="true"><defs><mask id="${id}" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="112"><image href="${up.m}" width="100" height="112"/></mask></defs><image href="${up.s}" width="100" height="112"/><g mask="url(#${id})" style="mix-blend-mode:multiply"><rect x="0" y="56" width="100" height="56" fill="${u.camisa}"/><g transform="translate(0 72) scale(1 .34) translate(-50 -16)">${pat}</g></g></svg>`}
   const i=rostoIdx(p)%ROSTOS.n,cx=(i%10)*ROSTOS.w,cy=Math.floor(i/10)*ROSTOS.h,id="rf"+(++svgN);
