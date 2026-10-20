@@ -1019,30 +1019,30 @@ nav.abas .wrap button[data-v="jogar"] svg{width:58px;height:58px;padding:9px;bor
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792456614"></script>
-<script src="img/arte-capa.js?v=1792456614"></script>
-<script src="img/fundo-criacao.js?v=1792456614"></script>
-<script src="img/fundo-pais.js?v=1792456614"></script>
-<script src="img/fundo-escudo.js?v=1792456614"></script>
-<script src="img/simbolos.js?v=1792456614"></script>
-<script src="img/kits-foto.js?v=1792456614"></script>
-<script src="img/fundo-vestiario.js?v=1792456614"></script>
-<script src="img/patro-logos.js?v=1792456614"></script>
-<script src="img/rostos.js?v=1792456614"></script>
-<script src="img/estadio-fotos.js?v=1792456614"></script>
-<script src="img/super-fotos.js?v=1792456614"></script>
-<script src="img/trofeus.js?v=1792456614"></script>
-<script src="img/medalhas.js?v=1792456614"></script>
-<script src="img/fotos.js?v=1792456614"></script>
-<script src="img/fotos-vs.js?v=1792456614"></script>
-<script src="img/kit-homens.js?v=1792456614"></script>
-<script src="img/tec-fotos.js?v=1792456614"></script>
-<script src="dados/elencos.js?v=1792456614"></script>
-<script src="img/rostos-reais.js?v=1792456614"></script>
-<script src="img/escudos-img.js?v=1792456614"></script>
-<script src="img/tradutores.js?v=1792456614"></script>
-<script src="img/avatares.js?v=1792456614"></script>
-<script src="dados/idiomas.js?v=1792456614"></script>
+<script src="img/escudos-reais.js?v=1792456666"></script>
+<script src="img/arte-capa.js?v=1792456666"></script>
+<script src="img/fundo-criacao.js?v=1792456666"></script>
+<script src="img/fundo-pais.js?v=1792456666"></script>
+<script src="img/fundo-escudo.js?v=1792456666"></script>
+<script src="img/simbolos.js?v=1792456666"></script>
+<script src="img/kits-foto.js?v=1792456666"></script>
+<script src="img/fundo-vestiario.js?v=1792456666"></script>
+<script src="img/patro-logos.js?v=1792456666"></script>
+<script src="img/rostos.js?v=1792456666"></script>
+<script src="img/estadio-fotos.js?v=1792456666"></script>
+<script src="img/super-fotos.js?v=1792456666"></script>
+<script src="img/trofeus.js?v=1792456666"></script>
+<script src="img/medalhas.js?v=1792456666"></script>
+<script src="img/fotos.js?v=1792456666"></script>
+<script src="img/fotos-vs.js?v=1792456666"></script>
+<script src="img/kit-homens.js?v=1792456666"></script>
+<script src="img/tec-fotos.js?v=1792456666"></script>
+<script src="dados/elencos.js?v=1792456666"></script>
+<script src="img/rostos-reais.js?v=1792456666"></script>
+<script src="img/escudos-img.js?v=1792456666"></script>
+<script src="img/tradutores.js?v=1792456666"></script>
+<script src="img/avatares.js?v=1792456666"></script>
+<script src="dados/idiomas.js?v=1792456666"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2517,7 +2517,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792456614";
+const VERSAO="1792456666";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4299,7 +4299,7 @@ function modalStats(){const m=partidaAtual();if(!m)return;const uid=G.user.club,
   // barra: cor principal de cada time (se as duas forem parecidas, o adversário usa a 2ª cor dele)
   const cor1=c=>(c.escudo&&c.escudo.c1)||(c.c1?"#"+String(c.c1).replace("#",""):"#888888"),cor2=c=>(c.escudo&&c.escudo.c2)||(c.c2?"#"+String(c.c2).replace("#",""):"#cccccc");
   const dist=(x,y)=>{const a=hexRgb(x),b=hexRgb(y);return Math.abs(a[0]-b[0])+Math.abs(a[1]-b[1])+Math.abs(a[2]-b[2])};
-  const ca=cor1(A),cb=dist(cor1(A),cor1(B))<90?cor2(B):cor1(B);
+  const ca=cor1(A);let cb=dist(cor1(A),cor1(B))<90?cor2(B):cor1(B);if(dist(ca,cb)<90)cb="#9aa3b2"; // se ainda ficar parecido, o adversário vira cinza
   const lado=(c,tx)=>`<div class="st-time">${escudoDe(c,34)}<b>${esc(c.short)}</b>${tx?`<small>${tx}</small>`:""}</div>`;
   const linha=(rot,a,b)=>`<div class="st-linha"><b class="num">${a}</b><span>${rot}</span><b class="num">${b}</b></div>`;
   modal(`<h3>Estatísticas</h3><p class="muted peq" style="margin:0 0 10px">${m.neutro?"Campo neutro":m.h===uid?"Em casa":"Fora de casa"}${m.ko?" · mata-mata: empate vai para os pênaltis":""}</p>
