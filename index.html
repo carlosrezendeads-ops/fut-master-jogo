@@ -1048,31 +1048,31 @@ body:has(header.topo) .esc-fixo{top:72px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792528384"></script>
-<script src="img/arte-capa.js?v=1792528384"></script>
-<script src="img/fundo-criacao.js?v=1792528384"></script>
-<script src="img/fundo-pais.js?v=1792528384"></script>
-<script src="img/fundo-escudo.js?v=1792528384"></script>
-<script src="img/simbolos.js?v=1792528384"></script>
-<script src="img/molduras.js?v=1792528384"></script>
-<script src="img/kits-foto.js?v=1792528384"></script>
-<script src="img/fundo-vestiario.js?v=1792528384"></script>
-<script src="img/patro-logos.js?v=1792528384"></script>
-<script src="img/rostos.js?v=1792528384"></script>
-<script src="img/estadio-fotos.js?v=1792528384"></script>
-<script src="img/super-fotos.js?v=1792528384"></script>
-<script src="img/trofeus.js?v=1792528384"></script>
-<script src="img/medalhas.js?v=1792528384"></script>
-<script src="img/fotos.js?v=1792528384"></script>
-<script src="img/fotos-vs.js?v=1792528384"></script>
-<script src="img/kit-homens.js?v=1792528384"></script>
-<script src="img/tec-fotos.js?v=1792528384"></script>
-<script src="dados/elencos.js?v=1792528384"></script>
-<script src="img/rostos-reais.js?v=1792528384"></script>
-<script src="img/escudos-img.js?v=1792528384"></script>
-<script src="img/tradutores.js?v=1792528384"></script>
-<script src="img/avatares.js?v=1792528384"></script>
-<script src="dados/idiomas.js?v=1792528384"></script>
+<script src="img/escudos-reais.js?v=1792528606"></script>
+<script src="img/arte-capa.js?v=1792528606"></script>
+<script src="img/fundo-criacao.js?v=1792528606"></script>
+<script src="img/fundo-pais.js?v=1792528606"></script>
+<script src="img/fundo-escudo.js?v=1792528606"></script>
+<script src="img/simbolos.js?v=1792528606"></script>
+<script src="img/molduras.js?v=1792528606"></script>
+<script src="img/kits-foto.js?v=1792528606"></script>
+<script src="img/fundo-vestiario.js?v=1792528606"></script>
+<script src="img/patro-logos.js?v=1792528606"></script>
+<script src="img/rostos.js?v=1792528606"></script>
+<script src="img/estadio-fotos.js?v=1792528606"></script>
+<script src="img/super-fotos.js?v=1792528606"></script>
+<script src="img/trofeus.js?v=1792528606"></script>
+<script src="img/medalhas.js?v=1792528606"></script>
+<script src="img/fotos.js?v=1792528606"></script>
+<script src="img/fotos-vs.js?v=1792528606"></script>
+<script src="img/kit-homens.js?v=1792528606"></script>
+<script src="img/tec-fotos.js?v=1792528606"></script>
+<script src="dados/elencos.js?v=1792528606"></script>
+<script src="img/rostos-reais.js?v=1792528606"></script>
+<script src="img/escudos-img.js?v=1792528606"></script>
+<script src="img/tradutores.js?v=1792528606"></script>
+<script src="img/avatares.js?v=1792528606"></script>
+<script src="dados/idiomas.js?v=1792528606"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -1987,7 +1987,7 @@ FRA:"Luis Enrique|93,Roberto De Zerbi|87,Adi Hütter|84,Paulo Fonseca|83,Christo
 };
 const TEC_INTERINO=()=>({n:"Auxiliar técnico (interino)",q:62,sal:0,interino:true});
 /* técnico de cada clube da IA: real da lista do país (o melhor livre perto do nível do clube) ou um nome gerado; fica salvo em c.tecIA */
-const TEC_FIXO={Flamengo:"Leonardo Jardim"}; // clube: técnico real fixo
+const TEC_FIXO={Flamengo:"Leonardo Jardim",Palmeiras:"Abel Ferreira"}; // clube: técnico real fixo
 function tecDoClube(cid){
   const c=G.clubs[cid];if(!c)return null;if(c.user)return G.tec;
   const fx=TEC_FIXO[c.name];
@@ -2633,7 +2633,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792528384";
+const VERSAO="1792528606";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
