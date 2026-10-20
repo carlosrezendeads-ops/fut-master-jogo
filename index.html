@@ -474,18 +474,19 @@ nav.abas[hidden]{display:none}
 .noticia.clube{border-left-color:var(--canario)}.noticia.mercado{border-left-color:var(--azul)}
 .noticia.tecnico{border-left-color:#e5484d}.noticia.rumor{border-left-color:#8e4ec6}.noticia.polemica{border-left-color:#f76b15}.noticia.exterior{border-left-color:var(--azul)}
 .lg-news{display:flex;flex-direction:column;gap:10px;width:100%;text-align:left;margin-top:12px;font:inherit;color:inherit;cursor:pointer}
-.nt-lista{display:flex;flex-direction:column;gap:10px}
-.nt-card{--tc:var(--gramado-3);position:relative;background:var(--gramado-2);border:1px solid var(--gramado-3);border-left:5px solid var(--tc);border-radius:12px;padding:10px 12px 11px;overflow:hidden}
+.nt-lista{display:flex;flex-direction:column;gap:6px}
+.nt-rola{max-height:62vh;overflow-y:auto;overscroll-behavior:contain;padding-right:2px;scrollbar-width:thin}
+.nt-card{--tc:var(--gramado-3);position:relative;background:var(--gramado-2);border:1px solid var(--gramado-3);border-left:5px solid var(--tc);border-radius:10px;padding:6px 10px 7px;overflow:hidden;flex:none}
 .nt-card.tecnico{--tc:#e5484d}.nt-card.rumor{--tc:#8e4ec6}.nt-card.polemica{--tc:#f76b15}.nt-card.exterior,.nt-card.mercado{--tc:#3e8ef7}.nt-card.clube{--tc:var(--canario)}.nt-card.geral{--tc:#30a46c}
 .nt-card.com-time{border:2px solid var(--t1);border-left-width:6px;box-shadow:inset -4px 0 0 var(--t2)}
-.nt-top{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:11px;color:var(--cal-2)}
+.nt-top{display:flex;align-items:center;gap:5px;flex-wrap:wrap;font-size:10.5px;line-height:1.2;color:var(--cal-2)}
 .nt-top .nt-tag{color:var(--tc)}.nt-card.com-time .nt-top .nt-tag{color:var(--cal-2)}
-.nt-ico{font-size:17px;line-height:1}
+.nt-ico{font-size:14px;line-height:1}
 .nt-data{margin-left:auto;font-variant-numeric:tabular-nums}
-.nt-hoje{display:inline-block;background:var(--canario);color:#1a1a1a;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:2px 7px;vertical-align:middle}
-.nt-time{display:inline-flex;align-items:center;gap:6px;margin:8px 0 2px;padding:4px 20px 4px 6px;border-radius:8px;background:linear-gradient(90deg,var(--t1) calc(100% - 12px),var(--t2) calc(100% - 12px) calc(100% - 6px),var(--t1) calc(100% - 6px));font-size:13px;font-weight:800;letter-spacing:.02em;max-width:100%}
+.nt-hoje{display:inline-block;background:var(--canario);color:#1a1a1a;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:1px 6px;vertical-align:middle}
+.nt-time{display:inline-flex;align-items:center;gap:5px;margin:4px 0 0;padding:2px 18px 2px 5px;border-radius:6px;background:linear-gradient(90deg,var(--t1) calc(100% - 12px),var(--t2) calc(100% - 12px) calc(100% - 6px),var(--t1) calc(100% - 6px));font-size:12px;line-height:1.2;font-weight:800;letter-spacing:.02em;max-width:100%}
 .nt-time b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.nt-card p{margin:6px 0 0;font-size:14px;line-height:1.4}
+.nt-card p{margin:3px 0 0;font-size:13px;line-height:1.28}
 .nt-card.nova{animation:ntBrilho 2.6s ease-in-out infinite}
 .nt-card.nova::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.14) 50%,transparent 70%);transform:translateX(-100%);animation:ntReflexo 3.2s ease-in-out infinite;pointer-events:none}
 @keyframes ntBrilho{0%,100%{box-shadow:0 0 0 rgba(255,210,63,0)}50%{box-shadow:0 0 14px 1px rgba(255,210,63,.45)}}
@@ -1071,31 +1072,31 @@ body:has(header.topo) .esc-fixo{top:72px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792532780"></script>
-<script src="img/arte-capa.js?v=1792532780"></script>
-<script src="img/fundo-criacao.js?v=1792532780"></script>
-<script src="img/fundo-pais.js?v=1792532780"></script>
-<script src="img/fundo-escudo.js?v=1792532780"></script>
-<script src="img/simbolos.js?v=1792532780"></script>
-<script src="img/molduras.js?v=1792532780"></script>
-<script src="img/kits-foto.js?v=1792532780"></script>
-<script src="img/fundo-vestiario.js?v=1792532780"></script>
-<script src="img/patro-logos.js?v=1792532780"></script>
-<script src="img/rostos.js?v=1792532780"></script>
-<script src="img/estadio-fotos.js?v=1792532780"></script>
-<script src="img/super-fotos.js?v=1792532780"></script>
-<script src="img/trofeus.js?v=1792532780"></script>
-<script src="img/medalhas.js?v=1792532780"></script>
-<script src="img/fotos.js?v=1792532780"></script>
-<script src="img/fotos-vs.js?v=1792532780"></script>
-<script src="img/kit-homens.js?v=1792532780"></script>
-<script src="img/tec-fotos.js?v=1792532780"></script>
-<script src="dados/elencos.js?v=1792532780"></script>
-<script src="img/rostos-reais.js?v=1792532780"></script>
-<script src="img/escudos-img.js?v=1792532780"></script>
-<script src="img/tradutores.js?v=1792532780"></script>
-<script src="img/avatares.js?v=1792532780"></script>
-<script src="dados/idiomas.js?v=1792532780"></script>
+<script src="img/escudos-reais.js?v=1792535929"></script>
+<script src="img/arte-capa.js?v=1792535929"></script>
+<script src="img/fundo-criacao.js?v=1792535929"></script>
+<script src="img/fundo-pais.js?v=1792535929"></script>
+<script src="img/fundo-escudo.js?v=1792535929"></script>
+<script src="img/simbolos.js?v=1792535929"></script>
+<script src="img/molduras.js?v=1792535929"></script>
+<script src="img/kits-foto.js?v=1792535929"></script>
+<script src="img/fundo-vestiario.js?v=1792535929"></script>
+<script src="img/patro-logos.js?v=1792535929"></script>
+<script src="img/rostos.js?v=1792535929"></script>
+<script src="img/estadio-fotos.js?v=1792535929"></script>
+<script src="img/super-fotos.js?v=1792535929"></script>
+<script src="img/trofeus.js?v=1792535929"></script>
+<script src="img/medalhas.js?v=1792535929"></script>
+<script src="img/fotos.js?v=1792535929"></script>
+<script src="img/fotos-vs.js?v=1792535929"></script>
+<script src="img/kit-homens.js?v=1792535929"></script>
+<script src="img/tec-fotos.js?v=1792535929"></script>
+<script src="dados/elencos.js?v=1792535929"></script>
+<script src="img/rostos-reais.js?v=1792535929"></script>
+<script src="img/escudos-img.js?v=1792535929"></script>
+<script src="img/tradutores.js?v=1792535929"></script>
+<script src="img/avatares.js?v=1792535929"></script>
+<script src="dados/idiomas.js?v=1792535929"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2811,7 +2812,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792532780";
+const VERSAO="1792535929";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -5191,7 +5192,7 @@ function linhaNoticia(x){if(x.c===undefined)x.c=clubeNoticia(x.t);
   const c=x.c!=null&&G.clubs[x.c],nova=novaNoticia(x),t1=c?(c.user&&unisDe(c)[0]?unisDe(c)[0].camisa:c.c1)||"#555":"",t2=c?(c.user&&unisDe(c)[0]?unisDe(c)[0].detalhe:c.c2)||"#fff":"";
   return `<div class="nt-card ${x.tipo}${nova?" nova":""}${c?" com-time":""}"${c?` style="--t1:${t1};--t2:${t2}"`:""}>
     <div class="nt-top"><span class="nt-ico">${icoNoticia(x)}</span><span class="nt-tag">${NT_TAG[x.tipo]||"Liga"}</span>${nova?`<span class="nt-hoje">Hoje</span>`:""}<span class="nt-data">${dataNoticia(x)}</span></div>
-    ${c?`<div class="nt-time" style="color:${contrasteHex(t1)}">${marcaDe(c,20)}<b>${esc(c.name)}</b></div>`:""}<p>${esc(x.t)}</p></div>`}
+    ${c?`<div class="nt-time" style="color:${contrasteHex(t1)}">${marcaDe(c,16)}<b>${esc(c.name)}</b></div>`:""}<p>${esc(x.t)}</p></div>`}
 function cartaoNoticias(){
   const n=noticiasDa(userTier()).slice(0,6);if(!n.length)return "";
   return `<h2>Notícias</h2><div class="nt-lista">${n.map(linhaNoticia).join("")}</div>`;
@@ -5200,7 +5201,7 @@ function cartaoNoticias(){
 function cartaoNoticiasLiga(t){const n=noticiasDa(t).slice(0,3),novas=noticiasDa(t).filter(novaNoticia).length;
   return `<div class="cartao lg-news" data-a="ligaaba" data-v="noticias" role="button" tabindex="0"><span class="lg-news-cab"><b>📰 Notícias${novas?` <span class="nt-hoje">${novas} nova${novas>1?"s":""}</span>`:""}</b><small>${esc(pais().ligas[t])} · ver todas ›</small></span>${n.length?`<div class="nt-lista">${n.map(linhaNoticia).join("")}</div>`:`<p class="muted" style="margin:0">As notícias da ${esc(pais().ligas[t])} aparecem aqui conforme as rodadas acontecem.</p>`}</div>`}
 function ligaNoticias(t){const n=noticiasDa(t);
-  return n.length?`<div class="nt-lista">${n.map(linhaNoticia).join("")}</div>`:`<div class="cartao lg-vazio">Ainda não há notícias da ${esc(pais().ligas[t])}. Jogue as primeiras rodadas.</div>`}
+  return n.length?`<div class="nt-lista nt-rola">${n.map(linhaNoticia).join("")}</div>`:`<div class="cartao lg-vazio">Ainda não há notícias da ${esc(pais().ligas[t])}. Jogue as primeiras rodadas.</div>`}
 function salaTrofeus(){
   const t=G.titles||[];
   return `<h2>Sala de troféus</h2>${t.length?`<div class="trofeus">${t.slice().reverse().map(x=>{const m=x.match(/^(.*) (\d{4})$/);return `<div class="trofeu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 6h3a3 3 0 0 1-3 4M7 6H4a3 3 0 0 0 3 4"/></svg><b>${esc(m?m[1]:x)}</b><small>${m?m[2]:""}</small></div>`}).join("")}</div>`:'<div class="cartao"><p class="muted" style="margin:0">A estante ainda está vazia. O primeiro título vai aparecer aqui.</p></div>'}`;
@@ -5413,8 +5414,8 @@ function telaResultado(){
 
 /* ---------- tabela ---------- */
 /* ---------- aba Liga: jogo em destaque + minuto a minuto, escalações, estatísticas, classificação, mais partidas, artilharia ---------- */
-let ligaT=null,ligaAba="class",ligaCopa=null,ligaFoco=null,ligaRolar=false;
-const LIGA_ABAS=[["elenco","Elenco"],["class","Classificação"],["noticias","Notícias"],["mais","Mais partidas"],["art","Artilharia"],["min","Minuto a minuto"],["esc","Escalações"],["est","Estatísticas"]];
+let ligaT=null,ligaAba="noticias",ligaCopa=null,ligaFoco=null,ligaRolar=false;
+const LIGA_ABAS=[["noticias","Notícias"],["elenco","Elenco"],["class","Classificação"],["mais","Mais partidas"],["art","Artilharia"],["min","Minuto a minuto"],["esc","Escalações"],["est","Estatísticas"]];
 function rodadasJogadas(t){return (G.res[t]||[]).reduce((n,r,i)=>r&&r.length?i+1:n,0)}
 function dataRodada(r){const i=G.cal.findIndex(e=>e.k==="L"&&e.r===r);return i>=0?dataEv(i):null}
 function ultimos5(t,id){const out=[];const R=G.res[t]||[];for(let i=R.length-1;i>=0&&out.length<5;i--){const x=(R[i]||[]).find(g=>g[0]===id||g[1]===id);if(x){const gf=x[0]===id?x[2]:x[3],gs=x[0]===id?x[3]:x[2];out.unshift(gf>gs?"v":gf<gs?"d":"e")}}return out}
@@ -5436,9 +5437,9 @@ function telaLiga(){
   if(ligaCopa==="copan"&&G.copaN){tabModo="copan";return cabLiga(G.copaN.nome||"Copa nacional")+telaCopaN()}
   ligaCopa=null;const t=ligaT??userTier(),R=nRodadas(),n=rodadasJogadas(t);
   let h=cabLiga(P.ligas[t],`Temporada normal · Rodada ${Math.max(n,0)} do total de ${R} rodadas`);
-  const D=jogoDestaque(t);h+=cartaoDestaque(D);if(ligaAba!=="noticias")h+=cartaoNoticiasLiga(t);
+  const D=jogoDestaque(t);h+=cartaoDestaque(D);
   const temJogo=D&&D.r&&D.meu,abas=LIGA_ABAS.filter(([k])=>temJogo||!["min","esc","est"].includes(k));
-  if(!abas.some(([k])=>k===ligaAba))ligaAba="class";
+  if(!abas.some(([k])=>k===ligaAba))ligaAba="noticias";
   h+=`<div class="lg-abas">${abas.map(([k,n])=>`<button data-a="ligaaba" data-v="${k}" aria-pressed="${k===ligaAba}">${n}</button>`).join("")}</div>`;
   h+=({elenco:()=>ligaElenco(t),min:()=>ligaMinuto(D.r),esc:()=>ligaEscalacoes(D.r),est:()=>ligaEstat(D.r),class:()=>ligaClass(t,D),noticias:()=>ligaNoticias(t),mais:()=>ligaMais(t,D),art:()=>ligaArt(t)})[ligaAba]();
   return h}
@@ -5786,7 +5787,8 @@ function guardarW(){const n=$("#w-nome"),t=$("#w-tec"),s=$("#w-sigla"),es=$("#w-
 function acao(a,v,el){
   const vis=()=>alvoVisual();
   switch(a){
-    case "aba":aba=v;expandido=null;if(v==="mercado"&&el&&nav.contains(el))merc={pos:"",min:0,orig:"pais"};if(v==="inicio"&&el&&nav.contains(el))abertura=true; // Início na barra de baixo volta pra capa
+    case "aba":aba=v;expandido=null;if(v==="liga"&&el&&nav.contains(el))ligaAba="noticias"; // Liga abre nas notícias
+    if(v==="mercado"&&el&&nav.contains(el))merc={pos:"",min:0,orig:"pais"};if(v==="inicio"&&el&&nav.contains(el))abertura=true; // Início na barra de baixo volta pra capa
 if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "wseguir":{
       guardarW();
