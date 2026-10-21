@@ -1086,31 +1086,31 @@ body:has(header.topo) .esc-fixo{top:72px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792622122"></script>
-<script src="img/arte-capa.js?v=1792622122"></script>
-<script src="img/fundo-criacao.js?v=1792622122"></script>
-<script src="img/fundo-pais.js?v=1792622122"></script>
-<script src="img/fundo-escudo.js?v=1792622122"></script>
-<script src="img/simbolos.js?v=1792622122"></script>
-<script src="img/molduras.js?v=1792622122"></script>
-<script src="img/kits-foto.js?v=1792622122"></script>
-<script src="img/fundo-vestiario.js?v=1792622122"></script>
-<script src="img/patro-logos.js?v=1792622122"></script>
-<script src="img/rostos.js?v=1792622122"></script>
-<script src="img/estadio-fotos.js?v=1792622122"></script>
-<script src="img/super-fotos.js?v=1792622122"></script>
-<script src="img/trofeus.js?v=1792622122"></script>
-<script src="img/medalhas.js?v=1792622122"></script>
-<script src="img/fotos.js?v=1792622122"></script>
-<script src="img/fotos-vs.js?v=1792622122"></script>
-<script src="img/kit-homens.js?v=1792622122"></script>
-<script src="img/tec-fotos.js?v=1792622122"></script>
-<script src="dados/elencos.js?v=1792622122"></script>
-<script src="img/rostos-reais.js?v=1792622122"></script>
-<script src="img/escudos-img.js?v=1792622122"></script>
-<script src="img/tradutores.js?v=1792622122"></script>
-<script src="img/avatares.js?v=1792622122"></script>
-<script src="dados/idiomas.js?v=1792622122"></script>
+<script src="img/escudos-reais.js?v=1792622502"></script>
+<script src="img/arte-capa.js?v=1792622502"></script>
+<script src="img/fundo-criacao.js?v=1792622502"></script>
+<script src="img/fundo-pais.js?v=1792622502"></script>
+<script src="img/fundo-escudo.js?v=1792622502"></script>
+<script src="img/simbolos.js?v=1792622502"></script>
+<script src="img/molduras.js?v=1792622502"></script>
+<script src="img/kits-foto.js?v=1792622502"></script>
+<script src="img/fundo-vestiario.js?v=1792622502"></script>
+<script src="img/patro-logos.js?v=1792622502"></script>
+<script src="img/rostos.js?v=1792622502"></script>
+<script src="img/estadio-fotos.js?v=1792622502"></script>
+<script src="img/super-fotos.js?v=1792622502"></script>
+<script src="img/trofeus.js?v=1792622502"></script>
+<script src="img/medalhas.js?v=1792622502"></script>
+<script src="img/fotos.js?v=1792622502"></script>
+<script src="img/fotos-vs.js?v=1792622502"></script>
+<script src="img/kit-homens.js?v=1792622502"></script>
+<script src="img/tec-fotos.js?v=1792622502"></script>
+<script src="dados/elencos.js?v=1792622502"></script>
+<script src="img/rostos-reais.js?v=1792622502"></script>
+<script src="img/escudos-img.js?v=1792622502"></script>
+<script src="img/tradutores.js?v=1792622502"></script>
+<script src="img/avatares.js?v=1792622502"></script>
+<script src="dados/idiomas.js?v=1792622502"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2878,7 +2878,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792622122";
+const VERSAO="1792622502";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4975,7 +4975,7 @@ function camisaViva(cv,vid,u,cfg,tocarJa){
     if(k==="sec"){poe(g,o.c,scx-ssw*f.x,sy+ssw*f.y,ssw*bw*f.t,ssw*bh*f.t,-90,f);poe(g,o.c,scx+ssw*f.x,sy+ssw*f.y,ssw*bw*f.t,ssw*bh*f.t,90,f)}
     else poe(g,o.c,scx+ssw*f.x,sy+ssw*f.y,ssw*bw*f.t,ssw*bh*f.t,0,f)};
   function desenhaCamisa(g,soLogos,T){const k=ssw*.74/100,tx=scx-100*k,ty=sy-16*k;g.setTransform(T[0],T[1],T[2],T[3],T[4],T[5]);
-    if(!soLogos){g.fillStyle=u.camisa;g.fillRect(-W,-H,3*W,3*H);if(des){g.drawImage(des,tx,ty,200*k,170*k);g.drawImage(des,0,336,400,4,tx,ty+170*k-1,200*k,3*H)} // desenho estica a última faixa até o fim da camisa
+    if(!soLogos){g.fillStyle=u.camisa;g.fillRect(-W,-H,3*W,3*H);if(des){g.drawImage(des,0,0,400,278,tx,ty,200*k,139*k);g.drawImage(des,0,274,400,2,tx,ty+139*k-1,200*k,3*H)} // desenhos vão até y=140: estica a última linha com desenho até o fim da camisa
       g.fillStyle=u.mangas||u.camisa;const xm=ssw*.37;g.fillRect(-W,-H,scx-xm+W,3*H);g.fillRect(scx+xm,-H,2*W,3*H)}
     poeLogo(g,"esc");poeLogo(g,"mat");poeLogo(g,"master");poeLogo(g,"sec");
     g.setTransform(1,0,0,1,0,0)}
