@@ -447,6 +447,68 @@ nav.abas[hidden]{display:none}
 .cmd-sel .cmd-pausa{width:42px;border:0;border-radius:9px;background:rgba(255,255,255,.1);color:var(--cal);display:grid;place-items:center;cursor:pointer;padding:0}
 .cmd-sel{display:grid;grid-template-columns:1fr auto 1fr;gap:4px;padding:4px;border-radius:12px;background:var(--gramado-2);border:1px solid var(--gramado-3);margin-top:10px}
 .cmd-sel button{border:0;border-radius:9px;padding:9px 6px;font:inherit;font-weight:700;font-size:13.5px;background:none;color:var(--cal-2);cursor:pointer}
+.gritos{margin-top:8px;border-radius:12px;background:var(--gramado-2);border:1px solid var(--gramado-3);overflow:hidden}
+.gritos-topo{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;border:0;background:none;color:var(--cal);font:inherit;font-size:13.5px;padding:10px 12px;cursor:pointer;text-align:left}
+.gritos-topo span{font-size:12px;color:var(--cal-2)}.gritos-topo.on{background:rgba(245,197,24,.1)}
+.gritos-lista{display:grid;gap:6px;padding:8px}
+.grito{display:flex;flex-direction:column;gap:2px;text-align:left;border:1px solid var(--gramado-3);border-radius:10px;background:rgba(255,255,255,.05);color:var(--cal);font:inherit;padding:9px 11px;cursor:pointer}
+.grito b{font-size:14px}.grito span{font-size:11.5px;color:var(--cal-2)}
+.gr-btn{display:inline-flex;align-items:center;gap:5px;background:none;border:0;padding:4px 3px;color:var(--cal);font-family:var(--f-display);font-weight:800;font-size:15px;line-height:1;cursor:pointer}
+.gr-btn .cupom-ico{width:22px;height:14px}.gr-btn .ico-nota{width:24px;height:16px}.gr-btn.neg b{color:var(--ruim)}
+.topo-grana{gap:4px}
+.msg-btn{position:relative}
+.msg-badge{position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;padding:0 4px;border-radius:99px;background:var(--ruim);color:#fff;font-size:10.5px;font-weight:800;display:grid;place-items:center;border:2px solid var(--gramado)}
+.msg-lista{display:grid;gap:8px;max-height:60vh;overflow:auto;margin-bottom:6px}
+.msg-card{display:flex;flex-direction:column;align-items:flex-start;gap:5px;text-align:left;width:100%;padding:10px 12px;border-radius:12px;background:var(--gramado-2);border:1px solid var(--gramado-3);color:var(--cal);font:inherit;cursor:pointer;position:relative}
+.msg-card.nova::after{content:"";position:absolute;top:10px;right:10px;width:9px;height:9px;border-radius:50%;background:var(--canario)}
+.msg-card.clube{border:2px solid #4f8cff;background:linear-gradient(160deg,rgba(79,140,255,.18),rgba(79,140,255,.04))}
+.msg-card .msg-txt{font-size:13.5px;line-height:1.3}.msg-card small{font-size:11.5px;color:var(--cal-2)}.msg-card small i{font-style:normal;color:var(--canario)}
+.msg-selo{display:inline-flex;align-items:center;gap:6px;padding:3px 9px 3px 5px;border-radius:99px;background:rgba(79,140,255,.25);font-size:12px}
+.msg-selo.jogo{background:rgba(255,255,255,.1);padding-left:9px}.msg-selo.grande{font-size:14px;padding:5px 12px 5px 7px}
+.msg-quadro{background:linear-gradient(165deg,#12337f,#071a4d);border:1px solid #4f8cff;border-radius:16px;padding:16px;color:#eaf1ff;box-shadow:0 8px 28px rgba(0,0,0,.4)}
+.msg-cab{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.msg-cab small{color:#a9c1f5}
+.msg-ass{margin:0 0 8px;font-family:var(--f-display);font-size:20px;color:#fff}
+.msg-corpo p{margin:0 0 10px;line-height:1.45;font-size:14.5px}
+.msg-jog{width:100%;margin-top:6px;background:rgba(255,255,255,.08);border-radius:12px;padding:8px}
+.msg-acoes{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.msg-est{grid-column:1/-1;margin:0;text-align:center;color:var(--canario);font-weight:700}
+.grana-box{text-align:center}.grana-v{font-family:var(--f-display);font-size:38px;font-weight:800;color:var(--ok);margin:6px 0}.grana-ic{font-size:46px}
+.atrs{display:grid;gap:7px;margin-top:6px}
+.atr{display:grid;grid-template-columns:118px 1fr 44px auto;align-items:center;gap:8px;font-size:13px}
+.atr:not(:has(.atr-mais)){grid-template-columns:118px 1fr 44px}
+.atr-b{height:8px;border-radius:99px;background:var(--gramado-3);overflow:hidden}
+.atr-b i{display:block;height:100%;border-radius:99px;transition:width .4s}
+.atr b{text-align:right}.atr em,.pts-lin em{font-style:normal;color:var(--canario);font-size:11.5px;margin-left:3px}
+.atr-mais{min-width:38px;padding:2px 8px;font-weight:800}.atr-mais small{font-size:10px;opacity:.75;margin-left:2px}
+.btn-pts{margin-top:12px;background:linear-gradient(160deg,#ffe27a,#c99a1a);color:#3a2a00;font-weight:800;border:0}
+.pts-badge{display:inline-block;min-width:20px;padding:0 6px;border-radius:99px;background:#3a2a00;color:#ffe27a;font-size:12px}
+.pts-grade{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pts-chip{display:flex;flex-direction:column;align-items:center;gap:1px;padding:10px 4px;border-radius:12px;border:1px solid var(--gramado-3);background:var(--gramado-2);color:var(--cal);font:inherit;cursor:pointer;opacity:.45;filter:grayscale(.8)}
+.pts-chip b{font-size:20px}.pts-chip small{font-size:10.5px;color:var(--cal-2)}.pts-ic{font-size:20px}
+.pts-chip.tem{opacity:1;filter:none;border-color:rgba(255,210,63,.6);background:linear-gradient(180deg,rgba(255,210,63,.18),rgba(255,210,63,.05));box-shadow:0 0 14px rgba(255,210,63,.18)}
+.pts-chip.tem b{color:var(--canario)}
+.pts-lista{display:grid;gap:6px;max-height:52vh;overflow:auto}
+.pts-lin{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:8px}
+.pts-lin .nm{min-width:0}.pts-lin .nm b{display:block;font-size:13.5px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bola-dourada{position:fixed;right:12px;bottom:92px;z-index:45;width:64px;height:64px;border:0;background:none;padding:0;cursor:pointer;animation:bolaVibra .45s infinite;filter:drop-shadow(0 0 14px rgba(255,210,63,.85))}
+.bola-dourada svg{display:block;transition:transform .2s}
+.bola-rot{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:2px;white-space:nowrap;font-size:11px;font-weight:800;color:#3a2a00;background:linear-gradient(160deg,#ffe27a,#c99a1a);border-radius:99px;padding:2px 9px}
+.bola-dourada i{position:absolute;left:50%;top:50%;width:9px;height:9px;margin:-4px;border-radius:50%;background:#ffd23f;opacity:0;box-shadow:0 0 8px #ffd23f}
+.bola-dourada.explode{animation:none;pointer-events:none}
+.bola-dourada.explode svg{animation:bolaBum .45s ease-in forwards}
+.bola-dourada.explode .bola-rot{display:none}
+.bola-dourada.explode i{animation:bolaPart .75s ease-out forwards}
+@keyframes bolaVibra{0%,100%{transform:translate(0,0) rotate(0)}20%{transform:translate(-2px,1px) rotate(-7deg)}40%{transform:translate(2px,-1px) rotate(6deg)}60%{transform:translate(-1px,-2px) rotate(-5deg)}80%{transform:translate(2px,1px) rotate(5deg)}}
+@keyframes bolaBum{0%{transform:scale(1)}55%{transform:scale(1.7);opacity:1}100%{transform:scale(2.6);opacity:0}}
+@keyframes bolaPart{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--x),var(--y)) scale(.2);opacity:0}}
+.bola-res{text-align:center;display:grid;gap:10px;justify-items:center}
+.bola-brilho{font-size:44px;animation:bolaVibra .6s 2}
+.bola-tit{font-family:var(--f-display);font-size:26px;color:var(--canario)}
+.bola-ganhos{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.bola-g{display:flex;flex-direction:column;align-items:center;padding:10px 14px;border-radius:14px;background:linear-gradient(180deg,rgba(255,210,63,.2),rgba(255,210,63,.05));border:1px solid rgba(255,210,63,.55);animation:bolaPop .5s both}
+.bola-g:nth-child(2){animation-delay:.15s}.bola-g:nth-child(3){animation-delay:.3s}
+.bola-g b{font-size:24px;color:var(--canario)}.bola-g small{font-size:11.5px;color:var(--cal-2)}
+@keyframes bolaPop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
 .cmd-sel button.on{background:var(--canario);color:var(--canario-ink)}
 .cmd-dica{margin:6px 2px 4px;text-align:center}
 .em-campo{padding:6px 12px}
@@ -1111,32 +1173,32 @@ body:has(header.topo) .esc-fixo{top:72px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792709194"></script>
-<script src="img/arte-capa.js?v=1792709194"></script>
-<script src="img/fundo-criacao.js?v=1792709194"></script>
-<script src="img/fundo-pais.js?v=1792709194"></script>
-<script src="img/fundo-escudo.js?v=1792709194"></script>
-<script src="img/simbolos.js?v=1792709194"></script>
-<script src="img/molduras.js?v=1792709194"></script>
-<script src="img/kits-foto.js?v=1792709194"></script>
-<script src="img/fundo-vestiario.js?v=1792709194"></script>
-<script src="img/patro-logos.js?v=1792709194"></script>
-<script src="img/rostos.js?v=1792709194"></script>
-<script src="img/estadio-fotos.js?v=1792709194"></script>
-<script src="img/super-fotos.js?v=1792709194"></script>
-<script src="img/trofeus.js?v=1792709194"></script>
-<script src="img/medalhas.js?v=1792709194"></script>
-<script src="img/fotos.js?v=1792709194"></script>
-<script src="img/fotos-vs.js?v=1792709194"></script>
-<script src="img/kit-homens.js?v=1792709194"></script>
-<script src="img/tec-fotos.js?v=1792709194"></script>
-<script src="dados/elencos.js?v=1792709194"></script>
-<script src="img/rostos-reais.js?v=1792709194"></script>
-<script src="img/escudos-img.js?v=1792709194"></script>
-<script src="img/tradutores.js?v=1792709194"></script>
-<script src="img/avatares.js?v=1792709194"></script>
-<script src="img/premios-icones.js?v=1792709194"></script>
-<script src="dados/idiomas.js?v=1792709194"></script>
+<script src="img/escudos-reais.js?v=1792710746"></script>
+<script src="img/arte-capa.js?v=1792710746"></script>
+<script src="img/fundo-criacao.js?v=1792710746"></script>
+<script src="img/fundo-pais.js?v=1792710746"></script>
+<script src="img/fundo-escudo.js?v=1792710746"></script>
+<script src="img/simbolos.js?v=1792710746"></script>
+<script src="img/molduras.js?v=1792710746"></script>
+<script src="img/kits-foto.js?v=1792710746"></script>
+<script src="img/fundo-vestiario.js?v=1792710746"></script>
+<script src="img/patro-logos.js?v=1792710746"></script>
+<script src="img/rostos.js?v=1792710746"></script>
+<script src="img/estadio-fotos.js?v=1792710746"></script>
+<script src="img/super-fotos.js?v=1792710746"></script>
+<script src="img/trofeus.js?v=1792710746"></script>
+<script src="img/medalhas.js?v=1792710746"></script>
+<script src="img/fotos.js?v=1792710746"></script>
+<script src="img/fotos-vs.js?v=1792710746"></script>
+<script src="img/kit-homens.js?v=1792710746"></script>
+<script src="img/tec-fotos.js?v=1792710746"></script>
+<script src="dados/elencos.js?v=1792710746"></script>
+<script src="img/rostos-reais.js?v=1792710746"></script>
+<script src="img/escudos-img.js?v=1792710746"></script>
+<script src="img/tradutores.js?v=1792710746"></script>
+<script src="img/avatares.js?v=1792710746"></script>
+<script src="img/premios-icones.js?v=1792710746"></script>
+<script src="dados/idiomas.js?v=1792710746"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -1510,10 +1572,21 @@ function bonusPassivas(cid){
   return {att,def};
 }
 function passivasHTML(t){const ps=passivasTec(t);return ps.length?`<div class="tec-pas">${ps.map(p=>`<div class="tp"><b>${p[1]}</b><div>${p[2]}</div></div>`).join("")}</div>`:""}
+/* comandos do técnico (modo manual): +habilidade nas posições do comando por 10 min, com gasto de energia maior */
+const GRITOS=[
+  {k:"atacar",n:"Vamos atacar!",d:"Meias e atacantes",pos:["MEI","ATA"],b:.25,e:2},
+  {k:"virada",n:"Vamos buscar a virada!",d:"Atacantes, meias e volantes",pos:["ATA","MEI","VOL"],b:.18,e:1.6},
+  {k:"meio",n:"Domina o meio-campo!",d:"Volantes e meias",pos:["VOL","MEI"],b:.25,e:2},
+  {k:"fechar",n:"Fecha a zaga!",d:"Zagueiros e goleiro",pos:["ZAG","GOL"],b:.25,e:2},
+  {k:"segurar",n:"Segura o jogo!",d:"Volantes, zagueiros e goleiro",pos:["VOL","ZAG","GOL"],b:.18,e:1.6},
+  {k:"limpo",n:"Sem falta, jogo limpo!",d:"Bem menos faltas e cartões",pos:[],b:0,e:1,cartao:.4}];
+const GRITO_MIN=10,GRITO_ESPERA=5;
+function gritoAtivo(L){const V=G.live,g=L&&L.grito;return g&&V&&V.min<g.ate?GRITOS.find(x=>x.k===g.k):null}
 function forcasCfg(xi,form,est,cid){
   const slots=FORMACOES[form].s;
+  const V0=G.live,L0=V0&&V0.L&&(V0.L.h.cid===cid?V0.L.h:V0.L.a.cid===cid?V0.L.a:null),gr=gritoAtivo(L0);
   let sa=0,wa=0,sd=0,wd=0;
-  slots.forEach((s,i)=>{const p=G.players[xi[i]];const ef=p?ovF(p)*eficiencia(p,s):28;sa+=ef*W_ATT[s];wa+=W_ATT[s];sd+=ef*W_DEF[s];wd+=W_DEF[s]});
+  slots.forEach((s,i)=>{const p=G.players[xi[i]];const ef=(p?ovF(p)*eficiencia(p,s):28)*(gr&&gr.pos.includes(s)?1+gr.b:1);sa+=ef*W_ATT[s];wa+=W_ATT[s];sd+=ef*W_DEF[s];wd+=W_DEF[s]});
   const F=FORMACOES[form],E=ESTILOS[est],b=cid&&cid===G.user.club?bonusTec():cid?bonusIA(cid):0;
   // estilo: ofensivo tira defesa (menos se a zaga for muito boa); defensivo tira ataque (menos se o ataque for muito bom)
   const qa=sa/wa,qd=sd/wd,c=cid&&G.clubs[cid],ref=c&&G.tierBase&&G.tierBase[c.tier]!=null?G.tierBase[c.tier]:60;
@@ -1572,7 +1645,7 @@ function escalaPais(t){
 }
 function custoFixo(){const t=userTier();return Math.round((CUSTO_FIXO[t]??80)*escalaPais(t))+(G.tradutor?1:0)} // tradutor: 1 mil/mês
 function parcelasEmp(){return (G.emp||[]).reduce((s,e)=>s+e.parc,0)}
-function folhaMensal(){const j=Math.round(folhaSalarial(G.user.club)*10)/10,t=G.tec&&!G.tec.interino?G.tec.sal:0,f=custoFixo(),e=Math.round(parcelasEmp()*10)/10;return {j,t,f,e,tot:Math.round((j+t+f+e)*10)/10}}
+function folhaMensal(){const j=Math.round(folhaSalarial(G.user.club)*10)/10,t=G.tec&&!G.tec.interino?G.tec.sal:0,f=custoFixo(),e=Math.round(parcelasEmp()*10)/10,rec=Math.round(rendaEmp()*10)/10;return {j,t,f,e,rec,tot:Math.round((j+t+f+e-rec)*10)/10}}
 const JURO_MES=.029;
 function opcoesEmprestimo(){
   const F=folhaMensal(),base=Math.max(50,Math.round((F.j+F.t+F.f)/10)*10);
@@ -1708,7 +1781,8 @@ function avancar(meuRes){
   movimentoIA();
   const prox=proximoEvento();
   if(prox&&prox.k==="W"){G.ev++;abrirJanelaMeio(msgs)}
-  G.inbox=msgs.concat(G.inbox).slice(0,40);
+  G.inbox=msgs.concat(G.inbox).slice(0,60);
+  try{processarNegocios();if(meuRes)interesseMercado()}catch(e){console.error(e)}
   if(!proximoEvento())G.seasonEnd=fecharTemporada();
   return out;
 }
@@ -1766,7 +1840,7 @@ const TUT_AMISTOSO={
     {sel:".placar-vivo",t:"Placar e relógio",x:"A partida corre minuto a minuto. No fim de cada tempo há acréscimos."},
     {sel:".cmd-sel [data-v=tec]",t:"Comando do técnico",x:"O técnico faz as trocas sozinho (cansaço, lesão e tática), sem parar o jogo."},
     {sel:".cmd-pausa",t:"Pausar",x:"Para o jogo quando você quiser. Toque de novo para continuar."},
-    {sel:".cmd-sel [data-v=manual]",t:"Comando manual",x:"Você decide as trocas. Se alguém se machucar, o jogo para para você escolher quem entra."},
+    {sel:".cmd-sel [data-v=manual]",t:"Comando manual",x:"Você decide as trocas. Se alguém se machucar, o jogo para para você escolher quem entra. Aparece o card Comandos: gritos para o time (atacar, fechar a zaga...) que dão +habilidade por 10 min, mas cansam mais."},
     {sel:"[data-a=lvpausa][data-v=subs]",t:"Fazer substituição",x:"Abre o campinho e a lista: toque em quem sai e depois em quem entra. São até 5 trocas."},
     {sel:"[data-a=lvpausa][data-v=form]",t:"Trocar formação",x:"Mude a formação e o estilo no meio do jogo."},
     {sel:"[data-a=lvmelhor]",t:"Escalar os melhores",x:"Troca na hora os cansados pelos melhores do banco."},
@@ -1855,12 +1929,12 @@ function lanceColorido(lam){
 }
 function ladoDe(cid){return G.live.L.h.cid===cid?"h":"a"}
 function nomeLado(s){return G.clubs[G.live.L[s].cid].name}
-const ORD_POS={GOL:0,ZAG:1,LAT:2,VOL:3,MEI:4,ATA:5};
+const ORD_POS={GOL:0,ZAG:1,LAT:2,VOL:3,MEI:4,ATA:5}; // ordem das posições na lista de reservas
 function ordenarBanco(ids){return ids.slice().sort((a,b)=>ORD_POS[G.players[a].pos]-ORD_POS[G.players[b].pos])} // estável: mantém a ordem por força dentro da posição
 function bancoDe(s){const L=G.live.L[s];return jogadoresDo(L.cid).filter(p=>disponivel(p)&&!L.part[p.id]).sort((a,b)=>b.ov-a.ov)}
 function iniciarAoVivo(auto){
   const m=partidaAtual();if(!m)return "Não há partida agora.";
-  autoEscalar();validarEscalacao(); // o técnico (ou interino) sempre escala os melhores
+  autoEscalar();validarEscalacao();velocidade=1;gritosAberto=false; // o técnico (ou interino) sempre escala os melhores; a partida começa em velocidade normal
   const uid=G.user.club;
   const mk=cid=>{const c=G.clubs[cid];const form=c.user?G.user.form:c.form,est=c.user?G.user.est:c.est;
     const xi=c.user?G.user.lineup.slice():melhorXI(cid,form);
@@ -1962,7 +2036,7 @@ function passoMinuto(){
   const V=G.live;if(!V||V.est!=="rodando")return;
   if(V.varGol==null)V.varGol=rnd()<.15; // em 1 de cada 5 jogos o VAR revisa um gol
   if((V.min===45&&!V.ht)||V.min>=90)V.add=(V.add||0)+1;else V.min++;
-  for(const s of ["h","a"]){const L=V.L[s],sl=FORMACOES[L.form].s;L.xi.forEach((id,i)=>{const p=G.players[id];if(p)gastar(p,gastoMin(p,sl[i],L.est,V.ritmo))})}
+  for(const s of ["h","a"]){const L=V.L[s],sl=FORMACOES[L.form].s,gr=gritoAtivo(L);L.xi.forEach((id,i)=>{const p=G.players[id];if(p)gastar(p,gastoMin(p,sl[i],L.est,V.ritmo)*(gr&&gr.pos.includes(sl[i])?gr.e:1))})}
   const F={h:forcasCfg(V.L.h.xi,V.L.h.form,V.L.h.est,V.L.h.cid),a:forcasCfg(V.L.a.xi,V.L.a.form,V.L.a.est,V.L.a.cid)};
   const k=18,mh=V.m.neutro?1.16:1.3,ma=V.m.neutro?1.16:1.02;
   const lam={h:clamp(mh*Math.exp((F.h.att-F.a.def)/k)*V.fat.h,.1,4.5),a:clamp(ma*Math.exp((F.a.att-F.h.def)/k)*V.fat.a,.08,4.2)};
@@ -1990,7 +2064,7 @@ function passoMinuto(){
         else{narrar("chance",`${pick(["O goleiro defende o pênalti de","Na trave! Desperdiça o pênalti","Pra fora! Isola o pênalti"])} ${bat.n} (${nomeT}).`);ultLance().pre=`${bat.n} ajeita a bola... corre para a cobrança...`}}
     }
     const emCampo=L.xi.map((id,i)=>[id,i]).filter(([id])=>id!=null);
-    if(!V.m.amistoso&&emCampo.length&&rnd()<.016){
+    if(!V.m.amistoso&&emCampo.length&&rnd()<.016*((gritoAtivo(L)||{}).cartao||1)){
       const [id,i]=pick(emCampo),p=G.players[id];
       if(L.am[id]&&rnd()<.85){/* jogador pendurado evita a falta */}
       else if(rnd()<.03){expulsar(s,i,`CARTÃO VERMELHO! ${p.n} (${nomeT}) ${pick(FR_FALTA)} e é expulso direto.`);
@@ -2090,8 +2164,9 @@ function somarXP(qtd){
 function ganharXP(gf,gs,dobro){
   const P=perfil(),r=gf>gs?"v":gf<gs?"d":"e",ganho=XP_RES[r]*(dobro?2:1);
   P.j++;P[r]++;P.gp+=gf;P.gc+=gs;
-  const s=somarXP(ganho);
-  return {ganho,antes:s.antes,nivel:s.nivel,premio:s.premio,dobro:!!dobro};
+  const s=somarXP(ganho),bola=gf>gs&&gf>=3; // vitória com 3 gols ou mais dá uma Bola Dourada (Pontos de Treino)
+  if(bola)G.user.bolas=(G.user.bolas||0)+1;
+  return {ganho,antes:s.antes,nivel:s.nivel,premio:s.premio,dobro:!!dobro,bola};
 }
 function xpBonus(qtd,motivo){somarXP(qtd);perfil().toastXP=`+${qtd} XP · ${motivo}`}
 
@@ -2187,7 +2262,7 @@ function mundoRodada(r){
 /* fim da temporada: rebaixados e campanhas ruins trocam de técnico, contratos que vencem renovam ou não */
 function mundoFimTemporada(cl){
   if(!G.mundoV)mundoIniciar();const k=pais().k,uid=G.user.club;
-  Object.values(G.players).forEach(p=>{if(!p.emp)return;const o=G.clubs[p.emp.de];if(p.club!==uid&&o&&!o.user)p.club=o.id;delete p.emp});tocou();
+  Object.values(G.players).forEach(p=>{if(!p.emp)return;const o=G.clubs[p.emp.de];if(p.club!==uid&&o&&!o.user)p.club=o.id;delete p.emp});voltaDosEmprestimos();tocou();
   cl.forEach((L,t)=>{for(let n=ri(...MUNDO.fimContrato);n>0;n--){const c=G.clubs[pick(L.filter(id=>id!==uid))];if(!c||jogadoresDo(c.id).length<=22)continue;
     const p=jogadoresDo(c.id).filter(p=>!p.lenda&&(p.age>=31||p.ov<c.rating-6)).sort((a,b)=>b.age-a.age)[0];if(!p)continue;
     p.club=null;tocou();registrarSaida(c,p);addNoticia(`Sem renovação: ${p.n} (${p.age} anos) deixa o ${c.name} ao fim do contrato e está livre no mercado.`,"mercado",t)}});
@@ -2344,6 +2419,118 @@ function processarVendas(){const uid=G.user.club,h=hojeJogo();
     G.cash+=pr-mu;p.club=comp;tocou();delete p.venda;delete p.vendaPreco;delete p.ctFim;delete p.ctAcabou;
     G.user.lineup=G.user.lineup.map(id=>id===p.id?null:id);validarEscalacao();
     G.inbox.unshift({t:"bom",m:`${p.n} foi vendido ao ${G.clubs[comp].name} por ${dinheiro(pr)}${mu?` (multa rescisória de ${dinheiro(mu)} descontada)`:""}.`});perfil().vend=(perfil().vend||0)+1;xpBonus(150,"venda de jogador")})}
+/* ---------- caixa de entrada: avisos do jogo e propostas de outros clubes ----------
+   mensagem de clube = item de G.inbox com cid, tit, d (data do jogo), id e ofm {pid, v, est, mot}.
+   est: aberta (esperando você) · aguardando (você fez contraproposta) · aceita (clube topou; falta fechar) · vendido · recusada · ignorada · expirada · respondida */
+const EST_ABERTOS=["aberta","aguardando","aceita"];
+const novoMid=()=>(G.msgSeq=(G.msgSeq||0)+1);
+function msgClube(cid,tit,txt,ofm){G.inbox.unshift({t:"clube",id:novoMid(),cid,tit,m:txt,d:hojeJogo(),ofm});G.inbox=G.inbox.slice(0,60)}
+const mediaNota=p=>p.nn>=3?p.nt/p.nn:6;
+function interessante(p){
+  const j=p.j||0,g=p.g||0;if(j<3||p.lenda)return false;
+  if(p.pos==="ATA"||p.pos==="MEI")if(g>=3&&g/j>=.5)return true;
+  if((p.pos==="LAT"||p.pos==="VOL")&&g>=3&&g/j>=.35)return true;
+  return p.nn>=4&&mediaNota(p)>=7.1}
+function motivoInteresse(p){const j=p.j||0,g=p.g||0;
+  if(g>=3&&g/j>=.35)return `${g} gols em ${j} jogos nesta temporada`;
+  return `nota média ${mediaNota(p).toFixed(1).replace(".",",")} nesta temporada, entre os melhores da posição`}
+/* quanto mais o time vai bem (posição na tabela e vitórias seguidas), mais clubes aparecem atrás dos jogadores */
+function interesseMercado(){
+  const uid=G.user.club,t=userTier();if(G.fase!=="jogo"||t<0||t>2||!G.tiers||!G.tiers[t]||!G.res||!G.res[t])return;
+  if(G.ev-(G.intUlt??-9)<2)return;
+  const abertos=G.inbox.filter(m=>m.ofm&&EST_ABERTOS.includes(m.ofm.est));if(abertos.length>=3)return;
+  const pos=posicaoDe(uid);let heat=pos<=1?.5:pos<=4?.3:pos<=8?.12:.04;
+  {let w=0,k=0;G.res[t].filter(Boolean).slice(-3).forEach(rd=>{const x=rd.find(g=>g[0]===uid||g[1]===uid);if(x){k++;if((x[0]===uid?x[2]-x[3]:x[3]-x[2])>0)w++}});if(k>=3&&w>=3)heat+=.15}
+  if(rnd()>heat)return;
+  const jaTem=new Set(abertos.map(m=>m.ofm.pid));
+  const cand=jogadoresDo(uid).filter(p=>p.ov>=58&&!jaTem.has(p.id)&&(p.intEv==null||G.ev-p.intEv>8)&&interessante(p));
+  if(!cand.length)return;
+  const pesos=cand.map(p=>(p.g||0)*2+(mediaNota(p)-6)*3+p.ov/20+1);let r=rnd()*pesos.reduce((a,b)=>a+b,0),i=0;while(i<cand.length-1&&(r-=pesos[i])>0)i++;
+  const p=cand[i],lim=c=>c.tier>=2?75:c.tier===1?80:999;
+  const cs=G.tiers.flat().map(id=>G.clubs[id]).filter(c=>c&&!c.user&&c.id!==uid&&p.ov>=c.rating-5&&p.ov<=c.rating+7&&jogadoresDo(c.id).length<34&&!(t===0&&p.ov>lim(c)));
+  if(!cs.length)return;
+  const c=pick(cs),v=Math.max(10,Math.round(valorJusto(p)*(.85+rnd()*.3)/5)*5);
+  p.intEv=G.ev;G.intUlt=G.ev;
+  msgClube(c.id,"Interesse em jogador",`O ${c.name} tem interesse em ${p.n} (${POS_EXT[p.pos]}): compra ou empréstimo.`,{pid:p.id,v,est:"aberta",mot:motivoInteresse(p),ev:G.ev})}
+function venderPara(pid,cid,preco){
+  const p=G.players[pid],dest=G.clubs[cid];if(!p||p.club!==G.user.club||!dest)return "Esse jogador não está mais no seu elenco.";
+  if(jogadoresDo(G.user.club).length<=16)return "O elenco precisa ter pelo menos 16 jogadores.";
+  if(jogadoresDo(cid).length>=34)return "O elenco do outro clube está cheio.";
+  G.cash+=preco;p.club=cid;tocou();delete p.venda;delete p.vendaPreco;delete p.ctFim;delete p.ctAcabou;delete p.ofertas;
+  if(G.janela)G.janela.listados=(G.janela.listados||[]).filter(x=>x!==pid);
+  G.user.lineup=G.user.lineup.map(id=>id===pid?null:id);validarEscalacao();
+  G.inbox.unshift({t:"bom",m:`${p.n} foi vendido ao ${dest.name} por ${dinheiro(preco)}.`});
+  perfil().vend=(perfil().vend||0)+1;xpBonus(150,"venda de jogador");return null}
+/* respostas dos clubes (2 a 3 rodadas depois) e prazos das propostas */
+const refEmprestimo=p=>Math.max(5,Math.round(p.sal*.6/5)*5); // taxa mensal "normal" de um empréstimo (o clube que recebe também paga o salário)
+function processarNegocios(){
+  const fila=G.negs||[];G.negs=[];
+  fila.forEach(n=>{if(G.ev<n.resp){G.negs.push(n);return}
+    const p=G.players[n.pid],c=G.clubs[n.cid],orig=G.inbox.find(x=>x.id===n.mid);if(!p||!c)return;
+    if(n.tipo==="rec"){msgClube(n.cid,"Re: interesse em jogador",`Tudo bem, entendemos a sua decisão sobre ${p.n}. Em outro momento, quem sabe, possamos fazer negócio. Desejamos sucesso ao ${G.clubs[G.user.club].name}.`);return}
+    if(orig)orig.ofm.est="respondida";
+    if(p.club!==G.user.club)return;
+    const venda=n.tipo==="venda",ratio=venda?n.pedido/valorJusto(p):n.mensal/refEmprestimo(p),
+      ok=ratio<=3&&rnd()<(ratio<=1.15?.85:ratio<=1.5?.65:ratio<=2?.45:.25);
+    if(ok)msgClube(n.cid,"Proposta aceita",venda?`Aceitamos o valor de ${dinheiro(n.pedido)} por ${p.n}. Para concluir a transferência, basta aceitar.`:`Aceitamos o empréstimo de ${p.n} por ${n.temp} temporada${n.temp>1?"s":""}, pagando ${dinheiro(n.mensal)} por mês. Para concluir, basta aceitar.`,{pid:p.id,tipo:n.tipo,v:n.pedido,temp:n.temp,mensal:n.mensal,est:"aceita",ev:G.ev});
+    else msgClube(n.cid,"Re: proposta por jogador",ratio>3?`Agradecemos o retorno, mas o valor pedido por ${p.n} está muito acima do que o clube pode pagar. Preferimos encerrar a negociação.`:`Analisamos a sua proposta por ${p.n}, mas não conseguimos chegar a um acordo. Por ora, vamos encerrar as conversas. Em outro momento, quem sabe, fazemos negócio.`)});
+  G.inbox.forEach(m=>{if(m.ofm&&(m.ofm.est==="aberta"&&G.ev-m.ofm.ev>=6||m.ofm.est==="aceita"&&G.ev-m.ofm.ev>=5))m.ofm.est="expirada"})}
+/* empréstimo de jogador seu a outro clube: sai da folha, o clube paga uma taxa por mês (entra na conta do mês) e ele volta no fim das temporadas combinadas */
+const rendaEmp=()=>Object.values(G.players).reduce((a,p)=>a+(p.empU&&p.club!==G.user.club?p.empU.mensal:0),0);
+function emprestarPara(pid,cid,temp,mensal){
+  const p=G.players[pid],dest=G.clubs[cid];if(!p||p.club!==G.user.club||!dest)return "Esse jogador não está mais no seu elenco.";
+  if(jogadoresDo(G.user.club).length<=16)return "O elenco precisa ter pelo menos 16 jogadores.";
+  if(jogadoresDo(cid).length>=34)return "O elenco do outro clube está cheio.";
+  p.club=cid;p.emp={de:G.user.club};p.empU={ate:G.year+temp-1,mensal,temp};tocou();delete p.venda;delete p.vendaPreco;
+  G.user.lineup=G.user.lineup.map(id=>id===pid?null:id);validarEscalacao();
+  G.inbox.unshift({t:"bom",m:`${p.n} foi emprestado ao ${dest.name} por ${temp} temporada${temp>1?"s":""}. Você recebe ${dinheiro(mensal)} por mês.`});return null}
+function voltaDosEmprestimos(){
+  Object.values(G.players).forEach(p=>{if(p.empU&&G.year>=p.empU.ate){const era=p.club!=null&&G.clubs[p.club];p.club=G.user.club;delete p.empU;delete p.emp;tocou();
+    G.inbox.unshift({t:"bom",m:`${p.n} terminou o empréstimo${era?` no ${era.name}`:""} e voltou ao seu elenco.`})}})}
+const naoLidas=()=>(G&&G.inbox?G.inbox.filter(m=>!m.lida).length:0);
+const ICO_AVIAO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>';
+const ICO_NOTA='<svg class="ico-nota" viewBox="0 0 28 18" aria-hidden="true"><rect x="1" y="1" width="26" height="16" rx="3" fill="#2e9b57" stroke="#bff0cf" stroke-width="1.5"/><circle cx="14" cy="9" r="4" fill="none" stroke="#bff0cf" stroke-width="1.5"/><circle cx="5" cy="9" r="1.2" fill="#bff0cf"/><circle cx="23" cy="9" r="1.2" fill="#bff0cf"/></svg>';
+const dinheiroCurto=k=>{const s=dinheiro(Math.abs(k)),m=G?pais().moeda:"R$";return (k<0?"−":"")+s.replace(m,"").trim()};
+const dataMsg=ms=>{const d=new Date(ms);return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`};
+function selosEst(o){return {aberta:"",aguardando:"Aguardando resposta",aceita:"Proposta aceita",vendido:"Vendido",recusada:"Recusada",ignorada:"Ignorada",expirada:"Expirada",respondida:"Respondida"}[o.est]||""}
+function modalCaixa(){
+  const l=G.inbox;
+  const h=l.length?l.map((m,i)=>{const nova=!m.lida,c=m.cid&&G.clubs[m.cid];
+    if(c)return `<button class="msg-card clube${nova?" nova":""}" data-a="msgver" data-v="${i}"><span class="msg-selo">${escudoMini(c,18)}<b>${esc(c.name)}</b></span><span class="msg-txt">${esc(m.m)}</span><small>${m.ofm&&selosEst(m.ofm)?`<i>${selosEst(m.ofm)}</i> · `:""}${dataMsg(m.d||hojeJogo())}</small></button>`;
+    return `<button class="msg-card${nova?" nova":""} ${m.t||""}" data-a="msgver" data-v="${i}"><span class="msg-selo jogo">📣 <b>Aviso do jogo</b></span><span class="msg-txt">${esc(m.m)}</span></button>`}).join(""):'<p class="muted">Nenhuma mensagem.</p>';
+  modal(`<h3>✉️ Caixa de entrada</h3><div class="msg-lista">${h}</div><div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`);
+  l.forEach(m=>m.lida=true);salvar();render()}
+function modalMensagem(i){
+  const m=G.inbox[i];if(!m)return;m.lida=true;
+  const c=m.cid&&G.clubs[m.cid],o=m.ofm,p=o&&G.players[o.pid];
+  let corpo,acoes="";
+  const ass=`<p>Atenciosamente,<br>Diretoria de Futebol do ${c?esc(c.name):""}</p>`,sd=`<p>Prezado treinador ${esc(G.user.coach||"")},</p>`;
+  if(c&&o&&p&&o.est==="aceita"){
+    corpo=sd+`<p>${o.tipo==="emp"?`O ${esc(c.name)} aceita o empréstimo de <b>${esc(p.n)}</b> por <b>${o.temp} temporada${o.temp>1?"s":""}</b>, pagando <b>${dinheiro(o.mensal)} por mês</b>.`:`O ${esc(c.name)} aceita pagar <b>${dinheiro(o.v)}</b> pelo atleta <b>${esc(p.n)}</b>, conforme a sua proposta.`}</p><p>Para concluir o negócio, aguardamos a sua confirmação.</p>`+ass;
+    acoes=p.club===G.user.club?`<button class="btn prim" data-a="msgaceitar" data-v="${i}">Aceitar</button><button class="btn" data-a="msgdesistir" data-v="${i}">Desistir</button>`:"";
+  }else if(c&&o&&p){
+    corpo=sd+`<p>A diretoria de futebol do ${esc(c.name)} acompanha o desempenho do atleta <b>${esc(p.n)}</b> (${POS_EXT[p.pos]}), que vem se destacando com ${esc(o.mot||"boas atuações")}.</p><p>Temos interesse em contar com o jogador e gostaríamos de conversar sobre a <b>compra</b> ou o <b>empréstimo</b> dele.</p><p>Aguardamos o seu retorno.</p>`+ass;
+    acoes=o.est==="aberta"?`<button class="btn" data-a="msgrec" data-v="${i}">Recusar</button><button class="btn prim" data-a="msgvend" data-v="${i}">Vender</button><button class="btn prim" data-a="msgempr" data-v="${i}">Emprestar</button><button class="btn" data-a="msgign" data-v="${i}">Ignorar</button>`
+      :`<p class="msg-est">${o.est==="aguardando"?"Proposta enviada. Aguardando a resposta do "+esc(c.name)+"...":selosEst(o)}</p>`;
+  }else corpo=`<p>${esc(m.m)}</p>${c?ass:""}`;
+  const cartao=p?cartaoJogMsg(p):"";
+  modal(`<div class="msg-quadro"><div class="msg-cab">${c?`<span class="msg-selo grande">${escudoMini(c,26)}<b>${esc(c.name)}</b></span>`:`<span class="msg-selo jogo grande">📣 <b>Aviso do jogo</b></span>`}<small>${dataMsg(m.d||hojeJogo())}</small></div>${m.tit?`<h3 class="msg-ass">${esc(m.tit)}</h3>`:""}<div class="msg-corpo">${corpo}</div>${cartao}</div>
+  ${acoes?`<div class="msg-acoes">${acoes}</div>`:""}<div class="botoes"><button class="btn" data-a="caixa">‹ Caixa de entrada</button><button class="btn prim" data-a="fechar">Fechar</button></div>`)}
+function cartaoJogMsg(p){return `<button class="jog msg-jog" data-a="perfil" data-v="${p.id}">${fotoPos(p,p.pos,true)}<div class="nm"><b>${esc(p.n)}</b><span>${p.pos} · ${p.age} anos · valor ${dinheiro(valorJusto(p))}</span></div><div class="ov num">${p.ov}</div></button>`}
+function modalVender(i){
+  const m=G.inbox[i],p=m&&m.ofm&&G.players[m.ofm.pid];if(!p)return;const vj=valorJusto(p),c=G.clubs[m.cid];
+  modal(`<h3>Vender ${esc(p.n)}</h3>${cartaoJogMsg(p)}<p class="muted peq">Quanto você quer pelo jogador? O mínimo é o valor dele (${dinheiro(vj)}). Quanto mais alto, menor a chance de o ${esc(c.name)} aceitar. A resposta chega em 2 ou 3 rodadas.</p>
+  <div class="campo"><span>Valor da venda</span><input type="number" id="neg-preco" inputmode="numeric" min="${vj}" step="5" value="${Math.round(vj*1.2/5)*5}" style="text-align:center"></div>
+  <div class="botoes"><button class="btn" data-a="msgver" data-v="${i}">‹ Voltar</button><button class="btn prim" data-a="msgvendenv" data-v="${i}">Enviar</button></div>`)}
+function modalEmprestar(i){
+  const m=G.inbox[i],p=m&&m.ofm&&G.players[m.ofm.pid];if(!p)return;const ref=refEmprestimo(p),c=G.clubs[m.cid];
+  modal(`<h3>Emprestar ${esc(p.n)}</h3>${cartaoJogMsg(p)}<p class="muted peq">No empréstimo o jogador vai para o ${esc(c.name)}, que paga o salário dele e uma taxa mensal a você. No fim, ele volta ao seu elenco. O valor normal de mercado é de uns ${dinheiro(ref)} por mês.</p>
+  <div class="campo"><span>Duração: <b id="emp-t-v">1</b> temporada(s)</span><input type="range" id="emp-t" min="1" max="3" step="1" value="1" oninput="document.getElementById('emp-t-v').textContent=this.value"></div>
+  <div class="campo"><span>Valor por mês: <b id="emp-m-v">${dinheiro(ref)}</b></span><input type="range" id="emp-m" min="0" max="${ref*4}" step="5" value="${ref}" oninput="document.getElementById('emp-m-v').textContent=(+this.value).toLocaleString('pt-BR')+' mil'"></div>
+  <div class="botoes"><button class="btn" data-a="msgver" data-v="${i}">‹ Voltar</button><button class="btn prim" data-a="msgempenv" data-v="${i}">Enviar</button></div>`)}
+/* depois de enviar a proposta, o clube responde na hora que vai pensar */
+function propostaEnviada(m,p,msg){msgClube(m.cid,"Proposta recebida",`Recebemos a sua proposta ${msg}por ${p.n}. Vamos analisar e respondemos em breve.`);salvar();render();modalMensagem(0)}
+function modalGrana(v,txt){modal(`<div class="aviso-box grana-box"><div class="cb-ic" style="justify-content:center">${ICO_GRANA(4)}</div><b>Negócio fechado!</b><div class="grana-v num">+${dinheiro(v)}</div><p>${txt}</p></div><div class="botoes"><button class="btn prim" data-a="fechar">Show!</button></div>`);confete()}
 function avisoElencoCheio(){if(jogadoresDo(G.user.club).length>=26)setTimeout(()=>aviso("Elenco muito grande",`Seu clube já tem ${jogadoresDo(G.user.club).length} jogadores. Muitos jogadores deixam a folha salarial mensal bem mais pesada. Venda alguns para equilibrar as contas e melhorar o lucro.`),400)}
 function pedidoRenovacao(p,anos){const s=Math.round(Math.max(p.sal,salarioDe(p.ov))*(1.05+.04*anos)*10)/10;return {sal:s,luvas:Math.round(s*2)}}
 function renovar(pid,anos){
@@ -2381,7 +2568,7 @@ function reporSaidas(janela){
 }
 /* times da IA com mais de 32 jogadores dispensam o mais fraco (fica sem clube, no mercado) */
 function apararElencos(){G.tiers.flat().forEach(id=>{const c=G.clubs[id];if(!c||c.user)return;const el=jogadoresDo(id);
-  if(el.length>32)el.filter(p=>!p.lenda&&!p.emp).sort((a,b)=>a.ov-b.ov||b.age-a.age).slice(0,el.length-32).forEach(p=>{p.club=null});});tocou()}
+  if(el.length>32)el.filter(p=>!p.lenda&&!p.emp&&!p.empU).sort((a,b)=>a.ov-b.ov||b.age-a.age).slice(0,el.length-32).forEach(p=>{p.club=null});});tocou()}
 function mercadoIA(n){
   const clubes=G.tiers.flat().filter(id=>!G.clubs[id].user).map(id=>G.clubs[id]);const neg=[],res=reservadosMercado(),compras={};
   for(let k=0;k<n;k++){
@@ -2877,7 +3064,7 @@ function proximaTemporada(){
     while(k<falta){const id=novoJogador(pick(ELENCO_BASE),c.rating-5,uid,ri(18,21));G.players[id].ct=2;k++}
     msgs.push({t:"msg",m:`O elenco ficou curto e a base promoveu ${falta} jogador${falta>1?"es":""} para completar 18.`})}}
   const fim=jogadoresDo(uid).filter(p=>(p.ct??2)<=1).map(p=>p.n);if(fim.length)msgs.push({t:"msg",m:`Contratos no último ano: ${fim.join(", ")}. Renove no Elenco para não perdê-los.`});
-  G.inbox=msgs.concat(G.inbox.filter(m=>!m.of)).slice(0,40);
+  G.inbox=msgs.concat(G.inbox.filter(m=>!m.of)).slice(0,60);
 }
 
 /* sufixos de milhão/mil e formato de número por idioma da tela */
@@ -2909,6 +3096,7 @@ function novoW(){return {passo:1,nome:"",sigla:"",tec:"",pais:"BRA",estadio:"",
 let uniSel=0;
 function migrar(g){
   if(!g||!g.clubs)return g;
+  if(!g.inboxV){g.inboxV=1;(g.inbox||[]).forEach(m=>m.lida=true)} // mensagens antigas já contam como lidas
   if(g.amistoso===undefined)g.amistoso="feito"; // carreiras antigas não têm amistoso de tutorial
   const orig={};Object.entries(PAISES).forEach(([k,p])=>[...p.t.flat(),...p.pool].forEach(x=>{const n=x.split("|")[0];orig[k+"|"+abreviar(n)]=n}));Object.values(EXTRAS).flat().forEach(x=>{const q=x.split("|");orig[q[4]+"|"+abreviar(q[0])]=q[0]});
   if(g.tecCand&&g.tecCand.length>2)g.tecCand=[g.tecCand[0],g.tecCand[2]];
@@ -2958,7 +3146,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792709194";
+const VERSAO="1792710746";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3924,9 +4112,9 @@ function render(){try{if(G&&G.user)garantirContratos()}catch(e){}
   nav.innerHTML=`<div class="wrap">${abasNav().map(k=>`<button data-a="aba" data-v="${k}" aria-current="${aba===k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES[k]}</svg>${k==="copa"?nomeCurtoCopa():ROTULOS[k]}</button>`).join("")}</div>`;
   const c=G.clubs[G.user.club];
   const Pf=perfil(),xpPct=Pf.nivel>=NIVEL_MAX?100:Math.round(Pf.xp/xpParaSubir(Pf.nivel)*100); // topo: foto do dono + nível + nome + XP (leva ao Perfil)
-  const topo=`<header class="topo"><button class="dono-foto" data-a="aba" data-v="perfil" aria-label="Perfil do dono">${avatarSrc()?`<img src="${avatarSrc()}" alt="">`:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">${ICONES.perfil}</svg>`}<b class="num">${Pf.nivel}</b></button><div class="info" data-a="aba" data-v="perfil" style="cursor:pointer"><h1 class="dono-nome">${esc(G.user.coach||"Dono do clube")}</h1><div class="xp-barra dono-xp"><i style="width:${xpPct}%"></i></div></div><div class="topo-grana"><span class="cupom-topo num" title="Cupons dourados">${ICO_CUPOM}${cupons()}</span><div class="caixa num${G.cash<0?" neg":""}"><small>Caixa</small>${dinheiro(G.cash)}</div></div><button class="som-btn" data-a="aba" data-v="config" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES.config}</svg></button></header>`;
+  const topo=`<header class="topo"><button class="dono-foto" data-a="aba" data-v="perfil" aria-label="Perfil do dono">${avatarSrc()?`<img src="${avatarSrc()}" alt="">`:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">${ICONES.perfil}</svg>`}<b class="num">${Pf.nivel}</b></button><div class="info" data-a="aba" data-v="perfil" style="cursor:pointer"><h1 class="dono-nome">${esc(G.user.coach||"Dono do clube")}</h1><div class="xp-barra dono-xp"><i style="width:${xpPct}%"></i></div></div><div class="topo-grana"><button class="gr-btn" data-a="cambioir" aria-label="Comprar cupons dourados">${ICO_CUPOM}<b class="num">${cupons()}</b></button><button class="gr-btn${G.cash<0?" neg":""}" data-a="cambioir" aria-label="Dinheiro do clube">${ICO_NOTA}<b class="num">${dinheiroCurto(G.cash)}</b></button></div><button class="som-btn msg-btn" data-a="caixa" aria-label="Caixa de entrada">${ICO_AVIAO}${naoLidas()?`<span class="msg-badge">${Math.min(naoLidas(),99)}</span>`:""}</button><button class="som-btn" data-a="aba" data-v="config" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES.config}</svg></button></header>`;
   const corpo={inicio:telaInicio,elenco:telaElenco,tabela:telaTabela,mercado:telaMercado,clube:telaClube,escudo:telaEscudo,upgrades:telaUpgrades,copa:telaAbaCopa,jogar:telaInicio,liga:telaLiga,perfil:telaPerfil,financas:telaFinancas,config:telaConfig,visual:telaVisual,prejogo:telaPreJogo,partida:telaPartida,resultado:telaResultado}[aba]();
-  app.innerHTML=(telaCheia?"":topo)+corpo;
+  app.innerHTML=(telaCheia?"":topo)+corpo+(telaCheia?"":bolaHTML());
   videoVS();ligarCampinho();
   if(G&&!TUTA&&!document.querySelector(".veu")){const ta=G.tutAmi||{};if(aba==="prejogo"&&!ta.pre&&partidaAtual()&&partidaAtual().amistoso)setTimeout(()=>tutAmistoso("pre"),600);else if(aba==="partida"&&G.live&&G.live.m.amistoso&&!ta.vivo)setTimeout(()=>tutAmistoso("vivo"),500)}if(aba==="financas")ligarGrafico();{const b=document.querySelector('.lg-abas [aria-pressed="true"]');if(b)b.scrollIntoView({inline:"center",block:"nearest"})}
   if(ligaRolar){ligaRolar=false;const ag=$("#lg-agora");if(ag&&aba==="liga"&&ligaAba==="mais")window.scrollTo(0,ag.getBoundingClientRect().top+scrollY-90)}
@@ -5322,6 +5510,60 @@ function modalTrocarRosto(id){
   <div class="botoes">${p.rf!=null?`<button class="btn" data-a="rescolhe" data-v="-1" data-i="${id}">Voltar ao automático</button>`:""}<button class="btn prim" data-a="perfil" data-v="${id}">Pronto</button></div>`);
   {const sel=document.querySelector('.grade-rostos [aria-pressed="true"]'),l=document.getElementById("rosto-lista");if(sel&&l)l.scrollTop+=sel.getBoundingClientRect().top-l.getBoundingClientRect().top-l.clientHeight/2+40}
 }
+/* ---------- atributos dos jogadores e Pontos de Treino ----------
+   atributos = calculados da força, da posição, da idade e de um sorteio fixo por jogador (hashId); o craque tem perfil mais marcado.
+   pontos de treino: G.user.pts {atq,def,vel,pas,fin,fis}; ganhos em Bolas Douradas (G.user.bolas); gastos viram p.ap[k] (+1 no atributo) e sobem a força (p.acc) */
+const ATRS=[["atq","Ataque","⚔️"],["def","Defesa","🛡️"],["vel","Velocidade","⚡"],["pas","Passe","🎯"],["fin","Finalização","🥅"],["fis","Preparo físico","💪"],["dri","Drible","🌀"],["cab","Cabeceio","🧠"]];
+const ATR_OFF={
+  GOL:{atq:-42,def:6,vel:-24,pas:-16,fin:-42,fis:-4,dri:-45,cab:-30},
+  ZAG:{atq:-22,def:5,vel:-8,pas:-10,fin:-26,fis:4,dri:-20,cab:4},
+  LAT:{atq:-9,def:-2,vel:6,pas:-4,fin:-17,fis:3,dri:-4,cab:-14},
+  VOL:{atq:-12,def:2,vel:-4,pas:2,fin:-14,fis:5,dri:-8,cab:-2},
+  MEI:{atq:0,def:-14,vel:-2,pas:6,fin:-4,fis:-2,dri:5,cab:-14},
+  ATA:{atq:5,def:-28,vel:4,pas:-4,fin:6,fis:-2,dri:4,cab:-4}};
+const ATR_REL={GOL:{def:1,fis:.5},ZAG:{def:1,fis:.5,vel:.5},LAT:{def:.5,vel:1,pas:.5,fis:.5,dri:.5},VOL:{def:1,pas:.5,fis:.5},MEI:{pas:1,atq:.5,fin:.5,vel:.5,dri:1},ATA:{atq:1,fin:1,vel:.5,dri:.5,cab:.5}}; // peso de cada ponto na força: o ponto principal da posição = 1; o ov sobe aos poucos (metade disso por ponto, ver usarPonto)
+function atributos(p){
+  const o=ATR_OFF[p.pos]||ATR_OFF.MEI,mag=.7+Math.max(0,p.ov-40)/70;
+  const fortes=ATRS.map(a=>a[0]).sort((a,b)=>o[b]-o[a]),destaque=fortes[hashId(p.id,31)%2],r={};
+  ATRS.forEach(([k],i)=>{let v=p.ov+o[k]*mag+(hashId(p.id,20+i)%9-4)+(k===destaque&&p.ov>60?Math.round((p.ov-60)/7):0)+((p.ap||{})[k]||0);
+    if(k==="vel"&&p.age>=31)v-=p.age-30;if(k==="fis"&&p.age>=33)v-=(p.age-32)*1.5;
+    r[k]=Math.round(clamp(v,8,99))});
+  return r}
+const pontosTreino=()=>{const u=G.user;if(!u.pts)u.pts={};return u.pts};
+const totalPontos=()=>Object.values(pontosTreino()).reduce((a,b)=>a+b,0);
+function usarPonto(id,k){
+  const p=G.players[id],P=pontosTreino();if(!p||p.club!==G.user.club)return "Esse jogador não está no seu elenco.";
+  if(!(P[k]>0))return "Você não tem pontos disso.";if(atributos(p)[k]>=99)return "Esse atributo já está no máximo.";
+  P[k]--;p.ap=p.ap||{};p.ap[k]=(p.ap[k]||0)+1;p.acc=(p.acc||0)+((ATR_REL[p.pos]||{})[k]||.25)*.5; // 2 pontos no atributo principal = +1 de força
+  while(p.acc>=1&&p.ov<99){p.acc--;p.ov++}
+  return null}
+function sortearPontos(){const ks=ATRS.map(a=>a[0]).sort(()=>rnd()-.5).slice(0,3),out={};ks.forEach(k=>out[k]=ri(1,2));return out}
+const corAtr=v=>v>=85?"var(--canario)":v>=70?"var(--ok)":v>=50?"var(--aviso)":"var(--ruim)";
+function barrasAtr(p,botoes){
+  const at=atributos(p),P=pontosTreino();
+  return `<div class="atrs">${ATRS.map(([k,n,ic])=>{const v=at[k],ex=(p.ap||{})[k]||0;
+    return `<div class="atr"><span>${ic} ${n}</span><div class="atr-b"><i style="width:${v}%;background:${corAtr(v)}"></i></div><b class="num">${v}${ex?`<em>+${ex}</em>`:""}</b>${botoes?`<button class="btn mini atr-mais" data-a="ptsadd" data-v="${p.id}|${k}"${P[k]>0&&v<99?"":" disabled"} aria-label="Usar 1 ponto de ${n}">+${P[k]>0?`<small>${P[k]}</small>`:""}</button>`:""}</div>`}).join("")}</div>`}
+function quadroPontos(){
+  const P=pontosTreino(),bolas=G.user.bolas||0;
+  return `<h2>Pontos de Treino</h2><div class="cartao secao pts-quadro"><p class="muted peq" style="margin:0">Vença jogos fazendo 3 gols ou mais para ganhar uma Bola Dourada. Ao estourar, ela dá pontos para você evoluir seus jogadores. Toque num ponto colorido para escolher quem recebe.${bolas?` <b style="color:var(--canario)">Você tem ${bolas} bola${bolas>1?"s":""} esperando!</b>`:""}</p>
+  <div class="pts-grade">${ATRS.map(([k,n,ic])=>`<button class="pts-chip${P[k]>0?" tem":""}" data-a="ptstipo" data-v="${k}"><span class="pts-ic">${ic}</span><b class="num">${P[k]||0}</b><small>${n}</small></button>`).join("")}</div></div>`}
+function modalPontosTipo(k){
+  const P=pontosTreino(),a=ATRS.find(x=>x[0]===k),el=jogadoresDo(G.user.club).sort((x,y)=>ORD_POS[x.pos]-ORD_POS[y.pos]||y.ov-x.ov);
+  modal(`<h3>${a[2]} Pontos de ${a[1]}</h3><p class="muted peq" style="margin:0 0 8px">${P[k]>0?`Você tem <b style="color:var(--canario)">${P[k]}</b> ponto${P[k]>1?"s":""}. Toque em + para dar 1 ponto ao jogador.`:"Você não tem pontos disso agora. Ganhe Bolas Douradas vencendo jogos com 3 gols ou mais."}</p>
+  <div class="pts-lista">${el.map(p=>{const v=atributos(p)[k],ex=(p.ap||{})[k]||0;return `<div class="pts-lin"><span class="posb ${p.pos}">${p.pos}</span><div class="nm"><b>${esc(nomeCurto(p.n))}</b><div class="atr-b"><i style="width:${v}%;background:${corAtr(v)}"></i></div></div><b class="num">${v}${ex?`<em>+${ex}</em>`:""}</b><button class="btn mini atr-mais" data-a="ptsadd" data-v="${p.id}|${k}|t"${P[k]>0&&v<99?"":" disabled"}>+</button></div>`}).join("")}</div>
+  <div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`)}
+function modalPontosJog(id){
+  const p=G.players[id];if(!p)return;const P=pontosTreino(),tot=totalPontos();
+  modal(`<div class="perfil"><div class="perfil-foto">${rostoSVG(p,80)}</div><div class="nm"><h3 style="margin:0">${esc(p.n)}</h3><span class="muted">${p.pos} · força ${p.ov}</span></div></div>
+  <p class="muted peq" style="margin:10px 0 6px">${tot?`Você tem <b style="color:var(--canario)">${tot}</b> ponto${tot>1?"s":""} de treino. Toque em + no atributo que quer melhorar.`:"Você não tem pontos de treino agora. Ganhe Bolas Douradas vencendo jogos com 3 gols ou mais."}</p>
+  ${barrasAtr(p,true)}<div class="botoes"><button class="btn" data-a="perfil" data-v="${p.id}">‹ Perfil</button><button class="btn prim" data-a="fechar">Fechar</button></div>`)}
+function bolaHTML(){
+  const n=G.user.bolas||0;if(!n)return "";
+  const parts=Array.from({length:14},(_,i)=>{const a=i/14*Math.PI*2,d=70+(i%3)*22;return `<i style="--x:${Math.round(Math.cos(a)*d)}px;--y:${Math.round(Math.sin(a)*d)}px"></i>`}).join("");
+  return `<button class="bola-dourada" data-a="bola" aria-label="Bola Dourada: toque para estourar"><svg viewBox="0 0 64 64" width="64" height="64"><defs><radialGradient id="bd-g" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff3b0"/><stop offset=".45" stop-color="#ffd23f"/><stop offset="1" stop-color="#b8820a"/></radialGradient></defs><circle cx="32" cy="32" r="29" fill="url(#bd-g)" stroke="#8a5f00" stroke-width="2"/><path d="M32 19l10 7-4 12H26l-4-12z" fill="#8a5f00" opacity=".75"/><path d="M32 19V8M42 26l11-4M38 38l7 9M26 38l-7 9M22 26L11 22" stroke="#8a5f00" stroke-width="2.4" stroke-linecap="round" opacity=".6"/></svg>${parts}<span class="bola-rot">Ponto surpresa${n>1?` ×${n}`:""}</span></button>`}
+function modalBola(gan){
+  modal(`<div class="bola-res"><div class="bola-brilho">✨</div><b class="bola-tit">Pontos surpresa!</b><div class="bola-ganhos">${Object.entries(gan).map(([k,n])=>{const a=ATRS.find(x=>x[0]===k);return `<div class="bola-g"><span>${a[2]}</span><b>+${n}</b><small>${a[1]}</small></div>`}).join("")}</div><p class="muted peq" style="margin:0">Os pontos ficam guardados em Clube › Pontos de Treino. Escolha quem vai evoluir.</p></div>
+  <div class="botoes"><button class="btn" data-a="fechar">Guardar</button><button class="btn prim" data-a="ptstipo" data-v="${Object.keys(gan)[0]}">Usar agora</button></div>`);confete()}
 function perfilJogador(id){
   const p=G.players[id];if(!p)return;
   const c=p.club!=null?G.clubs[p.club]:null,meu=p.club===G.user.club;
@@ -5341,6 +5583,7 @@ function perfilJogador(id){
       <div><span>Salário</span><span>${dinheiro(p.sal)}/mês</span></div>
       ${meu?`<div><span>Contrato</span><span>${contratoAcabou(p)?"Encerrado":"até "+fimContratoTxt(p)}</span></div>`:""}
     </div>
+    <h2>Atributos</h2>${barrasAtr(p,false)}${meu?`<button class="btn full btn-pts" data-a="ptsjog" data-v="${p.id}">⭐ Usar pontos de treino${totalPontos()?` <span class="pts-badge">${totalPontos()}</span>`:""}</button>`:""}
     <h2>Histórico de lesões</h2>${(p.lesoes||[]).length?`<div class="extrato num">${p.lesoes.slice().reverse().map(([a,j,m])=>`<div><span>${a} · ${esc(m)}</span><span>${j} jogo${j>1?"s":""} fora</span></div>`).join("")}</div>`:'<p class="muted peq" style="margin:0">Nenhuma lesão registrada.</p>'}
     <h2>Temporada ${G.year}</h2><div class="kpis"><div class="cartao kpi"><small>Jogos</small><b class="num">${p.j||0}</b></div><div class="cartao kpi"><small>Gols</small><b class="num">${p.g||0}</b></div><div class="cartao kpi"><small>Assistências</small><b class="num">${p.as||0}</b></div><div class="cartao kpi"><small>Nota média</small><b class="num">${media}</b></div></div>
     ${meu?`<h2>Carreira no clube</h2><div class="kpis"><div class="cartao kpi"><small>Jogos</small><b class="num">${(p.tj||0)+(p.j||0)}</b></div><div class="cartao kpi"><small>Gols</small><b class="num">${(p.tg||0)+(p.g||0)}</b></div></div>`:""}
@@ -5442,7 +5685,12 @@ function telaPreJogo(){
 
 /* ---------- partida ao vivo ---------- */
 const NIVEL_3X=20; // velocidade 3× libera nesse nível do dono
-let timerLive=null,velocidade=1,liveSel=null,painel=null;
+let timerLive=null,velocidade=1,liveSel=null,painel=null,gritosAberto=false;
+function blocoGritos(V){
+  const L=V.L[V.lado],at=gritoAtivo(L),espera=!at&&L.grito&&V.min<L.grito.ate+GRITO_ESPERA;
+  const st=at?`📣 ${at.n} · até os ${L.grito.ate}'`:espera?`Novo comando a partir dos ${L.grito.ate+GRITO_ESPERA}'`:"Fale com o time";
+  return `<div class="gritos"><button class="gritos-topo${gritosAberto?" on":""}" data-a="lvgritos" aria-expanded="${gritosAberto}"><b>📣 Comandos</b><span id="lv-grito">${st}</span></button>${gritosAberto?`<div class="gritos-lista">${GRITOS.map(g=>`<button class="grito" data-a="lvgrito" data-v="${g.k}"><b>${g.n}</b><span>${g.d}${g.b?` · +${Math.round(g.b*100)}% por ${GRITO_MIN} min, cansa ${String(g.e).replace(".",",")}× mais rápido`:` · por ${GRITO_MIN} min`}</span></button>`).join("")}</div>`:""}</div>`;
+}
 function pararTimer(){if(timerLive){clearInterval(timerLive);timerLive=null}}
 function iniciarTimer(){
   pararTimer();
@@ -5498,6 +5746,7 @@ function atualizarLive(n0){
   const rl=$("#lv-rel");if(rl)rl.textContent=relogio(V);
   const pg=$("#lv-prog");if(pg)pg.style.width=Math.min(V.min,90)/90*100+"%";
   const tm=$("#lv-time");if(tm)tm.innerHTML=blocoEmCampo(V);
+  const gs=$("#lv-grito");if(gs){const L=V.L[V.lado],at=gritoAtivo(L);gs.textContent=at?`📣 ${at.n} · até os ${L.grito.ate}'`:L.grito&&V.min<L.grito.ate+GRITO_ESPERA?`Novo comando a partir dos ${L.grito.ate+GRITO_ESPERA}'`:"Fale com o time"}
   const fd=$("#lv-feed");
   if(fd&&V.feed.length>n0){V.feed.slice(n0).forEach((f,i)=>{fd.insertAdjacentHTML("afterbegin",linhaFeed(f,true,i));if(f.t==="gol"&&pl){pl.classList.remove("gol");void pl.offsetWidth;pl.classList.add("gol")}})}
 }
@@ -5512,7 +5761,7 @@ function telaPartida(){
   if(V.est!=="fim"){const tec=(V.cmd||"tec")==="tec";
     h+=`<button class="btn-sair-jogo" data-a="lvsair" aria-label="Desistir da partida"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg></button>`;
     h+=`<div class="cmd-sel" role="radiogroup" aria-label="Quem comanda as trocas"><button role="radio" aria-checked="${tec}" class="${tec?"on":""}" data-a="lvcmd" data-v="tec">Comando do técnico</button>${V.est==="rodando"?`<button class="cmd-pausa" data-a="lvpausar" aria-label="Pausar o jogo"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>`:`<button class="cmd-pausa" data-a="lvretomar" aria-label="Continuar o jogo"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg></button>`}<button role="radio" aria-checked="${!tec}" class="${tec?"":"on"}" data-a="lvcmd" data-v="manual">Comando manual</button></div>
-    <p class="muted peq cmd-dica">${tec?"O técnico faz as trocas sozinho (cansaço, lesão e tática) sem parar o jogo.":"Você decide as trocas. Se alguém se machucar, o jogo para para você escolher."}</p>`}
+    <p class="muted peq cmd-dica">${tec?"O técnico faz as trocas sozinho (cansaço, lesão e tática) sem parar o jogo.":"Você decide as trocas. Se alguém se machucar, o jogo para para você escolher."}</p>${tec?"":blocoGritos(V)}`}
   if(V.est==="rodando"){
     h+=`<div class="ctrl"><button class="btn" data-a="lvpausa" data-v="subs">Fazer substituição</button><button class="btn" data-a="lvpausa" data-v="form">Trocar formação</button></div>
     <div class="linha" style="justify-content:center;margin-top:8px;flex-wrap:wrap"><button class="btn mini" data-a="lvmelhor">Escalar os melhores</button><button class="btn mini${velocidade===2?" prim-mini":""}" data-a="lvvel" aria-pressed="${velocidade===2}" aria-label="Velocidade 2 vezes">2×</button><button class="btn mini${velocidade===3?" prim-mini":""}${perfil().nivel<NIVEL_3X?" vel-bloq":""}" data-a="lvvel3" aria-pressed="${velocidade===3}" aria-label="Velocidade 3 vezes${perfil().nivel<NIVEL_3X?", bloqueada até o nível "+NIVEL_3X:""}">${perfil().nivel<NIVEL_3X?"🔒 ":""}3×</button></div>`;
@@ -5588,6 +5837,7 @@ function telaResultado(){
   const impTxt=f.imp==="grande"?"Jogo grande: estádio cheio e ingresso valorizado.":f.imp==="pequeno"?"Jogo de pouco apelo: público menor.":"";
   let h=`<div class="tela-cheia"><div class="resultado ${cls}"><p class="comp" style="padding-top:18px">${esc(r.tipo==="L"?`${nomeLiga(userTier())} · Rodada ${r.rodada}`:r.copa+" · "+r.fase)}</p>
     <div class="titulo-res">${tit}</div>${sub?`<div class="pontos">${sub}</div>`:""}${G.ultimoJogo&&G.ultimoJogo.xp?`<div class="xp-ganho">+${G.ultimoJogo.xp.ganho} XP${G.ultimoJogo.xp.dobro?" (em dobro: vitória sobre um time do G4)":""}${G.ultimoJogo.xp.nivel>G.ultimoJogo.xp.antes?` · subiu para o nível ${G.ultimoJogo.xp.nivel}! Bônus de ${dinheiro(G.ultimoJogo.xp.premio)}`:""}</div>`:""}
+    ${G.ultimoJogo&&G.ultimoJogo.xp&&G.ultimoJogo.xp.bola?`<div class="xp-ganho">🏅 Bola Dourada! Ela vai aparecer na tela: toque para ganhar Pontos de Treino</div>`:""}
     <div class="confronto" style="margin-top:14px"><div class="time">${marcaDe(H,44)}<b>${esc(H.name)}</b></div><div class="placar num">${r.gh}<span class="x">×</span>${r.ga}</div><div class="time">${marcaDe(A,44)}<b>${esc(A.name)}</b></div></div>${pen}
     <div class="gols"><div>${r.sh.map(nome).join("<br>")||"&nbsp;"}</div><div>${r.sa.map(nome).join("<br>")||"&nbsp;"}</div></div></div>
   <h2>Dinheiro do jogo</h2><div class="cartao extrato num">
@@ -5793,7 +6043,7 @@ const icoCupons=n=>`<span class="ico-cupons" style="--n:${Math.min(n,4)}">${[...
 function telaCambio(){const cp=cupons();
   const card=(tipo,i,ico,tit,sub,tag,ok)=>`<button class="cartao cb-card${ok?"":" off"}" data-a="cambio" data-v="${tipo}${i}"${ok?"":" disabled"}>${tag?`<span class="cb-tag">${tag}</span>`:""}<span class="cb-ic">${ico}</span><b>${tit}</b><small>${sub}</small></button>`;
   const pct=x=>Math.round(x*100);
-  return `<h2>Comprar cupons dourados</h2><p class="muted peq" style="margin:-4px 0 8px">1 cupom dourado vale ${dinheiro(500)}. Pacotes maiores saem mais baratos.</p>
+  return `<h2 id="cambio-ancora">Comprar cupons dourados</h2><p class="muted peq" style="margin:-4px 0 8px">1 cupom dourado vale ${dinheiro(500)}. Pacotes maiores saem mais baratos.</p>
   <div class="cb-grid">${CAMBIO_CUP.map(([n,v],i)=>{const d=1-v/(n*500);return card("c",i,icoCupons(n),`${n} cupo${n>1?"ns":"m"}`,dinheiro(v),d>0?`−${pct(d)}%`:"",G.cash>=v)}).join("")}</div>
   <h2>Trocar cupons por dinheiro</h2><p class="muted peq" style="margin:-4px 0 8px">Você tem ${cp} cupo${cp===1?"m":"ns"} dourado${cp===1?"":"s"}. Trocando mais de uma vez, ganha bônus.</p>
   <div class="cb-grid">${CAMBIO_DIN.map(([n,v],i)=>{const b=v/(n*500)-1;return card("d",i,ICO_GRANA(i+1),dinheiro(v),`${n} cupo${n>1?"ns":"m"}`,b>0?`+${pct(b)}%`:"",cp>=n)}).join("")}</div>`}
@@ -5931,7 +6181,7 @@ function telaClube(){
   const nt=cartaoNoticias().replace(/^\s*<h2>[^<]*<\/h2>/,"");
   const cx=`<div class="secao">${G.inbox.length?G.inbox.slice(0,14).map(m=>`<div class="msg ${m.t}">${esc(m.m)}</div>`).join(""):'<span class="muted">Nenhuma mensagem.</span>'}</div>`;
   const extra=sanf("Notícias","O que acontece na liga e no clube",nt,0)+sanf("Caixa de entrada",`${G.inbox.length} mensage${G.inbox.length===1?"m":"ns"}`,cx,0);
-  return heroi+`<h2>Gestão do clube</h2><div class="cg-grid">${grade}</div>`+extra+trof;
+  return heroi+quadroPontos()+`<h2>Gestão do clube</h2><div class="cg-grid">${grade}</div>`+extra+trof;
 }
 /* editar escudo pela aba Clube: mesma edição da criação, sem os passos da carreira */
 function telaEscudo(){
@@ -6034,6 +6284,11 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "iniciarjogo":{const er=iniciarAoVivo(false);if(er){toastErro(er);return}somIniciar();setTimeout(()=>apito(.9),250);painel=null;liveSel=null;aba="partida";salvar();window.scrollTo(0,0);break;}
     case "simularjogo":{if(!partidaAtual()){toastErro("Não há partida agora.");return}const ep=pagarSimulacao();if(ep){toastErro(ep);return}const er=iniciarAoVivo(true);if(er){toastErro(er);return}simularRestante();concluirAoVivo();G.ultimoJogo.pendente=true;aba="resultado";salvar();window.scrollTo(0,0);somIniciar();setTimeout(somResultado,300);break;}
     case "lvpausa":{if(G.live.est==="rodando"){G.live.est="pausa";G.live.motivo=null}painel=v;liveSel=null;pararTimer();salvar();break;}
+    case "lvgritos":gritosAberto=!gritosAberto;break;
+    case "lvgrito":{const V=G.live,L=V.L[V.lado],g=GRITOS.find(x=>x.k===v);if(!g)return;
+      if(gritoAtivo(L)){toastErro("Seu time já está cumprindo um comando.");return}
+      if(L.grito&&V.min<L.grito.ate+GRITO_ESPERA){toastErro(`Espere até os ${L.grito.ate+GRITO_ESPERA}' para dar outro comando.`);return}
+      L.grito={k:g.k,ini:V.min,ate:V.min+GRITO_MIN};gritosAberto=false;narrar("info",`📣 O técnico grita da beira do campo: "${g.n}"`);salvar();break}
     case "lvpainel":painel=painel===v?null:v;liveSel=null;break;
     case "lvretomar":{const V=G.live;V.ultSub=null;const L=V.L[V.lado];
       if(V.motivo==="goleiro"&&!L.xi[FORMACOES[L.form].s.indexOf("GOL")]&&L.subs<MAX_SUBS&&bancoDe(V.lado).some(p=>p.pos==="GOL")){toastErro("Coloque um goleiro antes de continuar.");return}
@@ -6102,6 +6357,30 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "novoconf":fecharModal();pararTimer();G=null;W=novoW();try{localStorage.removeItem(CHAVE_W);localStorage.removeItem(CHAVE);localStorage.removeItem(CHAVE_BKP)}catch(e){}aba="inicio";abertura=false;break;
     case "fechar":fecharModal();return;
     case "perfil":perfilJogador(+v);return;
+    case "caixa":modalCaixa();return;
+    case "msgver":modalMensagem(+v);render();return;
+    case "cambioir":fecharModal();aba="mercado";merc.orig="pais";render();setTimeout(()=>{const a=$("#cambio-ancora");if(a)window.scrollTo({top:a.getBoundingClientRect().top+scrollY-80,behavior:"smooth"})},60);return;
+    case "msgvend":modalVender(+v);return;
+    case "msgempr":modalEmprestar(+v);return;
+    case "msgvendenv":{const m=G.inbox[+v],p=G.players[m.ofm.pid],pr=Math.round(+($("#neg-preco").value||0));if(!p)return;
+      if(!(pr>=valorJusto(p))){toastErro(`O valor mínimo é o valor do jogador: ${dinheiro(valorJusto(p))}.`);return}
+      m.ofm.est="aguardando";(G.negs=G.negs||[]).push({mid:m.id,cid:m.cid,pid:p.id,tipo:"venda",pedido:pr,resp:G.ev+ri(2,3)});propostaEnviada(m,p,`de venda de ${dinheiro(pr)} `);return}
+    case "msgempenv":{const m=G.inbox[+v],p=G.players[m.ofm.pid],t=+$("#emp-t").value||1,mn=Math.round(+$("#emp-m").value||0);if(!p)return;
+      m.ofm.est="aguardando";(G.negs=G.negs||[]).push({mid:m.id,cid:m.cid,pid:p.id,tipo:"emp",temp:t,mensal:mn,resp:G.ev+ri(2,3)});propostaEnviada(m,p,`de empréstimo (${t} temporada${t>1?"s":""}, ${dinheiro(mn)} por mês) `);return}
+    case "msgaceitar":{const m=G.inbox[+v],o=m.ofm,p=G.players[o.pid];if(!p)return;
+      if(o.tipo==="emp"){const er=emprestarPara(o.pid,m.cid,o.temp,o.mensal);if(er){toastErro(er);return}o.est="vendido";salvar();render();
+        modal(`<div class="aviso-box grana-box"><div class="grana-ic">🤝</div><b>Empréstimo fechado!</b><p>${esc(p.n)} vai para o ${esc(G.clubs[m.cid].name)} por ${o.temp} temporada${o.temp>1?"s":""}. Você vai receber <b>${dinheiro(o.mensal)}</b> por mês, e ele volta no fim do combinado.</p></div><div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`);confete();return}
+      const er=venderPara(o.pid,m.cid,o.v);if(er){toastErro(er);return}o.est="vendido";salvar();render();modalGrana(o.v,`${esc(p.n)} foi vendido ao ${esc(G.clubs[m.cid].name)}. O dinheiro já está no caixa.`);return}
+    case "msgdesistir":{const m=G.inbox[+v];m.ofm.est="recusada";salvar();modalMensagem(+v);return}
+    case "msgrec":{const m=G.inbox[+v];m.ofm.est="recusada";(G.negs=G.negs||[]).push({mid:m.id,cid:m.cid,pid:m.ofm.pid,resp:G.ev+1,tipo:"rec"});salvar();fecharModal();toast("Proposta recusada. O clube será avisado.");return}
+    case "msgign":{const m=G.inbox[+v];m.ofm.est="ignorada";salvar();fecharModal();return}
+    case "ptstipo":modalPontosTipo(v);return;
+    case "ptsjog":modalPontosJog(+v);return;
+    case "ptsadd":{const [id,k,de]=v.split("|"),er=usarPonto(+id,k);if(er){toastErro(er);return}salvar();render();if(de==="t")modalPontosTipo(k);else modalPontosJog(+id);toast(`+1 ${ATRS.find(x=>x[0]===k)[1]} para ${nomeCurto(G.players[+id].n)}!`);return}
+    case "bola":{const el=document.querySelector(".bola-dourada");if(!el||el.classList.contains("explode")||!(G.user.bolas>0))return;
+      G.user.bolas--;const gan=sortearPontos(),P=pontosTreino();Object.entries(gan).forEach(([k,n])=>P[k]=(P[k]||0)+n);salvar();
+      el.classList.add("explode");if(typeof somConquista==="function")somConquista();
+      setTimeout(()=>{render();modalBola(gan)},800);return}
     case "vertime":modalTime(v);return;
     case "edlogin":modal(`<h3>Login do editor</h3><label class="campo"><span>Senha</span><input id="ed-senha" type="password" inputmode="numeric" maxlength="10" autocomplete="off"></label><div class="botoes"><button class="btn" data-a="fechar">Cancelar</button><button class="btn prim" data-a="edentrar">Entrar</button></div>`);setTimeout(()=>{const i=document.getElementById("ed-senha");if(i)i.focus()},50);return;
     case "edentrar":{const s=(document.getElementById("ed-senha")||{}).value;if(s===SENHA_EDITOR){editorOn=true;try{sessionStorage.setItem("fut-editor","1")}catch(e){}fecharModal();toast("Modo editor ativado.");break}toastErro("Senha incorreta.");return;}
