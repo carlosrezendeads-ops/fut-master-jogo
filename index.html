@@ -455,10 +455,9 @@ nav.abas[hidden]{display:none}
 .ec-fora{display:flex;flex-wrap:wrap;gap:6px;padding:8px 0 4px}
 .ec-chip{display:inline-flex;align-items:center;gap:4px;font-size:12px;padding:3px 8px;border-radius:999px;background:var(--gramado-3);color:var(--cal-2)}
 .ec-chip.sub{border:1.5px solid #ff8a1f;color:#ffb066}.ec-chip.les{border:1.5px solid var(--ruim);color:var(--ruim)}.ec-chip.exp{border:1.5px solid var(--ruim)}
-.jog.saiu-sub{opacity:.8;border:2px solid #ff8a1f;border-radius:12px;padding-inline:6px;margin-top:4px}
-.jog.saiu-les{opacity:.85;border:1.5px dashed var(--ruim);border-radius:12px;padding-inline:6px;margin-top:4px}
+.jog.saiu-sub,.jog.saiu-les,.jog.saiu-exp{opacity:.85;border:2px solid var(--ruim);border-radius:12px;padding-inline:6px;margin-top:4px}
+.tag.saiu{background:rgba(229,57,53,.2);color:#ff8a80}
 .jog.saiu-exp{opacity:.6}
-.tag.saiu{background:rgba(255,138,31,.18);color:#ffb066}
 .lance.sub-card{background:#fff4c2;border:2px solid #f5b800;color:#3a2a00}
 .lance.sub-card .min{color:#7a5a00}
 .sub-ico{width:22px;height:22px;color:#b07d00;align-self:center}.sub-ico svg{width:100%;height:100%}
@@ -1112,32 +1111,32 @@ body:has(header.topo) .esc-fixo{top:72px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792635727"></script>
-<script src="img/arte-capa.js?v=1792635727"></script>
-<script src="img/fundo-criacao.js?v=1792635727"></script>
-<script src="img/fundo-pais.js?v=1792635727"></script>
-<script src="img/fundo-escudo.js?v=1792635727"></script>
-<script src="img/simbolos.js?v=1792635727"></script>
-<script src="img/molduras.js?v=1792635727"></script>
-<script src="img/kits-foto.js?v=1792635727"></script>
-<script src="img/fundo-vestiario.js?v=1792635727"></script>
-<script src="img/patro-logos.js?v=1792635727"></script>
-<script src="img/rostos.js?v=1792635727"></script>
-<script src="img/estadio-fotos.js?v=1792635727"></script>
-<script src="img/super-fotos.js?v=1792635727"></script>
-<script src="img/trofeus.js?v=1792635727"></script>
-<script src="img/medalhas.js?v=1792635727"></script>
-<script src="img/fotos.js?v=1792635727"></script>
-<script src="img/fotos-vs.js?v=1792635727"></script>
-<script src="img/kit-homens.js?v=1792635727"></script>
-<script src="img/tec-fotos.js?v=1792635727"></script>
-<script src="dados/elencos.js?v=1792635727"></script>
-<script src="img/rostos-reais.js?v=1792635727"></script>
-<script src="img/escudos-img.js?v=1792635727"></script>
-<script src="img/tradutores.js?v=1792635727"></script>
-<script src="img/avatares.js?v=1792635727"></script>
-<script src="img/premios-icones.js?v=1792635727"></script>
-<script src="dados/idiomas.js?v=1792635727"></script>
+<script src="img/escudos-reais.js?v=1792709194"></script>
+<script src="img/arte-capa.js?v=1792709194"></script>
+<script src="img/fundo-criacao.js?v=1792709194"></script>
+<script src="img/fundo-pais.js?v=1792709194"></script>
+<script src="img/fundo-escudo.js?v=1792709194"></script>
+<script src="img/simbolos.js?v=1792709194"></script>
+<script src="img/molduras.js?v=1792709194"></script>
+<script src="img/kits-foto.js?v=1792709194"></script>
+<script src="img/fundo-vestiario.js?v=1792709194"></script>
+<script src="img/patro-logos.js?v=1792709194"></script>
+<script src="img/rostos.js?v=1792709194"></script>
+<script src="img/estadio-fotos.js?v=1792709194"></script>
+<script src="img/super-fotos.js?v=1792709194"></script>
+<script src="img/trofeus.js?v=1792709194"></script>
+<script src="img/medalhas.js?v=1792709194"></script>
+<script src="img/fotos.js?v=1792709194"></script>
+<script src="img/fotos-vs.js?v=1792709194"></script>
+<script src="img/kit-homens.js?v=1792709194"></script>
+<script src="img/tec-fotos.js?v=1792709194"></script>
+<script src="dados/elencos.js?v=1792709194"></script>
+<script src="img/rostos-reais.js?v=1792709194"></script>
+<script src="img/escudos-img.js?v=1792709194"></script>
+<script src="img/tradutores.js?v=1792709194"></script>
+<script src="img/avatares.js?v=1792709194"></script>
+<script src="img/premios-icones.js?v=1792709194"></script>
+<script src="dados/idiomas.js?v=1792709194"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -1682,7 +1681,7 @@ function avancar(meuRes){
   const ev=proximoEvento();if(!ev)return null;
   let out=null;
   const msgs=[];JOGARAM=new Set();if(meuRes){JOGARAM.add(meuRes.h);JOGARAM.add(meuRes.a)}
-  if(!meuRes){const trocas=validarEscalacao();
+  if(!meuRes){autoEscalar();const trocas=validarEscalacao();
     if(trocas.length)msgs.push({t:"ruim",m:`${trocas.join(", ")} ${trocas.length>1?"estavam fora e foram substituídos":"estava fora e foi substituído"} na escalação.`});}
   if(ev.k==="L")out=rodadaLiga(ev.r,msgs,meuRes);
   else if(ev.k==="C")out=rodadaCopa(ev.d,msgs,meuRes);
@@ -1760,9 +1759,8 @@ const TUT_AMISTOSO={
     {sel:".campinho",t:"Seu time em campo",x:"Cada bolinha mostra o rosto e a posição do jogador. Do outro lado está o adversário."},
     {sel:".campinho .cp-eu[data-i='9']",foco:".campinho svg",arrasta:true,t:"Arraste para ajustar",x:"Segure um jogador com o dedo e leve para onde quiser. Depois aparece o botão Salvar esta formação (até 3 formações)."},
     {sel:".campo-sel",t:"Formação e estilo",x:"Escolha a formação (4-4-2, 4-3-3...) e o estilo. Ofensivo aumenta o ataque e diminui a defesa; Defensivo faz o contrário."},
-    {sel:"[data-a=auto]",t:"Escalar os melhores",x:"Monta o time com os melhores jogadores disponíveis, de uma vez."},
     {sel:"#tut-sit",t:"Situação do elenco",x:"Lesionados, suspensos, pendurados (2 amarelos) e cansados aparecem aqui."},
-    {sel:"#tut-tit",t:"Titulares e reservas",x:"Toque num titular para trocar por um reserva."},
+    {sel:"#tut-tit",t:"Titulares e reservas",x:"Ao começar a partida, o técnico escala sozinho os melhores jogadores. Durante o jogo você faz as trocas."},
     {sel:".vs-comecar",t:"Tudo pronto!",x:"Agora é hora do jogo. Vamos para o campo!",fim:"Começar amistoso",acao:"iniciarjogo"}],
   vivo:[
     {sel:".placar-vivo",t:"Placar e relógio",x:"A partida corre minuto a minuto. No fim de cada tempo há acréscimos."},
@@ -1857,15 +1855,18 @@ function lanceColorido(lam){
 }
 function ladoDe(cid){return G.live.L.h.cid===cid?"h":"a"}
 function nomeLado(s){return G.clubs[G.live.L[s].cid].name}
+const ORD_POS={GOL:0,ZAG:1,LAT:2,VOL:3,MEI:4,ATA:5};
+function ordenarBanco(ids){return ids.slice().sort((a,b)=>ORD_POS[G.players[a].pos]-ORD_POS[G.players[b].pos])} // estável: mantém a ordem por força dentro da posição
 function bancoDe(s){const L=G.live.L[s];return jogadoresDo(L.cid).filter(p=>disponivel(p)&&!L.part[p.id]).sort((a,b)=>b.ov-a.ov)}
 function iniciarAoVivo(auto){
   const m=partidaAtual();if(!m)return "Não há partida agora.";
-  validarEscalacao();
+  autoEscalar();validarEscalacao(); // o técnico (ou interino) sempre escala os melhores
   const uid=G.user.club;
   const mk=cid=>{const c=G.clubs[cid];const form=c.user?G.user.form:c.form,est=c.user?G.user.est:c.est;
     const xi=c.user?G.user.lineup.slice():melhorXI(cid,form);
     const part={};xi.forEach((id,i)=>{if(id!=null)part[id]={pos:FORMACOES[form].s[i],ini:0,fim:null}});
-    return {cid,form,est,xi,bloq:xi.map(()=>false),subs:0,part,am:{},saiu:{},tsub:c.user?[]:[ri(55,68),ri(66,82),ri(75,86)]}};
+    const ordem=ordenarBanco(jogadoresDo(cid).filter(p=>disponivel(p)&&!part[p.id]).sort((a,b)=>b.ov-a.ov).map(p=>p.id));
+    return {cid,form,est,xi,bloq:xi.map(()=>false),subs:0,part,am:{},saiu:{},ordem,tsub:c.user?[]:[ri(55,68),ri(66,82),ri(75,86)]}};
   G.live={m,min:0,est:"rodando",auto:!!auto,cmd:"tec",ritmo:.85+rnd()*.3,gh:0,ga:0,sh:[],sa:[],feed:[],les:[],pen:null,penPl:null,motivo:null,
     L:{h:mk(m.h),a:mk(m.a)},fat:{h:.85+rnd()*.3,a:.85+rnd()*.3},
     susp0:jogadoresDo(uid).filter(p=>p.susp>0).map(p=>p.id),lado:m.h===uid?"h":"a"};
@@ -1882,6 +1883,7 @@ function substituir(s,i,inId,silencioso,mot){
   if(!disponivel(p))return p.inj>0?"Jogador lesionado não pode entrar.":"Jogador suspenso não pode entrar.";
   const outId=L.xi[i];
   if(outId!=null&&L.part[outId]){L.part[outId].fim=V.min;L.saiu[outId]="sub"}
+  if(L.ordem){const k=L.ordem.indexOf(inId);if(k>=0){if(outId!=null)L.ordem[k]=outId;else L.ordem.splice(k,1)}} // quem saiu ocupa o lugar de quem entrou na lista de reservas
   L.xi[i]=inId;L.part[inId]={pos:FORMACOES[L.form].s[i],ini:V.min,fim:null};L.subs++;
   if(!silencioso){const so=outId!=null?G.players[outId].n:"vaga aberta";narrar("sub",`Substituição no ${nomeLado(s)}: sai ${so}, entra ${p.n}.`);Object.assign(V.feed[V.feed.length-1],{sai:so,entra:p.n,time:nomeLado(s),mot:mot||""})}
   return null;
@@ -2956,7 +2958,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792635727";
+const VERSAO="1792709194";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4876,7 +4878,7 @@ function blocoTitulares(){
 function telaElenco(){
   const u=G.user,slots=FORMACOES[u.form].s;
   validarEscalacao();
-  let h=`<h2>Tática</h2><div class="cartao secao">${seletorTatica()}<button class="btn" data-a="auto">Escalar os melhores</button></div>`;
+  let h=`<h2>Tática</h2><div class="cartao secao">${seletorTatica()}</div>`;
   h+=blocoTitulares();
 
   const tit=new Set(u.lineup);
@@ -5424,7 +5426,7 @@ function telaPreJogo(){
   <button class="cartao card-stats" data-a="stats" style="margin-top:12px"><span>📊 Estatísticas</span><small>Força, idade e valor dos dois times ›</small></button>`;
   const FS=G.formSalvas||[],aj=G.user.posAjuste&&G.user.posAjuste.form===u.form&&!G.user.posAjuste.salvo;
   const salvas=`<button class="btn mini prim-mini cp-salvar" id="cp-salvar" data-a="formsalvar"${aj?"":" hidden"}>💾 Salvar esta formação</button>${FS.length?`<div class="cp-salvas"><small>Minhas formações</small>${FS.map((f,i)=>`<span class="cp-salva"><button data-a="formusar" data-v="${i}">${esc(f.nome)} <small>${f.form}</small></button><button class="x" data-a="formapagar" data-v="${i}" aria-label="Apagar ${esc(f.nome)}">×</button></span>`).join("")}</div>`:""}<p class="muted peq" style="margin:0">Arraste as bolinhas do seu time para ajustar a posição de cada jogador.</p>`;
-  h+=`<h2>Formação</h2><div class="cartao secao">${campinho(m)}${salvas}${seletorTatica()}<button class="btn" data-a="auto">Escalar os melhores</button></div>`;
+  h+=`<h2>Formação</h2><div class="cartao secao">${campinho(m)}${salvas}${seletorTatica()}</div>`;
   h+=`<h2>Situação do elenco</h2><div class="cartao secao" id="tut-sit">`;
   if(!fora.length&&!pend.length&&!el.some(p=>disponivel(p)&&(p.fis??100)<65&&tit.has(p.id)))h+=`<p style="margin:0">Todos os jogadores estão disponíveis e descansados.</p>`;
   fora.forEach(p=>h+=`<div class="sit"><span class="posb ${p.pos}">${p.pos}</span><b>${esc(p.n)}</b><span class="tag les">${p.susp>0?"Suspenso":`Lesionado · ${p.inj} jogo${p.inj>1?"s":""}`}</span></div>`);
@@ -5551,14 +5553,20 @@ function saiuDoJogo(L){const sai=L.saiu||{},ids=Object.keys(sai).filter(id=>G.pl
     return `<div class="jog off saiu-${t}">${fotoPos(p,p.pos,true)}<div class="nm"><b>${esc(p.n)}</b>${t==="les"?`<span class="tag les"><span class="atadura-in">${ATADURA}</span> Lesionado · fora por ${Math.max(1,p.inj-1)} jogo${p.inj-1>1?"s":""}</span>`:t==="exp"?`<span class="tag les">Expulso</span>`:`<span class="tag saiu">Substituído · não volta</span>`}${barraFis(p)}</div><div></div></div>`}).join("")}`}
 function painelSubs(V){
   const L=V.L[V.lado],slots=FORMACOES[L.form].s,banco=bancoDe(V.lado),rest=MAX_SUBS-L.subs;
-  if(rest<=0)return `<p class="peq" style="color:var(--aviso)">Você já fez as 5 substituições.</p>${saiuDoJogo(L)}`;
+  if(rest<=0)return `<p class="peq" style="color:var(--aviso)">Você já fez as 5 substituições.</p>`;
+  const sai=L.saiu||{},noXI=new Set(L.xi);
+  let lista=(L.ordem||ordenarBanco(banco.map(p=>p.id))).filter(id=>G.players[id]&&!noXI.has(id));
+  Object.keys(sai).forEach(id=>{if(G.players[id]&&!lista.includes(id)&&!noXI.has(id)){const g=ORD_POS[G.players[id].pos];let k=lista.findIndex(x=>ORD_POS[G.players[x].pos]>g);lista.splice(k<0?lista.length:k,0,id)}});
+  const cardRes=id=>{const p=G.players[id],t=sai[id];
+    if(t)return `<div class="jog off saiu-${t}">${fotoPos(p,p.pos,true)}<div class="nm"><b>${esc(p.n)}</b><span class="tag ${t==="sub"?"saiu":"les"}">${t==="les"?`<span class="atadura-in">${ATADURA}</span> Lesionado · `:t==="exp"?"Expulso · ":""}Não entra mais</span>${barraFis(p)}</div><div></div></div>`;
+    return `<button class="jog slot" data-a="lventra" data-v="${p.id}" ${liveSel==null?"disabled":""}>${fotoPos(p,p.pos)}<div class="nm"><b>${esc(p.n)}</b><span>${p.age} anos</span>${barraFis(p)}</div><div class="ov num">${liveSel!=null?Math.round(ovF(p)*eficiencia(p,slots[liveSel])):p.ov}</div></button>`};
   return `<p class="muted peq" style="margin:12px 0 6px">1. Toque em quem sai. 2. Toque em quem entra.</p>
   <div class="dois-col"><div><b class="rot-col">Em campo</b>${L.xi.map((id,i)=>{
     if(L.bloq[i])return `<div class="jog off"><div class="posb ${slots[i]}">${slots[i]}</div><div class="nm"><b class="muted">Expulso</b></div><div></div></div>`;
     const p=G.players[id];
     const tg=p?(L.am[id]?' <span class="tag am">Amarelo</span>':""):"";
     return `<button class="jog slot${liveSel===i?" sel":""}" data-a="lvsai" data-v="${i}">${fotoPos(p,slots[i],true)}<div class="nm"><b>${p?esc(p.n)+tg:'<span style="color:var(--ruim)">Vaga aberta</span>'}</b>${p?`<span>${p.pos}${p.pos!==slots[i]?" improvisado":""}</span>${barraFis(p)}`:""}</div><div class="ov num">${p?Math.round(p.ov*eficiencia(p,slots[i])):""}</div></button>`}).join("")}</div>
-  <div><b class="rot-col">Reservas</b>${banco.length?banco.map(p=>`<button class="jog slot" data-a="lventra" data-v="${p.id}" ${liveSel==null?"disabled":""}>${fotoPos(p,p.pos)}<div class="nm"><b>${esc(p.n)}</b><span>${p.age} anos</span>${barraFis(p)}</div><div class="ov num">${liveSel!=null?Math.round(ovF(p)*eficiencia(p,slots[liveSel])):p.ov}</div></button>`).join(""):'<p class="muted peq">Nenhum reserva disponível.</p>'}${saiuDoJogo(L)}</div></div>`;
+  <div><b class="rot-col">Reservas</b>${lista.length?lista.map(cardRes).join(""):'<p class="muted peq">Nenhum reserva disponível.</p>'}</div></div>`;
 }
 function painelForm(V){
   const L=V.L[V.lado];
