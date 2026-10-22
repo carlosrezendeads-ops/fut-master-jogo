@@ -1099,31 +1099,31 @@ body:has(header.topo) .esc-fixo{top:72px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792632729"></script>
-<script src="img/arte-capa.js?v=1792632729"></script>
-<script src="img/fundo-criacao.js?v=1792632729"></script>
-<script src="img/fundo-pais.js?v=1792632729"></script>
-<script src="img/fundo-escudo.js?v=1792632729"></script>
-<script src="img/simbolos.js?v=1792632729"></script>
-<script src="img/molduras.js?v=1792632729"></script>
-<script src="img/kits-foto.js?v=1792632729"></script>
-<script src="img/fundo-vestiario.js?v=1792632729"></script>
-<script src="img/patro-logos.js?v=1792632729"></script>
-<script src="img/rostos.js?v=1792632729"></script>
-<script src="img/estadio-fotos.js?v=1792632729"></script>
-<script src="img/super-fotos.js?v=1792632729"></script>
-<script src="img/trofeus.js?v=1792632729"></script>
-<script src="img/medalhas.js?v=1792632729"></script>
-<script src="img/fotos.js?v=1792632729"></script>
-<script src="img/fotos-vs.js?v=1792632729"></script>
-<script src="img/kit-homens.js?v=1792632729"></script>
-<script src="img/tec-fotos.js?v=1792632729"></script>
-<script src="dados/elencos.js?v=1792632729"></script>
-<script src="img/rostos-reais.js?v=1792632729"></script>
-<script src="img/escudos-img.js?v=1792632729"></script>
-<script src="img/tradutores.js?v=1792632729"></script>
-<script src="img/avatares.js?v=1792632729"></script>
-<script src="dados/idiomas.js?v=1792632729"></script>
+<script src="img/escudos-reais.js?v=1792632933"></script>
+<script src="img/arte-capa.js?v=1792632933"></script>
+<script src="img/fundo-criacao.js?v=1792632933"></script>
+<script src="img/fundo-pais.js?v=1792632933"></script>
+<script src="img/fundo-escudo.js?v=1792632933"></script>
+<script src="img/simbolos.js?v=1792632933"></script>
+<script src="img/molduras.js?v=1792632933"></script>
+<script src="img/kits-foto.js?v=1792632933"></script>
+<script src="img/fundo-vestiario.js?v=1792632933"></script>
+<script src="img/patro-logos.js?v=1792632933"></script>
+<script src="img/rostos.js?v=1792632933"></script>
+<script src="img/estadio-fotos.js?v=1792632933"></script>
+<script src="img/super-fotos.js?v=1792632933"></script>
+<script src="img/trofeus.js?v=1792632933"></script>
+<script src="img/medalhas.js?v=1792632933"></script>
+<script src="img/fotos.js?v=1792632933"></script>
+<script src="img/fotos-vs.js?v=1792632933"></script>
+<script src="img/kit-homens.js?v=1792632933"></script>
+<script src="img/tec-fotos.js?v=1792632933"></script>
+<script src="dados/elencos.js?v=1792632933"></script>
+<script src="img/rostos-reais.js?v=1792632933"></script>
+<script src="img/escudos-img.js?v=1792632933"></script>
+<script src="img/tradutores.js?v=1792632933"></script>
+<script src="img/avatares.js?v=1792632933"></script>
+<script src="dados/idiomas.js?v=1792632933"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2674,9 +2674,9 @@ function contratar(pid){
   const preco=precoPedido(p);
   if(preco>G.cash)return "Caixa insuficiente para essa contratação.";
   if(p.club&&jogadoresDo(p.club).length<=18)return `O ${G.clubs[p.club].name} não quer vender: elenco curto.`;
-  const de=p.club?G.clubs[p.club].name:null;if(p.club!=null)registrarSaida(G.clubs[p.club],p);delete p.emp;
+  const daA=p.club!=null&&!!G.clubs[p.club]&&G.clubs[p.club].tier===0,de=p.club?G.clubs[p.club].name:null;if(p.club!=null)registrarSaida(G.clubs[p.club],p);delete p.emp;
   G.cash-=preco;p.sal=salarioPedido(p);p.club=uid;p.ct=3;tocou();if(fonte==="j")G.janela.compras++;else diario().comprados.push(pid);
-  perfil().comp=(perfil().comp||0)+1;xpBonus(200,"contratação");
+  perfil().comp=(perfil().comp||0)+1;if(daA)perfil().compA=(perfil().compA||0)+1;xpBonus(200,"contratação");
   G.inbox.unshift({t:"bom",m:`${p.n} (${p.pos}, ${p.ov}) chegou${de?` do ${de}`:""} por ${preco?dinheiro(preco):"custo zero"}.`});
   return null;
 }
@@ -2942,7 +2942,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792632729";
+const VERSAO="1792632933";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4388,6 +4388,8 @@ function conquistasJogo(){
    ["Olheiro Premiado",`Contrate 8 jogadores (${Math.min(P.comp||0,8)}/8)`,(P.comp||0)>=8,"🔎",[0,800,0],1],
    ["Rei do Mercado",`Contrate 15 jogadores (${Math.min(P.comp||0,15)}/15)`,(P.comp||0)>=15,"👑",[0,1000,0],1],
    ["Imperador das Contratações",`Contrate 20 jogadores (${Math.min(P.comp||0,20)}/20)`,(P.comp||0)>=20,"🏰",[0,1500,0],1],
+   ["Estrela da Elite",`Contrate seu primeiro jogador da ${nomeLiga(0)}`,(P.compA||0)>=1,"⭐",[0,300,0],1],
+   ["Chegada Lendária","Contrate sua primeira lenda",(P.lendaC||0)>=1,"🏆",[0,500,0],1],
    ["Bom de Negócio",`Venda 3 jogadores (${Math.min(P.vend||0,3)}/3)`,(P.vend||0)>=3,"🤝",[0,500,0],1],
    ["Mercador",`Venda 8 jogadores (${Math.min(P.vend||0,8)}/8)`,(P.vend||0)>=8,"💼",[0,800,0],1],
    ["Tubarão das Vendas",`Venda 15 jogadores (${Math.min(P.vend||0,15)}/15)`,(P.vend||0)>=15,"🦈",[0,1000,0],1],
@@ -4544,7 +4546,7 @@ function comprarLenda(i,modo){
   else{const v=precoLendaDin(l);if(G.cash<v)return `Faltam ${dinheiro(v-G.cash)}.`;G.cash-=v}
   const uid=G.user.club,real=Object.values(G.players).find(p=>!p.lenda&&p.club!==uid&&(LENDA_ALIAS[p.n]||p.n)===l[0]),de=real&&real.club!=null&&G.clubs[real.club];
   const id=real?real.id:novoJogador(l[1],l[2],uid,l[4]);const p=G.players[id];if(real){p.club=uid;p.pos=l[1];delete p.venda;delete p.ctFim;if(de)addNoticia(`${l[0]} deixa o ${de.name} e acerta com o ${G.clubs[uid].name}!`,"mercado")}p.n=l[0];p.ov=l[2];p.pot=l[4]<=23?Math.min(97,l[2]+3):l[2];p.age=l[4];p.ct=3;p.lenda=1;p.sal=salarioLenda(p);tocou();
-  G.lendas[l[0]]=id;G.inbox.unshift({t:"bom",m:`${l[0]} chegou! A lenda vai vestir a camisa do ${G.clubs[uid].name}.`});perfil().comp=(perfil().comp||0)+1;xpBonus(300,"lenda contratada");return null;
+  G.lendas[l[0]]=id;G.inbox.unshift({t:"bom",m:`${l[0]} chegou! A lenda vai vestir a camisa do ${G.clubs[uid].name}.`});perfil().comp=(perfil().comp||0)+1;perfil().lendaC=(perfil().lendaC||0)+1;xpBonus(300,"lenda contratada");return null;
 }
 function telaLendas(){
   let h=`<h2>Mercado</h2><div class="cartao secao"><div class="seg" role="group">${[["pais",pais().nome],["fora","Exterior"],["livres","Sem clube"],["tec","Técnicos"],["lendas","Lendas"]].map(([k,x])=>`<button data-a="morig" data-v="${k}" aria-pressed="${merc.orig===k}">${x}</button>`).join("")}</div></div>`;
