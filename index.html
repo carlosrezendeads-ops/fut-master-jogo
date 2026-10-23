@@ -1187,34 +1187,34 @@ body:has(header.topo) .esc-fixo{top:72px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792793905"></script>
-<script src="img/arte-capa.js?v=1792793905"></script>
-<script src="img/fundo-criacao.js?v=1792793905"></script>
-<script src="img/fundo-pais.js?v=1792793905"></script>
-<script src="img/fundo-escudo.js?v=1792793905"></script>
-<script src="img/simbolos.js?v=1792793905"></script>
-<script src="img/molduras.js?v=1792793905"></script>
-<script src="img/kits-foto.js?v=1792793905"></script>
-<script src="img/fundo-vestiario.js?v=1792793905"></script>
-<script src="img/patro-logos.js?v=1792793905"></script>
-<script src="img/tv-logos.js?v=1792793905"></script>
-<script src="img/diretor.js?v=1792793905"></script>
-<script src="img/rostos.js?v=1792793905"></script>
-<script src="img/estadio-fotos.js?v=1792793905"></script>
-<script src="img/super-fotos.js?v=1792793905"></script>
-<script src="img/trofeus.js?v=1792793905"></script>
-<script src="img/medalhas.js?v=1792793905"></script>
-<script src="img/fotos.js?v=1792793905"></script>
-<script src="img/fotos-vs.js?v=1792793905"></script>
-<script src="img/kit-homens.js?v=1792793905"></script>
-<script src="img/tec-fotos.js?v=1792793905"></script>
-<script src="dados/elencos.js?v=1792793905"></script>
-<script src="img/rostos-reais.js?v=1792793905"></script>
-<script src="img/escudos-img.js?v=1792793905"></script>
-<script src="img/tradutores.js?v=1792793905"></script>
-<script src="img/avatares.js?v=1792793905"></script>
-<script src="img/premios-icones.js?v=1792793905"></script>
-<script src="dados/idiomas.js?v=1792793905"></script>
+<script src="img/escudos-reais.js?v=1792794252"></script>
+<script src="img/arte-capa.js?v=1792794252"></script>
+<script src="img/fundo-criacao.js?v=1792794252"></script>
+<script src="img/fundo-pais.js?v=1792794252"></script>
+<script src="img/fundo-escudo.js?v=1792794252"></script>
+<script src="img/simbolos.js?v=1792794252"></script>
+<script src="img/molduras.js?v=1792794252"></script>
+<script src="img/kits-foto.js?v=1792794252"></script>
+<script src="img/fundo-vestiario.js?v=1792794252"></script>
+<script src="img/patro-logos.js?v=1792794252"></script>
+<script src="img/tv-logos.js?v=1792794252"></script>
+<script src="img/diretor.js?v=1792794252"></script>
+<script src="img/rostos.js?v=1792794252"></script>
+<script src="img/estadio-fotos.js?v=1792794252"></script>
+<script src="img/super-fotos.js?v=1792794252"></script>
+<script src="img/trofeus.js?v=1792794252"></script>
+<script src="img/medalhas.js?v=1792794252"></script>
+<script src="img/fotos.js?v=1792794252"></script>
+<script src="img/fotos-vs.js?v=1792794252"></script>
+<script src="img/kit-homens.js?v=1792794252"></script>
+<script src="img/tec-fotos.js?v=1792794252"></script>
+<script src="dados/elencos.js?v=1792794252"></script>
+<script src="img/rostos-reais.js?v=1792794252"></script>
+<script src="img/escudos-img.js?v=1792794252"></script>
+<script src="img/tradutores.js?v=1792794252"></script>
+<script src="img/avatares.js?v=1792794252"></script>
+<script src="img/premios-icones.js?v=1792794252"></script>
+<script src="dados/idiomas.js?v=1792794252"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -1896,9 +1896,11 @@ function modalDiretorAceite(){const c=G.clubs[G.user.club];
   dirQuadro("palmas","Que ótimo!",`Vamos começar hoje então. O valor do meu serviço é <b>${dinheiro(DIR_SAL)} por mês</b>, mas vou te ajudar a gerenciar o ${esc(c.name)} e a montar um time competitivo para brigar pelo título. Sempre que acontecer algo importante, eu te aviso.`,`<button class="btn prim" data-a="dirok">Ok, vamos lá</button>`)}
 // último jogo de liga do clube: [gols pró, gols contra]
 function dirUltimo(){const t=userTier(),uid=G.user.club,R=G.res[t]||[];for(let i=R.length-1;i>=0;i--){const x=(R[i]||[]).find(g=>g[0]===uid||g[1]===uid);if(x)return x[0]===uid?[x[2],x[3]]:[x[3],x[2]]}return null}
-function dirSeq(r){const u=ultimos5(userTier(),G.user.club);let n=0;for(let i=u.length-1;i>=0&&u[i]===r;i--)n++;return n}
+function dirSeq(r){const t=userTier(),uid=G.user.club,R=G.res[t]||[];let n=0;for(let i=R.length-1;i>=0;i--){const x=(R[i]||[]).find(g=>g[0]===uid||g[1]===uid);if(!x)continue;const gf=x[0]===uid?x[2]:x[3],gs=x[0]===uid?x[3]:x[2],q=gf>gs?"v":gf<gs?"d":"e";if(q!==r)break;n++}return n} // sequência na liga (vitórias "v", derrotas "d")
 // tudo o que o diretor tem a dizer agora, por prioridade; aparece o primeiro ainda não visto (k = chave para não repetir)
 function dirAvisos(){const uid=G.user.club,c=G.clubs[uid],cl=esc(c.name),A=[],fm=folhaMensal().tot,ev=G.ev,t=userTier(),nj=(G.st[uid]||{}).j||0,add=x=>A.push(x);
+  // --- competições: começo/fim de temporada, liga, copas e clássico (o começo de temporada vem primeiro) ---
+  dirCompeticoes(add);
   // --- alertas ---
   if(G.cash<0)add({k:"div|"+G.year+"|"+Math.floor(ev/4),foto:"preocupado",tit:"Chefe, estamos no vermelho!",txt:`O caixa está negativo em <b>${dinheiro(-G.cash)}</b>. Precisamos olhar as finanças agora: cortar gastos, vender alguém ou pegar um empréstimo antes que a dívida cresça.`,alvo:'nav [data-v="financas"]',bt:"Ver finanças"});
   else if(G.cash<fm)add({k:"quase|"+G.year+"|"+Math.floor(ev/4),foto:"preocupado",tit:"O dinheiro está curto",txt:`Chefe, o caixa (<b>${dinheiro(G.cash)}</b>) não cobre a próxima conta do mês (<b>${dinheiro(fm)}</b>). Se nada mudar, vamos ficar devendo. Vale dar uma olhada nas finanças.`,alvo:'nav [data-v="financas"]',bt:"Ver finanças"});
@@ -1912,19 +1914,59 @@ function dirAvisos(){const uid=G.user.club,c=G.clubs[uid],cl=esc(c.name),A=[],fm
   {const n=jogadoresDo(uid).length;if(n<20)add({k:"curto|"+G.year+"|"+n,foto:"pensa",tit:"Elenco curto",txt:`Temos só <b>${n} jogadores</b>. Com lesões e cartões, pode faltar gente. Vale contratar alguém no mercado.`,alvo:'nav [data-v="mercado"]',bt:"Ir ao mercado"})}
   {const n=totalPontos();if(n>0)add({k:"pts|"+n+"|"+Math.floor(ev/3),foto:"joinha",tit:"Pontos de treino guardados",txt:`Chefe, temos <b>${n} ponto${n>1?"s":""} de treino</b> sem usar. Dá para melhorar os atributos dos jogadores agora mesmo.`,aba:"clube",bt:"Usar pontos"})}
   // --- parabéns e ânimo (depois dos jogos da liga) ---
-  const u=dirUltimo(),v=dirSeq("v"),d=dirSeq("d"),pos=nj>=3?posicaoDe(uid):0;
-  if(u&&v>=3&&v%2===1)add({k:"vit|"+ev,foto:"festa",tit:v>=5?`${v} vitórias seguidas!`:"Três vitórias seguidas!",txt:v>=5?`Que fase, chefe! O ${cl} não para de ganhar. A torcida está empolgada e o elenco está muito confiante.`:`Parabéns, chefe! O time está indo muito bem. Do jeito que está, dá para sonhar alto nesta temporada.`});
-  if(u&&u[0]-u[1]>=3)add({k:"gol|"+ev,foto:"palmas",tit:"Que goleada!",txt:`${u[0]} a ${u[1]}! O ${cl} deu show. Esse tipo de resultado anima a torcida e valoriza os nossos jogadores.`});
-  if(pos===1)add({k:"lider|"+G.year+"|"+Math.floor(nj/6),foto:"festa",tit:"Somos os líderes!",txt:`Chefe, o ${cl} está em <b>1º lugar</b> na ${esc(nomeLiga(t))}! Agora é manter o ritmo até o fim.`});
-  else if(pos&&pos<=4)add({k:"g4|"+G.year+"|"+Math.floor(nj/8),foto:"joinha",tit:"Estamos no G4",txt:`O ${cl} está em <b>${pos}º lugar</b>. ${t>0?"Se continuar assim, o acesso vem!":"Se continuar assim, a vaga na Libertadores vem!"}`});
-  if(u&&d>=3)add({k:"der|"+ev,foto:"preocupado",tit:"Fase difícil",txt:`Chefe, foram ${d} derrotas seguidas. Calma, isso acontece. Que tal revisar a escalação ou a tática para o próximo jogo?`,aba:"prejogo",bt:"Ver escalação"});
+  const u=dirUltimo(),v=dirSeq("v"),d=dirSeq("d"),pos=nj>=3&&!G.seasonEnd?posicaoDe(uid):0,zona=nj>=10,P=pais(),CC=COPAS[P.cont],n=(G.tiers[t]||[]).length,kk=P.k||4;
+  if(u&&[3,5,8,10,15,20].includes(v))add({k:"vit|"+G.year+"|"+nj,foto:"festa",tit:v>=5?`${v} vitórias seguidas!`:"Três vitórias seguidas!",txt:v>=5?`Que fase, chefe! O ${cl} não para de ganhar. A torcida está empolgada e o elenco está muito confiante.`:`Parabéns, chefe! O time está indo muito bem. Do jeito que está, dá para sonhar alto nesta temporada.`});
+  if(u&&u[0]-u[1]>=3)add({k:"gol|"+G.year+"|"+Math.floor(nj/5),foto:"palmas",tit:"Que goleada!",txt:`${u[0]} a ${u[1]}! O ${cl} deu show. Esse tipo de resultado anima a torcida e valoriza os nossos jogadores.`});
+  if(pos===1)add({k:"lider|"+G.year+"|"+Math.floor(nj/6),foto:"festa",tit:"Somos os líderes!",txt:t===0?`Chefe, o ${cl} está em <b>1º lugar</b> na ${esc(nomeLiga(t))}! Estamos brigando pelo título da elite. Agora é manter o ritmo até o fim.`:`Chefe, o ${cl} lidera a ${esc(nomeLiga(t))}! Se continuar assim, o acesso vem com taça.`});
+  else if(pos&&zona&&t>0&&pos<=kk)add({k:"ac|"+G.year+"|"+Math.floor(nj/8),foto:"joinha",tit:"Zona de acesso!",txt:`O ${cl} está em <b>${pos}º lugar</b> na ${esc(nomeLiga(t))}, dentro dos ${kk} que sobem. Se continuar assim, ano que vem estamos na ${esc(nomeLiga(t-1))}!`});
+  else if(pos&&zona&&t===0&&pos<=CC.mq)add({k:"lib|"+G.year+"|"+Math.floor(nj/8),foto:"joinha",tit:`Vaga na ${CC.main}!`,txt:`O ${cl} está em <b>${pos}º lugar</b>. Do jeito que está, garantimos a ${CC.main} no ano que vem. Isso vale prestígio e muito dinheiro.`});
+  else if(pos&&zona&&t===0&&pos<=CC.mq+CC.sq)add({k:"sul|"+G.year+"|"+Math.floor(nj/8),foto:"joinha",tit:`Vaga na ${CC.sec}`,txt:`Estamos em <b>${pos}º lugar</b>, na zona da ${CC.sec}. Mais um esforço e dá para buscar a ${CC.main}!`});
+  if(pos&&nj>=5&&pos>n-kk)add({k:"rb|"+G.year+"|"+Math.floor(nj/5),foto:"preocupado",tit:"Zona de rebaixamento",txt:`Chefe, estamos em <b>${pos}º lugar</b> na ${esc(nomeLiga(t))}, dentro dos ${kk} que caem. Precisamos reagir já: rever a escalação, a tática e talvez buscar reforços.`,aba:"prejogo",bt:"Ver escalação"});
+  {const tot=(n-1)*2,falta=tot-nj;if(pos&&falta>0&&falta<=5&&(pos===1||(t>0&&pos<=kk)||(t===0&&pos<=CC.mq)))add({k:"reta|"+G.year,foto:"pensa",tit:"Reta final!",txt:`Faltam <b>${falta} rodada${falta>1?"s":""}</b> e estamos em ${pos}º. ${pos===1?"O título está nas nossas mãos.":t>0?"O acesso está perto.":`A vaga na ${CC.main} está perto.`} Não dá para vacilar agora, chefe!`})}
+  if(u&&d>=3)add({k:"der|"+G.year+"|"+nj,foto:"preocupado",tit:"Fase difícil",txt:`Chefe, foram ${d} derrotas seguidas. Calma, isso acontece. Que tal revisar a escalação ou a tática para o próximo jogo?`,aba:"prejogo",bt:"Ver escalação"});
   [1e3,5e3,1e4,5e4].forEach(m=>{if(G.cash>=m)add({k:"rico|"+m,foto:"festa",tit:"O caixa está forte!",txt:`Chefe, passamos de <b>${dinheiro(m)}</b> em caixa. As contas estão em dia e dá para pensar em reforços ou em obras no estádio.`})});
   return A}
+// textos para cada competição do país da carreira (liga, copa nacional e copa continental)
+function dirCompeticoes(add){const uid=G.user.club,cl=esc(G.clubs[uid].name),t=userTier(),D=G.diretor||{},P=pais(),CC=COPAS[P.cont],L=esc(nomeLiga(t)),kk=P.k||4;
+  // começo de temporada (sobe, cai, mesma série)
+  if(D.ano!=null&&D.ano!==G.year){const ta=D.tier??t,cup=G.cup?` E ainda vamos disputar a <b>${esc(G.cup.nome)}</b>!`:"";
+    if(t<ta)add({k:"ini|"+G.year,ini:1,foto:"festa",tit:`Bem-vindos à ${L}!`,txt:`Chefe, conseguimos o acesso e agora o ${cl} disputa a ${L}. O nível é mais alto, então vamos precisar de reforços e de um elenco forte.${cup}`});
+    else if(t>ta)add({k:"ini|"+G.year,ini:1,foto:"preocupado",tit:"Hora de recomeçar",txt:`Foi duro cair, mas o ${cl} tem tudo para voltar. Na ${L}, o objetivo é ficar entre os ${kk} primeiros e subir de novo.${cup}`});
+    else if(t===0)add({k:"ini|"+G.year,ini:1,foto:"joinha",tit:`Mais um ano na ${L}`,txt:`Nova temporada, chefe! Na elite, terminar entre os ${CC.mq} primeiros vale vaga na ${CC.main}.${cup}`});
+    else add({k:"ini|"+G.year,ini:1,foto:"joinha",tit:`Nova temporada na ${L}`,txt:`Vamos com tudo, chefe! O objetivo é ficar entre os ${kk} primeiros e subir para a ${esc(nomeLiga(t-1))}.${cup}`})}
+  // fim de temporada
+  const R=G.seasonEnd;if(R&&R.year===G.year){
+    if(R.pos===1)add({k:"fim|"+G.year,foto:"festa",tit:`CAMPEÕES DA ${L.toUpperCase()}!`,txt:`Chefe, que temporada! O ${cl} é campeão da ${L}. Esse título vai ficar para sempre na história do clube.`});
+    else if(R.novoTier<R.tier)add({k:"fim|"+G.year,foto:"festa",tit:"SUBIMOS!",txt:`O ${cl} terminou em ${R.pos}º e conquistou o acesso para a ${esc(nomeLiga(R.novoTier))}! Parabéns, chefe, o trabalho deu certo.`});
+    else if(R.novoTier>R.tier)add({k:"fim|"+G.year,foto:"preocupado",tit:"Fomos rebaixados",txt:`Terminamos em ${R.pos}º e vamos cair${R.novoTier<3?` para a ${esc(nomeLiga(R.novoTier))}`:""}. É um golpe duro, mas vamos reconstruir o time e voltar mais fortes.`});
+    else add({k:"fim|"+G.year,foto:"pensa",tit:"Temporada encerrada",txt:`Terminamos a ${L} em <b>${R.pos}º lugar</b>. Ano que vem dá para ir mais longe com alguns reforços certos.`});
+    if(R.vaga)add({k:"vaga|"+G.year,foto:"palmas",tit:`Vaga na ${R.vaga}!`,txt:`Garantimos a ${R.vaga} no ano que vem, chefe! Vamos enfrentar os melhores times do continente.`})}
+  // copa nacional
+  const cn=G.copaN,ul=G.last;
+  if(cn){const nm=esc(cn.nome);
+    if(cn.champ===uid)add({k:"cnc|"+G.year,foto:"festa",tit:`CAMPEÕES DA ${nm.toUpperCase()}!`,txt:`É taça, chefe! O ${cl} é campeão da ${nm}. A torcida está em festa e o prêmio já caiu no caixa.`});
+    else if(cn.out)add({k:"cno|"+G.year,foto:"pensa",tit:`Fim da linha na ${nm}`,txt:`Caímos ${esc(cn.out)}. Faz parte, chefe. Agora é foco total na ${L}.`});
+    else if(ul&&ul.tipo==="N"&&ul.passou){const i=FASES_N.indexOf(ul.fase),prox=FASES_N[i+1];if(prox)add({k:"cnp|"+G.year+"|"+i,foto:"palmas",tit:prox==="Final"?`Estamos na FINAL da ${nm}!`:`Classificados na ${nm}!`,txt:prox==="Final"?`Chefe, o ${cl} está a um passo do título da ${nm}. Vamos com o time mais forte!`:`Passamos ${FASES_N_NA[i]} e agora vem a <b>${prox}</b>. Cada fase da ${nm} rende prêmio em dinheiro.`})}}
+  // copa continental (Libertadores, Sul-Americana, Champions, Europa League)
+  const cup=G.cup;
+  if(cup){const nm=esc(cup.nome);
+    if(cup.champ===uid)add({k:"ccc|"+G.year,foto:"festa",tit:`CAMPEÕES DA ${nm.toUpperCase()}!`,txt:`Chefe, o ${cl} é campeão da ${nm}! O maior título do continente é nosso. Isso é história!`});
+    else if(cup.out==="grupos")add({k:"cco|"+G.year,foto:"preocupado",tit:`Caímos na fase de grupos`,txt:`Não deu na ${nm} desta vez. Fica a experiência, chefe. Agora é focar na ${L} e voltar mais forte.`});
+    else if(cup.out)add({k:"cco|"+G.year,foto:"pensa",tit:`Eliminados da ${nm}`,txt:`Caímos ${esc(cup.out)}. Foi uma campanha bonita e o nome do ${cl} ficou conhecido no continente.`});
+    else if(ul&&ul.tipo==="C"){
+      if(!ul.ko&&/6ª rodada/.test(ul.fase||""))add({k:"ccg|"+G.year,foto:"palmas",tit:"Passamos da fase de grupos!",txt:`O ${cl} está nas <b>oitavas de final</b> da ${nm}! Agora é mata-mata, chefe: cada jogo vale muito.`});
+      else if(ul.ko&&ul.passou){const i=FASES_KO.indexOf(ul.fase),prox=FASES_KO[i+1];if(prox)add({k:"ccp|"+G.year+"|"+i,foto:"palmas",tit:prox==="Final"?`Estamos na FINAL da ${nm}!`:`Avançamos na ${nm}!`,txt:prox==="Final"?`Chefe, estamos a um jogo do título da ${nm}. É o jogo mais importante da história do ${cl}!`:`Passamos ${FASES_NA[i]} e agora vem a <b>${prox}</b>. O continente está de olho no ${cl}.`})}}}
+  // próximo jogo: clássico ou decisão
+  const m=G.fase!=="pre"&&!G.seasonEnd&&partidaAtual();
+  if(m&&!m.amistoso){
+    if(ehClassico(m)){const r=rivalDe(G.clubs[uid]);add({k:"cla|"+G.ev,foto:"pensa",tit:"Semana de clássico!",txt:`O próximo jogo é contra o <b>${esc(r.name)}</b>, nosso maior rival. A torcida não aceita perder, e uma vitória rende muito mais dinheiro. Vamos preparar o melhor time.`,aba:"prejogo",bt:"Preparar o time"})}
+    else if(/Final/.test(m.rot||"")&&!/Semifinal|Oitavas|Quartas/.test(m.rot||""))add({k:"dec|"+G.ev,foto:"pensa",tit:"Hoje é decisão!",txt:`O próximo jogo é a <b>${esc(m.rot)}</b>. Escale os titulares descansados e vamos buscar essa taça!`,aba:"prejogo",bt:"Preparar o time"})}}
 function diretorChecar(){if(!G||G.over||G.live||abertura||TUTA||document.querySelector(".veu,.tut-veu"))return;
   if(["visual","partida","resultado","prejogo"].includes(aba))return;
   if(!G.diretor||!G.diretor.on){if(((G.st[G.user.club]||{}).j||0)>=1&&!tvPendente()&&!G.tradOferta)modalDiretorOferta();return} // oferta depois da 1ª partida do campeonato
-  const D=G.diretor;D.vistos=D.vistos||{};if(D.ev===G.ev&&D.n>=2)return; // no máximo 2 avisos por dia de jogo
-  const a=dirAvisos().find(x=>!D.vistos[x.k]);if(!a)return;
+  const D=G.diretor;D.vistos=D.vistos||{};if(D.ano==null){D.ano=G.year;D.tier=userTier()}
+  if(D.ev===G.ev&&D.n>=2)return; // no máximo 2 avisos por dia de jogo
+  const a=dirAvisos().find(x=>!D.vistos[x.k]);if(D.ano!==G.year&&(!a||a.ini)){D.ano=G.year;D.tier=userTier()}if(!a)return;
   D.vistos[a.k]=1;D.n=D.ev===G.ev?(D.n||0)+1:1;D.ev=G.ev;salvar();window._dirAv=a;
   dirQuadro(a.foto,a.tit,a.txt,a.bt?`<button class="btn" data-a="fechar">Ok, obrigado</button><button class="btn prim" data-a="dirir">${a.bt}</button>`:`<button class="btn prim" data-a="fechar">${pick(["Obrigado!","Valeu, Wagner!","Ok, obrigado!"])}</button>`)} // sempre dá para responder o diretor
 // destaca o botão certo: o resto da tela escurece e o alvo brilha; tocar nele faz a ação
@@ -3293,7 +3335,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792793905";
+const VERSAO="1792794252";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -6517,7 +6559,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "patro":{const qu=el.dataset.i||"",seg=qu===""&&G.patroDuplo&&G.patro,er=escolherPatrocinio(+v,qu);if(er)toastErro(er);salvar();if(!er)setTimeout(()=>modalLogos(qu==="mat"?"mat":qu==="sec"||seg?"sec":"master"),350);break;}
     case "logos":modalLogos(v);break;
     case "dirsim":modalDiretorAceite();return;
-    case "dirok":G.diretor={on:1,vistos:{},ev:G.ev,n:1};salvar();fecharModal();toast(`${DIR_NOME} é o novo diretor do clube!`);render();return;
+    case "dirok":G.diretor={on:1,vistos:{},ev:G.ev,n:1,ano:G.year,tier:userTier()};salvar();fecharModal();toast(`${DIR_NOME} é o novo diretor do clube!`);render();return;
     case "dirir":{const a=window._dirAv;fecharModal();if(!a)return;if(a.aba){aba=a.aba;window.scrollTo(0,0);render()}else diretorFoco(a.alvo);return}
     case "tvsim":case "tvnao":decidirTV(+v,a==="tvsim");salvar();if(!tvPendente())window.scrollTo(0,0);break;
     case "fecharjanela":{const er=fecharJanela();if(er){toastErro(er);return}salvar();toast(G.ev===0?"Bola rolando! Boa temporada.":"Janela fechada.");window.scrollTo(0,0);break;}
