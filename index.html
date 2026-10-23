@@ -1182,33 +1182,33 @@ body:has(header.topo) .esc-fixo{top:72px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792791710"></script>
-<script src="img/arte-capa.js?v=1792791710"></script>
-<script src="img/fundo-criacao.js?v=1792791710"></script>
-<script src="img/fundo-pais.js?v=1792791710"></script>
-<script src="img/fundo-escudo.js?v=1792791710"></script>
-<script src="img/simbolos.js?v=1792791710"></script>
-<script src="img/molduras.js?v=1792791710"></script>
-<script src="img/kits-foto.js?v=1792791710"></script>
-<script src="img/fundo-vestiario.js?v=1792791710"></script>
-<script src="img/patro-logos.js?v=1792791710"></script>
-<script src="img/tv-logos.js?v=1792791710"></script>
-<script src="img/rostos.js?v=1792791710"></script>
-<script src="img/estadio-fotos.js?v=1792791710"></script>
-<script src="img/super-fotos.js?v=1792791710"></script>
-<script src="img/trofeus.js?v=1792791710"></script>
-<script src="img/medalhas.js?v=1792791710"></script>
-<script src="img/fotos.js?v=1792791710"></script>
-<script src="img/fotos-vs.js?v=1792791710"></script>
-<script src="img/kit-homens.js?v=1792791710"></script>
-<script src="img/tec-fotos.js?v=1792791710"></script>
-<script src="dados/elencos.js?v=1792791710"></script>
-<script src="img/rostos-reais.js?v=1792791710"></script>
-<script src="img/escudos-img.js?v=1792791710"></script>
-<script src="img/tradutores.js?v=1792791710"></script>
-<script src="img/avatares.js?v=1792791710"></script>
-<script src="img/premios-icones.js?v=1792791710"></script>
-<script src="dados/idiomas.js?v=1792791710"></script>
+<script src="img/escudos-reais.js?v=1792792655"></script>
+<script src="img/arte-capa.js?v=1792792655"></script>
+<script src="img/fundo-criacao.js?v=1792792655"></script>
+<script src="img/fundo-pais.js?v=1792792655"></script>
+<script src="img/fundo-escudo.js?v=1792792655"></script>
+<script src="img/simbolos.js?v=1792792655"></script>
+<script src="img/molduras.js?v=1792792655"></script>
+<script src="img/kits-foto.js?v=1792792655"></script>
+<script src="img/fundo-vestiario.js?v=1792792655"></script>
+<script src="img/patro-logos.js?v=1792792655"></script>
+<script src="img/tv-logos.js?v=1792792655"></script>
+<script src="img/rostos.js?v=1792792655"></script>
+<script src="img/estadio-fotos.js?v=1792792655"></script>
+<script src="img/super-fotos.js?v=1792792655"></script>
+<script src="img/trofeus.js?v=1792792655"></script>
+<script src="img/medalhas.js?v=1792792655"></script>
+<script src="img/fotos.js?v=1792792655"></script>
+<script src="img/fotos-vs.js?v=1792792655"></script>
+<script src="img/kit-homens.js?v=1792792655"></script>
+<script src="img/tec-fotos.js?v=1792792655"></script>
+<script src="dados/elencos.js?v=1792792655"></script>
+<script src="img/rostos-reais.js?v=1792792655"></script>
+<script src="img/escudos-img.js?v=1792792655"></script>
+<script src="img/tradutores.js?v=1792792655"></script>
+<script src="img/avatares.js?v=1792792655"></script>
+<script src="img/premios-icones.js?v=1792792655"></script>
+<script src="dados/idiomas.js?v=1792792655"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2966,12 +2966,16 @@ const PATRO_REAIS={
   m:[["Nike","Adidas","Puma","Kappa","Le Coq Sportif","Umbro","Macron","Hummel","Castore","New Balance"],["Kappa","Le Coq Sportif","Umbro","Macron","Hummel","Puma","Adidas","Nike","Castore","Kipsta"]]}};
 const logoPatro=(n,cls)=>typeof PATRO_LOGOS!=="undefined"&&PATRO_LOGOS[n]?`<span class="patro-logo${cls?" "+cls:""}"><img src="${PATRO_LOGOS[n]}" alt="${esc(n)}"></span>`:"";
 const tierPatro=()=>Math.min(2,Math.max(0,G.clubs[G.user.club].tier));
-function nomesPatro(qtd,usar){const L=(PATRO_REAIS[G.country]||PATRO_REAIS.BRA).p[tierPatro()].filter(n=>!(usar||[]).includes(n));return shuffle(L.slice()).slice(0,qtd)}
+// rodízio: cada série guarda quem já apareceu (G.patroVistos) e só repete depois de mostrar todos da lista
+function rodizio(chave,L,qtd){const V=(G.patroVistos=G.patroVistos||{})[chave]||[],novos=shuffle(L.filter(n=>!V.includes(n))),velhos=shuffle(L.filter(n=>V.includes(n)));
+  const esc=novos.concat(velhos).slice(0,qtd),todos=V.concat(esc.filter(n=>!V.includes(n)));
+  G.patroVistos[chave]=novos.length<=qtd?esc:todos;return esc}
+function nomesPatro(qtd,usar){const L=(PATRO_REAIS[G.country]||PATRO_REAIS.BRA).p[tierPatro()].filter(n=>!(usar||[]).includes(n));return rodizio(G.country+"|p"+tierPatro(),L,qtd)}
 // material esportivo (Série B e A): luvas maiores e um pouco por jogo
 const MULT_PATRO=[1.2,1.4,1]; // A, B, C: cada série paga claramente mais que a de baixo
 function gerarMaterial(){const c=G.clubs[G.user.club],e=econ(G.tierBase[c.tier]),base=9*e*(FREC[c.tier]??1)*(.6+(c.fama||0)/80)*(MULT_PATRO[c.tier]??1),f=()=>.88+rnd()*.24;
   const L=(PATRO_REAIS[G.country]||PATRO_REAIS.BRA).m[tierPatro()===0?0:1];
-  return shuffle(L.slice()).slice(0,3).map(n=>({nome:n,tipo:"fixo",mat:1,porJogo:Math.round(base*.3*f()),luvas:Math.round(base*4.5*f()),desc:"Fornece o uniforme. Luvas altas na assinatura e um valor por jogo."}))}
+  return rodizio(G.country+"|m"+(tierPatro()===0?0:1),L,3).map(n=>({nome:n,tipo:"fixo",mat:1,porJogo:Math.round(base*.3*f()),luvas:Math.round(base*4.5*f()),desc:"Fornece o uniforme. Luvas altas na assinatura e um valor por jogo."}))}
 // patrocinador secundário (Série A): paga menos que o master
 function gerarSecundario(){return gerarPatrocinios(G.patro?[G.patro.nome]:[]).map(o=>({...o,sec:1,porJogo:Math.round(o.porJogo*.45),luvas:Math.round(o.luvas*.45),bonus:o.bonus&&Math.round(o.bonus*.45),bonusMeta:o.bonusMeta&&Math.round(o.bonusMeta*.45)}))}
 function gerarPatrocinios(usar){
@@ -3236,7 +3240,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792791710";
+const VERSAO="1792792655";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
