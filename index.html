@@ -1187,34 +1187,34 @@ body:has(header.topo) .esc-fixo{top:72px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792796903"></script>
-<script src="img/arte-capa.js?v=1792796903"></script>
-<script src="img/fundo-criacao.js?v=1792796903"></script>
-<script src="img/fundo-pais.js?v=1792796903"></script>
-<script src="img/fundo-escudo.js?v=1792796903"></script>
-<script src="img/simbolos.js?v=1792796903"></script>
-<script src="img/molduras.js?v=1792796903"></script>
-<script src="img/kits-foto.js?v=1792796903"></script>
-<script src="img/fundo-vestiario.js?v=1792796903"></script>
-<script src="img/patro-logos.js?v=1792796903"></script>
-<script src="img/tv-logos.js?v=1792796903"></script>
-<script src="img/diretor.js?v=1792796903"></script>
-<script src="img/rostos.js?v=1792796903"></script>
-<script src="img/estadio-fotos.js?v=1792796903"></script>
-<script src="img/super-fotos.js?v=1792796903"></script>
-<script src="img/trofeus.js?v=1792796903"></script>
-<script src="img/medalhas.js?v=1792796903"></script>
-<script src="img/fotos.js?v=1792796903"></script>
-<script src="img/fotos-vs.js?v=1792796903"></script>
-<script src="img/kit-homens.js?v=1792796903"></script>
-<script src="img/tec-fotos.js?v=1792796903"></script>
-<script src="dados/elencos.js?v=1792796903"></script>
-<script src="img/rostos-reais.js?v=1792796903"></script>
-<script src="img/escudos-img.js?v=1792796903"></script>
-<script src="img/tradutores.js?v=1792796903"></script>
-<script src="img/avatares.js?v=1792796903"></script>
-<script src="img/premios-icones.js?v=1792796903"></script>
-<script src="dados/idiomas.js?v=1792796903"></script>
+<script src="img/escudos-reais.js?v=1792797134"></script>
+<script src="img/arte-capa.js?v=1792797134"></script>
+<script src="img/fundo-criacao.js?v=1792797134"></script>
+<script src="img/fundo-pais.js?v=1792797134"></script>
+<script src="img/fundo-escudo.js?v=1792797134"></script>
+<script src="img/simbolos.js?v=1792797134"></script>
+<script src="img/molduras.js?v=1792797134"></script>
+<script src="img/kits-foto.js?v=1792797134"></script>
+<script src="img/fundo-vestiario.js?v=1792797134"></script>
+<script src="img/patro-logos.js?v=1792797134"></script>
+<script src="img/tv-logos.js?v=1792797134"></script>
+<script src="img/diretor.js?v=1792797134"></script>
+<script src="img/rostos.js?v=1792797134"></script>
+<script src="img/estadio-fotos.js?v=1792797134"></script>
+<script src="img/super-fotos.js?v=1792797134"></script>
+<script src="img/trofeus.js?v=1792797134"></script>
+<script src="img/medalhas.js?v=1792797134"></script>
+<script src="img/fotos.js?v=1792797134"></script>
+<script src="img/fotos-vs.js?v=1792797134"></script>
+<script src="img/kit-homens.js?v=1792797134"></script>
+<script src="img/tec-fotos.js?v=1792797134"></script>
+<script src="dados/elencos.js?v=1792797134"></script>
+<script src="img/rostos-reais.js?v=1792797134"></script>
+<script src="img/escudos-img.js?v=1792797134"></script>
+<script src="img/tradutores.js?v=1792797134"></script>
+<script src="img/avatares.js?v=1792797134"></script>
+<script src="img/premios-icones.js?v=1792797134"></script>
+<script src="dados/idiomas.js?v=1792797134"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -3110,15 +3110,18 @@ const EMISSORAS={BRA:[[ // Série A, B, C — a mesma emissora pode estar em mai
   {nome:"Canal do Benja",chance:.35,luvas:1.2,porJogo:1,como:"Transmite dois jogos por rodada, de graça no YouTube."}]]};
 const logoTV=(n,cls)=>typeof TV_LOGOS!=="undefined"&&TV_LOGOS[n]?`<span class="patro-logo${cls?" "+cls:""}"><img src="${TV_LOGOS[n]}" alt="${esc(n)}"></span>`:"";
 function emissorasDe(){const L=EMISSORAS[G.country];return L&&L[userTier()]||null}
-const TV_RENOV=1.5; // renovação: +50% para todas
+const TV_RENOV=1.5; // renovação ao subir de série: +50% para todas; na mesma série renova pelo mesmo valor
 function gerarTV(){const L=emissorasDe();if(!L)return null;const c=G.clubs[G.user.club],f=()=>.9+rnd()*.2,EM=EMISSORAS[G.country];
   const baseT=t=>9*econ(G.tierBase[t])*(FREC[t]??1)*(.6+(c.fama||0)/80)*(MULT_PATRO[t]??1),base=baseT(c.tier);
   // emissora que também está na série de baixo paga pelo menos 40% a mais que lá
   const piso=(o,k)=>{let m=0;for(let t=c.tier+1;t<=2;t++){const x=EM[t]&&EM[t].find(y=>y.nome===o.nome);if(x)m=Math.max(m,baseT(t)*x[k]*1.4)}return m};
   // contrato vale 1 temporada; toda emissora da temporada anterior (aceita ou recusada) volta propondo renovação com aumento (TV_RENOV)
-  const ant={};if(G.tv)G.tv.ofs.forEach(o=>{ant[o.nome]=o});
-  return {ano:G.year,ofs:L.map(o=>{const v=k=>Math.round(Math.max(base*o[k],piso(o,k))*f()),r=ant[o.nome],x={nome:o.nome,como:o.como,chance:o.chance,luvas:v("luvas"),porJogo:v("porJogo"),dec:null};
-    if(r){x.renov={luvas:r.luvas,porJogo:r.porJogo,dec:r.dec};x.luvas=Math.max(x.luvas,Math.round(r.luvas*TV_RENOV));x.porJogo=Math.max(x.porJogo,Math.round(r.porJogo*TV_RENOV))}return x})}}
+  const ant={};if(G.tv)G.tv.ofs.forEach(o=>{ant[o.nome]=o});const subiu=G.tv&&G.tv.tier!=null&&c.tier<G.tv.tier;
+  return {ano:G.year,tier:c.tier,ofs:L.map(o=>{const v=k=>Math.round(Math.max(base*o[k],piso(o,k))*f()),r=ant[o.nome],x={nome:o.nome,como:o.como,chance:o.chance,luvas:v("luvas"),porJogo:v("porJogo"),dec:null};
+    if(r){x.renov={luvas:r.luvas,porJogo:r.porJogo,dec:r.dec,up:subiu};
+      if(subiu){x.luvas=Math.max(x.luvas,Math.round(r.luvas*TV_RENOV));x.porJogo=Math.max(x.porJogo,Math.round(r.porJogo*TV_RENOV))}
+      else if(c.tier===(G.tv.tier??c.tier)){x.luvas=r.luvas;x.porJogo=r.porJogo}} // mesma série: mesmo preço; caiu: valor da série nova
+    return x})}}
 function garantirTV(){if(G.amistoso==="feito"&&!G.seasonEnd&&emissorasDe()&&(!G.tv||G.tv.ano!==G.year))G.tv=gerarTV()}
 const tvPendente=()=>!!(G.tv&&G.tv.ano===G.year&&G.tv.ofs.some(o=>!o.dec));
 function decidirTV(i,sim){const o=G.tv&&G.tv.ofs[i];if(!o||o.dec)return;o.dec=sim?"sim":"nao";
@@ -3335,7 +3338,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792796903";
+const VERSAO="1792797134";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4690,8 +4693,8 @@ function telaInicio(){
 }
 function cartaoTV(){const T=G.tv;
   return `<h2>Transmissão dos jogos</h2><div class="cartao secao tv-card" style="margin-bottom:10px"><div><b class="etapa">Emissoras de TV · ${esc(nomeLiga(userTier()))}</b><p class="muted peq" style="margin:4px 0 0">As emissoras querem transmitir os jogos do seu clube e pagar pelos direitos de imagem. Aceite ou recuse cada uma.</p></div>
-    ${T.ofs.map((o,i)=>`<div class="patro">${logoTV(o.nome)}<div><b class="patro-nome">${esc(o.nome)}</b>${o.renov?` <span class="peq" style="color:var(--canario);font-weight:700">· Renovação +${Math.round((o.luvas/o.renov.luvas-1)*100)}%</span><p class="peq" style="margin:4px 0;font-style:italic">“Gostaríamos de renovar com o seu time e propomos um aumento no pagamento dos direitos.”</p>`:""}<div class="muted peq">${esc(o.como)}</div></div>
-      <div class="extrato num"><div><span>Direitos de imagem na assinatura${o.renov?` <small class="muted">(${o.renov.dec==="sim"?"antes":"proposta anterior"} ${dinheiro(o.renov.luvas)})</small>`:""}</span><span>${dinheiro(o.luvas)}</span></div><div><span>Por jogo transmitido${o.renov?` <small class="muted">(${o.renov.dec==="sim"?"antes":"proposta anterior"} ${dinheiro(o.renov.porJogo)})</small>`:""}</span><span>${dinheiro(o.porJogo)}</span></div><div><span>Seus jogos na emissora</span><span>${o.chance>=1?"Todos":o.chance>=.5?`Cerca de ${Math.round(o.chance*10)} em cada 10`:`Cerca de 1 em cada ${Math.round(1/o.chance)}`}</span></div></div>
+    ${T.ofs.map((o,i)=>`<div class="patro">${logoTV(o.nome)}<div><b class="patro-nome">${esc(o.nome)}</b>${o.renov?` <span class="peq" style="color:var(--canario);font-weight:700">· Renovação${o.renov.up?` +${Math.round((o.luvas/o.renov.luvas-1)*100)}%`:""}</span><p class="peq" style="margin:4px 0;font-style:italic">${o.renov.up?"“Parabéns pelo acesso! Gostaríamos de renovar com o seu time e propomos um aumento no pagamento dos direitos.”":"“Gostaríamos de renovar com o seu time para mais uma temporada, nas mesmas condições.”"}</p>`:""}<div class="muted peq">${esc(o.como)}</div></div>
+      <div class="extrato num"><div><span>Direitos de imagem na assinatura${o.renov&&o.renov.luvas!==o.luvas?` <small class="muted">(${o.renov.dec==="sim"?"antes":"proposta anterior"} ${dinheiro(o.renov.luvas)})</small>`:""}</span><span>${dinheiro(o.luvas)}</span></div><div><span>Por jogo transmitido${o.renov&&o.renov.porJogo!==o.porJogo?` <small class="muted">(${o.renov.dec==="sim"?"antes":"proposta anterior"} ${dinheiro(o.renov.porJogo)})</small>`:""}</span><span>${dinheiro(o.porJogo)}</span></div><div><span>Seus jogos na emissora</span><span>${o.chance>=1?"Todos":o.chance>=.5?`Cerca de ${Math.round(o.chance*10)} em cada 10`:`Cerca de 1 em cada ${Math.round(1/o.chance)}`}</span></div></div>
       ${o.dec?`<p class="peq" style="margin:0;text-align:center;font-weight:700;color:${o.dec==="sim"?"var(--canario)":"#ff8a8a"}">${o.dec==="sim"?(o.renov?"✔ Contrato renovado":"✔ Proposta aceita"):"✖ Proposta recusada"}</p>`:`<div class="linha"><button class="btn prim" style="flex:1" data-a="tvsim" data-v="${i}">${o.renov?"Renovar":"Aceitar"}</button><button class="btn" style="flex:1" data-a="tvnao" data-v="${i}">Recusar</button></div>`}</div>`).join("")}
     <p class="peq tv-dica" style="margin:4px 0 0">💡 <b>Dica:</b> transmissão é sempre bom negócio: dá visibilidade ao time e coloca mais dinheiro no caixa.</p></div>`}
 function contadorJanela(){const J=G.janela;return `<div class="kpis"><div class="cartao kpi"><small>Contratações</small><b class="num">${J.compras} de ${MAX_COMPRAS}</b></div><div class="cartao kpi"><small>Negócios</small><b class="num">${J.negocios} de ${MAX_NEGOCIOS}</b></div></div>`}
