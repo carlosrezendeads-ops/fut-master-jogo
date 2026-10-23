@@ -1180,33 +1180,33 @@ body:has(header.topo) .esc-fixo{top:72px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792784503"></script>
-<script src="img/arte-capa.js?v=1792784503"></script>
-<script src="img/fundo-criacao.js?v=1792784503"></script>
-<script src="img/fundo-pais.js?v=1792784503"></script>
-<script src="img/fundo-escudo.js?v=1792784503"></script>
-<script src="img/simbolos.js?v=1792784503"></script>
-<script src="img/molduras.js?v=1792784503"></script>
-<script src="img/kits-foto.js?v=1792784503"></script>
-<script src="img/fundo-vestiario.js?v=1792784503"></script>
-<script src="img/patro-logos.js?v=1792784503"></script>
-<script src="img/tv-logos.js?v=1792784503"></script>
-<script src="img/rostos.js?v=1792784503"></script>
-<script src="img/estadio-fotos.js?v=1792784503"></script>
-<script src="img/super-fotos.js?v=1792784503"></script>
-<script src="img/trofeus.js?v=1792784503"></script>
-<script src="img/medalhas.js?v=1792784503"></script>
-<script src="img/fotos.js?v=1792784503"></script>
-<script src="img/fotos-vs.js?v=1792784503"></script>
-<script src="img/kit-homens.js?v=1792784503"></script>
-<script src="img/tec-fotos.js?v=1792784503"></script>
-<script src="dados/elencos.js?v=1792784503"></script>
-<script src="img/rostos-reais.js?v=1792784503"></script>
-<script src="img/escudos-img.js?v=1792784503"></script>
-<script src="img/tradutores.js?v=1792784503"></script>
-<script src="img/avatares.js?v=1792784503"></script>
-<script src="img/premios-icones.js?v=1792784503"></script>
-<script src="dados/idiomas.js?v=1792784503"></script>
+<script src="img/escudos-reais.js?v=1792791485"></script>
+<script src="img/arte-capa.js?v=1792791485"></script>
+<script src="img/fundo-criacao.js?v=1792791485"></script>
+<script src="img/fundo-pais.js?v=1792791485"></script>
+<script src="img/fundo-escudo.js?v=1792791485"></script>
+<script src="img/simbolos.js?v=1792791485"></script>
+<script src="img/molduras.js?v=1792791485"></script>
+<script src="img/kits-foto.js?v=1792791485"></script>
+<script src="img/fundo-vestiario.js?v=1792791485"></script>
+<script src="img/patro-logos.js?v=1792791485"></script>
+<script src="img/tv-logos.js?v=1792791485"></script>
+<script src="img/rostos.js?v=1792791485"></script>
+<script src="img/estadio-fotos.js?v=1792791485"></script>
+<script src="img/super-fotos.js?v=1792791485"></script>
+<script src="img/trofeus.js?v=1792791485"></script>
+<script src="img/medalhas.js?v=1792791485"></script>
+<script src="img/fotos.js?v=1792791485"></script>
+<script src="img/fotos-vs.js?v=1792791485"></script>
+<script src="img/kit-homens.js?v=1792791485"></script>
+<script src="img/tec-fotos.js?v=1792791485"></script>
+<script src="dados/elencos.js?v=1792791485"></script>
+<script src="img/rostos-reais.js?v=1792791485"></script>
+<script src="img/escudos-img.js?v=1792791485"></script>
+<script src="img/tradutores.js?v=1792791485"></script>
+<script src="img/avatares.js?v=1792791485"></script>
+<script src="img/premios-icones.js?v=1792791485"></script>
+<script src="dados/idiomas.js?v=1792791485"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -3141,7 +3141,8 @@ function proximaTemporada(){
   novaTemporada();
   validarEscalacao();
   const t=userTier();
-  if(t<tAnt){G.amistoso="pendente";G.amistosoAdv=null;G.patroDuplo=true} // subiu: novos patrocinadores (escolhe 2 de 3) e amistoso antes da estreia
+  G.amistoso="pendente";G.amistosoAdv=null; // toda temporada: amistoso antes da estreia, depois as emissoras
+  if(t<tAnt)G.patroDuplo=true; // subiu: novos patrocinadores (escolhe 2 de 3)
   const msgs=[{t:"bom",m:`Começa a temporada ${G.year}. O clube disputa a ${nomeLiga(t)}${G.cup?` e a ${G.cup.nome}`:""}. Escolha o patrocinador do ano e aproveite a janela de transferências.`},{t:"msg",m:"A base subiu 2 jovens para o elenco principal."}];
   aposentados.forEach(n=>{msgs.push({t:"msg",m:`${n} se aposentou.`});addNoticia(`${n} se aposentou e encerra a carreira no ${G.clubs[uid].name}.`,"clube")});
   if(saidas.length)msgs.push({t:"ruim",m:`Saíram ao fim do contrato: ${saidas.join(", ")}.`});
@@ -3233,7 +3234,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792784503";
+const VERSAO="1792791485";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
