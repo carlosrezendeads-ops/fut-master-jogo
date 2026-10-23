@@ -12,3 +12,15 @@ self.addEventListener("fetch", e => {
     return r;
   }).catch(() => caches.open(CACHE).then(c => c.match(chave).then(m => m || c.match(url.origin + url.pathname.replace(/[^/]*$/, "index.html"))))));
 });
+
+// avisos no celular: o push chega vazio; o texto vem do servidor (notificacoes/) e o aviso só aparece se o jogo não estiver na tela
+const PUSH_URL = "";
+async function hashHex(t) { const d = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)); return [...new Uint8Array(d)].map(x => x.toString(16).padStart(2, "0")).join(""); }
+self.addEventListener("push", e => e.waitUntil((async () => {
+  const wins = await clients.matchAll({ type: "window", includeUncontrolled: true });
+  if (wins.some(c => c.visibilityState === "visible" && c.focused)) return;
+  let m = { t: "FUT Master", c: "Tem novidade no jogo. Toque para abrir." };
+  try { const sub = await self.registration.pushManager.getSubscription(); if (sub && PUSH_URL) { const r = await fetch(PUSH_URL + "/msg?e=" + await hashHex(sub.endpoint)); if (r.ok) m = await r.json(); } } catch (_) {}
+  await self.registration.showNotification(m.t || "FUT Master", { body: m.c, icon: "app/icon-192.png", badge: "app/icon-192.png", tag: m.k || "fut" });
+})()));
+self.addEventListener("notificationclick", e => { e.notification.close(); e.waitUntil(clients.matchAll({ type: "window", includeUncontrolled: true }).then(w => { const c = w.find(x => x.url.startsWith(self.registration.scope)); return c ? c.focus() : clients.openWindow(self.registration.scope); })); });
