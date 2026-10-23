@@ -488,8 +488,11 @@ nav.abas[hidden]{display:none}
 .pts-chip b{font-size:20px}.pts-chip small{font-size:10.5px;color:var(--cal-2)}.pts-ic{font-size:20px}
 .pts-chip.tem{opacity:1;filter:none;border-color:rgba(255,210,63,.6);background:linear-gradient(180deg,rgba(255,210,63,.18),rgba(255,210,63,.05));box-shadow:0 0 14px rgba(255,210,63,.18)}
 .pts-chip.tem b{color:var(--canario)}
-.pts-lista{display:grid;gap:6px;max-height:52vh;overflow:auto}
-.pts-lin{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:8px}
+.pts-lista{display:grid;gap:2px;max-height:56vh;overflow:auto}
+.pts-lin{display:grid;grid-template-columns:auto auto 1fr auto auto;align-items:center;gap:8px}
+.pts-grupo{font-family:var(--f-display);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--canario);margin:8px 0 2px}.pts-grupo:first-child{margin-top:0}
+.pts-foto{width:34px;height:34px;border-radius:50%;overflow:hidden;display:flex;flex:0 0 34px}.pts-foto>*{width:100%;height:100%}
+.pts-lin .atr-mais{padding:4px 12px;min-height:0}
 .pts-lin .nm{min-width:0}.pts-lin .nm b{display:block;font-size:13.5px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bola-dourada{position:fixed;right:12px;bottom:92px;z-index:45;width:64px;height:64px;border:0;background:none;padding:0;cursor:pointer;animation:bolaVibra .45s infinite;filter:drop-shadow(0 0 14px rgba(255,210,63,.85))}
 .bola-dourada svg{display:block;transition:transform .2s}
@@ -1180,33 +1183,33 @@ body:has(header.topo) .esc-fixo{top:72px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792791485"></script>
-<script src="img/arte-capa.js?v=1792791485"></script>
-<script src="img/fundo-criacao.js?v=1792791485"></script>
-<script src="img/fundo-pais.js?v=1792791485"></script>
-<script src="img/fundo-escudo.js?v=1792791485"></script>
-<script src="img/simbolos.js?v=1792791485"></script>
-<script src="img/molduras.js?v=1792791485"></script>
-<script src="img/kits-foto.js?v=1792791485"></script>
-<script src="img/fundo-vestiario.js?v=1792791485"></script>
-<script src="img/patro-logos.js?v=1792791485"></script>
-<script src="img/tv-logos.js?v=1792791485"></script>
-<script src="img/rostos.js?v=1792791485"></script>
-<script src="img/estadio-fotos.js?v=1792791485"></script>
-<script src="img/super-fotos.js?v=1792791485"></script>
-<script src="img/trofeus.js?v=1792791485"></script>
-<script src="img/medalhas.js?v=1792791485"></script>
-<script src="img/fotos.js?v=1792791485"></script>
-<script src="img/fotos-vs.js?v=1792791485"></script>
-<script src="img/kit-homens.js?v=1792791485"></script>
-<script src="img/tec-fotos.js?v=1792791485"></script>
-<script src="dados/elencos.js?v=1792791485"></script>
-<script src="img/rostos-reais.js?v=1792791485"></script>
-<script src="img/escudos-img.js?v=1792791485"></script>
-<script src="img/tradutores.js?v=1792791485"></script>
-<script src="img/avatares.js?v=1792791485"></script>
-<script src="img/premios-icones.js?v=1792791485"></script>
-<script src="dados/idiomas.js?v=1792791485"></script>
+<script src="img/escudos-reais.js?v=1792791615"></script>
+<script src="img/arte-capa.js?v=1792791615"></script>
+<script src="img/fundo-criacao.js?v=1792791615"></script>
+<script src="img/fundo-pais.js?v=1792791615"></script>
+<script src="img/fundo-escudo.js?v=1792791615"></script>
+<script src="img/simbolos.js?v=1792791615"></script>
+<script src="img/molduras.js?v=1792791615"></script>
+<script src="img/kits-foto.js?v=1792791615"></script>
+<script src="img/fundo-vestiario.js?v=1792791615"></script>
+<script src="img/patro-logos.js?v=1792791615"></script>
+<script src="img/tv-logos.js?v=1792791615"></script>
+<script src="img/rostos.js?v=1792791615"></script>
+<script src="img/estadio-fotos.js?v=1792791615"></script>
+<script src="img/super-fotos.js?v=1792791615"></script>
+<script src="img/trofeus.js?v=1792791615"></script>
+<script src="img/medalhas.js?v=1792791615"></script>
+<script src="img/fotos.js?v=1792791615"></script>
+<script src="img/fotos-vs.js?v=1792791615"></script>
+<script src="img/kit-homens.js?v=1792791615"></script>
+<script src="img/tec-fotos.js?v=1792791615"></script>
+<script src="dados/elencos.js?v=1792791615"></script>
+<script src="img/rostos-reais.js?v=1792791615"></script>
+<script src="img/escudos-img.js?v=1792791615"></script>
+<script src="img/tradutores.js?v=1792791615"></script>
+<script src="img/avatares.js?v=1792791615"></script>
+<script src="img/premios-icones.js?v=1792791615"></script>
+<script src="dados/idiomas.js?v=1792791615"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -3234,7 +3237,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792791485";
+const VERSAO="1792791615";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -5702,10 +5705,11 @@ function quadroPontos(){
   const P=pontosTreino(),bolas=G.user.bolas||0;
   return `<h2>Pontos de Treino</h2><div class="cartao secao pts-quadro"><p class="muted peq" style="margin:0">Vença jogos fazendo 3 gols ou mais para ganhar uma Bola Dourada. Ao estourar, ela dá pontos para você evoluir seus jogadores. Toque num ponto colorido para escolher quem recebe.${bolas?` <b style="color:var(--canario)">Você tem ${bolas} bola${bolas>1?"s":""} esperando!</b>`:""}</p>
   <div class="pts-grade">${ATRS.map(([k,n,ic])=>`<button class="pts-chip${P[k]>0?" tem":""}" data-a="ptstipo" data-v="${k}"><span class="pts-ic">${ic}</span><b class="num">${P[k]||0}</b><small>${n}</small></button>`).join("")}</div></div>`}
+const POS_GRUPO={GOL:"Goleiros",ZAG:"Zagueiros",LAT:"Laterais",VOL:"Volantes",MEI:"Meias",ATA:"Atacantes"};
 function modalPontosTipo(k){
   const P=pontosTreino(),a=ATRS.find(x=>x[0]===k),el=jogadoresDo(G.user.club).sort((x,y)=>ORD_POS[x.pos]-ORD_POS[y.pos]||y.ov-x.ov);
   modal(`<h3>${a[2]} Pontos de ${a[1]}</h3><p class="muted peq" style="margin:0 0 8px">${P[k]>0?`Você tem <b style="color:var(--canario)">${P[k]}</b> ponto${P[k]>1?"s":""}. Toque em + para dar 1 ponto ao jogador.`:"Você não tem pontos disso agora. Ganhe Bolas Douradas vencendo jogos com 3 gols ou mais."}</p>
-  <div class="pts-lista">${el.map(p=>{const v=atributos(p)[k],ex=(p.ap||{})[k]||0;return `<div class="pts-lin"><span class="posb ${p.pos}">${p.pos}</span><div class="nm"><b>${esc(nomeCurto(p.n))}</b><div class="atr-b"><i style="width:${v}%;background:${corAtr(v)}"></i></div></div><b class="num">${v}${ex?`<em>+${ex}</em>`:""}</b><button class="btn mini atr-mais" data-a="ptsadd" data-v="${p.id}|${k}|t"${P[k]>0&&v<99?"":" disabled"}>+</button></div>`}).join("")}</div>
+  <div class="pts-lista">${el.map((p,i)=>{const v=atributos(p)[k],ex=(p.ap||{})[k]||0,tit=i===0||el[i-1].pos!==p.pos?`<b class="pts-grupo">${POS_GRUPO[p.pos]||p.pos}</b>`:"";return `${tit}<div class="pts-lin"><span class="posb ${p.pos}">${p.pos}</span><span class="pts-foto">${rostoSVG(p,34)}</span><div class="nm"><b>${esc(nomeCurto(p.n))}</b><div class="atr-b"><i style="width:${v}%;background:var(--canario)"></i></div></div><b class="num">${v}${ex?`<em>+${ex}</em>`:""}</b><button class="btn mini atr-mais" data-a="ptsadd" data-v="${p.id}|${k}|t"${P[k]>0&&v<99?"":" disabled"}>+</button></div>`}).join("")}</div>
   <div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`)}
 function modalPontosJog(id){
   const p=G.players[id];if(!p)return;const P=pontosTreino(),tot=totalPontos();
