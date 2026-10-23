@@ -1187,34 +1187,34 @@ body:has(header.topo) .esc-fixo{top:72px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792794252"></script>
-<script src="img/arte-capa.js?v=1792794252"></script>
-<script src="img/fundo-criacao.js?v=1792794252"></script>
-<script src="img/fundo-pais.js?v=1792794252"></script>
-<script src="img/fundo-escudo.js?v=1792794252"></script>
-<script src="img/simbolos.js?v=1792794252"></script>
-<script src="img/molduras.js?v=1792794252"></script>
-<script src="img/kits-foto.js?v=1792794252"></script>
-<script src="img/fundo-vestiario.js?v=1792794252"></script>
-<script src="img/patro-logos.js?v=1792794252"></script>
-<script src="img/tv-logos.js?v=1792794252"></script>
-<script src="img/diretor.js?v=1792794252"></script>
-<script src="img/rostos.js?v=1792794252"></script>
-<script src="img/estadio-fotos.js?v=1792794252"></script>
-<script src="img/super-fotos.js?v=1792794252"></script>
-<script src="img/trofeus.js?v=1792794252"></script>
-<script src="img/medalhas.js?v=1792794252"></script>
-<script src="img/fotos.js?v=1792794252"></script>
-<script src="img/fotos-vs.js?v=1792794252"></script>
-<script src="img/kit-homens.js?v=1792794252"></script>
-<script src="img/tec-fotos.js?v=1792794252"></script>
-<script src="dados/elencos.js?v=1792794252"></script>
-<script src="img/rostos-reais.js?v=1792794252"></script>
-<script src="img/escudos-img.js?v=1792794252"></script>
-<script src="img/tradutores.js?v=1792794252"></script>
-<script src="img/avatares.js?v=1792794252"></script>
-<script src="img/premios-icones.js?v=1792794252"></script>
-<script src="dados/idiomas.js?v=1792794252"></script>
+<script src="img/escudos-reais.js?v=1792794490"></script>
+<script src="img/arte-capa.js?v=1792794490"></script>
+<script src="img/fundo-criacao.js?v=1792794490"></script>
+<script src="img/fundo-pais.js?v=1792794490"></script>
+<script src="img/fundo-escudo.js?v=1792794490"></script>
+<script src="img/simbolos.js?v=1792794490"></script>
+<script src="img/molduras.js?v=1792794490"></script>
+<script src="img/kits-foto.js?v=1792794490"></script>
+<script src="img/fundo-vestiario.js?v=1792794490"></script>
+<script src="img/patro-logos.js?v=1792794490"></script>
+<script src="img/tv-logos.js?v=1792794490"></script>
+<script src="img/diretor.js?v=1792794490"></script>
+<script src="img/rostos.js?v=1792794490"></script>
+<script src="img/estadio-fotos.js?v=1792794490"></script>
+<script src="img/super-fotos.js?v=1792794490"></script>
+<script src="img/trofeus.js?v=1792794490"></script>
+<script src="img/medalhas.js?v=1792794490"></script>
+<script src="img/fotos.js?v=1792794490"></script>
+<script src="img/fotos-vs.js?v=1792794490"></script>
+<script src="img/kit-homens.js?v=1792794490"></script>
+<script src="img/tec-fotos.js?v=1792794490"></script>
+<script src="dados/elencos.js?v=1792794490"></script>
+<script src="img/rostos-reais.js?v=1792794490"></script>
+<script src="img/escudos-img.js?v=1792794490"></script>
+<script src="img/tradutores.js?v=1792794490"></script>
+<script src="img/avatares.js?v=1792794490"></script>
+<script src="img/premios-icones.js?v=1792794490"></script>
+<script src="dados/idiomas.js?v=1792794490"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -1963,7 +1963,7 @@ function dirCompeticoes(add){const uid=G.user.club,cl=esc(G.clubs[uid].name),t=u
     else if(/Final/.test(m.rot||"")&&!/Semifinal|Oitavas|Quartas/.test(m.rot||""))add({k:"dec|"+G.ev,foto:"pensa",tit:"Hoje é decisão!",txt:`O próximo jogo é a <b>${esc(m.rot)}</b>. Escale os titulares descansados e vamos buscar essa taça!`,aba:"prejogo",bt:"Preparar o time"})}}
 function diretorChecar(){if(!G||G.over||G.live||abertura||TUTA||document.querySelector(".veu,.tut-veu"))return;
   if(["visual","partida","resultado","prejogo"].includes(aba))return;
-  if(!G.diretor||!G.diretor.on){if(((G.st[G.user.club]||{}).j||0)>=1&&!tvPendente()&&!G.tradOferta)modalDiretorOferta();return} // oferta depois da 1ª partida do campeonato
+  if(!G.diretor||!G.diretor.on){if((((G.st[G.user.club]||{}).j||0)>=1||(G.history||[]).length)&&!tvPendente()&&!G.tradOferta)modalDiretorOferta();return} // oferta depois da 1ª partida do campeonato (carreira já em andamento: aparece na hora)
   const D=G.diretor;D.vistos=D.vistos||{};if(D.ano==null){D.ano=G.year;D.tier=userTier()}
   if(D.ev===G.ev&&D.n>=2)return; // no máximo 2 avisos por dia de jogo
   const a=dirAvisos().find(x=>!D.vistos[x.k]);if(D.ano!==G.year&&(!a||a.ini)){D.ano=G.year;D.tier=userTier()}if(!a)return;
@@ -3335,7 +3335,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792794252";
+const VERSAO="1792794490";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
