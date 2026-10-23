@@ -510,6 +510,8 @@ nav.abas[hidden]{display:none}
 .bola-g:nth-child(2){animation-delay:.15s}.bola-g:nth-child(3){animation-delay:.3s}
 .bola-g b{font-size:24px;color:var(--canario)}.bola-g small{font-size:11.5px;color:var(--cal-2)}
 @keyframes bolaPop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+.ec-lin .imp{font-style:normal;font-size:10.5px;color:var(--aviso);font-weight:600}
+.aj-form{margin-top:12px;padding:10px;border-radius:12px;border:1.5px solid var(--aviso);background:rgba(245,197,24,.06);display:grid;gap:6px}
 .cmd-sel.cmd-pre{grid-template-columns:1fr 1fr;margin-top:0}
 .cmd-sel button.on{background:var(--canario);color:var(--canario-ink)}
 .cmd-dica{margin:6px 2px 4px;text-align:center}
@@ -1175,32 +1177,32 @@ body:has(header.topo) .esc-fixo{top:72px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792714252"></script>
-<script src="img/arte-capa.js?v=1792714252"></script>
-<script src="img/fundo-criacao.js?v=1792714252"></script>
-<script src="img/fundo-pais.js?v=1792714252"></script>
-<script src="img/fundo-escudo.js?v=1792714252"></script>
-<script src="img/simbolos.js?v=1792714252"></script>
-<script src="img/molduras.js?v=1792714252"></script>
-<script src="img/kits-foto.js?v=1792714252"></script>
-<script src="img/fundo-vestiario.js?v=1792714252"></script>
-<script src="img/patro-logos.js?v=1792714252"></script>
-<script src="img/rostos.js?v=1792714252"></script>
-<script src="img/estadio-fotos.js?v=1792714252"></script>
-<script src="img/super-fotos.js?v=1792714252"></script>
-<script src="img/trofeus.js?v=1792714252"></script>
-<script src="img/medalhas.js?v=1792714252"></script>
-<script src="img/fotos.js?v=1792714252"></script>
-<script src="img/fotos-vs.js?v=1792714252"></script>
-<script src="img/kit-homens.js?v=1792714252"></script>
-<script src="img/tec-fotos.js?v=1792714252"></script>
-<script src="dados/elencos.js?v=1792714252"></script>
-<script src="img/rostos-reais.js?v=1792714252"></script>
-<script src="img/escudos-img.js?v=1792714252"></script>
-<script src="img/tradutores.js?v=1792714252"></script>
-<script src="img/avatares.js?v=1792714252"></script>
-<script src="img/premios-icones.js?v=1792714252"></script>
-<script src="dados/idiomas.js?v=1792714252"></script>
+<script src="img/escudos-reais.js?v=1792715404"></script>
+<script src="img/arte-capa.js?v=1792715404"></script>
+<script src="img/fundo-criacao.js?v=1792715404"></script>
+<script src="img/fundo-pais.js?v=1792715404"></script>
+<script src="img/fundo-escudo.js?v=1792715404"></script>
+<script src="img/simbolos.js?v=1792715404"></script>
+<script src="img/molduras.js?v=1792715404"></script>
+<script src="img/kits-foto.js?v=1792715404"></script>
+<script src="img/fundo-vestiario.js?v=1792715404"></script>
+<script src="img/patro-logos.js?v=1792715404"></script>
+<script src="img/rostos.js?v=1792715404"></script>
+<script src="img/estadio-fotos.js?v=1792715404"></script>
+<script src="img/super-fotos.js?v=1792715404"></script>
+<script src="img/trofeus.js?v=1792715404"></script>
+<script src="img/medalhas.js?v=1792715404"></script>
+<script src="img/fotos.js?v=1792715404"></script>
+<script src="img/fotos-vs.js?v=1792715404"></script>
+<script src="img/kit-homens.js?v=1792715404"></script>
+<script src="img/tec-fotos.js?v=1792715404"></script>
+<script src="dados/elencos.js?v=1792715404"></script>
+<script src="img/rostos-reais.js?v=1792715404"></script>
+<script src="img/escudos-img.js?v=1792715404"></script>
+<script src="img/tradutores.js?v=1792715404"></script>
+<script src="img/avatares.js?v=1792715404"></script>
+<script src="img/premios-icones.js?v=1792715404"></script>
+<script src="dados/idiomas.js?v=1792715404"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -1245,7 +1247,10 @@ const FORMACOES={
   "4-3-3":{s:["GOL","LAT","ZAG","ZAG","LAT","VOL","MEI","MEI","ATA","ATA","ATA"],a:2.5,d:-2.5},
   "4-2-3-1":{s:["GOL","LAT","ZAG","ZAG","LAT","VOL","VOL","MEI","MEI","MEI","ATA"],a:1,d:-.5},
   "3-5-2":{s:["GOL","ZAG","ZAG","ZAG","LAT","LAT","VOL","MEI","MEI","ATA","ATA"],a:1.5,d:-1.5},
-  "5-3-2":{s:["GOL","LAT","ZAG","ZAG","ZAG","LAT","VOL","VOL","MEI","ATA","ATA"],a:-2,d:2.5}
+  "5-3-2":{s:["GOL","LAT","ZAG","ZAG","ZAG","LAT","VOL","VOL","MEI","ATA","ATA"],a:-2,d:2.5},
+  "3-4-3":{s:["GOL","ZAG","ZAG","ZAG","LAT","LAT","VOL","MEI","ATA","ATA","ATA"],a:3,d:-3},
+  "4-1-4-1":{s:["GOL","LAT","ZAG","ZAG","LAT","VOL","MEI","MEI","MEI","MEI","ATA"],a:-.5,d:1},
+  "5-4-1":{s:["GOL","LAT","ZAG","ZAG","ZAG","LAT","VOL","VOL","MEI","MEI","ATA"],a:-3,d:3}
 };
 const ESTILOS={def:{n:"Defensivo",a:-2.5,d:2.5},eq:{n:"Equilibrado",a:0,d:0},of:{n:"Ofensivo",a:2.5,d:-2.5}};
 const W_ATT={GOL:0,LAT:1,ZAG:.3,VOL:1,MEI:2,ATA:3};
@@ -1513,6 +1518,16 @@ function melhorXI(cid,form){
   return xi;
 }
 function autoEscalar(){G.user.lineup=melhorXI(G.user.club,G.user.form)}
+/* troca de formação antes do jogo: quem já está escalado e cabe numa vaga da posição dele fica; as vagas que faltam (ex.: a formação pede 3 atacantes e só há 2) são completadas sozinhas com os melhores */
+function adaptarEscalacao(form){
+  const u=G.user,slots=FORMACOES[form].s,xi=new Array(slots.length).fill(null),us=new Set();
+  const antigos=(u.lineup||[]).filter(id=>id!=null&&G.players[id]&&G.players[id].club===u.club&&disponivel(G.players[id]));
+  slots.forEach((sl,i)=>{const id=antigos.find(id=>!us.has(id)&&G.players[id].pos===sl);if(id!=null){xi[i]=id;us.add(id)}});
+  const disp=jogadoresDo(u.club).filter(p=>disponivel(p)).sort((a,b)=>notaEsc(b)-notaEsc(a));
+  slots.forEach((sl,i)=>{if(xi[i]!=null)return;let p=disp.find(q=>!us.has(q.id)&&q.pos===sl);
+    if(!p){let bv=-1;disp.forEach(q=>{if(us.has(q.id))return;const v=notaEsc(q)*eficiencia(q,sl);if(v>bv){bv=v;p=q}})}
+    if(p){xi[i]=p.id;us.add(p.id)}});
+  u.lineup=xi}
 function validarEscalacao(){
   const u=G.user,slots=FORMACOES[u.form].s,trocas=[];
   if(!Array.isArray(u.lineup)||u.lineup.length!==slots.length)u.lineup=new Array(slots.length).fill(null);
@@ -2450,12 +2465,19 @@ function interesseMercado(){
   const cand=jogadoresDo(uid).filter(p=>p.ov>=58&&!jaTem.has(p.id)&&(p.intEv==null||G.ev-p.intEv>8)&&interessante(p));
   if(!cand.length)return;
   const pesos=cand.map(p=>(p.g||0)*2+(mediaNota(p)-6)*3+p.ov/20+1);let r=rnd()*pesos.reduce((a,b)=>a+b,0),i=0;while(i<cand.length-1&&(r-=pesos[i])>0)i++;
-  const p=cand[i],lim=c=>c.tier>=2?75:c.tier===1?80:999;
-  const cs=G.tiers.flat().map(id=>G.clubs[id]).filter(c=>c&&!c.user&&c.id!==uid&&p.ov>=c.rating-5&&p.ov<=c.rating+7&&jogadoresDo(c.id).length<34&&!(t===0&&p.ov>lim(c)));
-  if(!cs.length)return;
-  const c=pick(cs),v=Math.max(10,Math.round(valorJusto(p)*(.85+rnd()*.3)/5)*5);
-  p.intEv=G.ev;G.intUlt=G.ev;
-  msgClube(c.id,"Interesse em jogador",`O ${c.name} tem interesse em ${p.n} (${POS_EXT[p.pos]}): compra ou empréstimo.`,{pid:p.id,v,est:"aberta",mot:motivoInteresse(p),ev:G.ev})}
+  const p=cand[i],lim=c=>c.tier>=2?75:c.tier===1?80:999,topoU=t===0;
+  // a cada 4 propostas, 1 vem de um clube de fora (melhor pagadora); as outras do Brasil. Série C: B e C (ou fora); B: A e B (ou fora); A: só A, às vezes B pagando alto
+  const fora=(G.intN||0)%4===3;let c=null,mult=1,bonus=0;
+  if(fora){const outros=Object.keys(PAISES).filter(x=>x!==G.country),tiMax=t===0?0:t===1?1:2;
+    for(let k=0;k<20&&!c;k++){const pk=pick(outros),ti=ri(0,tiMax),L=PAISES[pk].t[ti].filter(x=>{const r=+x.split("|")[1];return p.ov>=r-5&&p.ov<=r+7});
+      if(L.length){const id=clubeExterior(pk,ti,pick(L)),cc=G.clubs[id];if(cc&&jogadoresDo(id).length<34){c=cc;mult=1.15+rnd()*.3;bonus=.12}}}}
+  if(!c){const tiers=t===2?[1,2]:t===1?[0,1]:[0];
+    const alto=t===0&&rnd()<.3; // série B pagando muito alto por jogador da série A
+    const cs=(alto?G.tiers[1]:tiers.flatMap(x=>G.tiers[x])).map(id=>G.clubs[id]).filter(cc=>cc&&!cc.user&&cc.id!==uid&&p.ov>=cc.rating-5&&p.ov<=cc.rating+(alto?12:7)&&jogadoresDo(cc.id).length<34&&!(topoU&&p.ov>lim(cc)));
+    if(!cs.length)return;c=pick(cs);if(alto){mult=1.5+rnd()*.5;bonus=.1}else mult=.85+rnd()*.3}
+  const v=Math.max(10,Math.round(valorJusto(p)*mult/5)*5),pais=c.tier===-1&&PAIS_NOME[c.pais]?` (${PAIS_NOME[c.pais]})`:"";
+  p.intEv=G.ev;G.intUlt=G.ev;G.intN=(G.intN||0)+1;
+  msgClube(c.id,"Interesse em jogador",`O ${c.name}${pais} tem interesse em ${p.n} (${POS_EXT[p.pos]}): compra ou empréstimo.`,{pid:p.id,v,est:"aberta",mot:motivoInteresse(p),ev:G.ev,bonus,fora:c.tier===-1})}
 function venderPara(pid,cid,preco){
   const p=G.players[pid],dest=G.clubs[cid];if(!p||p.club!==G.user.club||!dest)return "Esse jogador não está mais no seu elenco.";
   if(jogadoresDo(G.user.club).length<=16)return "O elenco precisa ter pelo menos 16 jogadores.";
@@ -2475,7 +2497,7 @@ function processarNegocios(){
     if(orig)orig.ofm.est="respondida";
     if(p.club!==G.user.club)return;
     const venda=n.tipo==="venda",ratio=venda?n.pedido/valorJusto(p):n.mensal/refEmprestimo(p),
-      ok=ratio<=3&&rnd()<(ratio<=1.15?.85:ratio<=1.5?.65:ratio<=2?.45:.25);
+      ok=ratio<=3&&rnd()<Math.min(.95,(ratio<=1.15?.85:ratio<=1.5?.65:ratio<=2?.45:.25)+(n.bonus||0));
     if(ok)msgClube(n.cid,"Proposta aceita",venda?`Aceitamos o valor de ${dinheiro(n.pedido)} por ${p.n}. Para concluir a transferência, basta aceitar.`:`Aceitamos o empréstimo de ${p.n} por ${n.temp} temporada${n.temp>1?"s":""}, pagando ${dinheiro(n.mensal)} por mês. Para concluir, basta aceitar.`,{pid:p.id,tipo:n.tipo,v:n.pedido,temp:n.temp,mensal:n.mensal,est:"aceita",ev:G.ev});
     else msgClube(n.cid,"Re: proposta por jogador",ratio>3?`Agradecemos o retorno, mas o valor pedido por ${p.n} está muito acima do que o clube pode pagar. Preferimos encerrar a negociação.`:`Analisamos a sua proposta por ${p.n}, mas não conseguimos chegar a um acordo. Por ora, vamos encerrar as conversas. Em outro momento, quem sabe, fazemos negócio.`)});
   // sem resposta em mais de 5 rodadas: o clube contrata outro jogador
@@ -2497,12 +2519,13 @@ const naoLidas=()=>(G&&G.inbox?G.inbox.filter(m=>m.cid&&!m.lida).length:0); // a
 const ICO_AVIAO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>';
 const ICO_NOTA='<svg class="ico-nota" viewBox="0 0 28 18" aria-hidden="true"><rect x="1" y="1" width="26" height="16" rx="3" fill="#2e9b57" stroke="#bff0cf" stroke-width="1.5"/><circle cx="14" cy="9" r="4" fill="none" stroke="#bff0cf" stroke-width="1.5"/><circle cx="5" cy="9" r="1.2" fill="#bff0cf"/><circle cx="23" cy="9" r="1.2" fill="#bff0cf"/></svg>';
 const dinheiroCurto=k=>{const s=dinheiro(Math.abs(k)),m=G?pais().moeda:"R$";return (k<0?"−":"")+s.replace(m,"").trim()};
+const nomeMsg=c=>esc(c.name)+(c.tier===-1&&PAIS_NOME[c.pais]?` · ${esc(PAIS_NOME[c.pais])}`:"");
 const dataMsg=ms=>{const d=new Date(ms);return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`};
 function selosEst(o){return {aberta:"",aguardando:"Aguardando resposta",aceita:"Proposta aceita",vendido:"Vendido",recusada:"Recusada",ignorada:"Ignorada",expirada:"Expirada",respondida:"Respondida"}[o.est]||""}
 function modalCaixa(){
   const l=G.inbox;
   const h=l.some(m=>m.cid&&G.clubs[m.cid])?l.map((m,i)=>{if(!(m.cid&&G.clubs[m.cid]))return "";const nova=!m.lida,c=m.cid&&G.clubs[m.cid];
-    if(c)return `<button class="msg-card clube${nova?" nova":""}" data-a="msgver" data-v="${i}"><span class="msg-selo">${escudoMini(c,18)}<b>${esc(c.name)}</b></span><span class="msg-txt">${esc(m.m)}</span><small>${m.ofm&&selosEst(m.ofm)?`<i>${selosEst(m.ofm)}</i> · `:""}📅 ${dataMsg(m.d||hojeJogo())}</small></button>`;
+    if(c)return `<button class="msg-card clube${nova?" nova":""}" data-a="msgver" data-v="${i}"><span class="msg-selo">${escudoMini(c,18)}<b>${nomeMsg(c)}</b></span><span class="msg-txt">${esc(m.m)}</span><small>${m.ofm&&selosEst(m.ofm)?`<i>${selosEst(m.ofm)}</i> · `:""}📅 ${dataMsg(m.d||hojeJogo())}</small></button>`;
     return `<button class="msg-card${nova?" nova":""} ${m.t||""}" data-a="msgver" data-v="${i}"><span class="msg-selo jogo">📣 <b>Aviso do jogo</b></span><span class="msg-txt">${esc(m.m)}</span>${m.d?`<small>📅 ${dataMsg(m.d)}</small>`:""}</button>`}).join(""):'<p class="muted">Nenhuma mensagem de outros clubes por enquanto.</p>';
   modal(`<h3>✉️ Caixa de entrada</h3><div class="msg-lista">${h}</div><div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`);
   l.forEach(m=>{if(m.cid)m.lida=true});salvar();render()}
@@ -2515,12 +2538,12 @@ function modalMensagem(i){
     corpo=sd+`<p>${o.tipo==="emp"?`O ${esc(c.name)} aceita o empréstimo de <b>${esc(p.n)}</b> por <b>${o.temp} temporada${o.temp>1?"s":""}</b>, pagando <b>${dinheiro(o.mensal)} por mês</b>.`:`O ${esc(c.name)} aceita pagar <b>${dinheiro(o.v)}</b> pelo atleta <b>${esc(p.n)}</b>, conforme a sua proposta.`}</p><p>Para concluir o negócio, aguardamos a sua confirmação.</p>`+ass;
     acoes=p.club===G.user.club?`<button class="btn prim" data-a="msgaceitar" data-v="${i}">Aceitar</button><button class="btn" data-a="msgdesistir" data-v="${i}">Desistir</button>`:"";
   }else if(c&&o&&p){
-    corpo=sd+`<p>A diretoria de futebol do ${esc(c.name)} acompanha o desempenho do atleta <b>${esc(p.n)}</b> (${POS_EXT[p.pos]}), que vem se destacando com ${esc(o.mot||"boas atuações")}.</p><p>Temos interesse em contar com o jogador e gostaríamos de conversar sobre a <b>compra</b> ou o <b>empréstimo</b> dele.</p><p>Aguardamos o seu retorno.</p>`+ass;
+    corpo=sd+`<p>A diretoria de futebol do ${esc(c.name)} acompanha o desempenho do atleta <b>${esc(p.n)}</b> (${POS_EXT[p.pos]}), que vem se destacando com ${esc(o.mot||"boas atuações")}.</p><p>Temos interesse em contar com o jogador e gostaríamos de conversar sobre a <b>compra</b> ou o <b>empréstimo</b> dele. Pela compra, podemos pagar em torno de <b>${dinheiro(o.v)}</b>.</p><p>Aguardamos o seu retorno.</p>`+ass;
     acoes=o.est==="aberta"?`<button class="btn" data-a="msgrec" data-v="${i}">Recusar</button><button class="btn prim" data-a="msgvend" data-v="${i}">Vender</button><button class="btn prim" data-a="msgempr" data-v="${i}">Emprestar</button><button class="btn" data-a="msgign" data-v="${i}">Ignorar</button>`
       :`<p class="msg-est">${o.est==="aguardando"?"Proposta enviada. Aguardando a resposta do "+esc(c.name)+"...":selosEst(o)}</p>`;
   }else corpo=`<p>${esc(m.m)}</p>${c?ass:""}`;
   const cartao=p?cartaoJogMsg(p):"";
-  modal(`<div class="msg-quadro"><div class="msg-cab">${c?`<span class="msg-selo grande">${escudoMini(c,26)}<b>${esc(c.name)}</b></span>`:`<span class="msg-selo jogo grande">📣 <b>Aviso do jogo</b></span>`}<small>📅 ${dataMsg(m.d||hojeJogo())}</small></div>${m.tit?`<h3 class="msg-ass">${esc(m.tit)}</h3>`:""}<div class="msg-corpo">${corpo}</div>${cartao}</div>
+  modal(`<div class="msg-quadro"><div class="msg-cab">${c?`<span class="msg-selo grande">${escudoMini(c,26)}<b>${nomeMsg(c)}</b></span>`:`<span class="msg-selo jogo grande">📣 <b>Aviso do jogo</b></span>`}<small>📅 ${dataMsg(m.d||hojeJogo())}</small></div>${m.tit?`<h3 class="msg-ass">${esc(m.tit)}</h3>`:""}<div class="msg-corpo">${corpo}</div>${cartao}</div>
   ${acoes?`<div class="msg-acoes">${acoes}</div>`:""}<div class="botoes"><button class="btn" data-a="caixa">‹ Caixa de entrada</button><button class="btn prim" data-a="fechar">Fechar</button></div>`)}
 function cartaoJogMsg(p){return `<button class="jog msg-jog" data-a="perfil" data-v="${p.id}">${fotoPos(p,p.pos,true)}<div class="nm"><b>${esc(p.n)}</b><span>${p.pos} · ${p.age} anos · valor ${dinheiro(valorJusto(p))}</span></div><div class="ov num">${p.ov}</div></button>`}
 function modalVender(i){
@@ -3152,7 +3175,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792714252";
+const VERSAO="1792715404";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -5222,7 +5245,10 @@ const POS_FORM={
   "4-3-3":[[.045,.5],[.17,.12],[.15,.37],[.15,.63],[.17,.88],[.26,.5],[.33,.28],[.33,.72],[.42,.14],[.45,.5],[.42,.86]],
   "4-2-3-1":[[.045,.5],[.17,.12],[.15,.37],[.15,.63],[.17,.88],[.25,.37],[.25,.63],[.35,.14],[.35,.5],[.35,.86],[.45,.5]],
   "3-5-2":[[.045,.5],[.15,.25],[.15,.5],[.15,.75],[.3,.08],[.3,.92],[.25,.5],[.34,.32],[.34,.68],[.44,.37],[.44,.63]],
-  "5-3-2":[[.045,.5],[.2,.08],[.15,.28],[.15,.5],[.15,.72],[.2,.92],[.28,.3],[.28,.7],[.33,.5],[.43,.37],[.43,.63]]
+  "5-3-2":[[.045,.5],[.2,.08],[.15,.28],[.15,.5],[.15,.72],[.2,.92],[.28,.3],[.28,.7],[.33,.5],[.43,.37],[.43,.63]],
+  "3-4-3":[[.045,.5],[.15,.25],[.15,.5],[.15,.75],[.3,.08],[.3,.92],[.27,.37],[.27,.63],[.43,.14],[.45,.5],[.43,.86]],
+  "4-1-4-1":[[.045,.5],[.17,.12],[.15,.37],[.15,.63],[.17,.88],[.24,.5],[.34,.1],[.34,.37],[.34,.63],[.34,.9],[.45,.5]],
+  "5-4-1":[[.045,.5],[.2,.08],[.15,.28],[.15,.5],[.15,.72],[.2,.92],[.28,.37],[.28,.63],[.35,.2],[.35,.8],[.45,.5]]
 };
 function posicoesForm(form,esq){
   return (POS_FORM[form]||POS_FORM["4-4-2"]).map(([x,y])=>({x:esq?x:1-x,y:esq?y:1-y}));
@@ -5823,7 +5849,7 @@ function blocoEmCampo(V){
   const L=V.L[V.lado],sl=FORMACOES[L.form].s,sai=L.saiu||{};
   let h=L.xi.map((id,i)=>{if(L.bloq[i])return `<div class="ec-lin off"><span class="posb ${sl[i]}">${sl[i]}</span><span></span><b class="muted">Expulso</b><span></span></div>`;
     const p=G.players[id];if(!p)return `<div class="ec-lin"><span class="posb ${sl[i]}">${sl[i]}</span><span></span><b style="color:var(--ruim)">Vaga aberta</b><span></span></div>`;
-    return `<div class="ec-lin"><span class="posb ${sl[i]}">${sl[i]}</span>${rostoSVG(p,32)}<b>${esc(nomeCurto(p.n))}</b>${barraFis(p)}</div>`}).join("");
+    return `<div class="ec-lin"><span class="posb ${p.pos}">${p.pos}</span>${rostoSVG(p,32)}<b>${esc(nomeCurto(p.n))}${p.pos!==sl[i]?` <i class="imp">na vaga de ${sl[i]}</i>`:""}</b>${barraFis(p)}</div>`}).join("");
   const fora=Object.keys(sai).map(id=>[G.players[id],sai[id]]).filter(x=>x[0]);
   if(fora.length)h+=`<div class="ec-fora">${fora.map(([p,t])=>`<span class="ec-chip ${t}">${t==="les"?`<span class="atadura-in">${ATADURA}</span>`:""}${esc(nomeCurto(p.n))}${t==="les"?" · lesionado":t==="exp"?" · expulso":" · substituído"}</span>`).join("")}</div>`;
   return h;
@@ -5858,13 +5884,27 @@ function painelSubs(V){
     if(L.bloq[i])return `<div class="jog off"><div class="posb ${slots[i]}">${slots[i]}</div><div class="nm"><b class="muted">Expulso</b></div><div></div></div>`;
     const p=G.players[id];
     const tg=p?(L.am[id]?' <span class="tag am">Amarelo</span>':""):"";
-    return `<button class="jog slot${liveSel===i?" sel":""}" data-a="lvsai" data-v="${i}">${fotoPos(p,slots[i],true)}<div class="nm"><b>${p?esc(p.n)+tg:'<span style="color:var(--ruim)">Vaga aberta</span>'}</b>${p?`<span>${p.pos}${p.pos!==slots[i]?" improvisado":""}</span>${barraFis(p)}`:""}</div><div class="ov num">${p?Math.round(p.ov*eficiencia(p,slots[i])):""}</div></button>`}).join("")}</div>
+    return `<button class="jog slot${liveSel===i?" sel":""}" data-a="lvsai" data-v="${i}">${fotoPos(p,p?p.pos:slots[i],true)}<div class="nm"><b>${p?esc(p.n)+tg:'<span style="color:var(--ruim)">Vaga aberta</span>'}</b>${p?`<span>${p.pos}${p.pos!==slots[i]?" improvisado":""}</span>${barraFis(p)}`:""}</div><div class="ov num">${p?Math.round(p.ov*eficiencia(p,slots[i])):""}</div></button>`}).join("")}</div>
   <div><b class="rot-col">Reservas</b>${lista.length?lista.map(cardRes).join(""):'<p class="muted peq">Nenhum reserva disponível.</p>'}</div></div>`;
 }
+let formAjuste=null; // ajuste da formação na partida: {slot} (quem vai sair) ou {ok} (manter improvisado)
+const fAtual=()=>G.live?G.live.L[G.live.lado].form:G.user.form,estAtual=()=>G.live?G.live.L[G.live.lado].est:G.user.est;
+const POS_NOME={GOL:"goleiro",LAT:"lateral",ZAG:"zagueiro",VOL:"volante",MEI:"meia",ATA:"atacante"};
+/* depois de trocar a formação na partida: jogadores fora da posição da vaga (ex.: volante na vaga de atacante) podem sair para entrar um reserva da posição certa (conta como substituição) */
+function ajusteFormacao(V){
+  const L=V.L[V.lado],sl=FORMACOES[L.form].s;if(L.subs>=MAX_SUBS||(formAjuste&&formAjuste.ok))return "";
+  const imp=L.xi.map((id,i)=>[id,i]).filter(([id,i])=>id!=null&&!L.bloq[i]&&G.players[id].pos!==sl[i]);if(!imp.length)return "";
+  const banco=bancoDe(V.lado);
+  if(formAjuste&&formAjuste.slot!=null){const i=formAjuste.slot,pos=sl[i],res=banco.filter(p=>p.pos===pos),out=G.players[L.xi[i]];
+    return `<div class="aj-form"><b>Quem entra no lugar de ${esc(nomeCurto(out.n))}?</b><p class="muted peq" style="margin:2px 0 8px">A vaga pede ${POS_NOME[pos]}. ${res.length?"Escolha um reserva:":"Não há reserva dessa posição: ele fica improvisado."}</p>${res.map(p=>`<button class="jog slot" data-a="fpentra" data-v="${p.id}">${fotoPos(p,p.pos,true)}<div class="nm"><b>${esc(p.n)}</b><span>${POS_NOME[p.pos]} · ${p.age} anos</span>${barraFis(p)}</div><div class="ov num">${Math.round(ovF(p))}</div></button>`).join("")}<button class="btn mini" data-a="fpmanter" style="margin-top:6px">Manter como está</button></div>`}
+  const falta=[...new Set(imp.map(([id,i])=>POS_NOME[sl[i]]))].join(" e ");
+  return `<div class="aj-form"><b>Ajuste da formação</b><p class="muted peq" style="margin:2px 0 8px">A formação ${L.form} pede ${falta} a mais. Selecione um jogador para sair e entrar um reserva da posição certa (conta como substituição). Quem está fora da posição aparece marcado.</p>${imp.map(([id,i])=>{const p=G.players[id];return `<button class="jog slot" data-a="fpsai" data-v="${i}">${fotoPos(p,p.pos,true)}<div class="nm"><b>${esc(p.n)}</b><span>${POS_NOME[p.pos]} na vaga de ${POS_NOME[sl[i]]}</span>${barraFis(p)}</div><div class="ov num">${Math.round(ovF(p)*eficiencia(p,sl[i]))}</div></button>`}).join("")}<button class="btn mini" data-a="fpmanter" style="margin-top:6px">Manter como está</button></div>`}
+function salvasPartida(){const FS=G.formSalvas||[];
+  return `<button class="btn mini prim-mini cp-salvar" id="cp-salvar" data-a="formsalvar" style="margin-top:12px">💾 Salvar esta formação</button><p class="muted peq" style="margin:6px 0 0">Arraste as bolinhas do seu time no campinho para ajustar as posições e salve com um nome.</p>${FS.length?`<div class="cp-salvas"><small>Minhas formações</small>${FS.map((f,i)=>`<span class="cp-salva"><button data-a="formusar" data-v="${i}">${esc(f.nome)} <small>${f.form}</small></button><button class="x" data-a="formapagar" data-v="${i}" aria-label="Apagar ${esc(f.nome)}">×</button></span>`).join("")}</div>`:""}`}
 function painelForm(V){
   const L=V.L[V.lado];
-  return `<p class="muted peq" style="margin:12px 0 6px">Formação</p><div class="opc">${Object.keys(FORMACOES).map(f=>`<button class="btn mini${L.form===f?" on":""}" data-a="lvform" data-v="${f}">${f}</button>`).join("")}</div>
-  <p class="muted peq" style="margin:12px 0 6px">Estilo</p><div class="opc">${Object.entries(ESTILOS).map(([k,v])=>`<button class="btn mini${L.est===k?" on":""}" data-a="lvest" data-v="${k}">${v.n}</button>`).join("")}</div>`;
+  return ajusteFormacao(V)+`<p class="muted peq" style="margin:12px 0 6px">Formação</p><div class="opc">${Object.keys(FORMACOES).map(f=>`<button class="btn mini${L.form===f?" on":""}" data-a="lvform" data-v="${f}">${f}</button>`).join("")}</div>
+  <p class="muted peq" style="margin:12px 0 6px">Estilo</p><div class="opc">${Object.entries(ESTILOS).map(([k,v])=>`<button class="btn mini${L.est===k?" on":""}" data-a="lvest" data-v="${k}">${v.n}</button>`).join("")}</div>${salvasPartida()}`;
 }
 
 /* ---------- resultado ---------- */
@@ -6345,7 +6385,10 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "precmd":G.user.cmd=v;toast(v==="tec"?"Comando do técnico: ele escala os melhores e faz as trocas.":"Comando manual: você escala e faz as trocas.");salvar();break;
     case "lvcmd":G.live.cmd=v;G.user.cmd=v;toast(v==="tec"?"Comando do técnico: ele faz as trocas.":"Comando manual: as trocas são suas.");salvar();break;
     case "lvmelhor":{const V=G.live;if(V.L[V.lado].subs>=MAX_SUBS){toastErro("Já foram feitas as 5 substituições.");return}const n=melhorarTime(V.lado);toast(n?`${n} troca${n>1?"s":""} feita${n>1?"s":""}.`:"O time em campo já é o melhor possível.");if(n)V.ultSub=null;salvar();break;}
-    case "lvform":trocarFormacao(G.live.lado,v,null);salvar();break;
+    case "lvform":formAjuste=null;trocarFormacao(G.live.lado,v,null);salvar();break;
+    case "fpsai":formAjuste={slot:+v};break;
+    case "fpmanter":formAjuste={ok:1};break;
+    case "fpentra":{const V=G.live,s2=V.lado,L=V.L[s2],i=formAjuste&&formAjuste.slot;if(i==null)return;const er=substituir(s2,i,+v,false,"ajuste da formação");if(er){toastErro(er);return}formAjuste=null;V.ultSub=null;salvar();break}
     case "lvest":trocarFormacao(G.live.lado,null,v);salvar();break;
     case "lvsair":if(G.live&&G.live.m.amistoso){toast("No amistoso não dá para desistir. Jogue até o fim!");return}modal(`<div class="aviso-box"><b>Desistir da partida?</b><p>Se sair agora, seu time perde por W.O. (0 × 3) e os 3 pontos vão para o adversário.</p><div class="botoes"><button class="btn" data-a="fechar">Continuar jogando</button><button class="btn perigo" data-a="lvdesistir">Desistir</button></div></div>`);return;
     case "lvdesistir":{fecharModal();const V=G.live;if(!V||V.est==="fim")break;pararTimer();
@@ -6409,9 +6452,9 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "msgempr":modalEmprestar(+v);return;
     case "msgvendenv":{const m=G.inbox[+v],p=G.players[m.ofm.pid],pr=Math.round(+($("#neg-preco").value||0));if(!p)return;
       if(!(pr>=valorJusto(p))){toastErro(`O valor mínimo é o valor do jogador: ${dinheiro(valorJusto(p))}.`);return}
-      m.ofm.est="aguardando";(G.negs=G.negs||[]).push({mid:m.id,cid:m.cid,pid:p.id,tipo:"venda",pedido:pr,resp:G.ev+ri(2,3)});propostaEnviada(m,p,`de venda de ${dinheiro(pr)} `);return}
+      m.ofm.est="aguardando";(G.negs=G.negs||[]).push({mid:m.id,cid:m.cid,pid:p.id,tipo:"venda",bonus:m.ofm.bonus,pedido:pr,resp:G.ev+ri(2,3)});propostaEnviada(m,p,`de venda de ${dinheiro(pr)} `);return}
     case "msgempenv":{const m=G.inbox[+v],p=G.players[m.ofm.pid],t=+$("#emp-t").value||1,mn=Math.round(+$("#emp-m").value||0);if(!p)return;
-      m.ofm.est="aguardando";(G.negs=G.negs||[]).push({mid:m.id,cid:m.cid,pid:p.id,tipo:"emp",temp:t,mensal:mn,resp:G.ev+ri(2,3)});propostaEnviada(m,p,`de empréstimo (${t} temporada${t>1?"s":""}, ${dinheiro(mn)} por mês) `);return}
+      m.ofm.est="aguardando";(G.negs=G.negs||[]).push({mid:m.id,cid:m.cid,pid:p.id,tipo:"emp",bonus:m.ofm.bonus,temp:t,mensal:mn,resp:G.ev+ri(2,3)});propostaEnviada(m,p,`de empréstimo (${t} temporada${t>1?"s":""}, ${dinheiro(mn)} por mês) `);return}
     case "msgaceitar":{const m=G.inbox[+v],o=m.ofm,p=G.players[o.pid];if(!p)return;
       if(o.tipo==="emp"){const er=emprestarPara(o.pid,m.cid,o.temp,o.mensal);if(er){toastErro(er);return}o.est="vendido";salvar();render();
         modal(`<div class="aviso-box grana-box"><div class="grana-ic">🤝</div><b>Empréstimo fechado!</b><p>${esc(p.n)} vai para o ${esc(G.clubs[m.cid].name)} por ${o.temp} temporada${o.temp>1?"s":""}. Você vai receber <b>${dinheiro(o.mensal)}</b> por mês, e ele volta no fim do combinado.</p></div><div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`);confete();return}
@@ -6468,13 +6511,14 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "sploja":abertura=false;aba="mercado";merc={pos:"",min:0,orig:"pais"};break;
     case "ddabre":{const d=el.closest(".dd"),ab=!d.classList.contains("aberto");document.querySelectorAll(".dd.aberto").forEach(x=>x.classList.remove("aberto"));d.classList.toggle("aberto",ab);return}
     case "ddform":if(v===G.user.form){el.closest(".dd").classList.remove("aberto");return}G.user.form=v;G.user.posAjuste=null; // posições arrastadas só ficam se a formação for salva
-autoEscalar();salvar();el.closest(".dd").classList.remove("aberto");if(animarForm()){setTimeout(()=>{if(G&&!G.live)render()},700);return}break;
+adaptarEscalacao(v);salvar();el.closest(".dd").classList.remove("aberto");if(animarForm()){setTimeout(()=>{if(G&&!G.live)render()},700);return}break;
     case "ddest":G.user.est=v;salvar();break;
     case "formsalvar":{const FS=G.formSalvas||[];if(FS.length>=3){toastErro("Você já tem 3 formações salvas. Apague uma para salvar outra.");return}
-      modal(`<b class="etapa">Salvar esta formação</b><p class="muted peq">${esc(G.user.form)} · ${esc(ESTILOS[G.user.est].n)} · com as posições que você ajustou.</p><input id="form-nome" class="campo-txt" maxlength="20" placeholder="Nome da formação" style="width:100%;margin:6px 0 12px"><div class="botoes"><button class="btn" data-a="fechar">Cancelar</button><button class="btn prim" data-a="formsalvarok">Salvar</button></div>`);setTimeout(()=>{const i=$("#form-nome");if(i)i.focus()},100);return}
+      modal(`<b class="etapa">Salvar esta formação</b><p class="muted peq">${esc(fAtual())} · ${esc(ESTILOS[estAtual()].n)} · com as posições que você ajustou.</p><input id="form-nome" class="campo-txt" maxlength="20" placeholder="Nome da formação" style="width:100%;margin:6px 0 12px"><div class="botoes"><button class="btn" data-a="fechar">Cancelar</button><button class="btn prim" data-a="formsalvarok">Salvar</button></div>`);setTimeout(()=>{const i=$("#form-nome");if(i)i.focus()},100);return}
     case "formsalvarok":{const nome=(($("#form-nome")||{}).value||"").trim();if(!nome){toastErro("Dê um nome para a formação.");return}
-      G.formSalvas=(G.formSalvas||[]).concat([{nome,form:G.user.form,est:G.user.est,pts:posicoesEu()}]).slice(0,3);if(G.user.posAjuste)G.user.posAjuste.salvo=true;fecharModal();toast(`Formação "${nome}" salva!`);salvar();break}
-    case "formusar":{const f=(G.formSalvas||[])[+v];if(!f)return;if(G.user.form!==f.form){G.user.form=f.form;autoEscalar()}G.user.est=f.est||G.user.est;G.user.posAjuste={form:f.form,pts:f.pts.map(p=>({...p})),salvo:true};salvar();toast(`Formação "${f.nome}" aplicada.`);if(animarForm()){setTimeout(()=>{if(G&&!G.live)render()},700);return}break}
+      G.formSalvas=(G.formSalvas||[]).concat([{nome,form:fAtual(),est:estAtual(),pts:posicoesEu(fAtual())}]).slice(0,3);if(G.user.posAjuste)G.user.posAjuste.salvo=true;fecharModal();toast(`Formação "${nome}" salva!`);salvar();break}
+    case "formusar":{const f=(G.formSalvas||[])[+v];if(!f)return;if(G.live){const V=G.live,L=V.L[V.lado];formAjuste=null;trocarFormacao(V.lado,f.form,f.est||null);G.user.est=L.est;G.user.posAjuste={form:f.form,pts:f.pts.map(p=>({...p})),salvo:true};salvar();toast(`Formação "${f.nome}" aplicada.`);break}
+      if(G.user.form!==f.form){G.user.form=f.form;adaptarEscalacao(f.form)}G.user.est=f.est||G.user.est;G.user.posAjuste={form:f.form,pts:f.pts.map(p=>({...p})),salvo:true};salvar();toast(`Formação "${f.nome}" aplicada.`);if(animarForm()){setTimeout(()=>{if(G&&!G.live)render()},700);return}break}
     case "formapagar":{const f=(G.formSalvas||[])[+v];if(!f)return;G.formSalvas.splice(+v,1);toast(`"${f.nome}" apagada.`);salvar();break}
     case "verjogo":{const j=G.jogos&&G.jogos[+v];if(!j)return;modal(cartaoUltimo(j.r,j.f).replace(/<h2>/g,'<h3 style="margin:0 0 8px">').replace(/<\/h2>/g,"</h3>")+`<div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`);return}
     case "verrodada":{const n=ultimaRodada();if(!n)return;const t=userTier(),uid=G.user.club,rs=G.res[t][n-1]||[];
@@ -6560,7 +6604,7 @@ app.addEventListener("change",e=>{
   const t=e.target;
   if(t.dataset.escr||t.id==="esc-txt"){if(G)salvar();escGuardar();return}
   if(t.dataset.cor||t.id==="v-nome"||t.id==="v-sigla"||t.id==="v-estadio"){if(G)salvar();if(t.dataset.cor==="escudo")escGuardar();render();return}
-  if(t.id==="sel-form"){G.user.form=t.value;autoEscalar();salvar();render()}
+  if(t.id==="sel-form"){G.user.form=t.value;adaptarEscalacao(t.value);salvar();render()}
   else if(t.id==="sel-est"){G.user.est=t.value;salvar();render()}
   else if(t.id==="m-pos"){merc.pos=t.value;render()}
   else if(t.id==="m-min"){merc.min=+t.value;render()}
