@@ -1395,12 +1395,16 @@ function aplicarElencosReais(){
     const L=elencoReal(c.name);if(!L||c.user)return;
     /* tira jogadores reais repetidos (bug: elenco real era criado de novo a cada carregamento) */
     const vistos=new Set();jogadoresDo(c.id).forEach(p=>{if(!p.real)return;const k=p.n+"|"+p.pos+"|"+p.age;if(vistos.has(k)){p.club=null;tocou()}else vistos.add(k)});
-    const rep=REPETIDOS_REAIS[c.name];if(rep)jogadoresDo(c.id).forEach(p=>{if(p.real&&p.oc===c.name&&rep.includes(p.n)){p.club=null;tocou()}});
-    if(c.realV||jogadoresDo(c.id).some(p=>p.real)){c.realV=1;return}
+    if(c.realV||jogadoresDo(c.id).some(p=>p.real)){c.realV=1;
+      /* inventado que a IA contratou (save antigo) sai e o clube repõe com um real da mesma posição */
+      jogadoresDo(c.id).forEach(p=>{if(!p.real&&!p.lenda&&!p.exU&&!p.empU){p.club=null;registrarSaida(c,p);tocou()}});return}
     const velhos=jogadoresDo(c.id).filter(p=>!p.real);
     L.forEach(r=>{const i=velhos.findIndex(p=>p.pos===r[1]);if(i>=0){dadosReais(velhos[i],r,c.name);velhos.splice(i,1)}else jogadorReal(r,c.id)});
     velhos.forEach(p=>{p.club=null});c.realV=1;tocou();
   });
+  /* cópias antigas com nome abreviado (REPETIDOS_REAIS) saem de qualquer clube da IA, mesmo depois de transferidas */
+  Object.values(G.players).forEach(p=>{const rep=p.real&&REPETIDOS_REAIS[p.oc],c=p.club!=null&&G.clubs[p.club];
+    if(rep&&rep.includes(p.n)&&c&&!c.user){p.club=null;registrarSaida(c,p);tocou()}});
   Object.values(G.players).forEach(p=>{if((p.real||p.lenda)&&RENOMES[p.n])p.n=RENOMES[p.n]});
   if(G.lendas&&G.lendas["Neymar Júnior"]!=null){G.lendas["Neymar Jr"]=G.lendas["Neymar Júnior"];delete G.lendas["Neymar Júnior"]}
 }
@@ -2552,7 +2556,7 @@ function processarVendas(){const uid=G.user.club,h=hojeJogo();
   jogadoresDo(uid).filter(p=>p.venda&&h>=p.venda.desde+p.venda.dias*DIA_MS).forEach(p=>{
     if(jogadoresDo(uid).length<=16){p.venda.desde=h;return}
     const mu=multaVenda(p),pr=p.venda.preco,cands=G.tiers.flat().filter(id=>id!==uid),comp=pick(cands);
-    G.cash+=pr-mu;p.club=comp;tocou();delete p.venda;delete p.vendaPreco;delete p.ctFim;delete p.ctAcabou;
+    G.cash+=pr-mu;p.club=comp;p.exU=1;tocou();delete p.venda;delete p.vendaPreco;delete p.ctFim;delete p.ctAcabou;
     G.user.lineup=G.user.lineup.map(id=>id===p.id?null:id);validarEscalacao();
     G.inbox.unshift({t:"bom",m:`${p.n} foi vendido ao ${G.clubs[comp].name} por ${dinheiro(pr)}${mu?` (multa rescisória de ${dinheiro(mu)} descontada)`:""}.`});perfil().vend=(perfil().vend||0)+1;xpBonus(150,"venda de jogador")})}
 /* ---------- caixa de entrada: avisos do jogo e propostas de outros clubes ----------
@@ -2599,7 +2603,7 @@ function venderPara(pid,cid,preco){
   const p=G.players[pid],dest=G.clubs[cid];if(!p||p.club!==G.user.club||!dest)return "Esse jogador não está mais no seu elenco.";
   if(jogadoresDo(G.user.club).length<=16)return "O elenco precisa ter pelo menos 16 jogadores.";
   if(jogadoresDo(cid).length>=34)return "O elenco do outro clube está cheio.";
-  G.cash+=preco;p.club=cid;tocou();delete p.venda;delete p.vendaPreco;delete p.ctFim;delete p.ctAcabou;delete p.ofertas;
+  G.cash+=preco;p.club=cid;p.exU=1;tocou();delete p.venda;delete p.vendaPreco;delete p.ctFim;delete p.ctAcabou;delete p.ofertas;
   if(G.janela)G.janela.listados=(G.janela.listados||[]).filter(x=>x!==pid);
   G.user.lineup=G.user.lineup.map(id=>id===pid?null:id);validarEscalacao();
   G.inbox.unshift({t:"bom",d:hojeJogo(),m:`${p.n} foi vendido ao ${dest.name} por ${dinheiro(preco)}.`});
@@ -2937,6 +2941,7 @@ function podeTransferir(p,dest,res){
   if(jogadoresDo(dest.id).length>=(dest.user?32:34))return false;    // elenco cheio (a IA dispensa o mais fraco depois, em apararElencos)
   const topo=o&&(o.tier===0||(o.tier===-1&&!(o.tierExt>0))),lim=dest.tier>=2?75:dest.tier===1?80:999;
   if(topo&&p.ov>lim)return false;                     // jogador da 1ª divisão não desce para time pequeno
+  if(!dest.user&&!p.real&&!p.exU&&elencoReal(dest.name))return false; // time com elenco real só contrata jogador real (ou ex-jogador seu)
   return true}
 /* clube que perdeu um jogador vai atrás de outro da mesma posição: na janela compra de outro clube (ou do exterior), fora dela só sem clube */
 const POS_EXT={GOL:"goleiro",LAT:"lateral",ZAG:"zagueiro",VOL:"volante",MEI:"meia",ATA:"atacante"};
@@ -3235,7 +3240,7 @@ function aceitarOferta(pid,i){
   const p=G.players[pid];if(!p||!p.ofertas||!p.ofertas[i])return "Proposta não encontrada.";
   if(jogadoresDo(G.user.club).length<=16)return "O elenco precisa ter pelo menos 16 jogadores.";
   const of=p.ofertas[i];
-  G.cash+=of.v;p.club=of.c;tocou();delete p.ofertas;
+  G.cash+=of.v;p.club=of.c;p.exU=1;tocou();delete p.ofertas;
   G.janela.listados=G.janela.listados.filter(x=>x!==pid);
   G.user.lineup=G.user.lineup.map(id=>id===pid?null:id);validarEscalacao();
   G.inbox.unshift({t:"bom",m:`${p.n} foi vendido ao ${G.clubs[of.c].name} por ${dinheiro(of.v)}.`});
@@ -3588,7 +3593,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792871581";
+const VERSAO="1792872246";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
