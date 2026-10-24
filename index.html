@@ -778,6 +778,8 @@ nav.abas button{font-size:11px}
 .podio.p4 .podio-titulo,.podio.p5 .podio-titulo{color:#9fd8ff;text-shadow:0 3px 14px rgba(25,195,255,.45)}
 .podio-item{margin:6px 0 0;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:13px;color:var(--cal-2)}
 .podio-msg{margin:10px 4px}
+.vivo-faixa{margin:8px 0;padding:8px 10px;border-radius:12px;background:rgba(46,204,113,.12);border:1px solid rgba(46,204,113,.45);font-size:13px;line-height:1.45;text-align:center}
+.vivo-faixa.off{background:rgba(255,90,90,.12);border-color:rgba(255,90,90,.45)}.vivo-on{color:#2ecc71;font-weight:800;letter-spacing:.5px}
 .podio-acesso{font-weight:800;color:var(--ok);margin:6px 0}
 @media (prefers-reduced-motion:no-preference){
  .podio-raios{animation:gira 14s linear infinite}@keyframes gira{to{transform:rotate(360deg)}}
@@ -1216,7 +1218,7 @@ body:has(header.topo) .esc-fixo{top:72px}
 <script src="dados/elencos.js?v=bb464417"></script>
 <script src="img/rostos-reais.js?v=6547625b"></script>
 <script src="img/escudos-img.js?v=df90de51"></script>
-<script src="dados/idiomas.js?v=3c96122b"></script>
+<script src="dados/idiomas.js?v=23767458"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2221,7 +2223,7 @@ function passoMinuto(){
       const [id,i]=vivos[k],p=G.players[id],j=rnd()<.3?3:2;
       lesionar(s,i,j,j>2?"Lesão muscular grave":"Lesão muscular leve",`${p.n} (${nomeT}) sente lesão muscular e não tem condições de continuar. Fora por ${j} jogos.`);
     }
-    if(!eu||V.auto||V.cmd!=="manual")tecnicoAgir(s);
+    if(eu?(V.auto||V.cmd!=="manual"):(V.cmdC!=="manual"||L.cid!==AMG_CID||L.xi.some((id,i)=>id==null&&!L.bloq[i])))tecnicoAgir(s); // ao vivo no manual, o computador só repõe vaga aberta do amigo
   }
   if(V.feed.length&&V.feed[V.feed.length-1].m!==V.min&&V.min!==45&&V.min<90&&rnd()<.34)lanceColorido(lam);
   if(!V.add&&(V.min===22||V.min===67)&&!(V.agua||{})[V.min]){(V.agua=V.agua||{})[V.min]=1;narrar("info",`💧 Pausa para hidratação aos ${V.min===22?"22 minutos do 1º tempo":"22 minutos do 2º tempo"}.`);Object.assign(ultLance(),{pre:"💧 Pausa para hidratação",agua:1})}
@@ -2647,10 +2649,10 @@ function conta(){let c=null;try{c=JSON.parse(localStorage.getItem(CHAVE_CONTA)||
 function guardarConta(c){try{localStorage.setItem(CHAVE_CONTA,JSON.stringify(c))}catch(e){}if(G)G.conta=c}
 async function amgPost(rota,corpo){const r=await fetch(AMG_URL+"/"+rota,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({...(conta()||{}),...corpo})});
   const j=await r.json().catch(()=>({}));if(!r.ok&&!j.erro)j.erro="Sem resposta do servidor.";return j}
-/* cópia do time que os amigos enfrentam: elenco (30 melhores), escalação, formação, estilo, técnico, escudo e uniformes */
-function perfilAmg(){const c=G.clubs[G.user.club],ps=jogadoresDo(c.id).sort((a,b)=>b.ov-a.ov).slice(0,30);
+/* cópia do time que os amigos enfrentam: elenco (40 melhores), escalação, formação, estilo, técnico, escudo e uniformes */
+function perfilAmg(){const c=G.clubs[G.user.club],ps=jogadoresDo(c.id).sort((a,b)=>b.ov-a.ov).slice(0,40);AMG.pIds=ps.map(p=>p.id);
   let e=c.escudo;if(e&&e.img&&e.img.length>40000){e={...e};delete e.img}
-  return JSON.stringify({v:1,pais:c.pais,clube:{name:c.name,short:c.short,c1:c.c1,c2:c.c2,escudo:e,unis:c.unis},form:G.user.form,est:G.user.est,
+  return JSON.stringify({v:1,pais:c.pais,clube:{name:c.name,short:c.short,c1:c.c1,c2:c.c2,escudo:e,unis:c.unis,cap:c.cap},form:G.user.form,est:G.user.est,
     tec:G.tec?{n:G.tec.n,q:G.tec.q}:null,xi:(G.user.lineup||[]).map(id=>ps.findIndex(p=>p.id===id)),jog:ps.map(p=>[p.n,p.pos,p.age,p.ov]),nivel:perfil().nivel})}
 function avVisto(){try{return +localStorage.getItem("fut-amg-av")||0}catch(e){return 0}}
 function amgNovos(){const E=AMG.est;if(!E)return 0;const v=avVisto();return (E.pedidos||[]).length+(E.avisos||[]).filter(a=>a.n>v).length}
@@ -2704,18 +2706,18 @@ async function modalPerfilAmigo(id){
   modal(`<div class="amg-folha amg-perfil"><div class="amg-topo">${escudoSVG(cl.escudo||{forma:0,estampa:1,c1:cl.c1,c2:cl.c2,c3:contrasteHex(cl.c1||"#888888")},cl.short,64,cl.name)}<div><h3 style="margin:0">${esc(j.nome)}</h3><span class="muted">Dono do ${esc(cl.name)}</span><small class="${j.on?"amg-on":"muted"}">${j.on?"● Online agora":"Offline"} · Nível ${j.nivel||1} · ${idTxt(j.id)}</small></div></div>
     <div class="kpis"><div class="cartao kpi"><small>Força do time</small><b class="num">${media}</b></div><div class="cartao kpi"><small>Formação</small><b class="num">${esc(P.form||"4-4-2")}</b></div><div class="cartao kpi"><small>Técnico</small><b style="font-size:13px">${esc(P.tec?P.tec.n:"Interino")}</b></div></div>
     <h4 class="amg-sub">Titulares</h4><div class="amg-xi">${top.map(x=>`<span><i>${esc(x[1])}</i>${esc(x[0])}<b class="num">${x[3]}</b></span>`).join("")}</div>
-    <p class="muted peq">No amistoso, o time de ${esc(j.nome)} joga comandado pelo computador. Não vale dinheiro nem pontos, só um pouco de XP.</p>
-    <div class="botoes"><button class="btn perigo" data-a="amgdel" data-v="${id}">Remover</button><button class="btn" data-a="amigos">Voltar</button><button class="btn prim" data-a="amgjogar" data-v="${id}">Jogar amistoso</button></div></div>`)}
+    <p class="muted peq">${j.on?`${esc(j.nome)} está online: no <b>amistoso ao vivo</b> cada um comanda o seu time ao mesmo tempo. No amistoso normal, o time dele joga com o computador.`:`No amistoso, o time de ${esc(j.nome)} joga comandado pelo computador.`} Não vale pontos: rende XP, torcida e transmissão (com os gastos do jogo).</p>
+    <div class="botoes"><button class="btn perigo" data-a="amgdel" data-v="${id}">Remover</button><button class="btn" data-a="amigos">Voltar</button><button class="btn${j.on?"":" prim"}" data-a="amgjogar" data-v="${id}">${j.on?"Contra o computador":"Jogar amistoso"}</button>${j.on?`<button class="btn prim" data-a="vivoconv" data-v="${id}">● Jogar ao vivo</button>`:""}</div></div>`)}
 /* monta o time do amigo como um clube temporário (AMG) e guarda o seu elenco para voltar igual depois do amistoso */
 function amgMontar(id){const A=AMG.perfis[id];if(!A)return "Abra o perfil do amigo de novo.";
-  if(G.live)return "Termine a partida atual primeiro.";const P=A.P,jog=(P.jog||[]).filter(x=>ELENCO_BASE.includes(x[1])||FORMACOES["4-4-2"].s.includes(x[1]));
+  if(G.live)return "Termine a partida atual primeiro.";const P=A.P,okp=x=>ELENCO_BASE.includes(x[1])||FORMACOES["4-4-2"].s.includes(x[1]),jogT=P.jog||[],jog=jogT.filter(okp);
   if(jog.length<11)return "O time do seu amigo ainda não está completo.";
   limparAmigo();const cl=P.clube,uid=G.user.club,top=jog.slice(0,16),rating=Math.round(top.reduce((a,x)=>a+x[3],0)/top.length);
-  G.clubs[AMG_CID]={id:AMG_CID,name:cl.name,short:cl.short||siglaDe(cl.name),rating,rep:rating,pais:P.pais||G.country,tier:userTier(),c1:cl.c1,c2:cl.c2,cap:20000,
+  G.clubs[AMG_CID]={id:AMG_CID,name:cl.name,short:cl.short||siglaDe(cl.name),rating,rep:rating,pais:P.pais||G.country,tier:userTier(),c1:cl.c1,c2:cl.c2,cap:+cl.cap||G.clubs[uid].cap||20000,
     form:FORMACOES[P.form]?P.form:"4-4-2",est:ESTILOS[P.est]?P.est:"eq",escudo:cl.escudo,unis:cl.unis,amigo:true,
     tecIA:P.tec?{n:P.tec.n,q:P.tec.q}:{n:"Interino",q:60,interino:true},bt:P.tec?(P.tec.q-65)/8:-.4};
-  const ids=jog.map(([n,pos,age,ov])=>{const pid=novoJogador(pos,ov,AMG_CID,age),p=G.players[pid];p.n=n;p.ov=ov;p.pot=ov;p.sal=0;return pid});
-  const xi=(P.xi||[]).map(i=>i>=0?ids[i]:null);if(xi.length===FORMACOES[G.clubs[AMG_CID].form].s.length&&xi.every(x=>x!=null)&&new Set(xi).size===xi.length)G.clubs[AMG_CID].xiAmg=xi;
+  const idsT=jogT.map(x=>{if(!okp(x))return null;const [n,pos,age,ov]=x,pid=novoJogador(pos,ov,AMG_CID,age),p=G.players[pid];p.n=n;p.ov=ov;p.pot=ov;p.sal=0;return pid});
+  G.clubs[AMG_CID].ids=idsT;const xi=(P.xi||[]).map(i=>i>=0?idsT[i]??null:null);if(xi.length===FORMACOES[G.clubs[AMG_CID].form].s.length&&xi.every(x=>x!=null)&&new Set(xi).size===xi.length)G.clubs[AMG_CID].xiAmg=xi;
   const bak={};jogadoresDo(uid).forEach(p=>{bak[p.id]=JSON.parse(JSON.stringify(p))});
   G.amgBak={pl:bak,user:{form:G.user.form,est:G.user.est,lineup:(G.user.lineup||[]).slice()}};
   G.amgM={tipo:"A",h:uid,a:AMG_CID,neutro:false,ko:false,econ:eRec(userTier()),rot:`Amistoso entre amigos · ${A.nome}`,amg:{id,nome:A.nome}};
@@ -2724,15 +2726,161 @@ function limparAmigo(){if(!G)return;
   if(G.amgBak){Object.entries(G.amgBak.pl).forEach(([id,o])=>{if(G.players[id])G.players[id]=o});Object.assign(G.user,G.amgBak.user)}
   Object.keys(G.players).forEach(id=>{if(G.players[id].club===AMG_CID)delete G.players[id]});
   delete G.clubs[AMG_CID];G.amgM=null;G.amgBak=null;tocou()}
+/* amistoso entre amigos (offline ou ao vivo): torcida + transmissão − gastos do dia de jogo, sem prêmio nem patrocínio */
+function finAmigo(V){const uid=G.user.club,c=G.clubs[uid],casa=V.m.h===uid,e=eRec(userTier()),gu=casa?V.gh:V.ga,go=casa?V.ga:V.gh;
+  const res=gu>go?"v":gu===go?"e":"d",refE=casa?(G.reformas||0):0,capH=(G.clubs[V.m.h]||c).cap||20000;
+  const fill=clamp(.72+(casa?(c.fama||0)/1000:0)+refE*.008+gauss()*.035,.55,1),pub=Math.round(fill*capH); // amistoso enche um pouco menos que jogo oficial
+  const preco=18*Math.sqrt(e)*(1+refE*.05)*(.9+rnd()*.25),fBil=[.27,.36,.27][c.tier]??.6;
+  const bil=casa?Math.round(pub*preco/1000*fBil):Math.round(pub*preco/1000*.1); // fora de casa: cota do visitante
+  const T=G.tv&&G.tv.ano===G.year?G.tv.ofs.filter(o=>o.dec==="sim"):[],tv=T.length?T.reduce((x,o)=>x+o.porJogo,0):Math.round(premioPartida(e,"e")/2); // sem emissora: direitos do amistoso
+  const GASTOS=[[50,35],[30,20],[15,10]],gt=GASTOS[c.tier]||GASTOS[2],sal=-Math.round((casa?gt[0]:gt[1])*escalaPais(c.tier));
+  const fin={res,casa,pub:casa?pub:0,bil,tv,tvN:T.map(o=>o.nome).join(", "),sal,tot:bil+tv+sal};G.cash+=fin.tot;return fin}
 function concluirAmigo(){const V=G.live,m=V.m,eu=V.lado,gf=eu==="h"?V.gh:V.ga,gs=eu==="h"?V.ga:V.gh;
-  const r={gf,gs,nome:m.amg.nome,eu:G.clubs[G.user.club].short,ele:G.clubs[AMG_CID].short};
+  const r={gf,gs,nome:m.amg.nome,eu:G.clubs[G.user.club].short,ele:G.clubs[AMG_CID].short,fin:finAmigo(V)};
   G.live=null;limparAmigo();r.xp=XP_AMG[gf>gs?"v":gf<gs?"d":"e"];somarXP(r.xp);salvar();
-  amgPost("jogou",{outro:m.amg.id}).catch(()=>{}); // aviso para o amigo: "Fulano jogou contra você offline"
+  if(!m.vivo)amgPost("jogou",{outro:m.amg.id}).catch(()=>{}); // aviso para o amigo: "Fulano jogou contra você offline" (ao vivo ele viu o jogo)
   return r}
 function modalResAmigo(r){
   modal(`<div style="text-align:center"><div style="font-size:48px">${r.gf>r.gs?"🏆":r.gf<r.gs?"😓":"🤝"}</div><h3 style="margin:4px 0">${r.gf>r.gs?"Vitória no amistoso!":r.gf<r.gs?"Derrota no amistoso":"Empate no amistoso"}</h3>
     <p class="muted" style="margin:0">Contra o time de ${esc(r.nome)}</p><p class="num" style="font-family:var(--f-display);font-size:24px;margin:6px 0">${esc(r.eu)} ${r.gf} × ${r.gs} ${esc(r.ele)}</p>
-    <div class="premio-recomp"><span>+${r.xp} XP</span></div></div><div class="botoes"><button class="btn" data-a="amigos">Amigos</button><button class="btn prim" data-a="fechar">Fechar</button></div>`)}
+    <div class="premio-recomp"><span>+${r.xp} XP</span></div>
+    ${r.fin?`<div class="cartao" style="text-align:left;margin-top:10px"><div class="linha" style="justify-content:space-between"><span>${r.fin.casa?`Torcida (${r.fin.pub.toLocaleString("pt-BR")} pagantes)`:"Cota da torcida (visitante)"}</span><b class="num">${dinheiro(r.fin.bil)}</b></div><div class="linha" style="justify-content:space-between"><span>Transmissão${r.fin.tvN?` (${esc(r.fin.tvN)})`:""}</span><b class="num">${dinheiro(r.fin.tv)}</b></div><div class="linha" style="justify-content:space-between"><span>Gastos do jogo</span><b class="num" style="color:var(--ruim)">${dinheiro(r.fin.sal)}</b></div><div class="linha" style="justify-content:space-between;border-top:1px solid rgba(255,255,255,.12);margin-top:6px;padding-top:6px"><b>Total</b><b class="num" style="color:${r.fin.tot>=0?"var(--ok)":"var(--ruim)"}">${dinheiro(r.fin.tot)}</b></div></div>`:""}</div><div class="botoes"><button class="btn" data-a="amigos">Amigos</button><button class="btn prim" data-a="fechar">Fechar</button></div>`)}
+/* ---------- amistoso AO VIVO com amigo online ----------
+   Quem convida (host) roda a partida e manda o estado pelo servidor a cada segundo; o convidado mostra os lances e manda os comandos dele
+   (trocas, formação, pausa, pronto). Jogador = posição na lista do perfil ("h:3" do host, "c:5" do convidado). Pausa vale para os dois
+   (3 por jogador, até 90 s, cada um aperta ▶); intervalo de 10 s (se alguém mexer no time, espera os dois); sem sinal por 30 s = o computador assume. */
+let VIVO=null,VIVO_T=null,VIVO_CONV=null,VIVO_ULT=null;const VIVO_VISTO={},LADO_K=["form","est","xi","subs","part","saiu","ordem","grito"];
+function vivoMapas(meus,deles,tEu,tEle){const tok={},id={};(meus||[]).forEach((x,i)=>{if(x!=null){tok[x]=tEu+i;id[tEu+i]=x}});(deles||[]).forEach((x,i)=>{if(x!=null){tok[x]=tEle+i;id[tEle+i]=x}});return {tok,id}}
+const vivoK=(o,M)=>{const r={};for(const k in o||{}){const t=M[k];if(t!=null)r[t]=o[k]}return r};
+function vivoTrocaL(L,M){const P=x=>x==null?null:(M[x]??null);
+  return {...L,xi:(L.xi||[]).map(P),ordem:(L.ordem||[]).map(P).filter(x=>x!=null),part:vivoK(L.part,M),am:vivoK(L.am,M),saiu:vivoK(L.saiu,M)}}
+function vivoTroca(V,M,C){const W=JSON.parse(JSON.stringify(V)),P=x=>x==null?null:(M[x]??null);
+  W.m={...W.m,h:C[W.m.h]??W.m.h,a:C[W.m.a]??W.m.a};
+  ["h","a"].forEach(s=>{const cid=W.L[s].cid;W.L[s]=vivoTrocaL(W.L[s],M);W.L[s].cid=C[cid]??cid});
+  W.sh=(W.sh||[]).map(x=>[P(x[0]),...x.slice(1)]);W.sa=(W.sa||[]).map(x=>[P(x[0]),...x.slice(1)]);W.les=(W.les||[]).map(P).filter(x=>x!=null);
+  W.ev=vivoK(W.ev,M);W.as=vivoK(W.as,M);W.susp0=[];(W.feed||[]).forEach(f=>{if(f.pid!=null)f.pid=P(f.pid)});return W}
+const ladoK=(L,cmd)=>{const o={cmd};LADO_K.forEach(k=>o[k]=L[k]);return JSON.parse(JSON.stringify(o))};
+function vivoCmd(c){VIVO.cmds.push({...c,n:++VIVO.nC})}
+function vivoParar(){clearInterval(VIVO_T);VIVO_T=null;VIVO=null}
+function vivoLoop(){clearInterval(VIVO_T);VIVO_T=setInterval(()=>{if(!VIVO){clearInterval(VIVO_T);return}if(VIVO.papel==="host")vivoTickHost();else if(VIVO.papel==="conv")vivoTickConv()},1000)}
+function vivoPacote(){const V=G.live,f0=Math.max(0,V.feed.length-30),W=vivoTroca({...V,feed:V.feed.slice(f0)},VIVO.tok,VIVO.tokC),P={};
+  ["h","a"].forEach(s=>{const L=V.L[s];[...L.xi,...(L.ordem||[])].forEach(id=>{const p=G.players[id],t=VIVO.tok[id];if(p&&t)P[t]=Math.round(p.fis??100)})});
+  return {V:W,f0,P,ack:VIVO.ackC}}
+/* host: convite aceito → monta o time do amigo com o perfil novo e começa */
+function vivoComecarHost(pc){const A=AMG.perfis[VIVO.amigo.id];let P=null;try{P=JSON.parse(pc)}catch(e){}
+  if(!A||!P){vivoParar();fecharModal();toastErro("Não deu para montar o time do seu amigo.");return}A.P=P;
+  const er=amgMontar(VIVO.amigo.id);if(er){vivoParar();fecharModal();toastErro(er);return}
+  G.amgM.vivo=1;G.amgM.rot=`Amistoso ao vivo · ${VIVO.amigo.nome}`;
+  const er2=iniciarAoVivo(false);if(er2){vivoParar();limparAmigo();fecharModal();toastErro(er2);return}
+  const V=G.live;V.m.vivo=1;V.vpn={h:0,c:0};V.cmdC="tec";
+  Object.assign(VIVO,vivoMapas(VIVO.meus,G.clubs[AMG_CID].ids,"h:","c:"),{tokC:{[G.user.club]:"H",[AMG_CID]:"C"},fase:"jogo"});
+  velocidade=1;fecharModal();somIniciar();setTimeout(()=>apito(.9),250);painel=null;liveSel=null;aba="partida";salvar();window.scrollTo(0,0);render()}
+async function vivoTickHost(){if(VIVO.ocupado)return;VIVO.ocupado=1;const V=G.live,jogo=VIVO.fase==="jogo"&&V&&V.m.vivo,nome=VIVO.amigo.nome;
+  if(jogo)vivoRegras();
+  const corpo={sala:VIVO.sala};if(!jogo)corpo.pc=1;else{corpo.seq=++VIVO.seq;corpo.est=JSON.stringify(vivoPacote());if(V.est==="fim")corpo.fim=1}
+  let j=null;try{j=await amgPost("vivoHost",corpo)}catch(e){}if(!VIVO||VIVO.papel!=="host")return;VIVO.ocupado=0;const ag=Date.now();
+  if(!j||j.erro){if(ag-(VIVO.okEm||VIVO.t0)>30000){if(jogo)vivoSolo("Sem conexão com o servidor.");else{vivoParar();fecharModal();toastErro("Sem conexão com o servidor de amigos.")}}return}
+  VIVO.okEm=ag;
+  if(!jogo){if(j.st==="jogo"&&j.pc)vivoComecarHost(j.pc);
+    else if(j.st==="recusado"){vivoParar();modal(`<div class="aviso-box"><b>${esc(nome)} não pode jogar agora</b><p>O amistoso ao vivo foi recusado. Você pode jogar contra o time dele no computador.</p></div><div class="botoes"><button class="btn" data-a="fechar">Fechar</button><button class="btn prim" data-a="amgjogar" data-v="${VIVO_ULT}">Contra o computador</button></div>`)}
+    else if(ag-VIVO.t0>40000){vivoParar();amgPost("vivoHost",{sala:corpo.sala,sair:1}).catch(()=>{});modal(`<div class="aviso-box"><b>${esc(nome)} não respondeu</b><p>Talvez o jogo dele esteja fechado. Quer jogar contra o time dele no computador?</p></div><div class="botoes"><button class="btn" data-a="fechar">Fechar</button><button class="btn prim" data-a="amgjogar" data-v="${VIVO_ULT}">Contra o computador</button></div>`)}
+    return}
+  if(V.est==="fim"){vivoParar();return}
+  if(j.st==="saiu"){vivoSolo(`${nome} saiu do jogo.`);return}
+  vivoComandos(j.cmds||[]);
+  if(j.tc&&j.agora-j.tc>30000)vivoSolo(`A conexão com ${nome} caiu.`)}
+/* host: regras de pausa (vale para os dois) e intervalo */
+function vivoRegras(){const V=G.live,ag=Date.now();let mud=false;V.vpn=V.vpn||{h:0,c:0};
+  if(V.est==="pausa"&&!V.vp)V.vp={por:"h",ate:ag+90000,pr:{}};
+  if(V.est!=="pausa"&&V.vp)V.vp=null;
+  if(V.vp&&((V.vp.pr.h&&V.vp.pr.c)||ag>V.vp.ate)){V.vp=null;V.motivo=null;V.vaga=null;if(V.intervaloPendente){V.intervaloPendente=false;V.est="intervalo"}else V.est="rodando";mud=true}
+  if(V.est==="intervalo"&&!V.vi)V.vi={ate:ag+10000,pr:{},hold:0};
+  if(V.vi&&!V.vi.ok&&V.est==="intervalo"&&((V.vi.pr.h&&V.vi.pr.c)||(!V.vi.hold&&ag>V.vi.ate)||ag>V.vi.ate+90000)){V.vi.ok=1;V.est="rodando";apito(.8);mud=true}
+  if(mud&&aba==="partida"){painel=null;liveSel=null;render()}}
+/* host: comandos do convidado (time dele, pausa, pronto, segurar o intervalo) */
+function vivoComandos(cs){const V=G.live;if(!V||V.est==="fim")return;let mud=false;
+  cs.filter(c=>c.n>VIVO.ackC).sort((a,b)=>a.n-b.n).forEach(c=>{VIVO.ackC=c.n;
+    if(c.t==="lado"&&c.L){const L=V.L.a,N=vivoTrocaL(c.L,VIVO.id),antes=L.xi.slice();
+      LADO_K.forEach(k=>{if(N[k]!==undefined)L[k]=N[k]});V.cmdC=c.L.cmd||"tec";
+      L.xi.forEach((id,i)=>{if(id==null||antes.includes(id))return;const ent=G.players[id],sid=antes[i],sai=sid!=null&&!L.xi.includes(sid)?G.players[sid]:null;if(!ent)return;
+        narrar("sub",`Substituição no ${nomeLado("a")}: sai ${sai?sai.n:"vaga aberta"}, entra ${ent.n}.`);Object.assign(V.feed[V.feed.length-1],{sai:sai?sai.n:"vaga aberta",entra:ent.n,time:nomeLado("a"),mot:""})});mud=true}
+    else if(c.t==="pausa"&&V.est==="rodando"&&!V.vp&&(V.vpn.c||0)<3){V.vpn.c=(V.vpn.c||0)+1;V.vp={por:"c",ate:Date.now()+90000,pr:{}};V.est="pausa";V.motivo=null;pararTimer();mud=true;toast(`${VIVO.amigo.nome} pausou o jogo.`)}
+    else if(c.t==="pronto"){if(V.vp)V.vp.pr.c=1;if(V.vi&&V.est==="intervalo")V.vi.pr.c=1}
+    else if(c.t==="segura"&&V.vi&&V.est==="intervalo"&&!V.vi.hold){V.vi.hold=1;mud=true}});
+  if(mud&&aba==="partida")render()}
+/* convidado: aceita e espera o 1º estado do jogo */
+async function vivoAceitar(c){if(!c)return;if(G.live){toastErro("Termine a partida atual primeiro.");return}
+  const p=perfilAmg(),meus=AMG.pIds.slice();modal(`<div class="aviso-box"><b>⚽ Entrando em campo...</b><p>Conectando com o jogo de ${esc(c.nome)}.</p></div>`);
+  const j=await amgPost("vivoResponder",{sala:c.sala,ok:1,perfil:p}).catch(()=>({erro:"Sem conexão com o servidor de amigos."}));
+  let P=null;try{P=JSON.parse(j.ph)}catch(e){}if(j.erro||!P){fecharModal();toastErro(j.erro||"O convite não vale mais.");return}
+  AMG.perfis[c.de]={id:c.de,nome:c.nome,P};const er=amgMontar(c.de);if(er){fecharModal();toastErro(er);return}
+  const uid=G.user.club;G.amgM={...G.amgM,h:AMG_CID,a:uid,vivo:1,rot:`Amistoso ao vivo · ${c.nome}`,amg:{id:c.de,nome:c.nome}};
+  VIVO={papel:"conv",sala:c.sala,amigo:{id:c.de,nome:c.nome},seq:0,ackC:0,nC:0,cmds:[],feed:[],t0:Date.now(),...vivoMapas(meus,G.clubs[AMG_CID].ids,"c:","h:"),idC:{H:AMG_CID,C:uid}};
+  vivoLoop()}
+async function vivoTickConv(){if(VIVO.ocupado)return;VIVO.ocupado=1;let j=null;
+  try{j=await amgPost("vivoConv",{sala:VIVO.sala,cmds:VIVO.cmds,desde:VIVO.seq})}catch(e){}if(!VIVO||VIVO.papel!=="conv")return;VIVO.ocupado=0;const ag=Date.now(),nome=VIVO.amigo.nome;
+  if(!j||j.erro){if(ag-(VIVO.okEm||VIVO.t0)>30000)vivoSolo("Sem conexão com o servidor.");return}
+  VIVO.okEm=ag;
+  if(j.est&&j.seq>VIVO.seq){VIVO.seq=j.seq;try{vivoAplicar(JSON.parse(j.est))}catch(e){}}
+  if(!VIVO)return;
+  if(G.live&&G.live.est==="fim"){vivoParar();return}
+  if(j.st==="saiu"){vivoSolo(`${nome} saiu do jogo.`);return}
+  if((G.live&&j.agora-j.th>30000)||(!G.live&&ag-VIVO.t0>30000))vivoSolo(`A conexão com ${nome} caiu.`)}
+function vivoAplicar(pk){const old=G.live,W=vivoTroca(pk.V,VIVO.id,VIVO.idC),nAnt=VIVO.feed.length;
+  W.feed.forEach((f,i)=>VIVO.feed[pk.f0+i]=f);W.feed=VIVO.feed.filter(Boolean).map(f=>({...f}));
+  Object.assign(W,{lado:"a",auto:false,cmd:old?old.cmd:(G.user.cmd||"tec")});W.m={...W.m,rot:G.amgM.rot,amg:{...G.amgM.amg},vivo:1,h:AMG_CID,a:G.user.club};
+  for(const t in pk.P){const id=VIVO.id[t];if(id!=null&&G.players[id])G.players[id].fis=pk.P[t]}
+  VIVO.cmds=VIVO.cmds.filter(c=>c.n>pk.ack);
+  if(old&&VIVO.cmds.some(c=>c.t==="lado"))LADO_K.forEach(k=>W.L.a[k]=old.L.a[k]);
+  if(old&&VIVO.cmds.some(c=>c.t==="pausa")&&W.est==="rodando")W.est=old.est;
+  G.live=W;
+  if(!old){fecharModal();velocidade=1;somIniciar();setTimeout(()=>apito(.9),250);painel=null;liveSel=null;aba="partida";window.scrollTo(0,0);render();return}
+  if(aba!=="partida")return;
+  const novos=W.feed.slice(nAnt),est=x=>JSON.stringify([x.est,x.L.a.xi,x.L.a.form,x.L.h.xi,x.vp&&[x.vp.por,x.vp.pr],x.vi&&[x.vi.pr,x.vi.hold,x.vi.ok]]);
+  if(est(old)!==est(W))render();else atualizarLive(nAnt);
+  try{somEventos(novos,W,{gm:old.ga,go:old.gh});const g=novos.find(f=>f.t==="gol"&&f.s==="a");if(g&&!document.hidden)telaGol(g,()=>{})}catch(e){}}
+/* sem sinal do outro: o computador assume o time dele e o jogo segue só aqui */
+function vivoSolo(msg){if(!VIVO)return;const era=VIVO.papel,V=G.live;clearInterval(VIVO_T);VIVO_T=null;
+  amgPost(era==="host"?"vivoHost":"vivoConv",{sala:VIVO.sala,sair:1}).catch(()=>{});
+  if(!V||!V.m.vivo){VIVO=null;fecharModal();if(G.amgM&&!G.live)limparAmigo();toastErro(msg);render();return}
+  VIVO.papel="solo";V.cmdC=null;V.vp=null;if(V.vi)V.vi.ok=1;
+  if(V.est==="pausa"||V.est==="intervalo")retomarAoVivo();
+  toast(`${msg} O computador assume o time dele.`);if(aba==="partida")render()}
+function vivoFaixa(V){if(!V.m.vivo||!VIVO||V.est==="fim")return "";const nome=esc(VIVO.amigo.nome);
+  if(VIVO.papel==="solo")return `<div class="vivo-faixa off">📶 Sem sinal de ${nome}. O computador comanda o time dele até o fim.</div>`;
+  const eu=VIVO.papel==="host"?"h":"c",ele=eu==="h"?"c":"h";let t=`<span class="vivo-on">● AO VIVO</span> contra ${nome}`;
+  if(V.est==="pausa"&&V.vp){const pr=V.vp.pr||{};t+=V.vp.por===ele?`<br>⏸️ <b>${nome} está fazendo alterações.</b> Você também pode mexer no seu time e aperta ▶ quando estiver pronto.`:`<br>⏸️ Jogo pausado para os dois. ${nome} também pode mexer. Aperte ▶ quando estiver pronto.`;
+    if(pr[eu]&&!pr[ele])t+=`<br>Esperando ${nome} ficar pronto...`;t+=`<br><small>Você ainda tem ${Math.max(0,3-((V.vpn||{})[eu]||0))} de 3 pausas · cada pausa dura até 90 s</small>`}
+  else if(V.est==="intervalo"&&V.vi&&!V.vi.ok){t+=V.vi.hold?`<br>Intervalo: tem alguém mexendo no time. O 2º tempo começa quando os dois apertarem ▶.`:`<br>Intervalo: 10 segundos para mexer no time. Se abrir a substituição, o jogo espera os dois.`;if((V.vi.pr||{})[eu]&&!(V.vi.pr||{})[ele])t+=`<br>Esperando ${nome}...`}
+  return `<div class="vivo-faixa">${t}</div>`}
+/* ganchos em acao(): antes (bloqueia o que não vale ao vivo) e depois (manda/ajusta pausa, pronto e o time) */
+function vivoAntes(a){if(!VIVO||!G||!G.live||!G.live.m.vivo)return false;const V=G.live;
+  if(a==="lvconcluir"){if(VIVO.papel==="host"&&V.est==="fim"){try{amgPost("vivoHost",{sala:VIVO.sala,seq:++VIVO.seq,est:JSON.stringify(vivoPacote()),fim:1}).catch(()=>{})}catch(e){}}vivoParar();return false}
+  if(VIVO.papel==="solo")return false;
+  if(a==="lvvel"||a==="lvvel3"){toast("No amistoso ao vivo a velocidade é sempre normal.");return true}
+  if(a==="lvsair"){modal(`<div class="aviso-box"><b>Sair do amistoso ao vivo?</b><p>O jogo acaba aqui para você, sem XP. No celular de ${esc(VIVO.amigo.nome)}, o computador assume o seu time.</p><div class="botoes"><button class="btn" data-a="fechar">Continuar jogando</button><button class="btn perigo" data-a="vivosair">Sair</button></div></div>`);return true}
+  const eu=VIVO.papel==="host"?"h":"c";
+  if((a==="lvpausa"||a==="lvpausar")&&V.est==="rodando"&&((V.vpn||{})[eu]||0)>=3){toastErro("Você já usou as 3 pausas deste jogo.");return true}
+  VIVO.antesEst=V.est;VIVO.antesL=JSON.stringify(ladoK(V.L[V.lado],V.cmd));return false}
+const VIVO_SEGURA=["lvpausa","lvpainel","lvsai","campsair","fpsai","lvform","lvest","formusar","lventra","fpentra"];
+function vivoDepois(a){if(!VIVO||!G||!G.live||!G.live.m.vivo||VIVO.papel==="solo"||VIVO.antesEst==null)return;const V=G.live,ag=Date.now();
+  if(VIVO.papel==="conv"){
+    if(VIVO.antesEst==="rodando"&&V.est==="pausa"&&!V.vp)vivoCmd({t:"pausa"});
+    if(a==="lvretomar"){vivoCmd({t:"pronto"});V.est=VIVO.antesEst}
+    if(V.est==="intervalo"&&VIVO_SEGURA.includes(a))vivoCmd({t:"segura"});
+    const L=V.L[V.lado];if(JSON.stringify(ladoK(L,V.cmd))!==VIVO.antesL)vivoCmd({t:"lado",L:{...vivoTrocaL(ladoK(L,V.cmd),VIVO.tok),cmd:V.cmd}})}
+  else{V.vpn=V.vpn||{h:0,c:0};
+    if(V.vp&&a==="lvretomar"){V.vp.pr.h=1;if(!V.vp.pr.c){V.est="pausa";pararTimer()}else V.vp=null}
+    else if(VIVO.antesEst==="rodando"&&V.est==="pausa"&&!V.vp){if(!V.motivo)V.vpn.h++;V.vp={por:"h",ate:ag+90000,pr:{}}}
+    if(VIVO.antesEst==="intervalo"&&a==="lvretomar"&&V.vi&&!V.vi.ok){V.vi.pr.h=1;if(!V.vi.pr.c){V.est="intervalo";pararTimer()}else V.vi.ok=1}
+    if(V.est==="intervalo"&&V.vi&&!V.vi.ok&&VIVO_SEGURA.includes(a))V.vi.hold=1}
+  VIVO.antesEst=null}
+/* convites ao vivo: confere a cada 6 s se algum amigo chamou (só com o jogo aberto e com amigos na lista) */
+setInterval(()=>{if(document.visibilityState!=="visible"||!G||!G.user||VIVO||G.live||abertura||!conta()||document.querySelector(".veu"))return;
+  if(!(AMG.est&&(AMG.est.amigos||[]).length))return; // a lista de online só atualiza a cada 60 s: confere sempre que tiver amigos
+  amgPost("vivoConvites",{}).then(j=>{const c=(j.convites||[]).find(x=>!VIVO_VISTO[x.sala]);if(!c||G.live||VIVO||document.querySelector(".veu"))return;VIVO_VISTO[c.sala]=1;VIVO_CONV=c;
+    try{vibrar("capa");somConquista()}catch(e){}
+    modal(`<div class="aviso-box vivo-conv"><b>● ${esc(c.nome)} te chamou para um amistoso AO VIVO!</b><p>${esc(c.clube||"")} × seu time, agora. Cada um comanda o seu time ao mesmo tempo; se alguém pausar, pausa para os dois. Vale só XP.</p></div><div class="botoes"><button class="btn" data-a="vivonao">Agora não</button><button class="btn prim" data-a="vivosim">Jogar agora</button></div>`)}).catch(()=>{})},6000);
 function modalCaixa(){
   const l=G.inbox;
   const h=l.some(m=>m.cid&&G.clubs[m.cid])?l.map((m,i)=>{if(!(m.cid&&G.clubs[m.cid]))return "";const nova=!m.lida,c=m.cid&&G.clubs[m.cid];
@@ -3441,7 +3589,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792812643";
+const VERSAO="1792861757";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4434,7 +4582,7 @@ function render(){try{if(G&&G.user)garantirContratos()}catch(e){}
   if(!G.live&&aba==="partida")aba=G.ultimoJogo&&G.ultimoJogo.pendente?"resultado":"inicio";
   if(aba==="inicio")aba="jogar"; // Jogar = tela do próximo jogo (antigo Início)
   if(aba==="tabela"||aba==="copa")aba="liga";
-  if(G.amgM&&!G.live&&aba!=="prejogo")limparAmigo(); // saiu do pré-jogo do amistoso entre amigos sem jogar
+  if(G.amgM&&!G.live&&aba!=="prejogo"&&!VIVO)limparAmigo(); // saiu do pré-jogo do amistoso entre amigos sem jogar
   const telaCheia=["visual","partida","resultado","prejogo"].includes(aba);
   nav.hidden=telaCheia;
   nav.classList.remove("some");
@@ -6063,7 +6211,7 @@ function blocoGritos(V){
 }
 function pararTimer(){if(timerLive){clearInterval(timerLive);timerLive=null}}
 function iniciarTimer(){
-  pararTimer();
+  pararTimer();if(VIVO&&VIVO.papel==="conv")return; // ao vivo, o convidado só mostra o jogo que roda no celular do amigo
   timerLive=setInterval(()=>{
     const V=G&&G.live;if(!V||V.est!=="rodando"){pararTimer();return}
     if(SUSP||TUTA)return; // esperando o lance de perigo ou o tutorial
@@ -6127,7 +6275,7 @@ function telaPartida(){
   <div class="placar-vivo"><div class="time">${marcaDe(H,44)}<b>${esc(H.name)}</b></div>
     <div class="centro"><div class="placar num" id="lv-placar">${V.gh}<span class="x">×</span>${V.ga}</div><div class="relogio num" id="lv-rel">${relogio(V)}</div></div>
     <div class="time">${marcaDe(A,44)}<b>${esc(A.name)}</b></div></div>
-  ${ehClassico(V.m)?cardClassico().replace('class="classico"','class="classico" style="margin-inline:0"'):""}<div class="prog" aria-hidden="true"><i id="lv-prog" style="width:${Math.min(V.min,90)/90*100}%"></i><span></span></div>`;
+  ${ehClassico(V.m)?cardClassico().replace('class="classico"','class="classico" style="margin-inline:0"'):""}<div class="prog" aria-hidden="true"><i id="lv-prog" style="width:${Math.min(V.min,90)/90*100}%"></i><span></span></div>${vivoFaixa(V)}`;
   if(V.est!=="fim"){const tec=(V.cmd||"tec")==="tec";
     h+=`<button class="btn-sair-jogo" data-a="lvsair" aria-label="Desistir da partida"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg></button>`;
     h+=`<div class="cmd-sel" role="radiogroup" aria-label="Quem comanda as trocas"><button role="radio" aria-checked="${tec}" class="${tec?"on":""}" data-a="lvcmd" data-v="tec">Comando do técnico</button>${V.est==="rodando"?`<button class="cmd-pausa" data-a="lvpausar" aria-label="Pausar o jogo"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>`:`<button class="cmd-pausa" data-a="lvretomar" aria-label="Continuar o jogo"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg></button>`}<button role="radio" aria-checked="${!tec}" class="${tec?"":"on"}" data-a="lvcmd" data-v="manual">Comando manual</button></div>
@@ -6616,6 +6764,7 @@ function modalFim(){
 function guardarW(){const n=$("#w-nome"),t=$("#w-tec"),s=$("#w-sigla"),es=$("#w-estadio");if(es)W.estadio=es.value;if(n)W.nome=n.value;if(t)W.tec=t.value;if(s)W.sigla=s.value.toUpperCase().slice(0,3)}
 function acao(a,v,el){
   const vis=()=>alvoVisual();
+  if(vivoAntes(a))return; // amistoso ao vivo: velocidade, sair e limite de pausas
   switch(a){
     case "aba":aba=v;expandido=null;if(v==="liga"&&el&&nav.contains(el))ligaAba="noticias"; // Liga abre nas notícias
     if(v==="mercado"&&el&&nav.contains(el))merc={pos:"",min:0,orig:"pais"};if(v==="inicio"&&el&&nav.contains(el))abertura=true; // Início na barra de baixo volta pra capa
@@ -6767,6 +6916,15 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "amgver":modalPerfilAmigo(v);return;
     case "amgdel":modal(`<div class="aviso-box"><b>Remover amigo?</b><p>Vocês deixam de ser amigos no jogo.</p><div class="botoes"><button class="btn" data-a="amgver" data-v="${v}">Cancelar</button><button class="btn perigo" data-a="amgdelok" data-v="${v}">Remover</button></div></div>`);return;
     case "amgdelok":amgAcao("remover",{outro:v},"Amigo removido.").then(()=>{AMG.aba="amigos";modalAmigos(true)});return;
+        case "vivoconv":{const A=AMG.perfis[v];if(!A){toastErro("Abra o perfil do amigo de novo.");return}if(G.live){toastErro("Termine a partida atual primeiro.");return}if(VIVO){toastErro("Já tem um amistoso ao vivo em andamento.");return}
+      const p=perfilAmg(),meus=AMG.pIds.slice();VIVO_ULT=v;
+      modal(`<div class="aviso-box"><b>📡 Chamando ${esc(A.nome)}...</b><p>O convite aparece no jogo dele. Esperando ele aceitar (até 40 segundos).</p></div><div class="botoes"><button class="btn" data-a="vivocancel">Cancelar</button></div>`);
+      amgPost("vivoConvidar",{outro:v,perfil:p}).then(j=>{if(j.erro||!j.sala){fecharModal();toastErro(j.erro||"Sem conexão com o servidor de amigos.");return}
+        VIVO={papel:"host",fase:"espera",sala:j.sala,amigo:{id:v,nome:A.nome},meus,seq:0,ackC:0,t0:Date.now()};vivoLoop()}).catch(()=>{fecharModal();toastErro("Sem conexão com o servidor de amigos.")});return}
+    case "vivocancel":if(VIVO&&VIVO.fase==="espera"){amgPost("vivoHost",{sala:VIVO.sala,sair:1}).catch(()=>{});vivoParar()}fecharModal();return;
+    case "vivosim":fecharModal();vivoAceitar(VIVO_CONV);return;
+    case "vivonao":fecharModal();if(VIVO_CONV)amgPost("vivoResponder",{sala:VIVO_CONV.sala,ok:0}).catch(()=>{});return;
+    case "vivosair":{const vv=VIVO;if(vv)amgPost(vv.papel==="host"?"vivoHost":"vivoConv",{sala:vv.sala,sair:1}).catch(()=>{});vivoParar();acao("lvamgsair");return}
     case "amgjogar":{const er=amgMontar(v);if(er){toastErro(er);return}fecharModal();aba="prejogo";window.scrollTo(0,0);break}
     case "amgcopiar":{const c=conta();if(!c)return;const t=idTxt(c.id),ok=()=>toast("ID copiado: "+t);if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,()=>copiarAntigo(t,ok));else copiarAntigo(t,ok);return}
     case "msgver":modalMensagem(+v);render();return;
@@ -6873,6 +7031,7 @@ adaptarEscalacao(v);salvar();el.closest(".dd").classList.remove("aberto");if(ani
       if(G){modal(`<h3>Começar nova carreira?</h3><p>A carreira atual (${esc(G.clubs[G.user.club].name)}, ${G.year}) será apagada deste aparelho. Para não perder, salve o arquivo antes.</p><div class="botoes" style="flex-wrap:wrap"><button class="btn" data-a="salvararq">Salvar arquivo</button><button class="btn" data-a="fechar">Cancelar</button><button class="btn perigo" data-a="novoconf">Apagar e começar</button></div>`);return}
       abertura=false;G=null;W=lerW()||novoW();break;
   }
+  vivoDepois(a);
   render();
 }
 function handlers(root){
