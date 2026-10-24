@@ -458,6 +458,17 @@ nav.abas[hidden]{display:none}
 .gr-btn .cupom-ico{width:22px;height:14px}.gr-btn .ico-nota{width:24px;height:16px}.gr-btn.neg b{color:var(--ruim)}
 .topo-grana{gap:4px}
 .msg-btn{position:relative}
+.amg-id{display:flex;align-items:center;gap:8px;margin:4px 0 10px;flex-wrap:wrap}.amg-id b{color:var(--canario);letter-spacing:.06em}
+.amg-folha h3 svg{width:22px;height:22px;vertical-align:-4px}.amg-lista{display:grid;gap:8px;max-height:58vh;overflow:auto;margin:10px 0 6px}
+.amg-card{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--gramado-2);border:1px solid var(--gramado-3)}
+.amg-av{position:relative;flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--gramado-3);font-weight:800;font-size:17px}
+.amg-dot{flex:none;width:12px;height:12px;border-radius:50%;background:#7c869c}.amg-dot.on{background:#2ecc71;box-shadow:0 0 8px #2ecc71}
+.amg-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}.amg-info b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.amg-info small{font-size:11.5px;color:var(--cal-2)}.amg-on{color:var(--ok)!important}
+.amg-pedido{padding:10px;border-radius:12px;border:2px solid #4f8cff;background:rgba(79,140,255,.1)}.amg-pedido p{margin:0 0 8px}
+.amg-aviso{padding:9px 12px;border-radius:12px;background:var(--gramado-2);border:1px solid var(--gramado-3);font-size:13.5px}.amg-aviso.nova{border-color:var(--canario)}.amg-aviso small{display:block;color:var(--cal-2);font-size:11px;margin-top:2px}
+.amg-sub{margin:10px 0 4px;font-size:13px;color:var(--cal-2)}.amg-busca{display:flex;gap:8px}.amg-busca input{flex:1;min-width:0}
+.amg-topo{display:flex;align-items:center;gap:12px;margin-bottom:10px}.amg-topo>div{display:flex;flex-direction:column;gap:2px}
+.amg-xi{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;font-size:13px;margin-bottom:8px}.amg-xi span{display:flex;gap:6px;align-items:center;min-width:0}.amg-xi i{font-style:normal;font-size:10.5px;color:var(--cal-2);width:26px}.amg-xi b{margin-left:auto;color:var(--canario)}
 .msg-badge{position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;padding:0 4px;border-radius:99px;background:var(--ruim);color:#fff;font-size:10.5px;font-weight:800;display:grid;place-items:center;border:2px solid var(--gramado)}
 .msg-lista{display:grid;gap:8px;max-height:60vh;overflow:auto;margin-bottom:6px}
 .msg-card{display:flex;flex-direction:column;align-items:flex-start;gap:5px;text-align:left;width:100%;padding:10px 12px;border-radius:12px;background:var(--gramado-2);border:1px solid var(--gramado-3);color:var(--cal);font:inherit;cursor:pointer;position:relative}
@@ -604,6 +615,7 @@ nav.abas[hidden]{display:none}
 
 .som-btn{flex:0 0 auto;width:36px;height:36px;border-radius:50%;border:1px solid var(--gramado-3);background:var(--gramado-2);color:var(--cal);display:grid;place-items:center;cursor:pointer;padding:0;margin-left:4px}
 .som-btn svg{width:20px;height:20px}
+.topo{gap:8px}.topo .gr-btn{font-size:14px;gap:4px;padding:4px 2px}.topo .gr-btn .cupom-ico{width:18px;height:12px}.topo .gr-btn .ico-nota{width:20px;height:13px}.topo .topo-grana{gap:2px;margin-right:-4px}.topo .som-btn{margin-left:0}.topo .som-btn+.som-btn{margin-left:-2px}
 .som-btn.sp{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:12px;z-index:3;background:rgba(6,18,58,.6);border-color:rgba(255,255,255,.4);color:#fff}
 
 nav.abas button{font-size:10.5px;padding-inline:0}
@@ -978,7 +990,7 @@ nav.abas .wrap button[data-v="jogar"][aria-current="true"]::after{content:"";wid
 nav.abas .wrap button:not([data-v="jogar"]) svg{padding-bottom:9px;box-sizing:content-box;background:linear-gradient(#2f8cff,#2f8cff) center bottom/30px 4px no-repeat}
 nav.abas .wrap button:not([data-v="jogar"])[aria-current="true"] svg{background-image:linear-gradient(var(--canario),var(--canario))}
 @keyframes jogarVivo{0%,100%{transform:scale(1) rotate(0);box-shadow:0 0 8px rgba(255,210,63,.45)}10%{transform:scale(1.06) rotate(-6deg)}20%{transform:scale(1.06) rotate(6deg)}30%{transform:scale(1.04) rotate(-3deg)}40%{transform:scale(1) rotate(0)}55%{box-shadow:0 0 30px 8px rgba(255,210,63,.95)}}
-.dono-foto{position:relative;flex:0 0 auto;width:46px;height:46px;border-radius:50%;padding:0;border:2px solid var(--canario);background:var(--gramado-2);color:var(--cal);display:grid;place-items:center;cursor:pointer}
+.dono-foto{position:relative;flex:0 0 auto;width:54px;height:54px;border-radius:50%;padding:0;border:2px solid var(--canario);background:var(--gramado-2);color:var(--cal);display:grid;place-items:center;cursor:pointer}
 .dono-foto img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .dono-foto svg{width:28px;height:28px;opacity:.75}
 .dono-foto b{position:absolute;right:-5px;bottom:-4px;min-width:20px;height:20px;padding:0 4px;border-radius:999px;background:var(--canario);color:#1a1300;font-size:11px;font-weight:800;display:grid;place-items:center;border:2px solid var(--gramado)}
@@ -1187,34 +1199,34 @@ body:has(header.topo) .esc-fixo{top:72px}
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
 
-<script src="img/escudos-reais.js?v=1792801377"></script>
-<script src="img/arte-capa.js?v=1792801377"></script>
-<script src="img/fundo-criacao.js?v=1792801377"></script>
-<script src="img/fundo-pais.js?v=1792801377"></script>
-<script src="img/fundo-escudo.js?v=1792801377"></script>
-<script src="img/simbolos.js?v=1792801377"></script>
-<script src="img/molduras.js?v=1792801377"></script>
-<script src="img/kits-foto.js?v=1792801377"></script>
-<script src="img/fundo-vestiario.js?v=1792801377"></script>
-<script src="img/patro-logos.js?v=1792801377"></script>
-<script src="img/tv-logos.js?v=1792801377"></script>
-<script src="img/diretor.js?v=1792801377"></script>
-<script src="img/rostos.js?v=1792801377"></script>
-<script src="img/estadio-fotos.js?v=1792801377"></script>
-<script src="img/super-fotos.js?v=1792801377"></script>
-<script src="img/trofeus.js?v=1792801377"></script>
-<script src="img/medalhas.js?v=1792801377"></script>
-<script src="img/fotos.js?v=1792801377"></script>
-<script src="img/fotos-vs.js?v=1792801377"></script>
-<script src="img/kit-homens.js?v=1792801377"></script>
-<script src="img/tec-fotos.js?v=1792801377"></script>
-<script src="dados/elencos.js?v=1792801377"></script>
-<script src="img/rostos-reais.js?v=1792801377"></script>
-<script src="img/escudos-img.js?v=1792801377"></script>
-<script src="img/tradutores.js?v=1792801377"></script>
-<script src="img/avatares.js?v=1792801377"></script>
-<script src="img/premios-icones.js?v=1792801377"></script>
-<script src="dados/idiomas.js?v=1792801377"></script>
+<script src="img/escudos-reais.js?v=1792809044"></script>
+<script src="img/arte-capa.js?v=1792809044"></script>
+<script src="img/fundo-criacao.js?v=1792809044"></script>
+<script src="img/fundo-pais.js?v=1792809044"></script>
+<script src="img/fundo-escudo.js?v=1792809044"></script>
+<script src="img/simbolos.js?v=1792809044"></script>
+<script src="img/molduras.js?v=1792809044"></script>
+<script src="img/kits-foto.js?v=1792809044"></script>
+<script src="img/fundo-vestiario.js?v=1792809044"></script>
+<script src="img/patro-logos.js?v=1792809044"></script>
+<script src="img/tv-logos.js?v=1792809044"></script>
+<script src="img/diretor.js?v=1792809044"></script>
+<script src="img/rostos.js?v=1792809044"></script>
+<script src="img/estadio-fotos.js?v=1792809044"></script>
+<script src="img/super-fotos.js?v=1792809044"></script>
+<script src="img/trofeus.js?v=1792809044"></script>
+<script src="img/medalhas.js?v=1792809044"></script>
+<script src="img/fotos.js?v=1792809044"></script>
+<script src="img/fotos-vs.js?v=1792809044"></script>
+<script src="img/kit-homens.js?v=1792809044"></script>
+<script src="img/tec-fotos.js?v=1792809044"></script>
+<script src="dados/elencos.js?v=1792809044"></script>
+<script src="img/rostos-reais.js?v=1792809044"></script>
+<script src="img/escudos-img.js?v=1792809044"></script>
+<script src="img/tradutores.js?v=1792809044"></script>
+<script src="img/avatares.js?v=1792809044"></script>
+<script src="img/premios-icones.js?v=1792809044"></script>
+<script src="dados/idiomas.js?v=1792809044"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -1511,7 +1523,7 @@ function momento(cid){
       v+=clamp(f,-1,1.2)}}
   return MOM.m[cid]=v*.75;
 }
-function bonusIA(cid){const c=G.clubs[cid];if(!c||c.user)return 0;return (c.tier>=0&&c.tier<=2?TAT_TIER[c.tier]:.8)+momento(cid)}
+function bonusIA(cid){const c=G.clubs[cid];if(!c||c.user)return 0;if(c.amigo)return c.bt||0;return (c.tier>=0&&c.tier<=2?TAT_TIER[c.tier]:.8)+momento(cid)}
 let JOGARAM=null; // clubes que jogaram no evento atual (conta as partidas de afastamento)
 let IDX=null;function tocou(){IDX=null}
 function jogadoresDo(cid){if(!IDX){IDX=new Map();for(const p of Object.values(G.players)){let l=IDX.get(p.club);if(!l){l=[];IDX.set(p.club,l)}l.push(p)}}return (IDX.get(cid)||[]).slice()}
@@ -2001,6 +2013,7 @@ function demoArrasto(g){const i=+g.dataset.i,p0=posicoesEu()[i],dedo=document.cr
   requestAnimationFrame(passo);
   return ()=>{vivo=false;g.style.transform=cpXY(p0);g.classList.remove("arrasta");dedo.remove()}}
 function partidaAtual(){
+  if(G&&G.amgM)return G.amgM; // amistoso contra o time de um amigo
   {const am=amistosoAtual();if(am)return am}
   const ev=proximoEvento();if(!ev||G.fase!=="jogo"||G.seasonEnd||G.over)return null;
   const uid=G.user.club;
@@ -2064,7 +2077,7 @@ function iniciarAoVivo(auto){
   validarEscalacao();velocidade=1;gritosAberto=false; // a partida começa em velocidade normal
   const uid=G.user.club;
   const mk=cid=>{const c=G.clubs[cid];const form=c.user?G.user.form:c.form,est=c.user?G.user.est:c.est;
-    const xi=c.user?G.user.lineup.slice():melhorXI(cid,form);
+    const xi=c.user?G.user.lineup.slice():c.xiAmg?c.xiAmg.slice():melhorXI(cid,form);
     const part={};xi.forEach((id,i)=>{if(id!=null)part[id]={pos:FORMACOES[form].s[i],ini:0,fim:null}});
     const ordem=ordenarBanco(jogadoresDo(cid).filter(p=>disponivel(p)&&!part[p.id]).sort((a,b)=>b.ov-a.ov).map(p=>p.id));
     return {cid,form,est,xi,bloq:xi.map(()=>false),subs:0,part,am:{},saiu:{},ordem,tsub:c.user?[]:[ri(55,68),ri(66,82),ri(75,86)]}};
@@ -2338,7 +2351,7 @@ function escolherTec(c){const alvo=clamp(Math.round(c.rating+6),58,95);
   return {n:t.n,q:t.q,pais:t.pais,ate:novoContrato(),desde:G.year,ini:G.ev}}
 function interino(c){return {n:nomeJogador(LINGUA[c.pais]||"pt"),q:clamp(Math.round(c.rating-2),55,75),interino:true,rod:0,desde:G.year,ini:G.ev}}
 function tecDoClube(cid){
-  const c=G.clubs[cid];if(!c)return null;if(c.user)return G.tec;
+  const c=G.clubs[cid];if(!c)return null;if(c.user)return G.tec;if(c.amigo)return c.tecIA;
   if(!G.mundoV)mundoIniciar();
   if(c.tecIA&&G.tec&&c.tecIA.n===G.tec.n&&!c.tecIA.interino){ // o seu clube levou o técnico deste
     if(c.tier>=0&&c.tier<=2)addNoticia(`${c.name} perde o técnico ${G.tec.n} para o ${G.clubs[G.user.club].name}; auxiliar assume interinamente.`,"tecnico",c.tier);
@@ -2631,10 +2644,105 @@ function voltaDosEmprestimos(){
 const naoLidas=()=>(G&&G.inbox?G.inbox.filter(m=>m.cid&&!m.lida).length:0); // a caixa de entrada mostra só mensagens de outros clubes
 const ICO_AVIAO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>';
 const ICO_NOTA='<svg class="ico-nota" viewBox="0 0 28 18" aria-hidden="true"><rect x="1" y="1" width="26" height="16" rx="3" fill="#2e9b57" stroke="#bff0cf" stroke-width="1.5"/><circle cx="14" cy="9" r="4" fill="none" stroke="#bff0cf" stroke-width="1.5"/><circle cx="5" cy="9" r="1.2" fill="#bff0cf"/><circle cx="23" cy="9" r="1.2" fill="#bff0cf"/></svg>';
-const dinheiroCurto=k=>{const s=dinheiro(Math.abs(k)),m=G?pais().moeda:"R$";return (k<0?"−":"")+s.replace(m,"").trim()};
+const dinheiroCurto=k=>{const a=Math.abs(k),f=x=>String(Math.round(x*10)/10).replace(".",",");return (k<0?"−":"")+(a>=1000?f(a/1000)+"M":Math.round(a)+"k")}; // topo: 99k, 1,5M
 const nomeMsg=c=>esc(c.name)+(c.tier===-1&&PAIS_NOME[c.pais]?` · ${esc(PAIS_NOME[c.pais])}`:"");
 const dataMsg=ms=>{const d=new Date(ms);return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`};
 function selosEst(o){return {aberta:"",aguardando:"Aguardando resposta",aceita:"Proposta aceita",vendido:"Vendido",recusada:"Recusada",ignorada:"Ignorada",expirada:"Expirada",respondida:"Respondida"}[o.est]||""}
+/* ---------- amigos (servidor amigos/ na Cloudflare): ID do dono, convites, perfil e amistoso contra o time do amigo ---------- */
+const AMG_URL="https://fut-master-amigos.futmaster-carlos.workers.dev",CHAVE_CONTA="fut-conta",AMG_CID="AMG";
+const XP_AMG={v:20,e:10,d:5}; // amistoso entre amigos: só um pouco de XP
+const ICO_AMIGOS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>';
+let AMG={est:null,ok:null,carregando:false,ult:0,aba:"amigos",busca:null,q:"",perfis:{},pEnv:null};
+function conta(){let c=null;try{c=JSON.parse(localStorage.getItem(CHAVE_CONTA)||"null")}catch(e){}if(!(c&&c.id)&&G&&G.conta)c=G.conta;return c&&c.id&&c.tok?c:null}
+function guardarConta(c){try{localStorage.setItem(CHAVE_CONTA,JSON.stringify(c))}catch(e){}if(G)G.conta=c}
+async function amgPost(rota,corpo){const r=await fetch(AMG_URL+"/"+rota,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({...(conta()||{}),...corpo})});
+  const j=await r.json().catch(()=>({}));if(!r.ok&&!j.erro)j.erro="Sem resposta do servidor.";return j}
+/* cópia do time que os amigos enfrentam: elenco (30 melhores), escalação, formação, estilo, técnico, escudo e uniformes */
+function perfilAmg(){const c=G.clubs[G.user.club],ps=jogadoresDo(c.id).sort((a,b)=>b.ov-a.ov).slice(0,30);
+  let e=c.escudo;if(e&&e.img&&e.img.length>40000){e={...e};delete e.img}
+  return JSON.stringify({v:1,pais:c.pais,clube:{name:c.name,short:c.short,c1:c.c1,c2:c.c2,escudo:e,unis:c.unis},form:G.user.form,est:G.user.est,
+    tec:G.tec?{n:G.tec.n,q:G.tec.q}:null,xi:(G.user.lineup||[]).map(id=>ps.findIndex(p=>p.id===id)),jog:ps.map(p=>[p.n,p.pos,p.age,p.ov]),nivel:perfil().nivel})}
+function avVisto(){try{return +localStorage.getItem("fut-amg-av")||0}catch(e){return 0}}
+function amgNovos(){const E=AMG.est;if(!E)return 0;const v=avVisto();return (E.pedidos||[]).length+(E.avisos||[]).filter(a=>a.n>v).length}
+function amgBadge(){const n=amgNovos();return n?`<span class="msg-badge">${Math.min(n,99)}</span>`:""}
+async function amgSync(forcar){if(!G||!G.user||AMG.carregando)return;if(!forcar&&Date.now()-AMG.ult<55000)return;AMG.carregando=true;
+  try{const c=G.clubs[G.user.club],p=perfilAmg();
+    const j=await amgPost("entrar",{nome:G.user.coach||"Treinador",clube:c.name,nivel:perfil().nivel,perfil:p===AMG.pEnv?undefined:p});
+    if(!j.id)throw 0;if(j.tok)guardarConta({id:j.id,tok:j.tok});else if(!G.conta)G.conta=conta();
+    AMG.pEnv=p;AMG.est=j;AMG.ult=Date.now();AMG.ok=true}catch(e){AMG.ok=false}
+  AMG.carregando=false;const b=document.querySelector(".amg-btn");if(b)b.innerHTML=ICO_AMIGOS+amgBadge();
+  if(document.querySelector(".amg-folha")&&AMG.aba!=="add")modalAmigos(true)}
+setInterval(()=>{if(document.visibilityState==="visible")amgSync()},60000);
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")amgSync()});
+const idTxt=id=>"#"+id;
+const haQuanto=t=>{const m=Math.round((Date.now()-t)/60000);return m<1?"agora":m<60?`há ${m} min`:m<1440?`há ${Math.round(m/60)} h`:`há ${Math.round(m/1440)} dia${m<2880?"":"s"}`};
+function cardAmigo(a,botoes){return `<div class="amg-card"><i class="amg-dot${a.on?" on":""}" title="${a.on?"Online":"Offline"}"></i><span class="amg-av">${esc((a.nome||"?").trim()[0]||"?").toUpperCase()}</span><span class="amg-info"><b>${esc(a.nome)}</b><small>${esc(a.clube||"")} · Nível ${a.nivel||1}</small><small class="${a.on?"amg-on":""}">${a.on?"Online":"Offline"} · ${idTxt(a.id)}</small></span>${botoes}</div>`}
+function modalAmigos(soAtualiza){
+  if(!soAtualiza){amgSync(true);AMG.busca=null}
+  const E=AMG.est,c=conta(),ab=AMG.aba,nP=E?(E.pedidos||[]).length:0;
+  const topo=c&&E?`<div class="amg-id">Seu ID: <b class="num">${idTxt(c.id)}</b><button class="btn mini" data-a="amgcopiar">Copiar</button></div>`:`<p class="muted peq">${AMG.ok===false?"Sem conexão com o servidor de amigos. Confira a internet.":"Conectando..."}</p>`;
+  let corpo="";
+  if(ab==="amigos"){
+    const v=avVisto(),av=(E&&E.avisos||[]).slice(0,10);
+    corpo=av.map(a=>`<div class="amg-aviso${a.n>v?" nova":""}">⚽ <b>${esc(a.nome||"Um amigo")}</b> jogou contra você offline.<small>${haQuanto(a.t)}</small></div>`).join("");
+    const L=(E&&E.amigos||[]).slice().sort((a,b)=>b.on-a.on||a.nome.localeCompare(b.nome));
+    corpo+=L.length?L.map(a=>cardAmigo(a,`<button class="btn mini prim-mini" data-a="amgver" data-v="${a.id}">Ver perfil</button>`)).join(""):E?`<p class="muted">Você ainda não tem amigos no jogo. Toque em <b>Adicionar</b> e procure pelo ID ou pelo nome.</p>`:"";
+    if(av.length)try{localStorage.setItem("fut-amg-av",String(Math.max(...av.map(a=>a.n))))}catch(e){}}
+  else if(ab==="conv"){
+    corpo=(E&&E.pedidos||[]).map(a=>`<div class="amg-pedido"><p><b>${esc(a.nome)}</b> (${esc(a.clube||"")}) te enviou uma solicitação de amizade.</p>${cardAmigo(a,"")}<div class="botoes"><button class="btn" data-a="amgnao" data-v="${a.id}">Recusar</button><button class="btn prim" data-a="amgsim" data-v="${a.id}">Aceitar</button></div></div>`).join("")||'<p class="muted">Nenhum convite de amizade por enquanto.</p>';
+    const en=E&&E.enviados||[];if(en.length)corpo+=`<h4 class="amg-sub">Convites enviados</h4>`+en.map(a=>cardAmigo(a,`<small class="muted">Aguardando</small>`)).join("")}
+  else{
+    corpo=`<div class="amg-busca"><input id="amg-q" type="search" placeholder="ID (ex.: #K7P2QX) ou nome" value="${esc(AMG.q)}" autocomplete="off"><button class="btn prim-mini" data-a="amgbusca">Buscar</button></div>`;
+    const R=AMG.busca;
+    if(R==="...")corpo+='<p class="muted">Procurando...</p>';
+    else if(R)corpo+=R.length?R.map(a=>cardAmigo(a,a.rel==="amigo"?`<small class="amg-on">Amigos ✓</small>`:a.rel==="enviado"?`<small class="muted">Convite enviado</small>`:a.rel==="recebido"?`<button class="btn mini prim-mini" data-a="amgsim" data-v="${a.id}">Aceitar</button>`:`<button class="btn mini prim-mini" data-a="amgadd" data-v="${a.id}">Adicionar</button>`)).join(""):'<p class="muted">Ninguém encontrado com esse ID ou nome.</p>';
+    else corpo+='<p class="muted peq">Peça para o seu amigo o ID dele (fica no Perfil e aqui em cima), ou procure pelo nome de dono que ele usa no jogo.</p>'}
+  const abas=[["amigos","Amigos"],["conv","Convites"+(nP?` (${nP})`:"")],["add","Adicionar"]].map(([k,n])=>`<button data-a="amgaba" data-v="${k}" aria-pressed="${ab===k}">${n}</button>`).join("");
+  modal(`<div class="amg-folha"><h3>${ICO_AMIGOS} Amigos</h3>${topo}<div class="seg" role="group">${abas}</div><div class="amg-lista">${corpo}</div><div class="botoes"><button class="btn" data-a="fechar">Fechar</button></div></div>`);
+  if(ab==="add"&&!soAtualiza){const i=$("#amg-q");if(i){i.addEventListener("keydown",e=>{if(e.key==="Enter")acao("amgbusca")})}}
+  const b=document.querySelector(".amg-btn");if(b)b.innerHTML=ICO_AMIGOS+amgBadge()}
+async function amgBuscar(){const i=$("#amg-q"),q=(i?i.value:AMG.q).trim();AMG.q=q;if(q.replace(/^#/,"").length<2){toastErro("Digite o ID ou pelo menos 2 letras do nome.");return}
+  AMG.busca="...";modalAmigos(true);const j=await amgPost("buscar",{q}).catch(()=>({erro:1}));AMG.busca=j.lista||[];if(j.erro)toastErro("Sem conexão com o servidor de amigos.");if(document.querySelector(".amg-folha"))modalAmigos(true)}
+async function amgAcao(rota,corpo,msg){const j=await amgPost(rota,corpo).catch(()=>({erro:"Sem conexão com o servidor de amigos."}));if(j.erro){toastErro(j.erro);return false}if(msg)toast(msg);await amgSync(true);return true}
+async function modalPerfilAmigo(id){
+  modal(`<div class="amg-folha"><p class="muted">Carregando o perfil...</p></div>`);
+  const j=await amgPost("time",{outro:id}).catch(()=>({erro:"Sem conexão com o servidor de amigos."}));
+  if(j.erro||!j.perfil){modal(`<div class="aviso-box"><b>Não deu para abrir o perfil</b><p>${esc(j.erro||"Esse amigo ainda não tem time salvo.")}</p><div class="botoes"><button class="btn" data-a="amigos">Voltar</button></div></div>`);return}
+  let P;try{P=JSON.parse(j.perfil)}catch(e){P=null}if(!P||!P.clube)return;AMG.perfis[id]={...j,P};
+  const cl=P.clube,jog=P.jog||[],xi=(P.xi||[]).map(i=>jog[i]).filter(Boolean),top=(xi.length>=11?xi:jog.slice(0,11));
+  const media=top.length?Math.round(top.reduce((a,x)=>a+x[3],0)/top.length):0;
+  modal(`<div class="amg-folha amg-perfil"><div class="amg-topo">${escudoSVG(cl.escudo||{forma:0,estampa:1,c1:cl.c1,c2:cl.c2,c3:contrasteHex(cl.c1||"#888888")},cl.short,64,cl.name)}<div><h3 style="margin:0">${esc(j.nome)}</h3><span class="muted">Dono do ${esc(cl.name)}</span><small class="${j.on?"amg-on":"muted"}">${j.on?"● Online agora":"Offline"} · Nível ${j.nivel||1} · ${idTxt(j.id)}</small></div></div>
+    <div class="kpis"><div class="cartao kpi"><small>Força do time</small><b class="num">${media}</b></div><div class="cartao kpi"><small>Formação</small><b class="num">${esc(P.form||"4-4-2")}</b></div><div class="cartao kpi"><small>Técnico</small><b style="font-size:13px">${esc(P.tec?P.tec.n:"Interino")}</b></div></div>
+    <h4 class="amg-sub">Titulares</h4><div class="amg-xi">${top.map(x=>`<span><i>${esc(x[1])}</i>${esc(x[0])}<b class="num">${x[3]}</b></span>`).join("")}</div>
+    <p class="muted peq">No amistoso, o time de ${esc(j.nome)} joga comandado pelo computador. Não vale dinheiro nem pontos, só um pouco de XP.</p>
+    <div class="botoes"><button class="btn perigo" data-a="amgdel" data-v="${id}">Remover</button><button class="btn" data-a="amigos">Voltar</button><button class="btn prim" data-a="amgjogar" data-v="${id}">Jogar amistoso</button></div></div>`)}
+/* monta o time do amigo como um clube temporário (AMG) e guarda o seu elenco para voltar igual depois do amistoso */
+function amgMontar(id){const A=AMG.perfis[id];if(!A)return "Abra o perfil do amigo de novo.";
+  if(G.live)return "Termine a partida atual primeiro.";const P=A.P,jog=(P.jog||[]).filter(x=>ELENCO_BASE.includes(x[1])||FORMACOES["4-4-2"].s.includes(x[1]));
+  if(jog.length<11)return "O time do seu amigo ainda não está completo.";
+  limparAmigo();const cl=P.clube,uid=G.user.club,top=jog.slice(0,16),rating=Math.round(top.reduce((a,x)=>a+x[3],0)/top.length);
+  G.clubs[AMG_CID]={id:AMG_CID,name:cl.name,short:cl.short||siglaDe(cl.name),rating,rep:rating,pais:P.pais||G.country,tier:userTier(),c1:cl.c1,c2:cl.c2,cap:20000,
+    form:FORMACOES[P.form]?P.form:"4-4-2",est:ESTILOS[P.est]?P.est:"eq",escudo:cl.escudo,unis:cl.unis,amigo:true,
+    tecIA:P.tec?{n:P.tec.n,q:P.tec.q}:{n:"Interino",q:60,interino:true},bt:P.tec?(P.tec.q-65)/8:-.4};
+  const ids=jog.map(([n,pos,age,ov])=>{const pid=novoJogador(pos,ov,AMG_CID,age),p=G.players[pid];p.n=n;p.ov=ov;p.pot=ov;p.sal=0;return pid});
+  const xi=(P.xi||[]).map(i=>i>=0?ids[i]:null);if(xi.length===FORMACOES[G.clubs[AMG_CID].form].s.length&&xi.every(x=>x!=null)&&new Set(xi).size===xi.length)G.clubs[AMG_CID].xiAmg=xi;
+  const bak={};jogadoresDo(uid).forEach(p=>{bak[p.id]=JSON.parse(JSON.stringify(p))});
+  G.amgBak={pl:bak,user:{form:G.user.form,est:G.user.est,lineup:(G.user.lineup||[]).slice()}};
+  G.amgM={tipo:"A",h:uid,a:AMG_CID,neutro:false,ko:false,econ:eRec(userTier()),rot:`Amistoso entre amigos · ${A.nome}`,amg:{id,nome:A.nome}};
+  tocou();salvar();return null}
+function limparAmigo(){if(!G)return;
+  if(G.amgBak){Object.entries(G.amgBak.pl).forEach(([id,o])=>{if(G.players[id])G.players[id]=o});Object.assign(G.user,G.amgBak.user)}
+  Object.keys(G.players).forEach(id=>{if(G.players[id].club===AMG_CID)delete G.players[id]});
+  delete G.clubs[AMG_CID];G.amgM=null;G.amgBak=null;tocou()}
+function concluirAmigo(){const V=G.live,m=V.m,eu=V.lado,gf=eu==="h"?V.gh:V.ga,gs=eu==="h"?V.ga:V.gh;
+  const r={gf,gs,nome:m.amg.nome,eu:G.clubs[G.user.club].short,ele:G.clubs[AMG_CID].short};
+  G.live=null;limparAmigo();r.xp=XP_AMG[gf>gs?"v":gf<gs?"d":"e"];somarXP(r.xp);salvar();
+  amgPost("jogou",{outro:m.amg.id}).catch(()=>{}); // aviso para o amigo: "Fulano jogou contra você offline"
+  return r}
+function modalResAmigo(r){
+  modal(`<div style="text-align:center"><div style="font-size:48px">${r.gf>r.gs?"🏆":r.gf<r.gs?"😓":"🤝"}</div><h3 style="margin:4px 0">${r.gf>r.gs?"Vitória no amistoso!":r.gf<r.gs?"Derrota no amistoso":"Empate no amistoso"}</h3>
+    <p class="muted" style="margin:0">Contra o time de ${esc(r.nome)}</p><p class="num" style="font-family:var(--f-display);font-size:24px;margin:6px 0">${esc(r.eu)} ${r.gf} × ${r.gs} ${esc(r.ele)}</p>
+    <div class="premio-recomp"><span>+${r.xp} XP</span></div></div><div class="botoes"><button class="btn" data-a="amigos">Amigos</button><button class="btn prim" data-a="fechar">Fechar</button></div>`)}
 function modalCaixa(){
   const l=G.inbox;
   const h=l.some(m=>m.cid&&G.clubs[m.cid])?l.map((m,i)=>{if(!(m.cid&&G.clubs[m.cid]))return "";const nova=!m.lida,c=m.cid&&G.clubs[m.cid];
@@ -3338,7 +3446,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792801377";
+const VERSAO="1792809044";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3601,11 +3709,11 @@ function unisDe(c){
   return KIT_CACHE[c.id]=[u1,inverterUni(u1)];
 }
 function camisaSVG(u,px){return uniformeSVG(u,"",px,true)}
-function escudoReal(c,px){if(!c||c.user)return "";
+function escudoReal(c,px){if(!c||c.user||c.amigo)return "";
   const ei=typeof ESCUDOS_IMG!=="undefined"&&ESCUDOS_IMG[c.name];if(ei)return `<img class="esc-real" src="${ei}" width="${px}" height="${px}" alt="" title="${esc(c.name)}">`;
   if(!ESCUDOS_REAIS)return "";const i=ESCUDOS_REAIS.nomes.indexOf(c.name);if(i<0)return "";const col=i%5,row=Math.floor(i/5);
   return `<span class="esc-real" title="${esc(c.name)}" style="width:${px}px;height:${px}px;background-image:url(${ESCUDOS_REAIS.src});background-size:500% 400%;background-position:${col*25}% ${row*100/3}%"></span>`}
-function marcaDe(c,px){if(c&&c.user)return `<span class="camisa-ic" title="${esc(c.name)}">${escudoDe(c,px)}</span>`;return escudoReal(c,px)||`<span class="camisa-ic" title="${esc(c.name)}">${camisaSVG(unisDe(c)[0],px)}</span>`}
+function marcaDe(c,px){if(c&&(c.user||c.amigo))return `<span class="camisa-ic" title="${esc(c.name)}">${escudoDe(c,px)}</span>`;return escudoReal(c,px)||`<span class="camisa-ic" title="${esc(c.name)}">${camisaSVG(unisDe(c)[0],px)}</span>`}
 function distCor(a,b){const p=h=>{const n=parseInt(h.slice(1),16);return [n>>16,n>>8&255,n&255]};const x=p(a),y=p(b);return Math.hypot(x[0]-y[0],x[1]-y[1],x[2]-y[2])}
 function kitVisitante(casa,fora){const uc=unisDe(casa)[0],uf=unisDe(fora);return distCor(uc.camisa,uf[0].camisa)<120?1:0}
 
@@ -4331,6 +4439,7 @@ function render(){try{if(G&&G.user)garantirContratos()}catch(e){}
   if(!G.live&&aba==="partida")aba=G.ultimoJogo&&G.ultimoJogo.pendente?"resultado":"inicio";
   if(aba==="inicio")aba="jogar"; // Jogar = tela do próximo jogo (antigo Início)
   if(aba==="tabela"||aba==="copa")aba="liga";
+  if(G.amgM&&!G.live&&aba!=="prejogo")limparAmigo(); // saiu do pré-jogo do amistoso entre amigos sem jogar
   const telaCheia=["visual","partida","resultado","prejogo"].includes(aba);
   nav.hidden=telaCheia;
   nav.classList.remove("some");
@@ -4338,7 +4447,7 @@ function render(){try{if(G&&G.user)garantirContratos()}catch(e){}
   const c=G.clubs[G.user.club];
   const Pf=perfil(),xpPct=Pf.nivel>=NIVEL_MAX?100:Math.round(Pf.xp/xpParaSubir(Pf.nivel)*100); // topo: foto do dono + nível + nome + XP (leva ao Perfil)
   const dataTopo=new Date(hojeJogo()).toLocaleDateString(FMT_LG[typeof idioma==="function"?idioma():"pt"][0],{day:"numeric",month:"short",year:"numeric"}); // dia do calendário do jogo
-  const topo=`<header class="topo"><span class="topo-data" data-notr>${dataTopo}</span><button class="dono-foto" data-a="aba" data-v="perfil" aria-label="Perfil do dono">${avatarSrc()?`<img src="${avatarSrc()}" alt="">`:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">${ICONES.perfil}</svg>`}<b class="num">${Pf.nivel}</b></button><div class="info" data-a="aba" data-v="perfil" style="cursor:pointer"><h1 class="dono-nome">${esc(G.user.coach||"Dono do clube")}</h1><div class="xp-barra dono-xp"><i style="width:${xpPct}%"></i></div></div><div class="topo-grana"><button class="gr-btn" data-a="cambioir" aria-label="Comprar cupons dourados">${ICO_CUPOM}<b class="num">${cupons()}</b></button><button class="gr-btn${G.cash<0?" neg":""}" data-a="cambioir" aria-label="Dinheiro do clube">${ICO_NOTA}<b class="num">${dinheiroCurto(G.cash)}</b></button></div><button class="som-btn msg-btn" data-a="caixa" aria-label="Caixa de entrada">${ICO_AVIAO}${naoLidas()?`<span class="msg-badge">${Math.min(naoLidas(),99)}</span>`:""}</button><button class="som-btn" data-a="aba" data-v="config" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES.config}</svg></button></header>`;
+  const topo=`<header class="topo"><span class="topo-data" data-notr>${dataTopo}</span><button class="dono-foto" data-a="aba" data-v="perfil" aria-label="Perfil do dono">${avatarSrc()?`<img src="${avatarSrc()}" alt="">`:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">${ICONES.perfil}</svg>`}<b class="num">${Pf.nivel}</b></button><div class="info" data-a="aba" data-v="perfil" style="cursor:pointer"><h1 class="dono-nome">${esc(G.user.coach||"Dono do clube")}</h1><div class="xp-barra dono-xp"><i style="width:${xpPct}%"></i></div></div><div class="topo-grana"><button class="gr-btn" data-a="cambioir" aria-label="Comprar cupons dourados">${ICO_CUPOM}<b class="num">${cupons()}</b></button><button class="gr-btn${G.cash<0?" neg":""}" data-a="cambioir" aria-label="Dinheiro do clube">${ICO_NOTA}<b class="num">${dinheiroCurto(G.cash)}</b></button></div><button class="som-btn msg-btn amg-btn" data-a="amigos" aria-label="Amigos">${ICO_AMIGOS}${amgBadge()}</button><button class="som-btn msg-btn" data-a="caixa" aria-label="Caixa de entrada">${ICO_AVIAO}${naoLidas()?`<span class="msg-badge">${Math.min(naoLidas(),99)}</span>`:""}</button><button class="som-btn" data-a="aba" data-v="config" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES.config}</svg></button></header>`;
   const corpo={inicio:telaInicio,elenco:telaElenco,tabela:telaTabela,mercado:telaMercado,clube:telaClube,escudo:telaEscudo,upgrades:telaUpgrades,copa:telaAbaCopa,jogar:telaInicio,liga:telaLiga,perfil:telaPerfil,financas:telaFinancas,config:telaConfig,visual:telaVisual,prejogo:telaPreJogo,partida:telaPartida,resultado:telaResultado}[aba]();
   app.innerHTML=(telaCheia?"":topo)+corpo+(telaCheia?"":bolaHTML());
   videoVS();ligarCampinho();
@@ -5135,7 +5244,7 @@ function telaPerfil(){
   const ap=P.j?Math.round((P.v*3+P.e)/(P.j*3)*100):0;
   const temp=G.history.length+1;
   let h=`<div class="perfil-topo cartao" style="position:relative"><span style="position:absolute;top:10px;right:12px">${cupomTxt(cupons())}</span><button class="avatar-dono" data-a="avatar" aria-label="Trocar foto">${avatarSrc()?`<img src="${avatarSrc()}" alt="">`:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">${ICONES.perfil}</svg>`}<span>📷</span></button>
-    <div class="nm"><div class="nivel-selo mini"><small>Nível</small><b class="num">${P.nivel}</b></div><h2 style="margin:0">${esc(G.user.coach||"Dono do clube")}</h2><span class="muted">Dono do ${esc(c.name)}</span>
+    <div class="nm"><div class="nivel-selo mini"><small>Nível</small><b class="num">${P.nivel}</b></div><h2 style="margin:0">${esc(G.user.coach||"Dono do clube")}</h2><span class="muted">Dono do ${esc(c.name)}</span>${conta()?`<span class="amg-id peq">ID: <b class="num">${idTxt(conta().id)}</b><button class="btn mini" data-a="amgcopiar">Copiar</button></span>`:""}
     <div class="xp-barra"><i style="width:${P.nivel>=NIVEL_MAX?100:pct}%"></i></div><span class="peq muted num">${P.nivel>=NIVEL_MAX?"Nível máximo alcançado!":`${P.xp} de ${prox} XP · faltam ${prox-P.xp} para o nível ${P.nivel+1}`}</span>
     ${P.nivel<NIVEL_MAX?`<span class="peq num" style="color:var(--canario)">Bônus do nível ${P.nivel+1}: ${dinheiro(premioNivel(P.nivel+1))}</span>`:""}</div></div>`;
   h+=`<h2>Estatísticas</h2><div class="kpis">
@@ -5944,7 +6053,7 @@ function telaPreJogo(){
   h+=`</div>`;
   h+='<div id="tut-tit">'+blocoTitulares().replace("<h2>Titulares</h2>",`<h2>Titulares</h2><p class="muted peq" style="margin:-4px 0 8px">Toque num titular para substituí-lo por um reserva.</p>`)+'</div>';
   h+=`<h2>Reservas</h2><div class="cartao" style="padding-block:4px">${res.map(p=>`<div class="jog${disponivel(p)?"":" off"}${lendaCls(p)}">${linhaJog(p,"")}</div>`).join("")}</div>`;
-  h+=`<div class="secao" style="margin-top:18px">${m.amistoso?"":botaoSimular()}</div></div>`;
+  h+=`<div class="secao" style="margin-top:18px">${m.amistoso||m.amg?"":botaoSimular()}</div></div>`;
   return h;
 }
 
@@ -6594,7 +6703,8 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "fpmanter":formAjuste={ok:1};break;
     case "fpentra":{const V=G.live,s2=V.lado,L=V.L[s2],i=formAjuste&&formAjuste.slot;if(i==null)return;const er=substituir(s2,i,+v,false,"ajuste da formação");if(er){toastErro(er);return}formAjuste=null;V.ultSub=null;salvar();break}
     case "lvest":trocarFormacao(G.live.lado,null,v);salvar();break;
-    case "lvsair":if(G.live&&G.live.m.amistoso){toast("No amistoso não dá para desistir. Jogue até o fim!");return}modal(`<div class="aviso-box"><b>Desistir da partida?</b><p>Se sair agora, seu time perde por W.O. (0 × 3) e os 3 pontos vão para o adversário.</p><div class="botoes"><button class="btn" data-a="fechar">Continuar jogando</button><button class="btn perigo" data-a="lvdesistir">Desistir</button></div></div>`);return;
+    case "lvsair":if(G.live&&G.live.m.amg){modal(`<div class="aviso-box"><b>Sair do amistoso?</b><p>O jogo contra o time do seu amigo acaba aqui e você não ganha XP.</p><div class="botoes"><button class="btn" data-a="fechar">Continuar jogando</button><button class="btn perigo" data-a="lvamgsair">Sair</button></div></div>`);return}
+    if(G.live&&G.live.m.amistoso){toast("No amistoso não dá para desistir. Jogue até o fim!");return}modal(`<div class="aviso-box"><b>Desistir da partida?</b><p>Se sair agora, seu time perde por W.O. (0 × 3) e os 3 pontos vão para o adversário.</p><div class="botoes"><button class="btn" data-a="fechar">Continuar jogando</button><button class="btn perigo" data-a="lvdesistir">Desistir</button></div></div>`);return;
     case "lvdesistir":{fecharModal();const V=G.live;if(!V||V.est==="fim")break;pararTimer();
       const meu=V.lado,adv=meu==="h"?"a":"h",ga=Math.max(3,adv==="h"?V.gh:V.ga);
       if(meu==="h"){V.gh=0;V.sh=[];V.ga=ga}else{V.ga=0;V.sa=[];V.gh=ga}V.pen=null;
@@ -6603,7 +6713,9 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "lvpausar":{if(G.live.est==="rodando"){G.live.est="pausa";G.live.motivo=null}painel=null;liveSel=null;pararTimer();salvar();break;}
     case "lvvel":velocidade=velocidade===2?1:2;if(G.live&&G.live.est==="rodando")iniciarTimer();break;
     case "lvvel3":if(perfil().nivel<NIVEL_3X){toastErro(`🔒 Bloqueado. Libera no nível ${NIVEL_3X}.`);return}velocidade=velocidade===3?1:3;if(G.live&&G.live.est==="rodando")iniciarTimer();break;
-    case "lvconcluir":if(G.live&&G.live.m.amistoso){pararTimer();const r=concluirAmistoso();aba="jogar";window.scrollTo(0,0);render();setTimeout(()=>{somResultado();modalAmistoso(r)},300);return}
+    case "lvamgsair":fecharModal();pararTimer();G.live=null;limparAmigo();aba="jogar";salvar();window.scrollTo(0,0);break;
+    case "lvconcluir":if(G.live&&G.live.m.amg){pararTimer();const r=concluirAmigo();aba="jogar";window.scrollTo(0,0);render();setTimeout(()=>{somResultado();modalResAmigo(r)},300);return}
+    if(G.live&&G.live.m.amistoso){pararTimer();const r=concluirAmistoso();aba="jogar";window.scrollTo(0,0);render();setTimeout(()=>{somResultado();modalAmistoso(r)},300);return}
     {pararTimer();concluirAoVivo();if(G.ultimoJogo)G.ultimoJogo.pendente=true;aba="resultado";salvar();window.scrollTo(0,0);setTimeout(somResultado,300);break;}
     case "resok":if(G.ultimoJogo)G.ultimoJogo.pendente=false;aba="inicio";salvar();window.scrollTo(0,0);break;
     case "vertemporada":modalTemporada();return;
@@ -6650,6 +6762,17 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "fechar":fecharModal();return;
     case "perfil":perfilJogador(+v);return;
     case "caixa":modalCaixa();return;
+    case "amigos":modalAmigos();return;
+    case "amgaba":AMG.aba=v;AMG.busca=null;modalAmigos(true);if(v==="add"){const i=$("#amg-q");if(i){i.addEventListener("keydown",e=>{if(e.key==="Enter")acao("amgbusca")});i.focus()}}return;
+    case "amgbusca":amgBuscar();return;
+    case "amgadd":amgAcao("convidar",{para:v},"Convite de amizade enviado!").then(ok=>{if(ok&&AMG.busca&&AMG.busca.map){AMG.busca.forEach(a=>{if(a.id===v)a.rel="enviado"});modalAmigos(true)}});return;
+    case "amgsim":amgAcao("responder",{de:v,ok:true},"Agora vocês são amigos!").then(ok=>{if(ok){AMG.aba="amigos";modalAmigos(true)}});return;
+    case "amgnao":amgAcao("responder",{de:v,ok:false}).then(()=>modalAmigos(true));return;
+    case "amgver":modalPerfilAmigo(v);return;
+    case "amgdel":modal(`<div class="aviso-box"><b>Remover amigo?</b><p>Vocês deixam de ser amigos no jogo.</p><div class="botoes"><button class="btn" data-a="amgver" data-v="${v}">Cancelar</button><button class="btn perigo" data-a="amgdelok" data-v="${v}">Remover</button></div></div>`);return;
+    case "amgdelok":amgAcao("remover",{outro:v},"Amigo removido.").then(()=>{AMG.aba="amigos";modalAmigos(true)});return;
+    case "amgjogar":{const er=amgMontar(v);if(er){toastErro(er);return}fecharModal();aba="prejogo";window.scrollTo(0,0);break}
+    case "amgcopiar":{const c=conta();if(!c)return;const t=idTxt(c.id),ok=()=>toast("ID copiado: "+t);if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,()=>copiarAntigo(t,ok));else copiarAntigo(t,ok);return}
     case "msgver":modalMensagem(+v);render();return;
     case "cambioir":fecharModal();aba="mercado";merc.orig="pais";render();setTimeout(()=>{const a=$("#cambio-ancora");if(a)window.scrollTo({top:a.getBoundingClientRect().top+scrollY-80,behavior:"smooth"})},60);return;
     case "msgvend":modalVender(+v);return;
@@ -6816,6 +6939,7 @@ app.addEventListener("change",e=>{
 window.claude?.hot?.snapshot?.(()=>({G,W,aba,abertura}));
 function iniciar(d){if(d&&(d.G||d.W)){G=migrar(d.G)||null;W=d.W&&d.W.unis?d.W:null;aba=d.aba||"inicio";abertura=d.abertura!==false;if(G&&G.v!==2)G=null}else carregar();render()}
 window.claude?.hot?.ready?window.claude.hot.ready(iniciar):iniciar(window.claude?.hot?.data??{});
+setTimeout(()=>{try{amgSync(true)}catch(e){}},2500); // cria o ID do dono (1ª vez) e busca convites
 // tenta já abrir com a música da capa (se o navegador barrar, começa no primeiro toque)
 try{somIniciar();somModo(modoDesejado())}catch(e){}
 try{carregarKits()}catch(e){}
