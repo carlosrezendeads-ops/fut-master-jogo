@@ -1214,7 +1214,7 @@ body:has(header.topo) .esc-fixo{top:72px}
 <script src="img/fotos.js?v=fbcdc164"></script>
 <script src="img/fotos-vs.js?v=365600e7"></script>
 <script src="img/kit-homens.js?v=0ed6e386"></script>
-<script src="img/tec-fotos.js?v=7b92483f"></script>
+<script src="img/tec-fotos.js?v=9f4c1933"></script>
 <script src="dados/elencos.js?v=bb464417"></script>
 <script src="img/escudos-img.js?v=df90de51"></script>
 <script src="dados/idiomas.js?v=23767458"></script>
@@ -3593,7 +3593,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792872246";
+const VERSAO="1792878943";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -7103,7 +7103,7 @@ setTimeout(()=>{try{amgSync(true)}catch(e){}},2500); // cria o ID do dono (1ª v
 try{somIniciar();somModo(modoDesejado())}catch(e){}
 try{carregarKits()}catch(e){}
 // imagens que não aparecem na abertura carregam logo depois da 1ª tela (abre mais rápido no celular); quando chegam, redesenha a tela
-const IMG_TARDE=["img/rostos-reais.js?v=12bfe01e","img/patro-logos.js?v=f055fec3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=939d94d8","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
+const IMG_TARDE=["img/rostos-reais.js?v=3e8d1861","img/patro-logos.js?v=f055fec3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=939d94d8","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
 setTimeout(()=>{let falta=IMG_TARDE.length;IMG_TARDE.forEach(src=>{const sc=document.createElement("script");sc.src=src;sc.onload=sc.onerror=()=>{if(--falta)return;if(G&&!abertura&&!G.live&&aba!=="prejogo"&&!document.querySelector(".veu"))render()};document.body.appendChild(sc)})},200);
 
 </script>
