@@ -7,6 +7,8 @@ self.addEventListener("fetch", e => {
   const req = e.request, url = new URL(req.url);
   if (req.method !== "GET" || url.origin !== location.origin) return;
   const chave = url.origin + url.pathname; // sem o ?v= — a versão nova substitui a antiga
+  // imagem com versão (?v=): se já está guardada, usa direto sem baixar de novo (abre muito mais rápido)
+  if (url.searchParams.has("v")) { e.respondWith(caches.open(CACHE).then(c => c.match(req.url).then(m => m || fetch(req).then(r => { if (r.ok && r.status === 200) { c.put(req.url, r.clone()); c.put(chave, r.clone()); c.keys().then(ks => ks.forEach(k => { const u = new URL(k.url); if (u.pathname === url.pathname && u.search && k.url !== req.url) c.delete(k); })); } return r; }).catch(() => c.match(chave))))); return; }
   e.respondWith(fetch(req).then(r => {
     if (r.ok && r.status === 200) { const cp = r.clone(); caches.open(CACHE).then(c => c.put(chave, cp)); }
     return r;
