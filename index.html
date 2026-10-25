@@ -1616,15 +1616,16 @@ function passivasHTML(t){const ps=passivasTec(t);return ps.length?`<div class="t
 /* comandos do técnico: m = chance de gol SUA, s = chance de gol do RIVAL (multiplicam o ritmo de gols em passoMinuto),
    e = quanto mais rápido cansam os jogadores das posições pos; o efeito cai se eles já estiverem cansados (forcaGrito) */
 const GRITOS=[
-  {k:"atacar",n:"Vamos atacar!",d:"Meias e atacantes",pos:["MEI","ATA"],m:2.2,s:1.3,e:2.5,fx:"Muito mais chances de gol, mas a defesa fica mais exposta"},
-  {k:"virada",n:"Vamos buscar a virada!",d:"Atacantes, meias e volantes",pos:["ATA","MEI","VOL"],m:2.6,s:1.6,e:2.2,fx:"Tudo ao ataque: o máximo de chances, com risco de levar gol"},
+  {k:"atacar",n:"Vamos atacar!",d:"Meias e atacantes",pos:["MEI","ATA"],gol:.8,m:1.4,s:1.3,e:2.5,fx:"Muito mais chances de gol, mas a defesa fica mais exposta"},
+  {k:"virada",n:"Vamos buscar a virada!",d:"Atacantes, meias e volantes",pos:["ATA","MEI","VOL"],gol:.8,m:1.6,s:1.6,e:2.2,fx:"Tudo ao ataque: o máximo de chances, com risco de levar gol"},
   {k:"meio",n:"Domina o meio-campo!",d:"Volantes e meias",pos:["VOL","MEI"],m:1.4,s:.75,e:2,fx:"Mais posse: um pouco mais de chances e o rival cria menos"},
   {k:"fechar",n:"Fecha a zaga!",d:"Zagueiros e goleiro",pos:["ZAG","GOL"],m:.85,s:.45,e:2,fx:"O rival chega bem menos; seu ataque perde um pouco"},
   {k:"segurar",n:"Segura o jogo!",d:"Volantes, zagueiros e goleiro",pos:["VOL","ZAG","GOL"],m:.6,s:.4,e:1.6,fx:"Jogo travado: quase ninguém marca"},
   {k:"limpo",n:"Sem falta, jogo limpo!",d:"Bem menos faltas e cartões",pos:[],m:1,s:1,e:1,cartao:.4,fx:"Bem menos faltas e cartões"}];
 const GRITO_MIN=10,GRITO_ESPERA=5;
-function forcaGrito(L,g){const sl=FORMACOES[L.form].s,ps=L.xi.map((id,i)=>g.pos.includes(sl[i])&&G.players[id]).filter(Boolean);
-  const en=ps.length?ps.reduce((a,p)=>a+(p.fis??100),0)/ps.length:100,k=clamp(en/80,.35,1);return {m:1+(g.m-1)*k,s:1+(g.s-1)*k}}
+function energiaGrito(L,g){const sl=FORMACOES[L.form].s,ps=L.xi.map((id,i)=>g.pos.includes(sl[i])&&G.players[id]).filter(Boolean);
+  const en=ps.length?ps.reduce((a,p)=>a+(p.fis??100),0)/ps.length:100;return clamp(en/80,.35,1)}
+function forcaGrito(L,g){const k=energiaGrito(L,g);return {m:1+(g.m-1)*k,s:1+(g.s-1)*k}}
 function gritoAtivo(L){const V=G.live,g=L&&L.grito;return g&&V&&V.min<g.ate?GRITOS.find(x=>x.k===g.k):null}
 function forcasCfg(xi,form,est,cid){
   const slots=FORMACOES[form].s;
@@ -2185,8 +2186,9 @@ function passoMinuto(){
   if(!V.m.amistoso)for(const s of ["h","a"]){const g=gritoAtivo(V.L[s]);if(!g)continue;const fg=forcaGrito(V.L[s],g),o=s==="h"?"a":"h";lam[s]=Math.min(lam[s]*fg.m,7);lam[o]*=fg.s}
   for(const s of ["h","a"]){
     const L=V.L[s],nomeT=nomeLado(s),eu=L.cid===G.user.club,g0=V.gh+V.ga;
-    const r=rnd();
-    if(V.m.amistoso){ // amistoso com roteiro: gols só nos minutos sorteados em V.rot
+    const r=rnd(),gm=!V.m.amistoso&&L.grito&&L.grito.golMin!=null&&!L.grito.golFeito&&V.min>=L.grito.golMin&&gritoAtivo(L);
+    if(gm){L.grito.golFeito=1;const p=artilheiro(F[s]);aplicarGol(s,F,p).pre=preChute(p,nomeT)} // gol sorteado do comando de ataque
+    else if(V.m.amistoso){ // amistoso com roteiro: gols só nos minutos sorteados em V.rot
       if(!V.add&&V.rot&&V.rot[V.min]===s){const p=artilheiro(F[s]);aplicarGol(s,F,p).pre=preChute(p,nomeT)}
       else if(r<lam[s]/90*1.4&&rnd()<.75){const p=artilheiro(F[s]);if(p){narrar("chance",`Quase! ${p.n} (${nomeT}) ${pick(FR_CHANCE)}.`);ultLance().pre=preChute(p,nomeT)}}}
     else if(r<lam[s]/90*.92){ // .92: com os gols de pênalti, a média de gols fica igual à de antes
@@ -3619,7 +3621,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792935192";
+const VERSAO="1792937399";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -6858,7 +6860,8 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "lvgrito":{const V=G.live,L=V.L[V.lado],g=GRITOS.find(x=>x.k===v);if(!g)return;
       if(gritoAtivo(L)){toastErro("Seu time já está cumprindo um comando.");return}
       if(L.grito&&V.min<L.grito.ate+GRITO_ESPERA){toastErro(`Espere até os ${L.grito.ate+GRITO_ESPERA}' para dar outro comando.`);return}
-      L.grito={k:g.k,ini:V.min,ate:V.min+GRITO_MIN};gritosAberto=false;narrar("info",`📣 O técnico grita da beira do campo: "${g.n}"`);salvar();break}
+      L.grito={k:g.k,ini:V.min,ate:V.min+GRITO_MIN};if(g.gol&&rnd()<g.gol*energiaGrito(L,g))L.grito.golMin=V.min+ri(1,GRITO_MIN-1); // atacar/virada: 80% de sair gol nos 10 min (menos se o time estiver cansado)
+      gritosAberto=false;narrar("info",`📣 O técnico grita da beira do campo: "${g.n}"`);salvar();break}
     case "lvpainel":painel=painel===v?null:v;liveSel=null;break;
     case "lvretomar":{const V=G.live;V.ultSub=null;const L=V.L[V.lado];
       if(V.motivo==="goleiro"&&!L.xi[FORMACOES[L.form].s.indexOf("GOL")]&&L.subs<MAX_SUBS&&bancoDe(V.lado).some(p=>p.pos==="GOL")){toastErro("Coloque um goleiro antes de continuar.");return}
