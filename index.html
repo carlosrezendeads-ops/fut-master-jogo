@@ -1224,7 +1224,7 @@ body:has(header.topo) .esc-fixo{top:72px}
 <script src="img/tec-fotos.js?v=f32ddfa9"></script>
 <script src="dados/elencos.js?v=bb464417"></script>
 <script src="img/escudos-img.js?v=df90de51"></script>
-<script src="dados/idiomas.js?v=9912e8f0"></script>
+<script src="dados/idiomas.js?v=253ab717"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2043,7 +2043,7 @@ const preChute=(p,nomeT)=>`${p?p.n:"O atacante"} (${nomeT}) ${pick(PRE_CHUTE)}`;
 function aplicarGol(s,F,p,pen){const V=G.live,nomeT=nomeLado(s);if(s==="h")V.gh++;else V.ga++;
   (s==="h"?V.sh:V.sa).push([p?p.id:null,V.min]);
   let ass=null;if(p){gastar(p,1.5);ass=pen?null:garcom(F[s],p);if(V.m.tipo==="L"){p.g++;if(ass)ass.as=(ass.as||0)+1}V.ev=V.ev||{};V.ev[p.id]=(V.ev[p.id]||0)+1;if(ass){V.as=V.as||{};V.as[ass.id]=(V.as[ass.id]||0)+1}}
-  narrar("gol",`GOL do ${nomeT}! ${p?p.n+" "+(pen?"cobra o pênalti com categoria":pick(FR_GOL)):"Gol contra"}${ass?`, passe de ${ass.n}`:""}. ${placarTxt()}`);
+  narrar("gol",`GOL do ${nomeT}! ${p?p.n+" "+(pen?(pen===2?"cobra a falta no ângulo":"cobra o pênalti com categoria"):pick(FR_GOL)):"Gol contra"}${ass?`, passe de ${ass.n}`:""}. ${placarTxt()}`);
   const f=ultLance();f.s=s;f.pid=p?p.id:null;f.ph=[V.gh,V.ga];return f}
 /* acréscimos: mais faltas, cartões, gols, trocas, lesões, VAR e pênaltis = mais tempo */
 function calcAcr(tempo){const V=G.live,ls=V.feed.slice(tempo===2?(V.fi2||0):0),n=t=>ls.filter(f=>f.t===t).length;
@@ -2189,6 +2189,7 @@ function passoMinuto(){
   const F={h:forcasCfg(V.L.h.xi,V.L.h.form,V.L.h.est,V.L.h.cid),a:forcasCfg(V.L.a.xi,V.L.a.form,V.L.a.est,V.L.a.cid)};
   const k=18,mh=V.m.neutro?1.16:1.3,ma=V.m.neutro?1.16:1.02;
   const lam={h:clamp(mh*Math.exp((F.h.att-F.a.def)/k)*V.fat.h,.1,4.5),a:clamp(ma*Math.exp((F.a.att-F.h.def)/k)*V.fat.a,.08,4.2)};
+  {const rf=s=>{const gk=penGoleiro(s);return gk?clamp(1-(atributos(gk).ref-70)/350,.88,1.1):1.1};lam.h*=rf("a");lam.a*=rf("h")} // atributo Reflexos do goleiro: defende mais chutes
   if(!V.m.amistoso)for(const s of ["h","a"]){const g=gritoAtivo(V.L[s]);if(!g)continue;const fg=forcaGrito(V.L[s],g),o=s==="h"?"a":"h";lam[s]=Math.min(lam[s]*fg.m,7);lam[o]*=fg.s}
   for(const s of ["h","a"]){
     const L=V.L[s],nomeT=nomeLado(s),eu=L.cid===G.user.club,g0=V.gh+V.ga;
@@ -2197,7 +2198,7 @@ function passoMinuto(){
     else if(V.m.amistoso){ // amistoso com roteiro: gols só nos minutos sorteados em V.rot
       if(!V.add&&V.rot&&V.rot[V.min]===s){const p=artilheiro(F[s]);aplicarGol(s,F,p).pre=preChute(p,nomeT)}
       else if(r<lam[s]/90*1.4&&rnd()<.75){const p=artilheiro(F[s]);if(p){narrar("chance",`Quase! ${p.n} (${nomeT}) ${pick(FR_CHANCE)}.`);ultLance().pre=preChute(p,nomeT)}}}
-    else if(r<lam[s]/90*.92){ // .92: com os gols de pênalti, a média de gols fica igual à de antes
+    else if(r<lam[s]/90*.89){ // .89: com os gols de pênalti e de falta, a média de gols fica igual à de antes
       const p=artilheiro(F[s]);
       if(V.varGol&&!V.varUsado){V.varUsado=1;const anula=rnd()<.45;
         narrar("var",`${p?p.n:"A bola"} balança a rede para o ${nomeT}... mas o árbitro pede o VAR!`);ultLance().pre=preChute(p,nomeT);
@@ -2207,12 +2208,17 @@ function passoMinuto(){
     }else if(r<lam[s]/90*2.4&&rnd()<.75){
       const p=artilheiro(F[s]);if(p){narrar("chance",`Quase! ${p.n} (${nomeT}) ${pick(FR_CHANCE)}.`);ultLance().pre=preChute(p,nomeT)}
     }else if(rnd()<.003){ // pênalti: ~1 a cada 2 jogos (metade passa pelo VAR)
-      const ps=F[s].xi.map(id=>G.players[id]).filter(Boolean),bat=ps.filter(p=>p.pos==="ATA"||p.pos==="MEI").sort((a,b)=>b.ov-a.ov)[0]||artilheiro(F[s]);
+      const ps=F[s].xi.map(id=>G.players[id]).filter(Boolean),bat=ps.filter(p=>p.pos!=="GOL").sort((a,b)=>penChance(b,null)-penChance(a,null))[0]||artilheiro(F[s]);
       narrar("penal",`PÊNALTI para o ${nomeT}! Jogador derrubado dentro da área.`);ultLance().pre=`Lance na área... o árbitro vai marcar?`;
       let vale=true;
       if(rnd()<.5){vale=rnd()<.7;narrar("var",vale?"VAR confirma: é pênalti!":"VAR desmarca: não foi pênalti. Segue o jogo.");Object.assign(ultLance(),{pre:"📺 VAR revisando o pênalti...",var:1})}
-      if(vale&&bat){if(rnd()<.77)aplicarGol(s,F,bat,true).pre=`${bat.n} ajeita a bola... corre para a cobrança...`;
+      if(vale&&bat){if(rnd()<penChance(bat,penGoleiro(s==="h"?"a":"h")))aplicarGol(s,F,bat,true).pre=`${bat.n} ajeita a bola... corre para a cobrança...`;
         else{narrar("chance",`${pick(["O goleiro defende o pênalti de","Na trave! Desperdiça o pênalti","Pra fora! Isola o pênalti"])} ${bat.n} (${nomeT}).`);ultLance().pre=`${bat.n} ajeita a bola... corre para a cobrança...`}}
+    }else if(!V.m.amistoso&&rnd()<.005){ // falta perigosa perto da área (~0,45 por time no jogo)
+      const ps=F[s].xi.map(id=>G.players[id]).filter(p=>p&&p.pos!=="GOL"),cob=ps.sort((a,b)=>atributos(b).fal-atributos(a).fal)[0],gk=penGoleiro(s==="h"?"a":"h");
+      if(cob){const ch=ehLenda(cob)?.35:clamp(.1+(atributos(cob).fal-70)/150-(gk?atributos(gk).ref-70:-10)/300,.03,.3),pre=`Falta perigosa para o ${nomeT}... ${cob.n} ajeita a bola...`;
+        if(rnd()<ch)aplicarGol(s,F,cob,2).pre=pre;
+        else{narrar("chance",`${cob.n} (${nomeT}) ${pick(["cobra a falta e a bola passa raspando a trave","cobra a falta direto e a bola explode na barreira",gk?`cobra a falta no canto e ${gk.n} espalma`:"cobra a falta por cima do gol","cobra a falta e a bola carimba o travessão"])}.`);ultLance().pre=pre}}
     }
     const gS=V.m.amistoso?null:gritoAtivo(L); // comando do técnico: o efeito real está no ritmo de gols (lam); aqui só o relato
     if(gS&&gS.pos.length){const ofe=gS.m>1.2;
@@ -2260,13 +2266,12 @@ function encerrarAoVivo(){
   penFim(V);
 }
 /* pênaltis do mata-mata: o jogo para, escolhe 5 batedores (no comando do técnico ele escolhe), cobranças uma a uma; depois do 5º os melhores em campo batem sozinhos */
-const ehBatedor=p=>p.pos!=="GOL"&&habilidadesDe(p).some(h=>/pênaltis/i.test(h));
 function penBatedores(s){const L=G.live.L[s],v=p=>p.pos==="GOL"?-99:penChance(p,null)*100;
   return L.xi.filter(id=>id!=null&&G.players[id]).sort((a,b)=>v(G.players[b])-v(G.players[a]))}
 function penGoleiro(s){const L=G.live.L[s],id=L.xi[FORMACOES[L.form].s.indexOf("GOL")];return id!=null&&G.players[id]||null}
 function penChance(p,gk){if(ehLenda(p))return .95; // lenda acerta 95%
-  const fin=atributos(p).fin; // força e finalização pesam; cansaço não
-  let c=.72+(p.ov-70)/160+(fin-70)/220-((gk?gk.ov:60)-70)/400;if(ehBatedor(p))c+=.05;if(gk&&habilidadesDe(gk).some(h=>/pênaltis/i.test(h)))c-=.05;return clamp(c,.5,.92)}
+  const a=atributos(p); // força, Cobrador de pênaltis e Finalização pesam; o Pegador de pênaltis do goleiro tira; cansaço não
+  const c=.78+(p.ov-70)/250+(a.cpe-70)/200+(a.fin-70)/400-((gk?atributos(gk).pdp:60)-70)/250;return clamp(c,.5,.93)}
 function penCobrancas(ord){ // ord={h:[ids],a:[ids]} → cobranças até ter vencedor (casa bate primeiro)
   const k=[],gol={h:0,a:0},n={h:0,a:0},gk={h:penGoleiro("a"),a:penGoleiro("h")};
   const F={};["h","a"].forEach(s=>{const b=penBatedores(s);F[s]=ord[s].concat(b.filter(id=>!ord[s].includes(id)));if(!F[s].length)F[s]=[null]});
@@ -2296,7 +2301,7 @@ function painelPenais(V){const P=V.pn,eu=V.lado,pl=penPlacar(V),feitas=(P.k||[])
   let h=`<div class="painel pen"><b class="etapa">Disputa de pênaltis</b><div class="pen-placar">${linha("h",0)}${linha("a",1)}</div>`;
   if(P.fase==="esc"){const tec=(V.cmd||"tec")==="tec";
     h+=`<p class="muted peq" style="margin:10px 0 8px">${tec?"O técnico escolheu os 5 batedores, nesta ordem:":`Toque em 5 jogadores na ordem das cobranças (${P.bat.length} de 5).`}</p><div class="pen-grade">${penBatedores(eu).map(id=>{const p=G.players[id],k=P.bat.indexOf(id);
-      const tg=tec?"div":"button";return `<${tg} class="pen-jog${k>=0?" sel":""}"${tec?"":` data-a="penbat" data-v="${id}"`}>${k>=0?`<span class="pen-num num">${k+1}</span>`:""}${rostoSVG(p,44)}<b>${esc(nomeCurto(p.n))}</b><small>${p.pos} · ${p.ov}</small></${tg}>`}).join("")}</div>
+      const tg=tec?"div":"button";return `<${tg} class="pen-jog${k>=0?" sel":""}"${tec?"":` data-a="penbat" data-v="${id}"`}>${k>=0?`<span class="pen-num num">${k+1}</span>`:""}${rostoSVG(p,44)}<b>${esc(nomeCurto(p.n))}</b><small>${p.pos} · ⚽ ${atributos(p).cpe}</small></${tg}>`}).join("")}</div>
       ${tec?"":`<button class="btn full" data-a="penauto" style="margin-top:10px">Deixar o técnico escolher</button>`}<button class="btn prim full" data-a="penini" style="margin-top:8px">Começar cobranças</button>`}
   else{const x=P.k[P.i],ult=feitas[feitas.length-1];
     if(P.prep&&x){const p=G.players[x.id];h+=`<div class="pen-agora">${p?rostoSVG(p,64):""}<div><b>${esc(p?p.n:"")}</b><span>${esc(nomeLado(x.s))} · ajeita a bola na marca...</span></div></div>`}
@@ -3667,7 +3672,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792951023";
+const VERSAO="1792951544";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -6104,19 +6109,24 @@ function modalTrocarRosto(id){
 /* ---------- atributos dos jogadores e Pontos de Treino ----------
    atributos = calculados da força, da posição, da idade e de um sorteio fixo por jogador (hashId); o craque tem perfil mais marcado.
    pontos de treino: G.user.pts {atq,def,vel,pas,fin,fis}; ganhos em Bolas Douradas (G.user.bolas); gastos viram p.ap[k] (+1 no atributo) e sobem a força (p.acc) */
-const ATRS=[["atq","Ataque","⚔️"],["def","Defesa","🛡️"],["vel","Velocidade","⚡"],["pas","Passe","🎯"],["fin","Finalização","🥅"],["fis","Preparo físico","💪"],["dri","Drible","🌀"],["cab","Cabeceio","🧠"]];
+const ATRS=[["atq","Ataque","⚔️"],["def","Defesa","🛡️"],["vel","Velocidade","⚡"],["pas","Passe","🎯"],["fin","Finalização","🥅"],["fis","Preparo físico","💪"],["dri","Drible","🌀"],["cab","Cabeceio","🧠"],
+  ["cpe","Cobrador de pênaltis","⚽"],["fal","Cobrador de faltas","🦶"],["pdp","Pegador de pênaltis","🧤"],["ref","Reflexos","👐"]];
+/* específicos: pdp/ref só goleiro (pênalti no jogo e na disputa; reflexos = menos gols sofridos), cpe/fal só jogador de linha (pênaltis; faltas perigosas em passoMinuto) */
+const ATR_GOL=new Set(["pdp","ref"]),ATR_LIN=new Set(["cpe","fal"]);
+const atrVale=(p,k)=>ATR_GOL.has(k)?p.pos==="GOL":ATR_LIN.has(k)?p.pos!=="GOL":true;
+const atrsDe=p=>ATRS.filter(([k])=>atrVale(p,k));
 const ATR_OFF={
-  GOL:{atq:-42,def:6,vel:-24,pas:-16,fin:-42,fis:-4,dri:-45,cab:-30},
-  ZAG:{atq:-22,def:5,vel:-8,pas:-10,fin:-26,fis:4,dri:-20,cab:4},
-  LAT:{atq:-9,def:-2,vel:6,pas:-4,fin:-17,fis:3,dri:-4,cab:-14},
-  VOL:{atq:-12,def:2,vel:-4,pas:2,fin:-14,fis:5,dri:-8,cab:-2},
-  MEI:{atq:0,def:-14,vel:-2,pas:6,fin:-4,fis:-2,dri:5,cab:-14},
-  ATA:{atq:5,def:-28,vel:4,pas:-4,fin:6,fis:-2,dri:4,cab:-4}};
-const ATR_REL={GOL:{def:1,fis:.5},ZAG:{def:1,fis:.5,vel:.5},LAT:{def:.5,vel:1,pas:.5,fis:.5,dri:.5},VOL:{def:1,pas:.5,fis:.5},MEI:{pas:1,atq:.5,fin:.5,vel:.5,dri:1},ATA:{atq:1,fin:1,vel:.5,dri:.5,cab:.5}}; // peso de cada ponto na força: o ponto principal da posição = 1; o ov sobe aos poucos (metade disso por ponto, ver usarPonto)
+  GOL:{atq:-42,def:6,vel:-24,pas:-16,fin:-42,fis:-4,dri:-45,cab:-30,cpe:-40,fal:-45,pdp:-4,ref:3},
+  ZAG:{atq:-22,def:5,vel:-8,pas:-10,fin:-26,fis:4,dri:-20,cab:4,cpe:-18,fal:-22,pdp:-60,ref:-60},
+  LAT:{atq:-9,def:-2,vel:6,pas:-4,fin:-17,fis:3,dri:-4,cab:-14,cpe:-12,fal:-6,pdp:-60,ref:-60},
+  VOL:{atq:-12,def:2,vel:-4,pas:2,fin:-14,fis:5,dri:-8,cab:-2,cpe:-10,fal:-8,pdp:-60,ref:-60},
+  MEI:{atq:0,def:-14,vel:-2,pas:6,fin:-4,fis:-2,dri:5,cab:-14,cpe:-3,fal:0,pdp:-60,ref:-60},
+  ATA:{atq:5,def:-28,vel:4,pas:-4,fin:6,fis:-2,dri:4,cab:-4,cpe:2,fal:-6,pdp:-60,ref:-60}};
+const ATR_REL={GOL:{def:1,fis:.5,ref:.5},ZAG:{def:1,fis:.5,vel:.5},LAT:{def:.5,vel:1,pas:.5,fis:.5,dri:.5},VOL:{def:1,pas:.5,fis:.5},MEI:{pas:1,atq:.5,fin:.5,vel:.5,dri:1},ATA:{atq:1,fin:1,vel:.5,dri:.5,cab:.5}}; // peso de cada ponto na força: o ponto principal da posição = 1; o ov sobe aos poucos (metade disso por ponto, ver usarPonto)
 function atributos(p){
   const o=ATR_OFF[p.pos]||ATR_OFF.MEI,mag=.7+Math.max(0,p.ov-40)/70;
-  const fortes=ATRS.map(a=>a[0]).sort((a,b)=>o[b]-o[a]),destaque=fortes[hashId(p.id,31)%2],r={};
-  ATRS.forEach(([k],i)=>{let v=p.ov+o[k]*mag+(hashId(p.id,20+i)%9-4)+(k===destaque&&p.ov>60?Math.round((p.ov-60)/7):0)+((p.ap||{})[k]||0);
+  const fortes=ATRS.slice(0,8).map(a=>a[0]).sort((a,b)=>o[b]-o[a]),destaque=fortes[hashId(p.id,31)%2],r={},hb=habilidadesDe(p).join("|"),espP=k=>(k==="cpe"||k==="pdp")&&/pênaltis/i.test(hb)?8:k==="fal"&&/falta|chute de longe|bola parada/i.test(hb)?8:0; // habilidade de pênalti/falta = +8 no ponto específico
+  ATRS.forEach(([k],i)=>{let v=p.ov+(o[k]||0)*mag+(hashId(p.id,i<8?20+i:40+i)%9-4)+(k===destaque&&p.ov>60?Math.round((p.ov-60)/7):0)+((p.ap||{})[k]||0)+espP(k);
     if(k==="vel"&&p.age>=31)v-=p.age-30;if(k==="fis"&&p.age>=33)v-=(p.age-32)*1.5;
     r[k]=Math.round(clamp(v,8,99))});
   return r}
@@ -6124,7 +6134,7 @@ const pontosTreino=()=>{const u=G.user;if(!u.pts)u.pts={};return u.pts};
 const totalPontos=()=>Object.values(pontosTreino()).reduce((a,b)=>a+b,0);
 function usarPonto(id,k){
   const p=G.players[id],P=pontosTreino();if(!p||p.club!==G.user.club)return "Esse jogador não está no seu elenco.";
-  if(!(P[k]>0))return "Você não tem pontos disso.";if(atributos(p)[k]>=99)return "Esse atributo já está no máximo.";
+  if(!(P[k]>0))return "Você não tem pontos disso.";if(!atrVale(p,k))return p.pos==="GOL"?"Esse ponto é só para jogador de linha.":"Esse ponto é só para goleiro.";if(atributos(p)[k]>=99)return "Esse atributo já está no máximo.";
   P[k]--;p.ap=p.ap||{};p.ap[k]=(p.ap[k]||0)+1;p.acc=(p.acc||0)+((ATR_REL[p.pos]||{})[k]||.25)*(p.ov>=85?.5:1); // 1 ponto no atributo principal = +1 de força (2 pontos acima de 85)
   while(p.acc>=1&&p.ov<99){p.acc--;p.ov++}
   return null}
@@ -6133,7 +6143,7 @@ function sortearPontos(){const ks=ATRS.map(a=>a[0]).sort(()=>rnd()-.5).slice(0,3
 const corAtr=v=>v>=85?"var(--canario)":v>=70?"var(--ok)":v>=50?"var(--aviso)":"var(--ruim)";
 function barrasAtr(p,botoes){
   const at=atributos(p),P=pontosTreino();
-  return `<div class="atrs">${ATRS.map(([k,n,ic])=>{const v=at[k],ex=(p.ap||{})[k]||0;
+  return `<div class="atrs">${atrsDe(p).map(([k,n,ic])=>{const v=at[k],ex=(p.ap||{})[k]||0;
     return `<div class="atr"><span>${ic} ${n}</span><div class="atr-b"><i style="width:${v}%;background:${corAtr(v)}"></i></div><b class="num">${v}${ex?`<em>+${ex}</em>`:""}</b>${botoes?`<button class="btn mini atr-mais" data-a="ptsadd" data-v="${p.id}|${k}"${P[k]>0&&v<99?"":" disabled"} aria-label="Usar 1 ponto de ${n}">+${P[k]>0?`<small>${P[k]}</small>`:""}</button>`:""}</div>`}).join("")}</div>`}
 function quadroPontos(){
   const P=pontosTreino(),bolas=G.user.bolas||0;
@@ -6144,7 +6154,7 @@ function bolinhaJog(p){const u=unisDe(G.clubs[G.user.club])[0],[bg,fg]=({GOL:["#
   return `<svg viewBox="-16 -16 32 39" width="30" height="37" aria-hidden="true"><defs><clipPath id="bjClip"><circle r="11.8"/></clipPath></defs><circle r="13.2" fill="${u.camisa}" stroke="${u.detalhe&&distCor(u.detalhe,u.camisa)>60?u.detalhe:"#ffffff"}" stroke-width="2.4"/><g clip-path="url(#bjClip)">${rostoSVG(p,25).replace("<svg",'<svg x="-12.5" y="-10.8"')}</g><g transform="translate(0 17.6)"><rect x="-11.8" y="-5.2" width="23.6" height="10.4" rx="2.9" fill="${bg}" stroke="rgba(0,0,0,.35)" stroke-width=".6"/><text y="2.8" text-anchor="middle" font-size="7.4" font-weight="800" fill="${fg}" font-family="Archivo,Arial,sans-serif">${p.pos}</text></g></svg>`}
 const POS_GRUPO={GOL:"Goleiros",ZAG:"Zagueiros",LAT:"Laterais",VOL:"Volantes",MEI:"Meias",ATA:"Atacantes"};
 function modalPontosTipo(k){
-  const P=pontosTreino(),a=ATRS.find(x=>x[0]===k),el=jogadoresDo(G.user.club).sort((x,y)=>ORD_POS[x.pos]-ORD_POS[y.pos]||y.ov-x.ov);
+  const P=pontosTreino(),a=ATRS.find(x=>x[0]===k),el=jogadoresDo(G.user.club).filter(p=>atrVale(p,k)).sort((x,y)=>ORD_POS[x.pos]-ORD_POS[y.pos]||y.ov-x.ov);
   modal(`<h3>${a[2]} Pontos de ${a[1]}</h3><p class="muted peq" style="margin:0 0 8px">${P[k]>0?`Você tem <b style="color:var(--canario)">${P[k]}</b> ponto${P[k]>1?"s":""}. Toque em + para dar 1 ponto ao jogador.`:"Você não tem pontos disso agora. Ganhe Bolas Douradas vencendo jogos com 3 gols ou mais."}</p>
   <div class="pts-lista">${el.map((p,i)=>{const v=atributos(p)[k],ex=(p.ap||{})[k]||0,tit=i===0||el[i-1].pos!==p.pos?`<b class="pts-grupo">${POS_GRUPO[p.pos]||p.pos}</b>`:"";return `${tit}<div class="pts-lin"><span class="pts-bola">${bolinhaJog(p)}</span><div class="nm"><b>${esc(nomeCurto(p.n))}</b><div class="atr-b"><i style="width:${v}%;background:var(--canario)"></i></div></div><b class="num">${v}${ex?`<em>+${ex}</em>`:""}</b><button class="btn mini atr-mais" data-a="ptsadd" data-v="${p.id}|${k}|t"${P[k]>0&&v<99?"":" disabled"}>+</button></div>`}).join("")}</div>
   <div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`)}
