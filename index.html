@@ -368,7 +368,13 @@ td .linha svg{flex:0 0 auto}
 .ao-vivo .lance.info{grid-template-columns:31px 1fr}
 .ao-vivo .lance .mk{font-size:9.5px}
 .lance{display:grid;grid-template-columns:34px auto 1fr;gap:8px;align-items:baseline;background:var(--gramado-2);border-radius:10px;padding:8px 10px;font-size:14px}
-.lance.amarelo{box-shadow:inset 0 0 0 1.5px #ffd23f}.lance.vermelho{box-shadow:inset 0 0 0 1.5px #ff4d4d}.lance.var{box-shadow:inset 0 0 0 1.5px #ffffff}.lance.gol{box-shadow:inset 0 0 0 1.5px #3ddc84}
+.lance.amarelo{box-shadow:inset 0 0 0 1.5px #ffd23f}.lance.vermelho{box-shadow:inset 0 0 0 1.5px #ff4d4d}.lance.var{box-shadow:inset 0 0 0 1.5px #ffffff}.lance.gol{box-shadow:inset 0 0 0 1.5px #3ddc84}.lance.peng{box-shadow:inset 0 0 0 1.5px #3ddc84}.lance.penx{box-shadow:inset 0 0 0 1.5px #ff4d4d}
+.painel.pen .pen-placar{display:grid;gap:6px;margin-top:8px}.pen-lin{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.25);border-radius:10px;padding:6px 10px}.pen-lin>b:first-of-type{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pen-bolas{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}.pen-bolas i{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.35)}.pen-bolas i.g{background:#3ddc84;border-color:#3ddc84}.pen-bolas i.x{background:#ff4d4d;border-color:#ff4d4d}.pen-n{font-size:20px;min-width:22px;text-align:right}
+.pen-grade{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.pen-jog{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;border-radius:12px;background:rgba(255,255,255,.06);border:2px solid transparent;color:inherit;font:inherit}.pen-jog b{font-size:12px;line-height:1.1;text-align:center}.pen-jog small{opacity:.7;font-size:11px}.pen-jog.sel{border-color:#ffd23f;background:rgba(255,210,63,.12)}.pen-jog:disabled{opacity:1}
+.pen-num{position:absolute;top:4px;left:6px;background:#ffd23f;color:#111;font-weight:800;border-radius:50%;width:22px;height:22px;display:grid;place-items:center;font-size:13px}
+.pen-agora{display:flex;align-items:center;gap:12px;margin-top:10px;padding:10px;border-radius:12px;background:rgba(255,255,255,.07);animation:penEntra .3s ease}.pen-agora div{display:flex;flex-direction:column}.pen-agora b{font-size:18px}.pen-agora span{opacity:.8;font-size:13px}.pen-agora.g{background:rgba(61,220,132,.18)}.pen-agora.g b{color:#3ddc84}.pen-agora.x{background:rgba(255,77,77,.16)}.pen-agora.x b{color:#ff6b6b}
+@keyframes penEntra{from{transform:scale(.94);opacity:0}to{transform:none;opacity:1}}
 .lance .min{font-family:var(--f-display);font-weight:700;color:var(--cal-2)}
 .lance .mk{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:5px}
 .lance .mk:empty{display:none}
@@ -2248,21 +2254,59 @@ function passoMinuto(){
 function encerrarAoVivo(){
   const V=G.live;
   if(V.m.ko&&V.gh===V.ga){
-    const F={h:forcasCfg(V.L.h.xi,V.L.h.form,V.L.h.est,V.L.h.cid),a:forcasCfg(V.L.a.xi,V.L.a.form,V.L.a.est,V.L.a.cid)};
-    const c={h:clamp(.76+(F.h.att-F.a.def)/250,.6,.9),a:clamp(.76+(F.a.att-F.h.def)/250,.6,.9)};
-    let ph=0,pa=0;for(let i=0;i<5;i++){if(rnd()<c.h)ph++;if(rnd()<c.a)pa++}
-    while(ph===pa){const x=rnd()<c.h,y=rnd()<c.a;ph+=x;pa+=y}
-    V.pen=ph>pa?"h":"a";V.penPl=[ph,pa];
-    narrar("info",`Empate no tempo normal. Nos pênaltis: ${nomeLado("h")} ${ph} × ${pa} ${nomeLado("a")}. ${nomeLado(V.pen)} se classifica!`);
+    if(!V.auto&&!(VIVO&&VIVO.papel)){V.est="penais";V.pn={fase:"esc",bat:(V.cmd||"tec")==="tec"?penBatedores(V.lado).slice(0,5):[],i:0};narrar("info",`Empate no tempo normal: ${nomeLado("h")} ${V.gh} × ${V.ga} ${nomeLado("a")}. A vaga vai ser decidida nos pênaltis!`);return}
+    V.pn={k:penCobrancas({h:[],a:[]})};V.pn.i=V.pn.k.length;
   }
+  penFim(V);
+}
+/* pênaltis do mata-mata: o jogo para, escolhe 5 batedores (no comando do técnico ele escolhe), cobranças uma a uma; depois do 5º os melhores em campo batem sozinhos */
+const ehBatedor=p=>p.pos!=="GOL"&&habilidadesDe(p).some(h=>/pênaltis/i.test(h));
+function penBatedores(s){const L=G.live.L[s],v=p=>ovF(p)+(p.pos==="ATA"?8:p.pos==="MEI"?5:p.pos==="GOL"?-60:0)+(ehBatedor(p)?15:0);
+  return L.xi.filter(id=>id!=null&&G.players[id]).sort((a,b)=>v(G.players[b])-v(G.players[a]))}
+function penGoleiro(s){const L=G.live.L[s],id=L.xi[FORMACOES[L.form].s.indexOf("GOL")];return id!=null&&G.players[id]||null}
+function penChance(p,gk){let c=.74+(p.ov-(gk?gk.ov:50))/250-(1-fisF(p))*.3;if(ehBatedor(p))c+=.07;if(gk&&habilidadesDe(gk).some(h=>/pênaltis/i.test(h)))c-=.06;return clamp(c,.55,.92)}
+function penCobrancas(ord){ // ord={h:[ids],a:[ids]} → cobranças até ter vencedor (casa bate primeiro)
+  const k=[],gol={h:0,a:0},n={h:0,a:0},gk={h:penGoleiro("a"),a:penGoleiro("h")};
+  const F={};["h","a"].forEach(s=>{const b=penBatedores(s);F[s]=ord[s].concat(b.filter(id=>!ord[s].includes(id)));if(!F[s].length)F[s]=[null]});
+  const decidido=()=>n.h<=5&&n.a<=5?gol.h+5-n.h<gol.a||gol.a+5-n.a<gol.h:n.h===n.a&&gol.h!==gol.a;
+  for(let r=0;r<40;r++)for(const s of["h","a"]){const id=F[s][n[s]%F[s].length],p=G.players[id],g=rnd()<(p?penChance(p,gk[s]):.7)?1:0;n[s]++;gol[s]+=g;k.push({s,id,g});if(decidido())return k}
+  return k}
+function penPlacar(V){let ph=0,pa=0;(V.pn.k||[]).slice(0,V.pn.i).forEach(x=>{if(x.s==="h")ph+=x.g;else pa+=x.g});return [ph,pa]}
+function penFim(V){
+  if(V.pn&&V.pn.k){const [ph,pa]=penPlacar(V);V.pen=ph>pa?"h":ph<pa?"a":rnd()<.5?"h":"a";V.penPl=[ph,pa];V.pn.fase="fim";
+    narrar("info",`Nos pênaltis: ${nomeLado("h")} ${ph} × ${pa} ${nomeLado("a")}. ${nomeLado(V.pen)} se classifica!`)}
   V.est="fim";
   narrar("info",`Fim de jogo: ${nomeLado("h")} ${V.gh} × ${V.ga} ${nomeLado("a")}.`);
 }
+let PEN_T=null;
+function penSeguir(){if(PEN_T)return;const V=G.live;if(!V||V.est!=="penais"||!V.pn||V.pn.fase!=="bat")return;
+  PEN_T=setTimeout(()=>{PEN_T=null;const V=G.live;if(!V||V.est!=="penais"||V.pn.fase!=="bat")return;
+    const x=V.pn.k[V.pn.i],p=G.players[x.id],nm=p?p.n:"O batedor",gk=penGoleiro(x.s==="h"?"a":"h"),gn=gk?gk.n:"o goleiro",tm=nomeLado(x.s);
+    if(!V.pn.prep){V.pn.prep=1;render();return} // suspense: ajeita a bola na marca
+    V.pn.prep=0;V.pn.i++;
+    narrar(x.g?"peng":"penx",x.g?pick([`${nm} (${tm}) bate firme no canto. Gol!`,`${nm} (${tm}) desloca ${gn} e marca.`,`${nm} (${tm}) bate no meio e converte.`,`${nm} (${tm}) bate com categoria. Gol!`]):pick([`${gn} pula no canto certo e defende a cobrança de ${nm} (${tm})!`,`${nm} (${tm}) manda por cima do gol!`,`${nm} (${tm}) acerta a trave!`,`${gn} defende! ${nm} (${tm}) desperdiça.`]),"Pênalti");
+    try{if(x.g)somGol(x.s===V.lado);if(x.g&&x.s===V.lado)vibrar("golNosso")}catch(e){}
+    if(V.pn.i>=V.pn.k.length){penFim(V);try{apito(1.2)}catch(e){}}
+    salvar();render()},(V.pn.prep?1800:V.pn.i?1600:900)/velocidade)}
+function painelPenais(V){const P=V.pn,eu=V.lado,pl=penPlacar(V),feitas=(P.k||[]).slice(0,P.i);
+  const linha=(s,j)=>{const ks=feitas.filter(x=>x.s===s),c=G.clubs[V.L[s].cid];
+    return `<div class="pen-lin">${marcaDe(c,24)}<b>${esc(c.short||c.name)}</b><span class="pen-bolas">${Array.from({length:Math.max(5,ks.length)},(_,q)=>`<i class="${q<ks.length?(ks[q].g?"g":"x"):""}"></i>`).join("")}</span><b class="num pen-n">${pl[j]}</b></div>`};
+  let h=`<div class="painel pen"><b class="etapa">Disputa de pênaltis</b><div class="pen-placar">${linha("h",0)}${linha("a",1)}</div>`;
+  if(P.fase==="esc"){const tec=(V.cmd||"tec")==="tec";
+    h+=`<p class="muted peq" style="margin:10px 0 8px">${tec?"O técnico escolheu os 5 batedores, nesta ordem:":`Toque em 5 jogadores na ordem das cobranças (${P.bat.length} de 5).`}</p><div class="pen-grade">${penBatedores(eu).map(id=>{const p=G.players[id],k=P.bat.indexOf(id);
+      const tg=tec?"div":"button";return `<${tg} class="pen-jog${k>=0?" sel":""}"${tec?"":` data-a="penbat" data-v="${id}"`}>${k>=0?`<span class="pen-num num">${k+1}</span>`:""}${rostoSVG(p,44)}<b>${esc(nomeCurto(p.n))}</b><small>${p.pos} · ${p.ov}</small></${tg}>`}).join("")}</div>
+      ${tec?"":`<button class="btn full" data-a="penauto" style="margin-top:10px">Deixar o técnico escolher</button>`}<button class="btn prim full" data-a="penini" style="margin-top:8px">Começar cobranças</button>`}
+  else{const x=P.k[P.i],ult=feitas[feitas.length-1];
+    if(P.prep&&x){const p=G.players[x.id];h+=`<div class="pen-agora">${p?rostoSVG(p,64):""}<div><b>${esc(p?p.n:"")}</b><span>${esc(nomeLado(x.s))} · ajeita a bola na marca...</span></div></div>`}
+    else if(ult){const p=G.players[ult.id];h+=`<div class="pen-agora ${ult.g?"g":"x"}">${p?rostoSVG(p,64):""}<div><b>${ult.g?"GOL!":"PERDEU!"}</b><span>${esc(p?p.n:"")} · ${esc(nomeLado(ult.s))}</span></div></div>`}
+    setTimeout(penSeguir,0)}
+  return h+`</div>`}
 function retomarAoVivo(){const V=G.live;if(!V)return;if(V.est==="pausa"&&V.intervaloPendente){V.intervaloPendente=false;V.est="intervalo";return}if(V.est==="pausa"||V.est==="intervalo"){V.est="rodando";V.motivo=null;V.vaga=null}}
 function simularRestante(){
   const V=G.live;V.auto=true;
   let guard=0;
   while(V.est!=="fim"&&guard++<200){
+    if(V.est==="penais"){if(!V.pn.k||V.pn.fase==="esc")V.pn.k=penCobrancas({h:[],a:[]});V.pn.i=V.pn.k.length;penFim(V);break}
     if(V.est==="pausa"||V.est==="intervalo"){V.est="rodando";V.intervaloPendente=false}
     // repõe vaga aberta por lesão do usuário
     const L=V.L[V.lado];L.xi.forEach((id,i)=>{if(id==null&&!L.bloq[i]&&L.subs<MAX_SUBS){const q=melhorReserva(V.lado,FORMACOES[L.form].s[i]);if(q)substituir(V.lado,i,q.id)}});
@@ -3621,7 +3665,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792937399";
+const VERSAO="1792944443";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -6286,7 +6330,7 @@ function telaGol(f,fim){const V=G.live,c=G.clubs[G.user.club],e=c.escudo||{},p=f
   {const cores=[e.c1||c.c1||"#ffd23f",e.c2||c.c2||"#ffffff","#ffd23f"];for(let j=0;j<70;j++){const q=document.createElement("i");q.className="gt-conf";q.style.left=Math.random()*100+"%";q.style.background=cores[j%3];q.style.animationDelay=Math.random()*.5+"s";q.style.animationDuration=1.6+Math.random()*1.4+"s";o.appendChild(q)}}
   let ok=false;const sai=()=>{if(ok)return;ok=true;o.classList.add("sai");setTimeout(()=>{o.remove();fim()},300)};
   o.addEventListener("click",sai);setTimeout(sai,velocidade>1?2400:3200)}
-function relogio(V){const t=V.min<=45&&!V.ht?"1º tempo":"2º tempo";return V.est==="fim"?"Encerrado":V.est==="intervalo"?"Intervalo":`${V.min}${V.add?"+"+V.add:""}' · ${t}`}
+function relogio(V){const t=V.min<=45&&!V.ht?"1º tempo":"2º tempo";return V.est==="fim"?"Encerrado":V.est==="penais"?"Pênaltis":V.est==="intervalo"?"Intervalo":`${V.min}${V.add?"+"+V.add:""}' · ${t}`}
 const ROT_FEED={penal:"Pênalti",var:"VAR",jogada:"Lance",gol:"Gol",chance:"Chance",amarelo:"Amarelo",vermelho:"Vermelho",lesao:"Lesão",sub:"Troca",info:""};
 const ICO_SUB='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v14M3 14l4 4 4-4"/><path d="M17 20V6M13 10l4-4 4 4"/></svg>';
 function linhaFeed(f,novo,i){if(f.t==="sub"&&f.entra)return `<li class="lance sub-card${novo?" novo":""}"${novo&&i?` style="animation-delay:${i*.9}s"`:""}><span class="min num">${f.m?f.m+"'":""}</span><span class="sub-ico">${ICO_SUB}</span><span class="tx"><b class="sub-tit">Substituição · ${esc(f.time)}</b><span class="sub-in">Entra ${esc(f.entra)}</span><span class="sub-out">Sai ${esc(f.sai)}</span>${f.mot?`<small>Motivo: ${esc(f.mot)}</small>`:""}</span></li>`;
@@ -6311,15 +6355,17 @@ function telaPartida(){
   ${ehClassico(V.m)?cardClassico().replace('class="classico"','class="classico" style="margin-inline:0"'):""}<div class="prog" aria-hidden="true"><i id="lv-prog" style="width:${Math.min(V.min,90)/90*100}%"></i><span></span></div>${vivoFaixa(V)}`;
   if(V.est!=="fim"){const tec=(V.cmd||"tec")==="tec";
     h+=`<button class="btn-sair-jogo" data-a="lvsair" aria-label="Desistir da partida"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg></button>`;
-    h+=`<div class="cmd-sel" role="radiogroup" aria-label="Quem comanda as trocas"><button role="radio" aria-checked="${tec}" class="${tec?"on":""}" data-a="lvcmd" data-v="tec">Comando do técnico</button>${V.est==="rodando"?`<button class="cmd-pausa" data-a="lvpausar" aria-label="Pausar o jogo"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>`:`<button class="cmd-pausa" data-a="lvretomar" aria-label="Continuar o jogo"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg></button>`}<button role="radio" aria-checked="${!tec}" class="${tec?"":"on"}" data-a="lvcmd" data-v="manual">Comando manual</button></div>
+    if(V.est!=="penais")h+=`<div class="cmd-sel" role="radiogroup" aria-label="Quem comanda as trocas"><button role="radio" aria-checked="${tec}" class="${tec?"on":""}" data-a="lvcmd" data-v="tec">Comando do técnico</button>${V.est==="rodando"?`<button class="cmd-pausa" data-a="lvpausar" aria-label="Pausar o jogo"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>`:`<button class="cmd-pausa" data-a="lvretomar" aria-label="Continuar o jogo"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg></button>`}<button role="radio" aria-checked="${!tec}" class="${tec?"":"on"}" data-a="lvcmd" data-v="manual">Comando manual</button></div>
     <p class="muted peq cmd-dica">${tec?"O técnico faz as trocas sozinho (cansaço, lesão e tática) sem parar o jogo.":"Você decide as trocas. Se alguém se machucar, o jogo para para você escolher."}</p>${tec?"":blocoGritos(V)}`}
   if(V.est==="rodando"){
     h+=`<div class="ctrl"><button class="btn" data-a="lvpausa" data-v="subs">Fazer substituição</button><button class="btn" data-a="lvpausa" data-v="form">Trocar formação</button></div>
     <div class="linha" style="justify-content:center;margin-top:8px;flex-wrap:wrap"><button class="btn mini${velocidade===2?" prim-mini":""}" data-a="lvvel" aria-pressed="${velocidade===2}" aria-label="Velocidade 2 vezes">2×</button><button class="btn mini${velocidade===3?" prim-mini":""}${perfil().nivel<NIVEL_3X?" vel-bloq":""}" data-a="lvvel3" aria-pressed="${velocidade===3}" aria-label="Velocidade 3 vezes${perfil().nivel<NIVEL_3X?", bloqueada até o nível "+NIVEL_3X:""}">${perfil().nivel<NIVEL_3X?"🔒 ":""}3×</button></div>`;
   }else if(V.est==="pausa"||V.est==="intervalo"){
     h+=painelParado(V);
+  }else if(V.est==="penais"){
+    h+=painelPenais(V);
   }else{
-    h+=`<div class="fim-jogo"><button class="btn prim full" data-a="lvconcluir">Ver resultado</button></div>`;
+    h+=`${V.pn&&V.pn.fase==="fim"?painelPenais(V):""}<div class="fim-jogo"><button class="btn prim full" data-a="lvconcluir">Ver resultado</button></div>`;
   }
   h+=`<h2>Lances</h2><ol class="feed" id="lv-feed">${V.feed.slice().reverse().map(linhaFeed).join("")}</ol>`;
   if(V.est!=="fim")h+=`<h2>Seu time em campo</h2><div class="cartao em-campo" id="lv-time">${blocoEmCampo(V)}</div>`;
@@ -6889,6 +6935,9 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
       if(meu==="h"){V.gh=0;V.sh=[];V.ga=ga}else{V.ga=0;V.sa=[];V.gh=ga}V.pen=null;
       narrar("info",`${G.clubs[G.user.club].name} abandona a partida. Vitória do adversário por W.O.`);
       V.min=Math.max(V.min,90);V.est="fim";concluirAoVivo();if(G.ultimoJogo)G.ultimoJogo.pendente=true;aba="resultado";salvar();window.scrollTo(0,0);setTimeout(somResultado,300);break;}
+    case "penbat":{const P=G.live.pn,id=+v,k=P.bat.indexOf(id);if(k>=0)P.bat.splice(k,1);else if(P.bat.length<5)P.bat.push(id);else{toastErro("Já escolheu 5. Toque num escolhido para tirar.");return}break}
+    case "penauto":G.live.pn.bat=penBatedores(G.live.lado).slice(0,5);break;
+    case "penini":{const V=G.live,P=V.pn;if(P.bat.length<5){toastErro("Escolha 5 batedores.");return}P.k=penCobrancas({h:V.lado==="h"?P.bat:[],a:V.lado==="a"?P.bat:[]});P.fase="bat";P.i=0;P.prep=0;try{apito(.6)}catch(e){}salvar();break}
     case "lvpausar":{if(G.live.est==="rodando"){G.live.est="pausa";G.live.motivo=null}painel=null;liveSel=null;pararTimer();salvar();break;}
     case "lvvel":velocidade=velocidade===2?1:2;if(G.live&&G.live.est==="rodando")iniciarTimer();break;
     case "lvvel3":if(perfil().nivel<NIVEL_3X){toastErro(`🔒 Bloqueado. Libera no nível ${NIVEL_3X}.`);return}velocidade=velocidade===3?1:3;if(G.live&&G.live.est==="rodando")iniciarTimer();break;
