@@ -570,6 +570,7 @@ nav.abas[hidden]{display:none}
 .noticia.tecnico{border-left-color:#e5484d}.noticia.rumor{border-left-color:#8e4ec6}.noticia.polemica{border-left-color:#f76b15}.noticia.exterior{border-left-color:var(--azul)}
 .lg-news{display:flex;flex-direction:column;gap:10px;width:100%;text-align:left;margin-top:12px;font:inherit;color:inherit;cursor:pointer}
 .jog.of-promo{position:relative;border-radius:12px;outline:2px solid #ff4d4d;outline-offset:-2px;animation:promoBorda 1.6s ease-in-out infinite}
+.promo-canto.dest{background:linear-gradient(135deg,#f7d354,#d99a00);color:#231700}
 .promo-canto{position:absolute;top:-1px;right:-1px;background:#e5484d;color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:0 12px 0 8px;pointer-events:none}
 @keyframes promoBorda{0%,100%{outline-color:#ff8a8a;box-shadow:0 0 6px rgba(255,77,77,.35)}50%{outline-color:#b3121f;box-shadow:0 0 14px rgba(255,77,77,.7)}}
 @media (prefers-reduced-motion:reduce){.jog.of-promo{animation:none}}
@@ -1217,7 +1218,7 @@ body:has(header.topo) .esc-fixo{top:72px}
 <script src="img/tec-fotos.js?v=9f4c1933"></script>
 <script src="dados/elencos.js?v=bb464417"></script>
 <script src="img/escudos-img.js?v=df90de51"></script>
-<script src="dados/idiomas.js?v=23767458"></script>
+<script src="dados/idiomas.js?v=9912e8f0"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -1363,6 +1364,9 @@ function novoJogador(pos,base,clube,idade,ling){
   return id;
 }
 /* desempenho na temporada mexe no valor: gols, assistências e boas notas sobem; lesões e notas baixas descem (de −15% a +25%) */
+/* grande fase: muitos gols/assistências ou notas altas na temporada (vale para propostas de até 5x o valor) */
+function emAlta(p){if(!p||(p.j||0)<5||!(p.nn>=4))return false;const nota=p.nt/p.nn,ga=((p.g||0)+(p.as||0)*.6)/p.j;
+  return nota>=7.3||(p.pos!=="GOL"&&p.pos!=="ZAG"&&ga>=.55)||((p.pos==="GOL"||p.pos==="ZAG")&&nota>=7.1)}
 function formaValor(p){if(!p||!p.j)return 1;let f=1;
   if(p.nn>=3)f+=(p.nt/p.nn-6.3)*.08;
   if(p.pos!=="GOL")f+=Math.min(.15,(p.g||0)*.012)+Math.min(.06,(p.as||0)*.006);
@@ -1491,11 +1495,11 @@ function novaTemporada(){
 }
 
 function disponivel(p){return p.inj<=0&&!(p.susp>0)}
-function fisF(p){return .82+.18*((p.fis??100)/100)}
+function fisF(p){return .7+.3*((p.fis??100)/100)}
 const ovF=p=>p.ov*fisF(p);
 /* energia (p.fis, 0–100): gasto por minuto em campo — 90 min ≈ 30 a 60 de energia */
 const GASTO_POS={GOL:.3,ZAG:.42,LAT:.5,VOL:.52,MEI:.5,ATA:.47};
-const fisico=p=>.9+(hashId(p.id,7)%21)/100; // condição física própria do atleta (0,9 a 1,1)
+const fisico=p=>2-clamp(1.5-atributos(p).fis*.0078,.72,1.25); // atributo Preparo físico: 99 gasta 27% menos energia, 40 gasta 19% mais
 function gastoMin(p,pos,est,ritmo){return (GASTO_POS[pos]||.45)*(ritmo||1)*(est==="of"?1.08:est==="def"?.94:1)*(p.age>=32?1.12:p.age<=23?.93:1)*(2-fisico(p))}
 function gastar(p,v){if(p)p.fis=clamp((p.fis??100)-v,0,100)}
 /* recuperação entre jogos: pouco gasto volta a 100; muito gasto volta a ~90–97, conforme os dias de descanso */
@@ -1609,20 +1613,23 @@ function bonusPassivas(cid){
 }
 function passivasHTML(t){const ps=passivasTec(t);return ps.length?`<div class="tec-pas">${ps.map(p=>`<div class="tp"><b>${p[1]}</b><div>${p[2]}</div></div>`).join("")}</div>`:""}
 /* comandos do técnico (modo manual): +habilidade nas posições do comando por 10 min, com gasto de energia maior */
+/* comandos do técnico: m = chance de gol SUA, s = chance de gol do RIVAL (multiplicam o ritmo de gols em passoMinuto),
+   e = quanto mais rápido cansam os jogadores das posições pos; o efeito cai se eles já estiverem cansados (forcaGrito) */
 const GRITOS=[
-  {k:"atacar",n:"Vamos atacar!",d:"Meias e atacantes",pos:["MEI","ATA"],b:.5,e:2},
-  {k:"virada",n:"Vamos buscar a virada!",d:"Atacantes, meias e volantes",pos:["ATA","MEI","VOL"],b:.5,e:1.6},
-  {k:"meio",n:"Domina o meio-campo!",d:"Volantes e meias",pos:["VOL","MEI"],b:.5,e:2},
-  {k:"fechar",n:"Fecha a zaga!",d:"Zagueiros e goleiro",pos:["ZAG","GOL"],b:.5,e:2},
-  {k:"segurar",n:"Segura o jogo!",d:"Volantes, zagueiros e goleiro",pos:["VOL","ZAG","GOL"],b:.5,e:1.6},
-  {k:"limpo",n:"Sem falta, jogo limpo!",d:"Bem menos faltas e cartões",pos:[],b:0,e:1,cartao:.4}];
+  {k:"atacar",n:"Vamos atacar!",d:"Meias e atacantes",pos:["MEI","ATA"],m:2.2,s:1.3,e:2.5,fx:"Muito mais chances de gol, mas a defesa fica mais exposta"},
+  {k:"virada",n:"Vamos buscar a virada!",d:"Atacantes, meias e volantes",pos:["ATA","MEI","VOL"],m:2.6,s:1.6,e:2.2,fx:"Tudo ao ataque: o máximo de chances, com risco de levar gol"},
+  {k:"meio",n:"Domina o meio-campo!",d:"Volantes e meias",pos:["VOL","MEI"],m:1.4,s:.75,e:2,fx:"Mais posse: um pouco mais de chances e o rival cria menos"},
+  {k:"fechar",n:"Fecha a zaga!",d:"Zagueiros e goleiro",pos:["ZAG","GOL"],m:.85,s:.45,e:2,fx:"O rival chega bem menos; seu ataque perde um pouco"},
+  {k:"segurar",n:"Segura o jogo!",d:"Volantes, zagueiros e goleiro",pos:["VOL","ZAG","GOL"],m:.6,s:.4,e:1.6,fx:"Jogo travado: quase ninguém marca"},
+  {k:"limpo",n:"Sem falta, jogo limpo!",d:"Bem menos faltas e cartões",pos:[],m:1,s:1,e:1,cartao:.4,fx:"Bem menos faltas e cartões"}];
 const GRITO_MIN=10,GRITO_ESPERA=5;
+function forcaGrito(L,g){const sl=FORMACOES[L.form].s,ps=L.xi.map((id,i)=>g.pos.includes(sl[i])&&G.players[id]).filter(Boolean);
+  const en=ps.length?ps.reduce((a,p)=>a+(p.fis??100),0)/ps.length:100,k=clamp(en/80,.35,1);return {m:1+(g.m-1)*k,s:1+(g.s-1)*k}}
 function gritoAtivo(L){const V=G.live,g=L&&L.grito;return g&&V&&V.min<g.ate?GRITOS.find(x=>x.k===g.k):null}
 function forcasCfg(xi,form,est,cid){
   const slots=FORMACOES[form].s;
-  const V0=G.live,L0=V0&&V0.L&&(V0.L.h.cid===cid?V0.L.h:V0.L.a.cid===cid?V0.L.a:null),gr=gritoAtivo(L0);
   let sa=0,wa=0,sd=0,wd=0;
-  slots.forEach((s,i)=>{const p=G.players[xi[i]];const ef=(p?ovF(p)*eficiencia(p,s):28)*(gr&&gr.pos.includes(s)?1+gr.b:1);sa+=ef*W_ATT[s];wa+=W_ATT[s];sd+=ef*W_DEF[s];wd+=W_DEF[s]});
+  slots.forEach((s,i)=>{const p=G.players[xi[i]];const ef=p?ovF(p)*eficiencia(p,s):28;sa+=ef*W_ATT[s];wa+=W_ATT[s];sd+=ef*W_DEF[s];wd+=W_DEF[s]});
   const F=FORMACOES[form],E=ESTILOS[est],b=cid&&cid===G.user.club?bonusTec():cid?bonusIA(cid):0;
   // estilo: ofensivo tira defesa (menos se a zaga for muito boa); defensivo tira ataque (menos se o ataque for muito bom)
   const qa=sa/wa,qd=sd/wd,c=cid&&G.clubs[cid],ref=c&&G.tierBase&&G.tierBase[c.tier]!=null?G.tierBase[c.tier]:60;
@@ -2169,14 +2176,15 @@ function expulsar(s,i,txt){
 }
 function passoMinuto(){
   const V=G.live;if(!V||V.est!=="rodando")return;
-  if(V.varGol==null)V.varGol=rnd()<.15; // em 1 de cada 5 jogos o VAR revisa um gol
+  if(V.varGol==null)V.varGol=rnd()<.25; // em 1 de cada 4 jogos o VAR revisa um gol
   if((V.min===45&&!V.ht)||V.min>=90)V.add=(V.add||0)+1;else V.min++;
   for(const s of ["h","a"]){const L=V.L[s],sl=FORMACOES[L.form].s,gr=gritoAtivo(L);L.xi.forEach((id,i)=>{const p=G.players[id];if(p)gastar(p,gastoMin(p,sl[i],L.est,V.ritmo)*(gr&&gr.pos.includes(sl[i])?gr.e:1))})}
   const F={h:forcasCfg(V.L.h.xi,V.L.h.form,V.L.h.est,V.L.h.cid),a:forcasCfg(V.L.a.xi,V.L.a.form,V.L.a.est,V.L.a.cid)};
   const k=18,mh=V.m.neutro?1.16:1.3,ma=V.m.neutro?1.16:1.02;
   const lam={h:clamp(mh*Math.exp((F.h.att-F.a.def)/k)*V.fat.h,.1,4.5),a:clamp(ma*Math.exp((F.a.att-F.h.def)/k)*V.fat.a,.08,4.2)};
+  if(!V.m.amistoso)for(const s of ["h","a"]){const g=gritoAtivo(V.L[s]);if(!g)continue;const fg=forcaGrito(V.L[s],g),o=s==="h"?"a":"h";lam[s]=Math.min(lam[s]*fg.m,7);lam[o]*=fg.s}
   for(const s of ["h","a"]){
-    const L=V.L[s],nomeT=nomeLado(s),eu=L.cid===G.user.club;
+    const L=V.L[s],nomeT=nomeLado(s),eu=L.cid===G.user.club,g0=V.gh+V.ga;
     const r=rnd();
     if(V.m.amistoso){ // amistoso com roteiro: gols só nos minutos sorteados em V.rot
       if(!V.add&&V.rot&&V.rot[V.min]===s){const p=artilheiro(F[s]);aplicarGol(s,F,p).pre=preChute(p,nomeT)}
@@ -2190,7 +2198,7 @@ function passoMinuto(){
       else aplicarGol(s,F,p).pre=preChute(p,nomeT);
     }else if(r<lam[s]/90*2.4&&rnd()<.75){
       const p=artilheiro(F[s]);if(p){narrar("chance",`Quase! ${p.n} (${nomeT}) ${pick(FR_CHANCE)}.`);ultLance().pre=preChute(p,nomeT)}
-    }else if(rnd()<.0019){ // pênalti (metade passa pelo VAR)
+    }else if(rnd()<.003){ // pênalti: ~1 a cada 2 jogos (metade passa pelo VAR)
       const ps=F[s].xi.map(id=>G.players[id]).filter(Boolean),bat=ps.filter(p=>p.pos==="ATA"||p.pos==="MEI").sort((a,b)=>b.ov-a.ov)[0]||artilheiro(F[s]);
       narrar("penal",`PÊNALTI para o ${nomeT}! Jogador derrubado dentro da área.`);ultLance().pre=`Lance na área... o árbitro vai marcar?`;
       let vale=true;
@@ -2198,10 +2206,10 @@ function passoMinuto(){
       if(vale&&bat){if(rnd()<.77)aplicarGol(s,F,bat,true).pre=`${bat.n} ajeita a bola... corre para a cobrança...`;
         else{narrar("chance",`${pick(["O goleiro defende o pênalti de","Na trave! Desperdiça o pênalti","Pra fora! Isola o pênalti"])} ${bat.n} (${nomeT}).`);ultLance().pre=`${bat.n} ajeita a bola... corre para a cobrança...`}}
     }
-    const gS=V.m.amistoso?null:gritoAtivo(L); // comando do técnico aparece nos lances (além da força maior em forcasCfg)
-    if(gS&&gS.pos.length){
-      if(["atacar","virada","meio"].includes(gS.k)){if(rnd()<.09){const p=artilheiro(F[s]);if(p){narrar("chance",`${nomeT} pressiona, como pediu o técnico: ${p.n} ${pick(FR_CHANCE)}.`);ultLance().pre=preChute(p,nomeT)}}}
-      else if(rnd()<.09)narrar("info",`A defesa do ${nomeT} segue o que o técnico pediu e afasta o perigo.`);
+    const gS=V.m.amistoso?null:gritoAtivo(L); // comando do técnico: o efeito real está no ritmo de gols (lam); aqui só o relato
+    if(gS&&gS.pos.length){const ofe=gS.m>1.2;
+      if(ofe&&V.gh+V.ga>g0)narrar("info",`📣 Deu resultado o comando do técnico: "${gS.n}"`);
+      else if(rnd()<.04)narrar("info",ofe?`${nomeT} pressiona, como pediu o técnico.`:`A defesa do ${nomeT} segue o que o técnico pediu e afasta o perigo.`);
     }
     const emCampo=L.xi.map((id,i)=>[id,i]).filter(([id])=>id!=null);
     if(!V.m.amistoso&&emCampo.length&&rnd()<.016*((gritoAtivo(L)||{}).cartao||1)){
@@ -2304,8 +2312,8 @@ function somarXP(qtd){
 function ganharXP(gf,gs,dobro){
   const P=perfil(),r=gf>gs?"v":gf<gs?"d":"e",ganho=XP_RES[r]*(dobro?2:1);
   P.j++;P[r]++;P.gp+=gf;P.gc+=gs;
-  const s=somarXP(ganho),bola=gf>gs&&gf>=3; // vitória com 3 gols ou mais dá uma Bola Dourada (Pontos de Treino)
-  if(bola)G.user.bolas=(G.user.bolas||0)+1;
+  const s=somarXP(ganho),bola=gf>=3; // 3 gols ou mais (qualquer resultado) dá uma Bola Dourada: 3 gols = 3 pontos, 4 = 4, 5 ou mais = 5
+  if(bola){G.user.bolas=(G.user.bolas||0)+1;(G.user.bolaPts=G.user.bolaPts||[]).push(Math.min(gf,5))}
   return {ganho,antes:s.antes,nivel:s.nivel,premio:s.premio,dobro:!!dobro,bola};
 }
 function xpBonus(qtd,motivo){somarXP(qtd);perfil().toastXP=`+${qtd} XP · ${motivo}`}
@@ -2618,9 +2626,10 @@ function processarNegocios(){
     if(orig)orig.ofm.est="respondida";
     if(p.club!==G.user.club)return;
     const venda=n.tipo==="venda",ratio=venda?n.pedido/valorJusto(p):n.mensal/refEmprestimo(p),
-      ok=ratio<=3&&rnd()<Math.min(.95,(ratio<=1.15?.85:ratio<=1.5?.65:ratio<=2?.45:.25)+(n.bonus||0));
+      alta=venda&&emAlta(p),lim=alta?5:3,
+      ok=ratio<=lim&&rnd()<Math.min(.95,(alta?(ratio<=1.15?.85:.8):(ratio<=1.15?.85:ratio<=1.5?.65:ratio<=2?.45:.25))+(n.bonus||0));
     if(ok)msgClube(n.cid,"Proposta aceita",venda?`Aceitamos o valor de ${dinheiro(n.pedido)} por ${p.n}. Para concluir a transferência, basta aceitar.`:`Aceitamos o empréstimo de ${p.n} por ${n.temp} temporada${n.temp>1?"s":""}, pagando ${dinheiro(n.mensal)} por mês. Para concluir, basta aceitar.`,{pid:p.id,tipo:n.tipo,v:n.pedido,temp:n.temp,mensal:n.mensal,est:"aceita",ev:G.ev});
-    else msgClube(n.cid,"Re: proposta por jogador",ratio>3?`Agradecemos o retorno, mas o valor pedido por ${p.n} está muito acima do que o clube pode pagar. Preferimos encerrar a negociação.`:`Analisamos a sua proposta por ${p.n}, mas não conseguimos chegar a um acordo. Por ora, vamos encerrar as conversas. Em outro momento, quem sabe, fazemos negócio.`)});
+    else msgClube(n.cid,"Re: proposta por jogador",ratio>lim?`Agradecemos o retorno, mas o valor pedido por ${p.n} está muito acima do que o clube pode pagar. Preferimos encerrar a negociação.`:`Analisamos a sua proposta por ${p.n}, mas não conseguimos chegar a um acordo. Por ora, vamos encerrar as conversas. Em outro momento, quem sabe, fazemos negócio.`)});
   // sem resposta em mais de 5 rodadas: o clube contrata outro jogador
   G.inbox.filter(m=>m.ofm&&(m.ofm.est==="aberta"||m.ofm.est==="aceita")&&G.ev-m.ofm.ev>5).forEach(m=>{m.ofm.est="expirada";const p=G.players[m.ofm.pid];
     msgClube(m.cid,"Re: interesse em jogador",`Como não tivemos a sua resposta${p?` sobre ${p.n}`:""}, contratamos outro jogador. Demorou muito. Mantemos a boa relação para uma próxima oportunidade.`)})}
@@ -2910,7 +2919,7 @@ function modalMensagem(i){
 function cartaoJogMsg(p){return `<button class="jog msg-jog" data-a="perfil" data-v="${p.id}">${fotoPos(p,p.pos,true)}<div class="nm"><b>${esc(p.n)}</b><span>${p.pos} · ${p.age} anos · valor ${dinheiro(valorJusto(p))}</span></div><div class="ov num">${p.ov}</div></button>`}
 function modalVender(i){
   const m=G.inbox[i],p=m&&m.ofm&&G.players[m.ofm.pid];if(!p)return;const vj=valorJusto(p),c=G.clubs[m.cid];
-  modal(`<h3>Vender ${esc(p.n)}</h3>${cartaoJogMsg(p)}<p class="muted peq">Quanto você quer pelo jogador? O mínimo é o valor dele (${dinheiro(vj)}). Quanto mais alto, menor a chance de o ${esc(c.name)} aceitar. A resposta chega em 2 ou 3 rodadas.</p>
+  modal(`<h3>Vender ${esc(p.n)}</h3>${cartaoJogMsg(p)}<p class="muted peq">Quanto você quer pelo jogador? O mínimo é o valor dele (${dinheiro(vj)}). Quanto mais alto, menor a chance de o ${esc(c.name)} aceitar. A resposta chega em 2 ou 3 rodadas.</p>${emAlta(p)?`<p class="peq" style="color:var(--canario)">🔥 ${esc(p.n)} está em grande fase: o ${esc(c.name)} aceita pagar até 5 vezes o valor (até ${dinheiro(vj*5)}), com boa chance de fechar.</p>`:""}
   <div class="campo"><span>Valor da venda</span><input type="number" id="neg-preco" inputmode="numeric" min="${vj}" step="5" value="${Math.round(vj*1.2/5)*5}" style="text-align:center"></div>
   <div class="botoes"><button class="btn" data-a="msgver" data-v="${i}">‹ Voltar</button><button class="btn prim" data-a="msgvendenv" data-v="${i}">Enviar</button></div>`)}
 function modalEmprestar(i){
@@ -3012,6 +3021,14 @@ const LOJA_MS=2*3600*1000;
 function cicloLoja(){return Math.floor(Date.now()/LOJA_MS)}
 function msParaRenovar(){return LOJA_MS-(Date.now()%LOJA_MS)}
 function hojeChave(){const d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
+/* destaque da loja: a cada 2 ou 3 trocas (G.destProx), um dos 3 melhores (não lenda) de um time da 1ª divisão — do seu país ou de fora */
+function destaqueLoja(jog){const res=reservadosMercado(),outros=Object.keys(PAISES).filter(x=>x!==G.country);
+  const vistos=G.destVistos||[],ok=p=>p.real&&!ehLenda(p)&&!vistos.includes(p.n)&&!jog.includes(p.id)&&!res.has(p.id)&&p.inj<=0&&p.club!==G.user.club&&jogadoresDo(p.club).length>18;
+  for(let i=0;i<6;i++){let el;
+    if(rnd()<.45){const L=G.tiers[0].filter(id=>!G.clubs[id].user).sort((a,b)=>G.clubs[b].rating-G.clubs[a].rating).slice(0,8);el=jogadoresDo(pick(L))}
+    else{const k=pick(outros),T=(PAISES[k].t[0]||[]).slice().sort((a,b)=>+b.split("|")[1]-+a.split("|")[1]).slice(0,6);if(!T.length)continue;el=jogadoresDo(clubeExterior(k,0,pick(T)))}
+    const c=el.filter(ok).sort((a,b)=>b.ov-a.ov).slice(0,3);if(c.length){const p=pick(c);G.destVistos=[p.n,...vistos].slice(0,12);return p.id}}
+  return null}
 function diario(){
   const k=cicloLoja();
   if(!G.diario||G.diario.dia!==k){
@@ -3028,7 +3045,9 @@ function diario(){
       const fora=rnd()<.4?[...(G.foreign||[]),...(G.exterior||[])].filter(id=>G.clubs[id]&&G.clubs[id].pais!==G.country).flatMap(id=>jogadoresDo(id)).filter(ok):[];
       const c=fora.length?fora:candidatosSerie(de,b+3,Math.min(b+9,lim)).filter(ok);
       if(c.length){promo=pick(c).id;jog.unshift(promo)}}
-    G.diario={dia:k,jog,tec,comprados:[],vendas:0,lenda,promo};
+    let dest=null;if(G.destProx==null)G.destProx=G.lojaN+ri(2,3);
+    if(G.lojaN>=G.destProx){dest=destaqueLoja(jog);if(dest!=null)jog.unshift(dest);G.destProx=G.lojaN+ri(2,3)}
+    G.diario={dia:k,jog,tec,comprados:[],vendas:0,lenda,promo,dest};
   }
   return G.diario;
 }
@@ -3438,10 +3457,17 @@ function fecharTemporada(){
   try{mundoFimTemporada(cl)}catch(e){console.error(e)}
   return r;
 }
+/* quem sobe de série ganha +2 de força no elenco todo; quem cai perde 1 (MUDA_SERIE) */
+const MUDA_SERIE={sobe:2,cai:-1};
+function forcaPorSerie(antes){Object.values(G.clubs).forEach(c=>{const a=antes[c.id];if(a==null||c.tier==null||c.tier<0||a===c.tier)return;
+  const d=c.tier<a?MUDA_SERIE.sobe:MUDA_SERIE.cai;jogadoresDo(c.id).forEach(p=>{p.ov=clamp(p.ov+d,30,99);p.pot=Math.max(p.pot||0,p.ov)});
+  if(c.user)G.inbox.unshift({t:d>0?"bom":"ruim",m:d>0?`Acesso! O elenco se motiva com a nova série: todos os jogadores ganham +${d} de força.`:`Rebaixamento pesa no elenco: todos os jogadores perdem ${-d} de força.`})})}
 function proximaTemporada(){
-  const uid=G.user.club,tAnt=G.clubs[uid].tier;
+  const uid=G.user.club,tAnt=G.clubs[uid].tier,serieAntes={};
+  G.tiers.forEach((l,i)=>l.forEach(id=>serieAntes[id]=i));(G.pool||[]).forEach(id=>serieAntes[id]=3);
   if(G.pend){G.tiers=G.pend.tiers;G.pool=G.pend.pool;G.pend=null;
-    G.tiers.forEach((l,i)=>l.forEach(id=>G.clubs[id].tier=i));G.pool.forEach(id=>G.clubs[id].tier=3)}
+    G.tiers.forEach((l,i)=>l.forEach(id=>G.clubs[id].tier=i));G.pool.forEach(id=>G.clubs[id].tier=3);
+    forcaPorSerie(serieAntes)}
   const saidas=[];
   Object.values(G.players).forEach(p=>{
     if(p.club===uid){p.tg=(p.tg||0)+(p.g||0);p.ta=(p.ta||0)+(p.as||0);p.tj=(p.tj||0)+(p.j||0);(p.hist=p.hist||[]).push([G.year,p.ov,p.j||0,p.g||0,p.as||0,p.nn?Math.round(p.nt/p.nn*10)/10:null]);
@@ -3593,7 +3619,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792878943";
+const VERSAO="1792935192";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -5917,8 +5943,8 @@ function versus(m,semLista){
 
 function serieTag(p){if(p.club==null)return "Sem clube";const c=G.clubs[p.club];return c.tier===-1?(c.tierExt!=null&&PAISES[c.pais]?`${PAISES[c.pais].ligas[c.tierExt]} · ${PAIS_NOME[c.pais]}`:(PAIS_NOME[c.pais]||"Exterior")):nomeLiga(c.tier)}
 function fmtRelogio(ms){const s=Math.max(0,Math.floor(ms/1000)),hh=Math.floor(s/3600),mm=Math.floor(s%3600/60),ss=s%60;return `${hh}:${String(mm).padStart(2,"0")}:${String(ss).padStart(2,"0")}`}
-function linhaOferta(p){const meu=p.club===G.user.club,pr=precoPedido(p),promo=!meu&&G.diario&&G.diario.promo===p.id;
-  return `<div class="jog of${lendaCls(p)}${promo?" of-promo":""}" ${meu?"":`data-a="comprar" data-v="${p.id}" style="cursor:pointer"`}>${promo?`<span class="promo-canto">Oportunidade</span>`:""}${linhaJog(p)}<div class="of-dir"><span class="tag serie">${esc(meu?"Contratado":serieTag(p))}</span>${meu?"":`<b class="num peq">${pr?dinheiro(pr):"sem custo"}</b>`}</div></div>`}
+function linhaOferta(p){const meu=p.club===G.user.club,pr=precoPedido(p),promo=!meu&&G.diario&&G.diario.promo===p.id,dest=!meu&&G.diario&&G.diario.dest===p.id;
+  return `<div class="jog of${lendaCls(p)}${promo||dest?" of-promo":""}" ${meu?"":`data-a="comprar" data-v="${p.id}" style="cursor:pointer"`}>${dest?`<span class="promo-canto dest">⭐ Destaque</span>`:promo?`<span class="promo-canto">Oportunidade</span>`:""}${linhaJog(p)}<div class="of-dir"><span class="tag serie">${esc(meu?"Contratado":serieTag(p))}</span>${meu?"":`<b class="num peq">${pr?dinheiro(pr):"sem custo"}</b>`}</div></div>`}
 function cartaoTecOferta(c,i,fonte,pode){return `<div class="cartao tec-card livre${c.q>=80?" tec-a":""}"><span class="tec-foto">${tecRosto(c.n,52)}</span><div class="nm"><b>${esc(c.n)}</b>${timeTec(c)}<span>Nível ${nivelTec(c.q)} · ${dinheiro(c.sal)}/mês · luvas ${dinheiro(c.luvas)}</span><span>Efeito: ${((c.q-65)/8>=0?"+":"")}${((c.q-65)/8).toFixed(1)} em ataque e defesa</span>${passivasHTML(c)}</div><b class="ov num tec-ov">${c.q}</b><button class="btn mini${pode&&c.luvas<=G.cash?" prim-mini":""}" data-a="contratec" data-v="${i}" data-i="${fonte}" ${pode?"":"disabled"}>Contratar</button></div>`}
 function destaques(){
   const uid=G.user.club,el=jogadoresDo(uid);const media={};
@@ -6051,9 +6077,10 @@ const totalPontos=()=>Object.values(pontosTreino()).reduce((a,b)=>a+b,0);
 function usarPonto(id,k){
   const p=G.players[id],P=pontosTreino();if(!p||p.club!==G.user.club)return "Esse jogador não está no seu elenco.";
   if(!(P[k]>0))return "Você não tem pontos disso.";if(atributos(p)[k]>=99)return "Esse atributo já está no máximo.";
-  P[k]--;p.ap=p.ap||{};p.ap[k]=(p.ap[k]||0)+1;p.acc=(p.acc||0)+((ATR_REL[p.pos]||{})[k]||.25)*.5; // 2 pontos no atributo principal = +1 de força
+  P[k]--;p.ap=p.ap||{};p.ap[k]=(p.ap[k]||0)+1;p.acc=(p.acc||0)+((ATR_REL[p.pos]||{})[k]||.25)*(p.ov>=85?.5:1); // 1 ponto no atributo principal = +1 de força (2 pontos acima de 85)
   while(p.acc>=1&&p.ov<99){p.acc--;p.ov++}
   return null}
+function distribuirPontos(n){const ks=ATRS.map(a=>a[0]),out={};for(let i=0;i<n;i++){const k=pick(ks);out[k]=(out[k]||0)+1}return out}
 function sortearPontos(){const ks=ATRS.map(a=>a[0]).sort(()=>rnd()-.5).slice(0,3),out={};ks.forEach(k=>out[k]=ri(1,2));return out}
 const corAtr=v=>v>=85?"var(--canario)":v>=70?"var(--ok)":v>=50?"var(--aviso)":"var(--ruim)";
 function barrasAtr(p,botoes){
@@ -6062,7 +6089,7 @@ function barrasAtr(p,botoes){
     return `<div class="atr"><span>${ic} ${n}</span><div class="atr-b"><i style="width:${v}%;background:${corAtr(v)}"></i></div><b class="num">${v}${ex?`<em>+${ex}</em>`:""}</b>${botoes?`<button class="btn mini atr-mais" data-a="ptsadd" data-v="${p.id}|${k}"${P[k]>0&&v<99?"":" disabled"} aria-label="Usar 1 ponto de ${n}">+${P[k]>0?`<small>${P[k]}</small>`:""}</button>`:""}</div>`}).join("")}</div>`}
 function quadroPontos(){
   const P=pontosTreino(),bolas=G.user.bolas||0;
-  return `<h2>Pontos de Treino</h2><div class="cartao secao pts-quadro"><p class="muted peq" style="margin:0">Vença jogos fazendo 3 gols ou mais para ganhar uma Bola Dourada. Ao estourar, ela dá pontos para você evoluir seus jogadores. Toque num ponto colorido para escolher quem recebe.${bolas?` <b style="color:var(--canario)">Você tem ${bolas} bola${bolas>1?"s":""} esperando!</b>`:""}</p>
+  return `<h2>Pontos de Treino</h2><div class="cartao secao pts-quadro"><p class="muted peq" style="margin:0">Faça 3 gols ou mais num jogo para ganhar uma Bola Dourada. Ao estourar, ela dá pontos para evoluir seus jogadores: 3 gols = 3 pontos, 4 gols = 4 pontos, 5 gols ou mais = 5 pontos. Toque num ponto colorido para escolher quem recebe.${bolas?` <b style="color:var(--canario)">Você tem ${bolas} bola${bolas>1?"s":""} esperando!</b>`:""}</p>
   <div class="pts-grade">${ATRS.map(([k,n,ic])=>`<button class="pts-chip${P[k]>0?" tem":""}" data-a="ptstipo" data-v="${k}"><span class="pts-ic">${ic}</span><b class="num">${P[k]||0}</b><small>${n}</small></button>`).join("")}</div></div>`}
 // bolinha do jogador igual à do campinho: rosto no círculo com a cor da camisa e a posição embaixo
 function bolinhaJog(p){const u=unisDe(G.clubs[G.user.club])[0],[bg,fg]=({GOL:["#5b4a12","#ffe08a"],LAT:["#14405e","#a8dcff"],ZAG:["#14405e","#a8dcff"],VOL:["#1f5a33","#b9f5cc"],MEI:["#1f5a33","#b9f5cc"],ATA:["#5e1f1a","#ffb8ad"]})[p.pos]||["#1f5a33","#b9f5cc"];
@@ -6211,7 +6238,7 @@ let timerLive=null,velocidade=1,liveSel=null,painel=null,gritosAberto=false;
 function blocoGritos(V){
   const L=V.L[V.lado],at=gritoAtivo(L),espera=!at&&L.grito&&V.min<L.grito.ate+GRITO_ESPERA;
   const st=at?`📣 ${at.n} · até os ${L.grito.ate}'`:espera?`Novo comando a partir dos ${L.grito.ate+GRITO_ESPERA}'`:"Fale com o time";
-  return `<div class="gritos"><button class="gritos-topo${gritosAberto?" on":""}" data-a="lvgritos" aria-expanded="${gritosAberto}"><b>📣 Comandos</b><span id="lv-grito">${st}</span></button>${gritosAberto?`<div class="gritos-lista">${GRITOS.map(g=>`<button class="grito" data-a="lvgrito" data-v="${g.k}"><b>${g.n}</b><span>${g.d}${g.b?` · +${Math.round(g.b*100)}% por ${GRITO_MIN} min, cansa ${String(g.e).replace(".",",")}× mais rápido`:` · por ${GRITO_MIN} min`}</span></button>`).join("")}</div>`:""}</div>`;
+  return `<div class="gritos"><button class="gritos-topo${gritosAberto?" on":""}" data-a="lvgritos" aria-expanded="${gritosAberto}"><b>📣 Comandos</b><span id="lv-grito">${st}</span></button>${gritosAberto?`<div class="gritos-lista">${GRITOS.map(g=>`<button class="grito" data-a="lvgrito" data-v="${g.k}"><b>${g.n}</b><span>${g.d}${g.fx!==g.d?`: ${g.fx}`:""} · ${GRITO_MIN} min${g.e>1?`, cansam ${String(g.e).replace(".",",")}× mais rápido`:""}</span></button>`).join("")}</div>`:""}</div>`;
 }
 function pararTimer(){if(timerLive){clearInterval(timerLive);timerLive=null}}
 function iniciarTimer(){
@@ -6951,7 +6978,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "ptsjog":modalPontosJog(+v);return;
     case "ptsadd":{const [id,k,de]=v.split("|"),er=usarPonto(+id,k);if(er){toastErro(er);return}salvar();render();if(de==="t")modalPontosTipo(k);else modalPontosJog(+id);toast(`+1 ${ATRS.find(x=>x[0]===k)[1]} para ${nomeCurto(G.players[+id].n)}!`);return}
     case "bola":{const el=document.querySelector(".bola-dourada");if(!el||el.classList.contains("explode")||!(G.user.bolas>0))return;
-      G.user.bolas--;const gan=sortearPontos(),P=pontosTreino();Object.entries(gan).forEach(([k,n])=>P[k]=(P[k]||0)+n);salvar();
+      G.user.bolas--;const nb=(G.user.bolaPts||[]).shift(),gan=nb?distribuirPontos(nb):sortearPontos(),P=pontosTreino();Object.entries(gan).forEach(([k,n])=>P[k]=(P[k]||0)+n);salvar();
       el.classList.add("explode");if(typeof somConquista==="function")somConquista();
       setTimeout(()=>{render();modalBola(gan)},800);return}
     case "vertime":modalTime(v);return;
