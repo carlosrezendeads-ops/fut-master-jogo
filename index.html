@@ -368,7 +368,8 @@ td .linha svg{flex:0 0 auto}
 .ao-vivo .lance.info{grid-template-columns:31px 1fr}
 .ao-vivo .lance .mk{font-size:9.5px}
 .lance{display:grid;grid-template-columns:34px auto 1fr;gap:8px;align-items:baseline;background:var(--gramado-2);border-radius:10px;padding:8px 10px;font-size:14px}
-.lance.amarelo{box-shadow:inset 0 0 0 1.5px #ffd23f}.lance.vermelho{box-shadow:inset 0 0 0 1.5px #ff4d4d}.lance.var{box-shadow:inset 0 0 0 1.5px #ffffff}.lance.gol{box-shadow:inset 0 0 0 1.5px #3ddc84}.lance.peng{box-shadow:inset 0 0 0 1.5px #3ddc84}.lance.penx{box-shadow:inset 0 0 0 1.5px #ff4d4d}
+.lance.amarelo{box-shadow:inset 0 0 0 1.5px #ffd23f}.lance.vermelho{box-shadow:inset 0 0 0 1.5px #ff4d4d}.lance.var{box-shadow:inset 0 0 0 1.5px #ffffff}.lance.gol{box-shadow:inset 0 0 0 1.5px #3ddc84}.lance.falta{box-shadow:inset 0 0 0 1.5px #ffa94d}.fk-box{margin-top:10px;padding:10px;border-radius:12px;background:rgba(255,169,77,.12);border:1px solid rgba(255,169,77,.45);display:grid;gap:6px}.fk-box>span{font-size:13px;opacity:.9}.fk-lista{display:grid;gap:6px;margin-top:6px}.fk-jog{display:flex;align-items:center;gap:8px;width:100%;text-align:left;color:inherit;font:inherit;background:rgba(255,255,255,.06);border:2px solid transparent;border-radius:10px;padding:6px}.fk-jog small{margin-left:auto;opacity:.75}.fk-jog.sel{border-color:#ffd23f}.grito.on{outline:2px solid #ffd23f}.gritos.fk .gritos-topo{border-color:#ffa94d;box-shadow:0 0 0 2px rgba(255,169,77,.5)}
+.lance.peng{box-shadow:inset 0 0 0 1.5px #3ddc84}.lance.penx{box-shadow:inset 0 0 0 1.5px #ff4d4d}
 .painel.pen .pen-placar{display:grid;gap:6px;margin-top:8px}.pen-lin{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.25);border-radius:10px;padding:6px 10px}.pen-lin>b:first-of-type{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pen-bolas{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}.pen-bolas i{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.35)}.pen-bolas i.g{background:#3ddc84;border-color:#3ddc84}.pen-bolas i.x{background:#ff4d4d;border-color:#ff4d4d}.pen-n{font-size:20px;min-width:22px;text-align:right}
 .pen-grade{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.pen-jog{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;border-radius:12px;background:rgba(255,255,255,.06);border:2px solid transparent;color:inherit;font:inherit}.pen-jog b{font-size:12px;line-height:1.1;text-align:center}.pen-jog small{opacity:.7;font-size:11px}.pen-jog.sel{border-color:#ffd23f;background:rgba(255,210,63,.12)}.pen-jog:disabled{opacity:1}
@@ -1224,7 +1225,7 @@ body:has(header.topo) .esc-fixo{top:72px}
 <script src="img/tec-fotos.js?v=f32ddfa9"></script>
 <script src="dados/elencos.js?v=bb464417"></script>
 <script src="img/escudos-img.js?v=df90de51"></script>
-<script src="dados/idiomas.js?v=253ab717"></script>
+<script src="dados/idiomas.js?v=f19b2983"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2040,10 +2041,10 @@ const placarTxt=()=>{const V=G.live;return `${G.clubs[V.L.h.cid].short} ${V.gh} 
 const PRE_CHUTE=["arma o chute...","invade a área...","fica cara a cara com o goleiro...","solta a bomba...","sobe para cabecear..."];
 const preChute=(p,nomeT)=>`${p?p.n:"O atacante"} (${nomeT}) ${pick(PRE_CHUTE)}`;
 /* gol ao vivo: placar, artilharia, assistência e narração; pen = cobrança de pênalti */
-function aplicarGol(s,F,p,pen){const V=G.live,nomeT=nomeLado(s);if(s==="h")V.gh++;else V.ga++;
+function aplicarGol(s,F,p,pen,cruz){const V=G.live,nomeT=nomeLado(s);if(s==="h")V.gh++;else V.ga++; // pen: true = pênalti, 2 = falta direta, 3 = cabeçada após cruzamento de falta (cruz = quem cruzou)
   (s==="h"?V.sh:V.sa).push([p?p.id:null,V.min]);
-  let ass=null;if(p){gastar(p,1.5);ass=pen?null:garcom(F[s],p);if(V.m.tipo==="L"){p.g++;if(ass)ass.as=(ass.as||0)+1}V.ev=V.ev||{};V.ev[p.id]=(V.ev[p.id]||0)+1;if(ass){V.as=V.as||{};V.as[ass.id]=(V.as[ass.id]||0)+1}}
-  narrar("gol",`GOL do ${nomeT}! ${p?p.n+" "+(pen?(pen===2?"cobra a falta no ângulo":"cobra o pênalti com categoria"):pick(FR_GOL)):"Gol contra"}${ass?`, passe de ${ass.n}`:""}. ${placarTxt()}`);
+  let ass=null;if(p){gastar(p,1.5);ass=pen===3?cruz||null:pen?null:garcom(F[s],p);if(V.m.tipo==="L"){p.g++;if(ass)ass.as=(ass.as||0)+1}V.ev=V.ev||{};V.ev[p.id]=(V.ev[p.id]||0)+1;if(ass){V.as=V.as||{};V.as[ass.id]=(V.as[ass.id]||0)+1}}
+  narrar("gol",`GOL do ${nomeT}! ${p?p.n+" "+(pen?(pen===3?pick(["sobe mais alto que todo mundo e cabeceia para o gol","testa firme no canto","aparece na segunda trave e cabeceia para as redes"]):pen===2?"cobra a falta no ângulo":"cobra o pênalti com categoria"):pick(FR_GOL)):"Gol contra"}${ass?`, passe de ${ass.n}`:""}. ${placarTxt()}`);
   const f=ultLance();f.s=s;f.pid=p?p.id:null;f.ph=[V.gh,V.ga];return f}
 /* acréscimos: mais faltas, cartões, gols, trocas, lesões, VAR e pênaltis = mais tempo */
 function calcAcr(tempo){const V=G.live,ls=V.feed.slice(tempo===2?(V.fi2||0):0),n=t=>ls.filter(f=>f.t===t).length;
@@ -2214,11 +2215,11 @@ function passoMinuto(){
       if(rnd()<.5){vale=rnd()<.7;narrar("var",vale?"VAR confirma: é pênalti!":"VAR desmarca: não foi pênalti. Segue o jogo.");Object.assign(ultLance(),{pre:"📺 VAR revisando o pênalti...",var:1})}
       if(vale&&bat){if(rnd()<penChance(bat,penGoleiro(s==="h"?"a":"h")))aplicarGol(s,F,bat,true).pre=`${bat.n} ajeita a bola... corre para a cobrança...`;
         else{narrar("chance",`${pick(["O goleiro defende o pênalti de","Na trave! Desperdiça o pênalti","Pra fora! Isola o pênalti"])} ${bat.n} (${nomeT}).`);ultLance().pre=`${bat.n} ajeita a bola... corre para a cobrança...`}}
-    }else if(!V.m.amistoso&&rnd()<.005){ // falta perigosa perto da área (~0,45 por time no jogo)
-      const ps=F[s].xi.map(id=>G.players[id]).filter(p=>p&&p.pos!=="GOL"),cob=ps.sort((a,b)=>atributos(b).fal-atributos(a).fal)[0],gk=penGoleiro(s==="h"?"a":"h");
-      if(cob){const ch=ehLenda(cob)?.35:clamp(.1+(atributos(cob).fal-70)/150-(gk?atributos(gk).ref-70:-10)/300,.03,.3),pre=`Falta perigosa para o ${nomeT}... ${cob.n} ajeita a bola...`;
-        if(rnd()<ch)aplicarGol(s,F,cob,2).pre=pre;
-        else{narrar("chance",`${cob.n} (${nomeT}) ${pick(["cobra a falta e a bola passa raspando a trave","cobra a falta direto e a bola explode na barreira",gk?`cobra a falta no canto e ${gk.n} espalma`:"cobra a falta por cima do gol","cobra a falta e a bola carimba o travessão"])}.`);ultLance().pre=pre}}
+    }else if(!V.m.amistoso&&!V.fk&&rnd()<.005){ // falta perigosa perto da área (~0,45 por time no jogo): cobrança sai 5 minutos depois (fkResolver)
+      const cob=fkBatedor(s);if(cob){const sofre=pick(F[s].xi.map(id=>G.players[id]).filter(p=>p&&p.pos!=="GOL"&&p.id!==cob.id))||cob;
+        V.fk={s,n:5,bat:cob.id,tipo:null};
+        narrar("falta",`Falta perigosa para o ${nomeT}! ${sofre.n} é derrubado perto da área.`,"Falta");
+        narrar("falta",`${cob.n} (${nomeT}) se prepara para a cobrança.`,"Falta")}
     }
     const gS=V.m.amistoso?null:gritoAtivo(L); // comando do técnico: o efeito real está no ritmo de gols (lam); aqui só o relato
     if(gS&&gS.pos.length){const ofe=gS.m>1.2;
@@ -2252,6 +2253,7 @@ function passoMinuto(){
   }
   if(V.feed.length&&V.feed[V.feed.length-1].m!==V.min&&V.min!==45&&V.min<90&&rnd()<.34)lanceColorido(lam);
   if(!V.add&&(V.min===22||V.min===67)&&!(V.agua||{})[V.min]){(V.agua=V.agua||{})[V.min]=1;narrar("info",`💧 Pausa para hidratação aos ${V.min===22?"22 minutos do 1º tempo":"22 minutos do 2º tempo"}.`);Object.assign(ultLance(),{pre:"💧 Pausa para hidratação",agua:1})}
+  if(V.fk){V.fk.n--;const fimT=(V.min===45&&!V.ht&&V.acr1!=null&&(V.add||0)>=V.acr1)||(V.min>=90&&V.acr2!=null&&(V.add||0)>=V.acr2);if(V.fk.n<=0||fimT)fkResolver(F)}
   if(V.min===45&&!V.ht&&V.acr1==null){V.acr1=calcAcr(1);narrar("info",`⏱️ Acréscimos no primeiro tempo: +${V.acr1} minuto${V.acr1>1?"s":""}.`)}
   if(V.min>=90&&V.acr2==null){V.acr2=calcAcr(2);narrar("info",`⏱️ Acréscimos no segundo tempo: +${V.acr2} minutos.`)}
   if(V.min===45&&!V.ht&&(V.add||0)>=V.acr1&&V.est!=="fim"){V.ht=true;if(V.est==="rodando")V.est="intervalo";else V.intervaloPendente=true;narrar("info",`Fim do primeiro tempo. ${placarTxt()}`);V.add=0;V.fi2=V.feed.length}
@@ -2265,6 +2267,32 @@ function encerrarAoVivo(){
   }
   penFim(V);
 }
+/* falta perigosa: batedor (melhor Cobrador de faltas, ou o escolhido na pausa), tipo direto/cruzamento (comando do técnico ou decisão do batedor);
+   gol de falta sai mais de atacante e zagueiro (FK_POS), cabeçada pelo Cabeceio, chute direto pelo Cobrador de faltas, contra os Reflexos do goleiro */
+const FK_POS={ATA:1,ZAG:1,MEI:.6,VOL:.6,LAT:.4,GOL:.2};
+function fkBatedor(s){const L=G.live.L[s];return L.xi.map(id=>G.players[id]).filter(p=>p&&p.pos!=="GOL").sort((a,b)=>atributos(b).fal-atributos(a).fal)[0]||null}
+function fkResolver(F){const V=G.live,x=V.fk;V.fk=null;const s=x.s,L=V.L[s],nomeT=nomeLado(s),o=s==="h"?"a":"h",gk=penGoleiro(o);
+  let cob=G.players[x.bat];if(!cob||!L.xi.includes(cob.id))cob=fkBatedor(s);if(!cob)return;
+  const fal=atributos(cob).fal,ref=gk?atributos(gk).ref:60,tipo=x.tipo||(rnd()<clamp((fal-65)/40,.15,.55)?"direto":"cruz"),pre=`${cob.n} ajeita a bola... corre para a cobrança...`;
+  if(tipo==="direto"){const ch=ehLenda(cob)?.35:clamp((.1+(fal-70)/150-(ref-70)/300)*FK_POS[cob.pos],.02,.3);
+    narrar("falta",`${cob.n} (${nomeT}) vai bater direto no gol.`,"Falta");
+    if(rnd()<ch)aplicarGol(s,F,cob,2).pre=pre;
+    else{narrar("chance",`${cob.n} (${nomeT}) ${pick(["bate a falta e a bola passa raspando a trave","bate direto e a bola explode na barreira",gk?`bate no canto e ${gk.n} espalma`:"bate a falta por cima do gol","bate a falta e a bola carimba o travessão"])}.`);ultLance().pre=pre}
+    return}
+  const alvos=L.xi.map(id=>G.players[id]).filter(p=>p&&p.id!==cob.id),pes=alvos.map(p=>FK_POS[p.pos]*Math.pow(atributos(p).cab/70,3));
+  let r=rnd()*pes.reduce((a,b)=>a+b,0),k=0;while(k<alvos.length-1&&(r-=pes[k])>0)k++;const cab=alvos[k];
+  narrar("falta",`${cob.n} (${nomeT}) levanta a bola na área.`,"Falta");if(!cab)return;
+  const ch=clamp(.14*FK_POS[cab.pos]+(atributos(cab).cab-70)/250+(fal-70)/400-(ref-70)/400,.02,.3);
+  if(rnd()<ch)aplicarGol(s,F,cab,3,cob).pre=pre;
+  else{narrar("chance",`${pick([`${cab.n} (${nomeT}) cabeceia e a bola sai por cima`,`${cab.n} (${nomeT}) desvia de cabeça, mas ${gk?gk.n:"o goleiro"} segura`,`A zaga afasta antes de ${cab.n} (${nomeT}) chegar`,`${cab.n} (${nomeT}) cabeceia no travessão`])}.`);ultLance().pre=pre}}
+function fkTipoEscolher(t){const V=G.live;if(!V.fk||V.fk.s!==V.lado)return;V.fk.tipo=t;const b=G.players[V.fk.bat];
+  narrar("falta",`📣 O técnico pede: ${t==="direto"?`${b?b.n:"o batedor"} vai chutar direto no gol`:"cruzamento na área"}.`,"Falta")}
+function painelFalta(V){const x=V.fk;if(!x||x.s!==V.lado)return "";const L=V.L[V.lado],b=G.players[x.bat];
+  let h=`<div class="fk-box"><b>🦶 Falta perigosa a favor</b><span>Vai bater: <b>${esc(b?b.n:"")}</b> · ${x.tipo==="direto"?"chute direto":x.tipo==="cruz"?"cruzamento na área":"o batedor decide"}</span>
+    <div class="ctrl"><button class="btn${x.tipo==="direto"?" on":""}" data-a="fktipo" data-v="direto">Chute direto</button><button class="btn${x.tipo==="cruz"?" on":""}" data-a="fktipo" data-v="cruz">Cruzamento na área</button></div>
+    <button class="btn full" data-a="fkbat" style="margin-top:8px">Substituir batedor</button>`;
+  if(painel==="fk")h+=`<div class="fk-lista">${L.xi.map(id=>G.players[id]).filter(p=>p&&p.pos!=="GOL").sort((a,b)=>atributos(b).fal-atributos(a).fal).map(p=>{const a=atributos(p);return `<button class="fk-jog${p.id===x.bat?" sel":""}" data-a="fkbatsel" data-v="${p.id}">${rostoSVG(p,32)}<b>${esc(nomeCurto(p.n))}</b><small>${p.pos} · 🦶 ${a.fal} · 🧠 ${a.cab}</small></button>`}).join("")}</div>`;
+  return h+`</div>`}
 /* pênaltis do mata-mata: o jogo para, escolhe 5 batedores (no comando do técnico ele escolhe), cobranças uma a uma; depois do 5º os melhores em campo batem sozinhos */
 function penBatedores(s){const L=G.live.L[s],v=p=>p.pos==="GOL"?-99:penChance(p,null)*100;
   return L.xi.filter(id=>id!=null&&G.players[id]).sort((a,b)=>v(G.players[b])-v(G.players[a]))}
@@ -3672,7 +3700,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792951544";
+const VERSAO="1792952214";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -6295,8 +6323,9 @@ const NIVEL_3X=20; // velocidade 3× libera nesse nível do dono
 let timerLive=null,velocidade=1,liveSel=null,painel=null,gritosAberto=false;
 function blocoGritos(V){
   const L=V.L[V.lado],at=gritoAtivo(L),espera=!at&&L.grito&&V.min<L.grito.ate+GRITO_ESPERA;
-  const st=at?`📣 ${at.n} · até os ${L.grito.ate}'`:espera?`Novo comando a partir dos ${L.grito.ate+GRITO_ESPERA}'`:"Fale com o time";
-  return `<div class="gritos"><button class="gritos-topo${gritosAberto?" on":""}" data-a="lvgritos" aria-expanded="${gritosAberto}"><b>📣 Comandos</b><span id="lv-grito">${st}</span></button>${gritosAberto?`<div class="gritos-lista">${GRITOS.map(g=>`<button class="grito" data-a="lvgrito" data-v="${g.k}"><b>${g.n}</b><span>${g.d}${g.fx!==g.d?`: ${g.fx}`:""} · ${GRITO_MIN} min${g.e>1?`, cansam ${String(g.e).replace(".",",")}× mais rápido`:""}</span></button>`).join("")}</div>`:""}</div>`;
+  const fk=V.fk&&V.fk.s===V.lado;
+  const st=fk?"🦶 Falta a favor: escolha a cobrança":at?`📣 ${at.n} · até os ${L.grito.ate}'`:espera?`Novo comando a partir dos ${L.grito.ate+GRITO_ESPERA}'`:"Fale com o time";
+  return `<div class="gritos${fk?" fk":""}"><button class="gritos-topo${gritosAberto?" on":""}" data-a="lvgritos" aria-expanded="${gritosAberto}"><b>📣 Comandos</b><span id="lv-grito">${st}</span></button>${gritosAberto?`<div class="gritos-lista">${fk?"":GRITOS.map(g=>`<button class="grito" data-a="lvgrito" data-v="${g.k}"><b>${g.n}</b><span>${g.d}${g.fx!==g.d?`: ${g.fx}`:""} · ${GRITO_MIN} min${g.e>1?`, cansam ${String(g.e).replace(".",",")}× mais rápido`:""}</span></button>`).join("")}${!fk?"":[["direto","Chute direto","Nas faltas perto da área, o batedor chuta direto no gol"],["cruz","Cruzamento na área","Nas faltas, a bola é levantada para quem cabeceia bem (zagueiros e atacantes)"]].map(([k,n,d])=>`<button class="grito${V.fk.tipo===k?" on":""}" data-a="fktipo" data-v="${k}"><b>🦶 ${n}</b><span>${d}</span></button>`).join("")}</div>`:""}</div>`;
 }
 function pararTimer(){if(timerLive){clearInterval(timerLive);timerLive=null}}
 function iniciarTimer(){
@@ -6307,6 +6336,7 @@ function iniciarTimer(){
     const n0=V.feed.length,antes={gm:V.lado==="h"?V.gh:V.ga,go:V.lado==="h"?V.ga:V.gh};passoMinuto();
     const novos=V.feed.slice(n0),segue=revelado=>{if(!revelado)somEventos(novos,V,antes);
       if(V.est!=="rodando"){pararTimer();painel=V.motivo==="lesao"||V.motivo==="goleiro"?"subs":null;liveSel=V.vaga!=null?V.vaga:null;salvar();render();return}
+      {const fk=!!(V.fk&&V.fk.s===V.lado);if(fk!==!!V.fkUI){V.fkUI=fk;if(fk)gritosAberto=true;render();return}}
       atualizarLive(revelado?V.feed.length:n0);
       if(V.min%10===0)salvar()};
     if(novos.some(f=>f.pre)&&!document.hidden&&$("#lv-feed"))revelarLances(novos,antes,()=>segue(true));else segue(false);
@@ -6353,7 +6383,7 @@ function atualizarLive(n0){
   const rl=$("#lv-rel");if(rl)rl.textContent=relogio(V);
   const pg=$("#lv-prog");if(pg)pg.style.width=Math.min(V.min,90)/90*100+"%";
   const tm=$("#lv-time");if(tm)tm.innerHTML=blocoEmCampo(V);
-  const gs=$("#lv-grito");if(gs){const L=V.L[V.lado],at=gritoAtivo(L);gs.textContent=at?`📣 ${at.n} · até os ${L.grito.ate}'`:L.grito&&V.min<L.grito.ate+GRITO_ESPERA?`Novo comando a partir dos ${L.grito.ate+GRITO_ESPERA}'`:"Fale com o time"}
+  const gs=$("#lv-grito");if(gs){const L=V.L[V.lado],at=gritoAtivo(L);gs.textContent=V.fk&&V.fk.s===V.lado?"🦶 Falta a favor: escolha a cobrança":at?`📣 ${at.n} · até os ${L.grito.ate}'`:L.grito&&V.min<L.grito.ate+GRITO_ESPERA?`Novo comando a partir dos ${L.grito.ate+GRITO_ESPERA}'`:"Fale com o time"}
   const fd=$("#lv-feed");
   if(fd&&V.feed.length>n0){V.feed.slice(n0).forEach((f,i)=>{fd.insertAdjacentHTML("afterbegin",linhaFeed(f,true,i));if(f.t==="gol"&&pl){pl.classList.remove("gol");void pl.offsetWidth;pl.classList.add("gol")}})}
 }
@@ -6400,6 +6430,7 @@ function painelParado(V){
   let h=`<div class="painel"><div class="linha" style="justify-content:space-between;align-items:baseline"><b class="etapa">${titulo}</b><span class="muted peq">Substituições: ${L.subs} de ${MAX_SUBS}</span></div>
   <p class="muted peq" style="margin:4px 0 10px">${aviso}</p>
   <div class="ctrl"><button class="btn${painel==="subs"?" on":""}" data-a="lvpainel" data-v="subs">Fazer substituição</button><button class="btn${painel==="form"?" on":""}" data-a="lvpainel" data-v="form">Trocar formação</button></div>`;
+  h+=painelFalta(V);
   h+=`<div style="margin-top:12px">${campinho(V.m,V)}</div><p class="muted peq" style="margin:6px 0 0;text-align:center">Toque num jogador para ver as informações. Arraste para mudar a posição dele.</p>`;
   if(painel==="subs")h+=`<div class="subs-compacto">${painelSubs(V)}</div>`+(V.ultSub?`<p class="sub-ok">✓ ${esc(V.ultSub)}</p>`:"");
   if(painel==="form")h+=painelForm(V);
@@ -6947,6 +6978,9 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
       if(meu==="h"){V.gh=0;V.sh=[];V.ga=ga}else{V.ga=0;V.sa=[];V.gh=ga}V.pen=null;
       narrar("info",`${G.clubs[G.user.club].name} abandona a partida. Vitória do adversário por W.O.`);
       V.min=Math.max(V.min,90);V.est="fim";concluirAoVivo();if(G.ultimoJogo)G.ultimoJogo.pendente=true;aba="resultado";salvar();window.scrollTo(0,0);setTimeout(somResultado,300);break;}
+    case "fktipo":fkTipoEscolher(v);gritosAberto=false;salvar();break;
+    case "fkbat":painel=painel==="fk"?null:"fk";break;
+    case "fkbatsel":{const V=G.live;if(V.fk&&V.fk.s===V.lado){V.fk.bat=+v;narrar("info",`🔄 Troca de batedor: ${G.players[+v].n} vai cobrar a falta.`)}painel=null;salvar();break}
     case "penbat":{const P=G.live.pn,id=+v,k=P.bat.indexOf(id);if(k>=0)P.bat.splice(k,1);else if(P.bat.length<5)P.bat.push(id);else{toastErro("Já escolheu 5. Toque num escolhido para tirar.");return}break}
     case "penauto":G.live.pn.bat=penBatedores(G.live.lado).slice(0,5);break;
     case "penini":{const V=G.live,P=V.pn;if(P.bat.length<5){toastErro("Escolha 5 batedores.");return}P.k=penCobrancas({h:V.lado==="h"?P.bat:[],a:V.lado==="a"?P.bat:[]});P.fase="bat";P.i=0;P.prep=0;try{apito(.6)}catch(e){}salvar();break}
