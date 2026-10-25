@@ -2261,10 +2261,12 @@ function encerrarAoVivo(){
 }
 /* pênaltis do mata-mata: o jogo para, escolhe 5 batedores (no comando do técnico ele escolhe), cobranças uma a uma; depois do 5º os melhores em campo batem sozinhos */
 const ehBatedor=p=>p.pos!=="GOL"&&habilidadesDe(p).some(h=>/pênaltis/i.test(h));
-function penBatedores(s){const L=G.live.L[s],v=p=>p.ov+(p.pos==="ATA"?8:p.pos==="MEI"?5:p.pos==="GOL"?-60:0)+(ehBatedor(p)?15:0);
+function penBatedores(s){const L=G.live.L[s],v=p=>p.pos==="GOL"?-99:penChance(p,null)*100;
   return L.xi.filter(id=>id!=null&&G.players[id]).sort((a,b)=>v(G.players[b])-v(G.players[a]))}
 function penGoleiro(s){const L=G.live.L[s],id=L.xi[FORMACOES[L.form].s.indexOf("GOL")];return id!=null&&G.players[id]||null}
-function penChance(p,gk){let c=.74+(p.ov-(gk?gk.ov:50))/250;if(ehBatedor(p))c+=.07;if(gk&&habilidadesDe(gk).some(h=>/pênaltis/i.test(h)))c-=.06;return clamp(c,.55,.92)}
+function penChance(p,gk){if(ehLenda(p))return .95; // lenda acerta 95%
+  const fin=atributos(p).fin; // força e finalização pesam; cansaço não
+  let c=.72+(p.ov-70)/160+(fin-70)/220-((gk?gk.ov:60)-70)/400;if(ehBatedor(p))c+=.05;if(gk&&habilidadesDe(gk).some(h=>/pênaltis/i.test(h)))c-=.05;return clamp(c,.5,.92)}
 function penCobrancas(ord){ // ord={h:[ids],a:[ids]} → cobranças até ter vencedor (casa bate primeiro)
   const k=[],gol={h:0,a:0},n={h:0,a:0},gk={h:penGoleiro("a"),a:penGoleiro("h")};
   const F={};["h","a"].forEach(s=>{const b=penBatedores(s);F[s]=ord[s].concat(b.filter(id=>!ord[s].includes(id)));if(!F[s].length)F[s]=[null]});
@@ -3665,7 +3667,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792946321";
+const VERSAO="1792951023";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
