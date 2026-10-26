@@ -2379,7 +2379,17 @@ function concluirAoVivo(){
 /* ---------- perfil do dono: experiência e nível ---------- */
 const XP_RES={v:50,e:25,d:10};
 function xpParaSubir(n){return Math.round((n<=1?50:200+50*(n-2))*1.3*2/5)*5} // +30% e depois x2 de XP por nível
-function perfil(){if(!G.perfil)G.perfil={xp:0,nivel:1,j:0,v:0,e:0,d:0,gp:0,gc:0,aviso:null,dica:false};return G.perfil}
+/* perfil único do dono (26/10): nível, XP, números, conquistas e foto valem para todos os modos e carreiras.
+   Guardado à parte (CHAVE_PERFIL) e espelhado em G.perfil; save antigo ou carregado de arquivo se junta (fica o maior). */
+const CHAVE_PERFIL="fut-perfil";let PG=null;
+function fundirPerfil(a,b){if(!a)return b;if(!b||a===b)return a;const [x,y]=(b.nivel>a.nivel||b.nivel===a.nivel&&b.xp>a.xp)?[b,a]:[a,b];
+  ["j","v","e","d","gp","gc","comp","compA","vend","lendaC"].forEach(k=>{if((y[k]||0)>(x[k]||0))x[k]=y[k]});
+  x.premiosOk={...(y.premiosOk||{}),...(x.premiosOk||{})};if(!x.avatar&&y.avatar)x.avatar=y.avatar;x.dica=x.dica||y.dica;return x}
+function perfil(){if(!PG){try{PG=JSON.parse(localStorage.getItem(CHAVE_PERFIL)||"null")}catch(e){}}
+  if(G&&G.perfil!==PG)PG=fundirPerfil(PG,G.perfil);
+  if(!PG)PG={xp:0,nivel:1,j:0,v:0,e:0,d:0,gp:0,gc:0,aviso:null,dica:false};PG.premiosOk=PG.premiosOk||{};
+  if(G){G.perfil=PG;if(G.premiosOk){Object.assign(PG.premiosOk,G.premiosOk);delete G.premiosOk}if(!PG.avatar&&G.user&&G.user.avatar)PG.avatar=G.user.avatar}
+  return PG}
 const NIVEL_MAX=30;
 // título do dono pelo nível (26/10)
 const TITULOS=[[1,"Sonhador"],[3,"Clubista"],[6,"Fanático"],[9,"Conselheiro"],[12,"Empresário"],[15,"Cartola"],[18,"Presidente"],[21,"Magnata"],[24,"Imperador"],[30,"Lenda"]]; // os de jogador (Perna de Pau…Lendário) ficaram para o futuro modo de jogador individual
@@ -3683,7 +3693,7 @@ function migrar(g){
 function inverterUni(u){if(MODELOS_UNI[u.estilo]){const n={...u,camisa:u.detalhe,detalhe:u.camisa};aplicarModeloUni(n,n.estilo);return n}return {...u,estilo:u.estilo==="liso"?"faixa":u.estilo,camisa:u.detalhe,detalhe:u.camisa,mangas:u.detalhe,gola:u.camisa,calcao:u.camisa,meiao:u.detalhe}}
 
 let SAVE_ERRO=0; // 24/10: antes o erro ao salvar era engolido e o progresso se perdia sem aviso
-function salvar(){rastrearClubes();try{localStorage.setItem(CHAVE,JSON.stringify(G))}catch(e){const ag=Date.now();if(ag-SAVE_ERRO<60000)return;const prim1=!SAVE_ERRO;SAVE_ERRO=ag;
+function salvar(){rastrearClubes();try{if(G)localStorage.setItem(CHAVE_PERFIL,JSON.stringify(perfil()));localStorage.setItem(CHAVE,JSON.stringify(G))}catch(e){const ag=Date.now();if(ag-SAVE_ERRO<60000)return;const prim1=!SAVE_ERRO;SAVE_ERRO=ag;
   try{if(prim1&&!(G&&G.live))modal(`<div class="aviso-box"><b>⚠️ O jogo não conseguiu salvar</b><p>A memória do navegador está cheia ou bloqueada (aba anônima?). Para não perder o progresso, guarde uma cópia em arquivo agora e libere espaço no celular.</p></div><div class="botoes"><button class="btn prim" data-a="lembsalvar">Salvar em arquivo</button><button class="btn" data-a="fechar">Depois</button></div>`);else toastErro("Não foi possível salvar o jogo neste aparelho.")}catch(_){}}}
 /* seletor de cor próprio: abre direto no quadro de arrastar (sem a lista de cores prontas do celular) */
 function hexHsv(h){const n=parseInt((h||"#000000").slice(1),16),r=(n>>16)/255,g=(n>>8&255)/255,b=(n&255)/255,mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn;
@@ -3710,7 +3720,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793032095";
+const VERSAO="1793032383";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4691,7 +4701,7 @@ function rotuloEtapa(){
   return ev.k==="L"?`Rodada ${ev.r+1} de ${nRodadas()}`:ev.k==="N"?G.copaN.nome:G.cup.nome;
 }
 
-function render(){try{if(G&&G.user)garantirContratos()}catch(e){}
+function render(){try{if(G&&G.user){perfil();garantirContratos()}}catch(e){}
   if(G)tocou();
   if(SOM.ctx)somModo(modoDesejado());
   if(abertura)return renderAbertura();
@@ -5247,8 +5257,8 @@ function cupons(){return G.cupons||0}
 function cupomTxt(n){return `<span class="cupom-qtd">${ICO_CUPOM}<b class="num">${n}</b></span>`}
 function premioEmDinheiro(m){return Math.round(m*escalaFund(G.country)/10)*10}
 function checarPremios(){
-  if(!G||!G.user)return;G.premiosOk=G.premiosOk||{};const novos=[];
-  conquistasJogo().forEach(([n,d,f,e,r,ex])=>{if(f&&!G.premiosOk[n]){G.premiosOk[n]=1;const [xp,din,cp]=r;const v=ex?din:Math.round(premioEmDinheiro(din)*X_PREMIO);G.cash+=v;G.cupons=cupons()+cp;if(xp)somarXP(xp);novos.push({n,e,xp,v,cp})}});
+  if(!G||!G.user)return;const OK=perfil().premiosOk,novos=[];
+  conquistasJogo().forEach(([n,d,f,e,r,ex])=>{if(f&&!OK[n]){OK[n]=1;const [xp,din,cp]=r;const v=ex?din:Math.round(premioEmDinheiro(din)*X_PREMIO);G.cash+=v;G.cupons=cupons()+cp;if(xp)somarXP(xp);novos.push({n,e,xp,v,cp})}});
   // títulos dão muitos cupons dourados
   const T=G.titles||[];if(G.titulosPagos==null)G.titulosPagos=0;
   while(G.titulosPagos<T.length){const t=T[G.titulosPagos++];const P=pais(),C=COPAS[P.cont];
@@ -5542,9 +5552,9 @@ function telaPerfil(){
   return h;
 }
 /* foto do dono: "a:N" = um dos 20 AVATARES (img/avatares.js) ou imagem enviada (dataURL) */
-function avatarSrc(){const a=G.user.avatar;if(!a)return "";if(a.startsWith("a:"))return typeof AVATARES!=="undefined"?AVATARES[+a.slice(2)]||"":"";return a}
+function avatarSrc(){const a=G&&(perfil().avatar||G.user.avatar);if(!a)return "";if(a.startsWith("a:"))return typeof AVATARES!=="undefined"?AVATARES[+a.slice(2)]||"":"";return a}
 function modalAvatar(){const temA=typeof AVATARES!=="undefined";
-  modal(`<h3>Foto do dono</h3><div class="avatares">${temA?AVATARES.map((u,i)=>`<button data-a="avsel" data-v="${i}" aria-pressed="${G.user.avatar==="a:"+i}"><img src="${u}" alt=""></button>`).join(""):""}</div>
+  modal(`<h3>Foto do dono</h3><div class="avatares">${temA?AVATARES.map((u,i)=>`<button data-a="avsel" data-v="${i}" aria-pressed="${perfil().avatar==="a:"+i}"><img src="${u}" alt=""></button>`).join(""):""}</div>
   <div class="botoes" style="flex-wrap:wrap"><label class="btn">📤 Enviar foto<input type="file" id="avatar-arq" accept="image/*" hidden></label><button class="btn prim" data-a="fechar">Fechar</button></div>`)}
 function avisoNivel(){
   const P=G&&G.perfil;if(!P||!P.aviso||document.querySelector(".veu"))return;
@@ -7050,7 +7060,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "impconf":{try{const n=JSON.parse($("#imp-t").value);if(!n.clubs||!n.user||n.v!==2)throw 0;G=migrar(n);fecharModal();salvar();toast("Jogo carregado.");aba="inicio"}catch(e){toastErro("Código inválido. Confira se copiou o texto inteiro.");return}break;}
     case "novo":modal(`<h3>Começar novo jogo?</h3><p>O jogo atual será apagado deste navegador. Se quiser guardar, copie o código antes.</p><div class="botoes"><button class="btn" data-a="fechar">Cancelar</button><button class="btn perigo" data-a="novoconf">Apagar e recomeçar</button></div>`);return;
     case "avatar":modalAvatar();return;
-    case "avsel":G.user.avatar="a:"+v;salvar();fecharModal();toast("Foto do dono escolhida!");break;
+    case "avsel":perfil().avatar="a:"+v;salvar();fecharModal();toast("Foto do dono escolhida!");break;
     case "tradver":modalTradutor();return;
     case "excluircar":modal(`<h3>Excluir carreira?</h3><p>A carreira do ${esc(G.clubs[G.user.club].name)} (${G.year}) será apagada deste aparelho, com tudo que foi salvo nela. Não dá para desfazer.</p><div class="botoes" style="flex-wrap:wrap"><button class="btn" data-a="fechar">Cancelar</button><button class="btn perigo" data-a="excluirconf">Excluir</button></div>`);return;
     case "excluirconf":fecharModal();pararTimer();G=null;W=novoW();try{localStorage.removeItem(CHAVE_W);localStorage.removeItem(CHAVE);localStorage.removeItem(CHAVE_BKP)}catch(e){}aba="inicio";abertura=true;setTimeout(()=>modal(`<h3>Carreira excluída</h3><p>Sua carreira foi excluída. Agora você pode começar uma nova ou carregar outra carreira salva.</p><div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`),50);break;
@@ -7214,7 +7224,7 @@ document.addEventListener("change",e=>{if(e.target.id!=="avatar-arq")return;cons
   if(!f||!/^image\//.test(f.type)){toastErro("Escolha uma imagem.");return}
   const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{const L=220,cv=document.createElement("canvas");cv.width=cv.height=L; // avatar do dono: recorte quadrado do meio
     const t=Math.min(im.width,im.height);cv.getContext("2d").drawImage(im,(im.width-t)/2,(im.height-t)/2,t,t,0,0,L,L);
-    G.user.avatar=cv.toDataURL("image/jpeg",.85);salvar();fecharModal();toast("Foto do dono enviada!");render()};im.src=rd.result};rd.readAsDataURL(f)});
+    perfil().avatar=cv.toDataURL("image/jpeg",.85);salvar();fecharModal();toast("Foto do dono enviada!");render()};im.src=rd.result};rd.readAsDataURL(f)});
 document.addEventListener("change",e=>{if(e.target.id!=="rosto-arq")return;const pid=+e.target.dataset.pid,f=e.target.files&&e.target.files[0];
   processarRostoUpload(f,pid).then(r=>{G.rostosUp=G.rostosUp||{};G.rostosUp[pid]=r;salvar();toast("Rosto enviado!");const sy=scrollY;render();scrollTo(0,sy);perfilJogador(pid)}).catch(m=>toast(m))});
 /* barra de baixo: some ao rolar a tela para baixo, volta ao rolar para cima ou no topo */
