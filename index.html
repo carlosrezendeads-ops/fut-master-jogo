@@ -1937,7 +1937,7 @@ function dirAvisos(){const uid=G.user.club,c=G.clubs[uid],cl=esc(c.name),A=[],fm
   {const lim=hojeJogo()+60*864e5,P=jogadoresDo(uid).filter(p=>p.ctFim&&p.ctFim<=lim&&!p.ctAcabou).sort((a,b)=>b.ov-a.ov);
     if(P.length)add({k:"ct|"+P.map(p=>p.id).join(","),foto:"pensa",tit:"Contratos acabando",txt:`${P.length===1?`O contrato do <b>${esc(P[0].n)}</b> termina`:`Os contratos de <b>${P.slice(0,3).map(p=>esc(nomeCurto(p.n))).join(", ")}</b>${P.length>3?` e mais ${P.length-3}`:""} terminam`} em menos de 2 meses. Se quiser manter, é bom renovar antes que saiam de graça.`,aba:"elenco",bt:"Ver elenco"})}
   {const n=jogadoresDo(uid).length;if(n<20)add({k:"curto|"+G.year+"|"+n,foto:"pensa",tit:"Elenco curto",txt:`Temos só <b>${n} jogadores</b>. Com lesões e cartões, pode faltar gente. Vale contratar alguém no mercado.`,alvo:'nav [data-v="mercado"]',bt:"Ir ao mercado"})}
-  {const n=totalPontos();if(n>0)add({k:"pts|"+n+"|"+Math.floor(ev/3),foto:"joinha",tit:"Pontos de treino guardados",txt:`Chefe, temos <b>${n} ponto${n>1?"s":""} de treino</b> sem usar. Dá para melhorar os atributos dos jogadores agora mesmo.`,aba:"clube",bt:"Usar pontos"})}
+  {const n=totalPontos();if(n>=10)add({k:"pts|"+Math.floor(n/5)+"|"+Math.floor(ev/8),foto:"pensa",tit:"Pontos de treino acumulando",txt:`Chefe, já são <b>${n} pontos de treino</b> guardados sem usar. Os jogadores podem evoluir agora mesmo, é só distribuir.`,pts:1,bt:"Usar pontos"})} // 26/10: só avisa a partir de 10 pontos guardados
   // --- parabéns e ânimo (depois dos jogos da liga) ---
   const u=dirUltimo(),v=dirSeq("v"),d=dirSeq("d"),pos=nj>=3&&!G.seasonEnd?posicaoDe(uid):0,zona=nj>=10,P=pais(),CC=COPAS[P.cont],n=(G.tiers[t]||[]).length,kk=P.k||4;
   if(u&&[3,5,8,10,15,20].includes(v))add({k:"vit|"+G.year+"|"+nj,foto:"festa",tit:v>=5?`${v} vitórias seguidas!`:"Três vitórias seguidas!",txt:v>=5?`Que fase, chefe! O ${cl} não para de ganhar. A torcida está empolgada e o elenco está muito confiante.`:`Parabéns, chefe! O time está indo muito bem. Do jeito que está, dá para sonhar alto nesta temporada.`});
@@ -3704,7 +3704,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793023417";
+const VERSAO="1793023997";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -6189,11 +6189,13 @@ function quadroPontos(){
 function bolinhaJog(p){const u=unisDe(G.clubs[G.user.club])[0],[bg,fg]=({GOL:["#5b4a12","#ffe08a"],LAT:["#14405e","#a8dcff"],ZAG:["#14405e","#a8dcff"],VOL:["#1f5a33","#b9f5cc"],MEI:["#1f5a33","#b9f5cc"],ATA:["#5e1f1a","#ffb8ad"]})[p.pos]||["#1f5a33","#b9f5cc"];
   return `<svg viewBox="-16 -16 32 39" width="30" height="37" aria-hidden="true"><defs><clipPath id="bjClip"><circle r="11.8"/></clipPath></defs><circle r="13.2" fill="${u.camisa}" stroke="${u.detalhe&&distCor(u.detalhe,u.camisa)>60?u.detalhe:"#ffffff"}" stroke-width="2.4"/><g clip-path="url(#bjClip)">${rostoSVG(p,25).replace("<svg",'<svg x="-12.5" y="-10.8"')}</g><g transform="translate(0 17.6)"><rect x="-11.8" y="-5.2" width="23.6" height="10.4" rx="2.9" fill="${bg}" stroke="rgba(0,0,0,.35)" stroke-width=".6"/><text y="2.8" text-anchor="middle" font-size="7.4" font-weight="800" fill="${fg}" font-family="Archivo,Arial,sans-serif">${p.pos}</text></g></svg>`}
 const POS_GRUPO={GOL:"Goleiros",ZAG:"Zagueiros",LAT:"Laterais",VOL:"Volantes",MEI:"Meias",ATA:"Atacantes"};
+// próximo tipo de ponto que ainda tem saldo (segue a ordem de ATRS, dando a volta)
+function proxTipoPontos(k){const P=pontosTreino(),i=ATRS.findIndex(x=>x[0]===k);for(let j=1;j<=ATRS.length;j++){const x=ATRS[(i+j)%ATRS.length];if(x[0]!==k&&P[x[0]]>0)return x[0]}return null}
 function modalPontosTipo(k){
-  const P=pontosTreino(),a=ATRS.find(x=>x[0]===k),el=jogadoresDo(G.user.club).filter(p=>atrVale(p,k)).sort((x,y)=>ORD_POS[x.pos]-ORD_POS[y.pos]||y.ov-x.ov);
+  const P=pontosTreino(),a=ATRS.find(x=>x[0]===k),nx=proxTipoPontos(k),an=nx&&ATRS.find(x=>x[0]===nx),el=jogadoresDo(G.user.club).filter(p=>atrVale(p,k)).sort((x,y)=>ORD_POS[x.pos]-ORD_POS[y.pos]||y.ov-x.ov);
   modal(`<h3>${a[2]} Pontos de ${a[1]}</h3><p class="muted peq" style="margin:0 0 8px">${P[k]>0?`Você tem <b style="color:var(--canario)">${P[k]}</b> ponto${P[k]>1?"s":""}. Toque em + para dar 1 ponto ao jogador.`:"Você não tem pontos disso agora. Ganhe Bolas Douradas vencendo jogos com 3 gols ou mais."}</p>
   <div class="pts-lista">${el.map((p,i)=>{const v=atributos(p)[k],ex=(p.ap||{})[k]||0,tit=i===0||el[i-1].pos!==p.pos?`<b class="pts-grupo">${POS_GRUPO[p.pos]||p.pos}</b>`:"";return `${tit}<div class="pts-lin"><span class="pts-bola">${bolinhaJog(p)}</span><div class="nm"><b>${esc(nomeCurto(p.n))}</b><div class="atr-b"><i style="width:${v}%;background:var(--canario)"></i></div></div><b class="num">${v}${ex?`<em>+${ex}</em>`:""}</b><button class="btn mini atr-mais" data-a="ptsadd" data-v="${p.id}|${k}|t"${P[k]>0&&v<99?"":" disabled"}>+</button></div>`}).join("")}</div>
-  <div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`)}
+  <div class="botoes"><button class="btn${an?"":" prim"}" data-a="fechar">Sair</button>${an?`<button class="btn${P[k]>0?"":" prim"}" data-a="ptstipo" data-v="${nx}">${P[k]>0?"Pular para":"Próximo:"} ${an[2]} ${an[1]} (${P[nx]}) ›</button>`:""}</div>`)}
 function modalPontosJog(id){
   const p=G.players[id];if(!p)return;const P=pontosTreino(),tot=totalPontos();
   modal(`<div class="perfil"><div class="perfil-foto">${rostoSVG(p,80)}</div><div class="nm"><h3 style="margin:0">${esc(p.n)}</h3><span class="muted">${p.pos} · força ${p.ov}</span></div></div>
@@ -6953,7 +6955,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "logos":modalLogos(v);break;
     case "dirsim":modalDiretorAceite();return;
     case "dirok":G.diretor={on:1,vistos:{},ev:G.ev,n:1,ano:G.year,tier:userTier()};salvar();fecharModal();toast(`${DIR_NOME} é o novo diretor do clube!`);render();return;
-    case "dirir":{const a=window._dirAv;fecharModal();if(!a)return;if(a.aba){aba=a.aba;window.scrollTo(0,0);render()}else diretorFoco(a.alvo);return}
+    case "dirir":{const a=window._dirAv;fecharModal();if(!a)return;if(a.pts){const k=(ATRS.find(x=>pontosTreino()[x[0]]>0)||[])[0];if(k)modalPontosTipo(k);return}if(a.aba){aba=a.aba;window.scrollTo(0,0);render()}else diretorFoco(a.alvo);return}
     case "tvsim":case "tvnao":decidirTV(+v,a==="tvsim");salvar();if(!tvPendente())window.scrollTo(0,0);break;
     case "fecharjanela":{const er=fecharJanela();if(er){toastErro(er);return}salvar();toast(G.ev===0?"Bola rolando! Boa temporada.":"Janela fechada.");window.scrollTo(0,0);break;}
     case "iniciarjogo":{const er=iniciarAoVivo(false);if(er){toastErro(er);return}somIniciar();setTimeout(()=>apito(.9),250);painel=null;liveSel=null;aba="partida";salvar();window.scrollTo(0,0);break;}
@@ -7088,7 +7090,10 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "msgign":{const m=G.inbox[+v];m.ofm.est="ignorada";salvar();fecharModal();return}
     case "ptstipo":modalPontosTipo(v);return;
     case "ptsjog":modalPontosJog(+v);return;
-    case "ptsadd":{const [id,k,de]=v.split("|"),er=usarPonto(+id,k);if(er){toastErro(er);return}salvar();render();if(de==="t")modalPontosTipo(k);else modalPontosJog(+id);toast(`+1 ${ATRS.find(x=>x[0]===k)[1]} para ${nomeCurto(G.players[+id].n)}!`);return}
+    case "ptsadd":{const [id,k,de]=v.split("|"),er=usarPonto(+id,k);if(er){toastErro(er);return}salvar();render();const msg=`+1 ${ATRS.find(x=>x[0]===k)[1]} para ${nomeCurto(G.players[+id].n)}!`;
+      if(de!=="t"){modalPontosJog(+id);toast(msg);return}
+      if(pontosTreino()[k]>0){modalPontosTipo(k);toast(msg);return}
+      const nx=proxTipoPontos(k);if(nx){modalPontosTipo(nx);toast(`${msg} Agora: pontos de ${ATRS.find(x=>x[0]===nx)[1]}`)}else{fecharModal();toast(`${msg} Todos os pontos foram usados!`)}return}
     case "bola":{const el=document.querySelector(".bola-dourada");if(!el||el.classList.contains("explode")||!(G.user.bolas>0))return;
       G.user.bolas--;const nb=(G.user.bolaPts||[]).shift(),gan=nb?distribuirPontos(nb):sortearPontos(),P=pontosTreino();Object.entries(gan).forEach(([k,n])=>P[k]=(P[k]||0)+n);salvar();
       el.classList.add("explode");if(typeof somConquista==="function")somConquista();
