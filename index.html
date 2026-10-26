@@ -772,6 +772,8 @@ nav.abas button{font-size:11px}
 .hab-chips{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px;max-width:65%}
 .hab-chips i{font-style:normal;font-size:12px;background:var(--gramado-3);border-radius:999px;padding:2px 8px}
 .ant-chips i{display:inline-flex;align-items:center;gap:4px}
+.titulo-dono{display:inline-block;align-self:flex-start;width:fit-content;margin:2px 0 4px;padding:2px 10px;border-radius:999px;font-size:13px;font-weight:800;color:#3a2a00;background:linear-gradient(160deg,#ffe27a,#c99a1a)}
+.titulo-novo{margin:6px 0;font-size:15px}.titulo-novo b{color:var(--canario)}
 .hab-chips i.top{background:linear-gradient(160deg,#ffe27a,#c99a1a);color:#3a2a00;font-weight:800}
 .podio{position:relative;text-align:center;overflow:hidden;padding-top:6px}
 .podio-raios{position:absolute;left:50%;top:150px;width:620px;height:620px;margin:-310px 0 0 -310px;background:repeating-conic-gradient(rgba(255,210,63,.16) 0 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none}
@@ -2379,6 +2381,10 @@ const XP_RES={v:50,e:25,d:10};
 function xpParaSubir(n){return Math.round((n<=1?50:200+50*(n-2))*1.3*2/5)*5} // +30% e depois x2 de XP por nível
 function perfil(){if(!G.perfil)G.perfil={xp:0,nivel:1,j:0,v:0,e:0,d:0,gp:0,gc:0,aviso:null,dica:false};return G.perfil}
 const NIVEL_MAX=30;
+// título do dono pelo nível (26/10)
+const TITULOS=[[1,"Perna de Pau"],[3,"Amador"],[6,"Gandula"],[9,"Boleiro"],[12,"Craque da Várzea"],[15,"Profissional"],[18,"Jogador Caro"],[21,"Mestre"],[24,"Imperador"],[27,"Fenômeno"],[30,"Lendário"]];
+function tituloNivel(n){let t=TITULOS[0][1];TITULOS.forEach(([l,x])=>{if(n>=l)t=x});return t}
+function proxTitulo(n){return TITULOS.find(([l])=>l>n)}
 /* prêmio em dinheiro (em mil) ao chegar em cada nível: cresce aos poucos até 5 milhões no nível 30 (base Brasil; outros países ajustados pela economia do país, escalaFund) */
 const PREMIO_N30=5000;
 const CUPONS_NIVEL={10:5,20:10,30:30}; // cupons dourados extras nesses níveis
@@ -3704,7 +3710,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793023997";
+const VERSAO="1793024851";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -5507,9 +5513,9 @@ function telaPerfil(){
   const ap=P.j?Math.round((P.v*3+P.e)/(P.j*3)*100):0;
   const temp=G.history.length+1;
   let h=`<div class="perfil-topo cartao" style="position:relative"><span style="position:absolute;top:10px;right:12px">${cupomTxt(cupons())}</span><button class="avatar-dono" data-a="avatar" aria-label="Trocar foto">${avatarSrc()?`<img src="${avatarSrc()}" alt="">`:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">${ICONES.perfil}</svg>`}<span>📷</span></button>
-    <div class="nm"><div class="nivel-selo mini"><small>Nível</small><b class="num">${P.nivel}</b></div><h2 style="margin:0">${esc(G.user.coach||"Dono do clube")}</h2><span class="muted">Dono do ${esc(c.name)}</span>${conta()?`<span class="amg-id peq">ID: <b class="num">${idTxt(conta().id)}</b><button class="btn mini" data-a="amgcopiar">Copiar</button></span>`:""}
+    <div class="nm"><div class="nivel-selo mini"><small>Nível</small><b class="num">${P.nivel}</b></div><h2 style="margin:0">${esc(G.user.coach||"Dono do clube")}</h2><span class="titulo-dono">🏅 ${tituloNivel(P.nivel)}</span><span class="muted">Dono do ${esc(c.name)}</span>${conta()?`<span class="amg-id peq">ID: <b class="num">${idTxt(conta().id)}</b><button class="btn mini" data-a="amgcopiar">Copiar</button></span>`:""}
     <div class="xp-barra"><i style="width:${P.nivel>=NIVEL_MAX?100:pct}%"></i></div><span class="peq muted num">${P.nivel>=NIVEL_MAX?"Nível máximo alcançado!":`${P.xp} de ${prox} XP · faltam ${prox-P.xp} para o nível ${P.nivel+1}`}</span>
-    ${P.nivel<NIVEL_MAX?`<span class="peq num" style="color:var(--canario)">Bônus do nível ${P.nivel+1}: ${dinheiro(premioNivel(P.nivel+1))}</span>`:""}</div></div>`;
+    ${proxTitulo(P.nivel)?`<span class="peq muted">Próximo título: <b>${proxTitulo(P.nivel)[1]}</b> no nível ${proxTitulo(P.nivel)[0]}</span>`:""}${P.nivel<NIVEL_MAX?`<span class="peq num" style="color:var(--canario)">Bônus do nível ${P.nivel+1}: ${dinheiro(premioNivel(P.nivel+1))}</span>`:""}</div></div>`;
   h+=`<h2>Estatísticas</h2><div class="kpis">
     <div class="cartao kpi"><small>Jogos</small><b class="num">${P.j}</b></div>
     <div class="cartao kpi"><small>Vitórias</small><b class="num" style="color:var(--ok)">${P.v}</b></div>
@@ -5543,7 +5549,7 @@ function modalAvatar(){const temA=typeof AVATARES!=="undefined";
 function avisoNivel(){
   const P=G&&G.perfil;if(!P||!P.aviso||document.querySelector(".veu"))return;
   const n=P.aviso,pr=P.premioAviso||0,cpA=P.cupomAviso||0;P.aviso=null;setTimeout(somConquista,150);P.premioAviso=0;P.cupomAviso=0;salvar();
-  const prTxt=(pr?`<p class="premio-nivel">Bônus de nível: <b class="num">+${dinheiro(pr)}</b> no caixa</p>`:"")+(cpA?`<p class="premio-nivel">+${cupomTxt(cpA)} cupons dourados</p>`:"");
+  const prTxt=(pr?`<p class="premio-nivel">Bônus de nível: <b class="num">+${dinheiro(pr)}</b> no caixa</p>`:"")+(cpA?`<p class="premio-nivel">+${cupomTxt(cpA)} cupons dourados</p>`:"")+(tituloNivel(n)!==tituloNivel(n-1)?`<p class="titulo-novo">🏅 Novo título: <b>${tituloNivel(n)}</b></p>`:"");
   if(!P.dica){P.dica=true;salvar();
     modal(`<div style="text-align:center"><div class="nivel-selo grande" style="margin:4px auto 10px"><small>Nível</small><b class="num">${n}</b></div>
       <h3 style="margin:0 0 6px">Você subiu para o nível ${n}!</h3>${prTxt}
