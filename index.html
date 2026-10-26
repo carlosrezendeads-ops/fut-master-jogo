@@ -772,6 +772,7 @@ nav.abas button{font-size:11px}
 .hab-chips{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px;max-width:65%}
 .hab-chips i{font-style:normal;font-size:12px;background:var(--gramado-3);border-radius:999px;padding:2px 8px}
 .ant-chips i{display:inline-flex;align-items:center;gap:4px}
+.car-lista{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}.car-lin{display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;background:var(--gramado-3)}.car-lin .nm{flex:1;display:flex;flex-direction:column;min-width:0}.car-lin small{font-size:12px}.car-esc{flex:0 0 auto;display:flex}.car-bt{display:flex;gap:6px}
 .titulo-dono{display:inline-block;align-self:flex-start;width:fit-content;margin:2px 0 4px;padding:2px 10px;border-radius:999px;font-size:13px;font-weight:800;color:#3a2a00;background:linear-gradient(160deg,#ffe27a,#c99a1a)}
 .titulo-novo{margin:6px 0;font-size:15px}.titulo-novo b{color:var(--canario)}
 .hab-chips i.top{background:linear-gradient(160deg,#ffe27a,#c99a1a);color:#3a2a00;font-weight:800}
@@ -3722,7 +3723,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793033033";
+const VERSAO="1793033525";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4039,7 +4040,7 @@ function renderAbertura(){
 const MENU_SP=[
  ["entrar","Continuar carreira",'<path d="M8 5v14l11-7z"/>'],
  ["sploja","Loja",'<path d="M7 8h13l-2 8H8L6 4H3"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/>'],
- ["carregararq","Carregar jogo",'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'],
+ ["carreiras","Carregar jogo",'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'],
  ["novacarreira","Nova carreira",'<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>'],
  ["embreve","Brasileirão Série A",'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',1], // modos que vão entrar no jogo (26/10): só aviso, trancados
  ["embreve","Rumo ao Estrelato",'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',1],
@@ -4080,7 +4081,35 @@ function modalAjustesSp(){
 const CHAVE_BKP="fut-master-backup";
 function lerInfoBackup(){try{return JSON.parse(localStorage.getItem(CHAVE_BKP)||"null")}catch(e){return null}}
 function nomeArquivo(){const c=G.clubs[G.user.club];if(!G.carreiraId)G.carreiraId=Math.random().toString(36).slice(2,6); // mesmo nome sempre: o arquivo da carreira é salvo por cima
-  return `fut-master-${c.short.toLowerCase().replace(/[^a-z0-9]/g,"")||"clube"}-${G.carreiraId}.json`}
+  const nm=c.name.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^A-Za-z0-9]+/g,"-").replace(/^-|-$/g,"")||"Clube";
+  return `FUT-Master-${nm}-${G.carreiraId}.json`} // 26/10: nome do time no arquivo
+/* várias carreiras no aparelho (26/10): a aberta fica em CHAVE; as outras ficam no IndexedDB (cabe save grande) com resumo em CHAVE_CARS */
+const CHAVE_CARS="fut-carreiras",MAX_CARS=3;
+function idbCars(){return new Promise((ok,er)=>{const r=indexedDB.open("fut-carreiras",1);r.onupgradeneeded=()=>r.result.createObjectStore("c");r.onsuccess=()=>ok(r.result);r.onerror=()=>er(r.error)})}
+async function idbFaz(modo,fn){const db=await idbCars();return new Promise((ok,er)=>{const t=db.transaction("c",modo),q=fn(t.objectStore("c"));t.oncomplete=()=>ok(q.result);t.onerror=()=>er(t.error)})}
+const idbPega=id=>idbFaz("readonly",st=>st.get(id)),idbPoe=(id,v)=>idbFaz("readwrite",st=>st.put(v,id)),idbTira=id=>idbFaz("readwrite",st=>st.delete(id));
+function carId(){if(!G.carreiraId)G.carreiraId=Math.random().toString(36).slice(2,6);return G.carreiraId}
+function lerCars(){try{return JSON.parse(localStorage.getItem(CHAVE_CARS)||"{}")||{}}catch(e){return {}}}
+function gravarCars(o){try{localStorage.setItem(CHAVE_CARS,JSON.stringify(o))}catch(e){}}
+function resumoCar(){const uid=G.user.club,c=G.clubs[uid];return {id:carId(),cl:{name:c.name,short:c.short,escudo:c.escudo,c1:c.c1,c2:c.c2},serie:nomeLiga(userTier()),ano:G.year,j:(G.st[uid]||{}).j||0,quando:Date.now()}}
+const totalCars=()=>Object.keys(lerCars()).length+(G?1:0);
+async function guardarAtual(){if(!G)return;const r=resumoCar();await idbPoe(r.id,JSON.stringify(G));const L=lerCars();L[r.id]=r;gravarCars(L);pararTimer();G=null;try{localStorage.removeItem(CHAVE);localStorage.removeItem(CHAVE_BKP)}catch(e){}}
+function podeTrocar(){if(G&&(G.live||G.amgM)){toastErro("Termine a partida antes de trocar de carreira.");return false}return true}
+async function abrirCar(id){if(!podeTrocar())return;try{const s=await idbPega(id);if(!s)throw 0;await guardarAtual();
+    G=migrar(JSON.parse(s));salvar();await idbTira(id);const L=lerCars();delete L[id];gravarCars(L);
+    fecharModal();abertura=false;aba="inicio";render();toast(`Carreira carregada: ${G.clubs[G.user.club].name}, ${G.year}.`)}
+  catch(e){toastErro("Não deu para abrir essa carreira.")}}
+async function novaGuardando(){if(!podeTrocar())return;try{await guardarAtual()}catch(e){toastErro("Não deu para guardar a carreira atual.");return}fecharModal();abertura=false;W=lerW()||novoW();render();toast("Carreira guardada. Vamos criar a nova!")}
+function modalCarreiras(){
+  const L=Object.values(lerCars()).sort((a,b)=>b.quando-a.quando),lin=(cl,tit,sub,bt)=>`<div class="car-lin"><span class="car-esc">${escudoDe(cl,40)}</span><div class="nm"><b>${esc(cl.name)}</b><small>${tit}</small>${sub?`<small class="muted">${sub}</small>`:""}</div>${bt}</div>`;
+  let h="";
+  if(G){const r=resumoCar();h+=lin(r.cl,`${esc(r.serie)} · ${r.ano} · ${r.j} jogos`,"",`<span class="tag ok">Jogando agora</span>`)}
+  h+=L.map(r=>lin(r.cl,`${esc(r.serie)} · ${r.ano} · ${r.j} jogos`,`Guardada em ${new Date(r.quando).toLocaleDateString("pt-BR")}`,`<div class="car-bt"><button class="btn mini prim" data-a="carabre" data-v="${r.id}">Carregar</button><button class="btn mini perigo" data-a="carapaga" data-v="${r.id}" aria-label="Apagar">🗑</button></div>`)).join("");
+  const livre=MAX_CARS-totalCars();
+  modal(`<h3>Suas carreiras</h3><p class="muted peq" style="margin:0 0 8px">Até ${MAX_CARS} carreiras neste aparelho. Ao trocar, a carreira atual fica guardada aqui.</p><div class="car-lista">${h||'<p class="muted">Nenhuma carreira guardada.</p>'}</div>
+  ${livre>0?`<button class="btn full" data-a="carnova">➕ Nova carreira <small class="muted">(${livre} espaço${livre>1?"s":""} livre${livre>1?"s":""})</small></button>`:`<p class="muted peq">Os ${MAX_CARS} espaços estão ocupados. Apague uma carreira para começar outra.</p>`}
+  <button class="btn full" style="margin-top:6px" data-a="carregararq">📁 Carregar de um arquivo</button><input type="file" id="arq-save3" accept=".json,application/json" hidden>
+  <div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`)}
 let downloadsCap;
 async function salvarArquivo(){
   if(!G)return;
@@ -4100,7 +4129,8 @@ function lerArquivo(file){
   const fr=new FileReader();
   fr.onload=()=>{
     try{const o=JSON.parse(fr.result);const g=o&&o.G?o.G:o;if(!g||!g.clubs||!g.user||g.v!==2)throw 0;
-      pararTimer();G=migrar(g);salvar();abertura=false;aba="inicio";render();toast(`Carreira carregada: ${G.clubs[G.user.club].name}, ${G.year}.`)}
+      const abre=()=>{pararTimer();G=migrar(g);salvar();fecharModal();abertura=false;aba="inicio";render();toast(`Carreira carregada: ${G.clubs[G.user.club].name}, ${G.year}.`)};
+      if(G&&g.carreiraId!==G.carreiraId){if(!podeTrocar())return;if(totalCars()>=MAX_CARS){toastErro(`Já tem ${MAX_CARS} carreiras neste aparelho. Apague uma antes.`);return}guardarAtual().then(abre).catch(()=>toastErro("Não deu para guardar a carreira atual."))}else abre()}
     catch(e){toastErro("Esse arquivo não é um save do FUT Master.")}
   };
   fr.onerror=()=>toastErro("Não deu para ler o arquivo.");
@@ -5425,6 +5455,7 @@ let editorOn=false,edSel={grupo:null,clube:null,busca:""};
 try{editorOn=sessionStorage.getItem("fut-editor")==="1"}catch(e){}
 function telaConfig(){
   let h=`<h2>Configurações</h2><div class="cartao secao">
+    <div class="linha" style="justify-content:space-between"><span>Trocar de carreira</span><button class="btn mini prim" data-a="carreiras">Minhas carreiras</button></div>
     <div class="linha" style="justify-content:space-between"><span>Vibração (Android)</span><button class="btn mini" data-a="vib">${VIB_ON?"Desligar vibração":"Ligar vibração"}</button></div>
     ${pushOk()?`<div class="linha" style="justify-content:space-between"><span>Notificações no celular</span><button class="btn mini" data-a="${pushLigado()?"pushoff":"pushon"}">${pushLigado()?"Desligar":"Ligar"}</button></div>`:""}
     <div class="linha" style="justify-content:space-between"><span>Som do jogo</span><button class="btn mini" data-a="som">${SOM.mudo?"Ligar som":"Desligar som"}</button></div>
@@ -7174,7 +7205,12 @@ adaptarEscalacao(v);salvar();el.closest(".dd").classList.remove("aberto");if(ani
       modal(`<h3 style="margin:0 0 8px">Rodada ${n} · ${esc(nomeLiga(t))}</h3><div style="padding-block:4px">${rs.map(([a,b,x,y])=>`<div class="res${a===uid||b===uid?" meu":""}"><span>${esc(G.clubs[a].name)}</span><span class="c num">${x} × ${y}</span><span>${esc(G.clubs[b].name)}</span></div>`).join("")||'<p class="muted">Sem resultados.</p>'}</div><div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`);return}
     case "entrar":if(!G)W=lerW()||W||novoW();abertura=false;aba="inicio";break;
     case "som":somIniciar();somMudo(!SOM.mudo);if(aba==="config"&&G)render();document.querySelectorAll(".som-btn").forEach(b=>{b.innerHTML=iconeSom();b.setAttribute("aria-label",SOM.mudo?"Ligar som":"Desligar som")});if(!SOM.mudo)somModo(modoDesejado());return;
-    case "carregararq":{const i=$("#arq-save")||$("#arq-save2");if(i){i.value="";i.click()}return;}
+    case "carreiras":modalCarreiras();return;
+    case "carabre":abrirCar(v);return;
+    case "carnova":novaGuardando();return;
+    case "carapaga":modal(`<h3>Apagar esta carreira?</h3><p>A carreira guardada do ${esc((lerCars()[v]||{cl:{name:""}}).cl.name)} será apagada deste aparelho. Não dá para desfazer.</p><div class="botoes"><button class="btn" data-a="carreiras">Cancelar</button><button class="btn perigo" data-a="carapagaok" data-v="${v}">Apagar</button></div>`);return;
+    case "carapagaok":idbTira(v).catch(()=>{}).then(()=>{const L=lerCars();delete L[v];gravarCars(L);modalCarreiras();toast("Carreira apagada.")});return;
+    case "carregararq":{const i=$("#arq-save3")||$("#arq-save")||$("#arq-save2");if(i){i.value="";i.click()}return;}
     case "salvararq":salvarArquivo();return;
     case "lembsalvar":fecharModal();salvarArquivo();return;
     case "tradprox":{const c=document.querySelector(".trad-cards");if(c)c.scrollBy({left:c.clientWidth,behavior:"smooth"});return}
@@ -7197,7 +7233,8 @@ adaptarEscalacao(v);salvar();el.closest(".dd").classList.remove("aberto");if(ani
     case "splajustes":modalAjustesSp();return;
     case "splsom":acao("som");modalAjustesSp();return;
     case "novacarreira":
-      if(G){modal(`<h3>Começar nova carreira?</h3><p>A carreira atual (${esc(G.clubs[G.user.club].name)}, ${G.year}) será apagada deste aparelho. Para não perder, salve o arquivo antes.</p><div class="botoes" style="flex-wrap:wrap"><button class="btn" data-a="salvararq">Salvar arquivo</button><button class="btn" data-a="fechar">Cancelar</button><button class="btn perigo" data-a="novoconf">Apagar e começar</button></div>`);return}
+      if(G&&totalCars()<MAX_CARS){modal(`<h3>Começar nova carreira?</h3><p>A carreira atual (${esc(G.clubs[G.user.club].name)}, ${G.year}) fica guardada. Para voltar a ela, use <b>Trocar de carreira</b> na engrenagem ou <b>Carregar jogo</b> na capa.</p><div class="botoes"><button class="btn" data-a="fechar">Cancelar</button><button class="btn prim" data-a="carnova">Começar nova</button></div>`);return}
+      if(G){modal(`<h3>Começar nova carreira?</h3><p class="peq" style="color:var(--aviso)">Os ${MAX_CARS} espaços de carreira estão ocupados.</p><p>A carreira atual (${esc(G.clubs[G.user.club].name)}, ${G.year}) será apagada deste aparelho. Para não perder, salve o arquivo antes.</p><div class="botoes" style="flex-wrap:wrap"><button class="btn" data-a="salvararq">Salvar arquivo</button><button class="btn" data-a="fechar">Cancelar</button><button class="btn perigo" data-a="novoconf">Apagar e começar</button></div>`);return}
       abertura=false;G=null;W=lerW()||novoW();break;
   }
   vivoDepois(a);
@@ -7218,7 +7255,7 @@ function handlers(root){
 handlers(app);handlers(nav);handlers($("#splash"));
 document.addEventListener("change",e=>{if(e.target.id!=="esc-up")return;const f=e.target.files&&e.target.files[0];
   processarEscudoUpload(f).then(url=>{const {e:es}=alvoVisual();es.img=url;if(G)salvar();render();toast("Escudo enviado!")}).catch(m=>toastErro(m))});
-document.addEventListener("change",e=>{if(e.target.id==="arq-save"||e.target.id==="arq-save2")lerArquivo(e.target.files&&e.target.files[0])});
+document.addEventListener("change",e=>{if(e.target.id==="arq-save"||e.target.id==="arq-save2"||e.target.id==="arq-save3")lerArquivo(e.target.files&&e.target.files[0])});
 document.addEventListener("change",e=>{if(e.target.id!=="ed-arq"||!editorOn)return;const pid=+e.target.dataset.pid,f=e.target.files&&e.target.files[0];
   processarRostoUpload(f,pid).then(r=>{G.rostosUp=G.rostosUp||{};G.rostosUp[pid]=r;const p=G.players[pid];if(p)delete p.rf;salvar();toast("Foto atualizada em todo o jogo!");render();modalEditorJog(pid)}).catch(m=>toast(m))});
 document.addEventListener("change",e=>{if(e.target.id!=="edt-arq"||!editorOn)return;const n=e.target.dataset.n,f=e.target.files&&e.target.files[0];
