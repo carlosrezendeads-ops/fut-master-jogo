@@ -2382,7 +2382,7 @@ function xpParaSubir(n){return Math.round((n<=1?50:200+50*(n-2))*1.3*2/5)*5} // 
 function perfil(){if(!G.perfil)G.perfil={xp:0,nivel:1,j:0,v:0,e:0,d:0,gp:0,gc:0,aviso:null,dica:false};return G.perfil}
 const NIVEL_MAX=30;
 // título do dono pelo nível (26/10)
-const TITULOS=[[1,"Perna de Pau"],[3,"Amador"],[6,"Gandula"],[9,"Boleiro"],[12,"Craque da Várzea"],[15,"Profissional"],[18,"Jogador Caro"],[21,"Mestre"],[24,"Imperador"],[27,"Fenômeno"],[30,"Lendário"]];
+const TITULOS=[[1,"Sonhador"],[3,"Clubista"],[6,"Fanático"],[9,"Conselheiro"],[12,"Empresário"],[15,"Cartola"],[18,"Presidente"],[21,"Magnata"],[24,"Fenômeno"],[30,"Lenda"]]; // os de jogador (Perna de Pau…Lendário) ficaram para o futuro modo de jogador individual
 function tituloNivel(n){let t=TITULOS[0][1];TITULOS.forEach(([l,x])=>{if(n>=l)t=x});return t}
 function proxTitulo(n){return TITULOS.find(([l])=>l>n)}
 /* prêmio em dinheiro (em mil) ao chegar em cada nível: cresce aos poucos até 5 milhões no nível 30 (base Brasil; outros países ajustados pela economia do país, escalaFund) */
@@ -3710,7 +3710,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793024851";
+const VERSAO="1793031960";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
