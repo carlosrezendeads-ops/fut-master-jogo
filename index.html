@@ -980,7 +980,7 @@ nav.abas button{font-size:11px}
 .splash.arte::after{background:linear-gradient(180deg,rgba(4,13,51,0) 50%,rgba(4,13,51,.92) 100%)}
 .splash.arte .clube-sp{text-shadow:0 1px 3px #000}
 @media (min-aspect-ratio:3/4){.splash.arte img,.splash.arte .capa-video{object-fit:contain}}
-.splash.arte img.capa-logo{inset:auto;top:calc(17vh + env(safe-area-inset-top,0px));left:50%;width:min(70vw,34vh,360px);height:auto;transform:translateX(-50%);object-fit:fill;z-index:1;filter:drop-shadow(0 4px 14px rgba(0,0,0,.6))}
+.splash.arte img.capa-logo{inset:auto;top:calc(17vh - 60px + env(safe-area-inset-top,0px));left:50%;width:min(70vw,34vh,360px);height:auto;transform:translateX(calc(-50% + 45px));object-fit:fill;z-index:1;filter:drop-shadow(0 4px 14px rgba(0,0,0,.6))}
 .splash.arte{padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}
 .atalhos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
 .atalhos button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;font:inherit;font-size:12px;font-weight:700;color:inherit;cursor:pointer}
@@ -3722,7 +3722,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793032599";
+const VERSAO="1793033033";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
