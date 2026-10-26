@@ -971,6 +971,8 @@ nav.abas button{font-size:11px}
 .roda-it svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
 .roda-it[data-a=entrar] svg{fill:currentColor}
 .roda-it.sel{color:#fff;background:linear-gradient(90deg,transparent,rgba(25,195,255,.35) 20%,rgba(25,195,255,.35) 80%,transparent);text-shadow:0 0 12px #19c3ff,0 0 26px rgba(25,195,255,.8);border-block:1.5px solid rgba(25,195,255,.9)}
+.roda-it.bloq>svg,.roda-it.bloq>span{opacity:.4}
+.selo-breve{font-style:normal;font-family:Archivo,Arial,sans-serif;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#3a2a00;background:linear-gradient(160deg,#ffe27a,#e0a800);padding:2px 7px;border-radius:6px;align-self:flex-start;margin-top:6px;text-shadow:none;box-shadow:0 0 8px rgba(255,200,0,.5)}
 .roda-it.sel svg{filter:drop-shadow(0 0 6px #19c3ff)}
 .roda-dica{font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.06em;text-shadow:0 1px 3px #000}
 .regras{display:flex;flex-direction:column;gap:10px;max-height:60vh;overflow-y:auto;text-align:left}
@@ -3720,7 +3722,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793032383";
+const VERSAO="1793032599";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4027,7 +4029,7 @@ function renderAbertura(){
   ${arte?"":`<div class="lema"><b>FUT</b><span>Monte seu time.<br>Conquiste seu sonho.</span></div>`}
   ${c?`<div class="clube-sp"><b>${esc(c.name)}</b> · ${esc(nomeLiga(c.tier))} · ${G.year}${info?`<br>Arquivo de save: temporada ${info.ano}, ${esc(info.quando)}`:""}</div>`:""}
   <div class="roda-sp"><div class="roda" role="listbox" aria-label="Menu inicial">
-    ${MENU_SP.filter(o=>o[0]!=="sploja"&&(c||o[0]!=="entrar"||(!G&&lerW()))).map(([a,t,ic])=>`<button class="roda-it" data-a="${a}" role="option"><svg viewBox="0 0 24 24" aria-hidden="true">${ic}</svg><span>${a==="entrar"&&!c?"Continuar criação":t}</span></button>`).join("")}
+    ${MENU_SP.filter(o=>o[0]!=="sploja"&&(c||o[0]!=="entrar"||(!G&&lerW()))).map(([a,t,ic,bq])=>`<button class="roda-it${bq?" bloq":""}" data-a="${a}" data-v="${bq?esc(t):""}" role="option"><svg viewBox="0 0 24 24" aria-hidden="true">${ic}</svg><span>${a==="entrar"&&!c?"Continuar criação":t}</span>${bq?'<i class="selo-breve">Em breve</i>':""}</button>`).join("")}
   </div><span class="roda-dica">Role para escolher · toque para entrar</span></div>
   <input type="file" id="arq-save" accept=".json,application/json,text/plain" hidden>`;
   const cv=sp.querySelector("canvas");if(cv)pincel(cv);
@@ -4039,6 +4041,8 @@ const MENU_SP=[
  ["sploja","Loja",'<path d="M7 8h13l-2 8H8L6 4H3"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/>'],
  ["carregararq","Carregar jogo",'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'],
  ["novacarreira","Nova carreira",'<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>'],
+ ["embreve","Brasileirão Série A",'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',1], // modos que vão entrar no jogo (26/10): só aviso, trancados
+ ["embreve","Rumo ao Estrelato",'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',1],
  ["splajustes","Ajustes",'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>'],
  ["splregras","Regras do jogo",'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h7M8 11h7"/>']];
 function rodaIniciar(r){
@@ -7188,6 +7192,7 @@ adaptarEscalacao(v);salvar();el.closest(".dd").classList.remove("aberto");if(ani
     case "vcolocar":{const p=G.players[+v];if(!p||p.vendaPreco==null)return;p.venda={preco:p.vendaPreco,dias:diasVenda(p,p.vendaPreco),desde:hojeJogo()};salvar();fecharModal();toast(`${p.n} está à venda. Venda em uns ${p.venda.dias} dias.`);break;}
     case "vtirar":{const p=G.players[+v];if(p){delete p.venda;salvar()}fecharModal();toast("Jogador tirado da venda.");break;}
     case "stats":modalStats();return;
+    case "embreve":toast(`🔒 ${v}: em breve no FUT Master!`);return;
     case "splregras":modalRegras();return;
     case "splajustes":modalAjustesSp();return;
     case "splsom":acao("som");modalAjustesSp();return;
