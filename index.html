@@ -771,6 +771,7 @@ nav.abas button{font-size:11px}
 .jog.lenda{grid-template-columns:52px minmax(0,1fr) auto}
 .hab-chips{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px;max-width:65%}
 .hab-chips i{font-style:normal;font-size:12px;background:var(--gramado-3);border-radius:999px;padding:2px 8px}
+.ant-chips i{display:inline-flex;align-items:center;gap:4px}
 .hab-chips i.top{background:linear-gradient(160deg,#ffe27a,#c99a1a);color:#3a2a00;font-weight:800}
 .podio{position:relative;text-align:center;overflow:hidden;padding-top:6px}
 .podio-raios{position:absolute;left:50%;top:150px;width:620px;height:620px;margin:-310px 0 0 -310px;background:repeating-conic-gradient(rgba(255,210,63,.16) 0 10deg,transparent 10deg 20deg);border-radius:50%;z-index:0;pointer-events:none}
@@ -1225,6 +1226,7 @@ body:has(header.topo) .esc-fixo{top:72px}
 <script src="img/kit-homens.js?v=0ed6e386"></script>
 <script src="img/tec-fotos.js?v=fe782a52"></script>
 <script src="dados/elencos.js?v=bb464417"></script>
+<script src="dados/pes.js?v=266905da"></script>
 <script src="img/escudos-img.js?v=df90de51"></script>
 <script src="dados/idiomas.js?v=f19b2983"></script>
 <script>
@@ -2979,7 +2981,7 @@ setInterval(()=>{if(document.visibilityState!=="visible"||!G||!G.user||VIVO||G.l
 function modalCaixa(){
   const l=G.inbox;
   const h=l.some(m=>m.cid&&G.clubs[m.cid])?l.map((m,i)=>{if(!(m.cid&&G.clubs[m.cid]))return "";const nova=!m.lida,c=m.cid&&G.clubs[m.cid];
-    if(c)return `<button class="msg-card clube${nova?" nova":""}" data-a="msgver" data-v="${i}"><span class="msg-selo">${escudoMini(c,18)}<b>${nomeMsg(c)}</b></span><span class="msg-txt">${esc(m.m)}</span><small>${m.ofm&&selosEst(m.ofm)?`<i>${selosEst(m.ofm)}</i> · `:""}📅 ${dataMsg(m.d||hojeJogo())}</small></button>`;
+    if(c)return `<button class="msg-card clube${nova?" nova":""}" data-notime data-a="msgver" data-v="${i}"><span class="msg-selo">${escudoMini(c,18)}<b>${nomeMsg(c)}</b></span><span class="msg-txt">${esc(m.m)}</span><small>${m.ofm&&selosEst(m.ofm)?`<i>${selosEst(m.ofm)}</i> · `:""}📅 ${dataMsg(m.d||hojeJogo())}</small></button>`;
     return `<button class="msg-card${nova?" nova":""} ${m.t||""}" data-a="msgver" data-v="${i}"><span class="msg-selo jogo">📣 <b>Aviso do jogo</b></span><span class="msg-txt">${esc(m.m)}</span>${m.d?`<small>📅 ${dataMsg(m.d)}</small>`:""}</button>`}).join(""):'<p class="muted">Nenhuma mensagem de outros clubes por enquanto.</p>';
   modal(`<h3>✉️ Caixa de entrada</h3><div class="msg-lista">${h}</div><div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`);
   l.forEach(m=>{if(m.cid)m.lida=true});salvar();render()}
@@ -3675,7 +3677,7 @@ function migrar(g){
 function inverterUni(u){if(MODELOS_UNI[u.estilo]){const n={...u,camisa:u.detalhe,detalhe:u.camisa};aplicarModeloUni(n,n.estilo);return n}return {...u,estilo:u.estilo==="liso"?"faixa":u.estilo,camisa:u.detalhe,detalhe:u.camisa,mangas:u.detalhe,gola:u.camisa,calcao:u.camisa,meiao:u.detalhe}}
 
 let SAVE_ERRO=0; // 24/10: antes o erro ao salvar era engolido e o progresso se perdia sem aviso
-function salvar(){try{localStorage.setItem(CHAVE,JSON.stringify(G))}catch(e){const ag=Date.now();if(ag-SAVE_ERRO<60000)return;const prim1=!SAVE_ERRO;SAVE_ERRO=ag;
+function salvar(){rastrearClubes();try{localStorage.setItem(CHAVE,JSON.stringify(G))}catch(e){const ag=Date.now();if(ag-SAVE_ERRO<60000)return;const prim1=!SAVE_ERRO;SAVE_ERRO=ag;
   try{if(prim1&&!(G&&G.live))modal(`<div class="aviso-box"><b>⚠️ O jogo não conseguiu salvar</b><p>A memória do navegador está cheia ou bloqueada (aba anônima?). Para não perder o progresso, guarde uma cópia em arquivo agora e libere espaço no celular.</p></div><div class="botoes"><button class="btn prim" data-a="lembsalvar">Salvar em arquivo</button><button class="btn" data-a="fechar">Depois</button></div>`);else toastErro("Não foi possível salvar o jogo neste aparelho.")}catch(_){}}}
 /* seletor de cor próprio: abre direto no quadro de arrastar (sem a lista de cores prontas do celular) */
 function hexHsv(h){const n=parseInt((h||"#000000").slice(1),16),r=(n>>16)/255,g=(n>>8&255)/255,b=(n&255)/255,mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn;
@@ -3702,7 +3704,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792973458";
+const VERSAO="1793023417";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3966,10 +3968,10 @@ function unisDe(c){
 }
 function camisaSVG(u,px){return uniformeSVG(u,"",px,true)}
 function escudoReal(c,px){if(!c||c.user||c.amigo)return "";
-  const ei=typeof ESCUDOS_IMG!=="undefined"&&ESCUDOS_IMG[c.name];if(ei)return `<img class="esc-real" src="${ei}" width="${px}" height="${px}" alt="" title="${esc(c.name)}">`;
+  const ei=typeof ESCUDOS_IMG!=="undefined"&&ESCUDOS_IMG[c.name];if(ei)return `<img class="esc-real" data-time="${c.id}" src="${ei}" width="${px}" height="${px}" alt="" title="${esc(c.name)}">`;
   if(!ESCUDOS_REAIS)return "";const i=ESCUDOS_REAIS.nomes.indexOf(c.name);if(i<0)return "";const col=i%5,row=Math.floor(i/5);
-  return `<span class="esc-real" title="${esc(c.name)}" style="width:${px}px;height:${px}px;background-image:url(${ESCUDOS_REAIS.src});background-size:500% 400%;background-position:${col*25}% ${row*100/3}%"></span>`}
-function marcaDe(c,px){if(c&&(c.user||c.amigo))return `<span class="camisa-ic" title="${esc(c.name)}">${escudoDe(c,px)}</span>`;return escudoReal(c,px)||`<span class="camisa-ic" title="${esc(c.name)}">${camisaSVG(unisDe(c)[0],px)}</span>`}
+  return `<span class="esc-real" data-time="${c.id}" title="${esc(c.name)}" style="width:${px}px;height:${px}px;background-image:url(${ESCUDOS_REAIS.src});background-size:500% 400%;background-position:${col*25}% ${row*100/3}%"></span>`}
+function marcaDe(c,px){if(c&&(c.user||c.amigo))return `<span class="camisa-ic" title="${esc(c.name)}">${escudoDe(c,px)}</span>`;return escudoReal(c,px)||`<span class="camisa-ic" data-time="${c&&c.id}" title="${esc(c.name)}">${camisaSVG(unisDe(c)[0],px)}</span>`}
 function distCor(a,b){const p=h=>{const n=parseInt(h.slice(1),16);return [n>>16,n>>8&255,n&255]};const x=p(a),y=p(b);return Math.hypot(x[0]-y[0],x[1]-y[1],x[2]-y[2])}
 function kitVisitante(casa,fora){const uc=unisDe(casa)[0],uf=unisDe(fora);return distCor(uc.camisa,uf[0].camisa)<120?1:0}
 
@@ -4257,7 +4259,7 @@ const LENDA_INFO={ // pé e habilidades de cada lenda
 "Cristiano Ronaldo":["Direito",["Matador de jogos grandes","Cabeceio de outro nível","Especialista em faltas","Finalização de elite"]],
 "Lionel Messi":["Esquerdo",["Gênio de todos os tempos","Especialista em faltas","Drible em espaço curto","Visão de jogo"]]};
 const HABIL_LENDA={GOL:["Paredão nas finais","Muralha nos pênaltis"],ZAG:["Xerife da zaga","Imbatível no um contra um"],LAT:["Ala de seleção","Motor das duas áreas"],VOL:["Maestro do meio-campo","Dono do ritmo do jogo"],MEI:["Gênio criativo","Passe de outro planeta"],ATA:["Matador de jogos grandes","Finalização de elite","Decide sozinho"]};
-function peDe(p){if(p.peX)return p.peX;if(p.lenda&&LENDA_INFO[p.n])return LENDA_INFO[p.n][0];const r=hashId(p.id,7)%100;if(p.pos==="GOL")return r<70?"Direito":"Esquerdo";if(p.pos==="LAT")return r<50?"Esquerdo":"Direito";if(p.pos==="MEI")return r<35?"Esquerdo":r<93?"Direito":"Ambidestro";return r<75?"Direito":r<95?"Esquerdo":"Ambidestro"}
+function peDe(p){if(p.peX)return p.peX;if(p.lenda&&LENDA_INFO[p.n])return LENDA_INFO[p.n][0];const pr=p.real&&typeof PES_REAIS!=="undefined"&&PES_REAIS[p.n];if(pr)return pr==="E"?"Esquerdo":"Direito";const r=hashId(p.id,7)%100;if(p.pos==="GOL")return r<70?"Direito":"Esquerdo";if(p.pos==="LAT")return r<50?"Esquerdo":"Direito";if(p.pos==="MEI")return r<35?"Esquerdo":r<93?"Direito":"Ambidestro";return r<75?"Direito":r<95?"Esquerdo":"Ambidestro"}
 function posDetalhe(p){const pe=peDe(p);if(p.pos==="LAT")return pe==="Esquerdo"?"Lateral esquerdo":"Lateral direito";if(p.pos==="MEI")return pe==="Esquerdo"?"Meia pela esquerda":pe==="Direito"&&hashId(p.id,9)%3===0?"Meia pela direita":"Meia central";return {GOL:"Goleiro",ZAG:"Zagueiro",VOL:"Volante",ATA:"Atacante"}[p.pos]||p.pos}
 function habilDe(p){return habilidadesDe(p)[0]}
 function habilidadesDe(p){if(p.habX&&p.habX.length)return p.habX;if(p.lenda&&LENDA_INFO[p.n])return LENDA_INFO[p.n][1];const L=HABIL[p.pos]||HABIL.MEI,k=hashId(p.id,13),n=p.lenda?3:p.ov>=80?3:p.ov>=68?2:1,out=[];
@@ -5446,7 +5448,7 @@ function edNav(){
   }
   const g=+edSel.grupo,ids=g===3?G.pool:g===-1?G.foreign:G.tiers[g];
   if(edSel.clube==null||!ids.includes(edSel.clube)){
-    h+=`<div class="ed-clubes">${ids.map(id=>{const c=G.clubs[id];return `<button class="ed-clube" data-a="edclube" data-v="${id}">${c.user?escudoDe(c,30):marcaDe(c,30)}<span>${esc(c.name)}</span></button>`}).join("")}</div>`;
+    h+=`<div class="ed-clubes" data-notime>${ids.map(id=>{const c=G.clubs[id];return `<button class="ed-clube" data-a="edclube" data-v="${id}">${c.user?escudoDe(c,30):marcaDe(c,30)}<span>${esc(c.name)}</span></button>`}).join("")}</div>`;
     return h;
   }
   const c=G.clubs[edSel.clube],ordem={GOL:0,LAT:1,ZAG:2,VOL:3,MEI:4,ATA:5};
@@ -6204,8 +6206,12 @@ function bolaHTML(){
 function modalBola(gan){
   modal(`<div class="bola-res"><div class="bola-brilho">✨</div><b class="bola-tit">Pontos surpresa!</b><div class="bola-ganhos">${Object.entries(gan).map(([k,n])=>{const a=ATRS.find(x=>x[0]===k);return `<div class="bola-g"><span>${a[2]}</span><b>+${n}</b><small>${a[1]}</small></div>`}).join("")}</div><p class="muted peq" style="margin:0">Os pontos ficam guardados em Clube › Pontos de Treino. Escolha quem vai evoluir.</p></div>
   <div class="botoes"><button class="btn" data-a="fechar">Guardar</button><button class="btn prim" data-a="ptstipo" data-v="${Object.keys(gan)[0]}">Usar agora</button></div>`);confete()}
+/* clubes anteriores: quando p.club muda, o clube de antes entra no começo de p.ant [[id,nome],...] (p.cAt = clube conhecido) */
+function rastrearClubes(){if(!G||!G.players)return;Object.values(G.players).forEach(p=>{const a=p.club??null;
+  if(p.cAt===undefined){p.cAt=a;return}if(a===p.cAt)return;const o=p.cAt!==AMG_CID&&G.clubs[p.cAt];
+  if(o&&a!==AMG_CID&&!(p.ant&&p.ant[0][0]===o.id))(p.ant=p.ant||[]).unshift([o.id,o.name]);p.cAt=a})}
 function perfilJogador(id){
-  const p=G.players[id];if(!p)return;
+  const p=G.players[id];if(!p)return;rastrearClubes();
   const c=p.club!=null?G.clubs[p.club]:null,meu=p.club===G.user.club;
   const media=p.nn?(p.nt/p.nn).toFixed(1):"—";
   const hist=(p.hist||[]).slice().reverse();
@@ -6221,6 +6227,7 @@ function perfilJogador(id){
       <div><span>Condição física</span><span>${Math.round(p.fis??100)}%</span></div>
       <div><span>Valor de mercado</span><span>${dinheiro(valor(p))}</span></div>
       <div><span>Salário</span><span>${dinheiro(p.sal)}/mês</span></div>
+      ${(p.ant||[]).length?`<div><span>${p.ant.length>1?"Clubes anteriores":"Clube anterior"}</span><span class="hab-chips ant-chips">${p.ant.map(([k,n])=>{const o=G.clubs[k];return `<i>${o?marcaDe(o,14):""}${esc(o?o.name:n)}</i>`}).join("")}</span></div>`:""}
       ${meu?`<div><span>Contrato</span><span>${contratoAcabou(p)?"Encerrado":"até "+fimContratoTxt(p)}</span></div>`:""}
     </div>
     <h2>Atributos</h2>${barrasAtr(p,false)}${meu?`<button class="btn full btn-pts" data-a="ptsjog" data-v="${p.id}">⭐ Usar pontos de treino${totalPontos()?` <span class="pts-badge">${totalPontos()}</span>`:""}</button>`:""}
@@ -7170,8 +7177,12 @@ adaptarEscalacao(v);salvar();el.closest(".dd").classList.remove("aberto");if(ani
   vivoDepois(a);
   render();
 }
+/* tocar no escudo ou no nome de um clube (da IA) em qualquer tela abre o elenco dele; data-notime desliga */
+function timeTocado(t){if(!G||G.live||!t||!t.closest||t.closest("[data-notime]")||t.closest("input,textarea,select"))return null;
+  const d=t.closest("[data-time]");if(d){const c=G.clubs[d.dataset.time];return c&&!c.user&&!c.amigo?c.id:null}
+  const s=(t.textContent||"").trim();if(!s||s.length>40)return null;const c=Object.values(G.clubs).find(c=>c.name===s&&!c.user&&!c.amigo);return c?c.id:null}
 function handlers(root){
-  root.addEventListener("click",e=>{const el=e.target.closest("[data-a]");if(!el||!root.contains(el)||el.disabled)return;e.stopPropagation();
+  root.addEventListener("click",e=>{const tm=timeTocado(e.target);if(tm){e.stopPropagation();somClique();modalTime(tm);return}const el=e.target.closest("[data-a]");if(!el||!root.contains(el)||el.disabled)return;e.stopPropagation();
     if(el.classList.contains("roda-it")&&!el.classList.contains("sel")){const r=el.parentNode;r.scrollTo({top:el.offsetTop+el.offsetHeight/2-r.clientHeight/2,behavior:"smooth"});somClique();return}
     const a=el.dataset.a,r=el.getBoundingClientRect(),c0=G?G.cash:0,k0=G?cupons():0;
     acao(a,el.dataset.v,el);
