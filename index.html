@@ -655,6 +655,7 @@ nav.abas button svg{width:21px;height:21px}
 .pais-desc strong{color:var(--cal)}
 .pais-ok{margin-top:4px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--cal-2)}
 .pais-card[aria-pressed="true"] .pais-ok{color:var(--canario)}
+.pais-tranc .bandeira{filter:grayscale(1) brightness(.6)}.pais-tranc .pais-ok{color:#ffb4a8!important;font-weight:700}
 .pontos-car{display:flex;justify-content:center;gap:8px;margin:2px 0 6px}
 .pontos-car i{width:8px;height:8px;border-radius:50%;background:var(--gramado-3);transition:width .2s}
 .pontos-car i.on{width:22px;border-radius:4px;background:var(--canario)}
@@ -2387,6 +2388,7 @@ function somarXP(qtd){
   P.xp+=qtd;
   while(P.nivel<NIVEL_MAX&&P.xp>=xpParaSubir(P.nivel)){P.xp-=xpParaSubir(P.nivel);P.nivel++;const pr=premioNivel(P.nivel);dinheiroGanho+=pr;G.cash+=pr;const cp=CUPONS_NIVEL[P.nivel]||0;if(cp){G.cupons=cupons()+cp;cuponsGanhos+=cp}}
   if(P.nivel>=NIVEL_MAX)P.xp=0;
+  if(P.nivel>antes)nivelMax();
   if(P.nivel>antes){P.aviso=P.nivel;P.premioAviso=(P.premioAviso||0)+dinheiroGanho;P.cupomAviso=(P.cupomAviso||0)+cuponsGanhos;G.inbox.unshift({t:"bom",m:`Nível ${P.nivel}! Você ganhou ${dinheiro(dinheiroGanho)} de bônus${cuponsGanhos?` e ${cuponsGanhos} cupons dourados`:""}.`})}
   return {antes,nivel:P.nivel,premio:dinheiroGanho};
 }
@@ -3700,7 +3702,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1792954983";
+const VERSAO="1792973458";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -3746,7 +3748,7 @@ document.addEventListener("visibilitychange",()=>{if(document.hidden)pushAgendar
 // modo offline (só no site publicado): sw.js guarda os arquivos para jogar sem internet
 if(!VERSAO.startsWith("__")&&"serviceWorker" in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register("sw.js").catch(()=>{});
 setInterval(checarVersao,5*60*1000);setTimeout(checarVersao,3000);
-function carregar(){try{const s=localStorage.getItem(CHAVE);if(s){const g=JSON.parse(s);if(g&&g.v===2){G=migrar(g);return true}}}catch(e){}return false}
+function carregar(){try{const s=localStorage.getItem(CHAVE);if(s){const g=JSON.parse(s);if(g&&g.v===2){G=migrar(g);nivelMax();return true}}}catch(e){}return false}
 function toast(t){document.querySelectorAll(".toast").forEach(x=>x.remove());const d=document.createElement("div");d.className="toast";d.setAttribute("role","status");d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2800)}
 
 /* ---------- escudo e uniforme ---------- */
@@ -4830,13 +4832,13 @@ function renderCriacao(){
     <div class="campo"><span class="rot-info"><label for="w-sigla">Sigla</label><button type="button" class="info-bt" data-a="infosigla" aria-label="Para que serve a sigla">i</button></span><input type="text" id="w-sigla" maxlength="3" placeholder="${esc((W.nome?siglaDe(W.nome):"ECV").slice(0,3))}" value="${esc(W.sigla)}" style="text-transform:uppercase"></div></div>
 `;
   }else if(p===2){
-    const ks=Object.keys(PAISES);
+    const ks=Object.keys(PAIS_NIVEL).filter(k=>PAISES[k]).concat(Object.keys(PAISES).filter(k=>!PAIS_NIVEL[k]));
     h+=`<h2 style="margin-top:0">País do time</h2><p class="muted peq" style="margin:-4px 0 10px">Arraste para o lado para ver os outros países.</p>
-    <div class="carrossel" id="carrossel">${ks.map(k=>{const P=PAISES[k];return `<button class="pais-card" data-a="wpais" data-v="${k}" aria-pressed="${W.pais===k}">
+    <div class="carrossel" id="carrossel">${ks.map(k=>{const P=PAISES[k];return `<button class="pais-card${paisLivre(k)?"":" pais-tranc"}" data-a="wpais" data-v="${k}" aria-pressed="${W.pais===k}">
       <div class="bandeira">${bandeiraSVG(k)}</div>
       <b class="pais-nome">${P.nome}</b>
       <span class="pais-desc">Começa na <strong>${P.ligas[2]}</strong><br>Sobe para ${P.ligas[1]} e ${P.ligas[0]}<br>Copa continental: ${COPAS[P.cont].main}</span>
-      <span class="pais-ok">${W.pais===k?"Selecionado":"Toque para escolher"}</span></button>`}).join("")}</div>
+      <span class="pais-ok">${!paisLivre(k)?`🔒 Libera no nível ${PAIS_NIVEL[k]}`:W.pais===k?"Selecionado":"Toque para escolher"}</span></button>`}).join("")}</div>
     <div class="pontos-car">${ks.map(k=>`<i class="${W.pais===k?"on":""}" data-k="${k}"></i>`).join("")}</div>`;
   }else if(p===3){
     h+=editorEscudo(W.escudo,W.nome.trim()||"Seu Clube");
@@ -4882,9 +4884,13 @@ function ligarCarrossel(){
     selecionarPais(best.dataset.v);
   },110)},{passive:true});
 }
+/* países liberados pelo maior nível já atingido (qualquer carreira, guardado em fut-nivmax) */
+const PAIS_NIVEL={BRA:1,ARG:10,GER:15,FRA:20,ENG:25,ESP:30};
+function nivelMax(){let n=1;try{n=+localStorage.getItem("fut-nivmax")||1}catch(e){}const g=G&&G.perfil&&G.perfil.nivel||1;if(g>n){n=g;try{localStorage.setItem("fut-nivmax",n)}catch(e){}}return n}
+const paisLivre=k=>nivelMax()>=(PAIS_NIVEL[k]||1);
 function selecionarPais(k){
   W.pais=k;
-  document.querySelectorAll(".pais-card").forEach(c=>{const on=c.dataset.v===k;c.setAttribute("aria-pressed",on);c.querySelector(".pais-ok").textContent=on?"Selecionado":"Toque para escolher"});
+  document.querySelectorAll(".pais-card").forEach(c=>{const on=c.dataset.v===k;c.setAttribute("aria-pressed",on);if(PAIS_NIVEL[c.dataset.v]&&!paisLivre(c.dataset.v))return;c.querySelector(".pais-ok").textContent=on?"Selecionado":"Toque para escolher"});
   document.querySelectorAll(".pontos-car i").forEach(i=>i.classList.toggle("on",i.dataset.k===k));
 }
 
@@ -6896,6 +6902,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
       if(W.passo===1&&W.nome.trim().length<3){toastErro("Dê ao time um nome com pelo menos 3 letras.");return}
       if(W.passo===1&&W.tec.trim().length<2){toastErro("Preencha o seu nome (dono do clube).");return}
       if(W.passo===1&&!/^[A-Z0-9]{3}$/.test(W.sigla.trim())){toastErro("A sigla precisa ter 3 letras.");return}
+      if(W.passo===2&&!paisLivre(W.pais)){toastErro(`${PAISES[W.pais].nome} libera no nível ${PAIS_NIVEL[W.pais]}. Você está no nível ${nivelMax()}.`);return}
       if(W.passo===3){const e=W.escudo,[u1,u2]=W.unis; // ao chegar no uniforme: 1 = cores do escudo, 2 = invertido (2ª cor predominante)
         [u1,u2].forEach(uniNovo);Object.assign(u1,{camisa:e.c1,detalhe:e.c2,d2:e.c3});aplicarModeloUni(u1,u1.estilo);
         Object.assign(u2,{camisa:e.c2,detalhe:e.c1,d2:e.c3});aplicarModeloUni(u2,u2.estilo)}
