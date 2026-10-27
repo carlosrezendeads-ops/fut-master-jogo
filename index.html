@@ -3800,7 +3800,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793145006";
+const VERSAO="1793145325";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -7017,7 +7017,7 @@ function telaVisual(){
 
 /* ---------- modais ---------- */
 function modal(html){fecharModal();const v=document.createElement("div");v.className="veu";v.innerHTML=`<div class="folha" role="dialog" aria-modal="true">${html}</div>`;v.addEventListener("click",e=>{if(e.target===v&&!(G&&G.over))fecharModal()});document.body.appendChild(v);handlers(v)}
-function fecharModal(){if(typeof campSel!=="undefined"&&campSel!=null){campSel=null;document.querySelectorAll(".cp-eu.sel").forEach(x=>x.classList.remove("sel"))}
+function fecharModal(){if(TARDE_PEND)setTimeout(tardeRender,50);if(typeof campSel!=="undefined"&&campSel!=null){campSel=null;document.querySelectorAll(".cp-eu.sel").forEach(x=>x.classList.remove("sel"))}
   if(typeof slotAberto!=="undefined"&&slotAberto!=null){slotAberto=null;setTimeout(()=>{if(G&&!document.querySelector(".veu"))render()},0)}document.querySelectorAll(".veu").forEach(v=>v.remove())}
 function modalTemporada(){
   const r=G.seasonEnd,uid=G.user.club,P=pais();
@@ -7451,8 +7451,11 @@ setTimeout(()=>{try{amgSync(true)}catch(e){}},2500); // cria o ID do dono (1ª v
 try{somIniciar();somModo(modoDesejado())}catch(e){}
 try{carregarKits()}catch(e){}
 // imagens que não aparecem na abertura carregam logo depois da 1ª tela (abre mais rápido no celular); quando chegam, redesenha a tela
-const IMG_TARDE=["img/rostos-reais.js?v=0bcaf037","img/titulos.js?v=9ecffff6","dados/titulos.js?v=a01a43e3","img/patro-logos.js?v=c57d15d0","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=939d94d8","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
-setTimeout(()=>{let falta=IMG_TARDE.length;IMG_TARDE.forEach(src=>{const sc=document.createElement("script");sc.src=src;sc.onload=sc.onerror=()=>{if(--falta)return;if(G&&!abertura&&!G.live&&aba!=="prejogo"&&!document.querySelector(".veu"))render()};document.body.appendChild(sc)})},200);
+const IMG_TARDE=["img/patro-logos.js?v=c57d15d0","img/rostos-reais.js?v=0bcaf037","img/titulos.js?v=9ecffff6","dados/titulos.js?v=a01a43e3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=939d94d8","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
+// 27/10: redesenha a cada arquivo que chega (logos dos patrocinadores não esperam as fotos); com aviso aberto, redesenha quando ele fechar
+let TARDE_T=null,TARDE_PEND=false;
+function tardeRender(){clearTimeout(TARDE_T);TARDE_T=setTimeout(()=>{if(!G||abertura||G.live||aba==="prejogo")return;if(document.querySelector(".veu")){TARDE_PEND=true;return}TARDE_PEND=false;render()},250)}
+setTimeout(()=>{IMG_TARDE.forEach(src=>{const sc=document.createElement("script");sc.src=src;sc.onload=sc.onerror=tardeRender;document.body.appendChild(sc)})},200);
 
 </script>
 
