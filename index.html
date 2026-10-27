@@ -3763,7 +3763,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793068779";
+const VERSAO="1793104052";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -5430,7 +5430,7 @@ const LENDAS=[ // [nome, posição, força, cupons, idade] — destaques em ativ
  ["Pedri","MEI",90,32,23],["Jude Bellingham","MEI",89,32,23],["Florian Wirtz","MEI",88,30,23],["Jamal Musiala","MEI",88,29,23],["Cole Palmer","MEI",88,29,24],["Scott McTominay","MEI",86,23,29],
  ["Ousmane Dembélé","ATA",92,38,29],["Lamine Yamal","ATA",92,40,19],["Kylian Mbappé","ATA",92,40,27],["Erling Haaland","ATA",92,38,26],["Vinícius Júnior","ATA",90,34,26],
  ["Raphinha","ATA",90,33,29],["Mohamed Salah","ATA",89,30,34],["Harry Kane","ATA",90,30,33],["Khvicha Kvaratskhelia","ATA",88,28,25],["Michael Olise","ATA",88,28,24],
- ["Désiré Doué","ATA",86,25,21],["Lautaro Martínez","ATA",88,27,29],["Julián Álvarez","ATA",89,30,26],["Viktor Gyökeres","ATA",87,25,28],["Neymar Jr","ATA",86,24,34],["Cristiano Ronaldo","ATA",88,39,41],["Lionel Messi","ATA",89,40,39]];
+ ["Désiré Doué","ATA",86,25,21],["Lautaro Martínez","ATA",88,27,29],["Julián Álvarez","ATA",89,30,26],["Viktor Gyökeres","ATA",87,25,28],["Neymar Jr","MEI",86,24,34],["Cristiano Ronaldo","ATA",88,39,41],["Lionel Messi","ATA",89,40,39]];
 /* técnicos lendas (sem técnicos de seleção): [nome, nível, cupons, clube/seleção atual, títulos marcantes] */
 const TEC_LENDAS=[
  ["Pep Guardiola",96,45,"Manchester City","4 Champions League · 6 Premier League"],
