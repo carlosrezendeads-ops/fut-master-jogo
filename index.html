@@ -774,7 +774,7 @@ nav.abas button{font-size:11px}
 .ant-chips i{display:inline-flex;align-items:center;gap:4px}
 .fimc{text-align:center}.fimc-esc{display:flex;justify-content:center;margin:2px 0 4px}.fimc-pos{font-family:var(--f-display);font-weight:900;font-size:68px;line-height:1;color:var(--canario);text-shadow:0 4px 18px rgba(255,210,63,.45)}
 .fimc.meio .fimc-pos,.fimc.bom .fimc-pos{color:#9fd8ff;text-shadow:0 4px 18px rgba(25,195,255,.4)}.fimc.ruim .fimc-pos{color:#ff8a80;text-shadow:0 4px 18px rgba(255,90,90,.35)}
-.fimc-liga{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--cal-2)}.fimc-tit{margin:12px 0 6px;font-size:22px}.fimc-txt{margin:0 0 12px;line-height:1.5}.fimc .dir-box{text-align:left}
+.fimc-liga{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--cal-2)}.fimc-tit{margin:12px 0 6px;font-size:22px}.fimc-txt{margin:0 0 12px;line-height:1.5}.fimc .dir-box{text-align:left}.fimc-pts{margin:0 0 12px;padding:10px;border-radius:12px;background:rgba(255,210,63,.12);border:1px solid rgba(255,210,63,.45)}.fimc-pts b{display:block;color:var(--canario);margin-bottom:6px}.fimc-pts span{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}.fimc-pts i{font-style:normal;font-size:12px;padding:3px 8px;border-radius:99px;background:rgba(0,0,0,.25)}
 .premiacao{position:relative;overflow:hidden}.pr-topo{position:relative;text-align:center;padding:4px 0 12px}.pr-topo .podio-raios{top:30px}.pr-topo>*:not(.podio-raios){position:relative;z-index:1}
 .pr-tit{font-family:var(--f-display);font-weight:900;font-size:clamp(30px,9vw,42px);letter-spacing:.04em;color:var(--canario);text-shadow:0 3px 14px rgba(255,210,63,.45)}
 .pr-cards{position:relative;display:grid;gap:8px}.pr-card{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:14px;background:var(--gramado-3);border:1px solid rgba(255,255,255,.08)}
@@ -2428,7 +2428,7 @@ function somarXP(qtd){
 function ganharXP(gf,gs,dobro){
   const P=perfil(),r=gf>gs?"v":gf<gs?"d":"e",ganho=XP_RES[r]*(dobro?2:1);
   P.j++;P[r]++;P.gp+=gf;P.gc+=gs;
-  const s=somarXP(ganho),bola=gf>=3; // 3 gols ou mais (qualquer resultado) dá uma Bola Dourada: 3 ou 4 gols = 2 pontos, 5 ou mais = 3 (26/10)
+  const s=somarXP(ganho),bola=gf>=3&&rnd()<(gf>=5?.5:.3); // 26/10: 3 ou 4 gols = 30% de chance de Bola Dourada (2 pontos); 5 ou mais = 50% (3 pontos)
   if(bola){G.user.bolas=(G.user.bolas||0)+1;(G.user.bolaPts=G.user.bolaPts||[]).push(gf>=5?3:2)}
   return {ganho,antes:s.antes,nivel:s.nivel,premio:s.premio,dobro:!!dobro,bola};
 }
@@ -3536,6 +3536,7 @@ function fecharTemporada(){
   G.cash+=premio;
   const r={year:G.year,tier:t,pos,premio,camp:cl.map(x=>x[0]),cup:G.cup?{nome:G.cup.nome,champ:G.cup.champ,out:G.cup.out}:null};
   r.n=n;try{r.prem=premiosCamp(t,cl[t])}catch(e){console.error(e)}
+  {const q=(PTS_CAMP[t]||[])[pos-1];if(q){const g=distribuirPontos(q),P=pontosTreino();Object.entries(g).forEach(([k,v])=>P[k]=(P[k]||0)+v);r.ptsCamp=g}}
   const art=jogadoresDo(uid).sort((a,b)=>b.g-a.g)[0];
   G.history.unshift({y:G.year,t,l:nomeLiga(t),p:pos,pts:G.st[uid].pts,art:art&&art.g?`${art.n} (${art.g})`:"—",copa:G.cup?`${G.cup.nome}: ${G.cup.champ===uid?"campeão":G.cup.out?(G.cup.out==="grupos"?"caiu na fase de grupos":"caiu "+G.cup.out):"—"}`:""});
   if(pos===1)G.titles.push(`${nomeLiga(t)} ${G.year}`);
@@ -3577,6 +3578,7 @@ function fecharTemporada(){
 /* premiação individual do campeonato (26/10): craque, artilheiro, garçom, goleiro menos vazado, revelação e seleção 4-3-3.
    Quem ganha prêmio individual: +3 de força, +500 mil no valor (p.vb) e selo no perfil (p.selos); seleção ganha só o selo */
 const PREMIO_FORCA=3,PREMIO_VALOR=500;
+const PTS_CAMP=[[10,8,6],[8,6,4],[5,4,3]]; // pontos de treino pela colocação (1º, 2º, 3º) na Série A, B e C, tipos sorteados
 function premiosCamp(t,tab){
   const n=tab.length,R=Math.max(1,(n-1)*2),posT={};tab.forEach((id,i)=>posT[id]=i);
   const L=Object.values(G.players).filter(p=>p.club in posT&&(p.j||0)>=Math.max(3,R*.35));
@@ -3761,7 +3763,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793067517";
+const VERSAO="1793068486";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -6266,7 +6268,7 @@ function usarPonto(id,k){
   P[k]--;p.ap=p.ap||{};p.ap[k]=(p.ap[k]||0)+1;p.acc=(p.acc||0)+((ATR_REL[p.pos]||{})[k]||.25)*(p.ov>=85?.5:1); // 1 ponto no atributo principal = +1 de força (2 pontos acima de 85)
   while(p.acc>=1&&p.ov<99){p.acc--;p.ov++}
   return null}
-function distribuirPontos(n){const ks=ATRS.map(a=>a[0]),out={};for(let i=0;i<n;i++){const k=pick(ks);out[k]=(out[k]||0)+1}return out}
+function distribuirPontos(n){const ks=ATRS.map(a=>a[0]).sort(()=>rnd()-.5),out={};for(let i=0;i<n;i++){const k=ks[i%ks.length];out[k]=(out[k]||0)+1}return out} // 26/10: tipos sorteados sem repetir (só repete passando de 12)
 function sortearPontos(){const ks=ATRS.map(a=>a[0]).sort(()=>rnd()-.5).slice(0,3),out={};ks.forEach(k=>out[k]=ri(1,2));return out}
 const corAtr=v=>v>=85?"var(--canario)":v>=70?"var(--ok)":v>=50?"var(--aviso)":"var(--ruim)";
 function barrasAtr(p,botoes){
@@ -6275,7 +6277,7 @@ function barrasAtr(p,botoes){
     return `<div class="atr"><span>${ic} ${n}</span><div class="atr-b"><i style="width:${v}%;background:${corAtr(v)}"></i></div><b class="num">${v}${ex?`<em>+${ex}</em>`:""}</b>${botoes?`<button class="btn mini atr-mais" data-a="ptsadd" data-v="${p.id}|${k}"${P[k]>0&&v<99?"":" disabled"} aria-label="Usar 1 ponto de ${n}">+${P[k]>0?`<small>${P[k]}</small>`:""}</button>`:""}</div>`}).join("")}</div>`}
 function quadroPontos(){
   const P=pontosTreino(),bolas=G.user.bolas||0;
-  return `<h2>Pontos de Treino</h2><div class="cartao secao pts-quadro"><p class="muted peq" style="margin:0">Faça 3 gols ou mais num jogo para ganhar uma Bola Dourada. Ao estourar, ela dá pontos para evoluir seus jogadores: 3 ou 4 gols = 2 pontos, 5 gols ou mais = 3 pontos. Toque num ponto colorido para escolher quem recebe.${bolas?` <b style="color:var(--canario)">Você tem ${bolas} bola${bolas>1?"s":""} esperando!</b>`:""}</p>
+  return `<h2>Pontos de Treino</h2><div class="cartao secao pts-quadro"><p class="muted peq" style="margin:0">Faça 3 gols ou mais num jogo para ganhar uma Bola Dourada. Ao estourar, ela dá pontos para evoluir seus jogadores: 3 ou 4 gols = 30% de chance (2 pontos), 5 gols ou mais = 50% de chance (3 pontos). No fim do campeonato, os 3 primeiros também ganham pontos. Toque num ponto colorido para escolher quem recebe.${bolas?` <b style="color:var(--canario)">Você tem ${bolas} bola${bolas>1?"s":""} esperando!</b>`:""}</p>
   <div class="pts-grade">${ATRS.map(([k,n,ic])=>`<button class="pts-chip${P[k]>0?" tem":""}" data-a="ptstipo" data-v="${k}"><span class="pts-ic">${ic}</span><b class="num">${P[k]||0}</b><small>${n}</small></button>`).join("")}</div></div>`}
 // bolinha do jogador igual à do campinho: rosto no círculo com a cor da camisa e a posição embaixo
 function bolinhaJog(p){const u=unisDe(G.clubs[G.user.club])[0],[bg,fg]=({GOL:["#5b4a12","#ffe08a"],LAT:["#14405e","#a8dcff"],ZAG:["#14405e","#a8dcff"],VOL:["#1f5a33","#b9f5cc"],MEI:["#1f5a33","#b9f5cc"],ATA:["#5e1f1a","#ffb8ad"]})[p.pos]||["#1f5a33","#b9f5cc"];
@@ -7004,7 +7006,7 @@ function modalFimCamp(){const r=G.seasonEnd;if(!r){FLUXO_FIM=false;return}const 
   const dir=D&&D.on?`<div class="dir-box">${dirFoto(T.foto)}<div class="dir-fala"><b>${DIR_NOME}</b><p>${T.dir}</p><div class="dir-nome">Diretor do ${esc(c.name)}</div></div></div>`:"";
   if(D&&D.on){D.vistos=D.vistos||{};D.vistos["fim|"+r.year]=1;salvar()} // o diretor já falou aqui
   modal(`<div class="fimc ${T.c}" data-notime><div class="fimc-esc">${marcaDe(c,84)}</div><div class="fimc-pos">${r.pos}º</div><div class="fimc-liga">${esc(nomeLiga(r.tier))} ${r.year}</div>
-    <h3 class="fimc-tit">${T.tit}</h3><p class="fimc-txt">${T.txt}</p>${dir}</div>
+    <h3 class="fimc-tit">${T.tit}</h3><p class="fimc-txt">${T.txt}</p>${r.ptsCamp?(()=>{const g=Object.entries(r.ptsCamp),tot=g.reduce((a,[,v])=>a+v,0);return `<div class="fimc-pts"><b>🎁 +${tot} pontos de treino</b><span>${g.map(([k,v])=>{const a=ATRS.find(x=>x[0]===k);return `<i>${a?a[2]+" "+a[1]:k}${v>1?" ×"+v:""}</i>`}).join("")}</span></div>`})():""}${dir}</div>
     <div class="botoes"><button class="btn prim" data-a="${r.prem?"fimpremios":"fimresumo"}">${r.prem?"Ver premiação ›":"Continuar"}</button></div>`);
   if(T.c==="ouro")confete()}
 function modalPremiacao(){const r=G.seasonEnd,pr=r&&r.prem;if(!pr){modalTemporada();return}const uid=G.user.club;
