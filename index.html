@@ -772,6 +772,18 @@ nav.abas button{font-size:11px}
 .hab-chips{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px;max-width:65%}
 .hab-chips i{font-style:normal;font-size:12px;background:var(--gramado-3);border-radius:999px;padding:2px 8px}
 .ant-chips i{display:inline-flex;align-items:center;gap:4px}
+.fimc{text-align:center}.fimc-esc{display:flex;justify-content:center;margin:2px 0 4px}.fimc-pos{font-family:var(--f-display);font-weight:900;font-size:68px;line-height:1;color:var(--canario);text-shadow:0 4px 18px rgba(255,210,63,.45)}
+.fimc.meio .fimc-pos,.fimc.bom .fimc-pos{color:#9fd8ff;text-shadow:0 4px 18px rgba(25,195,255,.4)}.fimc.ruim .fimc-pos{color:#ff8a80;text-shadow:0 4px 18px rgba(255,90,90,.35)}
+.fimc-liga{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--cal-2)}.fimc-tit{margin:12px 0 6px;font-size:22px}.fimc-txt{margin:0 0 12px;line-height:1.5}.fimc .dir-box{text-align:left}
+.premiacao{position:relative;overflow:hidden}.pr-topo{position:relative;text-align:center;padding:4px 0 12px}.pr-topo .podio-raios{top:30px}.pr-topo>*:not(.podio-raios){position:relative;z-index:1}
+.pr-tit{font-family:var(--f-display);font-weight:900;font-size:clamp(30px,9vw,42px);letter-spacing:.04em;color:var(--canario);text-shadow:0 3px 14px rgba(255,210,63,.45)}
+.pr-cards{position:relative;display:grid;gap:8px}.pr-card{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:14px;background:var(--gramado-3);border:1px solid rgba(255,255,255,.08)}
+.pr-card.craque{background:linear-gradient(135deg,rgba(255,210,63,.25),rgba(255,210,63,.05));border-color:rgba(255,210,63,.65)}.pr-card.meu,.pr-sj.meu{box-shadow:0 0 0 2px var(--canario),0 0 16px rgba(255,210,63,.45)}
+.pr-foto{flex:0 0 auto;display:flex;border-radius:12px;overflow:hidden;background:rgba(0,0,0,.25)}.pr-semfoto{display:block}.pr-info{display:flex;flex-direction:column;gap:1px;min-width:0}
+.pr-info small{font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:11px;color:var(--canario)}.pr-info>b{font-size:16px}.pr-clube{display:flex;align-items:center;gap:4px;font-size:12px;opacity:.85}.pr-num{font-size:12px;opacity:.8}.pr-big{color:var(--canario)}
+.pr-bonus{margin:10px 0 0;padding:8px 10px;border-radius:12px;background:rgba(255,210,63,.12);border:1px solid rgba(255,210,63,.45);font-size:13px;text-align:center}
+.pr-sel-tit{text-align:center;margin:16px 0 8px}.pr-campo{padding:12px 4px;border-radius:14px;background:repeating-linear-gradient(0deg,#1f7a3a 0 36px,#238443 36px 72px);border:2px solid rgba(255,255,255,.35);display:flex;flex-direction:column;gap:10px}
+.pr-fila{display:flex;justify-content:space-around}.pr-sj{display:flex;flex-direction:column;align-items:center;gap:2px;width:23%;font-size:11px;text-align:center;border-radius:10px;padding:2px 0}.pr-sj b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-shadow:0 1px 3px #000}.pr-sj .rosto{border-radius:8px;background:rgba(0,0,0,.25)}
 .car-lista{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}.car-lin{display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;background:var(--gramado-3)}.car-lin .nm{flex:1;display:flex;flex-direction:column;min-width:0}.car-lin small{font-size:12px}.car-esc{flex:0 0 auto;display:flex}.car-bt{display:flex;gap:6px}
 .titulo-dono{display:inline-block;align-self:flex-start;width:fit-content;margin:2px 0 4px;padding:2px 10px;border-radius:999px;font-size:13px;font-weight:800;color:#3a2a00;background:linear-gradient(160deg,#ffe27a,#c99a1a)}
 .titulo-novo{margin:6px 0;font-size:15px}.titulo-novo b{color:var(--canario)}
@@ -1387,7 +1399,7 @@ function formaValor(p){if(!p||!p.j)return 1;let f=1;
   if(p.pos!=="GOL")f+=Math.min(.15,(p.g||0)*.012)+Math.min(.06,(p.as||0)*.006);
   f-=Math.min(.12,(p.lesN||0)*.04);
   return clamp(f,.85,1.25)}
-const valor=p=>Math.round(valorDe(p.ov,p.age,p.pot)*formaValor(p));
+const valor=p=>Math.round(valorDe(p.ov,p.age,p.pot)*formaValor(p))+(p.vb||0); // p.vb: bônus de prêmio do campeonato
 
 function criarClube(o,pais,tier){
   const id="C"+(G.nextId++);
@@ -1524,7 +1536,7 @@ function recuperar(p,dias){const f=p.fis??100;if(f>=100)return;const def=100-f;
   p.fis=Math.min(100,Math.round(100-def*k))}
 const notaEsc=p=>ovF(p)-Math.max(0,70-(p.fis??100))*.12; // escalação: evita quem está muito cansado
 /* dificuldade dos adversários: organização tática por divisão + momento (G4 e sequência recente) */
-const TAT_TIER=[-1.2,-1.6,-2.2]; // Série A, B, C (vantagem tática da IA; 19/10/2026: C mais fácil, B média, A um pouco mais difícil)
+const TAT_TIER=[1.5,-.8,-2.2]; // Série A, B, C (vantagem tática da IA; 26/10/2026: C fácil, B mais difícil, A bem difícil — elenco na média da A briga contra a queda, +10 de força chega ao G4)
 let MOM={ev:-1};
 function momento(cid){
   if(MOM.ev!==G.ev||MOM.y!==G.year)MOM={ev:G.ev,y:G.year,m:{},cls:{}};
@@ -3523,6 +3535,7 @@ function fecharTemporada(){
   const e=G.econ[t],premio=Math.round(eRec(t)*20*(n+1-pos)*X_PREMIO);
   G.cash+=premio;
   const r={year:G.year,tier:t,pos,premio,camp:cl.map(x=>x[0]),cup:G.cup?{nome:G.cup.nome,champ:G.cup.champ,out:G.cup.out}:null};
+  r.n=n;try{r.prem=premiosCamp(t,cl[t])}catch(e){console.error(e)}
   const art=jogadoresDo(uid).sort((a,b)=>b.g-a.g)[0];
   G.history.unshift({y:G.year,t,l:nomeLiga(t),p:pos,pts:G.st[uid].pts,art:art&&art.g?`${art.n} (${art.g})`:"—",copa:G.cup?`${G.cup.nome}: ${G.cup.champ===uid?"campeão":G.cup.out?(G.cup.out==="grupos"?"caiu na fase de grupos":"caiu "+G.cup.out):"—"}`:""});
   if(pos===1)G.titles.push(`${nomeLiga(t)} ${G.year}`);
@@ -3561,6 +3574,31 @@ function fecharTemporada(){
   try{mundoFimTemporada(cl)}catch(e){console.error(e)}
   return r;
 }
+/* premiação individual do campeonato (26/10): craque, artilheiro, garçom, goleiro menos vazado, revelação e seleção 4-3-3.
+   Quem ganha prêmio individual: +3 de força, +500 mil no valor (p.vb) e selo no perfil (p.selos); seleção ganha só o selo */
+const PREMIO_FORCA=3,PREMIO_VALOR=500;
+function premiosCamp(t,tab){
+  const n=tab.length,R=Math.max(1,(n-1)*2),posT={};tab.forEach((id,i)=>posT[id]=i);
+  const L=Object.values(G.players).filter(p=>p.club in posT&&(p.j||0)>=Math.max(3,R*.35));
+  const nota=p=>p.nn>=3?p.nt/p.nn:null;
+  const sc=p=>{const nt=nota(p),def=["GOL","ZAG","LAT"].includes(p.pos);return (p.ov-60)*.45+(p.g||0)*(def?1.6:.9)+(p.as||0)*.6+(nt?(nt-6.5)*4:0)+(n-posT[p.club])/n*6+(p.j||0)/R*3};
+  const S=p=>p?{id:p.id,n:p.n,pos:p.pos,age:p.age,c:p.club,g:p.g||0,as:p.as||0,j:p.j||0,nt:nota(p)?Math.round(nota(p)*10)/10:null}:null;
+  const ord=L.slice().sort((a,b)=>sc(b)-sc(a));
+  const craque=ord.find(p=>p.pos!=="GOL");
+  const art=L.filter(p=>p.g>0).sort((a,b)=>b.g-a.g||a.j-b.j)[0];
+  const gar=L.filter(p=>p.as>0).sort((a,b)=>b.as-a.as||a.j-b.j)[0];
+  let gol=null,golGc=0;
+  for(const cid of tab.slice().sort((a,b)=>(G.st[a].gc-G.st[b].gc)||posT[a]-posT[b])){const g=L.filter(p=>p.club===cid&&p.pos==="GOL").sort((a,b)=>b.j-a.j)[0];if(g){gol=g;golGc=G.st[cid].gc;break}}
+  const rev=ord.find(p=>p.age<=21);
+  const usados=new Set(gol?[gol.id]:[]),sel=[gol];
+  ["LAT","ZAG","ZAG","LAT","VOL","MEI","MEI","ATA","ATA","ATA"].forEach(pos=>{const p=ord.find(x=>x.pos===pos&&!usados.has(x.id))||ord.find(x=>x.pos!=="GOL"&&!usados.has(x.id));if(p)usados.add(p.id);sel.push(p||null)});
+  const L_=nomeLiga(t),ano=G.year,selo=(p,txt)=>{if(p)(p.selos=p.selos||[]).push(`${txt} ${ano}`)};
+  const ind=[[craque,"Craque da "+L_],[art,"Artilheiro da "+L_],[gar,"Garçom da "+L_],[gol,"Goleiro menos vazado da "+L_],[rev,"Revelação da "+L_]];
+  const premiados=new Set();
+  ind.forEach(([p,txt])=>{if(!p)return;selo(p,txt);if(!premiados.has(p.id)){premiados.add(p.id);p.ov=clamp(p.ov+PREMIO_FORCA,30,99);p.pot=Math.max(p.pot||0,p.ov);p.vb=(p.vb||0)+PREMIO_VALOR}});
+  sel.forEach(p=>selo(p,"Seleção da "+L_));
+  const out={craque:S(craque),art:S(art),gar:S(gar),gol:S(gol),rev:S(rev),sel:sel.map(S)};if(out.gol)out.gol.gc=golGc;
+  return out}
 /* quem sobe de série ganha +2 de força no elenco todo; quem cai perde 1 (MUDA_SERIE) */
 const MUDA_SERIE={sobe:2,cai:-1};
 function forcaPorSerie(antes){Object.values(G.clubs).forEach(c=>{const a=antes[c.id];if(a==null||c.tier==null||c.tier<0||a===c.tier)return;
@@ -3723,7 +3761,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793052768";
+const VERSAO="1793067128";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4774,8 +4812,8 @@ function render(){try{if(G&&G.user){perfil();garantirContratos()}}catch(e){}
     if(P.j-G.lembSave>=8){G.lembSave=P.j;salvar();modal(`<div class="aviso-box"><b>💾 Salve o progresso da carreira</b><p>Você já jogou mais 8 partidas! O jogo salva sozinho no aparelho, mas se limpar os dados do navegador ou trocar de celular a carreira se perde. Salve uma cópia em arquivo (fica na pasta Downloads) para nunca perder.</p></div><div class="botoes"><button class="btn" data-a="fechar">Depois</button><button class="btn prim" data-a="lembsalvar">Salvar agora</button></div>`)}}
   if(!G.over&&!G.tradOferta&&(G.tut??TUTORIAL.length)<TUTORIAL.length&&aba==="jogar"&&!document.querySelector(".veu"))mostrarTutorial();
   if(!telaCheia){clearTimeout(window._dirT);window._dirT=setTimeout(diretorChecar,1800)} // diretor: oferta no começo da carreira e avisos depois
-  if(G.over)modalFim();
-  else if(G.seasonEnd&&!document.querySelector(".veu")&&!G.seasonEnd.visto){G.seasonEnd.visto=true;if(G.seasonEnd.pos<=5&&!G.seasonEnd.podioVisto)celebrarPodio();else modalTemporada()}
+  if(G.seasonEnd&&!document.querySelector(".veu")&&!G.seasonEnd.visto){G.seasonEnd.visto=true;FLUXO_FIM=true;if(G.seasonEnd.pos<=5&&!G.seasonEnd.podioVisto)celebrarPodio();else modalFimCamp()}
+  else if(G.over&&!FLUXO_FIM)modalFim();
   {const ab=document.querySelector('nav [aria-current="true"]');if(ab&&ab.scrollIntoView)ab.scrollIntoView({block:"nearest",inline:"nearest"})}
   if(!telaCheia&&G.investidor&&G.investidor.pend&&!G.seasonEnd&&!document.querySelector(".veu")){G.investidor.pend=false;invIdx=0;salvar();modalInvestidor(0)}
   if(!telaCheia&&G.alertaFolha&&!document.querySelector(".veu")){G.alertaFolha=false;salvar();
@@ -6281,6 +6319,7 @@ function perfilJogador(id){
       <div><span>Valor de mercado</span><span>${dinheiro(valor(p))}</span></div>
       <div><span>Salário</span><span>${dinheiro(p.sal)}/mês</span></div>
       ${(p.ant||[]).length?`<div><span>${p.ant.length>1?"Clubes anteriores":"Clube anterior"}</span><span class="hab-chips ant-chips">${p.ant.map(([k,n])=>{const o=G.clubs[k];return `<i>${o?marcaDe(o,14):""}${esc(o?o.name:n)}</i>`}).join("")}</span></div>`:""}
+      ${(p.selos||[]).length?`<div><span>Prêmios</span><span class="hab-chips ant-chips selos">${p.selos.slice().reverse().map(x=>`<i>🏅 ${esc(x)}</i>`).join("")}</span></div>`:""}
       ${meu?`<div><span>Contrato</span><span>${contratoAcabou(p)?"Encerrado":"até "+fimContratoTxt(p)}</span></div>`:""}
     </div>
     <h2>Atributos</h2>${barrasAtr(p,false)}${meu?`<button class="btn full btn-pts" data-a="ptsjog" data-v="${p.id}">⭐ Usar pontos de treino${totalPontos()?` <span class="pts-badge">${totalPontos()}</span>`:""}</button>`:""}
@@ -6938,8 +6977,54 @@ function modalTemporada(){
   <p class="peq muted" style="margin:12px 0 0"><b>Sobem para a ${esc(P.ligas[0])}:</b> ${r.sobe[0].map(nm).join(", ")}<br><b>Sobem para a ${esc(P.ligas[1])}:</b> ${r.sobe[1].map(nm).join(", ")}<br><b>Caem da ${esc(P.ligas[0])}:</b> ${r.cai[0].map(nm).join(", ")}<br><b>Caem da ${esc(P.ligas[1])}:</b> ${r.cai[1].map(nm).join(", ")}</p>
   ${(()=>{const fim=jogadoresDo(uid).filter(p=>(p.ct??2)<=1);return fim.length?`<p class="peq" style="margin:12px 0 0;color:var(--aviso)"><b>Contratos terminando:</b> ${fim.map(p=>esc(p.n)).join(", ")}. Eles saem quando a próxima temporada começar. Renove no Elenco antes de avançar.</p>`:""})()}
   <div class="salvar-fim"><span class="peq">Guarde o progresso da temporada no aparelho:</span><button class="btn mini" data-a="salvararq">Salvar arquivo</button></div>
+  ${r.prem?`<button class="btn full" style="margin-top:10px" data-a="fimpremios">🏅 Ver premiação do campeonato</button>`:""}
   <div class="botoes"><button class="btn" data-a="fechar">Ver tabelas</button>${G.over?"":`<button class="btn prim" data-a="proxima">Temporada ${r.year+1}</button>`}</div>`);
 }
+/* fim do campeonato (26/10): mensagem pela posição + fala do diretor, depois a premiação individual */
+let FLUXO_FIM=false;
+function textoFimCamp(r){const P=pais(),CC=COPAS[P.cont],kk=P.k||4,n=r.n||(G.tiers[r.tier]||[]).length||20,t=r.tier,pos=r.pos,cl=esc(G.clubs[G.user.club].name),L=esc(nomeLiga(t)),cima=t>0?esc(nomeLiga(t-1)):"";
+  if(pos===1)return {c:"ouro",tit:`Campeão da ${L}!`,txt:`Que campanha! O <b>${cl}</b> terminou a ${L} ${r.year} em 1º lugar e levantou a taça. Cada vitória, cada virada e cada noite de sofrimento valeram a pena: esse título já está na história do clube.${t>0?` E de quebra vem o acesso para a <b>${cima}</b>!`:""}`,
+    foto:"festa",dir:`Chefe, trabalho com futebol há muitos anos e poucas vezes vi uma temporada assim. Parabéns pelo título! Agora é aproveitar a festa e já pensar em ${t>0?"brigar na série de cima":"defender a coroa"}.`};
+  if(t>0&&pos<=kk)return {c:"ouro",tit:"Acesso garantido!",txt:`O <b>${cl}</b> terminou em ${pos}º, dentro do G${kk}, e conquistou o acesso! Ano que vem o clube disputa a <b>${cima}</b>. Foi uma temporada de muita entrega e a torcida tem motivo de sobra para comemorar.`,
+    foto:"palmas",dir:`Parabéns, chefe! Subimos! O nível agora é mais alto, então já vou começar a procurar reforços para a ${cima}.`};
+  if(t===0&&pos<=CC.mq)return {c:"ouro",tit:`Vaga na ${esc(CC.main)}!`,txt:`O <b>${cl}</b> terminou em ${pos}º, no G${CC.mq}, e garantiu vaga na <b>${esc(CC.main)}</b>. Ficar entre os melhores da elite não é para qualquer um. Que temporada!`,
+    foto:"palmas",dir:`Chefe, vamos jogar a ${esc(CC.main)}! Isso traz prestígio, dinheiro e jogos enormes. Parabéns pelo trabalho.`};
+  if(pos>n-kk)return {c:"ruim",tit:r.novoTier===3?"Não foi dessa vez":"Infelizmente, não deu",txt:r.novoTier===3
+    ?`Infelizmente o campeonato não foi como você esperava. O <b>${cl}</b> terminou em ${pos}º e caiu para a ${esc(P.quarta)}, o que encerra esta carreira. Mas todo grande dirigente já tropeçou um dia: funde um novo clube, use o que aprendeu e volte mais forte!`
+    :`Infelizmente o campeonato não foi como você esperava. O <b>${cl}</b> terminou em ${pos}º, dentro da zona de rebaixamento, e vai disputar a <b>${esc(nomeLiga(r.novoTier))}</b> no ano que vem. Cair dói, mas também ensina: reorganize o elenco, ajuste a tática e mostre que o clube é maior que uma temporada ruim.`,
+    foto:"preocupado",dir:`Chefe, foi um ano duro, não vou mentir. Mas eu acredito nesse projeto. Vamos reconstruir o time e voltar mais fortes.`};
+  if(pos<=10)return {c:"bom",tit:"Parabéns pela campanha!",txt:`O <b>${cl}</b> terminou a ${L} em ${pos}º lugar e passou a temporada brigando na parte de cima da tabela. O time jogou bem, mostrou personalidade e ficou entre os primeiros.${r.vaga?` E ainda garantiu vaga na <b>${esc(r.vaga)}</b>!`:""} Com mais alguns ajustes, o próximo passo é ${t>0?"o acesso":`a ${esc(CC.main)}`}!`,
+    foto:"joinha",dir:`Bela temporada, chefe! Ficamos perto dos melhores. Com 2 ou 3 reforços certos, ano que vem a gente briga ${t>0?"pelo acesso":"lá no topo"}.`};
+  return {c:"meio",tit:"Temporada de aprendizado",txt:`O <b>${cl}</b> terminou em ${pos}º e garantiu a permanência na ${L}. Não foi o ano dos sonhos, mas o time mostrou que pode competir. Com alguns reforços certos e a torcida do lado, a próxima temporada pode ser a da virada. Bora pra cima!`,
+    foto:"pensa",dir:`Chefe, ficamos no meio do caminho. Já estou de olho no mercado para a gente brigar lá em cima no ano que vem.`}}
+function modalFimCamp(){const r=G.seasonEnd;if(!r){FLUXO_FIM=false;return}const c=G.clubs[G.user.club],T=textoFimCamp(r),D=G.diretor;
+  const dir=D&&D.on?`<div class="dir-box">${dirFoto(T.foto)}<div class="dir-fala"><b>${DIR_NOME}</b><p>${T.dir}</p><div class="dir-nome">Diretor do ${esc(c.name)}</div></div></div>`:"";
+  if(D&&D.on){D.vistos=D.vistos||{};D.vistos["fim|"+r.year]=1;salvar()} // o diretor já falou aqui
+  modal(`<div class="fimc ${T.c}" data-notime><div class="fimc-esc">${marcaDe(c,84)}</div><div class="fimc-pos">${r.pos}º</div><div class="fimc-liga">${esc(nomeLiga(r.tier))} ${r.year}</div>
+    <h3 class="fimc-tit">${T.tit}</h3><p class="fimc-txt">${T.txt}</p>${dir}</div>
+    <div class="botoes"><button class="btn prim" data-a="${r.prem?"fimpremios":"fimresumo"}">${r.prem?"Ver premiação ›":"Continuar"}</button></div>`);
+  if(T.c==="ouro")confete()}
+function modalPremiacao(){const r=G.seasonEnd,pr=r&&r.prem;if(!pr){modalTemporada();return}const uid=G.user.club;
+  const foto=(x,px)=>{const p=G.players[x.id];return p?rostoSVG(p,px):`<span class="pr-semfoto" style="width:${px}px;height:${Math.round(px*1.12)}px"></span>`};
+  const clube=x=>G.clubs[x.c],cl=x=>{const o=clube(x);return o?`<span class="pr-clube">${marcaDe(o,16)} ${esc(o.name)}</span>`:""};
+  const card=(ic,tit,x,info,k)=>x?`<div class="pr-card${k?" "+k:""}${x.c===uid?" meu":""}"><div class="pr-foto">${foto(x,k?84:64)}</div><div class="pr-info"><small>${ic} ${tit}</small><b>${esc(x.n)}</b>${cl(x)}<span class="pr-num">${info}</span></div></div>`:"";
+  const num=x=>`${x.j} jogos · ${x.g} gol${x.g===1?"":"s"} · ${x.as} assist.${x.nt?` · nota ${x.nt.toFixed(1)}`:""}`;
+  const sj=x=>x?`<div class="pr-sj${x.c===uid?" meu":""}">${foto(x,40)}<b>${esc(nomeCurto(x.n))}</b>${clube(x)?marcaDe(clube(x),14):""}</div>`:`<div class="pr-sj"></div>`;
+  const S=pr.sel,fila=ix=>`<div class="pr-fila">${ix.map(i=>sj(S[i])).join("")}</div>`;
+  const meus=[pr.craque,pr.art,pr.gar,pr.gol,pr.rev].filter(x=>x&&x.c===uid).length;
+  modal(`<div class="premiacao" data-notime><div class="pr-topo"><div class="podio-raios"></div><div class="pr-tit">PREMIAÇÃO</div><div class="fimc-liga">${esc(nomeLiga(r.tier))} ${r.year}</div></div>
+    <div class="pr-cards">
+      ${card("🏆","Craque do campeonato",pr.craque,num(pr.craque||{}),"craque")}
+      ${card("⚽","Artilheiro",pr.art,pr.art?`<b class="pr-big">${pr.art.g} gols</b> em ${pr.art.j} jogos`:"")}
+      ${card("🎯","Garçom",pr.gar,pr.gar?`<b class="pr-big">${pr.gar.as} assistências</b> em ${pr.gar.j} jogos`:"")}
+      ${card("🧤","Goleiro menos vazado",pr.gol,pr.gol?`<b class="pr-big">${pr.gol.gc} gols sofridos</b> pelo time`:"")}
+      ${card("⭐","Revelação",pr.rev,pr.rev?`${pr.rev.age} anos · ${num(pr.rev)}`:"")}
+    </div>
+    ${meus?`<p class="pr-bonus">Seus premiados ganham <b>+${PREMIO_FORCA} de força</b>, <b>+${dinheiro(PREMIO_VALOR)}</b> no valor de mercado e um selo no perfil!</p>`:""}
+    <h3 class="pr-sel-tit">Seleção do campeonato</h3>
+    <div class="pr-campo">${fila([8,9,10])}${fila([6,5,7])}${fila([1,2,3,4])}${fila([0])}</div></div>
+    <div class="botoes"><button class="btn prim" data-a="fimresumo">Continuar</button></div>`);
+  confete()}
 function modalFim(){
   if(document.querySelector(".veu"))return;
   modal(`<h3>Fim de jogo</h3><p>${esc(G.over.texto)}</p>
@@ -7161,7 +7246,9 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "edjogsalvar":salvarEditorJog(+v);fecharModal();salvar();toast("Jogador atualizado.");break;
     case "edtec":modalEditorTec(el.dataset.n);return;
     case "edtecsalvar":salvarEditorTec(el.dataset.n);fecharModal();salvar();toast("Técnico atualizado.");break;
-    case "podiook":fecharModal();modalTemporada();return;
+    case "podiook":fecharModal();modalFimCamp();return;
+    case "fimpremios":fecharModal();modalPremiacao();return;
+    case "fimresumo":FLUXO_FIM=false;fecharModal();if(G.over)modalFim();else modalTemporada();return;
     case "teclenda":{const er=contratarTecLenda(+v,el.dataset.i);if(er){toastErro(er);return}salvar();confete();toast(`${TEC_LENDAS[+v][0]} contratado!`);break;}
     case "lenda":{const er=comprarLenda(+v,el.dataset.i);if(er){if(er!==RECUSA)toastErro(er);return}avisoElencoCheio();salvar();confete();toast(`${LENDAS[+v][0]} contratado!`);break;}
     case "tecrosto":if(!editorOn)return;modalRostoTec(el.dataset.n);return;
