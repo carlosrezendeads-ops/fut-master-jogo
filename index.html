@@ -3763,7 +3763,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793068486";
+const VERSAO="1793068779";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -5459,7 +5459,7 @@ function cartaoTecLenda(l,i){const ja=G.tec&&G.tec.n===l[0],v=precoTecLenda(l),e
 /* lenda em qualquer elenco (comprada ou que já joga num clube, ex.: Neymar no Santos) ganha o card dourado */
 const LENDA_ALIAS={};
 let NOMES_LENDA=null;
-function ehLenda(p){if(!p)return false;if(p.lenda)return true;if(!NOMES_LENDA)NOMES_LENDA=new Set(LENDAS.map(l=>l[0]));return NOMES_LENDA.has(LENDA_ALIAS[p.n]||p.n)}
+function ehLenda(p){if(!p)return false;if(p.lenda)return true;if(!NOMES_LENDA)NOMES_LENDA=new Map(LENDAS.map(l=>[l[0],l[1]]));const ps=NOMES_LENDA.get(LENDA_ALIAS[p.n]||p.n);const setor=x=>x==="GOL"?0:x==="ZAG"||x==="LAT"?1:2;return !!ps&&setor(ps)===setor(p.pos)} // 26/10: só quem está na lista LENDAS; homônimo de outro setor (Marquinhos atacante, Alisson meia) não vale; Neymar meia/atacante vale
 const lendaCls=p=>ehLenda(p)?" lenda":"";
 function fotoLenda(n,pos){const f=typeof ROSTOS_REAIS!=="undefined"&&ROSTOS_REAIS["Lenda|"+n];return f?`<svg class="rosto" viewBox="0 0 100 112" width="46" height="52" aria-hidden="true"><image href="${f}" width="100" height="112"/></svg>`:`<span class="lenda-sel">★</span>`}
 LENDAS.forEach(l=>l[3]=Math.round(l[3]*1.2)); // lendas 20% mais caras (cupons e dinheiro)
@@ -6253,7 +6253,7 @@ const ATR_REL={GOL:{def:1,fis:.5,ref:.5},ZAG:{def:1,fis:.5,vel:.5},LAT:{def:.5,v
 function atributos(p){
   const o=ATR_OFF[p.pos]||ATR_OFF.MEI,mag=.7+Math.max(0,p.ov-40)/70;
   const fortes=ATRS.slice(0,8).map(a=>a[0]).sort((a,b)=>o[b]-o[a]),destaque=fortes[hashId(p.id,31)%2],r={},hb=habilidadesDe(p).join("|"),espP=k=>(k==="cpe"||k==="pdp")&&/pênaltis/i.test(hb)?8:k==="fal"&&/falta|chute de longe|bola parada/i.test(hb)?8:0; // habilidade de pênalti/falta = +8 no ponto específico
-  const lenda=ehLenda(p)&&(p.lenda||p.ov>=85); // nome igual ao de uma lenda (ex. Marquinhos) não basta
+  const lenda=ehLenda(p); // só as lendas da lista LENDAS (força não conta)
   ATRS.forEach(([k],i)=>{let v=p.ov+(o[k]||0)*mag+(hashId(p.id,i<8?20+i:40+i)%9-4)+(k===destaque&&p.ov>60?Math.round((p.ov-60)/7):0);
     v=lenda?((o[k]||0)>=-6?Math.max(v+4,93):v):99-(99-v)*1.35-2; // 26/10: habilidades mais baixas; só os craques da elite chegam perto de 99, lendas ficam em 93–99
     v+=((p.ap||{})[k]||0)+espP(k);
