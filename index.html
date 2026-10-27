@@ -772,6 +772,7 @@ nav.abas button{font-size:11px}
 .hab-chips{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px;max-width:65%}
 .hab-chips i{font-style:normal;font-size:12px;background:var(--gramado-3);border-radius:999px;padding:2px 8px}
 .ant-chips i{display:inline-flex;align-items:center;gap:4px}
+.tt-tit{margin:14px 0 6px}.tt-sala{display:flex;flex-direction:column;gap:12px;padding:10px 12px}.tt-nome{display:flex;justify-content:space-between;gap:8px;font-size:13px;margin-bottom:4px}.tt-nome span{color:var(--canario);font-weight:800;white-space:nowrap}.tt-tacas{display:flex;flex-wrap:wrap;gap:2px 3px}.tt-tacas i{width:20px;height:28px;background:var(--tt) center bottom/contain no-repeat;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
 .fimc{text-align:center}.fimc-esc{display:flex;justify-content:center;margin:2px 0 4px}.fimc-pos{font-family:var(--f-display);font-weight:900;font-size:68px;line-height:1;color:var(--canario);text-shadow:0 4px 18px rgba(255,210,63,.45)}
 .fimc.meio .fimc-pos,.fimc.bom .fimc-pos{color:#9fd8ff;text-shadow:0 4px 18px rgba(25,195,255,.4)}.fimc.ruim .fimc-pos{color:#ff8a80;text-shadow:0 4px 18px rgba(255,90,90,.35)}
 .fimc-liga{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--cal-2)}.fimc-tit{margin:12px 0 6px;font-size:22px}.fimc-txt{margin:0 0 12px;line-height:1.5}.fimc .dir-box{text-align:left}.fimc-pts{margin:0 0 12px;padding:10px;border-radius:12px;background:rgba(255,210,63,.12);border:1px solid rgba(255,210,63,.45)}.fimc-pts b{display:block;color:var(--canario);margin-bottom:6px}.fimc-pts span{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}.fimc-pts i{font-style:normal;font-size:12px;padding:3px 8px;border-radius:99px;background:rgba(0,0,0,.25)}
@@ -3763,7 +3764,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793104052";
+const VERSAO="1793106258";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -6205,6 +6206,15 @@ function cartaoTecClube(cid){
   const info=c.user?(t.interino?"Interino, sem custo":`${esc(nomeLiga(c.tier))} · ${dinheiro(t.sal)}/mês${t.desde?` · no clube desde ${t.desde}`:""}`):`${t.interino?`Interino · há ${t.rod||0} rodada${t.rod===1?"":"s"}`:`Nível ${nivelTec(t.q)}${t.ate?` · contrato até dez/${t.ate}`:""}`}${c.tier>=0&&c.tier<=2&&momento(cid)>.5?" · time em boa fase":""}`;
   return `<div class="cartao tec-card ${c.user&&t.lenda?"tec-lenda":"tec-clube"}">${tecFoto(t.n,t.q)}<div class="nm"><small>${c.user&&t.lenda?"★ Técnico lenda":"Técnico"}</small><b>${esc(t.n)}</b><span>${info}</span><span class="tec-ef">Benefício: ${efTxt}</span>${passivasHTML(t)}</div></div>`;
 }
+/* Sala de troféus dos clubes reais do Brasil (27/10): títulos em dados/titulos.js (TITULOS_CLUBES, gerado por Trofeus/titulos_dados.py),
+   taças pequenas em img/titulos.js (TITULOS_IMG) + as do jogo (TROFEUS_IMG); ordem do mais importante para o menor */
+const EST_NOME={SP:"Paulista",RJ:"Carioca",MG:"Mineiro",RS:"Gaúcho",PR:"Paranaense",BA:"Baiano",PE:"Pernambucano",CE:"Cearense",SC:"Catarinense",GO:"Goiano",PA:"Paraense",AL:"Alagoano",MT:"Mato-Grossense",AM:"Amazonense",PB:"Paraibano",SE:"Sergipano",MA:"Maranhense"};
+const ORDEM_TIT=[["MUN|fifa","Mundial de Clubes FIFA"],["MUN|inter","Mundial Interclubes"],["SA|main","Libertadores"],["BRA|L0","Campeonato Brasileiro"],["BRA|N","Copa do Brasil"],["SA|sec","Copa Sul-Americana"],["NE","Copa do Nordeste"]].concat(Object.entries(EST_NOME).map(([u,n])=>["EST|"+u,"Campeonato "+n]));
+function imgTitulo(k){return (typeof TITULOS_IMG!=="undefined"&&TITULOS_IMG[k])||(typeof TROFEUS_IMG!=="undefined"&&TROFEUS_IMG[k])||""}
+function salaTitulos(c){if(!c||c.pais!=="BRA"||typeof TITULOS_CLUBES==="undefined")return "";const T=TITULOS_CLUBES[c.name]||{};
+  const lin=ORDEM_TIT.filter(([k])=>T[k]>0).map(([k,nome])=>{const n=T[k],src=imgTitulo(k);
+    return `<div class="tt-lin"><div class="tt-nome"><b>${nome}</b><span class="num">${n} título${n>1?"s":""}</span></div>${src?`<div class="tt-tacas" style="--tt:url('${src}')">${"<i></i>".repeat(n)}</div>`:""}</div>`}).join("");
+  return `<h4 class="tt-tit">🏆 Sala de troféus</h4><div class="cartao tt-sala">${lin||'<p class="muted peq" style="margin:0">Ainda sem títulos nas grandes competições. A primeira taça pode estar perto!</p>'}</div>`}
 function modalTime(cid){
   const c=G.clubs[cid];if(!c)return;
   if(c.user){fecharModal();aba="elenco";render();return}
@@ -6216,6 +6226,7 @@ function modalTime(cid){
   modal(`<div class="time-topo">${c.user?escudoDe(c,56):marcaDe(c,56)}<div><h3 style="margin:0">${esc(c.name)}</h3><span class="muted peq">${pos} · ${esc(estadioDe(c))}</span></div></div>
     <div class="kpis" style="margin-top:10px"><div class="cartao kpi"><small>Jogadores</small><b class="num">${el.length}</b></div><div class="cartao kpi"><small>Força média</small><b class="num">${media}</b></div><div class="cartao kpi"><small>Formação</small><b class="num">${c.form}</b></div></div>
     <div style="margin-top:10px">${cartaoTecClube(cid)}</div>
+    ${salaTitulos(c)}
     <p class="muted peq" style="margin:10px 0 6px">Toque na foto para ver o perfil. ★ = titular provável.</p>
     <div class="time-lista">${el.map(p=>`<div class="jog${lendaCls(p)}">${linhaJog(p,xi.has(p.id)?" · ★ titular":"")}</div>`).join("")}</div>
     <div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`);
@@ -7401,7 +7412,7 @@ setTimeout(()=>{try{amgSync(true)}catch(e){}},2500); // cria o ID do dono (1ª v
 try{somIniciar();somModo(modoDesejado())}catch(e){}
 try{carregarKits()}catch(e){}
 // imagens que não aparecem na abertura carregam logo depois da 1ª tela (abre mais rápido no celular); quando chegam, redesenha a tela
-const IMG_TARDE=["img/rostos-reais.js?v=fbde4cc9","img/patro-logos.js?v=f055fec3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=939d94d8","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
+const IMG_TARDE=["img/rostos-reais.js?v=fbde4cc9","img/titulos.js?v=9ecffff6","dados/titulos.js?v=a01a43e3","img/patro-logos.js?v=f055fec3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=939d94d8","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
 setTimeout(()=>{let falta=IMG_TARDE.length;IMG_TARDE.forEach(src=>{const sc=document.createElement("script");sc.src=src;sc.onload=sc.onerror=()=>{if(--falta)return;if(G&&!abertura&&!G.live&&aba!=="prejogo"&&!document.querySelector(".veu"))render()};document.body.appendChild(sc)})},200);
 
 </script>
