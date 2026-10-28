@@ -3422,9 +3422,10 @@ function precoPedido(p){
   if(p.club==null)return 0;
   const el=jogadoresDo(p.club).sort((a,b)=>b.ov-a.ov);
   const top=el.indexOf(p)<4;
-  const t=G.clubs[p.club].tier,fs=t===-1?1.35:t===0?1.04:t===1?1.12:t===2?1:.9;
+  const t=G.clubs[p.club].tier,fs=t===-1?1.2:t===0?1.04:t===1?1.12:t===2?1:.9;
+  const craque=clamp(1-(p.ov-76)*.06,.55,1); // 27/10: força 77+ fica bem mais barata na loja (o valor sobe muito rápido com a força)
   const promo=!p.lenda&&G.diario&&G.diario.promo===p.id&&p.club!==G.user.club?(t===-1?.55:.72):1; // oferta especial da loja: bom preço
-  return Math.round(valor(p)*(top?1.5:1.2)*fs*promo/5)*5;
+  return Math.round(valor(p)*(top?1.5:1.2)*fs*promo*(p.lenda?1:craque)/5)*5;
 }
 function salarioPedido(p){return Math.round(Math.max(p.sal,salarioJog({...p,club:null}))*1.15*10)/10}
 function contratar(pid){
@@ -3800,7 +3801,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793145325";
+const VERSAO="1793147364";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -6304,7 +6305,7 @@ function atributos(p){
   const fortes=ATRS.slice(0,8).map(a=>a[0]).sort((a,b)=>o[b]-o[a]),destaque=fortes[hashId(p.id,31)%2],r={},hb=habilidadesDe(p).join("|"),espP=k=>(k==="cpe"||k==="pdp")&&/pênaltis/i.test(hb)?8:k==="fal"&&/falta|chute de longe|bola parada/i.test(hb)?8:0; // habilidade de pênalti/falta = +8 no ponto específico
   const lenda=ehLenda(p); // só as lendas da lista LENDAS (força não conta)
   ATRS.forEach(([k],i)=>{let v=p.ov+(o[k]||0)*mag+(hashId(p.id,i<8?20+i:40+i)%9-4)+(k===destaque&&p.ov>60?Math.round((p.ov-60)/7):0);
-    v=lenda?((o[k]||0)>=-6?Math.max(v+4,93):v):99-(99-v)*1.35-2; // 26/10: habilidades mais baixas; só os craques da elite chegam perto de 99, lendas ficam em 93–99
+    v=lenda?((o[k]||0)>=-6?Math.max(v+4,93):v):99-(99-v)*(1.35-clamp((p.ov-78)/10,0,1)*.25)-2+Math.max(0,p.ov-78)*.6; // 27/10: força 78+ aperta menos e ganha um pouco (craques valem a compra) // 26/10: habilidades mais baixas; só os craques da elite chegam perto de 99, lendas ficam em 93–99
     v+=((p.ap||{})[k]||0)+espP(k);
     if(k==="vel"&&p.age>=31)v-=p.age-30;if(k==="fis"&&p.age>=33)v-=(p.age-32)*1.5;
     r[k]=Math.round(clamp(v,8,99))});
