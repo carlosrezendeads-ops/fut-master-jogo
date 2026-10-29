@@ -1260,6 +1260,22 @@ body:has(header.topo) .esc-fixo{top:72px}
 </style>
 
 </head><body>
+<script>
+/* MANUTENÇÃO: só no site público. Carlos entra abrindo o link com ?dev=carlos (fica guardado no aparelho). Para desligar: MANUT=false */
+const MANUT=true;
+(function(){
+  try{if(/[?&]dev=carlos/.test(location.search))localStorage.setItem("fut-dev","1")}catch(e){}
+  let dev=false;try{dev=localStorage.getItem("fut-dev")==="1"}catch(e){}
+  if(!MANUT||dev||!/github\.io$/.test(location.hostname))return;
+  window.EM_MANUT=true;
+  document.write('<div id="manut" style="position:fixed;inset:0;z-index:2147483647;background:linear-gradient(160deg,#0b3d91,#06214f);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;font-family:system-ui,sans-serif;padding:24px">'+
+  '<svg width="110" height="110" viewBox="0 0 24 24" style="animation:manutGira 4s linear infinite"><path fill="#fff" d="M19.4 13a7.5 7.5 0 0 0 0-2l2.1-1.6-2-3.5-2.5 1a7.4 7.4 0 0 0-1.7-1L15 3.3h-4l-.4 2.6a7.4 7.4 0 0 0-1.7 1l-2.5-1-2 3.5L6.6 11a7.5 7.5 0 0 0 0 2l-2.1 1.6 2 3.5 2.5-1a7.4 7.4 0 0 0 1.7 1l.4 2.6h4l.4-2.6a7.4 7.4 0 0 0 1.7-1l2.5 1 2-3.5zM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z"/></svg>'+
+  '<div style="font-size:28px;font-weight:800;letter-spacing:.5px">Jogo em manutenção</div>'+
+  '<div style="font-size:17px;opacity:.85">Em breve, novidades!</div></div>'+
+  '<style>@keyframes manutGira{to{transform:rotate(360deg)}}</style>');
+  ["pointerdown","pointerup","touchstart","touchend","click","keydown"].forEach(t=>window.addEventListener(t,e=>{e.stopImmediatePropagation();e.preventDefault()},{capture:true,passive:false}));
+})();
+</script>
 <div id="app"></div>
 <div class="splash" id="splash" hidden></div>
 <nav class="abas" id="nav" hidden></nav>
@@ -3833,7 +3849,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793235724";
+const VERSAO="1793279245";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
