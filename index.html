@@ -1042,7 +1042,7 @@ nav.abas button{font-size:11px}
 .carga-frase{min-height:22px;margin:6px 0 -6px;font-size:15px;font-weight:600;color:#e8f4ff;text-shadow:0 1px 4px #000;transition:opacity .35s}
 .carga-frase.some{opacity:0}
 .carga-barra{width:calc(100% + 38px);max-width:96vw;height:18px;border-radius:9px;background:rgba(255,255,255,.14);overflow:hidden}
-.carga-barra i{display:block;height:100%;width:0;border-radius:9px;background:#1fa8ff;transition:width .2s linear}
+.carga-barra i{display:block;height:100%;width:0;border-radius:9px;background:linear-gradient(180deg,#1fa8ff 0 50%,#0b6fd0 50% 100%);transition:width .2s linear}
 .carga-pct{font-family:"Russo One","Saira Condensed",sans-serif;font-size:34px;line-height:1;margin-top:-2px;color:#fff;letter-spacing:.03em;-webkit-text-stroke:6px #000;paint-order:stroke fill;text-shadow:0 4px 0 #000}
 .atalhos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
 .atalhos button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;font:inherit;font-size:12px;font-weight:700;color:inherit;cursor:pointer}
@@ -3862,7 +3862,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793304698";
+const VERSAO="1793312098";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4209,8 +4209,8 @@ function telaCarga(sp,c){
   let ultFrase=performance.now();
   CARGA.timer=setInterval(()=>{
     const agora=performance.now(),t=agora-CARGA.t0;
-    // ritmo do Carlos (29/10): 0→20% em 2 s, para 3 s nos 20%, 20→100% em 4 s (9 s no total)
-    const p=t<2000?.2*t/2000:t<5000?.2:.2+.8*Math.min(1,(t-5000)/4000);
+    // ritmo do Carlos (29/10): 0→20% em 2 s, para 3 s nos 20%, 20→100% em 2 s (7 s no total)
+    const p=t<2000?.2*t/2000:t<5000?.2:.2+.8*Math.min(1,(t-5000)/2000);
     const box=$("#splash .carga-box");if(!box)return;
     const pc=Math.floor(Math.min(1,p)*100);
     box.querySelector(".carga-barra i").style.width=pc+"%";box.querySelector(".carga-pct").textContent=pc+"%";box.setAttribute("aria-valuenow",pc);
