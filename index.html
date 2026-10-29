@@ -3862,7 +3862,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793279853";
+const VERSAO="1793280182";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4181,7 +4181,7 @@ function renderAbertura(){
    A barra acompanha o carregamento de verdade das imagens pesadas (IMG_TARDE), com no mínimo CARGA_MIN. No fim vai pro menu da capa. */
 const CARGA={on:true,t0:0,n:0,timer:null,fi:0,ordem:null};
 const CARGA_MIN=6000,CARGA_MAX=12000,CARGA_FRASE=2000;
-const FRASES_CARGA=["Amarrando as chuteiras...","Organizando o time...","Os jogadores estão saindo da fisioterapia...","Calibrando a bola...","Cortando a grama do estádio...","O roupeiro está separando os uniformes...","Abrindo os portões para a torcida...","O técnico está riscando a prancheta...","Revisando os lances com o VAR...","Aquecendo o goleiro...","Pintando as linhas do campo...","Acendendo os refletores...","O massagista está preparando o gelo...","Enchendo as garrafinhas de água...","Conferindo a escalação...","Afinando a charanga da torcida...","Batendo um rachão no treino...","O preparador físico está apitando o tiro de 100 metros...","Lavando as camisas do jogo de ontem...","Pendurando as redes nos gols...","O olheiro está anotando nomes na arquibancada...","A torcida está ensaiando o mosaico...","Treinando cobranças de falta...","O capitão está dando a última palavra no vestiário...","Ajustando as travas das chuteiras..."];
+const FRASES_CARGA=["Amarrando as chuteiras...","Organizando o time...","Os jogadores estão saindo da fisioterapia...","Calibrando a bola...","Cortando a grama do estádio...","O roupeiro está separando os uniformes...","Abrindo os portões para a torcida...","O técnico está riscando a prancheta...","Revisando os lances com o VAR...","Aquecendo o goleiro...","Pintando as linhas do campo...","Acendendo os refletores...","O massagista está preparando o gelo...","Enchendo as garrafinhas de água...","Conferindo a escalação...","Batendo um rachão no treino...","Lavando as camisas do jogo de ontem...","Pendurando as redes nos gols...","O olheiro está anotando nomes na arquibancada...","A torcida está ensaiando o mosaico...","Treinando cobranças de falta...","O capitão está dando a última palavra no vestiário...","Ajustando as travas das chuteiras..."];
 function frasesCarga(c){
   const L=FRASES_CARGA.slice();
   if(c){L.push(`O ${c.name} está amarrando as chuteiras...`,`A torcida do ${c.name} está chegando ao estádio...`,`${DIR_NOME} está revisando os contratos do ${c.name}...`)}
