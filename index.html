@@ -1041,9 +1041,9 @@ nav.abas button{font-size:11px}
 @keyframes embPerna{0%,100%{transform:rotate(-38deg)}40%,60%{transform:rotate(0deg)}}
 .carga-frase{min-height:22px;font-size:15px;font-weight:600;color:#e8f4ff;text-shadow:0 1px 4px #000;transition:opacity .35s}
 .carga-frase.some{opacity:0}
-.carga-barra{width:100%;height:12px;border-radius:8px;background:rgba(255,255,255,.12);border:1px solid rgba(25,195,255,.45);overflow:hidden}
-.carga-barra i{display:block;height:100%;width:0;border-radius:8px;background:linear-gradient(90deg,#0a7cff,#19c3ff);box-shadow:0 0 12px #19c3ff;transition:width .2s linear}
-.carga-pct{font-size:13px;font-weight:800;color:#19c3ff;letter-spacing:.08em}
+.carga-barra{width:100%;height:24px;border-radius:14px;padding:3px;box-sizing:border-box;background:linear-gradient(180deg,#02050f,#0b1530);border:2px solid #000;box-shadow:0 4px 0 #000,0 6px 14px rgba(0,0,0,.6),inset 0 3px 6px rgba(0,0,0,.8)}
+.carga-barra i{display:block;height:100%;width:0;border-radius:10px;background:linear-gradient(180deg,#bfe6ff 0%,#5ec4ff 30%,#1a8cf0 70%,#0b5fc4 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.6),inset 0 -3px 0 rgba(0,0,0,.25),0 0 10px rgba(25,195,255,.6);transition:width .2s linear}
+.carga-pct{font-family:"Russo One","Saira Condensed",sans-serif;font-size:34px;line-height:1;margin-top:-2px;color:#fff;letter-spacing:.03em;-webkit-text-stroke:6px #000;paint-order:stroke fill;text-shadow:0 4px 0 #000}
 .atalhos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
 .atalhos button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;font:inherit;font-size:12px;font-weight:700;color:inherit;cursor:pointer}
 .atalhos svg{width:24px;height:24px;color:var(--canario)}
@@ -3862,7 +3862,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793280273";
+const VERSAO="1793296216";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4178,9 +4178,9 @@ function renderAbertura(){
   rodaIniciar(sp.querySelector(".roda"));
 }
 /* tela de carregamento (29/10): só a capa + logo, embaixadinha, frase trocando a cada 2 s e barra 0–100%.
-   A barra acompanha o carregamento de verdade das imagens pesadas (IMG_TARDE), com no mínimo CARGA_MIN. No fim vai pro menu da capa. */
+   Barra no ritmo fixo do Carlos (9 s); as imagens pesadas (IMG_TARDE) carregam enquanto isso. No fim vai pro menu da capa. */
 const CARGA={on:true,t0:0,n:0,timer:null,fi:0,ordem:null};
-const CARGA_MIN=6000,CARGA_MAX=12000,CARGA_FRASE=2000;
+const CARGA_FRASE=2000;
 const FRASES_CARGA=["Amarrando as chuteiras...","Organizando o time...","Os jogadores estão voltando da fisioterapia...","Enchendo a bola...","Cortando a grama do estádio...","Separando os uniformes...","Abrindo os portões para a torcida...","O técnico está montando a tática...","O juiz está conferindo o VAR...","Aquecendo o goleiro...","Pintando as linhas do campo...","Acendendo as luzes do estádio...","Escolhendo os titulares...","Colocando as redes nos gols...","Treinando chutes a gol...","A torcida está cantando lá fora...","O capitão está animando o time..."];
 function frasesCarga(c){
   const L=FRASES_CARGA.slice();
@@ -4209,9 +4209,8 @@ function telaCarga(sp,c){
   let ultFrase=performance.now();
   CARGA.timer=setInterval(()=>{
     const agora=performance.now(),t=agora-CARGA.t0;
-    let total=13;try{total=IMG_TARDE.length}catch(e){}
-    const real=Math.min(1,CARGA.n/total);
-    const p=t>=CARGA_MAX?1:Math.min(t/CARGA_MIN,real>=1?1:Math.max(real,.05)+(t/CARGA_MAX)*(1-real));
+    // ritmo do Carlos (29/10): 0→20% em 2 s, para 3 s nos 20%, 20→100% em 4 s (9 s no total)
+    const p=t<2000?.2*t/2000:t<5000?.2:.2+.8*Math.min(1,(t-5000)/4000);
     const box=$("#splash .carga-box");if(!box)return;
     const pc=Math.floor(Math.min(1,p)*100);
     box.querySelector(".carga-barra i").style.width=pc+"%";box.querySelector(".carga-pct").textContent=pc+"%";box.setAttribute("aria-valuenow",pc);
