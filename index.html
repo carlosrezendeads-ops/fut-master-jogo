@@ -1039,10 +1039,10 @@ nav.abas button{font-size:11px}
 .emb .perna{transform-origin:50px 66px;animation:embPerna .9s ease-in-out infinite}
 @keyframes embBola{0%,100%{transform:translateY(0)}50%{transform:translateY(-46px)}}
 @keyframes embPerna{0%,100%{transform:rotate(-38deg)}40%,60%{transform:rotate(0deg)}}
-.carga-frase{min-height:22px;font-size:15px;font-weight:600;color:#e8f4ff;text-shadow:0 1px 4px #000;transition:opacity .35s}
+.carga-frase{min-height:22px;margin:6px 0 -6px;font-size:15px;font-weight:600;color:#e8f4ff;text-shadow:0 1px 4px #000;transition:opacity .35s}
 .carga-frase.some{opacity:0}
-.carga-barra{width:100%;height:24px;border-radius:14px;padding:3px;box-sizing:border-box;background:linear-gradient(180deg,#02050f,#0b1530);border:2px solid #000;box-shadow:0 4px 0 #000,0 6px 14px rgba(0,0,0,.6),inset 0 3px 6px rgba(0,0,0,.8)}
-.carga-barra i{display:block;height:100%;width:0;border-radius:10px;background:linear-gradient(180deg,#bfe6ff 0%,#5ec4ff 30%,#1a8cf0 70%,#0b5fc4 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.6),inset 0 -3px 0 rgba(0,0,0,.25),0 0 10px rgba(25,195,255,.6);transition:width .2s linear}
+.carga-barra{width:calc(100% + 38px);max-width:96vw;height:18px;border-radius:9px;background:rgba(255,255,255,.14);overflow:hidden}
+.carga-barra i{display:block;height:100%;width:0;border-radius:9px;background:#1fa8ff;transition:width .2s linear}
 .carga-pct{font-family:"Russo One","Saira Condensed",sans-serif;font-size:34px;line-height:1;margin-top:-2px;color:#fff;letter-spacing:.03em;-webkit-text-stroke:6px #000;paint-order:stroke fill;text-shadow:0 4px 0 #000}
 .atalhos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
 .atalhos button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;font:inherit;font-size:12px;font-weight:700;color:inherit;cursor:pointer}
@@ -3862,7 +3862,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793296589";
+const VERSAO="1793304698";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
