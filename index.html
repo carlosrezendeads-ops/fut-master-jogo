@@ -1275,7 +1275,7 @@ body:has(header.topo) .esc-fixo{top:72px}
 </head><body>
 <script>
 /* MANUTENÇÃO: só no site público. Carlos entra abrindo o link com ?dev=carlos (fica guardado no aparelho). Para desligar: MANUT=false */
-const MANUT=true;
+const MANUT=false;
 (function(){
   try{if(/[?&]dev=carlos/.test(location.search))localStorage.setItem("fut-dev","1")}catch(e){}
   let dev=false;try{dev=localStorage.getItem("fut-dev")==="1"}catch(e){}
@@ -3862,7 +3862,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793279619";
+const VERSAO="1793279853";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
