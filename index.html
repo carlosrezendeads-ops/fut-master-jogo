@@ -1031,6 +1031,19 @@ nav.abas button{font-size:11px}
 @media (min-aspect-ratio:3/4){.splash.arte img,.splash.arte .capa-video{object-fit:contain}}
 .splash.arte img.capa-logo{inset:auto;top:calc(17vh - 60px + env(safe-area-inset-top,0px));left:50%;width:min(70vw,34vh,360px);height:auto;transform:translateX(calc(-50% + 23px));object-fit:fill;z-index:1;filter:drop-shadow(0 4px 14px rgba(0,0,0,.6))}
 .splash.arte{padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}
+/* tela de carregamento (29/10): capa + degradê azul escuro embaixo, embaixadinha, frase e barra */
+.splash.arte.carga::after{background:linear-gradient(180deg,rgba(3,10,40,0) 42%,rgba(3,10,40,.75) 62%,#030a28 82%,#020719 100%)}
+.carga-box{position:relative;z-index:2;width:min(86vw,420px);margin:0 auto calc(28px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.carga-box svg.emb{width:124px;height:142px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.6))}
+.emb .bola{animation:embBola .9s cubic-bezier(.3,0,.7,1) infinite}
+.emb .perna{transform-origin:50px 66px;animation:embPerna .9s ease-in-out infinite}
+@keyframes embBola{0%,100%{transform:translateY(0)}50%{transform:translateY(-46px)}}
+@keyframes embPerna{0%,100%{transform:rotate(-38deg)}40%,60%{transform:rotate(0deg)}}
+.carga-frase{min-height:22px;font-size:15px;font-weight:600;color:#e8f4ff;text-shadow:0 1px 4px #000;transition:opacity .35s}
+.carga-frase.some{opacity:0}
+.carga-barra{width:100%;height:12px;border-radius:8px;background:rgba(255,255,255,.12);border:1px solid rgba(25,195,255,.45);overflow:hidden}
+.carga-barra i{display:block;height:100%;width:0;border-radius:8px;background:linear-gradient(90deg,#0a7cff,#19c3ff);box-shadow:0 0 12px #19c3ff;transition:width .2s linear}
+.carga-pct{font-size:13px;font-weight:800;color:#19c3ff;letter-spacing:.08em}
 .atalhos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
 .atalhos button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;font:inherit;font-size:12px;font-weight:700;color:inherit;cursor:pointer}
 .atalhos svg{width:24px;height:24px;color:var(--canario)}
@@ -1270,7 +1283,7 @@ const MANUT=true;
   window.EM_MANUT=true;
   document.write('<div id="manut" style="position:fixed;inset:0;z-index:2147483647;background:linear-gradient(160deg,#0b3d91,#06214f);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;font-family:system-ui,sans-serif;padding:24px">'+
   '<svg width="110" height="110" viewBox="0 0 24 24" style="animation:manutGira 4s linear infinite"><path fill="#fff" d="M19.4 13a7.5 7.5 0 0 0 0-2l2.1-1.6-2-3.5-2.5 1a7.4 7.4 0 0 0-1.7-1L15 3.3h-4l-.4 2.6a7.4 7.4 0 0 0-1.7 1l-2.5-1-2 3.5L6.6 11a7.5 7.5 0 0 0 0 2l-2.1 1.6 2 3.5 2.5-1a7.4 7.4 0 0 0 1.7 1l.4 2.6h4l.4-2.6a7.4 7.4 0 0 0 1.7-1l2.5 1 2-3.5zM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z"/></svg>'+
-  '<div style="font-size:28px;font-weight:800;letter-spacing:.5px">Jogo em manutenção</div>'+
+  '<div style="font-size:24px;font-weight:800;letter-spacing:.5px">Jogo em manutenção</div>'+
   '<div style="font-size:17px;opacity:.85">Em breve, novidades!</div></div>'+
   '<style>@keyframes manutGira{to{transform:rotate(360deg)}}</style>');
   ["pointerdown","pointerup","touchstart","touchend","click","keydown"].forEach(t=>window.addEventListener(t,e=>{e.stopImmediatePropagation();e.preventDefault()},{capture:true,passive:false}));
@@ -3849,7 +3862,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793279245";
+const VERSAO="1793279619";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4149,6 +4162,8 @@ function renderAbertura(){
   const c=G&&G.clubs[G.user.club];
   const arte=typeof ARTE_CAPA!=="undefined";
   sp.classList.toggle("arte",arte);
+  sp.classList.toggle("carga",CARGA.on);
+  if(CARGA.on){telaCarga(sp,c);return}
   const info=lerInfoBackup();
   sp.innerHTML=`${arte?`<img class="capa-fundo" src="img/capa.jpg" alt=""><img src="img/capa.jpg" alt="Capa do FUT Master">${typeof LOGO_CAPA!=="undefined"?`<img class="capa-logo" src="${LOGO_CAPA}" alt="FUT Master 26">`:""}`:`<canvas aria-hidden="true"></canvas>`}
   <div class="logo"${arte?" hidden":""}><svg class="coroa" viewBox="0 0 100 60" aria-hidden="true"><path d="M6 56L2 14L28 34L50 4L72 34L98 14L94 56Z" fill="none" stroke="#19c3ff" stroke-width="7" stroke-linejoin="round"/></svg>
@@ -4161,6 +4176,49 @@ function renderAbertura(){
   <input type="file" id="arq-save" accept=".json,application/json,text/plain" hidden>`;
   const cv=sp.querySelector("canvas");if(cv)pincel(cv);
   rodaIniciar(sp.querySelector(".roda"));
+}
+/* tela de carregamento (29/10): só a capa + logo, embaixadinha, frase trocando a cada 2 s e barra 0–100%.
+   A barra acompanha o carregamento de verdade das imagens pesadas (IMG_TARDE), com no mínimo CARGA_MIN. No fim vai pro menu da capa. */
+const CARGA={on:true,t0:0,n:0,timer:null,fi:0,ordem:null};
+const CARGA_MIN=6000,CARGA_MAX=12000,CARGA_FRASE=2000;
+const FRASES_CARGA=["Amarrando as chuteiras...","Organizando o time...","Os jogadores estão saindo da fisioterapia...","Calibrando a bola...","Cortando a grama do estádio...","O roupeiro está separando os uniformes...","Abrindo os portões para a torcida...","O técnico está riscando a prancheta...","Revisando os lances com o VAR...","Aquecendo o goleiro...","Pintando as linhas do campo...","Acendendo os refletores...","O massagista está preparando o gelo...","Enchendo as garrafinhas de água...","Conferindo a escalação...","Afinando a charanga da torcida...","Batendo um rachão no treino...","O preparador físico está apitando o tiro de 100 metros...","Lavando as camisas do jogo de ontem...","Pendurando as redes nos gols...","O olheiro está anotando nomes na arquibancada...","A torcida está ensaiando o mosaico...","Treinando cobranças de falta...","O capitão está dando a última palavra no vestiário...","Ajustando as travas das chuteiras..."];
+function frasesCarga(c){
+  const L=FRASES_CARGA.slice();
+  if(c){L.push(`O ${c.name} está amarrando as chuteiras...`,`A torcida do ${c.name} está chegando ao estádio...`,`${DIR_NOME} está revisando os contratos do ${c.name}...`)}
+  for(let i=L.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[L[i],L[j]]=[L[j],L[i]]}
+  return L;
+}
+function telaCarga(sp,c){
+  if(!CARGA.t0){CARGA.t0=performance.now();CARGA.ordem=frasesCarga(c)}
+  sp.innerHTML=`${typeof ARTE_CAPA!=="undefined"?`<img class="capa-fundo" src="img/capa.jpg" alt=""><img src="img/capa.jpg" alt="Capa do FUT Master">${typeof LOGO_CAPA!=="undefined"?`<img class="capa-logo" src="${LOGO_CAPA}" alt="FUT Master 26">`:""}`:""}
+  <div class="carga-box" role="progressbar" aria-label="Carregando" aria-valuemin="0" aria-valuemax="100">
+    <svg class="emb" viewBox="0 0 100 115" aria-hidden="true">
+      <ellipse cx="52" cy="104" rx="26" ry="4" fill="rgba(0,0,0,.45)"/>
+      <circle cx="50" cy="22" r="9" fill="#f1c9a5"/><path d="M41 19a9 9 0 0 1 18 0c-3-3-6-4-9-4s-6 1-9 4z" fill="#2a1a10"/>
+      <path d="M38 36q12-6 24 0l-2 26H40z" fill="#19c3ff"/><path d="M38 36l-8 18M62 36l9 16" stroke="#19c3ff" stroke-width="6" stroke-linecap="round"/>
+      <path d="M40 60h20v9H40z" fill="#0a2a6b"/>
+      <path d="M47 68l-4 33" stroke="#f1c9a5" stroke-width="6" stroke-linecap="round"/><path d="M38 102h8" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+      <g class="perna"><path d="M50 66v30" stroke="#f1c9a5" stroke-width="6" stroke-linecap="round"/><path d="M50 98h9" stroke="#111" stroke-width="5" stroke-linecap="round"/></g>
+      <g class="bola"><circle cx="71" cy="82" r="6.5" fill="#fff" stroke="#222" stroke-width="1"/><path d="M71 78.5l3 2.2-1.1 3.4h-3.8l-1.1-3.4z" fill="#222"/></g>
+    </svg>
+    <div class="carga-frase">${esc(CARGA.ordem[CARGA.fi%CARGA.ordem.length])}</div>
+    <div class="carga-barra"><i></i></div>
+    <div class="carga-pct">0%</div>
+  </div>`;
+  if(CARGA.timer)return;
+  let ultFrase=performance.now();
+  CARGA.timer=setInterval(()=>{
+    const agora=performance.now(),t=agora-CARGA.t0;
+    let total=13;try{total=IMG_TARDE.length}catch(e){}
+    const real=Math.min(1,CARGA.n/total);
+    const p=t>=CARGA_MAX?1:Math.min(t/CARGA_MIN,real>=1?1:Math.max(real,.05)+(t/CARGA_MAX)*(1-real));
+    const box=$("#splash .carga-box");if(!box)return;
+    const pc=Math.floor(Math.min(1,p)*100);
+    box.querySelector(".carga-barra i").style.width=pc+"%";box.querySelector(".carga-pct").textContent=pc+"%";box.setAttribute("aria-valuenow",pc);
+    if(agora-ultFrase>=CARGA_FRASE){ultFrase=agora;const f=box.querySelector(".carga-frase");f.classList.add("some");
+      setTimeout(()=>{CARGA.fi++;f.textContent=CARGA.ordem[CARGA.fi%CARGA.ordem.length];f.classList.remove("some")},350)}
+    if(pc>=100){clearInterval(CARGA.timer);setTimeout(()=>{CARGA.on=false;if(abertura)render()},400)}
+  },100);
 }
 /* menu da capa em roda: rola pra cima/baixo, a opção do meio brilha e é a escolhida */
 const MENU_SP=[
@@ -7548,7 +7606,7 @@ const IMG_TARDE=["img/patro-logos.js?v=c57d15d0","img/rostos-reais.js?v=0bcaf037
 // 27/10: redesenha a cada arquivo que chega (logos dos patrocinadores não esperam as fotos); com aviso aberto, redesenha quando ele fechar
 let TARDE_T=null,TARDE_PEND=false;
 function tardeRender(){clearTimeout(TARDE_T);TARDE_T=setTimeout(()=>{if(!G||abertura||G.live||aba==="prejogo")return;if(document.querySelector(".veu")){TARDE_PEND=true;return}TARDE_PEND=false;render()},250)}
-setTimeout(()=>{IMG_TARDE.forEach(src=>{const sc=document.createElement("script");sc.src=src;sc.onload=sc.onerror=tardeRender;document.body.appendChild(sc)})},200);
+setTimeout(()=>{IMG_TARDE.forEach(src=>{const sc=document.createElement("script");sc.src=src;sc.onload=sc.onerror=()=>{CARGA.n++;tardeRender()};document.body.appendChild(sc)})},200);
 
 </script>
 
