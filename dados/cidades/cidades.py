@@ -77,7 +77,7 @@ cid = {k: set() for k in ['BRA', 'ARG', 'ENG', 'ESP', 'GER', 'FRA']}
 POP = {}  # população (GeoNames) para mostrar as maiores cidades primeiro
 for l in open(os.path.join(G, 'cities5000.txt'), encoding='utf-8'):
     c = l.rstrip('\n').split('\t'); cc = c[8]
-    if cc == 'BR': POP[('BR', c[1])] = max(POP.get(('BR', c[1]), 0), int(c[14] or 0))
+    if cc == 'BR': k = ('BR', c[1], A1.get('BR.' + c[10], '')); POP[k] = max(POP.get(k, 0), int(c[14] or 0))  # cidade + estado (há nomes repetidos)
     if cc not in PAIS: continue
     nome = PT.get(c[0]) or c[1]
     POP[(cc if cc != 'AD' else 'AD', nome)] = max(POP.get((cc, nome), 0), int(c[14] or 0))
@@ -107,7 +107,8 @@ for k, S in cid.items():
     regs = sorted({r for _, r in S} | set(CLUBES[k].values()))
     idx = {r: i for i, r in enumerate(regs)}
     cc = {'BRA': 'BR', 'ARG': 'AR', 'ENG': 'GB', 'ESP': 'ES', 'GER': 'DE', 'FRA': 'FR'}[k]
-    L = sorted(S, key=lambda x: (-POP.get((cc, x[0]), 0), x[0].lower(), x[1]))  # maiores primeiro
+    pop = (lambda x: POP.get(('BR', x[0], UF.get(x[1], '')), 0)) if k == 'BRA' else (lambda x: POP.get((cc, x[0]), 0))
+    L = sorted(S, key=lambda x: (-pop(x), x[0].lower(), x[1]))  # maiores primeiro
     saida[k] = {'r': regs, 'rn': [REG_PT.get(r, r) for r in regs], 'c': [[n, idx[r]] for n, r in L]}
 saida['BRA']['nomes'] = UF
 js = 'const CIDADES=' + json.dumps(saida, ensure_ascii=False, separators=(',', ':')) + ';\n'
