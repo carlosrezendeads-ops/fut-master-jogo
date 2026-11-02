@@ -505,9 +505,13 @@ nav.abas[hidden]{display:none}
 .trofeu-g b{font-size:12.5px;line-height:1.15;color:#ffe28a}.trofeu-g small{font-size:11px;color:var(--cal-2)}
 .emblema{position:relative}.em-num{display:inline-block;margin-top:3px;padding:1px 8px;border-radius:10px;background:#ffd23f;color:#2a1d00;font-weight:800;font-size:12px}
 .rk-selos{margin:6px 0}
-.pm-card{position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;width:100%;margin:2px 0 10px;padding:12px 14px;border-radius:14px;border:1.5px solid #ffd23f;background:linear-gradient(120deg,#5a3d00,#b8860b 45%,#5a3d00);color:#fff;font:inherit;text-align:left;cursor:pointer;animation:pmPisca 1.6s ease-in-out infinite}
+.rk-folha .amg-lista>*{flex:none}
+.rk-rei{position:absolute;left:50%;top:-14px;transform:translateX(-50%) rotate(-8deg);font-style:normal;font-size:20px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6))}
+.rk-fw .rk-coroa{top:auto;bottom:-6px;left:-6px;font-size:14px;transform:none}
+.rk-cico{font-style:normal;font-size:15px;margin-right:3px}.rk-ptsm{font-size:9.5px!important;opacity:.75}
+.pm-card{position:relative;overflow:hidden;display:flex;align-items:center;gap:14px;width:100%;min-height:78px;flex:none;margin:2px 0 12px;padding:14px 16px;border-radius:14px;border:1.5px solid #ffd23f;background:linear-gradient(120deg,#5a3d00,#b8860b 45%,#5a3d00);color:#fff;font:inherit;text-align:left;cursor:pointer;animation:pmPisca 1.6s ease-in-out infinite}
 .pm-card b{display:block;font-size:16px;color:#fff3b0}.pm-card small{color:#ffe9a6;font-size:12px}
-.pm-ico{font-size:30px}.pm-seta{margin-left:auto;font-size:26px;color:#ffe28a}
+.pm-ico{font-size:36px;line-height:1;flex:none}.pm-seta{margin-left:auto;font-size:26px;color:#ffe28a}
 .pm-brilho{position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.45) 50%,transparent 70%);transform:translateX(-100%);animation:pmVarre 2.2s ease-in-out infinite}
 @keyframes pmPisca{0%,100%{box-shadow:0 0 6px rgba(255,210,63,.4)}50%{box-shadow:0 0 22px rgba(255,210,63,.95)}}
 @keyframes pmVarre{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
@@ -3078,7 +3082,7 @@ function podioHTML(L,titulo){if(!L.length)return "";const por=[L[1],L[0],L[2]];
 </div>`}
 /* card piscando dos prêmios do mês → quadro detalhado com ícones */
 const ICO_XP='<span class="ico-xp">XP</span>';
-function cardPremiosMes(){return `<button class="pm-card" data-a="rkpremios"><span class="pm-brilho"></span><span class="pm-ico">🎁</span><span><b>Prêmios do mês</b><small>Veja o que ganham o 1º, o 2º e o 3º lugar</small></span><span class="pm-seta">›</span></button>`}
+function cardPremiosMes(){return `<button class="pm-card" data-a="rkpremios"><span class="pm-brilho"></span><span class="pm-ico">🎁</span><span><b>Prêmios da temporada</b><small>O que ganham o 1º, o 2º e o 3º do mês</small></span><span class="pm-seta">›</span></button>`}
 function modalPremiosMes(){const nomes=["","Campeão do mês","Vice-campeão","Terceiro do pódio"];
   modal(`<div class="pm-folha"><h3>🎁 Prêmios do mês</h3><p class="muted peq">No dia 1 de cada mês, os 3 primeiros do ranking do mês recebem o prêmio na hora em que abrirem o jogo.</p>
     ${[1,2,3].map(p=>{const r=PREMIO_MES[p];return `<div class="pm-nivel p${p}"><div class="pm-cab"><span class="pm-med">${MEDALHA[p]}</span><b>${p}º lugar</b><small>${nomes[p]}</small></div>
@@ -3124,13 +3128,11 @@ function modalAmigos(soAtualiza){
   if(av.length)try{localStorage.setItem("fut-amg-av",String(Math.max(...av.map(a=>a.n))))}catch(e){}
   const mesAt=mesTxt(new Date(Date.now()-3*36e5).toISOString().slice(0,7));
   if(ab==="mes")corpo+=cardPremiosMes();
-  if(ab==="mes"&&R){const top=R.filter(x=>x.mtp>0).slice(0,3).map((x,i)=>({...x,pos:i+1,st:x.mst}));corpo+=podioHTML(top,`🏆 Pódio de ${mesAt} (até agora)`);
-    const PA=AMG.podio;if(PA&&PA.lista&&PA.lista.length)corpo+=podioHTML(PA.lista,`🏅 Campeões de ${mesTxt(PA.mes)}`)}
   if(R&&R.length)corpo+=R.map((a,i)=>`<button class="rk-linha${a.eu?" eu":""}${i<3&&(ab==="geral"||a.mtp>0)?" top"+(i+1):""}" data-a="amgver" data-v="${a.id}">
-    <span class="rk-pos num">${i+1}º${ab==="geral"?rkSeta(a.sobe):""}</span><span class="rk-fw">${rkFoto(a.av,a.nome,44)}<i class="amg-dot${a.on?" on":""}"></i>${(a.coroas||[]).length?`<i class="rk-coroa" title="Campeão do mês">🏅</i>`:""}</span>
+    <span class="rk-pos num">${i+1}º${ab==="geral"?rkSeta(a.sobe):""}</span><span class="rk-fw">${rkFoto(a.av,a.nome,44)}<i class="amg-dot${a.on?" on":""}"></i>${i===0&&(ab==="geral"||a.mtp>0)?'<i class="rk-rei" aria-label="1º lugar">👑</i>':""}${(a.coroas||[]).length?`<i class="rk-coroa" title="Campeão do mês">🏅</i>`:""}</span>
     <span class="rk-info"><b>${esc(a.nome)}${a.eu?' <em class="rk-voce">você</em>':""}</b><small>${esc(a.clube||"")}</small>
-    <small class="rk-tags"><span>Nível ${a.nivel}</span><span>👑 ${ab==="mes"?a.mtp:a.tp} coroa${(ab==="mes"?a.mtp:a.tp)===1?"":"s"}</span><span>Força ${a.forca||"–"}</span></small></span>
-    <span class="rk-pts">${ab==="mes"?`<b class="num">${a.mtp}</b><small>coroas</small>`:`<b class="num">${Math.round(a.pts)}</b><small>pts</small>`}</span></button>`).join("");
+    <small class="rk-tags"><span>Nível ${a.nivel}</span><span>Força ${a.forca||"–"}</span>${a.nt?`<span>🏆 ${a.nt}</span>`:""}</small></span>
+    <span class="rk-pts"><b class="num"><i class="rk-cico">👑</i>${ab==="mes"?a.mtp:a.tp}</b><small>coroas</small>${ab==="geral"?`<small class="rk-ptsm">${Math.round(a.pts)} pts</small>`:""}</span></button>`).join("");
   else corpo+=`<p class="muted">${AMG.ok===false?"Sem conexão com o servidor. Confira a internet.":"Carregando o ranking..."}</p>`;
   const expl=ab==="mes"?`Quem ganhar mais coroas em <b>${mesAt}</b> é o <b>🏅 campeão do mês</b>. Zera todo dia 1. Vitória 3 coroas, empate 1; títulos valem muito mais.`:`Pontos: <b>👑 coroas</b> (metade), <b>nível</b> e <b>força do time</b>. Vitória 3 coroas, empate 1; títulos dão mais (Champions 300, Série A 150). ▲▼ = posições desde segunda-feira.`;
   const abas=[["geral","Geral"],["mes","Do mês"]].map(([k,n])=>`<button data-a="rkaba" data-v="${k}" aria-pressed="${ab===k}">${n}</button>`).join("");
@@ -4091,7 +4093,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793661327";
+const VERSAO="1793661605";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
