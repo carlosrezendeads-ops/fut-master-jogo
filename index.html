@@ -1039,6 +1039,15 @@ nav.abas button{font-size:11px}
 .splash.carga-entra{animation:cgEntra .7s cubic-bezier(.2,.7,.2,1) both}
 @keyframes cgEntra{0%{transform:scale(1.12);filter:brightness(1.8) blur(4px)}100%{transform:none;filter:none}}
 @media (prefers-reduced-motion:reduce){.splash.carga-sai{animation:spSaiR .3s forwards}.splash.carga-entra{animation:none}}
+.splash.intro{background:#000;justify-content:center;padding:0}
+.splash.intro::after,.splash.intro::before{display:none}
+.intro-logo{position:relative;width:min(62vw,340px);animation:inLogo .7s ease-out both}
+.splash .intro-logo img,.splash.arte .intro-logo img{display:block;position:static;inset:auto;width:100%;height:auto;object-fit:contain;transform:none;filter:none;opacity:1;animation:none;z-index:auto}
+.intro-brilho{position:absolute;inset:-2px;-webkit-mask:url(img/mega.png) center/100% 100% no-repeat;mask:url(img/mega.png) center/100% 100% no-repeat;
+  background:linear-gradient(45deg,transparent 38%,rgba(120,220,255,.55) 45%,#fff 50%,rgba(120,220,255,.55) 55%,transparent 62%) no-repeat;background-size:300% 300%;background-position:100% 0;
+  animation:inBrilho 1.3s .75s cubic-bezier(.45,0,.2,1) both;filter:drop-shadow(0 0 6px #9fe6ff)}
+@keyframes inLogo{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+@keyframes inBrilho{from{background-position:100% 0}to{background-position:0 100%}}
 .carga-box{position:relative;z-index:2;width:min(86vw,420px);margin:0 auto calc(28px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
 .carga-frase{min-height:22px;margin:6px 0 -6px;font-size:15px;font-weight:600;color:#e8f4ff;text-shadow:0 1px 4px #000;transition:opacity .35s}
 .carga-frase.some{opacity:0}
@@ -3863,7 +3872,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793636486";
+const VERSAO="1793638392";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4164,6 +4173,7 @@ function renderAbertura(){
   const arte=typeof ARTE_CAPA!=="undefined";
   sp.classList.toggle("arte",arte);
   sp.classList.toggle("carga",CARGA.on);
+  if(CARGA.intro){telaIntro(sp,c);return}
   if(CARGA.on){telaCarga(sp,c);return}
   const info=lerInfoBackup();
   sp.innerHTML=`${arte?`<img class="capa-fundo" src="img/capa.jpg" alt=""><img src="img/capa.jpg" alt="Capa do FUT Master">${typeof LOGO_CAPA!=="undefined"?`<img class="capa-logo" src="${LOGO_CAPA}" alt="FUT Master 26">`:""}`:`<canvas aria-hidden="true"></canvas>`}
@@ -4180,7 +4190,7 @@ function renderAbertura(){
 }
 /* tela de carregamento (29/10): só a capa + logo, embaixadinha, frase trocando a cada 2 s e barra 0–100%.
    Barra no ritmo fixo do Carlos (9 s); as imagens pesadas (IMG_TARDE) carregam enquanto isso. No fim vai pro menu da capa. */
-const CARGA={on:true,t0:0,n:0,timer:null,fi:0,ordem:null};
+const CARGA={on:true,intro:true,t0:0,n:0,timer:null,fi:0,ordem:null};
 const CARGA_FRASE=2000;
 const FRASES_CARGA=["Amarrando as chuteiras...","Organizando o time...","Os jogadores estão voltando da fisioterapia...","Enchendo a bola...","Cortando a grama do estádio...","Separando os uniformes...","Abrindo os portões para a torcida...","O técnico está montando a tática...","O juiz está conferindo o VAR...","Aquecendo o goleiro...","Pintando as linhas do campo...","Acendendo as luzes do estádio...","Escolhendo os titulares...","Colocando as redes nos gols...","Treinando chutes a gol...","A torcida está cantando lá fora...","O capitão está animando o time..."];
 function frasesCarga(c){
@@ -4188,6 +4198,13 @@ function frasesCarga(c){
   if(c){L.push(`O ${c.name} está amarrando as chuteiras...`,`A torcida do ${c.name} está chegando ao estádio...`,`O ${c.name} está entrando em campo...`)}
   for(let i=L.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[L[i],L[j]]=[L[j],L[i]]}
   return L;
+}
+function telaIntro(sp,c){ // 02/11: tela preta com a logo MEGA e brilho (3 s) antes do carregamento
+  sp.classList.add("intro");
+  if(CARGA.introT)return;
+  sp.innerHTML=`<div class="intro-logo" aria-label="MEGA"><img src="img/mega.png" alt="MEGA"><i class="intro-brilho"></i></div>`;
+  CARGA.introT=setTimeout(()=>somArquivo("intro",false,1),700); // sons/intro.mp3 (quando chegar)
+  setTimeout(()=>{CARGA.intro=false;sp.classList.remove("intro");if(abertura)render()},3000); // corte seco pro carregamento
 }
 function cargaTransicao(){ // 02/11: cortina diagonal sobe levando o carregamento, menu entra com zoom e brilho
   const sp=$("#splash"),v=sp.cloneNode(true);v.removeAttribute("id");v.classList.add("carga-sai");v.setAttribute("aria-hidden","true");
@@ -4664,7 +4681,7 @@ function somIniciar(){
   SOM.mus=c.createGain();SOM.mus.gain.value=0;SOM.mus.connect(SOM.master);
   SOM.fx=c.createGain();SOM.fx.gain.value=1;{const lim=c.createDynamicsCompressor();lim.threshold.value=-6;lim.knee.value=4;lim.ratio.value=12;lim.attack.value=.002;lim.release.value=.15;SOM.fx.connect(lim);lim.connect(SOM.master)} // limitador: efeitos altos sem estourar
   trilhaIniciar();
-  SOM.buf={};["clique","erro","derrota","vitoria","transicao","roleta","carga"].forEach(n=>fetch(`sons/${n}.mp3`).then(r=>r.arrayBuffer()).then(b=>new Promise((ok,er)=>c.decodeAudioData(b,ok,er))).then(buf=>SOM.buf[n]=buf).catch(()=>{}));
+  SOM.buf={};["clique","erro","derrota","vitoria","transicao","roleta","carga","intro"].forEach(n=>fetch(`sons/${n}.mp3`).then(r=>r.arrayBuffer()).then(b=>new Promise((ok,er)=>c.decodeAudioData(b,ok,er))).then(buf=>SOM.buf[n]=buf).catch(()=>{}));
   // ruído base
   const b=c.createBuffer(1,c.sampleRate*3,c.sampleRate),d=b.getChannelData(0);
   let last=0;for(let i=0;i<d.length;i++){const w=Math.random()*2-1;last=(last+.02*w)/1.02;d[i]=w*.6+last*3}
