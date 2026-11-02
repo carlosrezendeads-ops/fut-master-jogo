@@ -1380,7 +1380,7 @@ const MANUT=false;
 <script src="dados/elencos.js?v=bb464417"></script>
 <script src="dados/pes.js?v=266905da"></script>
 <script src="img/escudos-img.js?v=df90de51"></script>
-<script src="dados/idiomas.js?v=f19b2983"></script>
+<script src="dados/idiomas.js?v=1861f66c"></script>
 <script>
 /*ENGINE START*/
 const PAISES={
@@ -2592,11 +2592,14 @@ function somarXP(qtd){
   if(P.nivel>antes){P.aviso=P.nivel;P.premioAviso=(P.premioAviso||0)+dinheiroGanho;P.cupomAviso=(P.cupomAviso||0)+cuponsGanhos;G.inbox.unshift({t:"bom",m:`Nível ${P.nivel}! Você ganhou ${dinheiro(dinheiroGanho)} de bônus${cuponsGanhos?` e ${cuponsGanhos} cupons dourados`:""}.`})}
   return {antes,nivel:P.nivel,premio:dinheiroGanho};
 }
+// Bola Dourada (Carlos, 02/11): só com vitória; gols do seu time → [mínimo de gols, chance, pontos de treino]
+const BOLA_TAB=[[8,.5,3],[5,.5,2],[4,.3,2],[3,.3,1],[2,.2,1],[1,.1,1]];
+function bolaTabela(gf,gs){if(!(gf>gs))return null;const l=BOLA_TAB.find(x=>gf>=x[0]);return l?[l[1],l[2]]:null}
 function ganharXP(gf,gs,dobro){
   const P=perfil(),r=gf>gs?"v":gf<gs?"d":"e",ganho=XP_RES[r]*(dobro?2:1);
   P.j++;P[r]++;P.gp+=gf;P.gc+=gs;
-  const s=somarXP(ganho),bola=gf>=3&&rnd()<(gf>=5?.5:.3); // 26/10: 3 ou 4 gols = 30% de chance de Bola Dourada (2 pontos); 5 ou mais = 50% (3 pontos)
-  if(bola){G.user.bolas=(G.user.bolas||0)+1;(G.user.bolaPts=G.user.bolaPts||[]).push(gf>=5?3:2)}
+  const bt=bolaTabela(gf,gs),s=somarXP(ganho),bola=!!bt&&rnd()<bt[0];
+  if(bola){G.user.bolas=(G.user.bolas||0)+1;(G.user.bolaPts=G.user.bolaPts||[]).push(bt[1])}
   return {ganho,antes:s.antes,nivel:s.nivel,premio:s.premio,dobro:!!dobro,bola};
 }
 function xpBonus(qtd,motivo){somarXP(qtd);perfil().toastXP=`+${qtd} XP · ${motivo}`}
@@ -3986,7 +3989,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793652963";
+const VERSAO="1793653242";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -6605,7 +6608,7 @@ function barrasAtr(p,botoes){
     return `<div class="atr"><span>${ic} ${n}</span><div class="atr-b"><i style="width:${v}%;background:${corAtr(v)}"></i></div><b class="num">${v}${ex?`<em>+${ex}</em>`:""}</b>${botoes?`<button class="btn mini atr-mais" data-a="ptsadd" data-v="${p.id}|${k}"${P[k]>0&&v<99?"":" disabled"} aria-label="Usar 1 ponto de ${n}">+${P[k]>0?`<small>${P[k]}</small>`:""}</button>`:""}</div>`}).join("")}</div>`}
 function quadroPontos(){
   const P=pontosTreino(),bolas=G.user.bolas||0;
-  return `<h2>Pontos de Treino</h2><div class="cartao secao pts-quadro"><p class="muted peq" style="margin:0">Faça 3 gols ou mais num jogo para ganhar uma Bola Dourada. Ao estourar, ela dá pontos para evoluir seus jogadores: 3 ou 4 gols = 30% de chance (2 pontos), 5 gols ou mais = 50% de chance (3 pontos). No fim do campeonato, os 3 primeiros também ganham pontos. Toque num ponto colorido para escolher quem recebe.${bolas?` <b style="color:var(--canario)">Você tem ${bolas} bola${bolas>1?"s":""} esperando!</b>`:""}</p>
+  return `<h2>Pontos de Treino</h2><div class="cartao secao pts-quadro"><p class="muted peq" style="margin:0">Toda vitória pode dar uma Bola Dourada. Ao estourar, ela dá pontos para evoluir seus jogadores. Quanto mais gols, maior a chance: 1 gol = 10% (1 ponto) · 2 gols = 20% (1 ponto) · 3 gols = 30% (1 ponto) · 4 gols = 30% (2 pontos) · 5 a 7 gols = 50% (2 pontos) · 8 gols ou mais = 50% (3 pontos). No fim do campeonato, os 3 primeiros também ganham pontos. Toque num ponto colorido para escolher quem recebe.${bolas?` <b style="color:var(--canario)">Você tem ${bolas} bola${bolas>1?"s":""} esperando!</b>`:""}</p>
   <div class="pts-grade">${ATRS.map(([k,n,ic])=>`<button class="pts-chip${P[k]>0?" tem":""}" data-a="ptstipo" data-v="${k}"><span class="pts-ic">${ic}</span><b class="num">${P[k]||0}</b><small>${n}</small></button>`).join("")}</div></div>`}
 // bolinha do jogador igual à do campinho: rosto no círculo com a cor da camisa e a posição embaixo
 function bolinhaJog(p){const u=unisDe(G.clubs[G.user.club])[0],[bg,fg]=({GOL:["#5b4a12","#ffe08a"],LAT:["#14405e","#a8dcff"],ZAG:["#14405e","#a8dcff"],VOL:["#1f5a33","#b9f5cc"],MEI:["#1f5a33","#b9f5cc"],ATA:["#5e1f1a","#ffb8ad"]})[p.pos]||["#1f5a33","#b9f5cc"];
