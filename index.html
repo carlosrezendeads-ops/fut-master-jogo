@@ -2138,6 +2138,18 @@ function modalAmistoso(r){const c=G.clubs[G.user.club],A=G.clubs[r.adv];
     <p style="margin:12px 0 0"><b>Pronto! Agora você está pronto para iniciar o campeonato: ${esc(nomeLiga(userTier()))}.</b></p>
     <p class="muted peq">Boa sorte, ${esc(G.user.coach||"treinador")}!</p></div><div class="botoes"><button class="btn prim" data-a="fechar">Começar o campeonato</button></div>`);confete()}
 const TUT_AMISTOSO={
+  // tour da tela (02/11): curto, depois do amistoso e da TV, antes do 1º jogo oficial
+  tela:[
+    {sel:".topo .dono-foto",t:"Seu perfil",x:"Nível, títulos e conquistas. É lá que você coloca sua foto."},
+    {sel:".topo [data-a=amigos]",t:"Ranking",x:"Todos os jogadores. Compare e desafie para um amistoso."},
+    {sel:".topo [data-a=caixa]",t:"Caixa de entrada",x:"Propostas pelos seus jogadores e avisos."},
+    {sel:".topo [data-v=config]",t:"Ajustes",x:"Som, carreiras e as regras do jogo."},
+    {sel:"#nav [data-v=clube]",t:"Clube",x:"Elenco, técnico, escudo, uniformes e estádio."},
+    {sel:"#nav [data-v=liga]",t:"Liga",x:"Tabela, jogos, notícias e artilheiros."},
+    {sel:"#nav [data-v=jogar]",t:"Jogar",x:"Seu próximo jogo. Comece por aqui."},
+    {sel:"#nav [data-v=financas]",t:"Finanças",x:"Caixa, patrocínios, salários e empréstimos."},
+    {sel:"#nav [data-v=mercado]",t:"Loja",x:"Jogadores, técnicos, lendas e cupons dourados."}],
+  perfil:[{sel:".avatar-dono",t:"Sua foto",x:"Toque aqui para escolher um avatar ou enviar uma foto do celular. Ela aparece no ranking para todo mundo."}],
   pre:[
     {sel:".vs-pre .vs-video",t:"Bem-vindo ao amistoso!",x:"Antes do campeonato, um jogo-treino para você aprender a jogar. Aqui aparece um jogador do seu time com o uniforme e os patrocinadores."},
     {sel:".vs-card",t:"O confronto",x:"Seu time de um lado, o adversário do outro, com a posição na tabela. Toque num escudo para ver o time."},
@@ -4079,7 +4091,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793659902";
+const VERSAO="1793661327";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4926,7 +4938,7 @@ function somModo(m){
 }
 // trilha de fundo em mp3 (pasta musica/): na capa a música 3 em loop a 80%; nas telas do jogo as músicas se revezam a 60%, no pré-jogo as dele a 70%, com cruzamento (fade)
 const TRILHA_FADE=4;
-const LISTAS={musica:{faixas:[3,5,6,7,8,9,12].map(n=>`musica/musica${n}.mp3`),vol:.6},prejogo:{faixas:["musica/prejogo1.mp3","musica/prejogo2.mp3"],vol:.8},torcida:{faixas:["musica/prejogo1.mp3","musica/prejogo2.mp3"],vol:.3}}; // partida ao vivo: músicas do pré-jogo bem baixas
+const LISTAS={musica:{faixas:[3,5,6,7,8,9,12].map(n=>`musica/musica${n}.mp3`),vol:.6},prejogo:{faixas:["musica/prejogo1.mp3","musica/prejogo2.mp3"],vol:.8},torcida:{faixas:["musica/prejogo1.mp3","musica/prejogo2.mp3"],vol:.3}};LISTAS.abertura={faixas:LISTAS.musica.faixas,vol:.8}; // partida ao vivo: músicas do pré-jogo bem baixas
 function trilhaIniciar(){const c=SOM.ctx;SOM.trilha=c.createGain();SOM.trilha.connect(SOM.master);SOM.cur=-1;SOM.ult={};
   SOM.el=[0,1].map(k=>{const a=new Audio();a.preload="auto";const g=c.createGain();g.gain.value=0;try{c.createMediaElementSource(a).connect(g)}catch(e){}g.connect(SOM.trilha);
     const s={a,g,id:0,vol:0};a.addEventListener("ended",()=>{if(SOM.el[SOM.cur]===s&&SOM.modo===s.lista&&LISTAS[s.lista])trilhaProxima(s.lista,1)});
@@ -4940,11 +4952,11 @@ function trilhaFade(s,alvo,seg){const n=SOM.ctx.currentTime;s.g.gain.cancelSched
 function trilhaParar(s,seg){const id=++s.id;trilhaFade(s,0,seg);setTimeout(()=>{if(s.id===id)s.a.pause()},seg*1000+150)}
 function trilhaRetomar(s,seg){s.id++;s.a.play().catch(()=>{});trilhaFade(s,s.vol,seg)}
 function trilhaTocar(src,vol,seg,lista){const i=SOM.cur<0?0:1-SOM.cur,s=SOM.el[i],ant=SOM.el[SOM.cur];
-  if(ant)trilhaParar(ant,seg);SOM.cur=i;s.id++;s.vol=vol;s.lista=lista;s.fim=false;s.a.loop=lista==="abertura";s.a.src=src;s.a.play().catch(()=>{});
+  if(ant)trilhaParar(ant,seg);SOM.cur=i;s.id++;s.vol=vol;s.lista=lista;s.fim=false;s.a.loop=false;s.a.src=src;s.a.play().catch(()=>{});
   const n=SOM.ctx.currentTime;s.g.gain.cancelScheduledValues(n);s.g.gain.setValueAtTime(0,n);trilhaFade(s,vol,seg)}
 function trilhaProxima(m,seg){const f=LISTAS[m].faixas;let i;do{i=Math.floor(Math.random()*f.length)}while(f.length>1&&i===SOM.ult[m]);SOM.ult[m]=i;trilhaTocar(f[i],LISTAS[m].vol,seg,m)}
 function trilhaModo(m){if(!SOM.el)return;const s=SOM.el[SOM.cur];
-  if(m==="abertura"){if(s&&s.lista==="abertura")trilhaRetomar(s,1.5);else{SOM.ult.musica=0;trilhaTocar(LISTAS.musica.faixas[0],.8,1.5,"abertura")}}
+  if(m==="abertura"){if(s&&s.lista==="abertura")trilhaRetomar(s,1.5);else trilhaProxima("abertura",1.5)} // 02/11: capa sorteia a música e vai trocando
   else if(m==="torcida"&&s&&s.lista==="prejogo"&&!s.a.paused){s.lista="torcida";s.vol=LISTAS.torcida.vol;trilhaFade(s,s.vol,2.5)} // do pré-jogo pro jogo: mesma música, abaixando
   else if(LISTAS[m]){if(s&&s.lista===m)trilhaRetomar(s,1.5);else trilhaProxima(m,s?2.5:1.5)}
   else if(s)trilhaParar(s,1)}
@@ -5174,7 +5186,7 @@ function render(){try{if(G&&G.user){perfil();garantirContratos()}}catch(e){}
   const corpo={inicio:telaInicio,elenco:telaElenco,tabela:telaTabela,mercado:telaMercado,clube:telaClube,escudo:telaEscudo,upgrades:telaUpgrades,copa:telaAbaCopa,jogar:telaInicio,liga:telaLiga,perfil:telaPerfil,financas:telaFinancas,config:telaConfig,visual:telaVisual,prejogo:telaPreJogo,partida:telaPartida,resultado:telaResultado}[aba]();
   app.innerHTML=(telaCheia?"":topo)+corpo+(telaCheia?"":bolaHTML());
   videoVS();ligarCampinho();
-  if(G&&!TUTA&&!document.querySelector(".veu")){const ta=G.tutAmi||{},ami1=!(G.history||[]).length;if(aba==="prejogo"&&ami1&&!ta.pre&&partidaAtual()&&partidaAtual().amistoso)setTimeout(()=>tutAmistoso("pre"),600);else if(aba==="jogar"&&tvPendente()&&!ta["tv"+userTier()])setTimeout(()=>{if(!TUTA&&tvPendente())tutAmistoso("tv"+userTier())},700);else if(aba==="partida"&&ami1&&G.live&&G.live.m.amistoso&&!ta.vivo)setTimeout(()=>tutAmistoso("vivo"),500)}if(aba==="financas")ligarGrafico();{const b=document.querySelector('.lg-abas [aria-pressed="true"]');if(b)b.scrollIntoView({inline:"center",block:"nearest"})}
+  if(G&&!TUTA&&!document.querySelector(".veu")){const ta=G.tutAmi||{},ami1=!(G.history||[]).length;if(aba==="prejogo"&&ami1&&!ta.pre&&partidaAtual()&&partidaAtual().amistoso)setTimeout(()=>tutAmistoso("pre"),600);else if(aba==="jogar"&&tvPendente()&&!ta["tv"+userTier()])setTimeout(()=>{if(!TUTA&&tvPendente())tutAmistoso("tv"+userTier())},700);else if(aba==="partida"&&ami1&&G.live&&G.live.m.amistoso&&!ta.vivo)setTimeout(()=>tutAmistoso("vivo"),500);else if(aba==="jogar"&&!ta.tela&&G.amistoso==="feito"&&!tvPendente()&&!((G.st[G.user.club]||{}).j)&&ami1)setTimeout(()=>{if(!TUTA&&!document.querySelector(".veu")&&aba==="jogar")tutAmistoso("tela")},900);else if(aba==="perfil"&&!ta.perfil&&!perfil().avatar)setTimeout(()=>{if(!TUTA&&!document.querySelector(".veu")&&aba==="perfil")tutAmistoso("perfil")},600)}if(aba==="financas")ligarGrafico();{const b=document.querySelector('.lg-abas [aria-pressed="true"]');if(b)b.scrollIntoView({inline:"center",block:"nearest"})}
   if(ligaRolar){ligaRolar=false;const ag=$("#lg-agora");if(ag&&aba==="liga"&&ligaAba==="mais")window.scrollTo(0,ag.getBoundingClientRect().top+scrollY-90)}
   if(aba==="partida"){if(G.live&&G.live.est==="rodando")iniciarTimer();else pararTimer();const fd=$("#lv-feed");if(fd)fd.scrollTop=0}
   if(window._relLoja){clearInterval(window._relLoja);window._relLoja=null}
