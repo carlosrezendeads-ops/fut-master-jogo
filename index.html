@@ -1171,6 +1171,12 @@ nav.abas button{font-size:11px}
 .splash.carga-entra{animation:cgEntra .7s cubic-bezier(.2,.7,.2,1) both}
 @keyframes cgEntra{0%{transform:scale(1.12);filter:brightness(1.8) blur(4px)}100%{transform:none;filter:none}}
 @media (prefers-reduced-motion:reduce){.splash.carga-sai{animation:spSaiR .3s forwards}.splash.carga-entra{animation:none}}
+.beta-tag{position:fixed;z-index:3;left:-999px;top:0;opacity:0;font-family:var(--f-display);font-weight:800;letter-spacing:.12em;color:#031026;background:#19c3ff;padding:.12em .5em .1em;border-radius:.35em;transform:rotate(-8deg);box-shadow:0 2px 8px rgba(0,0,0,.45);pointer-events:none;transition:opacity .3s}
+.beta-tag.on{opacity:.92}
+.intro-games{display:block;margin-top:14px;text-align:center;font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-weight:300;font-size:min(7vw,30px);letter-spacing:.62em;padding-left:.62em;text-transform:uppercase;
+  background:linear-gradient(to top right,rgba(255,255,255,.78) 41%,#fff 46%,#fff 54%,rgba(255,255,255,.78) 59%) no-repeat;background-size:300% 300%;background-position:90% 10%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:inBrilho 1.3s .75s cubic-bezier(.45,0,.25,1) both,inGamesAcende .35s 1.85s ease-out forwards;filter:drop-shadow(0 0 0 transparent)}
+@keyframes inGamesAcende{to{filter:drop-shadow(0 0 6px rgba(255,255,255,.55))}}
 .splash.intro{background:#000;justify-content:center;padding:0}
 .splash.intro::after,.splash.intro::before{display:none}
 .intro-logo{position:relative;width:min(62vw,340px);animation:inLogo .7s ease-out both}
@@ -4098,7 +4104,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793662883";
+const VERSAO="1793663201";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -4403,7 +4409,7 @@ function renderAbertura(){
   if(CARGA.intro){telaIntro(sp,c);return}
   if(CARGA.on){telaCarga(sp,c);return}
   const info=lerInfoBackup();
-  sp.innerHTML=`${arte?`<img class="capa-fundo" src="img/capa.jpg" alt=""><img src="img/capa.jpg" alt="Capa do FUT Master">${typeof LOGO_CAPA!=="undefined"?`<img class="capa-logo" src="${LOGO_CAPA}" alt="FUT Master 26">`:""}`:`<canvas aria-hidden="true"></canvas>`}
+  sp.innerHTML=`${arte?`<img class="capa-fundo" src="img/capa.jpg" alt=""><img src="img/capa.jpg" alt="Capa do FUT Master">${typeof LOGO_CAPA!=="undefined"?`<img class="capa-logo" src="${LOGO_CAPA}" alt="FUT Master 26" onload="posBeta()"><span class="beta-tag" aria-label="Versão beta">BETA</span>`:""}`:`<canvas aria-hidden="true"></canvas>`}
   <div class="logo"${arte?" hidden":""}><svg class="coroa" viewBox="0 0 100 60" aria-hidden="true"><path d="M6 56L2 14L28 34L50 4L72 34L98 14L94 56Z" fill="none" stroke="#19c3ff" stroke-width="7" stroke-linejoin="round"/></svg>
     <div class="fut">FUT</div><div class="master">MASTER</div></div>
   ${arte?"":`<div class="lema"><b>FUT</b><span>Monte seu time.<br>Conquiste seu sonho.</span></div>`}
@@ -4426,11 +4432,15 @@ function frasesCarga(c){
   for(let i=L.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[L[i],L[j]]=[L[j],L[i]]}
   return L;
 }
+/* etiqueta BETA (02/11): pequena, no canto de baixo à direita do logo FUT MASTER 26 */
+function posBeta(){const L=document.querySelector("#splash .capa-logo"),b=document.querySelector("#splash .beta-tag");if(!L||!b)return;const r=L.getBoundingClientRect();if(!r.width)return;
+  b.style.left=(r.left+r.width*.73)+"px";b.style.top=(r.top+r.height*.86)+"px";b.style.fontSize=Math.max(10,r.width*.055)+"px";b.classList.add("on")}
+addEventListener("resize",()=>setTimeout(posBeta,50));
 function telaIntro(sp,c){ // 02/11: tela preta com a logo MEGA e brilho (3 s) antes do carregamento
   sp.classList.add("intro");
   if(!CARGA.verOk){sp.innerHTML="";if(!CARGA.verT)CARGA.verT=setTimeout(versaoOk,1500);return} // tela preta até conferir a versão (no máx. 1,5 s)
   if(CARGA.introT)return;
-  sp.innerHTML=`<div class="intro-logo" aria-label="MEGA"><img src="img/mega.png" alt="MEGA"><i class="intro-brilho"></i></div>`;
+  sp.innerHTML=`<div class="intro-logo" aria-label="MEGA Games"><img src="img/mega.png" alt="MEGA"><i class="intro-brilho"></i><span class="intro-games">GAMES</span></div>`;
   CARGA.introT=setTimeout(()=>somArquivo("carga",false,.9),750); // 02/11: som de transição (sons/carga.mp3) começa junto com o brilho
   setTimeout(()=>{CARGA.intro=false;sp.classList.remove("intro");if(abertura)render()},4500); // 02/11: +1,5 s parada depois do brilho, depois corte seco pro carregamento
 }
@@ -4441,7 +4451,7 @@ function cargaTransicao(){ // 02/11: cortina diagonal sobe levando o carregament
 }
 function telaCarga(sp,c){
   if(!CARGA.t0){CARGA.t0=performance.now();CARGA.ordem=frasesCarga(c)}
-  sp.innerHTML=`${typeof ARTE_CAPA!=="undefined"?`<img class="capa-fundo" src="img/carga.jpg" alt=""><img src="img/carga.jpg" alt="Ronaldo e Messi">${typeof LOGO_CAPA!=="undefined"?`<img class="capa-logo" src="${LOGO_CAPA}" alt="FUT Master 26">`:""}`:""}
+  sp.innerHTML=`${typeof ARTE_CAPA!=="undefined"?`<img class="capa-fundo" src="img/carga.jpg" alt=""><img src="img/carga.jpg" alt="Ronaldo e Messi">${typeof LOGO_CAPA!=="undefined"?`<img class="capa-logo" src="${LOGO_CAPA}" alt="FUT Master 26" onload="posBeta()"><span class="beta-tag" aria-label="Versão beta">BETA</span>`:""}`:""}
   <div class="carga-box" role="progressbar" aria-label="Carregando" aria-valuemin="0" aria-valuemax="100">
     <div class="carga-frase">${esc(CARGA.ordem[CARGA.fi%CARGA.ordem.length])}</div>
     <div class="carga-barra"><i></i></div>
