@@ -1459,6 +1459,10 @@ const MANUT=false;
 <script src="img/escudos-img.js?v=df90de51"></script>
 <script src="dados/idiomas.js?v=d09cf4d4"></script>
 <script>
+/* 02/11: todos começam do zero (limpeza única "R1" em cada aparelho): carreiras, perfil, nível, conta do ranking e rascunho; mantém som/vibração/notificações */
+(function(){try{const R="R1";if(localStorage.getItem("fut-reset")===R)return;
+  ["rumo-serie-a-v2","fut-criacao","fut-master-backup","fut-perfil","fut-conta","fut-carreiras","fut-rk-acima","fut-nivmax","fut-amg-av"].forEach(k=>localStorage.removeItem(k));
+  try{indexedDB.deleteDatabase("fut-carreiras")}catch(e){}localStorage.setItem("fut-reset",R)}catch(e){}})();
 /*ENGINE START*/
 const PAISES={
 BRA:{nome:"Brasil",moeda:"R$",cont:"SA",k:4,ligas:["Série A","Série B","Série C"],quarta:"Série D",
@@ -4093,7 +4097,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793662363";
+const VERSAO="1793662765";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
