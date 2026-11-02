@@ -1134,6 +1134,13 @@ nav.abas button{font-size:11px}
 .selo-breve{font-style:normal;font-family:Archivo,Arial,sans-serif;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#3a2a00;background:linear-gradient(160deg,#ffe27a,#e0a800);padding:2px 7px;border-radius:6px;align-self:flex-start;margin-top:6px;text-shadow:none;box-shadow:0 0 8px rgba(255,200,0,.5)}
 .roda-it.sel svg{filter:drop-shadow(0 0 6px #19c3ff)}
 .roda-dica{font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.06em;text-shadow:0 1px 3px #000}
+.rg-sec{border-radius:12px;background:var(--gramado-2);border:1px solid var(--gramado-3);padding:0 12px}
+.rg-sec summary{display:flex;align-items:center;gap:10px;padding:11px 0;cursor:pointer;list-style:none}.rg-sec summary::-webkit-details-marker{display:none}
+.rg-sec summary::after{content:"›";margin-left:auto;font-size:20px;color:var(--cal-2);transition:transform .2s}.rg-sec[open] summary::after{transform:rotate(90deg)}
+.rg-sec summary span{font-size:20px}.rg-sec ul{margin:0 0 12px;padding-left:18px;font-size:14px;line-height:1.4}.rg-sec li{margin:5px 0}
+.regras{max-height:66vh}
+.cfg-regras{display:flex;align-items:center;gap:12px;width:100%;margin-bottom:10px;padding:14px;border:1.5px solid var(--canario);color:inherit;font:inherit;text-align:left;cursor:pointer}
+.cfg-regras>span:first-child{font-size:28px}.cfg-regras b{display:block;font-size:16px}.cfg-regras small{color:var(--cal-2)}.cfg-regras i{margin-left:auto;font-style:normal;font-size:24px;color:var(--canario)}
 .regras{display:flex;flex-direction:column;gap:10px;max-height:60vh;overflow-y:auto;text-align:left}
 .regras b{color:var(--canario)}.regras p{margin:2px 0 0;font-size:14px}
 .splash.arte::after{background:linear-gradient(180deg,rgba(4,13,51,0) 50%,rgba(4,13,51,.92) 100%)}
@@ -4061,7 +4068,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793657361";
+const VERSAO="1793657883";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4428,7 +4435,6 @@ const MENU_SP=[
  ["sploja","Loja",'<path d="M7 8h13l-2 8H8L6 4H3"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/>'],
  ["carreiras","Carregar jogo",'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'],
  ["novacarreira","Nova carreira",'<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>'],
- ["embreve","Brasileirão Série A",'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',1], // modos que vão entrar no jogo (26/10): só aviso, trancados
  ["embreve","Rumo ao Estrelato",'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',1],
  ["splajustes","Ajustes",'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>'],
  ["splregras","Regras do jogo",'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h7M8 11h7"/>']];
@@ -4445,16 +4451,23 @@ function rodaIniciar(r){
 function somRoleta(){if(!SOM.ctx||SOM.mudo)return;const t=SOM.ctx.currentTime;if(t-(SOM.ultRoleta||-1)<.035)return;SOM.ultRoleta=t;
   if(somArquivo("roleta",false,VOL_BOTAO))return; // sons/roleta.mp3
   ruidoCurto(t,.03,1.6,3000,SOM.fx,2);nota(t,1900+Math.random()*150,.05,"square",.32,SOM.fx,5000)}
+/* regras do jogo (02/11): tudo o que existe no jogo, em seções; abre pela capa e pelas Configurações */
+const REGRAS=[
+ ["🎯","Objetivo",["Você é o dono do clube: cria o time, começa na terceira divisão e leva o clube até a elite do país e às copas continentais (Libertadores ou Champions).","Os primeiros colocados sobem de divisão (no Brasil, os 4 primeiros) e os últimos caem. Subir deixa o elenco um pouco mais forte; cair, um pouco mais fraco."]],
+ ["⚽","Partidas",["Antes da 1ª rodada de cada temporada tem um amistoso de preparação.","Dá para assistir ao vivo (velocidade 1×, 2× e, a partir do nível 20, 3×), pausar, substituir, mudar formação, estilo e posição dos jogadores no campinho. Ou simular sem assistir, pagando uma taxa.","Na partida acontecem VAR, pênaltis, faltas, cartões, acréscimos e pausa para hidratação. No mata-mata, empate vai para os pênaltis: você escolhe os 5 batedores.","Comandos do técnico (modo manual): gritos como atacar ou segurar mudam de verdade a chance de gol, mas cansam os jogadores."]],
+ ["🔋","Energia, lesões e cartões",["A energia cai durante o jogo (quem tem mais Preparo físico cansa menos) e volta a 100% antes de cada partida.","Lesionado fica fora alguns jogos; expulso ou com cartões acumulados fica suspenso."]],
+ ["🏋️","Pontos de treino",["Servem para evoluir os jogadores: cada ponto no atributo principal dá +1 de força (metade disso acima de 85).","Bola Dourada: só em vitória de partida do campeonato (liga). Quanto mais gols, maior a chance: 1 gol = 10% (1 ponto) · 2 gols = 20% (1) · 3 gols = 30% (1) · 4 gols = 30% (2 pontos) · 5 a 7 gols = 50% (2) · 8 ou mais = 50% (3 pontos).","No fim do campeonato, os 3 primeiros também ganham pontos de treino.","Toque na bola para estourar e distribua os pontos em sequência. Também dá para treinar habilidades especiais: cobrador de pênaltis, de faltas, pegador de pênaltis e reflexos."]],
+ ["🛒","Mercado e loja",["A loja renova a cada 2 horas, com jogadores e técnicos. Às vezes aparece uma oportunidade com bom preço ou um craque em destaque de time grande.","Lendas: pagas com cupons dourados ou com muito dinheiro. Têm passivas especiais.","Na janela de transferências são até 3 contratações. Jogador forte pode recusar clube de divisão baixa.","Outros clubes mandam propostas pelos seus jogadores (caixa de entrada ✈️): você vende ou empresta."]],
+ ["📋","Técnicos",["O técnico dá bônus de ataque e defesa ao time todo e acelera a evolução dos jogadores. Cada um tem passivas (efeitos em certas situações do jogo).","Para contratar paga as luvas; trocar de técnico custa 6 meses de salário do atual. Toque em qualquer técnico para ver o perfil completo."]],
+ ["📝","Contratos",["Todo jogador tem data de fim de contrato. Quando vence, o diretor avisa: renove ou venda, senão ele sai de graça no fim da temporada.","Jogadores se aposentam entre 36 e 40 anos."]],
+ ["💰","Dinheiro",["Entram: bilheteria, prêmios, patrocinadores, material esportivo, transmissão de TV e vendas. Saem: salários e custos todo mês.","Se faltar, dá para pegar empréstimo (com juros). Cupons dourados podem ser trocados por dinheiro (e vice-versa) no Câmbio da loja."]],
+ ["🏟️","Estádio e clube",["Amplie e reforme o estádio para ter mais público e renda.","Na aba Clube você edita escudo, uniformes, logos na camisa e vê a sala de troféus. O diretor do clube dá avisos importantes."]],
+ ["⭐","Nível do dono",["Cada partida dá XP: vitória 50, empate 25, derrota 10. São 30 níveis, cada um com prêmio em dinheiro e cupons, e com um título novo (Sonhador, Cartola, Presidente, Lenda…)."]],
+ ["🏆","Conquistas",["Troféus (títulos de campeonato e copas) aparecem um por um na sala de troféus.","Prêmios do jogo, emblemas e selos aparecem uma vez, com o número de vezes embaixo (×2, ×3)."]],
+ ["👑","Ranking",["Todo mundo que joga aparece no Ranking (ícone de pessoas no topo). Toque em alguém para ver o perfil, os troféus e o time, e para jogar um amistoso: contra o computador ou ao vivo, se a pessoa estiver online.","Coroas: vitória 3, empate 1, derrota 0, em qualquer partida oficial. Títulos dão muito mais: Champions 300, Premier League 225, Libertadores 210, LaLiga e Bundesliga 195, Ligue 1 180, Série A e Primera (ARG) 150, Europa League 150, copas nacionais 105 a 120, Sul-Americana 105, segundas divisões 75 a 105, terceiras 45.","Ranking Geral: pontos = coroas (metade), nível do dono (um quarto) e força do time titular (um quarto). As setas ▲▼ mostram quanto você subiu ou desceu desde segunda-feira.","Ranking do Mês: conta só as coroas ganhas no mês e zera todo dia 1. Pódio do mês: 🥇 R$ 3 mi, 100 coroas, 30 cupons e 1000 XP · 🥈 R$ 1,5 mi, 60 coroas, 15 cupons e 600 XP · 🥉 R$ 800 mil, 30 coroas, 8 cupons e 300 XP. O campeão ganha o selo 🏅 Campeão do mês.","Amistoso entre jogadores não vale coroas: rende XP, torcida e transmissão."]],
+ ["💾","Salvar e carreiras",["O jogo salva sozinho neste aparelho. Dá para ter até 3 carreiras. Salve também o arquivo (Ajustes) para não perder a carreira se trocar de celular."]]];
 function modalRegras(){
-  const R=[["Objetivo","Você é o dono do clube: comece na terceira divisão e leve o time até a elite do seu país e às copas continentais."],
-   ["Partidas","Vitória dá mais dinheiro e XP (50), empate 25 e derrota 10. Dá para assistir ao vivo, fazer substituições e mudar a formação, ou simular sem assistir."],
-   ["Energia e lesões","A energia cai durante o jogo, mas volta a 100% antes de cada partida. Jogador lesionado fica fora até se recuperar."],
-   ["Mercado e loja","A loja renova a cada 2 horas. Às vezes aparece uma lenda, paga com cupons dourados ou com muito dinheiro. Na janela de transferências são até 3 contratações."],
-   ["Dinheiro","Bilheteria, prêmios e patrocínio entram no caixa; salários e custos saem todo mês. Se faltar, dá para pegar empréstimo, com juros."],
-   ["Níveis","Cada jogo dá XP. São 30 níveis, cada um com prêmio em dinheiro; nos níveis 10, 20 e 30 você também ganha cupons dourados."],
-   ["Estádio","Na aba Upgrades você amplia o estádio, aumentando o público e a renda."],
-   ["Salvar","O jogo salva sozinho neste aparelho. No fim da temporada, salve também o arquivo (Ajustes) para não perder a carreira."]];
-  modal(`<h3>Regras do jogo</h3><div class="regras">${R.map(([t,d])=>`<div><b>${t}</b><p>${d}</p></div>`).join("")}</div><div class="botoes"><button class="btn prim" data-a="fechar">Entendi</button></div>`);
+  modal(`<h3>📖 Regras do jogo</h3><div class="regras">${REGRAS.map(([ic,t,L],i)=>`<details class="rg-sec"${i===0?" open":""}><summary><span>${ic}</span><b>${t}</b></summary><ul>${L.map(x=>`<li>${x}</li>`).join("")}</ul></details>`).join("")}</div><div class="botoes"><button class="btn prim" data-a="fechar">Entendi</button></div>`);
 }
 function modalAjustesSp(){
   modal(`<h3>Ajustes</h3><div class="secao">
@@ -5885,7 +5898,7 @@ const SENHA_EDITOR="12345";
 let editorOn=false,edSel={grupo:null,clube:null,busca:""};
 try{editorOn=sessionStorage.getItem("fut-editor")==="1"}catch(e){}
 function telaConfig(){
-  let h=`<h2>Configurações</h2><div class="cartao secao">
+  let h=`<h2>Configurações</h2><button class="cartao cfg-regras" data-a="splregras"><span>📖</span><span><b>Regras do jogo</b><small>Como funciona tudo: partidas, treino, mercado, ranking…</small></span><i>›</i></button><div class="cartao secao">
     <div class="linha" style="justify-content:space-between"><span>Trocar de carreira</span><button class="btn mini prim" data-a="carreiras">Minhas carreiras</button></div>
     <div class="linha" style="justify-content:space-between"><span>Vibração (Android)</span><button class="btn mini" data-a="vib">${VIB_ON?"Desligar vibração":"Ligar vibração"}</button></div>
     ${pushOk()?`<div class="linha" style="justify-content:space-between"><span>Notificações no celular</span><button class="btn mini" data-a="${pushLigado()?"pushoff":"pushon"}">${pushLigado()?"Desligar":"Ligar"}</button></div>`:""}
