@@ -3877,7 +3877,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793643651";
+const VERSAO="1793647990";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4208,12 +4208,12 @@ function telaIntro(sp,c){ // 02/11: tela preta com a logo MEGA e brilho (3 s) an
   sp.classList.add("intro");
   if(CARGA.introT)return;
   sp.innerHTML=`<div class="intro-logo" aria-label="MEGA"><img src="img/mega.png" alt="MEGA"><i class="intro-brilho"></i></div>`;
-  CARGA.introT=setTimeout(()=>somArquivo("intro",false,1),700); // sons/intro.mp3 (quando chegar)
-  setTimeout(()=>{CARGA.intro=false;sp.classList.remove("intro");if(abertura)render()},3000); // corte seco pro carregamento
+  CARGA.introT=setTimeout(()=>somArquivo("carga",false,.9),750); // 02/11: som de transição (sons/carga.mp3) começa junto com o brilho
+  setTimeout(()=>{CARGA.intro=false;sp.classList.remove("intro");if(abertura)render()},4500); // 02/11: +1,5 s parada depois do brilho, depois corte seco pro carregamento
 }
 function cargaTransicao(){ // 02/11: cortina diagonal sobe levando o carregamento, menu entra com zoom e brilho
   const sp=$("#splash"),v=sp.cloneNode(true);v.removeAttribute("id");v.classList.add("carga-sai");v.setAttribute("aria-hidden","true");
-  document.body.appendChild(v);somArquivo("carga",false,.9);{const d=SOM.buf&&SOM.buf.carga?SOM.buf.carga.duration*1000:0;CARGA.musAte=performance.now()+d;setTimeout(()=>{try{somModo(modoDesejado())}catch(e){}},d+50)}CARGA.on=false;if(abertura)render();
+  document.body.appendChild(v);CARGA.musAte=0;setTimeout(()=>{try{somModo(modoDesejado())}catch(e){}},50);CARGA.on=false;if(abertura)render(); // 02/11: som de transição foi pra tela da logo
   sp.classList.add("carga-entra");setTimeout(()=>{v.remove();sp.classList.remove("carga-entra")},800);
 }
 function telaCarga(sp,c){
