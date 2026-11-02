@@ -1031,14 +1031,9 @@ nav.abas button{font-size:11px}
 @media (min-aspect-ratio:3/4){.splash.arte img,.splash.arte .capa-video{object-fit:contain}}
 .splash.arte img.capa-logo{inset:auto;top:calc(17vh - 60px + env(safe-area-inset-top,0px));left:50%;width:min(70vw,34vh,360px);height:auto;transform:translateX(calc(-50% + 23px));object-fit:fill;z-index:1;filter:drop-shadow(0 4px 14px rgba(0,0,0,.6))}
 .splash.arte{padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}
-/* tela de carregamento (29/10): capa + degradê azul escuro embaixo, embaixadinha, frase e barra */
+/* tela de carregamento (29/10): capa + degradê azul escuro embaixo, frase e barra */
 .splash.arte.carga::after{background:linear-gradient(180deg,rgba(3,10,40,0) 42%,rgba(3,10,40,.75) 62%,#030a28 82%,#020719 100%)}
 .carga-box{position:relative;z-index:2;width:min(86vw,420px);margin:0 auto calc(28px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
-.carga-box svg.emb{width:124px;height:142px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.6))}
-.emb .bola{animation:embBola .9s cubic-bezier(.3,0,.7,1) infinite}
-.emb .perna{transform-origin:50px 66px;animation:embPerna .9s ease-in-out infinite}
-@keyframes embBola{0%,100%{transform:translateY(0)}50%{transform:translateY(-46px)}}
-@keyframes embPerna{0%,100%{transform:rotate(-38deg)}40%,60%{transform:rotate(0deg)}}
 .carga-frase{min-height:22px;margin:6px 0 -6px;font-size:15px;font-weight:600;color:#e8f4ff;text-shadow:0 1px 4px #000;transition:opacity .35s}
 .carga-frase.some{opacity:0}
 .carga-barra{width:calc(100% + 38px);max-width:96vw;height:18px;border-radius:9px;background:rgba(255,255,255,.14);overflow:hidden}
@@ -3862,7 +3857,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793312098";
+const VERSAO="1793627473";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4192,15 +4187,6 @@ function telaCarga(sp,c){
   if(!CARGA.t0){CARGA.t0=performance.now();CARGA.ordem=frasesCarga(c)}
   sp.innerHTML=`${typeof ARTE_CAPA!=="undefined"?`<img class="capa-fundo" src="img/capa.jpg" alt=""><img src="img/capa.jpg" alt="Capa do FUT Master">${typeof LOGO_CAPA!=="undefined"?`<img class="capa-logo" src="${LOGO_CAPA}" alt="FUT Master 26">`:""}`:""}
   <div class="carga-box" role="progressbar" aria-label="Carregando" aria-valuemin="0" aria-valuemax="100">
-    <svg class="emb" viewBox="0 0 100 115" aria-hidden="true">
-      <ellipse cx="52" cy="104" rx="26" ry="4" fill="rgba(0,0,0,.45)"/>
-      <circle cx="50" cy="22" r="9" fill="#f1c9a5"/><path d="M41 19a9 9 0 0 1 18 0c-3-3-6-4-9-4s-6 1-9 4z" fill="#2a1a10"/>
-      <path d="M38 36q12-6 24 0l-2 26H40z" fill="#19c3ff"/><path d="M38 36l-8 18M62 36l9 16" stroke="#19c3ff" stroke-width="6" stroke-linecap="round"/>
-      <path d="M40 60h20v9H40z" fill="#0a2a6b"/>
-      <path d="M47 68l-4 33" stroke="#f1c9a5" stroke-width="6" stroke-linecap="round"/><path d="M38 102h8" stroke="#111" stroke-width="5" stroke-linecap="round"/>
-      <g class="perna"><path d="M50 66v30" stroke="#f1c9a5" stroke-width="6" stroke-linecap="round"/><path d="M50 98h9" stroke="#111" stroke-width="5" stroke-linecap="round"/></g>
-      <g class="bola"><circle cx="71" cy="82" r="6.5" fill="#fff" stroke="#222" stroke-width="1"/><path d="M71 78.5l3 2.2-1.1 3.4h-3.8l-1.1-3.4z" fill="#222"/></g>
-    </svg>
     <div class="carga-frase">${esc(CARGA.ordem[CARGA.fi%CARGA.ordem.length])}</div>
     <div class="carga-barra"><i></i></div>
     <div class="carga-pct">0%</div>
