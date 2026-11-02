@@ -2922,10 +2922,12 @@ function perfilAmg(){const c=G.clubs[G.user.club],ps=jogadoresDo(c.id).sort((a,b
     tec:G.tec?{n:G.tec.n,q:G.tec.q}:null,xi:(G.user.lineup||[]).map(id=>ps.findIndex(p=>p.id===id)),jog:ps.map(p=>[p.n,p.pos,p.age,p.ov]),nivel:perfil().nivel})}
 /* ranking (02/11): todos os jogadores num grupo só, pontuação = média de nível, títulos e força */
 function forcaXI(){const L=(G.user.lineup||[]).map(id=>G.players[id]).filter(Boolean);const T=L.length>=11?L:jogadoresDo(G.user.club).sort((a,b)=>b.ov-a.ov).slice(0,11);return T.length?Math.round(T.reduce((a,p)=>a+p.ov,0)/T.length):0}
-function pontosTitulo(t){const P=pais(),L=P.ligas||[],nom=Object.values(COPAS),nac=Object.values(COPA_NAC);
-  // taças (Carlos, 02/11): Série A 10, continental 10, copa nacional 7, 2ª continental 6, Série B 5, Série C 3
-  if(L[0]&&t.startsWith(L[0]+" "))return 10;if(nom.some(c=>t.startsWith(c.main+" ")))return 10;if(nom.some(c=>t.startsWith(c.sec+" ")))return 6;if(nac.some(c=>t.startsWith(c+" ")))return 7;
-  if(L[1]&&t.startsWith(L[1]+" "))return 5;if(L[2]&&t.startsWith(L[2]+" "))return 3;return 3}
+// taças por título (Carlos, 02/11): pela força do campeonato, Champions = 100
+const TACAS={BRA:[50,25,15],ARG:[50,25,15],ENG:[75,35,25],ESP:[65,30,15],GER:[65,30,15],FRA:[60,25,15]};
+const TACAS_COPA={"Champions League":100,"Libertadores":70,"Europa League":50,"Sul-Americana":35,"FA Cup":40,"Copa del Rey":40,"DFB-Pokal":40,"Coupe de France":40,"Copa do Brasil":35,"Copa Argentina":35};
+const TACAS_MAX=300; // 300 taças = nota máxima no ranking
+function pontosTitulo(t){for(const [n,v] of Object.entries(TACAS_COPA))if(t.startsWith(n+" "))return v;
+  for(const [k,v] of Object.entries(TACAS)){const L=(PAISES[k]||{}).ligas||[];for(let i=0;i<3;i++)if(L[i]&&t.startsWith(L[i]+" "))return v[i]}return 15}
 function fotoMini(src){return new Promise(ok=>{const im=new Image();im.onload=()=>{const cv=document.createElement("canvas"),T=96;cv.width=cv.height=T;const s=Math.min(im.width,im.height);
   cv.getContext("2d").drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,T,T);try{ok(cv.toDataURL("image/jpeg",.75))}catch(e){ok("")}};im.onerror=()=>ok("");im.src=src})}
 async function avRanking(){const a=G&&(perfil().avatar||G.user.avatar)||"";if(!a||a.startsWith("a:"))return a;
@@ -2961,7 +2963,7 @@ function modalAmigos(soAtualiza){
     <small class="rk-tags"><span>Nível ${a.nivel}</span><span>🏆 ${a.tp} taça${a.tp===1?"":"s"}</span><span>Força ${a.forca||"–"}</span></small></span>
     <span class="rk-pts"><b class="num">${Math.round(a.pts)}</b><small>pts</small></span></button>`).join("");
   else corpo+=`<p class="muted">${AMG.ok===false?"Sem conexão com o servidor. Confira a internet.":"Carregando o ranking..."}</p>`;
-  modal(`<div class="amg-folha rk-folha"><h3>${ICO_AMIGOS} Ranking</h3><p class="muted peq rk-expl">Todo mundo que joga o FUT Master. Pontos: <b>taças</b> (metade), <b>nível</b> e <b>força do time</b>. Série A vale 10 taças, Série B 5, Série C 3. Toque em alguém para ver o perfil e jogar.</p><div class="amg-lista">${corpo}</div><div class="botoes"><button class="btn" data-a="fechar">Fechar</button></div></div>`);
+  modal(`<div class="amg-folha rk-folha"><h3>${ICO_AMIGOS} Ranking</h3><p class="muted peq rk-expl">Todo mundo que joga o FUT Master. Pontos: <b>taças</b> (metade), <b>nível</b> e <b>força do time</b>. Champions vale 100 taças, Série A 50, Série B 25, Série C 15. Toque em alguém para ver o perfil e jogar.</p><div class="amg-lista">${corpo}</div><div class="botoes"><button class="btn" data-a="fechar">Fechar</button></div></div>`);
   const b=document.querySelector(".amg-btn");if(b)b.innerHTML=ICO_AMIGOS+amgBadge()}
 async function amgBuscar(){const i=$("#amg-q"),q=(i?i.value:AMG.q).trim();AMG.q=q;if(q.replace(/^#/,"").length<2){toastErro("Digite o ID ou pelo menos 2 letras do nome.");return}
   AMG.busca="...";modalAmigos(true);const j=await amgPost("buscar",{q}).catch(()=>({erro:1}));AMG.busca=j.lista||[];if(j.erro)toastErro("Sem conexão com o servidor de amigos.");if(document.querySelector(".amg-folha"))modalAmigos(true)}
@@ -3916,7 +3918,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793649379";
+const VERSAO="1793650954";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
