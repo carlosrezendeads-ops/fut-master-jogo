@@ -1463,6 +1463,7 @@ const MANUT=false;
 (function(){try{const R="R1";if(localStorage.getItem("fut-reset")===R)return;
   ["rumo-serie-a-v2","fut-criacao","fut-master-backup","fut-perfil","fut-conta","fut-carreiras","fut-rk-acima","fut-nivmax","fut-amg-av"].forEach(k=>localStorage.removeItem(k));
   try{indexedDB.deleteDatabase("fut-carreiras")}catch(e){}localStorage.setItem("fut-reset",R)}catch(e){}})();
+const ERA="R1"; // 02/11: só abre carreira criada depois do recomeço (save/arquivo antigo é recusado)
 /*ENGINE START*/
 const PAISES={
 BRA:{nome:"Brasil",moeda:"R$",cont:"SA",k:4,ligas:["Série A","Série B","Série C"],quarta:"Série D",
@@ -1659,7 +1660,7 @@ function contrasteHex(hex){const n=parseInt(hex.slice(1),16),r=n>>16,g=n>>8&255,
 
 function novoJogo(opts){
   const P=PAISES[opts.pais];tocou();
-  G={v:2,amistoso:"pendente",nextId:1,country:opts.pais,year:2026,clubs:{},players:{},tiers:[[],[],[]],pool:[],foreign:[],
+  G={v:2,era:ERA,amistoso:"pendente",nextId:1,country:opts.pais,year:2026,clubs:{},players:{},tiers:[[],[],[]],pool:[],foreign:[],
      fix:[],res:[],st:{},tierBase:[],econ:[],cal:[],ev:0,fase:"pre",
      user:{},inbox:[],history:[],titles:[],last:null,lastFin:null,over:null,seasonEnd:null,cup:null,nextCup:null,
      janela:null,patro:null,ofertasPatro:null,prevTable:null};
@@ -4097,7 +4098,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793662765";
+const VERSAO="1793662883";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -4144,7 +4145,7 @@ document.addEventListener("visibilitychange",()=>{if(document.hidden)pushAgendar
 // modo offline (só no site publicado): sw.js guarda os arquivos para jogar sem internet
 if(!VERSAO.startsWith("__")&&"serviceWorker" in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register("sw.js").catch(()=>{});
 setInterval(checarVersao,5*60*1000);setTimeout(checarVersao,0);
-function carregar(){try{const s=localStorage.getItem(CHAVE);if(s){const g=JSON.parse(s);if(g&&g.v===2){G=migrar(g);nivelMax();return true}}}catch(e){}return false}
+function carregar(){try{const s=localStorage.getItem(CHAVE);if(s){const g=JSON.parse(s);if(g&&g.v===2&&g.era===ERA){G=migrar(g);nivelMax();return true}}}catch(e){}return false}
 function toast(t){document.querySelectorAll(".toast").forEach(x=>x.remove());const d=document.createElement("div");d.className="toast";d.setAttribute("role","status");d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2800)}
 
 /* ---------- escudo e uniforme ---------- */
@@ -4559,6 +4560,7 @@ function lerArquivo(file){
   const fr=new FileReader();
   fr.onload=()=>{
     try{const o=JSON.parse(fr.result);const g=o&&o.G?o.G:o;if(!g||!g.clubs||!g.user||g.v!==2)throw 0;
+      if(g.era!==ERA){aviso("Arquivo antigo","Esse arquivo é de uma versão antiga do FUT Master, de antes do recomeço do jogo. Só dá para carregar carreiras criadas a partir de agora.");return}
       const abre=()=>{pararTimer();G=migrar(g);salvar();fecharModal();abertura=false;aba="inicio";render();toast(`Carreira carregada: ${G.clubs[G.user.club].name}, ${G.year}.`)};
       if(G&&g.carreiraId!==G.carreiraId){if(!podeTrocar())return;if(totalCars()>=MAX_CARS){toastErro(`Já tem ${MAX_CARS} carreiras neste aparelho. Apague uma antes.`);return}guardarAtual().then(abre).catch(()=>toastErro("Não deu para guardar a carreira atual."))}else abre()}
     catch(e){toastErro("Esse arquivo não é um save do FUT Master.")}
