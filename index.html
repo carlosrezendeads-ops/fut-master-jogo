@@ -483,7 +483,7 @@ nav.abas[hidden]{display:none}
 .precos-lenda{display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap}.precos-lenda i{font-style:normal;font-size:12px;color:#5a3d00;font-weight:700}
 .tec-acao{display:flex;flex-direction:column;align-items:center;gap:6px}
 .tec-preco{display:flex;flex-direction:column;align-items:center;gap:2px}.tec-preco small{font-size:10.5px;color:var(--cal-2)}
-.tec-card[data-a="tecver"]{cursor:pointer}.tec-ver{font-size:12px;font-weight:700;color:#7fd3ff;margin-top:2px}
+.tec-card[data-a="tecver"]{cursor:pointer}.tec-ver{display:block;font-size:12px;font-weight:700;color:#7fd3ff;margin-top:2px}
 .tl-bt .btn[disabled]{opacity:.9;filter:none}
 .tp-topo{display:flex;align-items:center;gap:14px}.tp-topo h3{margin:0}.tp-topo small{color:var(--cal-2);font-weight:700}
 .tp-folha.lenda .tp-topo small{color:#ffd23f}
@@ -2846,12 +2846,13 @@ function noticiasMundo(t,r,qtd,usados){
 }
 function nivelTec(q){return q>=80?"Série A":q>=70?"Série B":"Série C"}
 function listaTec(){const E=G.tecEdit||{};return TECNICOS[G.country].split(",").map(s=>{const [n,q]=s.split("|");return {n,q:E[n]&&E[n].q!=null?E[n].q:+q}})}
+const LUVAS_TEC=12; // 02/11: luvas = 12 salários (antes 4; técnico estava barato demais perto de jogador)
 function gerarTecnicos(n){
   const L=listaTec().filter(t=>!G.tec||t.n!==G.tec.n);n=n||2;
   let sel;
   if(n===1)sel=[pick(L)];
   else sel=[pick(L.filter(t=>t.q>=78))||pick(L),pick(L.filter(t=>t.q>=64&&t.q<78))||pick(L)];
-  return sel.map(t=>{const sal=Math.round(salarioDe(t.q)*1.5*10)/10;return {...t,sal,luvas:Math.round(sal*4)}});
+  return sel.map(t=>{const sal=Math.round(salarioDe(t.q)*1.5*10)/10;return {...t,sal,luvas:Math.round(sal*LUVAS_TEC)}});
 }
 function contratarTec(i,fonte){
   const lista=fonte==="d"?(mercadoDia()?diario().tec:null):(janelaAberta()?G.tecCand:null);
@@ -3473,14 +3474,14 @@ function jogadorExterior(){const b=G.tierBase[minhaSerie()],outros=Object.keys(P
 function tecExterior(){const k=pick(Object.keys(PAISES).filter(x=>x!==G.country)),L=(TECNICOS[k]||"").split(",").filter(Boolean).map(x=>{const [n,q]=x.split("|");return {n,q:+q}});
   const i=ri(0,L.length-1),t=L[i];if(!t||(G.tec&&G.tec.n===t.n))return null;
   const clubes=PAISES[k].t.flat().map(parseClube).sort((a,b)=>b.rating-a.rating),cl=clubes[Math.min(i,clubes.length-1)]; // time atual: mesma posição no ranking do país
-  const sal=Math.round(salarioDe(t.q)*1.5*10)/10;return {...t,sal,luvas:Math.round(sal*4),clube:{name:cl.name,pais:k,c1:cl.c1,c2:cl.c2}}}
+  const sal=Math.round(salarioDe(t.q)*1.5*10)/10;return {...t,sal,luvas:Math.round(sal*LUVAS_TEC),clube:{name:cl.name,pais:k,c1:cl.c1,c2:cl.c2}}}
 /* time atual (escudo + nome) nos cards */
 function escudoMini(c,px){return escudoReal(c,px)||`<span class="esc-mini" style="width:${px}px;height:${px}px;background:linear-gradient(135deg,${c.c1||"#888"} 50%,${c.c2||"#fff"} 50%)"></span>`}
 function timeJog(p){const c=p.club!=null&&G.clubs[p.club];return `<span class="time-of">${c?`${c.user?escudoDe(c,16):marcaDe(c,16)}<b>${esc(c.name)}</b>`:"<b>Sem clube</b>"}</span>`}
 /* último técnico demitido (que ainda está sem clube e não foi oferecido) vira oferta na loja do dia */
 function tecDemitidoLoja(){const emp=tecEmpregados();G.tecOfertados=G.tecOfertados||[];
   const d=(G.tecDesemp||[]).slice().reverse().find(t=>t.ex&&!emp.has(t.n)&&!G.tecOfertados.includes(t.n)&&(!G.tec||G.tec.n!==t.n));if(!d)return null;
-  G.tecOfertados.push(d.n);G.tecOfertados=G.tecOfertados.slice(-30);const sal=Math.round(salarioDe(d.q)*1.5*10)/10;return {n:d.n,q:d.q,sal,luvas:Math.round(sal*4),ex:d.ex}}
+  G.tecOfertados.push(d.n);G.tecOfertados=G.tecOfertados.slice(-30);const sal=Math.round(salarioDe(d.q)*1.5*10)/10;return {n:d.n,q:d.q,sal,luvas:Math.round(sal*LUVAS_TEC),ex:d.ex}}
 function timeTec(t){const c=t.clube||Object.values(G.clubs).find(x=>!x.user&&x.tecIA&&x.tecIA.n===t.n);
   return `<span class="time-of">${c?`${G.clubs[c.id]?marcaDe(c,16):escudoMini(c,16)}<b>${esc(c.name)}</b>${c.pais&&c.pais!==G.country?` <small class="muted">· ${esc(PAIS_NOME[c.pais]||"")}</small>`:""}`:`<b>Sem clube</b>${t.ex?` <small class="muted">· demitido do ${esc(t.ex)}</small>`:""}`}</span>`}
 
@@ -4060,7 +4061,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793654798";
+const VERSAO="1793655343";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -6531,7 +6532,7 @@ function destaques(){
 function telaTecnicos(){
   const ab=janelaAberta(),t=G.tec;
   let h=`<h2>Mercado</h2><div class="cartao secao"><div class="seg" role="group">${[["pais",pais().nome],["fora","Exterior"],["livres","Sem clube"],["tec","Técnicos"],["lendas","Lendas"]].map(([k,x])=>`<button data-a="morig" data-v="${k}" aria-pressed="${merc.orig===k}">${x}</button>`).join("")}</div></div>`;
-  h+=`<h2>Técnico atual</h2><div class="cartao tec-card">${tecFoto(t.n,t.q)}<div class="nm"><b>${esc(t.n)}</b><span>${t.interino?"Interino, sem custo":`${esc(nomeLiga(G.clubs[G.user.club].tier))} · ${esc(G.clubs[G.user.club].name)} · ${dinheiro(t.sal)}/mês`}</span><span>Efeito no time: ${bonusTec()>=0?"+":""}${bonusTec().toFixed(1)} em ataque e defesa · evolução dos jogadores ${Math.round((.55+t.q/150)*100)}%</span></div></div>`;
+  h+=`<h2>Técnico atual</h2>${cartaoTecClube(G.user.club)}`;
   const dia=mercadoDia(),L=ab?(G.tecCand||[]):dia?diario().tec:[];
   h+=`<h2>${ab?"Técnicos da janela":"Técnico do dia"}</h2><p class="muted peq" style="margin:-4px 0 8px">${ab?"Dois técnicos disponíveis nesta janela.":dia?"Um técnico novo a cada renovação da loja (2 horas).":"Nenhum técnico no mercado agora."} Contrate pagando as luvas. Trocar de técnico custa 6 meses de salário do atual.</p>`;
   h+=`<div class="secao">${L.map((c,i)=>cartaoTecOferta(c,i,ab?"j":"d",true)).join("")||'<p class="muted">Nenhum técnico disponível agora.</p>'}</div>`;
