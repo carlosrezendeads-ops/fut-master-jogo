@@ -1033,6 +1033,7 @@ nav.abas button{font-size:11px}
 .splash.arte{padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}
 /* tela de carregamento (29/10): capa + degradê azul escuro embaixo, frase e barra */
 .splash.arte.carga::after{background:linear-gradient(180deg,rgba(3,10,40,0) 42%,rgba(3,10,40,.75) 62%,#030a28 82%,#020719 100%)}
+.splash.arte.carga img.capa-logo{top:calc(3vh + env(safe-area-inset-top,0px));width:min(56vw,26vh,300px)}
 .carga-box{position:relative;z-index:2;width:min(86vw,420px);margin:0 auto calc(28px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
 .carga-frase{min-height:22px;margin:6px 0 -6px;font-size:15px;font-weight:600;color:#e8f4ff;text-shadow:0 1px 4px #000;transition:opacity .35s}
 .carga-frase.some{opacity:0}
@@ -3857,7 +3858,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793627473";
+const VERSAO="1793633297";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4185,7 +4186,7 @@ function frasesCarga(c){
 }
 function telaCarga(sp,c){
   if(!CARGA.t0){CARGA.t0=performance.now();CARGA.ordem=frasesCarga(c)}
-  sp.innerHTML=`${typeof ARTE_CAPA!=="undefined"?`<img class="capa-fundo" src="img/capa.jpg" alt=""><img src="img/capa.jpg" alt="Capa do FUT Master">${typeof LOGO_CAPA!=="undefined"?`<img class="capa-logo" src="${LOGO_CAPA}" alt="FUT Master 26">`:""}`:""}
+  sp.innerHTML=`${typeof ARTE_CAPA!=="undefined"?`<img class="capa-fundo" src="img/carga.jpg" alt=""><img src="img/carga.jpg" alt="Ronaldo e Messi">${typeof LOGO_CAPA!=="undefined"?`<img class="capa-logo" src="${LOGO_CAPA}" alt="FUT Master 26">`:""}`:""}
   <div class="carga-box" role="progressbar" aria-label="Carregando" aria-valuemin="0" aria-valuemax="100">
     <div class="carga-frase">${esc(CARGA.ordem[CARGA.fi%CARGA.ordem.length])}</div>
     <div class="carga-barra"><i></i></div>
