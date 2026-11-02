@@ -467,6 +467,23 @@ nav.abas[hidden]{display:none}
 .msg-btn{position:relative}
 .amg-id{display:flex;align-items:center;gap:8px;margin:4px 0 10px;flex-wrap:wrap}.amg-id b{color:var(--canario);letter-spacing:.06em}
 .amg-folha h3 svg{width:22px;height:22px;vertical-align:-4px}.amg-lista{display:grid;gap:8px;max-height:58vh;overflow:auto;margin:10px 0 6px}
+.pm-card{position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;width:100%;margin:2px 0 10px;padding:12px 14px;border-radius:14px;border:1.5px solid #ffd23f;background:linear-gradient(120deg,#5a3d00,#b8860b 45%,#5a3d00);color:#fff;font:inherit;text-align:left;cursor:pointer;animation:pmPisca 1.6s ease-in-out infinite}
+.pm-card b{display:block;font-size:16px;color:#fff3b0}.pm-card small{color:#ffe9a6;font-size:12px}
+.pm-ico{font-size:30px}.pm-seta{margin-left:auto;font-size:26px;color:#ffe28a}
+.pm-brilho{position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.45) 50%,transparent 70%);transform:translateX(-100%);animation:pmVarre 2.2s ease-in-out infinite}
+@keyframes pmPisca{0%,100%{box-shadow:0 0 6px rgba(255,210,63,.4)}50%{box-shadow:0 0 22px rgba(255,210,63,.95)}}
+@keyframes pmVarre{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
+.pm-folha h3{margin-top:0}
+.pm-nivel{margin-top:10px;padding:10px;border-radius:14px;border:1.5px solid rgba(255,210,63,.6);background:linear-gradient(180deg,rgba(255,210,63,.16),rgba(255,255,255,.02))}
+.pm-nivel.p2{border-color:rgba(223,230,240,.55);background:linear-gradient(180deg,rgba(223,230,240,.14),rgba(255,255,255,.02))}
+.pm-nivel.p3{border-color:rgba(224,153,90,.6);background:linear-gradient(180deg,rgba(224,153,90,.16),rgba(255,255,255,.02))}
+.pm-cab{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}.pm-med{font-size:26px;align-self:center}.pm-cab b{font-size:18px}.pm-cab small{color:var(--cal-2)}
+.pm-itens{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pm-it{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:0 8px;padding:8px;border-radius:10px;background:rgba(0,0,0,.22)}
+.pm-it>:first-child{grid-row:1/3}.pm-it b{font-size:16px}.pm-it small{font-size:11px;color:var(--cal-2)}
+.pm-it .ico-grana{width:40px;height:30px}.pm-emo{font-size:26px;font-style:normal}
+.ico-xp{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#8fe0ff,#1f7fd6);color:#fff;font-weight:900;font-size:13px;border:2px solid #cdeeff;box-shadow:0 0 8px rgba(80,180,255,.6)}
+.pd-ganhos span{display:flex;align-items:center;justify-content:center;gap:6px}.pd-ganhos .ico-grana{width:34px;height:26px}.pd-ganhos .ico-xp{width:26px;height:26px;font-size:10px}
 .podio-box{margin:4px 0 12px;padding:10px;border-radius:14px;background:linear-gradient(180deg,rgba(255,210,63,.12),rgba(255,255,255,.02));border:1px solid rgba(255,210,63,.35)}
 .podio-tit{display:block;text-align:center;margin-bottom:8px;color:#ffe28a}
 .podio{display:grid;grid-template-columns:1fr 1.15fr 1fr;align-items:end;gap:6px}
@@ -2989,7 +3006,16 @@ function podioHTML(L,titulo){if(!L.length)return "";const por=[L[1],L[0],L[2]];
   return `<div class="podio-box"><b class="podio-tit">${titulo}</b><div class="podio">${por.map((x,k)=>{if(!x)return `<div class="pd-col vazio"></div>`;const p=x.pos;
     return `<button class="pd-col p${p}" data-a="amgver" data-v="${x.id}"><span class="pd-foto">${rkFoto(x.av,x.nome,p===1?70:56)}<i>${MEDALHA[p]}</i></span><b>${esc(x.nome)}</b><span class="pd-degrau"><em>${p}º</em></span></button>`}).join("")}</div>
     <div class="pd-cards">${L.map(x=>`<button class="pd-card p${x.pos}" data-a="amgver" data-v="${x.id}">${rkFoto(x.av,x.nome,48)}<span class="pd-info"><b>${MEDALHA[x.pos]} ${x.pos===1?"Campeão":x.pos+"º lugar"} · ${esc(x.nome)}</b><small>${esc(x.clube||"")}</small><span class="pd-st">${rkStats(x.st)}</span></span></button>`).join("")}</div>
-    <p class="muted peq pd-prem">Prêmio no fim do mês: 🥇 ${dinheiro(PREMIO_MES[1].din)}, ${PREMIO_MES[1].coroas} coroas, ${PREMIO_MES[1].cup} cupons e ${PREMIO_MES[1].xp} XP · 🥈 ${dinheiro(PREMIO_MES[2].din)}… · 🥉 ${dinheiro(PREMIO_MES[3].din)}…</p></div>`}
+</div>`}
+/* card piscando dos prêmios do mês → quadro detalhado com ícones */
+const ICO_XP='<span class="ico-xp">XP</span>';
+function cardPremiosMes(){return `<button class="pm-card" data-a="rkpremios"><span class="pm-brilho"></span><span class="pm-ico">🎁</span><span><b>Prêmios do mês</b><small>Veja o que ganham o 1º, o 2º e o 3º lugar</small></span><span class="pm-seta">›</span></button>`}
+function modalPremiosMes(){const nomes=["","Campeão do mês","Vice-campeão","Terceiro do pódio"];
+  modal(`<div class="pm-folha"><h3>🎁 Prêmios do mês</h3><p class="muted peq">No dia 1 de cada mês, os 3 primeiros do ranking do mês recebem o prêmio na hora em que abrirem o jogo.</p>
+    ${[1,2,3].map(p=>{const r=PREMIO_MES[p];return `<div class="pm-nivel p${p}"><div class="pm-cab"><span class="pm-med">${MEDALHA[p]}</span><b>${p}º lugar</b><small>${nomes[p]}</small></div>
+      <div class="pm-itens"><div class="pm-it">${ICO_GRANA(3)}<b class="num">${dinheiro(r.din)}</b><small>em dinheiro</small></div><div class="pm-it"><span class="pm-emo">👑</span><b class="num">${r.coroas}</b><small>coroas no ranking</small></div>
+      <div class="pm-it">${icoCupons(3)}<b class="num">${r.cup}</b><small>cupons dourados</small></div><div class="pm-it">${ICO_XP}<b class="num">${r.xp}</b><small>de experiência</small></div></div></div>`}).join("")}
+    <div class="botoes"><button class="btn" data-a="amigos">Voltar ao ranking</button></div></div>`)}
 function premioPodio(){const P=AMG.podio,c=conta();if(!P||!c||!G||G.live||abertura||document.querySelector(".veu"))return;
   const eu=(P.lista||[]).find(x=>x.id===c.id);if(!eu)return;const PF=perfil();PF.podioPago=PF.podioPago||{};if(PF.podioPago[P.mes])return;
   const pr=PREMIO_MES[eu.pos];if(!pr)return;PF.podioPago[P.mes]=eu.pos;
@@ -2997,7 +3023,7 @@ function premioPodio(){const P=AMG.podio,c=conta();if(!P||!c||!G||G.live||abertu
   try{confete()}catch(e){}
   modal(`<div class="aviso-box pd-premio"><div class="pd-premio-foto">${rkFoto(eu.av,eu.nome,90)}<i>${MEDALHA[eu.pos]}</i></div><b>${eu.pos===1?"Você é o CAMPEÃO do mês!":`Você ficou em ${eu.pos}º no ranking do mês!`}</b><p class="muted">${mesTxt(P.mes)}</p>
     <div class="pd-st">${rkStats(eu.st)}</div>
-    <div class="pd-ganhos"><span>💰 ${dinheiro(pr.din)}</span><span>👑 ${pr.coroas} coroas</span><span>${cupomTxt(pr.cup)}</span><span>⭐ ${pr.xp} XP</span></div>
+    <div class="pd-ganhos"><span>${ICO_GRANA(3)} ${dinheiro(pr.din)}</span><span><i class="pm-emo">👑</i> ${pr.coroas} coroas</span><span>${icoCupons(3)} ${pr.cup} cupons</span><span>${ICO_XP} ${pr.xp} XP</span></div>
     <div class="botoes"><button class="btn prim" data-a="fechar">Receber</button></div></div>`);
   if(xp&&xp.nivel>xp.antes)setTimeout(()=>{try{avisoNivel()}catch(e){}},400);amgSync(true)}
 function rkSeta(n){return !n?`<i class="rk-seta igual">–</i>`:n>0?`<i class="rk-seta sobe">▲${n}</i>`:`<i class="rk-seta desce">▼${-n}</i>`}
@@ -3028,6 +3054,7 @@ function modalAmigos(soAtualiza){
   corpo+=av.map(a=>`<div class="amg-aviso${a.n>v?" nova":""}">⚽ <b>${esc(a.nome||"Alguém")}</b> jogou contra você offline.<small>${haQuanto(a.t)}</small></div>`).join("");
   if(av.length)try{localStorage.setItem("fut-amg-av",String(Math.max(...av.map(a=>a.n))))}catch(e){}
   const mesAt=mesTxt(new Date(Date.now()-3*36e5).toISOString().slice(0,7));
+  if(ab==="mes")corpo+=cardPremiosMes();
   if(ab==="mes"&&R){const top=R.filter(x=>x.mtp>0).slice(0,3).map((x,i)=>({...x,pos:i+1,st:x.mst}));corpo+=podioHTML(top,`🏆 Pódio de ${mesAt} (até agora)`);
     const PA=AMG.podio;if(PA&&PA.lista&&PA.lista.length)corpo+=podioHTML(PA.lista,`🏅 Campeões de ${mesTxt(PA.mes)}`)}
   if(R&&R.length)corpo+=R.map((a,i)=>`<button class="rk-linha${a.eu?" eu":""}${i<3&&(ab==="geral"||a.mtp>0)?" top"+(i+1):""}" data-a="amgver" data-v="${a.id}">
@@ -3995,7 +4022,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793653527";
+const VERSAO="1793653718";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -7532,6 +7559,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "caixa":modalCaixa();return;
     case "amigos":modalAmigos();return;
     case "rkaba":AMG.rkAba=v;modalAmigos(true);return;
+    case "rkpremios":modalPremiosMes();return;
     case "amgaba":AMG.aba=v;AMG.busca=null;modalAmigos(true);if(v==="add"){const i=$("#amg-q");if(i){i.addEventListener("keydown",e=>{if(e.key==="Enter")acao("amgbusca")});i.focus()}}return;
     case "amgbusca":amgBuscar();return;
     case "amgadd":amgAcao("convidar",{para:v},"Convite de amizade enviado!").then(ok=>{if(ok&&AMG.busca&&AMG.busca.map){AMG.busca.forEach(a=>{if(a.id===v)a.rel="enviado"});modalAmigos(true)}});return;
