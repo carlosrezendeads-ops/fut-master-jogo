@@ -1444,7 +1444,7 @@ const MANUT=false;
 <script src="img/kit-homens.js?v=0ed6e386"></script>
 <script src="img/tec-fotos.js?v=fe782a52"></script>
 <script src="dados/elencos.js?v=bb464417"></script>
-<script src="dados/regioes.js?v=de084f1a"></script><script src="dados/pes.js?v=266905da"></script>
+<script src="dados/regioes.js?v=3648a765"></script><script src="dados/pes.js?v=266905da"></script>
 <script src="img/escudos-img.js?v=df90de51"></script>
 <script src="dados/idiomas.js?v=d09cf4d4"></script>
 <script>
@@ -4072,7 +4072,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793659274";
+const VERSAO="1793659538";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -5300,7 +5300,7 @@ function renderCriacao(){
       <span class="pais-desc">Começa na <strong>${P.ligas[2]}</strong><br>Sobe para ${P.ligas[1]} e ${P.ligas[0]}<br>Copa continental: ${COPAS[P.cont].main}</span>
       <span class="pais-ok">${!paisLivre(k)?`🔒 Libera no nível ${PAIS_NIVEL[k]}`:W.pais===k?"Selecionado":"Toque para escolher"}</span></button>`}).join("")}</div>
     <div class="pontos-car">${ks.map(k=>`<i class="${W.pais===k?"on":""}" data-k="${k}"></i>`).join("")}</div>
-    <div class="cid-box"><h2 style="margin:14px 0 2px">Cidade do clube</h2><p class="muted peq" style="margin:0 0 8px">Os times do mesmo ${W.pais==="BRA"?"estado":"região"} serão seus <b>clássicos</b>: vitória vale prêmio triplo.</p>
+    <div class="cid-box"><h2 style="margin:14px 0 2px">Cidade do clube <small class="muted" style="font-size:13px;font-weight:600">(opcional)</small></h2><p class="muted peq" style="margin:0 0 8px">Os times do mesmo ${W.pais==="BRA"?"estado":"região"} serão seus <b>clássicos</b>: vitória vale prêmio triplo. Se não escolher, o jogo sorteia ${W.pais==="BRA"?"um estado":"uma região"} para você.</p>
       <input type="search" id="w-cid" autocomplete="off" placeholder="Digite o nome da cidade" value="${W.cidade&&W.cidade.p===W.pais?esc(W.cidade.txt):""}" oninput="buscaCidade(this.value)">
       <div class="cid-res" id="w-cid-res"></div>${W.cidade&&W.cidade.p===W.pais?`<p class="cid-ok">✓ ${esc(W.cidade.txt)}</p>`:""}</div>`;
   }else if(p===3){
@@ -5353,9 +5353,11 @@ function nivelMax(){let n=1;try{n=+localStorage.getItem("fut-nivmax")||1}catch(e
 const paisLivre=k=>nivelMax()>=(PAIS_NIVEL[k]||1);
 /* cidade do clube (02/11): banco dados/cidades.js (CIDADES, só na criação) e região dos clubes dados/regioes.js (REGIAO_CLUBE) */
 function carregarCidades(cb){if(typeof CIDADES!=="undefined"){cb&&cb();return}if(window._cidCarr){(window._cidCb=window._cidCb||[]).push(cb);return}window._cidCarr=1;window._cidCb=[cb];
-  const sc=document.createElement("script");sc.src="dados/cidades.js?v=b8589b4f";sc.onload=()=>{(window._cidCb||[]).forEach(f=>f&&f())};document.head.appendChild(sc)}
+  const sc=document.createElement("script");sc.src="dados/cidades.js?v=eecbba66";sc.onload=()=>{(window._cidCb||[]).forEach(f=>f&&f())};document.head.appendChild(sc)}
 const semAcento=t=>String(t).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
-function regiaoNome(p,r){return p==="BRA"&&typeof CIDADES!=="undefined"&&CIDADES.BRA.nomes[r]||r}
+function regiaoNome(p,r){if(typeof REGIAO_NOME!=="undefined"&&REGIAO_NOME[p]&&REGIAO_NOME[p][r])return REGIAO_NOME[p][r];if(typeof CIDADES!=="undefined"&&CIDADES[p]){if(p==="BRA")return CIDADES.BRA.nomes[r]||r;const i=CIDADES[p].r.indexOf(r);if(i>=0&&CIDADES[p].rn)return CIDADES[p].rn[i]}return r}
+/* sem cidade escolhida: o jogo sorteia um estado/região que tenha clubes (mais clubes = mais chance) */
+function regiaoSorteada(p){const L=Object.values((typeof REGIAO_CLUBE!=="undefined"&&REGIAO_CLUBE[p])||{});if(!L.length)return null;const r=L[Math.floor(Math.random()*L.length)];return {n:"",r,rn:regiaoNome(p,r)}}
 function buscaCidade(q){const box=$("#w-cid-res");if(!box||!W)return;const t=semAcento(q.trim());if(t.length<2){box.innerHTML="";return}
   carregarCidades(()=>{const D=CIDADES[W.pais];if(!D)return;const pre=[],meio=[];
     for(const [n,ri] of D.c){const k=semAcento(n);if(k.startsWith(t))pre.push([n,ri]);else if(pre.length<10&&k.includes(t))meio.push([n,ri]);if(pre.length>=10)break}
@@ -7368,7 +7370,7 @@ function heroiClube(){
     <div class="hc-linhas">
       <div><small>Estádio</small><b>${esc(estadioDe(c))}</b><span>${c.cap.toLocaleString("pt-BR")} lugares</span></div>
       <div><small>Dono</small><b>${esc(G.user.coach||"—")}</b><span>${temp}ª temporada</span></div>
-      ${G.cidade?(()=>{const n=(G.tiers[c.tier]||[]).filter(id=>classicoCom(G.clubs[id])).length;return `<div><small>Cidade</small><b>${esc(G.cidade.n)}</b><span>${esc(G.cidade.rn)} · ${n} clássico${n===1?"":"s"} na ${esc(nomeLiga(c.tier))}</span></div>`})():rv?`<div data-a="vertime" data-v="${rv.id}" style="cursor:pointer"><small>Maior rival</small><b class="hc-rival">${marcaDe(rv,22)} ${esc(rv.name)}</b><span>Clássico da ${esc(nomeLiga(c.tier))}</span></div>`:""}
+      ${G.cidade?(()=>{const n=(G.tiers[c.tier]||[]).filter(id=>classicoCom(G.clubs[id])).length;return `<div><small>${G.cidade.n?"Cidade":G.country==="BRA"?"Estado":"Região"}</small><b>${esc(G.cidade.n||G.cidade.rn)}</b><span>${esc(G.cidade.rn)} · ${n} clássico${n===1?"":"s"} na ${esc(nomeLiga(c.tier))}</span></div>`})():rv?`<div data-a="vertime" data-v="${rv.id}" style="cursor:pointer"><small>Maior rival</small><b class="hc-rival">${marcaDe(rv,22)} ${esc(rv.name)}</b><span>Clássico da ${esc(nomeLiga(c.tier))}</span></div>`:""}
       <div><small>Técnico</small><b>${esc(G.tec.n)}</b><span>${G.tec.interino?"Interino":"Nível "+nivelTec(G.tec.q)}</span></div>
     </div>
     <div class="hc-unis">${uniformeSVG(c.unis[0],G.patro?G.patro.nome:"",58)}${uniformeSVG(c.unis[1],G.patro?G.patro.nome:"",58)}<small>Uniformes 1 e 2</small></div>
@@ -7541,7 +7543,6 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
         fetch(AMG_URL+"/nomeLivre",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({nome:nm,id:c?c.id:""})}).then(r=>r.json())
           .then(j=>{if(j.livre){W.nomeOk=nm;acao("wseguir")}else toastErro(`O nome "${nm}" já é usado por outro jogador. Escolha outro.`)})
           .catch(()=>{W.nomeOk=nm;acao("wseguir")});return}
-      if(W.passo===2&&!(W.cidade&&W.cidade.p===W.pais)){toastErro("Escolha a cidade do clube.");const i=$("#w-cid");if(i)i.focus();return}
       if(W.passo===2&&!paisLivre(W.pais)){toastErro(`${PAISES[W.pais].nome} libera no nível ${PAIS_NIVEL[W.pais]}. Você está no nível ${nivelMax()}.`);return}
       if(W.passo===3){const e=W.escudo,[u1,u2]=W.unis; // ao chegar no uniforme: 1 = cores do escudo, 2 = invertido (2ª cor predominante)
         [u1,u2].forEach(uniNovo);Object.assign(u1,{camisa:e.c1,detalhe:e.c2,d2:e.c3});aplicarModeloUni(u1,u1.estilo);
@@ -7549,7 +7550,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
       if(W.passo<5){W.passo++;window.scrollTo(0,0);break}
       const sig=(W.sigla||siglaDe(W.nome)).trim().toUpperCase().slice(0,3);
       try{localStorage.removeItem(CHAVE_W)}catch(e){}novoJogo({pais:W.pais,name:W.nome.trim(),short:sig,coach:W.tec.trim()||"Professor",escudo:{...W.escudo},unis:W.unis.map(x=>({...x}))});uniSel=0;
-      G.cidade=W.cidade?{n:W.cidade.n,r:W.cidade.r,rn:W.cidade.rn}:null;{const c=G.clubs[G.user.club];c.estadio=(W.estadio||"").trim()||`Arena ${c.name}`;c.cap=ESTADIO_INICIAL;G.reformas=0;G.cash=caixaFundacao(W.pais)-precoEstadioFund(W.pais);}
+      G.cidade=W.cidade&&W.cidade.p===W.pais?{n:W.cidade.n,r:W.cidade.r,rn:W.cidade.rn}:regiaoSorteada(W.pais);{const c=G.clubs[G.user.club];c.estadio=(W.estadio||"").trim()||`Arena ${c.name}`;c.cap=ESTADIO_INICIAL;G.reformas=0;G.cash=caixaFundacao(W.pais)-precoEstadioFund(W.pais);}
       aba="inicio";W=null;salvar();window.scrollTo(0,0);break;}
     case "wvoltar":guardarW();W.passo--;window.scrollTo(0,0);break;
     case "compraest":guardarW();W.estComprado=true;window.scrollTo(0,0);setTimeout(confete,60);break;

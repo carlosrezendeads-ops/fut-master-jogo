@@ -59,6 +59,19 @@ for cond, L in {
 }.items():
     for d in L: CONDADO[d] = cond
 
+# nomes em português do Brasil (GeoNames alternatenames/<PAIS>.txt, idioma pt); sem versão em pt fica o nome local
+PT = {}
+for cc in ['AR', 'GB', 'ES', 'DE', 'FR', 'AD', 'MC']:
+    f = os.path.join(G, 'alt', cc + '.txt')
+    if not os.path.exists(f): continue
+    for l in open(f, encoding='utf-8'):
+        c = l.rstrip('\n').split('\t')
+        if len(c) < 4 or c[2] not in ('pt', 'pt-BR') or (len(c) > 7 and (c[6] == '1' or c[7] == '1')): continue
+        if c[1] not in PT or (len(c) > 4 and c[4] == '1') or c[2] == 'pt-BR': PT[c[1]] = c[3]
+REG_PT = {'Andalucía': 'Andaluzia', 'Cataluña': 'Catalunha', 'País Vasco': 'País Basco', 'Islas Baleares': 'Ilhas Baleares', 'Canarias': 'Canárias', 'Castilla-La Mancha': 'Castela-Mancha', 'Castilla y León': 'Castela e Leão', 'Aragón': 'Aragão', 'Comunidad Valenciana': 'Comunidade Valenciana', 'Región de Murcia': 'Região de Múrcia', 'Madrid': 'Madri', 'Galicia': 'Galiza', 'Asturias': 'Astúrias', 'Cantabria': 'Cantábria', 'Extremadura': 'Estremadura',
+ 'Bayern': 'Baviera', 'Nordrhein-Westfalen': 'Renânia do Norte-Vestfália', 'Sachsen': 'Saxônia', 'Hessen': 'Hesse', 'Niedersachsen': 'Baixa Saxônia', 'Sachsen-Anhalt': 'Saxônia-Anhalt', 'Thüringen': 'Turíngia', 'Rheinland-Pfalz': 'Renânia-Palatinado', 'Mecklenburg-Vorpommern': 'Meclemburgo-Pomerânia Ocidental', 'Brandenburg': 'Brandemburgo', 'Saarland': 'Sarre', 'Hamburg': 'Hamburgo', 'Berlin': 'Berlim',
+ "Provence-Alpes-Côte d'Azur": 'Provença-Alpes-Costa Azul', 'Auvergne-Rhône-Alpes': 'Auvérnia-Ródano-Alpes', 'Bretagne': 'Bretanha', 'Occitanie': 'Occitânia', 'Normandie': 'Normandia', 'Pays de la Loire': 'Países do Loire', 'Nouvelle-Aquitaine': 'Nova Aquitânia', 'Bourgogne-Franche-Comté': 'Borgonha-Franco-Condado', 'Centre-Val de Loire': 'Centro-Vale do Loire', 'Corse': 'Córsega',
+ 'Greater London': 'Grande Londres', 'Greater Manchester': 'Grande Manchester', 'West Midlands': 'Midlands Ocidentais', 'West Yorkshire': 'Yorkshire Ocidental', 'South Yorkshire': 'Yorkshire do Sul', 'North Yorkshire': 'Yorkshire do Norte', 'East Riding of Yorkshire': 'East Riding (Yorkshire)', 'Cornwall': 'Cornualha', 'Santa Fe': 'Santa Fé', 'Entre Ríos': 'Entre Rios'}
 PAIS = {'AR': 'ARG', 'GB': 'ENG', 'ES': 'ESP', 'DE': 'GER', 'FR': 'FRA', 'AD': 'ESP', 'MC': 'FRA'}
 cid = {k: set() for k in ['BRA', 'ARG', 'ENG', 'ESP', 'GER', 'FRA']}
 POP = {}  # população (GeoNames) para mostrar as maiores cidades primeiro
@@ -66,7 +79,7 @@ for l in open(os.path.join(G, 'cities5000.txt'), encoding='utf-8'):
     c = l.rstrip('\n').split('\t'); cc = c[8]
     if cc == 'BR': POP[('BR', c[1])] = max(POP.get(('BR', c[1]), 0), int(c[14] or 0))
     if cc not in PAIS: continue
-    nome = {'Munich': 'München', 'Nuremberg': 'Nürnberg', 'Dunkirk': 'Dunkerque', 'Cadiz': 'Cádiz'}.get(c[1], c[1])  # nomes locais
+    nome = PT.get(c[0]) or c[1]
     POP[(cc if cc != 'AD' else 'AD', nome)] = max(POP.get((cc, nome), 0), int(c[14] or 0))
     if cc == 'GB':
         if c[10] not in ('ENG', 'WLS'): continue
@@ -95,11 +108,13 @@ for k, S in cid.items():
     idx = {r: i for i, r in enumerate(regs)}
     cc = {'BRA': 'BR', 'ARG': 'AR', 'ENG': 'GB', 'ESP': 'ES', 'GER': 'DE', 'FRA': 'FR'}[k]
     L = sorted(S, key=lambda x: (-POP.get((cc, x[0]), 0), x[0].lower(), x[1]))  # maiores primeiro
-    saida[k] = {'r': regs, 'c': [[n, idx[r]] for n, r in L]}
+    saida[k] = {'r': regs, 'rn': [REG_PT.get(r, r) for r in regs], 'c': [[n, idx[r]] for n, r in L]}
 saida['BRA']['nomes'] = UF
 js = 'const CIDADES=' + json.dumps(saida, ensure_ascii=False, separators=(',', ':')) + ';\n'
 open(os.path.join(AQUI, '..', 'cidades.js'), 'w', encoding='utf-8').write(js)
-open(os.path.join(AQUI, '..', 'regioes.js'), 'w', encoding='utf-8').write('const REGIAO_CLUBE=' + json.dumps(CLUBES, ensure_ascii=False, separators=(',', ':')) + ';\n')
+NOMES_REG = {k: ({r: UF.get(r, r) for r in v['r']} if k == 'BRA' else {r: n for r, n in zip(v['r'], v['rn'])}) for k, v in saida.items()}
+NOME_CLUBE_REG = {k: {r: NOMES_REG[k][r] for r in set(CLUBES[k].values())} for k in CLUBES}
+open(os.path.join(AQUI, '..', 'regioes.js'), 'w', encoding='utf-8').write('const REGIAO_CLUBE=' + json.dumps(CLUBES, ensure_ascii=False, separators=(',', ':')) + ';\nconst REGIAO_NOME=' + json.dumps(NOME_CLUBE_REG, ensure_ascii=False, separators=(',', ':')) + ';\n')
 print({k: len(v['c']) for k, v in saida.items()}, len(js) // 1024, 'KB')
 faltam = {k: [r for r in set(v.values()) if r not in {x for _, x in cid[k]}] for k, v in CLUBES.items()}
 print('regiões de clube sem cidade no banco:', faltam)
