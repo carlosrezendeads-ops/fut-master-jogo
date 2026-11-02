@@ -1134,6 +1134,12 @@ nav.abas button{font-size:11px}
 .selo-breve{font-style:normal;font-family:Archivo,Arial,sans-serif;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#3a2a00;background:linear-gradient(160deg,#ffe27a,#e0a800);padding:2px 7px;border-radius:6px;align-self:flex-start;margin-top:6px;text-shadow:none;box-shadow:0 0 8px rgba(255,200,0,.5)}
 .roda-it.sel svg{filter:drop-shadow(0 0 6px #19c3ff)}
 .roda-dica{font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.06em;text-shadow:0 1px 3px #000}
+.cid-linha{display:flex;gap:8px}.cid-linha input{flex:1;min-width:0}
+.cid-dado{flex:none;white-space:nowrap;padding:0 14px;border-radius:12px;background:linear-gradient(180deg,#ffd23f,#e0a800);color:#2a1d00;font-weight:800}
+.cid-roleta{margin-top:10px;padding:16px 12px;border-radius:14px;text-align:center;background:linear-gradient(180deg,rgba(255,210,63,.18),rgba(10,20,50,.9));border:2px solid rgba(255,210,63,.6);min-height:66px}
+.cid-roleta b{display:block;font-family:var(--f-display);font-size:24px;color:#fff;letter-spacing:.5px}.cid-roleta span{color:#ffe28a;font-size:14px}
+.cid-roleta.parou{animation:cidPara .5s ease-out;box-shadow:0 0 22px rgba(255,210,63,.75)}
+@keyframes cidPara{0%{transform:scale(1.08)}100%{transform:none}}
 .cid-box input{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--gramado-3);background:rgba(4,10,30,.85);color:#fff;font:inherit;font-size:16px}
 .cid-res{display:flex;flex-direction:column;gap:4px;margin-top:6px;max-height:260px;overflow-y:auto}
 .cid-res button{text-align:left;padding:10px 12px;border-radius:10px;border:1px solid var(--gramado-3);background:rgba(10,20,50,.9);color:#dfe8ff;font:inherit;cursor:pointer}.cid-res button b{color:#fff}
@@ -4072,7 +4078,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793659538";
+const VERSAO="1793659687";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -5300,8 +5306,9 @@ function renderCriacao(){
       <span class="pais-desc">Começa na <strong>${P.ligas[2]}</strong><br>Sobe para ${P.ligas[1]} e ${P.ligas[0]}<br>Copa continental: ${COPAS[P.cont].main}</span>
       <span class="pais-ok">${!paisLivre(k)?`🔒 Libera no nível ${PAIS_NIVEL[k]}`:W.pais===k?"Selecionado":"Toque para escolher"}</span></button>`}).join("")}</div>
     <div class="pontos-car">${ks.map(k=>`<i class="${W.pais===k?"on":""}" data-k="${k}"></i>`).join("")}</div>
-    <div class="cid-box"><h2 style="margin:14px 0 2px">Cidade do clube <small class="muted" style="font-size:13px;font-weight:600">(opcional)</small></h2><p class="muted peq" style="margin:0 0 8px">Os times do mesmo ${W.pais==="BRA"?"estado":"região"} serão seus <b>clássicos</b>: vitória vale prêmio triplo. Se não escolher, o jogo sorteia ${W.pais==="BRA"?"um estado":"uma região"} para você.</p>
-      <input type="search" id="w-cid" autocomplete="off" placeholder="Digite o nome da cidade" value="${W.cidade&&W.cidade.p===W.pais?esc(W.cidade.txt):""}" oninput="buscaCidade(this.value)">
+    <div class="cid-box"><h2 style="margin:14px 0 2px">Origem do time</h2><p class="muted peq" style="margin:0 0 8px">Escolha a cidade do clube ou sorteie uma. Os times do mesmo ${W.pais==="BRA"?"estado":"região"} serão seus <b>clássicos</b>: vitória vale prêmio triplo.</p>
+      <div class="cid-linha"><input type="search" id="w-cid" autocomplete="off" placeholder="Digite o nome da cidade" value="${W.cidade&&W.cidade.p===W.pais?esc(W.cidade.txt):""}" oninput="buscaCidade(this.value)"><button type="button" class="btn cid-dado" data-a="wcidale">🎲 Aleatório</button></div>
+      <div class="cid-roleta" id="w-cid-rol" hidden></div>
       <div class="cid-res" id="w-cid-res"></div>${W.cidade&&W.cidade.p===W.pais?`<p class="cid-ok">✓ ${esc(W.cidade.txt)}</p>`:""}</div>`;
   }else if(p===3){
     h+=editorEscudo(W.escudo,W.nome.trim()||"Seu Clube");
@@ -5363,6 +5370,17 @@ function buscaCidade(q){const box=$("#w-cid-res");if(!box||!W)return;const t=sem
     for(const [n,ri] of D.c){const k=semAcento(n);if(k.startsWith(t))pre.push([n,ri]);else if(pre.length<10&&k.includes(t))meio.push([n,ri]);if(pre.length>=10)break}
     const L=pre.concat(meio).slice(0,10);W._cid=L;
     box.innerHTML=L.length?L.map(([n,ri],i)=>`<button type="button" data-a="wcid" data-v="${i}"><b>${esc(n)}</b>, ${esc(regiaoNome(W.pais,D.r[ri]))}</button>`).join(""):'<p class="muted peq">Nenhuma cidade encontrada.</p>'})}
+/* roletinha da origem: gira nomes de cidades (só de estados/regiões com clubes), desacelera e para numa */
+function roletaCidade(){if(W._girando)return;carregarCidades(()=>{const D=CIDADES[W.pais];if(!D)return;
+  const regs=new Set(Object.values((typeof REGIAO_CLUBE!=="undefined"&&REGIAO_CLUBE[W.pais])||{})),pool=D.c.filter(x=>regs.has(D.r[x[1]]));if(!pool.length)return;
+  const top=pool.slice(0,Math.min(pool.length,600)),alvo=top[Math.floor(Math.random()*top.length)],rol=$("#w-cid-rol"),res=$("#w-cid-res");if(res)res.innerHTML="";
+  W._girando=1;rol.hidden=false;rol.classList.remove("parou");let n=0;const total=22;
+  const mostra=x=>{rol.innerHTML=`<b>${esc(x[0])}</b><span>${esc(regiaoNome(W.pais,D.r[x[1]]))}</span>`};
+  const passo=()=>{n++;const fim=n>=total,x=fim?alvo:top[Math.floor(Math.random()*top.length)];mostra(x);try{somRoleta();vibrar("roleta")}catch(e){}
+    if(!fim){setTimeout(passo,45+Math.pow(n/total,2.4)*330);return}
+    W._girando=0;rol.classList.add("parou");const r=D.r[x[1]],rn=regiaoNome(W.pais,r);W.cidade={n:x[0],r,rn,p:W.pais,txt:`${x[0]}, ${rn}`};
+    const i=$("#w-cid");if(i)i.value=W.cidade.txt;let ok=document.querySelector(".cid-ok");if(!ok){ok=document.createElement("p");ok.className="cid-ok";document.querySelector(".cid-box").appendChild(ok)}ok.textContent="✓ "+W.cidade.txt;try{somConquista()}catch(e){}};
+  passo()})}
 function regiaoDe(c){if(!c)return null;if(c.user)return G.cidade&&G.cidade.r||null;const P=typeof REGIAO_CLUBE!=="undefined"&&REGIAO_CLUBE[c.pais||G.country];return P&&P[c.name]||null}
 function classicoCom(adv){if(!adv||adv.user||!G.cidade)return false;const r=regiaoDe(adv);return !!r&&r===G.cidade.r&&(adv.pais||G.country)===G.country}
 function selecionarPais(k){
@@ -7531,6 +7549,7 @@ function acao(a,v,el){
     case "aba":aba=v;expandido=null;if(v==="liga"&&el&&nav.contains(el))ligaAba="noticias"; // Liga abre nas notícias
     if(v==="mercado"&&el&&nav.contains(el))merc={pos:"",min:0,orig:"pais"};if(v==="inicio"&&el&&nav.contains(el))abertura=true; // Início na barra de baixo volta pra capa
 if(v!=="tabela"){}window.scrollTo(0,0);break;
+    case "wcidale":roletaCidade();return;
     case "wcid":{const x=W&&W._cid&&W._cid[+v];if(!x)return;const D=CIDADES[W.pais],r=D.r[x[1]],rn=regiaoNome(W.pais,r);
       W.cidade={n:x[0],r,rn,p:W.pais,txt:`${x[0]}, ${rn}`};const i=$("#w-cid");if(i)i.value=W.cidade.txt;const b=$("#w-cid-res");if(b)b.innerHTML="";
       let ok=document.querySelector(".cid-ok");if(!ok){ok=document.createElement("p");ok.className="cid-ok";document.querySelector(".cid-box").appendChild(ok)}ok.textContent="✓ "+W.cidade.txt;return;}
@@ -7543,6 +7562,8 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
         fetch(AMG_URL+"/nomeLivre",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({nome:nm,id:c?c.id:""})}).then(r=>r.json())
           .then(j=>{if(j.livre){W.nomeOk=nm;acao("wseguir")}else toastErro(`O nome "${nm}" já é usado por outro jogador. Escolha outro.`)})
           .catch(()=>{W.nomeOk=nm;acao("wseguir")});return}
+      if(W.passo===2&&W._girando)return;
+      if(W.passo===2&&!(W.cidade&&W.cidade.p===W.pais)){toastErro("Escolha a origem do time: digite a cidade ou toque em Aleatório.");const i=$("#w-cid");if(i)i.focus();return}
       if(W.passo===2&&!paisLivre(W.pais)){toastErro(`${PAISES[W.pais].nome} libera no nível ${PAIS_NIVEL[W.pais]}. Você está no nível ${nivelMax()}.`);return}
       if(W.passo===3){const e=W.escudo,[u1,u2]=W.unis; // ao chegar no uniforme: 1 = cores do escudo, 2 = invertido (2ª cor predominante)
         [u1,u2].forEach(uniNovo);Object.assign(u1,{camisa:e.c1,detalhe:e.c2,d2:e.c3});aplicarModeloUni(u1,u1.estilo);
