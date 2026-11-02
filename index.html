@@ -4093,7 +4093,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793661896";
+const VERSAO="1793662363";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -4492,7 +4492,7 @@ const REGRAS=[
  ["⭐","Nível do dono",["Cada partida dá XP: vitória 50, empate 25, derrota 10. São 30 níveis, cada um com prêmio em dinheiro e cupons, e com um título novo (Sonhador, Cartola, Presidente, Lenda…)."]],
  ["🏆","Conquistas",["Troféus (títulos de campeonato e copas) aparecem um por um na sala de troféus.","Prêmios do jogo, emblemas e selos aparecem uma vez, com o número de vezes embaixo (×2, ×3)."]],
  ["👑","Ranking",["Todo mundo que joga aparece no Ranking (ícone de pessoas no topo). Toque em alguém para ver o perfil, os troféus e o time, e para jogar um amistoso: contra o computador ou ao vivo, se a pessoa estiver online.","Coroas: vitória 3, empate 1, derrota 0, em qualquer partida oficial. Títulos dão muito mais: Champions 300, Premier League 225, Libertadores 210, LaLiga e Bundesliga 195, Ligue 1 180, Série A e Primera (ARG) 150, Europa League 150, copas nacionais 105 a 120, Sul-Americana 105, segundas divisões 75 a 105, terceiras 45.","Ranking Geral: pontos = coroas (metade), nível do dono (um quarto) e força do time titular (um quarto). As setas ▲▼ mostram quanto você subiu ou desceu desde segunda-feira.","Ranking do Mês: conta só as coroas ganhas no mês e zera todo dia 1. Pódio do mês: 🥇 R$ 3 mi, 100 coroas, 30 cupons e 1000 XP · 🥈 R$ 1,5 mi, 60 coroas, 15 cupons e 600 XP · 🥉 R$ 800 mil, 30 coroas, 8 cupons e 300 XP. O campeão ganha o selo 🏅 Campeão do mês.","Amistoso entre jogadores não vale coroas: rende XP, torcida e transmissão."]],
- ["💾","Salvar e carreiras",["O jogo salva sozinho neste aparelho. Dá para ter até 3 carreiras. Salve também o arquivo (Ajustes) para não perder a carreira se trocar de celular."]]];
+ ["💾","Salvar e carreiras",["O jogo salva sozinho neste aparelho. Dá para ter até 6 carreiras (em Configurações: Nova carreira e Minhas carreiras); para começar a 7ª, apague uma. Salve também o arquivo (Ajustes) para não perder a carreira se trocar de celular."]]];
 function modalRegras(){
   modal(`<h3>📖 Regras do jogo</h3><div class="regras">${REGRAS.map(([ic,t,L],i)=>`<details class="rg-sec"${i===0?" open":""}><summary><span>${ic}</span><b>${t}</b></summary><ul>${L.map(x=>`<li>${x}</li>`).join("")}</ul></details>`).join("")}</div><div class="botoes"><button class="btn prim" data-a="fechar">Entendi</button></div>`);
 }
@@ -4510,7 +4510,7 @@ function nomeArquivo(){const c=G.clubs[G.user.club];if(!G.carreiraId)G.carreiraI
   const nm=c.name.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^A-Za-z0-9]+/g,"-").replace(/^-|-$/g,"")||"Clube";
   return `FUT-Master-${nm}-${G.carreiraId}.json`} // 26/10: nome do time no arquivo
 /* várias carreiras no aparelho (26/10): a aberta fica em CHAVE; as outras ficam no IndexedDB (cabe save grande) com resumo em CHAVE_CARS */
-const CHAVE_CARS="fut-carreiras",MAX_CARS=3;
+const CHAVE_CARS="fut-carreiras",MAX_CARS=6; // 02/11: até 6 carreiras (uma por país, por exemplo)
 function idbCars(){return new Promise((ok,er)=>{const r=indexedDB.open("fut-carreiras",1);r.onupgradeneeded=()=>r.result.createObjectStore("c");r.onsuccess=()=>ok(r.result);r.onerror=()=>er(r.error)})}
 async function idbFaz(modo,fn){const db=await idbCars();return new Promise((ok,er)=>{const t=db.transaction("c",modo),q=fn(t.objectStore("c"));t.oncomplete=()=>ok(q.result);t.onerror=()=>er(t.error)})}
 const idbPega=id=>idbFaz("readonly",st=>st.get(id)),idbPoe=(id,v)=>idbFaz("readwrite",st=>st.put(v,id)),idbTira=id=>idbFaz("readwrite",st=>st.delete(id));
@@ -5958,6 +5958,7 @@ try{editorOn=sessionStorage.getItem("fut-editor")==="1"}catch(e){}
 function telaConfig(){
   let h=`<h2>Configurações</h2><button class="cartao cfg-regras" data-a="splregras"><span>📖</span><span><b>Regras do jogo</b><small>Como funciona tudo: partidas, treino, mercado, ranking…</small></span><i>›</i></button><div class="cartao secao">
     <div class="linha" style="justify-content:space-between"><span>Trocar de carreira</span><button class="btn mini prim" data-a="carreiras">Minhas carreiras</button></div>
+    <div class="linha" style="justify-content:space-between"><span>Começar outra carreira</span><button class="btn mini prim" data-a="novacarreira">➕ Nova carreira</button></div>
     <div class="linha" style="justify-content:space-between"><span>Vibração (Android)</span><button class="btn mini" data-a="vib">${VIB_ON?"Desligar vibração":"Ligar vibração"}</button></div>
     ${pushOk()?`<div class="linha" style="justify-content:space-between"><span>Notificações no celular</span><button class="btn mini" data-a="${pushLigado()?"pushoff":"pushon"}">${pushLigado()?"Desligar":"Ligar"}</button></div>`:""}
     <div class="linha" style="justify-content:space-between"><span>Som do jogo</span><button class="btn mini" data-a="som">${SOM.mudo?"Ligar som":"Desligar som"}</button></div>
@@ -7862,8 +7863,8 @@ adaptarEscalacao(v);salvar();el.closest(".dd").classList.remove("aberto");if(ani
     case "splajustes":modalAjustesSp();return;
     case "splsom":acao("som");modalAjustesSp();return;
     case "novacarreira":
-      if(G&&totalCars()<MAX_CARS){modal(`<h3>Começar nova carreira?</h3><p>A carreira atual (${esc(G.clubs[G.user.club].name)}, ${G.year}) fica guardada. Para voltar a ela, use <b>Trocar de carreira</b> na engrenagem ou <b>Carregar jogo</b> na capa.</p><div class="botoes"><button class="btn" data-a="fechar">Cancelar</button><button class="btn prim" data-a="carnova">Começar nova</button></div>`);return}
-      if(G){modal(`<h3>Começar nova carreira?</h3><p class="peq" style="color:var(--aviso)">Os ${MAX_CARS} espaços de carreira estão ocupados.</p><p>A carreira atual (${esc(G.clubs[G.user.club].name)}, ${G.year}) será apagada deste aparelho. Para não perder, salve o arquivo antes.</p><div class="botoes" style="flex-wrap:wrap"><button class="btn" data-a="salvararq">Salvar arquivo</button><button class="btn" data-a="fechar">Cancelar</button><button class="btn perigo" data-a="novoconf">Apagar e começar</button></div>`);return}
+      if(G&&totalCars()<MAX_CARS){modal(`<h3>Começar nova carreira?</h3><p>A carreira atual (${esc(G.clubs[G.user.club].name)}, ${G.year}) fica guardada. Para voltar a ela, use <b>Trocar de carreira</b> na engrenagem ou <b>Carregar jogo</b> na capa.</p><p class="muted peq">Quer uma cópia de segurança antes? Toque em <b>Salvar arquivo</b>.</p><div class="botoes" style="flex-wrap:wrap"><button class="btn" data-a="salvararq">Salvar arquivo</button><button class="btn" data-a="fechar">Cancelar</button><button class="btn prim" data-a="carnova">Começar nova</button></div>`);return}
+      if(G){modal(`<h3>Começar nova carreira?</h3><p class="peq" style="color:var(--aviso)">Os ${MAX_CARS} espaços de carreira estão ocupados.</p><p>Para começar outra, apague uma das carreiras. Se quiser guardar uma cópia da atual (${esc(G.clubs[G.user.club].name)}, ${G.year}), salve o arquivo antes.</p><div class="botoes" style="flex-wrap:wrap"><button class="btn" data-a="salvararq">Salvar arquivo</button><button class="btn" data-a="fechar">Cancelar</button><button class="btn prim" data-a="carreiras">Escolher qual apagar</button></div>`);return}
       abertura=false;G=null;W=lerW()||novoW();break;
   }
   vivoDepois(a);
