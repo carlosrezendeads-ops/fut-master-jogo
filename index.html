@@ -2111,6 +2111,11 @@ function dirAvisos(){const uid=G.user.club,c=G.clubs[uid],cl=esc(c.name),A=[],fm
   // --- competições: começo/fim de temporada, liga, copas e clássico (o começo de temporada vem primeiro) ---
   dirCompeticoes(add);
   // --- alertas ---
+  // contrato vencido (02/11): o diretor avisa desesperado e lembra a cada 6 rodadas até resolver
+  jogadoresDo(uid).filter(p=>p.ctAcabou&&contratoAcabou(p)).sort((a,b)=>b.ov-a.ov).slice(0,1).forEach(p=>{const n=esc(p.n),primeira=!(G.diretor&&G.diretor.vistos&&Object.keys(G.diretor.vistos).some(k=>k.startsWith("ct|"+p.id+"|")));
+    add({k:"ct|"+p.id+"|"+p.ctFim+"|"+Math.floor(ev/6),foto:"preocupado",tit:primeira?`Chefe, temos um problema sério com o ${n}!`:`Chefe, o ${n} continua sem contrato!`,
+      txt:primeira?`O contrato do <b>${n}</b> (${POS_EXT[p.pos]}, força ${p.ov}) <b>venceu</b> e ninguém do clube falou nada com ele! O empresário já está ligando, e outros clubes vão aparecer a qualquer momento. Se não resolvermos, ele vai embora <b>de graça</b> no fim da temporada. Precisamos decidir agora: <b>renovar</b> ou <b>vender</b> enquanto ainda dá.`
+        :`Ainda não resolvemos a situação do <b>${n}</b>. Ele está treinando sem contrato e a torcida já está perguntando. Se nada for feito, ele sai de graça no fim da temporada!`,bt:`Resolver a situação do ${esc(p.n.split(" ")[0])}`,ren:p.id})});
   if(G.cash<0)add({k:"div|"+G.year+"|"+Math.floor(ev/4),foto:"preocupado",tit:"Chefe, estamos no vermelho!",txt:`O caixa está negativo em <b>${dinheiro(-G.cash)}</b>. Precisamos olhar as finanças agora: cortar gastos, vender alguém ou pegar um empréstimo antes que a dívida cresça.`,alvo:'nav [data-v="financas"]',bt:"Ver finanças"});
   else if(G.cash<fm)add({k:"quase|"+G.year+"|"+Math.floor(ev/4),foto:"preocupado",tit:"O dinheiro está curto",txt:`Chefe, o caixa (<b>${dinheiro(G.cash)}</b>) não cobre a próxima conta do mês (<b>${dinheiro(fm)}</b>). Se nada mudar, vamos ficar devendo. Vale dar uma olhada nas finanças.`,alvo:'nav [data-v="financas"]',bt:"Ver finanças"});
   (G.inbox||[]).filter(m=>m.ofm&&(m.ofm.est==="aberta"||m.ofm.est==="aceita")&&ev-m.ofm.ev>=4).slice(0,1).forEach(m=>{const o=G.clubs[m.cid];
@@ -3990,7 +3995,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793653318";
+const VERSAO="1793653527";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -7428,7 +7433,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "logos":modalLogos(v);break;
     case "dirsim":modalDiretorAceite();return;
     case "dirok":G.diretor={on:1,vistos:{},ev:G.ev,n:1,ano:G.year,tier:userTier()};salvar();fecharModal();toast(`${DIR_NOME} é o novo diretor do clube!`);render();return;
-    case "dirir":{const a=window._dirAv;fecharModal();if(!a)return;if(a.pts){const k=(ATRS.find(x=>pontosTreino()[x[0]]>0)||[])[0];if(k)modalPontosTipo(k);return}if(a.aba){aba=a.aba;window.scrollTo(0,0);render()}else diretorFoco(a.alvo);return}
+    case "dirir":{const a=window._dirAv;fecharModal();if(!a)return;if(a.ren&&G.players[a.ren]){perfilJogador(a.ren);return}if(a.pts){const k=(ATRS.find(x=>pontosTreino()[x[0]]>0)||[])[0];if(k)modalPontosTipo(k);return}if(a.aba){aba=a.aba;window.scrollTo(0,0);render()}else diretorFoco(a.alvo);return}
     case "tvsim":case "tvnao":decidirTV(+v,a==="tvsim");salvar();if(!tvPendente())window.scrollTo(0,0);break;
     case "fecharjanela":{const er=fecharJanela();if(er){toastErro(er);return}salvar();toast(G.ev===0?"Bola rolando! Boa temporada.":"Janela fechada.");window.scrollTo(0,0);break;}
     case "iniciarjogo":{const er=iniciarAoVivo(false);if(er){toastErro(er);return}somIniciar();setTimeout(()=>apito(.9),250);painel=null;liveSel=null;aba="partida";salvar();window.scrollTo(0,0);break;}
