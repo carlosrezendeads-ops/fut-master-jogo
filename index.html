@@ -3877,7 +3877,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793647990";
+const VERSAO="1793648278";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4228,8 +4228,8 @@ function telaCarga(sp,c){
   let ultFrase=performance.now();
   CARGA.timer=setInterval(()=>{
     const agora=performance.now(),t=agora-CARGA.t0;
-    // ritmo do Carlos (29/10): 0→20% em 2 s, para 3 s nos 20%, 20→100% em 2 s (7 s no total)
-    const p=t<2000?.2*t/2000:t<5000?.2:.2+.8*Math.min(1,(t-5000)/2000);
+    // ritmo do Carlos: 0→20% em 2 s, para 2 s, 20→100% em 2 s (6 s no total)
+    const p=t<2000?.2*t/2000:t<4000?.2:.2+.8*Math.min(1,(t-4000)/2000); // 02/11: para 2 s nos 20%, 20→100% em 2 s
     const box=$("#splash .carga-box");if(!box)return;
     const pc=Math.floor(Math.min(1,p)*100);
     box.querySelector(".carga-barra i").style.width=pc+"%";box.querySelector(".carga-pct").textContent=pc+"%";box.setAttribute("aria-valuenow",pc);
@@ -4830,7 +4830,8 @@ function somGol(nosso){
 function somVitoria(){if(!SOM.ctx||SOM.mudo)return;const t=SOM.ctx.currentTime;SOM.mus.gain.cancelScheduledValues(t);SOM.mus.gain.setTargetAtTime(.06,t,.1);SOM.mus.gain.setTargetAtTime(SOM.modo==="musica"?.2:0,t+4.5,.6);SOM.trilha.gain.cancelScheduledValues(t);SOM.trilha.gain.setTargetAtTime(.3,t,.1);SOM.trilha.gain.setTargetAtTime(1,t+4.5,.6);
   gritoTorcida(0,5,.5,true,false);torcidaOnda(.3,.4,2.8,2.2,[1000,800]);palmas(.3,5,30,.38);setTimeout(()=>gritoTorcida(0,2.5,.3,true,false),2400)}
 // efeitos em mp3 (pasta sons/): toca o arquivo; abafar = baixa a música de fundo enquanto ele toca
-function somArquivo(n,abafar,vol){const b=SOM.ctx&&!SOM.mudo&&SOM.buf&&SOM.buf[n];if(!b)return false;const c=SOM.ctx,t=c.currentTime,s=c.createBufferSource();s.buffer=b;if(vol!=null&&vol!==1){const g=c.createGain();g.gain.value=vol;s.connect(g);g.connect(SOM.fx)}else s.connect(SOM.fx);s.start(t);
+function somArquivo(n,abafar,vol){if(abertura&&CARGA.on&&!CARGA.intro&&n!=="carga")return true; // 02/11: carregamento sem som nenhum
+  const b=SOM.ctx&&!SOM.mudo&&SOM.buf&&SOM.buf[n];if(!b)return false;const c=SOM.ctx,t=c.currentTime,s=c.createBufferSource();s.buffer=b;if(vol!=null&&vol!==1){const g=c.createGain();g.gain.value=vol;s.connect(g);g.connect(SOM.fx)}else s.connect(SOM.fx);s.start(t);
   if(abafar){SOM.trilha.gain.cancelScheduledValues(t);SOM.trilha.gain.setTargetAtTime(.2,t,.1);SOM.trilha.gain.setTargetAtTime(1,t+Math.max(1,b.duration-.5),.6)}return true}
 // erro: clicou em algo bloqueado ou que não pode (substitui o clique)
 function somErro(){vibrar("erro");SOM.errAt=Date.now();somArquivo("erro",false,VOL_BOTAO)}
