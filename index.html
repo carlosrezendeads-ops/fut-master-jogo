@@ -498,6 +498,13 @@ nav.abas[hidden]{display:none}
 .tec-chip span{display:flex;flex-direction:column;min-width:0}.tec-chip small{font-size:10.5px;color:var(--cal-2)}.tec-chip b{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tec-chips.vivo{margin:6px 0}.tec-chips.vivo .tec-chip{padding:4px 6px}
 .tec-chip i{margin-left:auto;font-style:normal;font-weight:800;color:#ffd23f}.tec-chip svg,.tec-chip img{flex:none;border-radius:8px}
+.trofeus-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:8px;margin-top:8px}
+.trofeu-g{display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;padding:10px 6px;border-radius:12px;background:radial-gradient(circle at 50% 30%,rgba(255,210,63,.22),rgba(255,210,63,.04) 70%);border:1.5px solid rgba(255,210,63,.55)}
+.trofeu-g img{width:72px;height:72px;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}
+.trofeu-g .tg-ico svg{width:56px;height:56px}
+.trofeu-g b{font-size:12.5px;line-height:1.15;color:#ffe28a}.trofeu-g small{font-size:11px;color:var(--cal-2)}
+.emblema{position:relative}.em-num{display:inline-block;margin-top:3px;padding:1px 8px;border-radius:10px;background:#ffd23f;color:#2a1d00;font-weight:800;font-size:12px}
+.rk-selos{margin:6px 0}
 .pm-card{position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;width:100%;margin:2px 0 10px;padding:12px 14px;border-radius:14px;border:1.5px solid #ffd23f;background:linear-gradient(120deg,#5a3d00,#b8860b 45%,#5a3d00);color:#fff;font:inherit;text-align:left;cursor:pointer;animation:pmPisca 1.6s ease-in-out infinite}
 .pm-card b{display:block;font-size:16px;color:#fff3b0}.pm-card small{color:#ffe9a6;font-size:12px}
 .pm-ico{font-size:30px}.pm-seta{margin-left:auto;font-size:26px;color:#ffe28a}
@@ -3115,8 +3122,8 @@ async function modalPerfilAmigo(id){
     <div class="rk-perfil-topo">${rkFoto(j.av,j.nome,84)}<div><h3 style="margin:0">${esc(j.nome)}</h3>${j.titulo?`<span class="titulo-dono">${esc(j.titulo)}</span>`:""}
       <small class="${j.on?"amg-on":"muted"}">${j.on?"● Online agora":"Offline"} · Nível ${j.nivel||1}</small>${pos>=0?`<small class="rk-lugar">${pos+1}º no ranking · ${Math.round(j.pts||0)} pts</small>`:""}</div></div>
     <div class="rk-tacas"><div><b class="num">${j.tp||0}</b><small>👑 coroas</small></div><div><b class="num">${j.ttit||0}</b><small>de títulos e prêmios</small></div><div><b class="num">${j.tjog||0}</b><small>de vitórias e empates</small></div></div>
-    ${(j.coroas||[]).length?`<div class="rk-coroas">${j.coroas.map(m=>`<span>🏅 Campeão do mês · ${mesTxt(m)}</span>`).join("")}</div>`:""}
-    <h4 class="amg-sub">🏆 Sala de troféus</h4>${tits.length?`<div class="rk-tits">${Object.entries(grupos).map(([n,anos])=>`<div class="rk-tit"><b>${anos.length}×</b><span>${esc(n)}<small>${esc(anos.join(", "))}</small></span></div>`).join("")}</div>`:`<p class="muted peq">Ainda sem títulos.</p>`}
+    ${(j.coroas||[]).length?`<div class="emblemas rk-selos">${emblemaCard({n:"Campeão do mês",e:"🏅",d:j.coroas.map(mesTxt).join(", "),c:j.coroas.length})}</div>`:""}
+    <h4 class="amg-sub">🏆 Sala de troféus</h4>${tits.length?`<div class="trofeus-g">${tits.slice().reverse().map(trofeuCard).join("")}</div>`:`<p class="muted peq">Ainda sem títulos.</p>`}
     <h4 class="amg-sub">Time</h4>
     <div class="amg-topo">${escudoSVG(cl.escudo||{forma:0,estampa:1,c1:cl.c1,c2:cl.c2,c3:contrasteHex(cl.c1||"#888888")},cl.short,64,cl.name)}<div><b style="font-size:17px">${esc(cl.name)}</b><br><span class="muted">${esc(PAIS_NOME[P.pais]||"")}</span></div></div>
     <div class="kpis"><div class="cartao kpi"><small>Força do time</small><b class="num">${media}</b></div><div class="cartao kpi"><small>Formação</small><b class="num">${esc(P.form||"4-4-2")}</b></div><div class="cartao kpi"><small>Técnico</small><b style="font-size:13px">${esc(P.tec?P.tec.n:"Interino")}</b></div></div>
@@ -4053,7 +4060,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793654599";
+const VERSAO="1793654798";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -5755,13 +5762,13 @@ function celebrar(c){
   if(typeof somVitoria==="function"&&SOM.ctx&&!SOM.mudo&&pos<=3)somVitoria();
 }
 function blocoConquistas(){
-  const t=(G.titles||[]).slice().reverse(),C=conquistasJogo(),ok=C.filter(c=>c[2]).length,em=G.emblemas||[];
+  const t=(G.titles||[]).slice().reverse(),C=conquistasJogo(),ok=C.filter(c=>c[2]).length,em=emblemasAgrupados();
   let h=`<h2>Conquistas</h2><div class="cartao linha" style="justify-content:space-between"><span>Seus cupons dourados</span>${cupomTxt(cupons())}</div><div style="height:10px"></div>`;
   const pod=(G.podios||[]).slice().reverse();
   if(pod.length)h+=`<div class="cartao" style="margin-bottom:10px"><b class="etapa">Taças e medalhas · ${pod.length}</b><div class="podios-lista">${pod.map(x=>{const it=x.item||(x.pos===1?"taca":"prata");return `<div class="podio-mini">${imgItem(it,x.chave||chaveComp("L",x.tier),it==="prata"&&MED_IMG()[x.chave]?120:92)}<b>${NOME_ITEM[it]}</b><small>${esc(x.nome||x.liga)} ${x.ano}</small></div>`}).join("")}</div></div>`;
-  h+=`<div class="cartao"><b class="etapa">Troféus · ${t.length}</b>${t.length?`<div class="trofeus" style="margin-top:8px">${t.map(x=>{const m=x.match(/^(.*) (\d{4})$/);return `<div class="trofeu">${ICO_TROFEU}<b>${esc(m?m[1]:x)}</b><small>${m?m[2]:""}</small></div>`}).join("")}</div>`:`<p class="muted peq" style="margin:6px 0 0">Nenhum título ainda. Campeonatos, copas nacionais e continentais vencidos aparecem aqui.</p>`}</div>`;
+  h+=`<div class="cartao"><b class="etapa">Troféus · ${t.length}</b>${t.length?`<div class="trofeus-g">${t.map(trofeuCard).join("")}</div>`:`<p class="muted peq" style="margin:6px 0 0">Nenhum título ainda. Campeonatos, copas nacionais e continentais vencidos aparecem aqui.</p>`}</div>`;
   h+=`<div class="cartao" style="margin-top:10px"><b class="etapa">Prêmios do jogo · ${ok} de ${C.length}</b><div class="emblemas">${C.map(([n,d,f,e,r,ex])=>`<div class="emblema${f?" on":""}" title="${esc(d)}"><span class="em-ico">${iconePremio(n,e,f,52)}</span><b>${esc(n)}</b><small>${esc(d)}</small><span class="em-recomp">${r[0]?`${r[0]} XP · `:""}${dinheiro(ex?r[1]:Math.round(premioEmDinheiro(r[1])*X_PREMIO))}<br>${cupomTxt(r[2])}</span></div>`).join("")}</div></div>`;
-  h+=`<div class="cartao" style="margin-top:10px"><b class="etapa">Emblemas de desafios · ${em.length}</b>${em.length?`<div class="emblemas">${em.map(x=>`<div class="emblema on"><span class="em-ico">${x.e||"🏅"}</span><b>${esc(x.n)}</b><small>${esc(x.d||"")}</small></div>`).join("")}</div>`:`<p class="muted peq" style="margin:6px 0 0">Em breve: desafios especiais com emblemas exclusivos.</p>`}</div>`;
+  h+=`<div class="cartao" style="margin-top:10px"><b class="etapa">Emblemas e selos · ${em.reduce((a,x)=>a+(x.c||1),0)}</b>${em.length?`<div class="emblemas">${em.map(emblemaCard).join("")}</div>`:`<p class="muted peq" style="margin:6px 0 0">Em breve: desafios especiais com emblemas exclusivos.</p>`}</div>`;
   return h;
 }
 const LENDAS=[ // [nome, posição, força, cupons, idade] — destaques em atividade, indicados à Bola de Ouro
@@ -6593,6 +6600,16 @@ function cartaoTecClube(cid){
    taças pequenas em img/titulos.js (TITULOS_IMG) + as do jogo (TROFEUS_IMG); ordem do mais importante para o menor */
 const EST_NOME={SP:"Paulista",RJ:"Carioca",MG:"Mineiro",RS:"Gaúcho",PR:"Paranaense",BA:"Baiano",PE:"Pernambucano",CE:"Cearense",SC:"Catarinense",GO:"Goiano",PA:"Paraense",AL:"Alagoano",MT:"Mato-Grossense",AM:"Amazonense",PB:"Paraibano",SE:"Sergipano",MA:"Maranhense"};
 const ORDEM_TIT=[["MUN|fifa","Mundial de Clubes FIFA"],["MUN|inter","Mundial Interclubes"],["SA|main","Libertadores"],["BRA|L0","Campeonato Brasileiro"],["BRA|N","Copa do Brasil"],["SA|sec","Copa Sul-Americana"],["NE","Copa do Nordeste"]].concat(Object.entries(EST_NOME).map(([u,n])=>["EST|"+u,"Campeonato "+n]));
+/* troféus (02/11): cada título aparece sozinho (pode repetir), grande e com a imagem da taça */
+function chaveTitulo(t){for(const [k,P] of Object.entries(PAISES)){const L=P.ligas||[];for(let i=0;i<3;i++)if(L[i]&&t.startsWith(L[i]+" "))return `${k}|L${i}`;if(COPA_NAC[k]&&t.startsWith(COPA_NAC[k]+" "))return `${k}|N`}
+  for(const [c,o] of Object.entries(COPAS)){if(t.startsWith(o.main+" "))return `${c}|main`;if(t.startsWith(o.sec+" "))return `${c}|sec`}return ""}
+function trofeuCard(x){const m=x.match(/^(.*) (\d{4})$/),k=chaveTitulo(x),src=k?imgTitulo(k):"";
+  return `<div class="trofeu-g">${src?`<img src="${src}" alt="">`:`<span class="tg-ico">${ICO_TROFEU}</span>`}<b>${esc(m?m[1]:x)}</b><small>${m?m[2]:""}</small></div>`}
+/* emblemas e selos (02/11): não repetem; mostram quantas vezes embaixo */
+function emblemaCard(x){return `<div class="emblema on"><span class="em-ico">${x.e||"🏅"}</span><b>${esc(x.n)}</b><small>${esc(x.d||"")}</small>${x.c>1?`<span class="em-num">×${x.c}</span>`:""}</div>`}
+function emblemasAgrupados(){const g={};(G.emblemas||[]).forEach(x=>{const k=x.n;if(!g[k])g[k]={...x,c:0};g[k].c++});
+  const me=(AMG.rank||[]).find(x=>x.eu),n=me&&me.coroas?me.coroas.length:0;
+  if(n)g["Campeão do mês"]={n:"Campeão do mês",e:"🏅",d:"1º lugar no ranking do mês",c:n};return Object.values(g)}
 function imgTitulo(k){return (typeof TITULOS_IMG!=="undefined"&&TITULOS_IMG[k])||(typeof TROFEUS_IMG!=="undefined"&&TROFEUS_IMG[k])||""}
 function salaTitulos(c){if(!c||c.pais!=="BRA"||typeof TITULOS_CLUBES==="undefined")return "";const T=TITULOS_CLUBES[c.name]||{};
   const lin=ORDEM_TIT.filter(([k])=>T[k]>0).map(([k,nome])=>{const n=T[k],src=imgTitulo(k);
