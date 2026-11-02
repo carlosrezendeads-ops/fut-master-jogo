@@ -3863,7 +3863,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793634577";
+const VERSAO="1793636486";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4191,7 +4191,7 @@ function frasesCarga(c){
 }
 function cargaTransicao(){ // 02/11: cortina diagonal sobe levando o carregamento, menu entra com zoom e brilho
   const sp=$("#splash"),v=sp.cloneNode(true);v.removeAttribute("id");v.classList.add("carga-sai");v.setAttribute("aria-hidden","true");
-  document.body.appendChild(v);CARGA.on=false;if(abertura)render();
+  document.body.appendChild(v);somArquivo("carga",false,.9);CARGA.on=false;if(abertura)render();
   sp.classList.add("carga-entra");setTimeout(()=>{v.remove();sp.classList.remove("carga-entra")},800);
 }
 function telaCarga(sp,c){
@@ -4664,7 +4664,7 @@ function somIniciar(){
   SOM.mus=c.createGain();SOM.mus.gain.value=0;SOM.mus.connect(SOM.master);
   SOM.fx=c.createGain();SOM.fx.gain.value=1;{const lim=c.createDynamicsCompressor();lim.threshold.value=-6;lim.knee.value=4;lim.ratio.value=12;lim.attack.value=.002;lim.release.value=.15;SOM.fx.connect(lim);lim.connect(SOM.master)} // limitador: efeitos altos sem estourar
   trilhaIniciar();
-  SOM.buf={};["clique","erro","derrota","vitoria","transicao","roleta"].forEach(n=>fetch(`sons/${n}.mp3`).then(r=>r.arrayBuffer()).then(b=>new Promise((ok,er)=>c.decodeAudioData(b,ok,er))).then(buf=>SOM.buf[n]=buf).catch(()=>{}));
+  SOM.buf={};["clique","erro","derrota","vitoria","transicao","roleta","carga"].forEach(n=>fetch(`sons/${n}.mp3`).then(r=>r.arrayBuffer()).then(b=>new Promise((ok,er)=>c.decodeAudioData(b,ok,er))).then(buf=>SOM.buf[n]=buf).catch(()=>{}));
   // ruído base
   const b=c.createBuffer(1,c.sampleRate*3,c.sampleRate),d=b.getChannelData(0);
   let last=0;for(let i=0;i<d.length;i++){const w=Math.random()*2-1;last=(last+.02*w)/1.02;d[i]=w*.6+last*3}
