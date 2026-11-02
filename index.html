@@ -1034,6 +1034,11 @@ nav.abas button{font-size:11px}
 /* tela de carregamento (29/10): capa + degradê azul escuro embaixo, frase e barra */
 .splash.arte.carga::after{background:linear-gradient(180deg,rgba(3,10,40,0) 42%,rgba(3,10,40,.75) 62%,#030a28 82%,#020719 100%)}
 .splash.arte.carga img.capa-logo{top:calc(3vh + env(safe-area-inset-top,0px));width:min(56vw,26vh,300px)}
+.splash.carga-sai{z-index:41;pointer-events:none;will-change:clip-path,transform;animation:cgSai .62s cubic-bezier(.75,0,.25,1) forwards}
+@keyframes cgSai{0%{clip-path:polygon(0 0,100% 0,100% 100%,0 130%);transform:scale(1)}100%{clip-path:polygon(0 0,100% 0,100% -30%,0 0);transform:scale(1.08);filter:brightness(1.3)}}
+.splash.carga-entra{animation:cgEntra .7s cubic-bezier(.2,.7,.2,1) both}
+@keyframes cgEntra{0%{transform:scale(1.12);filter:brightness(1.8) blur(4px)}100%{transform:none;filter:none}}
+@media (prefers-reduced-motion:reduce){.splash.carga-sai{animation:spSaiR .3s forwards}.splash.carga-entra{animation:none}}
 .carga-box{position:relative;z-index:2;width:min(86vw,420px);margin:0 auto calc(28px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
 .carga-frase{min-height:22px;margin:6px 0 -6px;font-size:15px;font-weight:600;color:#e8f4ff;text-shadow:0 1px 4px #000;transition:opacity .35s}
 .carga-frase.some{opacity:0}
@@ -3858,7 +3863,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793633297";
+const VERSAO="1793634577";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4184,6 +4189,11 @@ function frasesCarga(c){
   for(let i=L.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[L[i],L[j]]=[L[j],L[i]]}
   return L;
 }
+function cargaTransicao(){ // 02/11: cortina diagonal sobe levando o carregamento, menu entra com zoom e brilho
+  const sp=$("#splash"),v=sp.cloneNode(true);v.removeAttribute("id");v.classList.add("carga-sai");v.setAttribute("aria-hidden","true");
+  document.body.appendChild(v);CARGA.on=false;if(abertura)render();
+  sp.classList.add("carga-entra");setTimeout(()=>{v.remove();sp.classList.remove("carga-entra")},800);
+}
 function telaCarga(sp,c){
   if(!CARGA.t0){CARGA.t0=performance.now();CARGA.ordem=frasesCarga(c)}
   sp.innerHTML=`${typeof ARTE_CAPA!=="undefined"?`<img class="capa-fundo" src="img/carga.jpg" alt=""><img src="img/carga.jpg" alt="Ronaldo e Messi">${typeof LOGO_CAPA!=="undefined"?`<img class="capa-logo" src="${LOGO_CAPA}" alt="FUT Master 26">`:""}`:""}
@@ -4203,7 +4213,7 @@ function telaCarga(sp,c){
     box.querySelector(".carga-barra i").style.width=pc+"%";box.querySelector(".carga-pct").textContent=pc+"%";box.setAttribute("aria-valuenow",pc);
     if(agora-ultFrase>=CARGA_FRASE){ultFrase=agora;const f=box.querySelector(".carga-frase");f.classList.add("some");
       setTimeout(()=>{CARGA.fi++;f.textContent=CARGA.ordem[CARGA.fi%CARGA.ordem.length];f.classList.remove("some")},350)}
-    if(pc>=100){clearInterval(CARGA.timer);setTimeout(()=>{CARGA.on=false;if(abertura)render()},400)}
+    if(pc>=100){clearInterval(CARGA.timer);setTimeout(cargaTransicao,400)}
   },100);
 }
 /* menu da capa em roda: rola pra cima/baixo, a opção do meio brilha e é a escolhida */
