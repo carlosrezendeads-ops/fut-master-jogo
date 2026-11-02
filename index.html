@@ -1051,6 +1051,8 @@ nav.abas button{font-size:11px}
 @keyframes inLogo{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
 @keyframes inBrilho{from{background-position:90% 10%}to{background-position:10% 90%}}
 @keyframes inHalo{0%{opacity:0;transform:scale(.85)}50%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.05)}}
+.splash.arte.carga .capa-fundo{display:none}
+.splash.arte.carga img:not(.capa-logo):not(.capa-fundo){object-fit:cover;object-position:center 30%}
 .carga-box{position:relative;z-index:2;width:min(86vw,420px);margin:0 auto calc(28px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
 .carga-frase{min-height:22px;margin:6px 0 -6px;font-size:15px;font-weight:600;color:#e8f4ff;text-shadow:0 1px 4px #000;transition:opacity .35s}
 .carga-frase.some{opacity:0}
@@ -3875,7 +3877,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793638717";
+const VERSAO="1793639414";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4211,7 +4213,7 @@ function telaIntro(sp,c){ // 02/11: tela preta com a logo MEGA e brilho (3 s) an
 }
 function cargaTransicao(){ // 02/11: cortina diagonal sobe levando o carregamento, menu entra com zoom e brilho
   const sp=$("#splash"),v=sp.cloneNode(true);v.removeAttribute("id");v.classList.add("carga-sai");v.setAttribute("aria-hidden","true");
-  document.body.appendChild(v);somArquivo("carga",false,.9);CARGA.on=false;if(abertura)render();
+  document.body.appendChild(v);somArquivo("carga",false,.9);{const d=SOM.buf&&SOM.buf.carga?SOM.buf.carga.duration*1000:0;CARGA.musAte=performance.now()+d;setTimeout(()=>{try{somModo(modoDesejado())}catch(e){}},d+50)}CARGA.on=false;if(abertura)render();
   sp.classList.add("carga-entra");setTimeout(()=>{v.remove();sp.classList.remove("carga-entra")},800);
 }
 function telaCarga(sp,c){
@@ -4907,7 +4909,8 @@ function venceuUltimo(){const r=G.last,uid=G.user.club;if(!r)return false;const 
 function iconeSom(){return SOM.mudo?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M17 9l5 6M22 9l-5 6"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>'}
 document.addEventListener("pointerdown",()=>{somIniciar();trilhaDesbloquear();somModo(modoDesejado())},{capture:true});
 document.addEventListener("pointerdown",e=>{if(e.target.closest&&e.target.closest("button:disabled,.sim-bloq"))somErro()},{capture:true});
-function modoDesejado(){if(abertura)return"abertura";if(G&&G.live&&aba==="partida")return"torcida";if(G&&aba==="prejogo")return"prejogo";if(G&&aba==="partida")return"silencio";return"musica"}
+function modoDesejado(){if(abertura&&(CARGA.intro||CARGA.on||performance.now()<(CARGA.musAte||0)))return"silencio"; // 02/11: logo e carregamento sem música; capa só depois do som de transição
+  if(abertura)return"abertura";if(G&&G.live&&aba==="partida")return"torcida";if(G&&aba==="prejogo")return"prejogo";if(G&&aba==="partida")return"silencio";return"musica"}
 /* ---------- navegação ---------- */
 const ICONES={
   config:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
