@@ -1134,6 +1134,10 @@ nav.abas button{font-size:11px}
 .selo-breve{font-style:normal;font-family:Archivo,Arial,sans-serif;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#3a2a00;background:linear-gradient(160deg,#ffe27a,#e0a800);padding:2px 7px;border-radius:6px;align-self:flex-start;margin-top:6px;text-shadow:none;box-shadow:0 0 8px rgba(255,200,0,.5)}
 .roda-it.sel svg{filter:drop-shadow(0 0 6px #19c3ff)}
 .roda-dica{font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.06em;text-shadow:0 1px 3px #000}
+.cid-box input{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--gramado-3);background:rgba(4,10,30,.85);color:#fff;font:inherit;font-size:16px}
+.cid-res{display:flex;flex-direction:column;gap:4px;margin-top:6px;max-height:260px;overflow-y:auto}
+.cid-res button{text-align:left;padding:10px 12px;border-radius:10px;border:1px solid var(--gramado-3);background:rgba(10,20,50,.9);color:#dfe8ff;font:inherit;cursor:pointer}.cid-res button b{color:#fff}
+.cid-ok{margin:8px 0 0;color:#3ddc84;font-weight:700}
 .rg-sec{border-radius:12px;background:var(--gramado-2);border:1px solid var(--gramado-3);padding:0 12px}
 .rg-sec summary{display:flex;align-items:center;gap:10px;padding:11px 0;cursor:pointer;list-style:none}.rg-sec summary::-webkit-details-marker{display:none}
 .rg-sec summary::after{content:"›";margin-left:auto;font-size:20px;color:var(--cal-2);transition:transform .2s}.rg-sec[open] summary::after{transform:rotate(90deg)}
@@ -1440,7 +1444,7 @@ const MANUT=false;
 <script src="img/kit-homens.js?v=0ed6e386"></script>
 <script src="img/tec-fotos.js?v=fe782a52"></script>
 <script src="dados/elencos.js?v=bb464417"></script>
-<script src="dados/pes.js?v=266905da"></script>
+<script src="dados/regioes.js?v=de084f1a"></script><script src="dados/pes.js?v=266905da"></script>
 <script src="img/escudos-img.js?v=df90de51"></script>
 <script src="dados/idiomas.js?v=d09cf4d4"></script>
 <script>
@@ -1999,7 +2003,7 @@ function receitaPartida(r,e,ehCopa){
   // clássico contra o rival: vitória triplica a renda da partida, derrota ainda rende 25% a mais
   // TV: só jogos da liga; SportyNet passa todos, Band e Canal do Benja só os escolhidos
   {const T=ev.k==="L"&&G.tv&&G.tv.ano===G.year?G.tv.ofs.filter(o=>o.dec==="sim"&&(o.chance>=1||rnd()<o.chance)):[];if(T.length){fin.tv=T.reduce((x,o)=>x+o.porJogo,0);fin.tvN=T.map(o=>o.nome).join(", ")}}
-  {const rv=rivalDe(c);if(rv&&adv.id===rv.id&&res!=="e"){const base=fin.premio+fin.bil+fin.patro+fin.bonus;fin.classico=Math.round(base*(res==="v"?2:.25))}}
+  {const rv=G.cidade?null:rivalDe(c);if((G.cidade?classicoCom(adv):rv&&adv.id===rv.id)&&res!=="e"){const base=fin.premio+fin.bil+fin.patro+fin.bonus;fin.classico=Math.round(base*(res==="v"?2:.25))}}
   return fin;
 }
 function aplicarFin(fin,ehRodadaLiga){
@@ -2235,7 +2239,7 @@ function dirCompeticoes(add){const uid=G.user.club,cl=esc(G.clubs[uid].name),t=u
   // próximo jogo: clássico ou decisão
   const m=G.fase!=="pre"&&!G.seasonEnd&&partidaAtual();
   if(m&&!m.amistoso){
-    if(ehClassico(m)){const r=rivalDe(G.clubs[uid]);add({k:"cla|"+G.ev,foto:"pensa",tit:"Semana de clássico!",txt:`O próximo jogo é contra o <b>${esc(r.name)}</b>, nosso maior rival. A torcida não aceita perder, e uma vitória rende muito mais dinheiro. Vamos preparar o melhor time.`,aba:"prejogo",bt:"Preparar o time"})}
+    if(ehClassico(m)){const r=G.clubs[m.h===uid?m.a:m.h];add({k:"cla|"+G.ev,foto:"pensa",tit:"Semana de clássico!",txt:`O próximo jogo é contra o <b>${esc(r.name)}</b>, clássico${G.cidade?` de ${esc(G.cidade.rn)}`:""}. A torcida não aceita perder, e uma vitória rende muito mais dinheiro. Vamos preparar o melhor time.`,aba:"prejogo",bt:"Preparar o time"})}
     else if(/Final/.test(m.rot||"")&&!/Semifinal|Oitavas|Quartas/.test(m.rot||""))add({k:"dec|"+G.ev,foto:"pensa",tit:"Hoje é decisão!",txt:`O próximo jogo é a <b>${esc(m.rot)}</b>. Escale os titulares descansados e vamos buscar essa taça!`,aba:"prejogo",bt:"Preparar o time"})}}
 function diretorChecar(){if(!G||G.over||G.live||abertura||TUTA||document.querySelector(".veu,.tut-veu"))return;
   if(["visual","partida","resultado","prejogo"].includes(aba))return;
@@ -4068,7 +4072,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793657883";
+const VERSAO="1793659274";
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol))return;
   fetch(location.pathname+"?nc="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.text():"").then(t=>{
@@ -4454,7 +4458,7 @@ function somRoleta(){if(!SOM.ctx||SOM.mudo)return;const t=SOM.ctx.currentTime;if
 /* regras do jogo (02/11): tudo o que existe no jogo, em seções; abre pela capa e pelas Configurações */
 const REGRAS=[
  ["🎯","Objetivo",["Você é o dono do clube: cria o time, começa na terceira divisão e leva o clube até a elite do país e às copas continentais (Libertadores ou Champions).","Os primeiros colocados sobem de divisão (no Brasil, os 4 primeiros) e os últimos caem. Subir deixa o elenco um pouco mais forte; cair, um pouco mais fraco."]],
- ["⚽","Partidas",["Antes da 1ª rodada de cada temporada tem um amistoso de preparação.","Dá para assistir ao vivo (velocidade 1×, 2× e, a partir do nível 20, 3×), pausar, substituir, mudar formação, estilo e posição dos jogadores no campinho. Ou simular sem assistir, pagando uma taxa.","Na partida acontecem VAR, pênaltis, faltas, cartões, acréscimos e pausa para hidratação. No mata-mata, empate vai para os pênaltis: você escolhe os 5 batedores.","Comandos do técnico (modo manual): gritos como atacar ou segurar mudam de verdade a chance de gol, mas cansam os jogadores."]],
+ ["⚽","Partidas",["Antes da 1ª rodada de cada temporada tem um amistoso de preparação.","Dá para assistir ao vivo (velocidade 1×, 2× e, a partir do nível 20, 3×), pausar, substituir, mudar formação, estilo e posição dos jogadores no campinho. Ou simular sem assistir, pagando uma taxa.","Clássico: jogo contra um time do mesmo estado (ou região) da cidade do seu clube. Vitória no clássico vale o prêmio da partida ×3. Vale na Série C, B e A.","Na partida acontecem VAR, pênaltis, faltas, cartões, acréscimos e pausa para hidratação. No mata-mata, empate vai para os pênaltis: você escolhe os 5 batedores.","Comandos do técnico (modo manual): gritos como atacar ou segurar mudam de verdade a chance de gol, mas cansam os jogadores."]],
  ["🔋","Energia, lesões e cartões",["A energia cai durante o jogo (quem tem mais Preparo físico cansa menos) e volta a 100% antes de cada partida.","Lesionado fica fora alguns jogos; expulso ou com cartões acumulados fica suspenso."]],
  ["🏋️","Pontos de treino",["Servem para evoluir os jogadores: cada ponto no atributo principal dá +1 de força (metade disso acima de 85).","Bola Dourada: só em vitória de partida do campeonato (liga). Quanto mais gols, maior a chance: 1 gol = 10% (1 ponto) · 2 gols = 20% (1) · 3 gols = 30% (1) · 4 gols = 30% (2 pontos) · 5 a 7 gols = 50% (2) · 8 ou mais = 50% (3 pontos).","No fim do campeonato, os 3 primeiros também ganham pontos de treino.","Toque na bola para estourar e distribua os pontos em sequência. Também dá para treinar habilidades especiais: cobrador de pênaltis, de faltas, pegador de pênaltis e reflexos."]],
  ["🛒","Mercado e loja",["A loja renova a cada 2 horas, com jogadores e técnicos. Às vezes aparece uma oportunidade com bom preço ou um craque em destaque de time grande.","Lendas: pagas com cupons dourados ou com muito dinheiro. Têm passivas especiais.","Na janela de transferências são até 3 contratações. Jogador forte pode recusar clube de divisão baixa.","Outros clubes mandam propostas pelos seus jogadores (caixa de entrada ✈️): você vende ou empresta."]],
@@ -5283,8 +5287,8 @@ function renderCriacao(){
   if(p===1)h+=`<div class="marca">Funde seu<br><em>clube</em></div><p>Funde um clube, comece na terceira divisão do seu país e suba até a elite. Lá em cima, dispute a Libertadores ou a Champions League.</p>`;
   h+=`<ol class="passos">${PASSOS.map((n,i)=>`<li aria-current="${i+1===p?"step":"false"}" class="${i+1<p?"feito":""}"><b>${i+1}</b>${n}</li>`).join("")}</ol>`;
   if(p===1){
-    h+=`<label class="campo"><span>Nome do time</span><input type="text" id="w-nome" maxlength="28" placeholder="Ex.: Esporte Clube Ventania" value="${esc(W.nome)}"></label>
-    <div class="dupla"><label class="campo"><span>Seu nome (dono do clube)</span><input type="text" id="w-tec" maxlength="24" placeholder="Ex.: Carlos" value="${esc(W.tec)}"></label>
+    h+=`<label class="campo"><span>Seu nome (dono do clube)</span><input type="text" id="w-tec" maxlength="24" placeholder="Ex.: Carlos" value="${esc(W.tec)}"></label>
+    <div class="dupla"><label class="campo"><span>Nome do time</span><input type="text" id="w-nome" maxlength="28" placeholder="Ex.: Esporte Clube Ventania" value="${esc(W.nome)}"></label>
     <div class="campo"><span class="rot-info"><label for="w-sigla">Sigla</label><button type="button" class="info-bt" data-a="infosigla" aria-label="Para que serve a sigla">i</button></span><input type="text" id="w-sigla" maxlength="3" placeholder="${esc((W.nome?siglaDe(W.nome):"ECV").slice(0,3))}" value="${esc(W.sigla)}" style="text-transform:uppercase"></div></div>
 `;
   }else if(p===2){
@@ -5295,7 +5299,10 @@ function renderCriacao(){
       <b class="pais-nome">${P.nome}</b>
       <span class="pais-desc">Começa na <strong>${P.ligas[2]}</strong><br>Sobe para ${P.ligas[1]} e ${P.ligas[0]}<br>Copa continental: ${COPAS[P.cont].main}</span>
       <span class="pais-ok">${!paisLivre(k)?`🔒 Libera no nível ${PAIS_NIVEL[k]}`:W.pais===k?"Selecionado":"Toque para escolher"}</span></button>`}).join("")}</div>
-    <div class="pontos-car">${ks.map(k=>`<i class="${W.pais===k?"on":""}" data-k="${k}"></i>`).join("")}</div>`;
+    <div class="pontos-car">${ks.map(k=>`<i class="${W.pais===k?"on":""}" data-k="${k}"></i>`).join("")}</div>
+    <div class="cid-box"><h2 style="margin:14px 0 2px">Cidade do clube</h2><p class="muted peq" style="margin:0 0 8px">Os times do mesmo ${W.pais==="BRA"?"estado":"região"} serão seus <b>clássicos</b>: vitória vale prêmio triplo.</p>
+      <input type="search" id="w-cid" autocomplete="off" placeholder="Digite o nome da cidade" value="${W.cidade&&W.cidade.p===W.pais?esc(W.cidade.txt):""}" oninput="buscaCidade(this.value)">
+      <div class="cid-res" id="w-cid-res"></div>${W.cidade&&W.cidade.p===W.pais?`<p class="cid-ok">✓ ${esc(W.cidade.txt)}</p>`:""}</div>`;
   }else if(p===3){
     h+=editorEscudo(W.escudo,W.nome.trim()||"Seu Clube");
   }else if(p===4){
@@ -5344,7 +5351,20 @@ function ligarCarrossel(){
 const PAIS_NIVEL={BRA:1,ARG:10,GER:15,FRA:20,ENG:25,ESP:30};
 function nivelMax(){let n=1;try{n=+localStorage.getItem("fut-nivmax")||1}catch(e){}const g=G&&G.perfil&&G.perfil.nivel||1;if(g>n){n=g;try{localStorage.setItem("fut-nivmax",n)}catch(e){}}return n}
 const paisLivre=k=>nivelMax()>=(PAIS_NIVEL[k]||1);
+/* cidade do clube (02/11): banco dados/cidades.js (CIDADES, só na criação) e região dos clubes dados/regioes.js (REGIAO_CLUBE) */
+function carregarCidades(cb){if(typeof CIDADES!=="undefined"){cb&&cb();return}if(window._cidCarr){(window._cidCb=window._cidCb||[]).push(cb);return}window._cidCarr=1;window._cidCb=[cb];
+  const sc=document.createElement("script");sc.src="dados/cidades.js?v=b8589b4f";sc.onload=()=>{(window._cidCb||[]).forEach(f=>f&&f())};document.head.appendChild(sc)}
+const semAcento=t=>String(t).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+function regiaoNome(p,r){return p==="BRA"&&typeof CIDADES!=="undefined"&&CIDADES.BRA.nomes[r]||r}
+function buscaCidade(q){const box=$("#w-cid-res");if(!box||!W)return;const t=semAcento(q.trim());if(t.length<2){box.innerHTML="";return}
+  carregarCidades(()=>{const D=CIDADES[W.pais];if(!D)return;const pre=[],meio=[];
+    for(const [n,ri] of D.c){const k=semAcento(n);if(k.startsWith(t))pre.push([n,ri]);else if(pre.length<10&&k.includes(t))meio.push([n,ri]);if(pre.length>=10)break}
+    const L=pre.concat(meio).slice(0,10);W._cid=L;
+    box.innerHTML=L.length?L.map(([n,ri],i)=>`<button type="button" data-a="wcid" data-v="${i}"><b>${esc(n)}</b>, ${esc(regiaoNome(W.pais,D.r[ri]))}</button>`).join(""):'<p class="muted peq">Nenhuma cidade encontrada.</p>'})}
+function regiaoDe(c){if(!c)return null;if(c.user)return G.cidade&&G.cidade.r||null;const P=typeof REGIAO_CLUBE!=="undefined"&&REGIAO_CLUBE[c.pais||G.country];return P&&P[c.name]||null}
+function classicoCom(adv){if(!adv||adv.user||!G.cidade)return false;const r=regiaoDe(adv);return !!r&&r===G.cidade.r&&(adv.pais||G.country)===G.country}
 function selecionarPais(k){
+  if(W.pais!==k&&W.cidade){W.cidade=null;const i=$("#w-cid");if(i)i.value="";const r=$("#w-cid-res");if(r)r.innerHTML="";const ok=document.querySelector(".cid-ok");if(ok)ok.remove()}
   W.pais=k;
   document.querySelectorAll(".pais-card").forEach(c=>{const on=c.dataset.v===k;c.setAttribute("aria-pressed",on);if(PAIS_NIVEL[c.dataset.v]&&!paisLivre(c.dataset.v))return;c.querySelector(".pais-ok").textContent=on?"Selecionado":"Toque para escolher"});
   document.querySelectorAll(".pontos-car i").forEach(i=>i.classList.toggle("on",i.dataset.k===k));
@@ -7314,8 +7334,9 @@ const MESES=["janeiro","fevereiro","março","abril","maio","junho","julho","agos
 function fundacao(){const c=G.clubs[G.user.club];
   if(!G.fundado){const h=[...c.name].reduce((a,x)=>a*31+x.charCodeAt(0),7)>>>0,ano=(G.history&&G.history[0]&&G.history[0].y)||G.year;G.fundado={d:1+h%28,m:(h>>>5)%12,a:ano};salvar()}
   const f=G.fundado;return `${f.d} de ${MESES[f.m]} de ${f.a}`}
-function ehClassico(m){const uid=G.user.club,r=rivalDe(G.clubs[uid]);return !!(r&&(m.h===r.id||m.a===r.id)&&(m.h===uid||m.a===uid))}
-const cardClassico=()=>`<div class="classico"><i>⚡</i> Clássico contra o rival <i>⚡</i><small>Vitória vale bônus de partida triplo</small></div>`;
+function ehClassico(m){const uid=G.user.club;if(!(m.h===uid||m.a===uid))return false;
+  if(G.cidade)return classicoCom(G.clubs[m.h===uid?m.a:m.h]);const r=rivalDe(G.clubs[uid]);return !!(r&&(m.h===r.id||m.a===r.id))}
+const cardClassico=()=>`<div class="classico"><i>⚡</i> CLÁSSICO${G.cidade?` ${G.country==="BRA"?"ESTADUAL":"REGIONAL"}`:""} <i>⚡</i><small>${G.cidade?`Duelo de ${esc(G.cidade.rn)} · `:""}vitória vale prêmio da partida ×3</small></div>`;
 function rivalDe(c){const L=(G.tiers[c.tier]||[]).filter(id=>id!==c.id);if(!L.length)return null;
   if(!G.rival||!L.includes(G.rival)){const h=[...c.name].reduce((a,x)=>a*17+x.charCodeAt(0),3)>>>0;G.rival=L.slice().sort()[h%L.length]}
   return G.clubs[G.rival]}
@@ -7347,7 +7368,7 @@ function heroiClube(){
     <div class="hc-linhas">
       <div><small>Estádio</small><b>${esc(estadioDe(c))}</b><span>${c.cap.toLocaleString("pt-BR")} lugares</span></div>
       <div><small>Dono</small><b>${esc(G.user.coach||"—")}</b><span>${temp}ª temporada</span></div>
-      ${rv?`<div data-a="vertime" data-v="${rv.id}" style="cursor:pointer"><small>Maior rival</small><b class="hc-rival">${marcaDe(rv,22)} ${esc(rv.name)}</b><span>Clássico da ${esc(nomeLiga(c.tier))}</span></div>`:""}
+      ${G.cidade?(()=>{const n=(G.tiers[c.tier]||[]).filter(id=>classicoCom(G.clubs[id])).length;return `<div><small>Cidade</small><b>${esc(G.cidade.n)}</b><span>${esc(G.cidade.rn)} · ${n} clássico${n===1?"":"s"} na ${esc(nomeLiga(c.tier))}</span></div>`})():rv?`<div data-a="vertime" data-v="${rv.id}" style="cursor:pointer"><small>Maior rival</small><b class="hc-rival">${marcaDe(rv,22)} ${esc(rv.name)}</b><span>Clássico da ${esc(nomeLiga(c.tier))}</span></div>`:""}
       <div><small>Técnico</small><b>${esc(G.tec.n)}</b><span>${G.tec.interino?"Interino":"Nível "+nivelTec(G.tec.q)}</span></div>
     </div>
     <div class="hc-unis">${uniformeSVG(c.unis[0],G.patro?G.patro.nome:"",58)}${uniformeSVG(c.unis[1],G.patro?G.patro.nome:"",58)}<small>Uniformes 1 e 2</small></div>
@@ -7508,11 +7529,19 @@ function acao(a,v,el){
     case "aba":aba=v;expandido=null;if(v==="liga"&&el&&nav.contains(el))ligaAba="noticias"; // Liga abre nas notícias
     if(v==="mercado"&&el&&nav.contains(el))merc={pos:"",min:0,orig:"pais"};if(v==="inicio"&&el&&nav.contains(el))abertura=true; // Início na barra de baixo volta pra capa
 if(v!=="tabela"){}window.scrollTo(0,0);break;
+    case "wcid":{const x=W&&W._cid&&W._cid[+v];if(!x)return;const D=CIDADES[W.pais],r=D.r[x[1]],rn=regiaoNome(W.pais,r);
+      W.cidade={n:x[0],r,rn,p:W.pais,txt:`${x[0]}, ${rn}`};const i=$("#w-cid");if(i)i.value=W.cidade.txt;const b=$("#w-cid-res");if(b)b.innerHTML="";
+      let ok=document.querySelector(".cid-ok");if(!ok){ok=document.createElement("p");ok.className="cid-ok";document.querySelector(".cid-box").appendChild(ok)}ok.textContent="✓ "+W.cidade.txt;return;}
     case "wseguir":{
       guardarW();
       if(W.passo===1&&W.nome.trim().length<3){toastErro("Dê ao time um nome com pelo menos 3 letras.");return}
       if(W.passo===1&&W.tec.trim().length<2){toastErro("Preencha o seu nome (dono do clube).");return}
       if(W.passo===1&&!/^[A-Z0-9]{3}$/.test(W.sigla.trim())){toastErro("A sigla precisa ter 3 letras.");return}
+      if(W.passo===1&&W.nomeOk!==W.tec.trim()){const nm=W.tec.trim(),c=conta(); // nome do dono é único no jogo
+        fetch(AMG_URL+"/nomeLivre",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({nome:nm,id:c?c.id:""})}).then(r=>r.json())
+          .then(j=>{if(j.livre){W.nomeOk=nm;acao("wseguir")}else toastErro(`O nome "${nm}" já é usado por outro jogador. Escolha outro.`)})
+          .catch(()=>{W.nomeOk=nm;acao("wseguir")});return}
+      if(W.passo===2&&!(W.cidade&&W.cidade.p===W.pais)){toastErro("Escolha a cidade do clube.");const i=$("#w-cid");if(i)i.focus();return}
       if(W.passo===2&&!paisLivre(W.pais)){toastErro(`${PAISES[W.pais].nome} libera no nível ${PAIS_NIVEL[W.pais]}. Você está no nível ${nivelMax()}.`);return}
       if(W.passo===3){const e=W.escudo,[u1,u2]=W.unis; // ao chegar no uniforme: 1 = cores do escudo, 2 = invertido (2ª cor predominante)
         [u1,u2].forEach(uniNovo);Object.assign(u1,{camisa:e.c1,detalhe:e.c2,d2:e.c3});aplicarModeloUni(u1,u1.estilo);
@@ -7520,7 +7549,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
       if(W.passo<5){W.passo++;window.scrollTo(0,0);break}
       const sig=(W.sigla||siglaDe(W.nome)).trim().toUpperCase().slice(0,3);
       try{localStorage.removeItem(CHAVE_W)}catch(e){}novoJogo({pais:W.pais,name:W.nome.trim(),short:sig,coach:W.tec.trim()||"Professor",escudo:{...W.escudo},unis:W.unis.map(x=>({...x}))});uniSel=0;
-      {const c=G.clubs[G.user.club];c.estadio=(W.estadio||"").trim()||`Arena ${c.name}`;c.cap=ESTADIO_INICIAL;G.reformas=0;G.cash=caixaFundacao(W.pais)-precoEstadioFund(W.pais);}
+      G.cidade=W.cidade?{n:W.cidade.n,r:W.cidade.r,rn:W.cidade.rn}:null;{const c=G.clubs[G.user.club];c.estadio=(W.estadio||"").trim()||`Arena ${c.name}`;c.cap=ESTADIO_INICIAL;G.reformas=0;G.cash=caixaFundacao(W.pais)-precoEstadioFund(W.pais);}
       aba="inicio";W=null;salvar();window.scrollTo(0,0);break;}
     case "wvoltar":guardarW();W.passo--;window.scrollTo(0,0);break;
     case "compraest":guardarW();W.estComprado=true;window.scrollTo(0,0);setTimeout(confete,60);break;
