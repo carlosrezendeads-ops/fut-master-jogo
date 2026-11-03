@@ -1464,7 +1464,7 @@ const MANUT=false;
 <script src="dados/elencos.js?v=bb464417"></script>
 <script src="dados/regioes.js?v=1d168c1a"></script><script src="dados/pes.js?v=266905da"></script>
 <script src="img/escudos-img.js?v=df90de51"></script>
-<script src="dados/idiomas.js?v=d09cf4d4"></script>
+<script src="dados/idiomas.js?v=f248f583"></script>
 <script>
 /* 02/11: todos começam do zero (limpeza única "R1" em cada aparelho): carreiras, perfil, nível, conta do ranking e rascunho; mantém som/vibração/notificações */
 (function(){try{const R="R1";if(localStorage.getItem("fut-reset")===R)return;
@@ -2703,7 +2703,7 @@ function somarXP(qtd){
   return {antes,nivel:P.nivel,premio:dinheiroGanho};
 }
 // Bola Dourada (Carlos, 02/11): só com vitória; gols do seu time → [mínimo de gols, chance, pontos de treino]
-const BOLA_TAB=[[8,.5,3],[5,.5,2],[4,.3,2],[3,.3,1],[2,.2,1],[1,.1,1]];
+const BOLA_TAB=[[8,.5,3],[5,.4,2],[4,.3,2],[3,.25,1],[2,.15,1]]; // 02/11 (Vitor): 1 gol não dá bola; chances menores para os pontos não deixarem o time forte rápido demais
 function bolaTabela(gf,gs){if(!(gf>gs))return null;const l=BOLA_TAB.find(x=>gf>=x[0]);return l?[l[1],l[2]]:null}
 function ganharXP(gf,gs,dobro,liga){
   const P=perfil(),r=gf>gs?"v":gf<gs?"d":"e",ganho=XP_RES[r]*(dobro?2:1);
@@ -4109,7 +4109,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793665372";
+const VERSAO="1793665525";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -4503,7 +4503,7 @@ const REGRAS=[
  ["🎯","Objetivo",["Você é o dono do clube: cria o time, começa na terceira divisão e leva o clube até a elite do país e às copas continentais (Libertadores ou Champions).","Os primeiros colocados sobem de divisão (no Brasil, os 4 primeiros) e os últimos caem. Subir deixa o elenco um pouco mais forte; cair, um pouco mais fraco."]],
  ["⚽","Partidas",["Antes da 1ª rodada de cada temporada tem um amistoso de preparação.","Dá para assistir ao vivo (velocidade 1×, 2× e, a partir do nível 20, 3×), pausar, substituir, mudar formação, estilo e posição dos jogadores no campinho. Ou simular sem assistir, pagando uma taxa que sobe a cada simulação e volta ao preço inicial todo dia, à meia-noite.","Clássico: jogo contra um time do mesmo estado (ou região) da cidade do seu clube. Vitória no clássico vale o prêmio da partida ×3. Vale na Série C, B e A.","Na partida acontecem VAR, pênaltis, faltas, cartões, acréscimos e pausa para hidratação. No mata-mata, empate vai para os pênaltis: você escolhe os 5 batedores.","Comandos do técnico (modo manual): gritos como atacar ou segurar mudam de verdade a chance de gol, mas cansam os jogadores."]],
  ["🔋","Energia, lesões e cartões",["A energia cai durante o jogo (quem tem mais Preparo físico cansa menos) e volta a 100% antes de cada partida.","Lesionado fica fora alguns jogos; expulso ou com cartões acumulados fica suspenso."]],
- ["🏋️","Pontos de treino",["Servem para evoluir os jogadores: cada ponto no atributo principal dá +1 de força (metade disso acima de 85).","Bola Dourada: só em vitória de partida do campeonato (liga). Quanto mais gols, maior a chance: 1 gol = 10% (1 ponto) · 2 gols = 20% (1) · 3 gols = 30% (1) · 4 gols = 30% (2 pontos) · 5 a 7 gols = 50% (2) · 8 ou mais = 50% (3 pontos).","No fim do campeonato, os 3 primeiros também ganham pontos de treino.","Toque na bola para estourar e distribua os pontos em sequência. Também dá para treinar habilidades especiais: cobrador de pênaltis, de faltas, pegador de pênaltis e reflexos."]],
+ ["🏋️","Pontos de treino",["Servem para evoluir os jogadores: cada ponto no atributo principal dá +1 de força (metade disso acima de 85).","Bola Dourada: só em vitória de partida do campeonato (liga). Quanto mais gols, maior a chance: 2 gols = 15% (1 ponto) · 3 gols = 25% (1) · 4 gols = 30% (2 pontos) · 5 a 7 gols = 40% (2) · 8 ou mais = 50% (3 pontos). Vitória por 1 gol não dá bola.","No fim do campeonato, os 3 primeiros também ganham pontos de treino.","Toque na bola para estourar e distribua os pontos em sequência. Também dá para treinar habilidades especiais: cobrador de pênaltis, de faltas, pegador de pênaltis e reflexos."]],
  ["🛒","Mercado e loja",["A loja renova a cada 2 horas, com jogadores e técnicos. Às vezes aparece uma oportunidade com bom preço ou um craque em destaque de time grande.","Lendas: pagas com cupons dourados ou com muito dinheiro. Têm passivas especiais.","Na janela de transferências são até 3 contratações. Jogador forte pode recusar clube de divisão baixa.","Outros clubes mandam propostas pelos seus jogadores (caixa de entrada ✈️): você vende ou empresta."]],
  ["📋","Técnicos",["O técnico dá bônus de ataque e defesa ao time todo e acelera a evolução dos jogadores. Cada um tem passivas (efeitos em certas situações do jogo).","Para contratar paga as luvas; trocar de técnico custa 6 meses de salário do atual. Toque em qualquer técnico para ver o perfil completo."]],
  ["📝","Contratos",["Todo jogador tem data de fim de contrato. Quando vence, o diretor avisa: renove ou venda, senão ele sai de graça no fim da temporada.","Jogadores se aposentam entre 36 e 40 anos."]],
@@ -6792,7 +6792,7 @@ function barrasAtr(p,botoes){
     return `<div class="atr"><span>${ic} ${n}</span><div class="atr-b"><i style="width:${v}%;background:${corAtr(v)}"></i></div><b class="num">${v}${ex?`<em>+${ex}</em>`:""}</b>${botoes?`<button class="btn mini atr-mais" data-a="ptsadd" data-v="${p.id}|${k}"${P[k]>0&&v<99?"":" disabled"} aria-label="Usar 1 ponto de ${n}">+${P[k]>0?`<small>${P[k]}</small>`:""}</button>`:""}</div>`}).join("")}</div>`}
 function quadroPontos(){
   const P=pontosTreino(),bolas=G.user.bolas||0;
-  return `<h2>Pontos de Treino</h2><div class="cartao secao pts-quadro"><p class="muted peq" style="margin:0">Toda vitória no campeonato pode dar uma Bola Dourada. Ao estourar, ela dá pontos para evoluir seus jogadores. Quanto mais gols, maior a chance: 1 gol = 10% (1 ponto) · 2 gols = 20% (1 ponto) · 3 gols = 30% (1 ponto) · 4 gols = 30% (2 pontos) · 5 a 7 gols = 50% (2 pontos) · 8 gols ou mais = 50% (3 pontos). No fim do campeonato, os 3 primeiros também ganham pontos. Toque num ponto colorido para escolher quem recebe.${bolas?` <b style="color:var(--canario)">Você tem ${bolas} bola${bolas>1?"s":""} esperando!</b>`:""}</p>
+  return `<h2>Pontos de Treino</h2><div class="cartao secao pts-quadro"><p class="muted peq" style="margin:0">Toda vitória no campeonato pode dar uma Bola Dourada. Ao estourar, ela dá pontos para evoluir seus jogadores. Quanto mais gols, maior a chance: 2 gols = 15% (1 ponto) · 3 gols = 25% (1 ponto) · 4 gols = 30% (2 pontos) · 5 a 7 gols = 40% (2 pontos) · 8 gols ou mais = 50% (3 pontos). Vitória por 1 gol não dá bola. No fim do campeonato, os 3 primeiros também ganham pontos. Toque num ponto colorido para escolher quem recebe.${bolas?` <b style="color:var(--canario)">Você tem ${bolas} bola${bolas>1?"s":""} esperando!</b>`:""}</p>
   <div class="pts-grade">${ATRS.map(([k,n,ic])=>`<button class="pts-chip${P[k]>0?" tem":""}" data-a="ptstipo" data-v="${k}"><span class="pts-ic">${ic}</span><b class="num">${P[k]||0}</b><small>${n}</small></button>`).join("")}</div></div>`}
 // bolinha do jogador igual à do campinho: rosto no círculo com a cor da camisa e a posição embaixo
 function bolinhaJog(p){const u=unisDe(G.clubs[G.user.club])[0],[bg,fg]=({GOL:["#5b4a12","#ffe08a"],LAT:["#14405e","#a8dcff"],ZAG:["#14405e","#a8dcff"],VOL:["#1f5a33","#b9f5cc"],MEI:["#1f5a33","#b9f5cc"],ATA:["#5e1f1a","#ffb8ad"]})[p.pos]||["#1f5a33","#b9f5cc"];
