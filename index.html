@@ -548,6 +548,17 @@ nav.abas[hidden]{display:none}
 .pd-premio-foto i{position:absolute;right:-8px;bottom:-4px;font-style:normal;font-size:30px}
 .pd-premio .pd-st{justify-content:center;margin:6px 0}
 .pd-ganhos{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:10px 0}.pd-ganhos span{padding:8px;border-radius:10px;background:rgba(255,210,63,.12);border:1px solid rgba(255,210,63,.35);font-weight:700}
+.chat-lista{display:flex;flex-direction:column;gap:8px;height:min(52vh,420px);overflow-y:auto;padding:4px 2px;margin-bottom:8px}
+.chat-vazio{text-align:center;margin:auto}
+.chat-msg{max-width:84%;align-self:flex-start;padding:8px 10px;border-radius:4px 14px 14px 14px;background:var(--gramado-2);border:1px solid var(--gramado-3)}
+.chat-msg.meu{align-self:flex-end;border-radius:14px 4px 14px 14px;background:linear-gradient(180deg,#1a4f8f,#143e72);border-color:#2b6cb8}
+.chat-quem{display:flex;align-items:center;gap:6px;background:none;border:0;padding:0;color:#ffd23f;font:inherit;font-size:12.5px;cursor:pointer}
+.chat-quem .rk-foto{flex:none}.chat-msg.meu .chat-quem{color:#9fdcff}
+.chat-msg p{margin:4px 0 2px;font-size:15px;line-height:1.35;word-break:break-word}
+.chat-msg small{display:block;text-align:right;font-size:10.5px;color:var(--cal-2)}
+.chat-del{background:none;border:0;padding:0;cursor:pointer;font-size:12px}
+.chat-env{display:flex;gap:6px}.chat-env input{flex:1;min-width:0;padding:11px 12px;border-radius:12px;border:1.5px solid var(--gramado-3);background:rgba(4,10,30,.85);color:#fff;font:inherit;font-size:16px}
+.chat-dot{display:inline-block;width:9px;height:9px;margin-left:6px;border-radius:50%;background:#ff4d4d;box-shadow:0 0 6px #ff4d4d;vertical-align:2px}
 .rk-folha .seg{margin:4px 0 6px}
 .rk-pos{display:flex;flex-direction:column;align-items:center;line-height:1.1}
 .rk-seta{font-style:normal;font-size:10px;font-weight:700}.rk-seta.sobe{color:#3ddc84}.rk-seta.desce{color:#ff5a5a}.rk-seta.igual{color:var(--cal-2)}
@@ -3122,7 +3133,7 @@ function fotoMudou(){if(AMG.rank)AMG.rank.forEach(x=>{if(x.eu)x.av=meuAv()});AMG
 function rkFoto(av,nome,px){px=px||40;const src=!av?"":av.startsWith("a:")?(typeof AVATARES!=="undefined"?AVATARES[+av.slice(2)]||"":""):av;
   return src?`<img class="rk-foto" src="${src}" alt="" style="width:${px}px;height:${px}px">`:`<span class="rk-foto rk-letra" style="width:${px}px;height:${px}px;font-size:${Math.round(px*.42)}px">${esc((nome||"?").trim()[0]||"?").toUpperCase()}</span>`}
 function avVisto(){try{return +localStorage.getItem("fut-amg-av")||0}catch(e){return 0}}
-function amgNovos(){const E=AMG.est;if(!E)return 0;const v=avVisto();return (E.avisos||[]).filter(a=>a.n>v).length}
+function amgNovos(){const E=AMG.est;if(!E)return 0;const v=avVisto();return (E.avisos||[]).filter(a=>a.n>v).length+(chatNovas()?1:0)}
 function amgBadge(){const n=amgNovos();return n?`<span class="msg-badge">${Math.min(n,99)}</span>`:""}
 async function amgSync(forcar){if(!G||!G.user)return;if(AMG.carregando){if(forcar)AMG.denovo=1;return}if(location.protocol==="file:")return; // 02/11: testes locais não entram no ranking
 if(!forcar&&Date.now()-AMG.ult<55000)return;AMG.carregando=true;
@@ -3130,14 +3141,31 @@ if(!forcar&&Date.now()-AMG.ult<55000)return;AMG.carregando=true;
     const av=await avRanking(),tits=(G.titles||[]).slice(),PF=perfil(),ttit=tits.reduce((x,t)=>x+pontosTitulo(t),0)+(PF.coroasPremio||0),tjog=TACAS_JOGO.v*(PF.v||0)+TACAS_JOGO.e*(PF.e||0)+TACAS_JOGO.d*(PF.d||0)+TACAS_JOGO.wo*(PF.wo||0)+TACAS_JOGO.rebaix*(PF.rebaix||0),tp=Math.max(0,ttit+tjog),nv=PF.nivel;
     const j=await amgPost("entrar",{nome:G.user.coach||"Treinador",clube:c.name,nivel:nv,perfil:p===AMG.pEnv?undefined:p,av:av===AMG.avEnv?undefined:av,tits,tp,ttit,tjog,v:PF.v||0,e:PF.e||0,gp:PF.gp||0,forca:forcaXI(),titulo:tituloNivel(nv)});
     if(!j.id)throw 0;if(j.tok)guardarConta({id:j.id,tok:j.tok});else if(!G.conta)G.conta=conta();
-    AMG.pEnv=p;AMG.avEnv=av;AMG.est=j;if(j.ranking){AMG.rank=j.ranking;rkPassou(j.ranking)}if(j.podio){AMG.podio=j.podio;setTimeout(premioPodio,300)}AMG.ult=Date.now();AMG.ok=true}catch(e){AMG.ok=false}
+    AMG.pEnv=p;AMG.avEnv=av;AMG.est=j;if(j.chatUlt!=null)AMG.chatUlt=j.chatUlt;if(j.ranking){avisoOnline(j.ranking);AMG.rank=j.ranking;rkPassou(j.ranking)}if(j.podio){AMG.podio=j.podio;setTimeout(premioPodio,300)}AMG.ult=Date.now();AMG.ok=true}catch(e){AMG.ok=false}
   AMG.carregando=false;if(AMG.denovo){AMG.denovo=0;setTimeout(()=>amgSync(true),50)}const b=document.querySelector(".amg-btn");if(b)b.innerHTML=ICO_AMIGOS+amgBadge();
-  if(document.querySelector(".amg-folha")&&AMG.aba!=="add")modalAmigos(true)}
+  if(document.querySelector(".amg-folha")&&AMG.aba!=="add"&&AMG.rkAba!=="chat")modalAmigos(true)}
 setInterval(()=>{if(document.visibilityState==="visible")amgSync()},60000);
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")amgSync()});
 const idTxt=id=>"#"+id;
 const haQuanto=t=>{const m=Math.round((Date.now()-t)/60000);return m<1?"agora":m<60?`há ${m} min`:m<1440?`há ${Math.round(m/60)} h`:`há ${Math.round(m/1440)} dia${m<2880?"":"s"}`};
 function cardAmigo(a,botoes){return `<div class="amg-card"><i class="amg-dot${a.on?" on":""}" title="${a.on?"Online":"Offline"}"></i><span class="amg-av">${esc((a.nome||"?").trim()[0]||"?").toUpperCase()}</span><span class="amg-info"><b>${esc(a.nome)}</b><small>${esc(a.clube||"")} · Nível ${a.nivel||1}</small><small class="${a.on?"amg-on":""}">${a.on?"Online":"Offline"} · ${idTxt(a.id)}</small></span>${botoes}</div>`}
+/* chat do ranking (02/11): grupo único; balão com foto e nome (tocáveis → perfil); bolinha de mensagem nova; Carlos apaga */
+const chatVisto=()=>{try{return +localStorage.getItem("fut-chat-visto")||0}catch(e){return 0}};
+const chatNovas=()=>(AMG.chatUlt||0)>chatVisto();
+/* 02/11: aviso curto quando alguém do ranking entra no jogo (não avisa na 1ª leitura nem durante a partida) */
+function avisoOnline(R){const antes=AMG.onAntes;AMG.onAntes=new Set(R.filter(x=>x.on&&!x.eu).map(x=>x.id));if(!antes||(G&&G.live))return;
+  const novos=R.filter(x=>x.on&&!x.eu&&!antes.has(x.id));if(!novos.length)return;
+  const n=novos.map(x=>x.nome);toast(`🟢 ${n.length===1?n[0]+" entrou no jogo":n.length===2?n.join(" e ")+" entraram no jogo":n[0]+" e mais "+(n.length-1)+" entraram no jogo"}`)}
+function chatMarcarVisto(n){try{if(n>chatVisto())localStorage.setItem("fut-chat-visto",String(n))}catch(e){}const b=document.querySelector(".amg-btn");if(b)b.innerHTML=ICO_AMIGOS+amgBadge()}
+function chatHTML(){const L=AMG.chat||[],c=conta(),eu=c&&c.id;
+  if(!L.length)return `<p class="muted chat-vazio">${AMG.chatOk===false?"Sem conexão com o servidor.":"Ninguém falou ainda. Mande a primeira mensagem! 👋"}</p>`;
+  return L.map(m=>{const meu=m.de===eu,h=new Date(m.t);return `<div class="chat-msg${meu?" meu":""}"><button class="chat-quem" data-a="amgver" data-v="${esc(m.de)}">${rkFoto(meu?meuAv():m.av,m.nome,26)}<b>${esc(m.nome||"Jogador")}</b></button><p>${esc(m.txt)}</p><small>${String(h.getHours()).padStart(2,"0")}:${String(h.getMinutes()).padStart(2,"0")}${AMG.chatAdmin?` · <button class="chat-del" data-a="chatdel" data-v="${m.n}" aria-label="Apagar mensagem">🗑️</button>`:""}</small></div>`}).join("")}
+function chatDesenha(){const box=$("#chat-lista");if(!box)return;const fim=box.scrollHeight-box.scrollTop-box.clientHeight<60;box.innerHTML=chatHTML();if(fim||!AMG.chatRolou){box.scrollTop=box.scrollHeight;AMG.chatRolou=1}}
+async function chatPuxa(){if(!document.querySelector("#chat-lista")){clearInterval(AMG.chatT);AMG.chatT=null;return}
+  const j=await amgPost("chatLer",{}).catch(()=>({erro:1}));if(j.erro){AMG.chatOk=false;chatDesenha();return}
+  AMG.chatOk=true;AMG.chat=j.msgs||[];AMG.chatAdmin=!!j.admin;AMG.chatUlt=j.ultimo||0;chatMarcarVisto(AMG.chatUlt);chatDesenha()}
+async function chatEnviar(){const i=$("#chat-txt");if(!i)return;const t=i.value.trim();if(!t)return;
+  const j=await amgPost("chatEnviar",{txt:t}).catch(()=>({erro:"Sem conexão com o servidor."}));if(j.erro){toastErro(j.erro);return}i.value="";AMG.chatRolou=0;chatPuxa()}
 function modalAmigos(soAtualiza){
   if(!soAtualiza)amgSync(true);
   const E=AMG.est,ab=AMG.rkAba||"geral",R0=AMG.rank;
@@ -3155,7 +3183,11 @@ function modalAmigos(soAtualiza){
     <span class="rk-pts"><b class="num"><i class="rk-cico">👑</i>${ab==="mes"?a.mtp:a.tp}</b><small>coroas</small></span></button>`).join("");
   else corpo+=`<p class="muted">${AMG.ok===false?"Sem conexão com o servidor. Confira a internet.":"Carregando o ranking..."}</p>`;
   const expl=ab==="mes"?`Quem ganhar mais coroas em <b>${mesAt}</b> é o <b>🏅 campeão do mês</b>. Zera todo dia 1. Vitória +3, empate +1, derrota −1; títulos valem muito mais.`:`Quem tem mais <b>👑 coroas</b> fica em cima. Vitória +3, empate +1, derrota −1, W.O. −3, rebaixamento −45; títulos dão muito mais (Champions 300, Série A 150). ▲▼ = posições desde segunda-feira.`;
-  const abas=[["geral","Geral"],["mes","Do mês"]].map(([k,n])=>`<button data-a="rkaba" data-v="${k}" aria-pressed="${ab===k}">${n}</button>`).join("");
+  const abas=[["geral","Geral"],["mes","Do mês"],["chat","💬 Chat"]].map(([k,n])=>`<button data-a="rkaba" data-v="${k}" aria-pressed="${ab===k}">${n}${k==="chat"&&chatNovas()&&ab!=="chat"?'<i class="chat-dot"></i>':""}</button>`).join("");
+  if(ab==="chat"){modal(`<div class="amg-folha rk-folha chat-folha"><h3>${ICO_AMIGOS} Ranking</h3><div class="seg" role="group">${abas}</div><p class="muted peq rk-expl">Converse com todo mundo que joga. Toque na foto ou no nome para ver o perfil. Seja gentil: palavrão é bloqueado.</p>
+      <div class="chat-lista" id="chat-lista">${chatHTML()}</div><div class="chat-env"><input id="chat-txt" type="text" maxlength="200" placeholder="Escreva uma mensagem..." autocomplete="off"><button class="btn prim" data-a="chatenv">Enviar</button></div>
+      <div class="botoes"><button class="btn" data-a="fechar">Fechar</button></div></div>`);
+    const i=$("#chat-txt");if(i)i.addEventListener("keydown",e=>{if(e.key==="Enter")chatEnviar()});AMG.chatRolou=0;chatDesenha();chatPuxa();if(!AMG.chatT)AMG.chatT=setInterval(chatPuxa,3000);return}
   modal(`<div class="amg-folha rk-folha"><h3>${ICO_AMIGOS} Ranking</h3><div class="seg" role="group">${abas}</div><p class="muted peq rk-expl">${expl} Toque em alguém para ver o perfil e jogar.</p><div class="amg-lista">${corpo}</div><div class="botoes"><button class="btn" data-a="fechar">Fechar</button></div></div>`);
   const b=document.querySelector(".amg-btn");if(b)b.innerHTML=ICO_AMIGOS+amgBadge()}
 async function amgBuscar(){const i=$("#amg-q"),q=(i?i.value:AMG.q).trim();AMG.q=q;if(q.replace(/^#/,"").length<2){toastErro("Digite o ID ou pelo menos 2 letras do nome.");return}
@@ -4113,7 +4145,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793672052";
+const VERSAO="1793673276";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7750,6 +7782,8 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "amigos":modalAmigos();return;
     case "rkaba":AMG.rkAba=v;modalAmigos(true);return;
     case "rkpremios":modalPremiosMes();return;
+    case "chatenv":chatEnviar();return;
+    case "chatdel":amgPost("chatApagar",{n:+v}).then(j=>{if(j.erro)toastErro(j.erro);chatPuxa()}).catch(()=>{});return;
     case "tecver":modalTec(v);return;
     case "amgaba":AMG.aba=v;AMG.busca=null;modalAmigos(true);if(v==="add"){const i=$("#amg-q");if(i){i.addEventListener("keydown",e=>{if(e.key==="Enter")acao("amgbusca")});i.focus()}}return;
     case "amgbusca":amgBuscar();return;
