@@ -3116,19 +3116,22 @@ function premioPodio(){const P=AMG.podio,c=conta();if(!P||!c||!G||G.live||abertu
     <div class="botoes"><button class="btn prim" data-a="fechar">Receber</button></div></div>`);
   if(xp&&xp.nivel>xp.antes)setTimeout(()=>{try{avisoNivel()}catch(e){}},400);amgSync(true)}
 function rkSeta(n){return !n?`<i class="rk-seta igual">–</i>`:n>0?`<i class="rk-seta sobe">▲${n}</i>`:`<i class="rk-seta desce">▼${-n}</i>`}
+/* 02/11: a própria foto vem do aparelho (aparece na hora); troca de foto manda pro servidor na hora */
+function meuAv(){return G&&(perfil().avatar||G.user.avatar)||""}
+function fotoMudou(){if(AMG.rank)AMG.rank.forEach(x=>{if(x.eu)x.av=meuAv()});AMG.ult=0;amgSync(true);const f=document.querySelector(".amg-folha");if(f&&document.querySelector(".rk-folha"))modalAmigos(true)}
 function rkFoto(av,nome,px){px=px||40;const src=!av?"":av.startsWith("a:")?(typeof AVATARES!=="undefined"?AVATARES[+av.slice(2)]||"":""):av;
   return src?`<img class="rk-foto" src="${src}" alt="" style="width:${px}px;height:${px}px">`:`<span class="rk-foto rk-letra" style="width:${px}px;height:${px}px;font-size:${Math.round(px*.42)}px">${esc((nome||"?").trim()[0]||"?").toUpperCase()}</span>`}
 function avVisto(){try{return +localStorage.getItem("fut-amg-av")||0}catch(e){return 0}}
 function amgNovos(){const E=AMG.est;if(!E)return 0;const v=avVisto();return (E.avisos||[]).filter(a=>a.n>v).length}
 function amgBadge(){const n=amgNovos();return n?`<span class="msg-badge">${Math.min(n,99)}</span>`:""}
-async function amgSync(forcar){if(!G||!G.user||AMG.carregando)return;if(location.protocol==="file:")return; // 02/11: testes locais não entram no ranking
+async function amgSync(forcar){if(!G||!G.user)return;if(AMG.carregando){if(forcar)AMG.denovo=1;return}if(location.protocol==="file:")return; // 02/11: testes locais não entram no ranking
 if(!forcar&&Date.now()-AMG.ult<55000)return;AMG.carregando=true;
   try{const c=G.clubs[G.user.club],p=perfilAmg();
     const av=await avRanking(),tits=(G.titles||[]).slice(),PF=perfil(),ttit=tits.reduce((x,t)=>x+pontosTitulo(t),0)+(PF.coroasPremio||0),tjog=TACAS_JOGO.v*(PF.v||0)+TACAS_JOGO.e*(PF.e||0),tp=ttit+tjog,nv=PF.nivel;
     const j=await amgPost("entrar",{nome:G.user.coach||"Treinador",clube:c.name,nivel:nv,perfil:p===AMG.pEnv?undefined:p,av:av===AMG.avEnv?undefined:av,tits,tp,ttit,tjog,v:PF.v||0,e:PF.e||0,gp:PF.gp||0,forca:forcaXI(),titulo:tituloNivel(nv)});
     if(!j.id)throw 0;if(j.tok)guardarConta({id:j.id,tok:j.tok});else if(!G.conta)G.conta=conta();
     AMG.pEnv=p;AMG.avEnv=av;AMG.est=j;if(j.ranking){AMG.rank=j.ranking;rkPassou(j.ranking)}if(j.podio){AMG.podio=j.podio;setTimeout(premioPodio,300)}AMG.ult=Date.now();AMG.ok=true}catch(e){AMG.ok=false}
-  AMG.carregando=false;const b=document.querySelector(".amg-btn");if(b)b.innerHTML=ICO_AMIGOS+amgBadge();
+  AMG.carregando=false;if(AMG.denovo){AMG.denovo=0;setTimeout(()=>amgSync(true),50)}const b=document.querySelector(".amg-btn");if(b)b.innerHTML=ICO_AMIGOS+amgBadge();
   if(document.querySelector(".amg-folha")&&AMG.aba!=="add")modalAmigos(true)}
 setInterval(()=>{if(document.visibilityState==="visible")amgSync()},60000);
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")amgSync()});
@@ -3146,7 +3149,7 @@ function modalAmigos(soAtualiza){
   const mesAt=mesTxt(new Date(Date.now()-3*36e5).toISOString().slice(0,7));
   if(ab==="mes")corpo+=cardPremiosMes();
   if(R&&R.length)corpo+=R.map((a,i)=>`<button class="rk-linha${a.eu?" eu":""}${i<3&&(ab==="geral"||a.mtp>0)?" top"+(i+1):""}" data-a="amgver" data-v="${a.id}">
-    <span class="rk-pos num">${i+1}º${ab==="geral"?rkSeta(a.sobe):""}</span><span class="rk-fw">${rkFoto(a.av,a.nome,44)}<i class="amg-dot${a.on?" on":""}"></i>${i===0&&(ab==="geral"||a.mtp>0)?'<i class="rk-rei" aria-label="1º lugar">👑</i>':""}${(a.coroas||[]).length?`<i class="rk-coroa" title="Campeão do mês">🏅</i>`:""}</span>
+    <span class="rk-pos num">${i+1}º${ab==="geral"?rkSeta(a.sobe):""}</span><span class="rk-fw">${rkFoto(a.eu?meuAv():a.av,a.nome,44)}<i class="amg-dot${a.on?" on":""}"></i>${i===0&&(ab==="geral"||a.mtp>0)?'<i class="rk-rei" aria-label="1º lugar">👑</i>':""}${(a.coroas||[]).length?`<i class="rk-coroa" title="Campeão do mês">🏅</i>`:""}</span>
     <span class="rk-info"><b>${esc(a.nome)}${a.eu?' <em class="rk-voce">você</em>':""}</b><small>${esc(a.clube||"")}</small>
     <small class="rk-tags"><span>Nível ${a.nivel}</span><span>Força ${a.forca||"–"}</span>${a.nt?`<span>🏆 ${a.nt}</span>`:""}</small></span>
     <span class="rk-pts"><b class="num"><i class="rk-cico">👑</i>${ab==="mes"?a.mtp:a.tp}</b><small>coroas</small>${ab==="geral"?`<small class="rk-ptsm">${Math.round(a.pts)} pts</small>`:""}</span></button>`).join("");
@@ -3169,7 +3172,7 @@ async function modalPerfilAmigo(id){
   const pos=(AMG.rank||[]).findIndex(x=>x.id===id),tits=j.tits||[];
   const grupos={};tits.forEach(t=>{const n=t.replace(/\s+\d{4}$/,"");(grupos[n]=grupos[n]||[]).push(t.slice(n.length).trim())});
   modal(`<div class="amg-folha amg-perfil">
-    <div class="rk-perfil-topo">${rkFoto(j.av,j.nome,84)}<div><h3 style="margin:0">${esc(j.nome)}</h3>${j.titulo?`<span class="titulo-dono">${esc(j.titulo)}</span>`:""}
+    <div class="rk-perfil-topo">${rkFoto(eu?meuAv():j.av,j.nome,84)}<div><h3 style="margin:0">${esc(j.nome)}</h3>${j.titulo?`<span class="titulo-dono">${esc(j.titulo)}</span>`:""}
       <small class="${j.on?"amg-on":"muted"}">${j.on?"● Online agora":"Offline"} · Nível ${j.nivel||1}</small>${pos>=0?`<small class="rk-lugar">${pos+1}º no ranking · ${Math.round(j.pts||0)} pts</small>`:""}</div></div>
     <div class="rk-tacas"><div><b class="num">${j.tp||0}</b><small>👑 coroas</small></div><div><b class="num">${j.ttit||0}</b><small>de títulos e prêmios</small></div><div><b class="num">${j.tjog||0}</b><small>de vitórias e empates</small></div></div>
     ${(j.coroas||[]).length?`<div class="emblemas rk-selos">${emblemaCard({n:"Campeão do mês",e:"🏅",d:j.coroas.map(mesTxt).join(", "),c:j.coroas.length})}</div>`:""}
@@ -4110,7 +4113,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793666311";
+const VERSAO="1793666951";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7736,7 +7739,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "impconf":{try{const n=JSON.parse($("#imp-t").value);if(!n.clubs||!n.user||n.v!==2)throw 0;G=migrar(n);fecharModal();salvar();toast("Jogo carregado.");aba="inicio"}catch(e){toastErro("Código inválido. Confira se copiou o texto inteiro.");return}break;}
     case "novo":modal(`<h3>Começar novo jogo?</h3><p>O jogo atual será apagado deste navegador. Se quiser guardar, copie o código antes.</p><div class="botoes"><button class="btn" data-a="fechar">Cancelar</button><button class="btn perigo" data-a="novoconf">Apagar e recomeçar</button></div>`);return;
     case "avatar":modalAvatar();return;
-    case "avsel":perfil().avatar="a:"+v;salvar();fecharModal();toast("Foto do dono escolhida!");break;
+    case "avsel":perfil().avatar="a:"+v;salvar();fecharModal();toast("Foto do dono escolhida!");fotoMudou();break;
     case "tradver":modalTradutor();return;
     case "excluircar":modal(`<h3>Excluir carreira?</h3><p>A carreira do ${esc(G.clubs[G.user.club].name)} (${G.year}) será apagada deste aparelho, com tudo que foi salvo nela. Não dá para desfazer.</p><div class="botoes" style="flex-wrap:wrap"><button class="btn" data-a="fechar">Cancelar</button><button class="btn perigo" data-a="excluirconf">Excluir</button></div>`);return;
     case "excluirconf":fecharModal();pararTimer();G=null;W=novoW();try{localStorage.removeItem(CHAVE_W);localStorage.removeItem(CHAVE);localStorage.removeItem(CHAVE_BKP)}catch(e){}aba="inicio";abertura=true;setTimeout(()=>modal(`<h3>Carreira excluída</h3><p>Sua carreira foi excluída. Agora você pode começar uma nova ou carregar outra carreira salva.</p><div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`),50);break;
@@ -7914,7 +7917,7 @@ document.addEventListener("change",e=>{if(e.target.id!=="avatar-arq")return;cons
   if(!f||!/^image\//.test(f.type)){toastErro("Escolha uma imagem.");return}
   const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{const L=220,cv=document.createElement("canvas");cv.width=cv.height=L; // avatar do dono: recorte quadrado do meio
     const t=Math.min(im.width,im.height);cv.getContext("2d").drawImage(im,(im.width-t)/2,(im.height-t)/2,t,t,0,0,L,L);
-    perfil().avatar=cv.toDataURL("image/jpeg",.85);salvar();fecharModal();toast("Foto do dono enviada!");render()};im.src=rd.result};rd.readAsDataURL(f)});
+    perfil().avatar=cv.toDataURL("image/jpeg",.85);salvar();fecharModal();toast("Foto do dono enviada!");render();fotoMudou()};im.src=rd.result};rd.readAsDataURL(f)});
 document.addEventListener("change",e=>{if(e.target.id!=="rosto-arq")return;const pid=+e.target.dataset.pid,f=e.target.files&&e.target.files[0];
   processarRostoUpload(f,pid).then(r=>{G.rostosUp=G.rostosUp||{};G.rostosUp[pid]=r;salvar();toast("Rosto enviado!");const sy=scrollY;render();scrollTo(0,sy);perfilJogador(pid)}).catch(m=>toast(m))});
 /* barra de baixo: some ao rolar a tela para baixo, volta ao rolar para cima ou no topo */
