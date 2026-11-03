@@ -507,7 +507,7 @@ nav.abas[hidden]{display:none}
 .emblema{position:relative}.em-num{display:inline-block;margin-top:3px;padding:1px 8px;border-radius:10px;background:#ffd23f;color:#2a1d00;font-weight:800;font-size:12px}
 .rk-selos{margin:6px 0}
 .rk-folha .amg-lista>*{flex:none}
-.rk-rei{position:absolute;left:50%;top:-14px;transform:translateX(-50%) rotate(-8deg);font-style:normal;font-size:20px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6))}
+.rk-rei{position:absolute;left:40%;top:-19px;transform:translateX(-50%) rotate(-16deg);font-style:normal;font-size:20px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6))}
 .rk-fw .rk-coroa{top:auto;bottom:-6px;left:-6px;font-size:14px;transform:none}
 .rk-cico{font-style:normal;font-size:15px;margin-right:3px}.rk-ptsm{font-size:9.5px!important;opacity:.75}
 .pm-card{position:relative;overflow:hidden;display:flex;align-items:center;gap:14px;width:100%;min-height:78px;flex:none;margin:2px 0 12px;padding:14px 16px;border-radius:14px;border:1.5px solid #ffd23f;background:linear-gradient(120deg,#5a3d00,#b8860b 45%,#5a3d00);color:#fff;font:inherit;text-align:left;cursor:pointer;animation:pmPisca 1.6s ease-in-out infinite}
@@ -4113,7 +4113,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793666951";
+const VERSAO="1793666998";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
