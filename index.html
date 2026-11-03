@@ -4105,7 +4105,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793664163";
+const VERSAO="1793664327";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -4497,7 +4497,7 @@ function somRoleta(){if(!SOM.ctx||SOM.mudo)return;const t=SOM.ctx.currentTime;if
 /* regras do jogo (02/11): tudo o que existe no jogo, em seções; abre pela capa e pelas Configurações */
 const REGRAS=[
  ["🎯","Objetivo",["Você é o dono do clube: cria o time, começa na terceira divisão e leva o clube até a elite do país e às copas continentais (Libertadores ou Champions).","Os primeiros colocados sobem de divisão (no Brasil, os 4 primeiros) e os últimos caem. Subir deixa o elenco um pouco mais forte; cair, um pouco mais fraco."]],
- ["⚽","Partidas",["Antes da 1ª rodada de cada temporada tem um amistoso de preparação.","Dá para assistir ao vivo (velocidade 1×, 2× e, a partir do nível 20, 3×), pausar, substituir, mudar formação, estilo e posição dos jogadores no campinho. Ou simular sem assistir, pagando uma taxa.","Clássico: jogo contra um time do mesmo estado (ou região) da cidade do seu clube. Vitória no clássico vale o prêmio da partida ×3. Vale na Série C, B e A.","Na partida acontecem VAR, pênaltis, faltas, cartões, acréscimos e pausa para hidratação. No mata-mata, empate vai para os pênaltis: você escolhe os 5 batedores.","Comandos do técnico (modo manual): gritos como atacar ou segurar mudam de verdade a chance de gol, mas cansam os jogadores."]],
+ ["⚽","Partidas",["Antes da 1ª rodada de cada temporada tem um amistoso de preparação.","Dá para assistir ao vivo (velocidade 1×, 2× e, a partir do nível 20, 3×), pausar, substituir, mudar formação, estilo e posição dos jogadores no campinho. Ou simular sem assistir, pagando uma taxa que sobe a cada simulação e volta ao preço inicial todo dia, à meia-noite.","Clássico: jogo contra um time do mesmo estado (ou região) da cidade do seu clube. Vitória no clássico vale o prêmio da partida ×3. Vale na Série C, B e A.","Na partida acontecem VAR, pênaltis, faltas, cartões, acréscimos e pausa para hidratação. No mata-mata, empate vai para os pênaltis: você escolhe os 5 batedores.","Comandos do técnico (modo manual): gritos como atacar ou segurar mudam de verdade a chance de gol, mas cansam os jogadores."]],
  ["🔋","Energia, lesões e cartões",["A energia cai durante o jogo (quem tem mais Preparo físico cansa menos) e volta a 100% antes de cada partida.","Lesionado fica fora alguns jogos; expulso ou com cartões acumulados fica suspenso."]],
  ["🏋️","Pontos de treino",["Servem para evoluir os jogadores: cada ponto no atributo principal dá +1 de força (metade disso acima de 85).","Bola Dourada: só em vitória de partida do campeonato (liga). Quanto mais gols, maior a chance: 1 gol = 10% (1 ponto) · 2 gols = 20% (1) · 3 gols = 30% (1) · 4 gols = 30% (2 pontos) · 5 a 7 gols = 50% (2) · 8 ou mais = 50% (3 pontos).","No fim do campeonato, os 3 primeiros também ganham pontos de treino.","Toque na bola para estourar e distribua os pontos em sequência. Também dá para treinar habilidades especiais: cobrador de pênaltis, de faltas, pegador de pênaltis e reflexos."]],
  ["🛒","Mercado e loja",["A loja renova a cada 2 horas, com jogadores e técnicos. Às vezes aparece uma oportunidade com bom preço ou um craque em destaque de time grande.","Lendas: pagas com cupons dourados ou com muito dinheiro. Têm passivas especiais.","Na janela de transferências são até 3 contratações. Jogador forte pode recusar clube de divisão baixa.","Outros clubes mandam propostas pelos seus jogadores (caixa de entrada ✈️): você vende ou empresta."]],
@@ -6134,7 +6134,8 @@ function avisoNivel(){
 }
 /* simular sem assistir: custa dinheiro (10, 30, 60, 100 mil) e na 5ª vez 5 cupons; depois espera 24h */
 const SIM_CUSTO=[10,30,60,100];
-function simEstado(){const S=G.simUso=G.simUso||{n:0,bloq:0};if(S.bloq&&Date.now()>=S.bloq){S.n=0;S.bloq=0}return S}
+const diaReal=()=>{const d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()};const meiaNoite=()=>{const d=new Date();d.setHours(24,0,0,0);return d.getTime()};
+function simEstado(){const S=G.simUso=G.simUso||{n:0,bloq:0};if(S.dia!==diaReal()||(S.bloq&&Date.now()>=S.bloq)){S.n=0;S.bloq=0;S.dia=diaReal()}return S} // 02/11: preço da simulação volta ao início todo dia (meia-noite)
 function simCusto(){const S=simEstado();if(S.bloq)return null;return S.n<4?{tipo:"d",v:premioEmDinheiro(SIM_CUSTO[S.n])}:{tipo:"c",v:5}}
 function botaoSimular(){
   const S=simEstado(),c=simCusto();
@@ -6146,7 +6147,7 @@ function pagarSimulacao(){
   const S=simEstado(),c=simCusto();if(!c)return "A simulação está em recarga.";
   if(c.tipo==="d"){if(G.cash<c.v)return `Faltam ${dinheiro(c.v-G.cash)} para simular.`;G.cash-=c.v}
   else{if(cupons()<c.v)return `Faltam ${c.v-cupons()} cupons dourados.`;G.cupons-=c.v}
-  S.n++;if(S.n>=5)S.bloq=Date.now()+24*3600*1000;return null;
+  S.n++;if(S.n>=5)S.bloq=meiaNoite();return null;
 }
 function telaJogar(){
   const m=partidaAtual(),uid=G.user.club;
@@ -6947,21 +6948,17 @@ function telaPreJogo(){
   const res=el.filter(p=>!tit.has(p.id)).sort((a,b)=>disponivel(b)-disponivel(a)||ordem[a.pos]-ordem[b.pos]||b.ov-a.ov);
   let h=`<div class="tela-cheia"><div class="linha" style="justify-content:space-between;padding-top:14px"><button class="btn mini" data-a="aba" data-v="inicio">Voltar</button><span class="comp" style="margin:0">Pré-jogo</span></div>`;
   h+=`<div style="margin-top:12px">${versus(m,true).replace('class="versus"','class="versus so-topo"')}</div>
-  <button class="cartao card-stats" data-a="stats" style="margin-top:12px"><span>📊 Estatísticas</span><small>Força, idade e valor dos dois times ›</small></button><div class="tec-chips">${chipTec(m.h)}${chipTec(m.a)}</div>`;
+  <button class="cartao card-stats" data-a="stats" style="margin-top:12px"><span>📊 Estatísticas</span><small>Força, idade e valor dos dois times ›</small></button>`;
   const FS=G.formSalvas||[],aj=G.user.posAjuste&&G.user.posAjuste.form===u.form&&!G.user.posAjuste.salvo;
   const salvas=`<button class="btn mini prim-mini cp-salvar" id="cp-salvar" data-a="formsalvar"${aj?"":" hidden"}>💾 Salvar esta formação</button>${FS.length?`<div class="cp-salvas"><small>Minhas formações</small>${FS.map((f,i)=>`<span class="cp-salva"><button data-a="formusar" data-v="${i}">${esc(f.nome)} <small>${f.form}</small></button><button class="x" data-a="formapagar" data-v="${i}" aria-label="Apagar ${esc(f.nome)}">×</button></span>`).join("")}</div>`:""}<p class="muted peq" style="margin:0">Arraste as bolinhas do seu time para ajustar a posição de cada jogador.</p>`;
   const manualPre=(G.user.cmd||"tec")==="manual";
   h+=`<h2>Formação</h2><div class="cartao secao">${campinho(m)}${salvas}${seletorTatica()}<div class="cmd-sel cmd-pre" role="radiogroup" aria-label="Quem comanda o time"><button role="radio" aria-checked="${!manualPre}" class="${manualPre?"":"on"}" data-a="precmd" data-v="tec">Comando do técnico</button><button role="radio" aria-checked="${manualPre}" class="${manualPre?"on":""}" data-a="precmd" data-v="manual">Comando manual</button></div><p class="muted peq cmd-dica" style="margin:0">${manualPre?"Você escala o time e decide as trocas.":"O técnico escala os melhores e faz as trocas sozinho."}</p>${manualPre?`<button class="btn" data-a="auto">Escalar os melhores</button>`:""}</div>`;
-  h+=`<h2>Situação do elenco</h2><div class="cartao secao" id="tut-sit">`;
-  if(!fora.length&&!pend.length&&!el.some(p=>disponivel(p)&&(p.fis??100)<65&&tit.has(p.id)))h+=`<p style="margin:0">Todos os jogadores estão disponíveis e descansados.</p>`;
-  fora.forEach(p=>h+=`<div class="sit"><span class="posb ${p.pos}">${p.pos}</span><b>${esc(p.n)}</b><span class="tag les">${p.susp>0?"Suspenso":`Lesionado · ${p.inj} jogo${p.inj>1?"s":""}`}</span></div>`);
-  pend.forEach(p=>h+=`<div class="sit"><span class="posb ${p.pos}">${p.pos}</span><b>${esc(p.n)}</b><span class="tag am">2 amarelos · pendurado</span></div>`);
-  el.filter(p=>disponivel(p)&&(p.fis??100)<65&&tit.has(p.id)).forEach(p=>h+=`<div class="sit"><span class="posb ${p.pos}">${p.pos}</span><b>${esc(p.n)}</b><span class="tag les">Cansado · ${Math.round(p.fis)}%</span></div>`);
-  if(trocas.length)h+=`<p class="peq" style="margin:0;color:var(--aviso)">Saíram da escalação por estarem fora: ${trocas.map(esc).join(", ")}.</p>`;
-  h+=`</div>`;
+  if(!(m.amistoso||m.amg))h+=`<div class="secao sim-pre">${botaoSimular()}</div>`; // 02/11: simular sobe para o lugar da situação do elenco
+  if(trocas.length)h+=`<p class="peq" style="margin:10px 0 0;color:var(--aviso)">Saíram da escalação por estarem fora: ${trocas.map(esc).join(", ")}.</p>`;
+  h+=`<h2>Técnico</h2>${cartaoTecClube(uid)}`; // 02/11: técnico em card de jogador, acima dos titulares
   h+='<div id="tut-tit">'+blocoTitulares().replace("<h2>Titulares</h2>",`<h2>Titulares</h2><p class="muted peq" style="margin:-4px 0 8px">Toque num titular para substituí-lo por um reserva.</p>`)+'</div>';
   h+=`<h2>Reservas</h2><div class="cartao" style="padding-block:4px">${res.map(p=>`<div class="jog${disponivel(p)?"":" off"}${lendaCls(p)}">${linhaJog(p,"")}</div>`).join("")}</div>`;
-  h+=`<div class="secao" style="margin-top:18px">${m.amistoso||m.amg?"":botaoSimular()}</div></div>`;
+  h+=`</div>`;
   return h;
 }
 
