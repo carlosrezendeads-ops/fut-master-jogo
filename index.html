@@ -3069,7 +3069,7 @@ function forcaXI(){const L=(G.user.lineup||[]).map(id=>G.players[id]).filter(Boo
 // taças por título (Carlos, 02/11): pela força do campeonato, Champions = 300
 const TACAS={BRA:[150,75,45],ARG:[150,75,45],ENG:[225,105,75],ESP:[195,90,45],GER:[195,90,45],FRA:[180,75,45]};
 const TACAS_COPA={"Champions League":300,"Libertadores":210,"Europa League":150,"Sul-Americana":105,"FA Cup":120,"Copa del Rey":120,"DFB-Pokal":120,"Coupe de France":120,"Copa do Brasil":105,"Copa Argentina":105};
-const TACAS_JOGO={v:3,e:1}; // cada partida (Carlos, 02/11): vitória 3 taças, empate 1, derrota 0 — contadas no perfil do dono
+const TACAS_JOGO={v:3,e:1,d:-1,wo:-2,rebaix:-45}; // 02/11: derrota −1, W.O. −3 no total (derrota + −2), rebaixamento −45; // cada partida (Carlos, 02/11): vitória 3 taças, empate 1, derrota 0 — contadas no perfil do dono
 const TACAS_MAX=3000; // 3000 taças = nota máxima no ranking (conta feita no servidor)
 function pontosTitulo(t){for(const [n,v] of Object.entries(TACAS_COPA))if(t.startsWith(n+" "))return v;
   for(const [k,v] of Object.entries(TACAS)){const L=(PAISES[k]||{}).ligas||[];for(let i=0;i<3;i++)if(L[i]&&t.startsWith(L[i]+" "))return v[i]}return 45}
@@ -3127,7 +3127,7 @@ function amgBadge(){const n=amgNovos();return n?`<span class="msg-badge">${Math.
 async function amgSync(forcar){if(!G||!G.user)return;if(AMG.carregando){if(forcar)AMG.denovo=1;return}if(location.protocol==="file:")return; // 02/11: testes locais não entram no ranking
 if(!forcar&&Date.now()-AMG.ult<55000)return;AMG.carregando=true;
   try{const c=G.clubs[G.user.club],p=perfilAmg();
-    const av=await avRanking(),tits=(G.titles||[]).slice(),PF=perfil(),ttit=tits.reduce((x,t)=>x+pontosTitulo(t),0)+(PF.coroasPremio||0),tjog=TACAS_JOGO.v*(PF.v||0)+TACAS_JOGO.e*(PF.e||0),tp=ttit+tjog,nv=PF.nivel;
+    const av=await avRanking(),tits=(G.titles||[]).slice(),PF=perfil(),ttit=tits.reduce((x,t)=>x+pontosTitulo(t),0)+(PF.coroasPremio||0),tjog=TACAS_JOGO.v*(PF.v||0)+TACAS_JOGO.e*(PF.e||0)+TACAS_JOGO.d*(PF.d||0)+TACAS_JOGO.wo*(PF.wo||0)+TACAS_JOGO.rebaix*(PF.rebaix||0),tp=Math.max(0,ttit+tjog),nv=PF.nivel;
     const j=await amgPost("entrar",{nome:G.user.coach||"Treinador",clube:c.name,nivel:nv,perfil:p===AMG.pEnv?undefined:p,av:av===AMG.avEnv?undefined:av,tits,tp,ttit,tjog,v:PF.v||0,e:PF.e||0,gp:PF.gp||0,forca:forcaXI(),titulo:tituloNivel(nv)});
     if(!j.id)throw 0;if(j.tok)guardarConta({id:j.id,tok:j.tok});else if(!G.conta)G.conta=conta();
     AMG.pEnv=p;AMG.avEnv=av;AMG.est=j;if(j.ranking){AMG.rank=j.ranking;rkPassou(j.ranking)}if(j.podio){AMG.podio=j.podio;setTimeout(premioPodio,300)}AMG.ult=Date.now();AMG.ok=true}catch(e){AMG.ok=false}
@@ -3152,9 +3152,9 @@ function modalAmigos(soAtualiza){
     <span class="rk-pos num">${i+1}º${ab==="geral"?rkSeta(a.sobe):""}</span><span class="rk-fw">${rkFoto(a.eu?meuAv():a.av,a.nome,44)}<i class="amg-dot${a.on?" on":""}"></i>${i===0&&(ab==="geral"||a.mtp>0)?'<i class="rk-rei" aria-label="1º lugar">👑</i>':""}${(a.coroas||[]).length?`<i class="rk-coroa" title="Campeão do mês">🏅</i>`:""}</span>
     <span class="rk-info"><b>${esc(a.nome)}${a.eu?' <em class="rk-voce">você</em>':""}</b><small>${esc(a.clube||"")}</small>
     <small class="rk-tags"><span>Nível ${a.nivel}</span><span>Força ${a.forca||"–"}</span>${a.nt?`<span>🏆 ${a.nt}</span>`:""}</small></span>
-    <span class="rk-pts"><b class="num"><i class="rk-cico">👑</i>${ab==="mes"?a.mtp:a.tp}</b><small>coroas</small>${ab==="geral"?`<small class="rk-ptsm">${Math.round(a.pts)} pts</small>`:""}</span></button>`).join("");
+    <span class="rk-pts"><b class="num"><i class="rk-cico">👑</i>${ab==="mes"?a.mtp:a.tp}</b><small>coroas</small></span></button>`).join("");
   else corpo+=`<p class="muted">${AMG.ok===false?"Sem conexão com o servidor. Confira a internet.":"Carregando o ranking..."}</p>`;
-  const expl=ab==="mes"?`Quem ganhar mais coroas em <b>${mesAt}</b> é o <b>🏅 campeão do mês</b>. Zera todo dia 1. Vitória 3 coroas, empate 1; títulos valem muito mais.`:`Pontos: <b>👑 coroas</b> (metade), <b>nível</b> e <b>força do time</b>. Vitória 3 coroas, empate 1; títulos dão mais (Champions 300, Série A 150). ▲▼ = posições desde segunda-feira.`;
+  const expl=ab==="mes"?`Quem ganhar mais coroas em <b>${mesAt}</b> é o <b>🏅 campeão do mês</b>. Zera todo dia 1. Vitória +3, empate +1, derrota −1; títulos valem muito mais.`:`Quem tem mais <b>👑 coroas</b> fica em cima. Vitória +3, empate +1, derrota −1, W.O. −3, rebaixamento −45; títulos dão muito mais (Champions 300, Série A 150). ▲▼ = posições desde segunda-feira.`;
   const abas=[["geral","Geral"],["mes","Do mês"]].map(([k,n])=>`<button data-a="rkaba" data-v="${k}" aria-pressed="${ab===k}">${n}</button>`).join("");
   modal(`<div class="amg-folha rk-folha"><h3>${ICO_AMIGOS} Ranking</h3><div class="seg" role="group">${abas}</div><p class="muted peq rk-expl">${expl} Toque em alguém para ver o perfil e jogar.</p><div class="amg-lista">${corpo}</div><div class="botoes"><button class="btn" data-a="fechar">Fechar</button></div></div>`);
   const b=document.querySelector(".amg-btn");if(b)b.innerHTML=ICO_AMIGOS+amgBadge()}
@@ -3173,8 +3173,8 @@ async function modalPerfilAmigo(id){
   const grupos={};tits.forEach(t=>{const n=t.replace(/\s+\d{4}$/,"");(grupos[n]=grupos[n]||[]).push(t.slice(n.length).trim())});
   modal(`<div class="amg-folha amg-perfil">
     <div class="rk-perfil-topo">${rkFoto(eu?meuAv():j.av,j.nome,84)}<div><h3 style="margin:0">${esc(j.nome)}</h3>${j.titulo?`<span class="titulo-dono">${esc(j.titulo)}</span>`:""}
-      <small class="${j.on?"amg-on":"muted"}">${j.on?"● Online agora":"Offline"} · Nível ${j.nivel||1}</small>${pos>=0?`<small class="rk-lugar">${pos+1}º no ranking · ${Math.round(j.pts||0)} pts</small>`:""}</div></div>
-    <div class="rk-tacas"><div><b class="num">${j.tp||0}</b><small>👑 coroas</small></div><div><b class="num">${j.ttit||0}</b><small>de títulos e prêmios</small></div><div><b class="num">${j.tjog||0}</b><small>de vitórias e empates</small></div></div>
+      <small class="${j.on?"amg-on":"muted"}">${j.on?"● Online agora":"Offline"} · Nível ${j.nivel||1}</small>${pos>=0?`<small class="rk-lugar">${pos+1}º no ranking</small>`:""}</div></div>
+    <div class="rk-tacas"><div><b class="num">${j.tp||0}</b><small>👑 coroas</small></div><div><b class="num">${j.ttit||0}</b><small>de títulos e prêmios</small></div><div><b class="num">${j.tjog||0}</b><small>das partidas</small></div></div>
     ${(j.coroas||[]).length?`<div class="emblemas rk-selos">${emblemaCard({n:"Campeão do mês",e:"🏅",d:j.coroas.map(mesTxt).join(", "),c:j.coroas.length})}</div>`:""}
     <h4 class="amg-sub">🏆 Sala de troféus</h4>${tits.length?`<div class="trofeus-g">${tits.slice().reverse().map(trofeuCard).join("")}</div>`:`<p class="muted peq">Ainda sem títulos.</p>`}
     <h4 class="amg-sub">Time</h4>
@@ -3913,7 +3913,7 @@ function fecharTemporada(){
   r.novoTier=novo.findIndex(l=>l.includes(uid));if(r.novoTier<0)r.novoTier=3;
   if(r.novoTier<t)fama.fama=clamp(fama.fama+15,0,100);
   if(pos===1)fama.fama=clamp(fama.fama+10,0,100);
-  if(r.novoTier>t)fama.fama=clamp(fama.fama-10,0,100);
+  if(r.novoTier>t){fama.fama=clamp(fama.fama-10,0,100);const PF=perfil();PF.rebaix=(PF.rebaix||0)+1} // 02/11: rebaixamento tira coroas
   {const pagos=G.pag&&G.pag.y===G.year?(G.pag.n||0):0,meses=Math.max(0,12-pagos);
    if(meses){const F=folhaMensal(),v=Math.round(F.tot*meses);G.cash-=v;r.folhaFerias={meses,v};(G.emp||[]).forEach(e=>e.rest-=meses);G.emp=(G.emp||[]).filter(e=>e.rest>0);
      G.inbox.unshift({t:"ruim",m:`Folha dos ${meses} meses sem jogos (fim e começo de ano): ${dinheiro(v)}.`});if(G.cash<0)G.alertaFolha=true}}
@@ -4113,7 +4113,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793666998";
+const VERSAO="1793672052";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -4515,7 +4515,7 @@ const REGRAS=[
  ["🏟️","Estádio e clube",["Amplie e reforme o estádio para ter mais público e renda.","Na aba Clube você edita escudo, uniformes, logos na camisa e vê a sala de troféus. O diretor do clube dá avisos importantes."]],
  ["⭐","Nível do dono",["Cada partida dá XP: vitória 50, empate 25, derrota 10. São 30 níveis, cada um com prêmio em dinheiro e cupons, e com um título novo (Sonhador, Cartola, Presidente, Lenda…)."]],
  ["🏆","Conquistas",["Troféus (títulos de campeonato e copas) aparecem um por um na sala de troféus.","Prêmios do jogo, emblemas e selos aparecem uma vez, com o número de vezes embaixo (×2, ×3)."]],
- ["👑","Ranking",["Todo mundo que joga aparece no Ranking (ícone de pessoas no topo). Toque em alguém para ver o perfil, os troféus e o time, e para jogar um amistoso: contra o computador ou ao vivo, se a pessoa estiver online.","Coroas: vitória 3, empate 1, derrota 0, em qualquer partida oficial. Títulos dão muito mais: Champions 300, Premier League 225, Libertadores 210, LaLiga e Bundesliga 195, Ligue 1 180, Série A e Primera (ARG) 150, Europa League 150, copas nacionais 105 a 120, Sul-Americana 105, segundas divisões 75 a 105, terceiras 45.","Ranking Geral: pontos = coroas (metade), nível do dono (um quarto) e força do time titular (um quarto). As setas ▲▼ mostram quanto você subiu ou desceu desde segunda-feira.","Ranking do Mês: conta só as coroas ganhas no mês e zera todo dia 1. Pódio do mês: 🥇 R$ 3 mi, 100 coroas, 30 cupons e 1000 XP · 🥈 R$ 1,5 mi, 60 coroas, 15 cupons e 600 XP · 🥉 R$ 800 mil, 30 coroas, 8 cupons e 300 XP. O campeão ganha o selo 🏅 Campeão do mês.","Amistoso entre jogadores não vale coroas: rende XP, torcida e transmissão."]],
+ ["👑","Ranking",["Todo mundo que joga aparece no Ranking (ícone de pessoas no topo). Toque em alguém para ver o perfil, os troféus e o time, e para jogar um amistoso: contra o computador ou ao vivo, se a pessoa estiver online.","Coroas: vitória +3, empate +1, derrota −1, desistir (W.O.) −3 e rebaixamento −45, em qualquer partida oficial. Nunca ficam abaixo de zero. Títulos dão muito mais: Champions 300, Premier League 225, Libertadores 210, LaLiga e Bundesliga 195, Ligue 1 180, Série A e Primera (ARG) 150, Europa League 150, copas nacionais 105 a 120, Sul-Americana 105, segundas divisões 75 a 105, terceiras 45.","Ranking Geral: quem tem mais coroas fica em cima (empate: nível do dono e depois força do time). As setas ▲▼ mostram quanto você subiu ou desceu desde segunda-feira.","Ranking do Mês: conta só as coroas ganhas no mês e zera todo dia 1. Pódio do mês: 🥇 R$ 3 mi, 100 coroas, 30 cupons e 1000 XP · 🥈 R$ 1,5 mi, 60 coroas, 15 cupons e 600 XP · 🥉 R$ 800 mil, 30 coroas, 8 cupons e 300 XP. O campeão ganha o selo 🏅 Campeão do mês.","Amistoso entre jogadores não vale coroas: rende XP, torcida e transmissão."]],
  ["💾","Salvar e carreiras",["O jogo salva sozinho neste aparelho. Dá para ter até 6 carreiras (em Configurações: Nova carreira e Minhas carreiras); para começar a 7ª, apague uma. Salve também o arquivo (Ajustes) para não perder a carreira se trocar de celular."]]];
 function modalRegras(){
   modal(`<h3>📖 Regras do jogo</h3><div class="regras">${REGRAS.map(([ic,t,L],i)=>`<details class="rg-sec"${i===0?" open":""}><summary><span>${ic}</span><b>${t}</b></summary><ul>${L.map(x=>`<li>${x}</li>`).join("")}</ul></details>`).join("")}</div><div class="botoes"><button class="btn prim" data-a="fechar">Entendi</button></div>`);
@@ -7684,7 +7684,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "lvest":trocarFormacao(G.live.lado,null,v);salvar();break;
     case "lvsair":if(G.live&&G.live.m.amg){modal(`<div class="aviso-box"><b>Sair do amistoso?</b><p>O jogo contra o time do seu amigo acaba aqui e você não ganha XP.</p><div class="botoes"><button class="btn" data-a="fechar">Continuar jogando</button><button class="btn perigo" data-a="lvamgsair">Sair</button></div></div>`);return}
     if(G.live&&G.live.m.amistoso){toast("No amistoso não dá para desistir. Jogue até o fim!");return}modal(`<div class="aviso-box"><b>Desistir da partida?</b><p>Se sair agora, seu time perde por W.O. (0 × 3) e os 3 pontos vão para o adversário.</p><div class="botoes"><button class="btn" data-a="fechar">Continuar jogando</button><button class="btn perigo" data-a="lvdesistir">Desistir</button></div></div>`);return;
-    case "lvdesistir":{fecharModal();const V=G.live;if(!V||V.est==="fim")break;pararTimer();
+    case "lvdesistir":{fecharModal();const V=G.live;if(!V||V.est==="fim")break;pararTimer();if(!V.m.amistoso&&!V.m.amg){const PF=perfil();PF.wo=(PF.wo||0)+1} // W.O. tira coroas
       const meu=V.lado,adv=meu==="h"?"a":"h",ga=Math.max(3,adv==="h"?V.gh:V.ga);
       if(meu==="h"){V.gh=0;V.sh=[];V.ga=ga}else{V.ga=0;V.sa=[];V.gh=ga}V.pen=null;
       narrar("info",`${G.clubs[G.user.club].name} abandona a partida. Vitória do adversário por W.O.`);
