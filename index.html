@@ -1682,7 +1682,7 @@ function novoJogo(opts){
   Object.values(G.players).forEach(p=>{if(p.club!=null)p.oc=G.clubs[p.club].name});
   RNG=Math.random;
   for(let t=0;t<3;t++){G.tierBase[t]=Math.round(G.tiers[t].reduce((a,id)=>a+G.clubs[id].rating,0)/G.tiers[t].length)}
-  const base=G.tierBase[2]-1; // elenco inicial no nível da Série C: precisa de reforços para brigar pelo acesso
+  const base=G.tierBase[2]-3; // 02/11: elenco inicial na média da Série C (simulação: força do XI ≈ média da liga); com reforços briga pelo acesso
   const uid="U"+(G.nextId++);
   G.clubs[uid]={id:uid,name:opts.name,short:opts.short,rating:base,rep:base,pais:opts.pais,tier:2,
     c1:opts.escudo.c1,c2:opts.escudo.c2,cap:5000,user:true,form:"4-4-2",est:"eq",escudo:opts.escudo,unis:opts.unis,fama:10};
@@ -2388,6 +2388,7 @@ function iniciarAoVivo(auto){
     L:{h:mk(m.h),a:mk(m.a)},fat:{h:.85+rnd()*.3,a:.85+rnd()*.3},
     susp0:jogadoresDo(uid).filter(p=>p.susp>0).map(p=>p.id),lado:m.h===uid?"h":"a"};
   narrar("info",`Bola rolando: ${G.clubs[m.h].name} × ${G.clubs[m.a].name}${typeof estadioDe==="function"?`, no ${estadioDe(G.clubs[m.h])}`:""}.`);
+  if(m.tipo==="L"&&!(G.history||[]).length&&!((G.st[uid]||{}).j))G.live.garante=1; // 02/11: 1º jogo do campeonato da carreira termina em vitória
   if(m.amistoso){const V=G.live,ad=V.lado==="h"?"a":"h";V.varGol=false;V.rot={};V.rot[ri(14,30)]=ad;V.rot[ri(50,64)]=V.lado;V.rot[ri(72,86)]=V.lado} // amistoso: o adversário sai na frente e seu time vira
   return null;
 }
@@ -2485,8 +2486,11 @@ function passoMinuto(){
   const lam={h:clamp(mh*Math.exp((F.h.att-F.a.def)/k)*V.fat.h,.1,4.5),a:clamp(ma*Math.exp((F.a.att-F.h.def)/k)*V.fat.a,.08,4.2)};
   {const rf=s=>{const gk=penGoleiro(s);return gk?clamp(1-(atributos(gk).ref-70)/350,.88,1.1):1.1};lam.h*=rf("a");lam.a*=rf("h")} // atributo Reflexos do goleiro: defende mais chutes
   if(!V.m.amistoso)for(const s of ["h","a"]){const g=gritoAtivo(V.L[s]);if(!g)continue;const fg=forcaGrito(V.L[s],g),o=s==="h"?"a":"h";lam[s]=Math.min(lam[s]*fg.m,7);lam[o]*=fg.s}
+  if(V.garante&&V.min>=80){const me=V.lado,gm=me==="h"?V.gh:V.ga,go=me==="h"?V.ga:V.gh;
+    if(gm<=go&&(rnd()<.3||V.min>=88||V.add)){const p=artilheiro(F[me]);if(p)aplicarGol(me,F,p).pre=preChute(p,nomeLado(me))}}
   for(const s of ["h","a"]){
     const L=V.L[s],nomeT=nomeLado(s),eu=L.cid===G.user.club,g0=V.gh+V.ga;
+    if(V.garante&&!eu&&V.min>=84)continue; // fim do 1º jogo: o adversário não marca mais
     const r=rnd(),gm=!V.m.amistoso&&L.grito&&L.grito.golMin!=null&&!L.grito.golFeito&&V.min>=L.grito.golMin&&gritoAtivo(L);
     if(gm){L.grito.golFeito=1;const p=artilheiro(F[s]);aplicarGol(s,F,p).pre=preChute(p,nomeT)} // gol sorteado do comando de ataque
     else if(V.m.amistoso){ // amistoso com roteiro: gols só nos minutos sorteados em V.rot
@@ -4105,7 +4109,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793664327";
+const VERSAO="1793665372";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
