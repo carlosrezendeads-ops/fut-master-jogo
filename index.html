@@ -497,6 +497,7 @@ nav.abas[hidden]{display:none}
 .tec-chip{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:12px;background:var(--gramado-2);border:1px solid var(--gramado-3);color:inherit;font:inherit;text-align:left;cursor:pointer;min-width:0}
 .tec-chip span{display:flex;flex-direction:column;min-width:0}.tec-chip small{font-size:10.5px;color:var(--cal-2)}.tec-chip b{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tec-chips.vivo{margin:6px 0}.tec-chips.vivo .tec-chip{padding:4px 6px}
+.tec-chip>:first-child{width:34px!important;height:34px!important;min-width:34px;overflow:hidden;border-radius:8px}.tec-chip>:first-child img,.tec-chip>:first-child svg{width:34px!important;height:34px!important}
 .tec-chip i{margin-left:auto;font-style:normal;font-weight:800;color:#ffd23f}.tec-chip svg,.tec-chip img{flex:none;border-radius:8px}
 .trofeus-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:8px;margin-top:8px}
 .trofeu-g{display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;padding:10px 6px;border-radius:12px;background:radial-gradient(circle at 50% 30%,rgba(255,210,63,.22),rgba(255,210,63,.04) 70%);border:1.5px solid rgba(255,210,63,.55)}
@@ -2182,7 +2183,7 @@ const TUT_AMISTOSO={
     {sel:".placar-vivo",t:"Placar e relógio",x:"A partida corre minuto a minuto. No fim de cada tempo há acréscimos."},
     {sel:".cmd-sel [data-v=tec]",t:"Comando do técnico",x:"O técnico faz as trocas sozinho (cansaço, lesão e tática), sem parar o jogo."},
     {sel:".cmd-pausa",t:"Pausar",x:"Para o jogo quando você quiser. Toque de novo para continuar."},
-    {sel:".cmd-sel [data-v=manual]",t:"Comando manual",x:"Você decide as trocas. Se alguém se machucar, o jogo para para você escolher quem entra. Aparece o card Comandos: gritos para o time (atacar, fechar a zaga...) que dão +habilidade por 10 min, mas cansam mais."},
+    {sel:".cmd-sel [data-v=manual]",t:"Comando manual",x:"Você decide as trocas e ganha os Comandos: “Vamos atacar!” (mais chance de gol), “Vamos buscar a virada!” (tudo ao ataque), “Fecha a zaga!” (segura o resultado)... Valem por 10 min e cansam o time. Na falta, você escolhe o batedor e se chuta direto ou cruza."},
     {sel:"[data-a=lvpausa][data-v=subs]",t:"Fazer substituição",x:"Abre o campinho e a lista: toque em quem sai e depois em quem entra. São até 5 trocas."},
     {sel:"[data-a=lvpausa][data-v=form]",t:"Trocar formação",x:"Mude a formação e o estilo no meio do jogo."},
     {sel:"[data-a=lvvel]",t:"Velocidade 2×",x:"Deixa a partida duas vezes mais rápida. Toque de novo para voltar ao normal. O 3× (ao lado) libera no nível 20."},
@@ -4104,7 +4105,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793663201";
+const VERSAO="1793664163";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7040,7 +7041,6 @@ function telaPartida(){
   <div class="placar-vivo"><div class="time">${marcaDe(H,44)}<b>${esc(H.name)}</b></div>
     <div class="centro"><div class="placar num" id="lv-placar">${V.gh}<span class="x">×</span>${V.ga}</div><div class="relogio num" id="lv-rel">${relogio(V)}</div></div>
     <div class="time">${marcaDe(A,44)}<b>${esc(A.name)}</b></div></div>
-  <div class="tec-chips vivo">${chipTec(V.m.h)}${chipTec(V.m.a)}</div>
   ${ehClassico(V.m)?cardClassico().replace('class="classico"','class="classico" style="margin-inline:0"'):""}<div class="prog" aria-hidden="true"><i id="lv-prog" style="width:${Math.min(V.min,90)/90*100}%"></i><span></span></div>${vivoFaixa(V)}`;
   if(V.est!=="fim"){const tec=(V.cmd||"tec")==="tec";
     h+=`<button class="btn-sair-jogo" data-a="lvsair" aria-label="Desistir da partida"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg></button>`;
