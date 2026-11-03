@@ -3121,7 +3121,8 @@ function rkFoto(av,nome,px){px=px||40;const src=!av?"":av.startsWith("a:")?(type
 function avVisto(){try{return +localStorage.getItem("fut-amg-av")||0}catch(e){return 0}}
 function amgNovos(){const E=AMG.est;if(!E)return 0;const v=avVisto();return (E.avisos||[]).filter(a=>a.n>v).length}
 function amgBadge(){const n=amgNovos();return n?`<span class="msg-badge">${Math.min(n,99)}</span>`:""}
-async function amgSync(forcar){if(!G||!G.user||AMG.carregando)return;if(!forcar&&Date.now()-AMG.ult<55000)return;AMG.carregando=true;
+async function amgSync(forcar){if(!G||!G.user||AMG.carregando)return;if(location.protocol==="file:")return; // 02/11: testes locais não entram no ranking
+if(!forcar&&Date.now()-AMG.ult<55000)return;AMG.carregando=true;
   try{const c=G.clubs[G.user.club],p=perfilAmg();
     const av=await avRanking(),tits=(G.titles||[]).slice(),PF=perfil(),ttit=tits.reduce((x,t)=>x+pontosTitulo(t),0)+(PF.coroasPremio||0),tjog=TACAS_JOGO.v*(PF.v||0)+TACAS_JOGO.e*(PF.e||0),tp=ttit+tjog,nv=PF.nivel;
     const j=await amgPost("entrar",{nome:G.user.coach||"Treinador",clube:c.name,nivel:nv,perfil:p===AMG.pEnv?undefined:p,av:av===AMG.avEnv?undefined:av,tits,tp,ttit,tjog,v:PF.v||0,e:PF.e||0,gp:PF.gp||0,forca:forcaXI(),titulo:tituloNivel(nv)});
@@ -4109,7 +4110,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793665525";
+const VERSAO="1793666311";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
