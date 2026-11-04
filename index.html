@@ -2476,6 +2476,62 @@ const RS_AMIGO={
   "7HMHTR":{ // Carlos (criador do jogo)
     sempre:["pensa|Pedido ao criador|{n}, dizem por aí que foi o senhor que inventou esse jogo… Então me arruma um aumento aí! 😂",
       "joinha|Sem moleza|{n}, o pessoal reclamou que o jogo ficou difícil. Falei que reclamação é com o criador. 😏"]}};
+/* mais frases de ranking (04/11): genéricas + misturando com o amigo que está logo acima/abaixo (RS_ALVO; listas com A no fim = só quando quem lê é adulto) */
+const RS_MAIS={
+  rk1:["festa|Dono do pedaço|{n}, tamo no topo! Agora cada vitória nossa é um recado pros outros: \"vem buscar!\" 👑",
+    "joinha|Coroa pesada|{n}, a coroa do 1º lugar pesa, mas fica linda na nossa cabeça. Bora manter! 👑",
+    "festa|Todo mundo olhando pra cima|{n}, todo mundo do ranking abre o jogo e a primeira coisa que vê é o {cl} lá no topo. Delícia, né? 😎"],
+  rk1Perto:["preocupado|Trono balançando|{n}, só {dif} coroas separam a gente do {r}. Um vacilo e ele senta no nosso trono!",
+    "pensa|Sem descanso|{n}, o {r} tá colado: {dif} coroas. Rei que dorme acorda sem coroa! 👑"],
+  rkPerto:["festa|Cheirinho de ultrapassagem|{n}, tô sentindo um cheirinho de ultrapassagem no ar… o {r} tá só {dif} coroas na frente! 😏",
+    "joinha|Mais umas vitórias|{n}, mais umas vitórias e o {r} vai ver o {cl} passando na janela dele. {dif} coroas, só isso!",
+    "pensa|Recado preparado|{n}, já deixei pronto o recado pro {r} no chat. Só falta a gente tirar essas {dif} coroas de diferença. 😂"],
+  rkCola:["preocupado|Não dá mole|{n}, o {r} tá {dif} coroas atrás e doido pra passar a gente. Não dá mole!",
+    "pensa|Sirene ligada|{n}, alerta vermelho: o {r} tá a {dif} coroas. Se ele passar, vai zoar no chat, e eu não vou aguentar! 🚨"],
+  rkLonge:["pensa|Paciência|{n}, o {lider} tá longe lá na frente, mas maratona não se ganha no primeiro quilômetro. Uma vitória de cada vez!",
+    "festa|Sonhar não custa|{n}, imagina o dia que o {cl} passar o {lider} no ranking? Eu já tenho até o rojão guardado! 🎆"],
+  rkUlt:["pensa|Começando de baixo|{n}, último lugar no ranking, mas toda grande história começa assim. Bora escrever a nossa!",
+    "preocupado|Lanterna acesa|{n}, a lanterna do ranking tá com a gente… Bora jogar umas partidas e passar essa lanterna pra frente! 🔦"],
+  rkPodio:["festa|No pódio!|{n}, tamo em {pos}º no ranking! Pódio é bom, mas o topo é melhor. Bora!",
+    "pensa|Quase lá|{n}, {pos}º lugar no ranking. Mais um empurrão e a gente encosta no {lider}!"],
+  rkMeio:["pensa|Meio de tabela|{n}, {pos}º no ranking. Nem lá em cima, nem lá embaixo… e meio de tabela não tem graça, né? Bora subir!",
+    "joinha|Subindo a escada|{n}, {pos}º no ranking. Degrau por degrau a gente chega lá em cima. Próximo alvo: o {r}! 🎯"]};
+Object.entries(RS_MAIS).forEach(([k,l])=>RS[k]=(RS[k]||[]).concat(l));
+const RS_RANK={ // frases de ranking com as coisas de quem lê
+  QF7JHZ:["pensa|Todo mundo quer o Imperador|{n}, todo mundo no ranking tá treinando pra derrubar o senhor. Igual na várzea: time que tá em cima, todo mundo quer ganhar dele!",
+    "festa|Zaga do ranking|{n}, no ranking o senhor tem que fazer o que faz no domingo: ninguém passa! Nem que seja na base do carrinho. 😂"],
+  NPHHA6:["festa|Pedro na caçada|{n}, o pessoal do ranking já sabe: quando o Pedro entra em campo, alguém perde posição. 😏"],
+  FDRXER:["festa|Competitivo nato|{n}, eu sei que o senhor abre o ranking todo dia pra ver quem tá na frente. Não adianta negar! 😂",
+    "pensa|Exemplo pras meninas|{n}, subir no ranking é bom, mas subir e as meninas verem o pai lá em cima é melhor ainda! 👧👧"],
+  ZZWQUT:["festa|Speedrun no ranking|{n}, bora fazer um speedrun no ranking e passar todo mundo? 🎮",
+    "joinha|Subindo de nível|{n}, cada vitória é XP! Mais uns níveis e você passa os adultos no ranking. ⬆️"],
+  "4Y7CZE":["pensa|Defende e ataca|{n}, você que já foi goleiro e agora é da linha: no ranking tem que defender a posição E atacar quem tá na frente!"],
+  ZQ3F5Z:["pensa|Corintiano não desiste|{n}, o ranking é longo, e corintiano não desiste nunca. Bora jogar e subir!"],
+  "7HMHTR":["pensa|Criador no ranking|{n}, o criador do jogo tem que dar o exemplo no ranking, né? Bora subir! 😂"]};
+const RS_ALVO={ // quando ESSE amigo está logo acima (acima) ou logo atrás (abaixo) de quem lê
+  QF7JHZ:{acima:["pensa|Derruba o Imperador|{n}, o Paulo tá {dif} coroas na nossa frente. Agora que o \"Vamos atacar!\" dele enfraqueceu, é a nossa chance! 😏",
+      "festa|Zagueiro na mira|{n}, o Paulo é zagueiro na vida real… mas no ranking ele não vai conseguir marcar a gente. Faltam {dif} coroas! 😂",
+      "pensa|Sem Mundial e sem posição|{n}, imagina a cara do Paulo se a gente passar ele? O Palmeiras já não tem Mundial, agora ele vai ficar sem a posição também! 😂"],
+    abaixo:["preocupado|O zagueiro tá vindo|{n}, o Paulo tá só {dif} coroas atrás. Zagueiro de várzea quando gruda no atacante não larga mais! 😬",
+      "festa|Segura o Paulo|{n}, o Paulo tá {dif} coroas atrás, gritando \"Vamos atacar!\" pro ranking. Segura a nossa posição!"]},
+  NPHHA6:{acima:["pensa|Mira no Pedro|{n}, o Pedro tá {dif} coroas na frente. Bora mostrar pra ele quem monta time de verdade!",
+      "festa|Recado pro Pedro|{n}, se a gente passar o Pedro essa semana, eu mesmo mando o recado no chat. 😂"],
+    abaixo:["preocupado|Pedro na cola|{n}, o Pedro tá {dif} coroas atrás e jogando muito. Esse aí não para!"]},
+  FDRXER:{acima:["pensa|Tira o sono dele|{n}, o Maurício tá {dif} coroas na nossa frente. Ele é competitivo demais… imagina se a gente passa ele? Não dorme uma semana! 😂"],
+    acimaA:["festa|Desculpa, meninas|{n}, o pai das meninas tá {dif} coroas na frente. Desculpa, meninas, mas o papai de vocês vai ser ultrapassado! 😂"],
+    abaixo:["preocupado|Competitivo na cola|{n}, o Maurício tá {dif} coroas atrás. E ele é competitivo, não vai sossegar enquanto não passar a gente!",
+      "pensa|Tricolor no retrovisor|{n}, o Maurício tá chegando… são {dif} coroas. Esse são-paulino não desiste fácil!"]},
+  ZZWQUT:{acima:["pensa|Minecraft de time|{n}, o João Vitor tá montando time igual Minecraft e já tá {dif} coroas na frente. Bora cavar uns diamantes no mercado! 💎"],
+    acimaA:["festa|Perdendo pro moleque?|{n}, o João Vitor tá {dif} coroas na nossa frente! Um menino de 10 anos, hein? Bora reagir! 😂"],
+    abaixo:["pensa|Olha o cruzeirense|{n}, o João Vitor tá {dif} coroas atrás. Se ele passar, o pai dele vai comemorar junto! 💙"],
+    abaixoA:["preocupado|O moleque tá vindo|{n}, o João Vitor tá só {dif} coroas atrás. Imagina ser passado por um menino de 10 anos? A zoeira ia ser eterna! 😂"]},
+  "4Y7CZE":{acima:["pensa|O ex-goleiro tá voando|{n}, o Davi saiu do gol, foi pra linha… e tá {dif} coroas na nossa frente. Bora correr atrás!"],
+    acimaA:["festa|Perdendo pra criança?|{n}, o Davi tá {dif} coroas na nossa frente! Perder pra criança não dá! 😂"],
+    abaixo:["preocupado|O Galo tá vindo|{n}, o Davi tá só {dif} coroas atrás. Se ele passar a gente, vai cantar \"Galo doido\" no chat a semana inteira! 🐓"]},
+  ZQ3F5Z:{acima:["pensa|Bando de loucos na frente|{n}, o Mateus tá {dif} coroas na frente. Corintiano na nossa frente não dá, né? Bora!"],
+    abaixo:["preocupado|A Fiel tá chegando|{n}, o Mateusão tá {dif} coroas atrás. Corintiano quando embala ninguém segura!"]},
+  "7HMHTR":{acima:["pensa|Passar o criador|{n}, o Carlos, que criou o jogo, tá {dif} coroas na nossa frente. Passar o dono da bola é outro nível! 😏"],
+    abaixo:["festa|Criador comendo poeira|{n}, o Carlos inventou o jogo e tá {dif} coroas atrás da gente. Que vergonha pra ele, hein! 😂"]}};
 // como o Wagner chama o dono: nome (amigo conhecido) ou chefe/professor…
 function dirVoc(){const c=conta(),A=c&&AMIGOS[c.id],g=A&&A.kid?["chefe","professor","técnico","craque"]:["chefe","professor","presidente","patrão","mister"];
   if(A&&rnd()<(A.kid?.65:.55))return pick(A.ap);const pn=(G.user.coach||"").trim().split(" ")[0];if(!A&&pn&&rnd()<.25)return pn;return pick(g)}
@@ -2501,10 +2557,13 @@ function dirResenha(add){const D=G.diretor;if(!D||!D.on||G.seasonEnd)return;cons
   // ranking (coroas)
   const R=(typeof AMG!=="undefined"&&AMG.rank||[]).slice().sort((a,b)=>(b.tp||0)-(a.tp||0)),me=R.findIndex(x=>x.eu||x.id===eu);
   const nm=x=>esc(AMIGOS[x.id]?AMIGOS[x.id].ap[0]:x.nome);
-  if(R.length>=3&&me>=0){const M=R[me];
-    if(me===0){const ex={r:nm(R[1]),dif:(M.tp||0)-(R[1].tp||0)};tem(ex.dif<=100?RS.rk1Perto:RS.rk1,2,ex);tem(X.lider,3,ex)}
-    else{const up=R[me-1],dif=(up.tp||0)-(M.tp||0);if(dif<=80)tem(RS.rkPerto,2,{r:nm(up),dif:Math.max(1,dif)});if(me>=2)tem(RS.rkLonge,1,{lider:nm(R[0])})}
-    const dn=R[me+1];if(dn&&(M.tp||0)-(dn.tp||0)<=50)tem(RS.rkCola,2,{r:nm(dn),dif:(M.tp||0)-(dn.tp||0)});
+  if(R.length>=3&&me>=0){const M=R[me],kid=A&&A.kid,alvo=(x,k,w,ex)=>{const T=x&&RS_ALVO[x.id];if(T){tem(T[k],w,ex);if(!kid)tem(T[k+"A"],w,ex)}};
+    ctx.pos=me+1;tem(RS_RANK[eu],2);
+    if(me===0){const ex={r:nm(R[1]),dif:(M.tp||0)-(R[1].tp||0)};tem(ex.dif<=100?RS.rk1Perto:RS.rk1,2,ex);tem(X.lider,3,ex);if(ex.dif<=100)alvo(R[1],"abaixo",3,ex)}
+    else{const up=R[me-1],dif=(up.tp||0)-(M.tp||0),ex={r:nm(up),dif:Math.max(1,dif),lider:nm(R[0])};
+      if(dif<=80)tem(RS.rkPerto,2,ex);if(dif<=150)alvo(up,"acima",3,ex);
+      if(me>=2)tem(RS.rkLonge,1,ex);if(me<=2)tem(RS.rkPodio,2,ex);else if(me<R.length-1)tem(RS.rkMeio,1,ex)}
+    const dn=R[me+1];if(dn&&(M.tp||0)-(dn.tp||0)<=50){const ex={r:nm(dn),dif:Math.max(1,(M.tp||0)-(dn.tp||0))};tem(RS.rkCola,2,ex);if(me>0)alvo(dn,"abaixo",3,ex)}
     if(me===R.length-1&&R.length>=4)tem(RS.rkUlt,1)}
   if(R.length&&me>0)ctx.lider=nm(R[0]);
   tem(X.sempre,2);tem(RS.geral,1);
@@ -4550,7 +4609,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793827816";
+const VERSAO="1793831234";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
