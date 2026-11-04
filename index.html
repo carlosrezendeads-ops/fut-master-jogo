@@ -554,20 +554,30 @@ nav.abas[hidden]{display:none}
 .chat-msg.meu{align-self:flex-end;border-radius:14px 4px 14px 14px;background:linear-gradient(180deg,#1a4f8f,#143e72);border-color:#2b6cb8}
 .chat-quem{display:flex;align-items:center;gap:5px;background:none;border:0;padding:0;color:#ffd23f;font:inherit;font-size:12px;line-height:1.1;cursor:pointer}
 .chat-quem .rk-foto{flex:none}.chat-msg.meu .chat-quem{color:#9fdcff}
-.chat-msg p{margin:2px 0 0;font-size:14.5px;line-height:1.22;word-break:break-word}
-.chat-msg small{display:block;text-align:right;font-size:10px;line-height:1.1;color:var(--cal-2)}
+.chat-msg p{margin:1px 0 0;font-size:14.5px;line-height:1.15;word-break:break-word}
+.chat-msg small{display:block;text-align:right;font-size:10px;line-height:1;margin-top:1px;color:var(--cal-2)}
+.au{display:flex;align-items:center;gap:8px;min-width:190px;margin-top:2px}
+.au-play{flex:none;width:34px;height:34px;border-radius:50%;border:0;background:#ffd23f;color:#2a1d00;font-size:14px;font-weight:900;cursor:pointer;display:grid;place-items:center;padding:0}
+.au-barra{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.22);overflow:hidden}.au-barra i{display:block;height:100%;width:0;background:#ffd23f;transition:width .25s linear}
+.au-dur{font-size:12px;color:var(--cal-2);min-width:30px;text-align:right}
+.chat-env{position:relative}.chat-env .au-env{display:none}.chat-env.tem-txt .au-env{display:inline-flex}.chat-env.tem-txt .au-mic{display:none}
+.au-mic{flex:none;padding:0 14px;font-size:20px;touch-action:none;-webkit-user-select:none;user-select:none}
+.chat-env.gravando .au-mic{background:#e5484d;transform:scale(1.15);box-shadow:0 0 0 6px rgba(229,72,77,.25)}
+.au-rec{display:none;position:absolute;left:52px;right:62px;top:0;bottom:0;align-items:center;gap:8px;padding:0 12px;border-radius:12px;background:rgba(4,10,30,.97);border:1.5px solid #e5484d;font-size:13px;color:var(--cal-2)}
+.chat-env.gravando .au-rec{display:flex}.au-rec b{color:#fff;font-size:15px}.au-rec.cancela{border-color:#888}.au-rec.cancela span{color:#ff6b6b}
+.au-ponto{width:10px;height:10px;border-radius:50%;background:#e5484d;animation:auPisca 1s infinite}@keyframes auPisca{50%{opacity:.25}}
 .chat-msg.del-on{border-color:#ff4d4d;box-shadow:0 0 0 1px #ff4d4d inset}
 .chat-excl{display:block;width:100%;margin-top:5px;padding:6px 8px;border-radius:9px;border:1px solid #ff4d4d;background:rgba(255,60,60,.16);color:#ff6b6b;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 .chat-vender{flex:none;padding:0 12px;font-size:19px}
-.chat-vd .jog.mv-of{position:relative;margin:3px 0 0;cursor:pointer;padding:6px 8px 5px;line-height:1.2}.chat-vd .jog.mv-of .ov{width:34px;height:34px;font-size:15px}
+.chat-vd .jog.mv-of{position:relative;margin:2px 0 0;cursor:pointer;padding:5px 8px 4px;line-height:1.1}.chat-vd .jog.mv-of .nm b{line-height:1.1}.chat-vd .jog.mv-of .ov{width:34px;height:34px;font-size:15px}
 .mv-ver{position:absolute;right:8px;bottom:5px;font-size:10.5px;color:#d9ffe8;opacity:.9}.mv-of .nm b{white-space:normal}
-.mv-rod{flex-wrap:wrap}.mv-rod .mv-acaba{order:3;width:100%;text-align:left}
-.mv-of .nm>span{display:block;font-size:12px}.mv-ficha-preco{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;padding:8px 10px;border-radius:12px;background:linear-gradient(135deg,#1f8a4c,#136b39);border:1px solid #4fd68a;font-weight:700}
+.mv-rod .mv-acaba{flex:1;font-size:10.5px;line-height:1.1}
+.mv-of .nm>span{display:block;font-size:12px;line-height:1.15}.mv-ficha-preco{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;padding:8px 10px;border-radius:12px;background:linear-gradient(135deg,#1f8a4c,#136b39);border:1px solid #4fd68a;font-weight:700}
 .chat-vd{min-width:min(92%,330px)}
 .mv-card{display:flex;align-items:center;gap:8px;margin-top:4px;padding:6px;border-radius:10px;background:rgba(0,0,0,.25);border:1px solid rgba(255,210,63,.45)}
 .mv-card .jfoto{flex:none}.mv-info{flex:1;min-width:0;display:flex;flex-direction:column;font-size:12px;line-height:1.25;color:var(--cal-2)}.mv-info>b{font-size:14px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mv-card .preco-pill{flex:none}
-.mv-rod{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:4px;min-height:20px}.mv-acaba{font-size:11px;color:var(--cal-2)}
+.mv-rod{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:3px;min-height:0}.mv-acaba{font-size:11px;color:var(--cal-2)}
 .mv-btn{padding:5px 12px;font-size:12.5px;min-height:0}.mv-st{font-size:12.5px;color:var(--cal-2)}.mv-st.ok{color:#5be08a}
 .mv-lista{max-height:56vh;overflow-y:auto;display:flex;flex-direction:column;gap:4px;margin:8px 0}
 .mv-preco{display:flex;flex-direction:column;align-items:center;gap:8px;margin:10px 0}.mv-preco b{font-size:26px;color:#ffd23f}.mv-preco input{width:100%}
@@ -626,6 +636,10 @@ nav.abas[hidden]{display:none}
 .msg-lista{display:grid;gap:8px;max-height:60vh;overflow:auto;margin-bottom:6px}
 .msg-card{display:flex;flex-direction:column;align-items:flex-start;gap:5px;text-align:left;width:100%;padding:10px 12px;border-radius:12px;background:var(--gramado-2);border:1px solid var(--gramado-3);color:var(--cal);font:inherit;cursor:pointer;position:relative}
 .msg-card.nova::after{content:"";position:absolute;top:10px;right:10px;width:9px;height:9px;border-radius:50%;background:var(--canario)}
+.msg-card.fm-msg{border:2px solid #ffd23f;background:linear-gradient(160deg,rgba(255,210,63,.2),rgba(255,210,63,.04))}
+.fm-logo-p{width:22px;height:22px;border-radius:6px}.fm-tarja{display:inline-block;margin-left:6px;padding:2px 7px;border-radius:6px;background:#e5484d;color:#fff;font-size:10px;font-weight:900;letter-spacing:.06em;vertical-align:1px;animation:promoBorda 1.6s ease-in-out infinite}
+.fm-cab{display:flex;align-items:center;gap:12px;margin-bottom:8px}.fm-cab b{display:block;font-size:17px}.fm-cab .fm-tarja{margin:4px 0 0}.fm-logo{width:58px;height:58px;border-radius:14px;box-shadow:0 0 0 2px #ffd23f}
+.fm-lista{margin:6px 0 8px;padding-left:4px;list-style:none;display:flex;flex-direction:column;gap:6px}.fm-lista li{padding:7px 10px;border-radius:10px;background:var(--gramado-2);border:1px solid var(--gramado-3);font-size:14px;line-height:1.25}
 .msg-card.clube{border:2px solid #4f8cff;background:linear-gradient(160deg,rgba(79,140,255,.18),rgba(79,140,255,.04))}
 .msg-card .msg-txt{font-size:13.5px;line-height:1.3}.msg-card small{font-size:11.5px;color:var(--cal-2)}.msg-card small i{font-style:normal;color:var(--canario)}
 .msg-selo{display:inline-flex;align-items:center;gap:6px;padding:3px 9px 3px 5px;border-radius:99px;background:rgba(79,140,255,.25);font-size:12px}
@@ -3079,7 +3093,7 @@ function emprestarPara(pid,cid,temp,mensal){
 function voltaDosEmprestimos(){mvDevolver();
   Object.values(G.players).forEach(p=>{if(p.empU&&G.year>=p.empU.ate){const era=p.club!=null&&G.clubs[p.club];p.club=G.user.club;delete p.empU;delete p.emp;tocou();
     G.inbox.unshift({t:"bom",m:`${p.n} terminou o empréstimo${era?` no ${era.name}`:""} e voltou ao seu elenco.`})}})}
-const naoLidas=()=>(G&&G.inbox?G.inbox.filter(m=>(m.cid||m.rk)&&!m.lida).length:0); // a caixa de entrada mostra só mensagens de outros clubes
+const naoLidas=()=>(G&&G.inbox?G.inbox.filter(m=>(m.cid||m.rk||m.fm)&&!m.lida).length:0); // a caixa de entrada mostra só mensagens de outros clubes
 const ICO_AVIAO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>';
 const ICO_NOTA='<svg class="ico-nota" viewBox="0 0 28 18" aria-hidden="true"><rect x="1" y="1" width="26" height="16" rx="3" fill="#2e9b57" stroke="#bff0cf" stroke-width="1.5"/><circle cx="14" cy="9" r="4" fill="none" stroke="#bff0cf" stroke-width="1.5"/><circle cx="5" cy="9" r="1.2" fill="#bff0cf"/><circle cx="23" cy="9" r="1.2" fill="#bff0cf"/></svg>';
 const dinheiroCurto=k=>{const a=Math.abs(k),f=x=>String(Math.round(x*10)/10).replace(".",",");return (k<0?"−":"")+(a>=1000?f(a/1000)+"M":Math.round(a)+"k")}; // topo: 99k, 1,5M
@@ -3185,11 +3199,45 @@ function chatMarcarVisto(n){try{if(n>chatVisto())localStorage.setItem("fut-chat-
 function chatHTML(){const L=AMG.chat||[],c=conta(),eu=c&&c.id;
   if(!L.length)return `<p class="muted chat-vazio">${AMG.chatOk===false?"Sem conexão com o servidor.":"Ninguém falou ainda. Mande a primeira mensagem! 👋"}</p>`;
   return L.map(m=>{const meu=m.de===eu,h=new Date(m.t),pode=meu||AMG.chatAdmin,del=pode&&AMG.chatDelN===m.n;
-    return `<div class="chat-msg${meu?" meu":""}${m.vd?" chat-vd":""}${del?" del-on":""}"${pode?` data-del="${m.n}"`:""}><button class="chat-quem" data-a="amgver" data-v="${esc(m.de)}">${rkFoto(meu?meuAv():m.av,m.nome,22)}<b>${esc(m.nome||"Jogador")}</b></button>${m.vd&&m.vjog?(mvVencido(m)?`<p class="mv-exp">⏰ ${m.vtipo==="e"?"Tempo do empréstimo expirado":"Tempo de venda expirado"} · ${esc((mvJog(m)||{}).n||"")}</p>`:cardVenda(m,meu)):`<p>${esc(m.txt)}</p>`}<small>${String(h.getHours()).padStart(2,"0")}:${String(h.getMinutes()).padStart(2,"0")}</small>${del?`<button class="chat-excl" data-a="chatdel" data-v="${m.n}">🗑️ Excluir?</button>`:""}</div>`}).join("")}
-function chatDesenha(){const box=$("#chat-lista");if(!box)return;const h=chatHTML();if(h===AMG.chatH&&box.innerHTML)return;AMG.chatH=h;const fim=box.scrollHeight-box.scrollTop-box.clientHeight<60;box.innerHTML=h;if(fim||!AMG.chatRolou){box.scrollTop=box.scrollHeight;AMG.chatRolou=1}}
+    return `<div class="chat-msg${meu?" meu":""}${m.vd?" chat-vd":""}${del?" del-on":""}"${pode?` data-del="${m.n}"`:""}><button class="chat-quem" data-a="amgver" data-v="${esc(m.de)}">${rkFoto(meu?meuAv():m.av,m.nome,22)}<b>${esc(m.nome||"Jogador")}</b></button>${m.temAu?auHTML(m):m.vd&&m.vjog?(mvVencido(m)?`<p class="mv-exp">⏰ ${m.vtipo==="e"?"Tempo do empréstimo expirado":"Tempo de venda expirado"} · ${esc((mvJog(m)||{}).n||"")}</p>`:cardVenda(m,meu)):`<p>${esc(m.txt)}</p>`}<small>${String(h.getHours()).padStart(2,"0")}:${String(h.getMinutes()).padStart(2,"0")}</small>${del?`<button class="chat-excl" data-a="chatdel" data-v="${m.n}">🗑️ Excluir?</button>`:""}</div>`}).join("")}
+function chatDesenha(){const box=$("#chat-lista");if(!box)return;const h=chatHTML();if(h===AMG.chatH&&box.innerHTML)return;AMG.chatH=h;const fim=box.scrollHeight-box.scrollTop-box.clientHeight<60;box.innerHTML=h;if(fim||!AMG.chatRolou){box.scrollTop=box.scrollHeight;AMG.chatRolou=1}auMarca()}
+/* ---------- áudio no chat (04/11): segura o 🎤 para gravar (até 1 min), solta para enviar, arrasta para o lado para cancelar ---------- */
+const AU_MAX=60,durTxt=d=>`${Math.floor(d/60)}:${String(d%60).padStart(2,"0")}`;
+function auHTML(m){const d=m.dur||0;return `<div class="au" data-n="${m.n}" data-d="${d}"><button class="au-play" data-a="auplay" data-v="${m.n}" aria-label="Ouvir áudio">▶</button><span class="au-barra"><i></i></span><b class="au-dur num">${durTxt(d)}</b></div>`}
+function auMarca(){const P=AMG.auPl;document.querySelectorAll(".au").forEach(el=>{const n=+el.dataset.n,on=P&&P.n===n,d=+el.dataset.d||1;
+  const b=el.querySelector(".au-play");if(b)b.textContent=on&&P.load?"…":on&&!P.a.paused?"❚❚":"▶";const i=el.querySelector(".au-barra i");if(i)i.style.width=on?Math.min(100,P.a.currentTime/d*100)+"%":"0%";
+  const t=el.querySelector(".au-dur");if(t)t.textContent=on&&P.a.currentTime>0?durTxt(Math.floor(P.a.currentTime)):durTxt(d)})}
+async function auTocar(n){const P=AMG.auPl;if(P&&P.n===n){if(P.a.paused)P.a.play().catch(()=>{});else P.a.pause();auMarca();return}if(P)P.a.pause();
+  const C=AMG.auCache=AMG.auCache||{},a=new Audio();AMG.auPl={n,a,load:!C[n]};auMarca();
+  if(!C[n]){const j=await amgPost("chatAudio",{n}).catch(()=>({erro:"Sem conexão com o servidor."}));if(j.erro||!j.au){if(AMG.auPl&&AMG.auPl.n===n)AMG.auPl=null;auMarca();toastErro(j.erro||"Não deu para carregar o áudio.");return}C[n]=j.au}
+  if(!AMG.auPl||AMG.auPl.n!==n)return;AMG.auPl.load=false;a.src=C[n];["timeupdate","play","pause"].forEach(k=>a.addEventListener(k,auMarca));a.addEventListener("ended",()=>{if(AMG.auPl&&AMG.auPl.a===a)AMG.auPl=null;auMarca()});
+  a.play().catch(()=>{AMG.auPl=null;auMarca();toastErro("Não deu para tocar o áudio.")})}
+function auUI(on){const env=document.querySelector(".chat-env");if(env)env.classList.toggle("gravando",!!on);if(!on){const c=document.querySelector(".au-rec");if(c)c.classList.remove("cancela")}}
+async function auIniciar(){if(AMG.auRec||AMG.auPedindo)return;
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){toastErro("Este aparelho não grava áudio aqui.");return}
+  let st;AMG.auPedindo=1;try{st=await navigator.mediaDevices.getUserMedia({audio:true})}catch(x){AMG.auPedindo=0;toastErro("Libere o microfone para mandar áudio.");return}AMG.auPedindo=0;
+  if(!AMG.auSegura){st.getTracks().forEach(t=>t.stop());toast("Microfone liberado! Agora segure o 🎤 para gravar.");return} // 1ª vez: soltou durante a pergunta de permissão
+  const mt=["audio/webm;codecs=opus","audio/mp4","audio/ogg;codecs=opus","audio/webm"].find(t=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(t))||"";
+  let r;try{r=new MediaRecorder(st,{...(mt?{mimeType:mt}:{}),audioBitsPerSecond:32000})}catch(x){r=new MediaRecorder(st)}
+  const pd=[],R={r,st,pd,t0:Date.now(),cancel:false};AMG.auRec=R;
+  r.ondataavailable=ev=>{if(ev.data&&ev.data.size)pd.push(ev.data)};
+  r.onstop=()=>{st.getTracks().forEach(t=>t.stop());clearInterval(AMG.auT);AMG.auRec=null;auUI(false);
+    const dur=Math.min(AU_MAX,Math.round((Date.now()-R.t0)/1000));if(R.cancel){toast("Áudio cancelado");return}if(dur<1){toast("Segure o 🎤 enquanto fala");return}
+    const fr=new FileReader();fr.onload=()=>auEnviar(fr.result,dur);fr.readAsDataURL(new Blob(pd,{type:r.mimeType||mt||"audio/webm"}))};
+  r.start(250);vibrar(30);auUI(true);const t=$("#au-t");if(t)t.textContent="0:00";
+  AMG.auT=setInterval(()=>{if(!AMG.auRec)return;const sg=Math.floor((Date.now()-AMG.auRec.t0)/1000),el=$("#au-t");if(el)el.textContent=durTxt(Math.min(AU_MAX,sg));if(sg>=AU_MAX)auParar(false)},250)}
+function auParar(cancel){const R=AMG.auRec;if(!R)return;R.cancel=!!cancel;try{R.r.stop()}catch(e){}}
+async function auEnviar(dataUrl,dur){if(dataUrl.length>1150000){toastErro("Áudio muito grande.");return}
+  const j=await amgPost("chatEnviar",{au:dataUrl,dur}).catch(()=>({erro:"Sem conexão com o servidor."}));if(j.erro){toastErro(j.erro);return}AMG.chatRolou=0;chatPuxa()}
+function auLigar(){const mic=document.querySelector(".au-mic");if(!mic)return;let x0=0;
+  mic.addEventListener("pointerdown",e=>{e.preventDefault();x0=e.clientX;AMG.auSegura=1;try{mic.setPointerCapture(e.pointerId)}catch(x){}auIniciar()});
+  mic.addEventListener("pointermove",e=>{if(!AMG.auRec)return;const c=document.querySelector(".au-rec");if(c)c.classList.toggle("cancela",x0-e.clientX>70)});
+  const solta=e=>{AMG.auSegura=0;if(AMG.auRec)auParar(e.type==="pointercancel"||x0-e.clientX>70)};mic.addEventListener("pointerup",solta);mic.addEventListener("pointercancel",solta);
+  mic.addEventListener("contextmenu",e=>e.preventDefault());
+  const i=$("#chat-txt"),env=document.querySelector(".chat-env");if(i&&env){const tg=()=>env.classList.toggle("tem-txt",!!i.value.trim());i.addEventListener("input",tg);tg()}}
 /* 04/11: segurar a própria mensagem → vibra e aparece "🗑️ Excluir?" vermelho no card */
 function chatLigar(){const box=$("#chat-lista");if(!box)return;let tm=null;const para=()=>{clearTimeout(tm);tm=null};
-  box.addEventListener("pointerdown",e=>{const b=e.target.closest(".chat-msg[data-del]");if(!b||e.target.closest(".chat-excl,.mv-btn"))return;para();
+  box.addEventListener("pointerdown",e=>{const b=e.target.closest(".chat-msg[data-del]");if(!b||e.target.closest(".chat-excl,.mv-btn,.au-play"))return;para();
     tm=setTimeout(()=>{tm=null;AMG.chatDelN=+b.dataset.del;AMG.lpFez=1;vibrar(40);chatDesenha()},550)});
   box.addEventListener("pointerleave",para);if(!AMG.lpDoc){AMG.lpDoc=1;["pointerup","pointercancel"].forEach(k=>window.addEventListener(k,()=>{if(AMG.lpPara)AMG.lpPara();if(AMG.lpFez){AMG.lpFez=0;AMG.lpUp=Date.now()}},true))}AMG.lpPara=para;box.addEventListener("scroll",para,{passive:true});
   box.addEventListener("contextmenu",e=>{if(e.target.closest(".chat-msg[data-del]"))e.preventDefault()});
@@ -3207,8 +3255,8 @@ const mvPreco=m=>m.vtipo==="e"?`${dinheiro(m.vmensal)}/mês`:dinheiro(m.vpreco);
 function cardVenda(m,meu){const J=mvJog(m);if(!J)return `<p>${esc(m.txt)}</p>`;const st=m.vst,resta=m.vt+864e5-Date.now();
   const emp=m.vtipo==="e";
   const rodape=st==="vend"||st==="fim"?`<b class="mv-st ok">✅ ${emp?"Emprestado":"Vendido"} para ${esc(m.vcomp||"outro jogador")}</b>`:st==="canc"?`<b class="mv-st">Anúncio cancelado</b>`:st==="exp"||resta<=0?`<b class="mv-st">Anúncio encerrado</b>`
-    :meu?`<span class="mv-acaba">acaba em ${Math.max(1,Math.ceil(resta/36e5))} h</span><button class="btn mv-btn" data-a="mvcancel" data-v="${m.vd}">Cancelar</button>`
-    :`<span class="mv-acaba">acaba em ${Math.max(1,Math.ceil(resta/36e5))} h</span><button class="btn prim mv-btn" data-a="mvcomprar" data-v="${m.vd}">${emp?"Pegar emprestado?":"Comprar jogador?"}</button>`;
+    :meu?`<span class="mv-acaba">⏳ ${Math.max(1,Math.ceil(resta/36e5))} h</span><button class="btn mv-btn" data-a="mvcancel" data-v="${m.vd}">Cancelar</button>`
+    :`<span class="mv-acaba">⏳ ${Math.max(1,Math.ceil(resta/36e5))} h</span><button class="btn prim mv-btn" data-a="mvcomprar" data-v="${m.vd}">${emp?"Pegar emprestado?":"Comprar jogador?"}</button>`;
   const temp=J.j!=null?`⚽ ${J.g||0} gol${J.g===1?"":"s"} em ${J.j} jogo${J.j===1?"":"s"}`:"";
   return `<div class="jog of mv-of" data-a="mvver" data-v="${m.vd}" role="button"><span class="promo-canto mv-canto">${emp?"🔁 Empréstimo":"Oferta"}</span><div class="jfoto">${rostoSVG(J,40)}<span class="posb ${J.pos}">${J.pos}</span></div>
     <div class="nm"><b>${esc(J.n)}</b><span>${J.age} anos${(J.habX||[]).length?` · ✨ ${esc(J.habX[0])}`:temp?` · ${temp}`:""}</span><span class="time-of"><b>${esc(J.clube||"")}</b>${J.serie>=0&&J.pais&&PAISES[J.pais]?` · ${esc(PAISES[J.pais].ligas[J.serie]||"")}`:""}</span></div>
@@ -3309,9 +3357,10 @@ function mvDevolver(){Object.values(G.players).filter(p=>p.empC&&G.year>=p.empC.
 function mvDevEnviar(){(G.mvDevPend||[]).slice().forEach(n=>amgPost("vendaOk",{n,k:"fim"}).then(j=>{if(!j.erro){G.mvDevPend=(G.mvDevPend||[]).filter(x=>x!==n);salvar()}}).catch(()=>{}))}
 const mvCustoEmp=()=>G?Object.values(G.players).reduce((a,p)=>a+(p.empC&&p.club===G.user.club?p.empC.mensal:0),0):0; // quem pegou emprestado paga por mês
 const mvRendaEmp=()=>G&&G.mercV?Object.values(G.mercV).reduce((a,p)=>a+(p.mvEmp?p.mvEmp.mensal:0),0):0; // quem emprestou recebe por mês
-async function chatPuxa(){if(!document.querySelector("#chat-lista")){clearInterval(AMG.chatT);AMG.chatT=null;return}
-  const j=await amgPost("chatLer",{}).catch(()=>({erro:1}));if(j.erro){AMG.chatOk=false;chatDesenha();return}
-  AMG.chatOk=true;AMG.chat=j.msgs||[];AMG.chatAdmin=!!j.admin;AMG.chatUlt=j.ultimo||0;chatMarcarVisto(AMG.chatUlt);chatDesenha()}
+async function chatPuxa(){if(!document.querySelector("#chat-lista")){clearInterval(AMG.chatT);AMG.chatT=null;if(AMG.auPl){AMG.auPl.a.pause();AMG.auPl=null}if(AMG.auRec)auParar(true);return}
+  const j=await amgPost("chatLer",AMG.chat&&AMG.chatV!=null?{v:AMG.chatV}:{}).catch(()=>({erro:1}));if(j.erro){AMG.chatOk=false;chatDesenha();return}
+  if(j.same){AMG.chatOk=true;chatDesenha();return} // nada mudou: só redesenha (anúncio que venceu pelo relógio)
+  AMG.chatV=j.v;AMG.chatOk=true;AMG.chat=j.msgs||[];AMG.chatAdmin=!!j.admin;AMG.chatUlt=j.ultimo||0;chatMarcarVisto(AMG.chatUlt);chatDesenha()}
 async function chatEnviar(){const i=$("#chat-txt");if(!i)return;const t=i.value.trim();if(!t)return;
   const j=await amgPost("chatEnviar",{txt:t}).catch(()=>({erro:"Sem conexão com o servidor."}));if(j.erro){toastErro(j.erro);return}i.value="";AMG.chatRolou=0;chatPuxa()}
 function modalAmigos(soAtualiza){
@@ -3333,9 +3382,9 @@ function modalAmigos(soAtualiza){
   const expl=ab==="mes"?`Quem ganhar mais coroas em <b>${mesAt}</b> é o <b>🏅 campeão do mês</b>. Zera todo dia 1. Vitória +3, empate +1, derrota −1; títulos valem muito mais.`:`Quem tem mais <b>👑 coroas</b> fica em cima. Vitória +3, empate +1, derrota −1, W.O. −3, rebaixamento −45; títulos dão muito mais (Champions 300, Série A 150). ▲▼ = posições desde segunda-feira.`;
   const abas=[["geral","Geral"],["mes","Do mês"],["chat","💬 Chat"]].map(([k,n])=>`<button data-a="rkaba" data-v="${k}" aria-pressed="${ab===k}">${n}${k==="chat"&&chatNovas()&&ab!=="chat"?'<i class="chat-dot"></i>':""}</button>`).join("");
   if(ab==="chat"){modal(`<div class="amg-folha rk-folha chat-folha"><h3>${ICO_AMIGOS} Ranking</h3><div class="seg" role="group">${abas}</div><p class="muted peq rk-expl">Toque na foto para ver o perfil. Segure a sua mensagem para apagar. Palavrão é bloqueado.</p>
-      <div class="chat-lista" id="chat-lista">${chatHTML()}</div><div class="chat-env"><button class="btn chat-vender" data-a="mvender" aria-label="Vender jogador">💰</button><input id="chat-txt" type="text" maxlength="200" placeholder="Escreva uma mensagem..." autocomplete="off"><button class="btn prim" data-a="chatenv">Enviar</button></div>
+      <div class="chat-lista" id="chat-lista">${chatHTML()}</div><div class="chat-env"><button class="btn chat-vender" data-a="mvender" aria-label="Vender jogador">💰</button><input id="chat-txt" type="text" maxlength="200" placeholder="Escreva uma mensagem..." autocomplete="off"><div class="au-rec"><i class="au-ponto"></i><b id="au-t" class="num">0:00</b><span>‹ arraste para cancelar</span></div><button class="btn au-mic" aria-label="Segure para gravar áudio">🎤</button><button class="btn prim au-env" data-a="chatenv">Enviar</button></div>
       <div class="botoes"><button class="btn" data-a="fechar">Fechar</button></div></div>`);
-    const i=$("#chat-txt");if(i)i.addEventListener("keydown",e=>{if(e.key==="Enter")chatEnviar()});AMG.chatRolou=0;AMG.chatH=null;AMG.chatDelN=null;chatLigar();chatDesenha();chatPuxa();if(!AMG.chatT)AMG.chatT=setInterval(chatPuxa,3000);return}
+    const i=$("#chat-txt");if(i)i.addEventListener("keydown",e=>{if(e.key==="Enter")chatEnviar()});AMG.chatRolou=0;AMG.chatH=null;AMG.chatDelN=null;chatLigar();auLigar();chatDesenha();chatPuxa();if(!AMG.chatT)AMG.chatT=setInterval(chatPuxa,3000);return}
   modal(`<div class="amg-folha rk-folha"><h3>${ICO_AMIGOS} Ranking</h3><div class="seg" role="group">${abas}</div><p class="muted peq rk-expl">${expl} Toque em alguém para ver o perfil e jogar.</p><div class="amg-lista">${corpo}</div><div class="botoes"><button class="btn" data-a="fechar">Fechar</button></div></div>`);
   const b=document.querySelector(".amg-btn");if(b)b.innerHTML=ICO_AMIGOS+amgBadge()}
 async function amgBuscar(){const i=$("#amg-q"),q=(i?i.value:AMG.q).trim();AMG.q=q;if(q.replace(/^#/,"").length<2){toastErro("Digite o ID ou pelo menos 2 letras do nome.");return}
@@ -3537,15 +3586,28 @@ setInterval(()=>{if(document.visibilityState!=="visible"||!G||!G.user||VIVO||G.l
   amgPost("vivoConvites",{}).then(j=>{const c=(j.convites||[]).find(x=>!VIVO_VISTO[x.sala]);if(!c||G.live||VIVO||document.querySelector(".veu"))return;VIVO_VISTO[c.sala]=1;VIVO_CONV=c;
     try{vibrar("capa");somConquista()}catch(e){}
     modal(`<div class="aviso-box vivo-conv"><b>● ${esc(c.nome)} te chamou para um amistoso AO VIVO!</b><p>${esc(c.clube||"")} × seu time, agora. Cada um comanda o seu time ao mesmo tempo; se alguém pausar, pausa para os dois. Vale só XP.</p></div><div class="botoes"><button class="btn" data-a="vivonao">Agora não</button><button class="btn prim" data-a="vivosim">Jogar agora</button></div>`)}).catch(()=>{})},6000);
+/* FUT Master Assistente (04/11): lista de novidades na caixa de entrada de todos (1 vez por perfil).
+   Nova leva = novo item NO COMEÇO de NOVIDADES (a cada 3+ novidades ou quando o Carlos pedir). Quem nunca recebeu ganha só a mais recente. */
+const NOVIDADES=[
+ {id:"n1",itens:["💬 Chat no Ranking: converse com todo mundo que joga","🎤 Mensagens de áudio de até 1 minuto (segure o microfone)","🗑️ Segure a sua mensagem para apagar","💰 Venda e empréstimo de jogadores entre treinadores, direto no chat","🟢 Aviso quando alguém entra no jogo","👑 Ranking por coroas, com prêmios para o pódio do mês"]},
+];
+const FM_LOGO="app/icon-192.png";
+function novidadesEntregar(){if(!G||!G.inbox||!G.user||abertura)return;const PF=perfil();const vistos=PF.novs=PF.novs||[];const nova=NOVIDADES[0];if(!nova||vistos.includes(nova.id))return;
+  NOVIDADES.forEach(x=>{if(!vistos.includes(x.id))vistos.push(x.id)});G.inbox.unshift({fm:nova.id,t:"msg",m:nova.itens.slice(0,2).join(" · ")+(nova.itens.length>2?" e mais…":""),d:hojeJogo()});G.inbox=G.inbox.slice(0,60);salvar();
+  const b=document.querySelector(".msg-btn,.caixa-btn");if(b)render()}
+function modalNovidades(i){const m=G.inbox[i],x=m&&NOVIDADES.find(n=>n.id===m.fm);if(!x)return;m.lida=true;salvar();
+  modal(`<div class="fm-folha"><div class="fm-cab"><img class="fm-logo" src="${FM_LOGO}" alt="FUT Master"><div><b>FUT Master Assistente</b><span class="fm-tarja">NOVIDADES!</span></div></div>
+    <p class="muted peq">Olá, ${esc(G.user.coach||"treinador")}! Veja o que chegou de novo no jogo:</p><ul class="fm-lista">${x.itens.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
+    <p class="muted peq">Bom jogo! ⚽</p><div class="botoes"><button class="btn" data-a="caixa">‹ Caixa de entrada</button><button class="btn prim" data-a="fechar">Valeu!</button></div></div>`);render()}
 function modalCaixa(){
   const l=G.inbox;
-  const h=l.some(m=>m.rk||m.cid&&G.clubs[m.cid])?l.map((m,i)=>{const nova=!m.lida;if(m.rk)return `<button class="msg-card rk-msg${nova?" nova":""}" data-a="msgver" data-v="${i}"><span class="msg-selo jogo">🏆 <b>Ranking</b></span><span class="msg-txt">${esc(m.m)}</span>${m.d?`<small>📅 ${dataMsg(m.d)}</small>`:""}</button>`;if(!(m.cid&&G.clubs[m.cid]))return "";const c=m.cid&&G.clubs[m.cid];
+  const h=l.some(m=>m.fm||m.rk||m.cid&&G.clubs[m.cid])?l.map((m,i)=>{const nova=!m.lida;if(m.fm)return `<button class="msg-card fm-msg${nova?" nova":""}" data-a="msgver" data-v="${i}"><span class="msg-selo"><img class="fm-logo-p" src="${FM_LOGO}" alt=""><b>FUT Master Assistente</b><span class="fm-tarja">NOVIDADES!</span></span><span class="msg-txt">${esc(m.m)}</span>${m.d?`<small>📅 ${dataMsg(m.d)}</small>`:""}</button>`;if(m.rk)return `<button class="msg-card rk-msg${nova?" nova":""}" data-a="msgver" data-v="${i}"><span class="msg-selo jogo">🏆 <b>Ranking</b></span><span class="msg-txt">${esc(m.m)}</span>${m.d?`<small>📅 ${dataMsg(m.d)}</small>`:""}</button>`;if(!(m.cid&&G.clubs[m.cid]))return "";const c=m.cid&&G.clubs[m.cid];
     if(c)return `<button class="msg-card clube${nova?" nova":""}" data-notime data-a="msgver" data-v="${i}"><span class="msg-selo">${escudoMini(c,18)}<b>${nomeMsg(c)}</b></span><span class="msg-txt">${esc(m.m)}</span><small>${m.ofm&&selosEst(m.ofm)?`<i>${selosEst(m.ofm)}</i> · `:""}📅 ${dataMsg(m.d||hojeJogo())}</small></button>`;
     return `<button class="msg-card${nova?" nova":""} ${m.t||""}" data-a="msgver" data-v="${i}"><span class="msg-selo jogo">📣 <b>Aviso do jogo</b></span><span class="msg-txt">${esc(m.m)}</span>${m.d?`<small>📅 ${dataMsg(m.d)}</small>`:""}</button>`}).join(""):'<p class="muted">Nenhuma mensagem por enquanto.</p>';
   modal(`<h3>✉️ Caixa de entrada</h3><div class="msg-lista">${h}</div><div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`);
-  l.forEach(m=>{if(m.cid||m.rk)m.lida=true});salvar();render()}
+  l.forEach(m=>{if(m.cid||m.rk)m.lida=true});salvar();render()} // novidades (m.fm) só ficam lidas ao abrir
 function modalMensagem(i){
-  const m=G.inbox[i];if(!m)return;m.lida=true;
+  const m=G.inbox[i];if(!m)return;if(m.fm){modalNovidades(i);return}m.lida=true;
   const c=m.cid&&G.clubs[m.cid],o=m.ofm,p=o&&G.players[o.pid];
   let corpo,acoes="";
   const ass=`<p>Atenciosamente,<br>Diretoria de Futebol do ${c?esc(c.name):""}</p>`,sd=`<p>Prezado treinador ${esc(G.user.coach||"")},</p>`;
@@ -4293,7 +4355,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793793882";
+const VERSAO="1793795613";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -5409,7 +5471,7 @@ function render(){try{if(G&&G.user){perfil();garantirContratos()}}catch(e){}
   if(!telaCheia&&!G.over&&!G.tradOferta&&!document.querySelector(".veu")){const P=perfil();if(G.lembSave==null)G.lembSave=P.j; // a cada 8 partidas: lembrete de salvar o arquivo
     if(P.j-G.lembSave>=8){G.lembSave=P.j;salvar();modal(`<div class="aviso-box"><b>💾 Salve o progresso da carreira</b><p>Você já jogou mais 8 partidas! O jogo salva sozinho no aparelho, mas se limpar os dados do navegador ou trocar de celular a carreira se perde. Salve uma cópia em arquivo (fica na pasta Downloads) para nunca perder.</p></div><div class="botoes"><button class="btn" data-a="fechar">Depois</button><button class="btn prim" data-a="lembsalvar">Salvar agora</button></div>`)}}
   if(!G.over&&!G.tradOferta&&(G.tut??TUTORIAL.length)<TUTORIAL.length&&aba==="jogar"&&!document.querySelector(".veu"))mostrarTutorial();
-  if(!telaCheia){clearTimeout(window._dirT);window._dirT=setTimeout(diretorChecar,1800)} // diretor: oferta no começo da carreira e avisos depois
+  if(!telaCheia){clearTimeout(window._dirT);window._dirT=setTimeout(diretorChecar,1800);setTimeout(novidadesEntregar,1200)} // diretor: oferta no começo da carreira e avisos depois
   if(G.seasonEnd&&!document.querySelector(".veu")&&!G.seasonEnd.visto){G.seasonEnd.visto=true;FLUXO_FIM=true;if(G.seasonEnd.pos<=5&&!G.seasonEnd.podioVisto)celebrarPodio();else modalFimCamp()}
   else if(G.over&&!FLUXO_FIM)modalFim();
   {const ab=document.querySelector('nav [aria-current="true"]');if(ab&&ab.scrollIntoView)ab.scrollIntoView({block:"nearest",inline:"nearest"})}
@@ -7930,7 +7992,8 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "amigos":modalAmigos();return;
     case "rkaba":AMG.rkAba=v;modalAmigos(true);return;
     case "rkpremios":modalPremiosMes();return;
-    case "chatenv":chatEnviar();return;
+    case "chatenv":chatEnviar().then(()=>{const e=document.querySelector(".chat-env");if(e)e.classList.remove("tem-txt")});return;
+    case "auplay":auTocar(+v);return;
     case "chatdel":AMG.chatDelN=null;amgPost("chatApagar",{n:+v}).then(j=>{if(j.erro)toastErro(j.erro);chatPuxa()}).catch(()=>{});return;
     case "mvender":modalNegociarChat();return;
     case "mvsel":modalPrecoVenda(+v);return;
