@@ -1818,6 +1818,14 @@ function momento(cid){
       v+=clamp(f,-1,1.2)}}
   return MOM.m[cid]=v*.5; // 24/10: era .75 — o time mais forte da Série C terminava em 5º–8º
 }
+/* 04/11 (Carlos): Série A, copa nacional e continentais mais difíceis + zebras escondidas. Só nos jogos do SEU time (ao vivo/simulado); não aparece nas estatísticas. */
+const DIF_COMP={A:2,N:2.5,sec:2.5,main:3.5}; // força extra (atq/def) do adversário: Série A, Copa do Brasil, Sul-Americana, Libertadores
+const ZEBRA={ch:.3,min:4,max:8}; // adversário mais fraco que você: 30% de chance de vir "inspirado" (+4 a +8, escondido)
+const GOL_GRITO_DIF=.6,GOL_GRITO_MAX=2; // comando atacar/virada nessas competições: chance do gol ×0,6 e no máx. 2 gols assim por jogo
+function compDificil(m){if(!m||m.amistoso||G.amgM)return null;if(m.tipo==="L")return userTier()===0?"A":null;if(m.tipo==="N")return "N";if(m.tipo==="C")return G.cup&&G.cup.tipo==="main"?"main":"sec";return null}
+function difLive(V,F){if(!V.dif&&!V.zebra)return;const ad=V.lado==="h"?"a":"h",o=G.clubs[V.L[ad].cid];if(!o||o.user||o.amigo)return;
+  let x=(V.dif||0)+(V.zebra||0);const dg=ad==="h"?V.gh-V.ga:V.ga-V.gh;if(dg<0&&V.min>=60)x+=1.5; // perdendo no 2º tempo, o rival se lança
+  F[ad].att+=x;F[ad].def+=x}
 function bonusIA(cid){const c=G.clubs[cid];if(!c||c.user)return 0;if(c.amigo)return c.bt||0;return (c.tier>=0&&c.tier<=2?TAT_TIER[c.tier]:.8)+momento(cid)}
 let JOGARAM=null; // clubes que jogaram no evento atual (conta as partidas de afastamento)
 let IDX=null;function tocou(){IDX=null}
@@ -1944,11 +1952,11 @@ function passivasHTML(t){const ps=passivasTec(t);return ps.length?`<div class="t
 /* comandos do técnico: m = chance de gol SUA, s = chance de gol do RIVAL (multiplicam o ritmo de gols em passoMinuto),
    e = quanto mais rápido cansam os jogadores das posições pos; o efeito cai se eles já estiverem cansados (forcaGrito) */
 const GRITOS=[
-  {k:"atacar",n:"Vamos atacar!",d:"Meias e atacantes",pos:["MEI","ATA"],gol:.8,m:1.4,s:1.3,e:2.5,fx:"Muito mais chances de gol, mas a defesa fica mais exposta"},
-  {k:"virada",n:"Vamos buscar a virada!",d:"Atacantes, meias e volantes",pos:["ATA","MEI","VOL"],gol:.8,m:1.6,s:1.6,e:2.2,fx:"Tudo ao ataque: o máximo de chances, com risco de levar gol"},
-  {k:"meio",n:"Domina o meio-campo!",d:"Volantes e meias",pos:["VOL","MEI"],m:1.4,s:.75,e:2,fx:"Mais posse: um pouco mais de chances e o rival cria menos"},
-  {k:"fechar",n:"Fecha a zaga!",d:"Zagueiros e goleiro",pos:["ZAG","GOL"],m:.85,s:.45,e:2,fx:"O rival chega bem menos; seu ataque perde um pouco"},
-  {k:"segurar",n:"Segura o jogo!",d:"Volantes, zagueiros e goleiro",pos:["VOL","ZAG","GOL"],m:.6,s:.4,e:1.6,fx:"Jogo travado: quase ninguém marca"},
+  {k:"atacar",n:"Vamos atacar!",d:"Meias e atacantes",pos:["MEI","ATA"],gol:.5,m:1.25,s:1.3,e:2.5,fx:"Muito mais chances de gol, mas a defesa fica mais exposta"},
+  {k:"virada",n:"Vamos buscar a virada!",d:"Atacantes, meias e volantes",pos:["ATA","MEI","VOL"],gol:.5,m:1.4,s:1.6,e:2.2,fx:"Tudo ao ataque: o máximo de chances, com risco de levar gol"},
+  {k:"meio",n:"Domina o meio-campo!",d:"Volantes e meias",pos:["VOL","MEI"],m:1.2,s:.85,e:2,fx:"Mais posse: um pouco mais de chances e o rival cria menos"},
+  {k:"fechar",n:"Fecha a zaga!",d:"Zagueiros e goleiro",pos:["ZAG","GOL"],m:.85,s:.6,e:2,fx:"O rival chega bem menos; seu ataque perde um pouco"},
+  {k:"segurar",n:"Segura o jogo!",d:"Volantes, zagueiros e goleiro",pos:["VOL","ZAG","GOL"],m:.6,s:.55,e:1.6,fx:"Jogo travado: quase ninguém marca"},
   {k:"limpo",n:"Sem falta, jogo limpo!",d:"Bem menos faltas e cartões",pos:[],m:1,s:1,e:1,cartao:.4,fx:"Bem menos faltas e cartões"}];
 const GRITO_MIN=10,GRITO_ESPERA=5;
 function energiaGrito(L,g){const sl=FORMACOES[L.form].s,ps=L.xi.map((id,i)=>g.pos.includes(sl[i])&&G.players[id]).filter(Boolean);
@@ -2436,6 +2444,7 @@ function iniciarAoVivo(auto){
     L:{h:mk(m.h),a:mk(m.a)},fat:{h:.85+rnd()*.3,a:.85+rnd()*.3},
     susp0:jogadoresDo(uid).filter(p=>p.susp>0).map(p=>p.id),lado:m.h===uid?"h":"a"};
   narrar("info",`Bola rolando: ${G.clubs[m.h].name} × ${G.clubs[m.a].name}${typeof estadioDe==="function"?`, no ${estadioDe(G.clubs[m.h])}`:""}.`);
+  {const V=G.live,k=compDificil(m);if(k){V.dif=DIF_COMP[k];const ad=V.lado==="h"?m.a:m.h,fz=id=>{const f=forcas(id);return f.att+f.def};if(fz(ad)<fz(uid)&&rnd()<ZEBRA.ch)V.zebra=ZEBRA.min+rnd()*(ZEBRA.max-ZEBRA.min)}}
   if(m.tipo==="L"&&!(G.history||[]).length&&!((G.st[uid]||{}).j))G.live.garante=1; // 02/11: 1º jogo do campeonato da carreira termina em vitória
   if(m.amistoso){const V=G.live,ad=V.lado==="h"?"a":"h";V.varGol=false;V.rot={};V.rot[ri(14,30)]=ad;V.rot[ri(50,64)]=V.lado;V.rot[ri(72,86)]=V.lado} // amistoso: o adversário sai na frente e seu time vira
   return null;
@@ -2529,7 +2538,7 @@ function passoMinuto(){
   if(V.varGol==null)V.varGol=rnd()<.25; // em 1 de cada 4 jogos o VAR revisa um gol
   if((V.min===45&&!V.ht)||V.min>=90)V.add=(V.add||0)+1;else V.min++;
   for(const s of ["h","a"]){const L=V.L[s],sl=FORMACOES[L.form].s,gr=gritoAtivo(L);L.xi.forEach((id,i)=>{const p=G.players[id];if(p)gastar(p,gastoMin(p,sl[i],L.est,V.ritmo)*(gr&&gr.pos.includes(sl[i])?gr.e:1))})}
-  const F={h:forcasCfg(V.L.h.xi,V.L.h.form,V.L.h.est,V.L.h.cid),a:forcasCfg(V.L.a.xi,V.L.a.form,V.L.a.est,V.L.a.cid)};
+  const F={h:forcasCfg(V.L.h.xi,V.L.h.form,V.L.h.est,V.L.h.cid),a:forcasCfg(V.L.a.xi,V.L.a.form,V.L.a.est,V.L.a.cid)};difLive(V,F);
   const k=18,mh=V.m.neutro?1.16:1.3,ma=V.m.neutro?1.16:1.02;
   const lam={h:clamp(mh*Math.exp((F.h.att-F.a.def)/k)*V.fat.h,.1,4.5),a:clamp(ma*Math.exp((F.a.att-F.h.def)/k)*V.fat.a,.08,4.2)};
   {const rf=s=>{const gk=penGoleiro(s);return gk?clamp(1-(atributos(gk).ref-70)/350,.88,1.1):1.1};lam.h*=rf("a");lam.a*=rf("h")} // atributo Reflexos do goleiro: defende mais chutes
@@ -2540,7 +2549,7 @@ function passoMinuto(){
     const L=V.L[s],nomeT=nomeLado(s),eu=L.cid===G.user.club,g0=V.gh+V.ga;
     if(V.garante&&!eu&&V.min>=84)continue; // fim do 1º jogo: o adversário não marca mais
     const r=rnd(),gm=!V.m.amistoso&&L.grito&&L.grito.golMin!=null&&!L.grito.golFeito&&V.min>=L.grito.golMin&&gritoAtivo(L);
-    if(gm){L.grito.golFeito=1;const p=artilheiro(F[s]);aplicarGol(s,F,p).pre=preChute(p,nomeT)} // gol sorteado do comando de ataque
+    if(gm){L.grito.golFeito=1;L.ggol=(L.ggol||0)+1;const p=artilheiro(F[s]);aplicarGol(s,F,p).pre=preChute(p,nomeT)} // gol sorteado do comando de ataque
     else if(V.m.amistoso){ // amistoso com roteiro: gols só nos minutos sorteados em V.rot
       if(!V.add&&V.rot&&V.rot[V.min]===s){const p=artilheiro(F[s]);aplicarGol(s,F,p).pre=preChute(p,nomeT)}
       else if(r<lam[s]/90*1.4&&rnd()<.75){const p=artilheiro(F[s]);if(p){narrar("chance",`Quase! ${p.n} (${nomeT}) ${pick(FR_CHANCE)}.`);ultLance().pre=preChute(p,nomeT)}}}
@@ -4358,7 +4367,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793797688";
+const VERSAO="1793813589";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7906,7 +7915,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "lvgrito":{const V=G.live,L=V.L[V.lado],g=GRITOS.find(x=>x.k===v);if(!g)return;
       if(gritoAtivo(L)){toastErro("Seu time já está cumprindo um comando.");return}
       if(L.grito&&V.min<L.grito.ate+GRITO_ESPERA){toastErro(`Espere até os ${L.grito.ate+GRITO_ESPERA}' para dar outro comando.`);return}
-      L.grito={k:g.k,ini:V.min,ate:V.min+GRITO_MIN};if(g.gol&&rnd()<g.gol*energiaGrito(L,g))L.grito.golMin=V.min+ri(1,GRITO_MIN-1); // atacar/virada: 80% de sair gol nos 10 min (menos se o time estiver cansado)
+      L.grito={k:g.k,ini:V.min,ate:V.min+GRITO_MIN};if(g.gol&&!(V.dif&&(L.ggol||0)>=GOL_GRITO_MAX)&&rnd()<g.gol*(V.dif?GOL_GRITO_DIF:1)*energiaGrito(L,g))L.grito.golMin=V.min+ri(1,GRITO_MIN-1); // atacar/virada: 50% de sair gol (04/11, era 80%) nos 10 min (menos se o time estiver cansado)
       gritosAberto=false;narrar("info",`📣 O técnico grita da beira do campo: "${g.n}"`);salvar();break}
     case "lvpainel":painel=painel===v?null:v;liveSel=null;break;
     case "lvretomar":{const V=G.live;V.ultSub=null;const L=V.L[V.lado];
