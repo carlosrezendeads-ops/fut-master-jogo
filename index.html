@@ -548,15 +548,31 @@ nav.abas[hidden]{display:none}
 .pd-premio-foto i{position:absolute;right:-8px;bottom:-4px;font-style:normal;font-size:30px}
 .pd-premio .pd-st{justify-content:center;margin:6px 0}
 .pd-ganhos{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:10px 0}.pd-ganhos span{padding:8px;border-radius:10px;background:rgba(255,210,63,.12);border:1px solid rgba(255,210,63,.35);font-weight:700}
-.chat-lista{display:flex;flex-direction:column;gap:8px;height:min(52vh,420px);overflow-y:auto;padding:4px 2px;margin-bottom:8px}
+.chat-lista{display:flex;flex-direction:column;gap:5px;height:min(52vh,420px);overflow-y:auto;padding:4px 2px;margin-bottom:8px}
 .chat-vazio{text-align:center;margin:auto}
-.chat-msg{max-width:84%;align-self:flex-start;padding:8px 10px;border-radius:4px 14px 14px 14px;background:var(--gramado-2);border:1px solid var(--gramado-3)}
+.chat-msg{position:relative;max-width:84%;align-self:flex-start;padding:5px 9px 4px;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;border-radius:4px 14px 14px 14px;background:var(--gramado-2);border:1px solid var(--gramado-3)}
 .chat-msg.meu{align-self:flex-end;border-radius:14px 4px 14px 14px;background:linear-gradient(180deg,#1a4f8f,#143e72);border-color:#2b6cb8}
-.chat-quem{display:flex;align-items:center;gap:6px;background:none;border:0;padding:0;color:#ffd23f;font:inherit;font-size:12.5px;cursor:pointer}
+.chat-quem{display:flex;align-items:center;gap:5px;background:none;border:0;padding:0;color:#ffd23f;font:inherit;font-size:12px;line-height:1.1;cursor:pointer}
 .chat-quem .rk-foto{flex:none}.chat-msg.meu .chat-quem{color:#9fdcff}
-.chat-msg p{margin:4px 0 2px;font-size:15px;line-height:1.35;word-break:break-word}
-.chat-msg small{display:block;text-align:right;font-size:10.5px;color:var(--cal-2)}
-.chat-del{background:none;border:0;padding:0;cursor:pointer;font-size:12px}
+.chat-msg p{margin:2px 0 0;font-size:14.5px;line-height:1.22;word-break:break-word}
+.chat-msg small{display:block;text-align:right;font-size:10px;line-height:1.1;color:var(--cal-2)}
+.chat-msg.del-on{border-color:#ff4d4d;box-shadow:0 0 0 1px #ff4d4d inset}
+.chat-excl{display:block;width:100%;margin-top:5px;padding:6px 8px;border-radius:9px;border:1px solid #ff4d4d;background:rgba(255,60,60,.16);color:#ff6b6b;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.chat-vender{flex:none;padding:0 12px;font-size:19px}
+.chat-vd{min-width:min(84%,290px)}
+.mv-card{display:flex;align-items:center;gap:8px;margin-top:4px;padding:6px;border-radius:10px;background:rgba(0,0,0,.25);border:1px solid rgba(255,210,63,.45)}
+.mv-card .jfoto{flex:none}.mv-info{flex:1;min-width:0;display:flex;flex-direction:column;font-size:12px;line-height:1.25;color:var(--cal-2)}.mv-info>b{font-size:14px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mv-card .preco-pill{flex:none}
+.mv-rod{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:5px;min-height:20px}.mv-acaba{font-size:11px;color:var(--cal-2)}
+.mv-btn{padding:6px 14px;font-size:13px;min-height:0}.mv-st{font-size:12.5px;color:var(--cal-2)}.mv-st.ok{color:#5be08a}
+.mv-lista{max-height:56vh;overflow-y:auto;display:flex;flex-direction:column;gap:4px;margin:8px 0}
+.mv-preco{display:flex;flex-direction:column;align-items:center;gap:8px;margin:10px 0}.mv-preco b{font-size:26px;color:#ffd23f}.mv-preco input{width:100%}
+.mv-rap{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}.mv-rap .btn{padding:6px 10px;font-size:13px;min-height:0}
+.mv-conf{max-width:100%;align-self:stretch}
+.mv-exp{color:var(--cal-2);font-style:italic}
+.mv-tipos{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.mv-tipo{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:10px;align-items:center;text-align:left;padding:12px;border-radius:14px;border:1.5px solid var(--gramado-3);background:var(--gramado-2);color:#fff;font:inherit;cursor:pointer}
+.mv-tipo span{grid-row:1/3;font-size:28px}.mv-tipo b{font-size:16px}.mv-tipo small{color:var(--cal-2);font-size:12.5px}
 .chat-env{display:flex;gap:6px}.chat-env input{flex:1;min-width:0;padding:11px 12px;border-radius:12px;border:1.5px solid var(--gramado-3);background:rgba(4,10,30,.85);color:#fff;font:inherit;font-size:16px}
 .chat-dot{display:inline-block;width:9px;height:9px;margin-left:6px;border-radius:50%;background:#ff4d4d;box-shadow:0 0 6px #ff4d4d;vertical-align:2px}
 .rk-folha .seg{margin:4px 0 6px}
@@ -1981,7 +1997,7 @@ function escalaPais(t){
   if(!ECON_BR){ECON_BR=PAISES.BRA.t.map(l=>{const r=l.map(s=>+s.split("|")[1]).filter(isFinite);return econ(Math.round(r.reduce((a,b)=>a+b,0)/r.length))})}
   if(G.country==="BRA")return 1;const k=(G.econ[t]||1)/(ECON_BR[t]||1);return clamp(isFinite(k)?k:1,.5,6);
 }
-function custoFixo(){const t=userTier();return Math.round((CUSTO_FIXO[t]??80)*escalaPais(t))+(G.tradutor?1:0)+(G.diretor&&G.diretor.on?DIR_SAL:0)} // tradutor: 1 mil/mês; diretor: 10 mil/mês
+function custoFixo(){const t=userTier();return Math.round((CUSTO_FIXO[t]??80)*escalaPais(t))+(G.tradutor?1:0)+(G.diretor&&G.diretor.on?DIR_SAL:0)+mvCustoEmp()} // tradutor: 1 mil/mês; diretor: 10 mil/mês
 function parcelasEmp(){return (G.emp||[]).reduce((s,e)=>s+e.parc,0)}
 function folhaMensal(){const j=Math.round(folhaSalarial(G.user.club)*10)/10,t=G.tec&&!G.tec.interino?G.tec.sal:0,f=custoFixo(),e=Math.round(parcelasEmp()*10)/10,rec=Math.round(rendaEmp()*10)/10;return {j,t,f,e,rec,tot:Math.round((j+t+f+e-rec)*10)/10}}
 const JURO_MES=.029;
@@ -2223,6 +2239,9 @@ function dirAvisos(){const uid=G.user.club,c=G.clubs[uid],cl=esc(c.name),A=[],fm
   // --- competições: começo/fim de temporada, liga, copas e clássico (o começo de temporada vem primeiro) ---
   dirCompeticoes(add);
   // --- alertas ---
+  // anúncio do chat sem comprador (04/11)
+  (G.mvAvisos||[]).forEach(x=>{const n=esc(x.nome);add({k:"mv|"+x.n,foto:"pensa",tit:x.emp?`Infelizmente ninguém pegou o ${n} emprestado`:`Infelizmente ninguém comprou o ${n}`,
+    txt:`Chefe, o anúncio do ${n} no chat terminou sem ${x.emp?"interessados":"comprador"} e ele voltou para o elenco. Talvez seja bom ajustar o ${x.emp?"valor do mês":"preço"} dele e anunciar de novo.`})});
   // contrato vencido (02/11): o diretor avisa desesperado e lembra a cada 6 rodadas até resolver
   jogadoresDo(uid).filter(p=>p.ctAcabou&&contratoAcabou(p)).sort((a,b)=>b.ov-a.ov).slice(0,1).forEach(p=>{const n=esc(p.n),primeira=!(G.diretor&&G.diretor.vistos&&Object.keys(G.diretor.vistos).some(k=>k.startsWith("ct|"+p.id+"|")));
     add({k:"ct|"+p.id+"|"+p.ctFim+"|"+Math.floor(ev/6),foto:"preocupado",tit:primeira?`Chefe, temos um problema sério com o ${n}!`:`Chefe, o ${n} continua sem contrato!`,
@@ -3018,6 +3037,7 @@ function interesseMercado(){
   msgClube(c.id,"Interesse em jogador",`O ${c.name}${pais} tem interesse em ${p.n} (${POS_EXT[p.pos]}): compra ou empréstimo.`,{pid:p.id,v,est:"aberta",mot:motivoInteresse(p),ev:G.ev,bonus,fora:c.tier===-1})}
 function venderPara(pid,cid,preco){
   const p=G.players[pid],dest=G.clubs[cid];if(!p||p.club!==G.user.club||!dest)return "Esse jogador não está mais no seu elenco.";
+  if(p.empC)return "Jogador emprestado não pode ser negociado.";
   if(jogadoresDo(G.user.club).length<=16)return "O elenco precisa ter pelo menos 16 jogadores.";
   if(jogadoresDo(cid).length>=34)return "O elenco do outro clube está cheio.";
   G.cash+=preco;p.club=cid;p.exU=1;tocou();delete p.venda;delete p.vendaPreco;delete p.ctFim;delete p.ctAcabou;delete p.ofertas;
@@ -3026,7 +3046,7 @@ function venderPara(pid,cid,preco){
   G.inbox.unshift({t:"bom",d:hojeJogo(),m:`${p.n} foi vendido ao ${dest.name} por ${dinheiro(preco)}.`});
   perfil().vend=(perfil().vend||0)+1;xpBonus(150,"venda de jogador");return null}
 /* respostas dos clubes (2 a 3 rodadas depois) e prazos das propostas */
-const refEmprestimo=p=>Math.max(5,Math.round(p.sal*.6/5)*5); // taxa mensal "normal" de um empréstimo (o clube que recebe também paga o salário)
+const refEmprestimo=p=>Math.max(10,Math.round(p.sal*1.5/5)*5); /* 04/11: era sal×0,6 */ // taxa mensal "normal" de um empréstimo (o clube que recebe também paga o salário)
 function processarNegocios(){
   const fila=G.negs||[];G.negs=[];
   fila.forEach(n=>{if(G.ev<n.resp){G.negs.push(n);return}
@@ -3043,15 +3063,16 @@ function processarNegocios(){
   G.inbox.filter(m=>m.ofm&&(m.ofm.est==="aberta"||m.ofm.est==="aceita")&&G.ev-m.ofm.ev>5).forEach(m=>{m.ofm.est="expirada";const p=G.players[m.ofm.pid];
     msgClube(m.cid,"Re: interesse em jogador",`Como não tivemos a sua resposta${p?` sobre ${p.n}`:""}, contratamos outro jogador. Demorou muito. Mantemos a boa relação para uma próxima oportunidade.`)})}
 /* empréstimo de jogador seu a outro clube: sai da folha, o clube paga uma taxa por mês (entra na conta do mês) e ele volta no fim das temporadas combinadas */
-const rendaEmp=()=>Object.values(G.players).reduce((a,p)=>a+(p.empU&&p.club!==G.user.club?p.empU.mensal:0),0);
+const rendaEmp=()=>Object.values(G.players).reduce((a,p)=>a+(p.empU&&p.club!==G.user.club?p.empU.mensal:0),0)+mvRendaEmp();
 function emprestarPara(pid,cid,temp,mensal){
   const p=G.players[pid],dest=G.clubs[cid];if(!p||p.club!==G.user.club||!dest)return "Esse jogador não está mais no seu elenco.";
+  if(p.empC)return "Jogador emprestado não pode ser negociado.";
   if(jogadoresDo(G.user.club).length<=16)return "O elenco precisa ter pelo menos 16 jogadores.";
   if(jogadoresDo(cid).length>=34)return "O elenco do outro clube está cheio.";
   p.club=cid;p.emp={de:G.user.club};p.empU={ate:G.year+temp-1,mensal,temp};tocou();delete p.venda;delete p.vendaPreco;
   G.user.lineup=G.user.lineup.map(id=>id===pid?null:id);validarEscalacao();
   G.inbox.unshift({t:"bom",m:`${p.n} foi emprestado ao ${dest.name} por ${temp} temporada${temp>1?"s":""}. Você recebe ${dinheiro(mensal)} por mês.`});return null}
-function voltaDosEmprestimos(){
+function voltaDosEmprestimos(){mvDevolver();
   Object.values(G.players).forEach(p=>{if(p.empU&&G.year>=p.empU.ate){const era=p.club!=null&&G.clubs[p.club];p.club=G.user.club;delete p.empU;delete p.emp;tocou();
     G.inbox.unshift({t:"bom",m:`${p.n} terminou o empréstimo${era?` no ${era.name}`:""} e voltou ao seu elenco.`})}})}
 const naoLidas=()=>(G&&G.inbox?G.inbox.filter(m=>(m.cid||m.rk)&&!m.lida).length:0); // a caixa de entrada mostra só mensagens de outros clubes
@@ -3141,7 +3162,7 @@ if(!forcar&&Date.now()-AMG.ult<55000)return;AMG.carregando=true;
     const av=await avRanking(),tits=(G.titles||[]).slice(),PF=perfil(),ttit=tits.reduce((x,t)=>x+pontosTitulo(t),0)+(PF.coroasPremio||0),tjog=TACAS_JOGO.v*(PF.v||0)+TACAS_JOGO.e*(PF.e||0)+TACAS_JOGO.d*(PF.d||0)+TACAS_JOGO.wo*(PF.wo||0)+TACAS_JOGO.rebaix*(PF.rebaix||0),tp=Math.max(0,ttit+tjog),nv=PF.nivel;
     const j=await amgPost("entrar",{nome:G.user.coach||"Treinador",clube:c.name,nivel:nv,perfil:p===AMG.pEnv?undefined:p,av:av===AMG.avEnv?undefined:av,tits,tp,ttit,tjog,v:PF.v||0,e:PF.e||0,gp:PF.gp||0,forca:forcaXI(),titulo:tituloNivel(nv)});
     if(!j.id)throw 0;if(j.tok)guardarConta({id:j.id,tok:j.tok});else if(!G.conta)G.conta=conta();
-    AMG.pEnv=p;AMG.avEnv=av;AMG.est=j;if(j.chatUlt!=null)AMG.chatUlt=j.chatUlt;if(j.ranking){avisoOnline(j.ranking);AMG.rank=j.ranking;rkPassou(j.ranking)}if(j.podio){AMG.podio=j.podio;setTimeout(premioPodio,300)}AMG.ult=Date.now();AMG.ok=true}catch(e){AMG.ok=false}
+    AMG.pEnv=p;AMG.avEnv=av;AMG.est=j;if(j.chatUlt!=null)AMG.chatUlt=j.chatUlt;if(j.vendas)mvPendentes(j.vendas);if((G.mvDevPend||[]).length)mvDevEnviar();if(j.ranking){avisoOnline(j.ranking);AMG.rank=j.ranking;rkPassou(j.ranking)}if(j.podio){AMG.podio=j.podio;setTimeout(premioPodio,300)}AMG.ult=Date.now();AMG.ok=true}catch(e){AMG.ok=false}
   AMG.carregando=false;if(AMG.denovo){AMG.denovo=0;setTimeout(()=>amgSync(true),50)}const b=document.querySelector(".amg-btn");if(b)b.innerHTML=ICO_AMIGOS+amgBadge();
   if(document.querySelector(".amg-folha")&&AMG.aba!=="add"&&AMG.rkAba!=="chat")modalAmigos(true)}
 setInterval(()=>{if(document.visibilityState==="visible")amgSync()},60000);
@@ -3159,8 +3180,106 @@ function avisoOnline(R){const antes=AMG.onAntes;AMG.onAntes=new Set(R.filter(x=>
 function chatMarcarVisto(n){try{if(n>chatVisto())localStorage.setItem("fut-chat-visto",String(n))}catch(e){}const b=document.querySelector(".amg-btn");if(b)b.innerHTML=ICO_AMIGOS+amgBadge()}
 function chatHTML(){const L=AMG.chat||[],c=conta(),eu=c&&c.id;
   if(!L.length)return `<p class="muted chat-vazio">${AMG.chatOk===false?"Sem conexão com o servidor.":"Ninguém falou ainda. Mande a primeira mensagem! 👋"}</p>`;
-  return L.map(m=>{const meu=m.de===eu,h=new Date(m.t);return `<div class="chat-msg${meu?" meu":""}"><button class="chat-quem" data-a="amgver" data-v="${esc(m.de)}">${rkFoto(meu?meuAv():m.av,m.nome,26)}<b>${esc(m.nome||"Jogador")}</b></button><p>${esc(m.txt)}</p><small>${String(h.getHours()).padStart(2,"0")}:${String(h.getMinutes()).padStart(2,"0")}${AMG.chatAdmin?` · <button class="chat-del" data-a="chatdel" data-v="${m.n}" aria-label="Apagar mensagem">🗑️</button>`:""}</small></div>`}).join("")}
-function chatDesenha(){const box=$("#chat-lista");if(!box)return;const fim=box.scrollHeight-box.scrollTop-box.clientHeight<60;box.innerHTML=chatHTML();if(fim||!AMG.chatRolou){box.scrollTop=box.scrollHeight;AMG.chatRolou=1}}
+  return L.map(m=>{const meu=m.de===eu,h=new Date(m.t),pode=meu||AMG.chatAdmin,del=pode&&AMG.chatDelN===m.n;
+    return `<div class="chat-msg${meu?" meu":""}${m.vd?" chat-vd":""}${del?" del-on":""}"${pode?` data-del="${m.n}"`:""}><button class="chat-quem" data-a="amgver" data-v="${esc(m.de)}">${rkFoto(meu?meuAv():m.av,m.nome,22)}<b>${esc(m.nome||"Jogador")}</b></button>${m.vd&&m.vjog?(mvVencido(m)?`<p class="mv-exp">⏰ ${m.vtipo==="e"?"Tempo do empréstimo expirado":"Tempo de venda expirado"} · ${esc((mvJog(m)||{}).n||"")}</p>`:cardVenda(m,meu)):`<p>${esc(m.txt)}</p>`}<small>${String(h.getHours()).padStart(2,"0")}:${String(h.getMinutes()).padStart(2,"0")}</small>${del?`<button class="chat-excl" data-a="chatdel" data-v="${m.n}">🗑️ Excluir?</button>`:""}</div>`}).join("")}
+function chatDesenha(){const box=$("#chat-lista");if(!box)return;const h=chatHTML();if(h===AMG.chatH&&box.innerHTML)return;AMG.chatH=h;const fim=box.scrollHeight-box.scrollTop-box.clientHeight<60;box.innerHTML=h;if(fim||!AMG.chatRolou){box.scrollTop=box.scrollHeight;AMG.chatRolou=1}}
+/* 04/11: segurar a própria mensagem → vibra e aparece "🗑️ Excluir?" vermelho no card */
+function chatLigar(){const box=$("#chat-lista");if(!box)return;let tm=null;const para=()=>{clearTimeout(tm);tm=null};
+  box.addEventListener("pointerdown",e=>{const b=e.target.closest(".chat-msg[data-del]");if(!b||e.target.closest(".chat-excl,.mv-btn"))return;para();
+    tm=setTimeout(()=>{tm=null;AMG.chatDelN=+b.dataset.del;AMG.lpFez=1;vibrar(40);chatDesenha()},550)});
+  box.addEventListener("pointerleave",para);if(!AMG.lpDoc){AMG.lpDoc=1;["pointerup","pointercancel"].forEach(k=>window.addEventListener(k,()=>{if(AMG.lpPara)AMG.lpPara();if(AMG.lpFez){AMG.lpFez=0;AMG.lpUp=Date.now()}},true))}AMG.lpPara=para;box.addEventListener("scroll",para,{passive:true});
+  box.addEventListener("contextmenu",e=>{if(e.target.closest(".chat-msg[data-del]"))e.preventDefault()});
+  box.addEventListener("click",e=>{if(AMG.lpFez||Date.now()-(AMG.lpUp||0)<450){AMG.lpFez=0;AMG.lpUp=0;e.stopPropagation();e.preventDefault();return}
+    if(AMG.chatDelN!=null&&!e.target.closest(".chat-excl")){AMG.chatDelN=null;chatDesenha()}},true)}
+/* ---------- venda de jogador no chat (04/11): anúncio tira o jogador do elenco; quem tocar primeiro em Comprar leva ---------- */
+const MV_MIN=50,MV_MAX_X=5; // preço em mil: mínimo 50 mil, máximo 5x o valor (Carlos, 04/11)
+const mvMax=val=>Math.max(MV_MIN,Math.floor(val*MV_MAX_X/5)*5);
+function mvSnap(p){const c=G.clubs[G.user.club],o={n:p.n,pos:p.pos,ov:p.ov,pot:p.pot,age:p.age,sal:p.sal,val:valor(p),ref:refEmprestimo(p),clube:c.name,serie:c.tier,pais:c.pais};
+  ["real","oc","ap","acc","selos","vb","bInt","apos","pe"].forEach(k=>{if(p[k]!=null)o[k]=p[k]});if(!rostoRealK(p)&&!(p.real&&typeof ROSTOS_REAIS==="undefined"))o.rf=rostoIdx(p);return o}
+function mvJog(m){try{return JSON.parse(m.vjog)}catch(e){return null}}
+const mvVencido=m=>m.vst==="exp"||(m.vst==="ab"&&m.vt+864e5<=Date.now());
+const mvPreco=m=>m.vtipo==="e"?`${dinheiro(m.vmensal)}/mês`:dinheiro(m.vpreco);
+function cardVenda(m,meu){const J=mvJog(m);if(!J)return `<p>${esc(m.txt)}</p>`;const st=m.vst,resta=m.vt+864e5-Date.now();
+  const emp=m.vtipo==="e";
+  const rodape=st==="vend"||st==="fim"?`<b class="mv-st ok">✅ ${emp?"Emprestado":"Vendido"} para ${esc(m.vcomp||"outro jogador")}</b>`:st==="canc"?`<b class="mv-st">Anúncio cancelado</b>`:st==="exp"||resta<=0?`<b class="mv-st">Anúncio encerrado</b>`
+    :meu?`<span class="mv-acaba">acaba em ${Math.max(1,Math.ceil(resta/36e5))} h</span><button class="btn mv-btn" data-a="mvcancel" data-v="${m.vd}">Cancelar</button>`
+    :`<span class="mv-acaba">acaba em ${Math.max(1,Math.ceil(resta/36e5))} h</span><button class="btn prim mv-btn" data-a="mvcomprar" data-v="${m.vd}">${emp?"Pegar emprestado":"Comprar"}</button>`;
+  return `<div class="mv-card"><div class="jfoto">${rostoSVG(J,42)}<span class="posb ${J.pos}">${J.pos}</span></div><div class="mv-info"><b>${esc(J.n)}</b><span>${J.age} anos · Força <b class="num">${J.ov}</b></span><span>${emp?"🔁 Empréstimo · 1 temporada":`${esc(J.clube||"")}${J.serie>=0&&J.pais&&PAISES[J.pais]?` · ${esc(PAISES[J.pais].ligas[J.serie]||"")}`:""}`}</span></div>
+    <span class="preco-pill">${ICO_NOTA}<b class="num">${mvPreco(m)}</b></span></div><div class="mv-rod">${rodape}</div>`}
+function mvPodeVender(){if(!conta())return "Entre no ranking primeiro (precisa de internet).";if(G.live)return "Termine a partida antes.";
+  if(jogadoresDo(G.user.club).length<=18)return "O elenco precisa ficar com pelo menos 18 jogadores.";return null}
+function modalNegociarChat(){const e=mvPodeVender();if(e){toastErro(e);return}
+  modal(`<div class="mv-folha"><h3>Negociar no chat</h3><p class="muted peq">Anuncie um jogador para todo mundo do ranking. Quem tocar primeiro leva.</p>
+    <div class="mv-tipos"><button class="mv-tipo" data-a="mvtipo" data-v="v"><span>💰</span><b>Vender jogador</b><small>Recebe o dinheiro de uma vez. De 50 mil até 5x o valor dele.</small></button>
+    <button class="mv-tipo" data-a="mvtipo" data-v="e"><span>🔁</span><b>Emprestar jogador</b><small>Recebe um valor por mês durante 1 temporada; depois ele volta.</small></button></div>
+    <div class="botoes"><button class="btn" data-a="mvvoltar">Voltar ao chat</button></div></div>`)}
+function modalVenderChat(){const e=mvPodeVender();if(e){toastErro(e);return}const emp=AMG.mvTipo==="e";
+  const L=jogadoresDo(G.user.club).filter(p=>!ehLenda(p)&&!p.empC&&!p.empU).sort((a,b)=>b.ov-a.ov);
+  modal(`<div class="mv-folha"><h3>${emp?"🔁 Emprestar no chat":"💰 Vender no chat"}</h3><p class="muted peq">Escolha o jogador. Ele sai do seu elenco enquanto estiver anunciado; se ninguém ${emp?"pegar":"comprar"} em 24 h, ele volta. Lendas não podem ser negociadas.</p>
+    <div class="mv-lista">${L.map(p=>`<div class="jog of" data-a="mvsel" data-v="${p.id}" role="button" style="cursor:pointer">${fotoPos(p,p.pos,true)}<div class="nm"><b>${esc(p.n)}</b><span>${p.age} anos · ${dinheiro(valor(p))}</span></div><div class="ov num">${p.ov}</div></div>`).join("")}</div>
+    <div class="botoes"><button class="btn" data-a="mvvoltar">Voltar ao chat</button></div></div>`)}
+const MV_EMP_MIN=10,MV_EMP_X=3; // empréstimo no chat: 10 mil a 3x o valor normal por mês
+function modalPrecoVenda(pid){const p=G.players[pid];if(!p)return;const emp=AMG.mvTipo==="e",val=emp?refEmprestimo(p):valor(p),mn=emp?MV_EMP_MIN:MV_MIN,mx=emp?Math.max(MV_EMP_MIN,val*MV_EMP_X):mvMax(val),ini=clamp(Math.round(val*(emp?1:1.2)/5)*5,mn,mx);AMG.mvPid=pid;AMG.mvPreco=ini;
+  const sufixo=emp?"/mês":"",rap=emp?[[.5,"½"],[1,"Normal"],[2,"2x"],[3,"3x"]]:[[.5,"½ valor"],[1,"Valor"],[2,"2x"],[3,"3x"],[5,"5x"]];
+  modal(`<div class="mv-folha"><h3>${emp?"🔁 Empréstimo de":"💰 Preço de"} ${esc(p.n)}</h3><div class="jog">${linhaJog(p)}</div>
+    <p class="muted peq">${emp?`Valor normal de um empréstimo: <b>${dinheiro(val)}/mês</b>. Mínimo ${dinheiro(mn)}, máximo ${dinheiro(mx)} por mês (3x o normal). Quem pegar paga todo mês até o fim da temporada dele e o salário fica por conta dele.`:`Valor de mercado: <b>${dinheiro(val)}</b>. Mínimo ${dinheiro(MV_MIN)}, máximo ${dinheiro(mx)} (5x o valor).`}</p>
+    <div class="mv-preco"><b class="num" id="mv-pv" data-suf="${sufixo}">${dinheiro(ini)}${sufixo}</b><input type="range" id="mv-pr" min="${mn}" max="${mx}" step="5" value="${ini}"></div>
+    <div class="mv-rap">${rap.map(([k,n])=>`<button class="btn" data-a="mvrap" data-v="${clamp(Math.round(val*k/5)*5,mn,mx)}">${n}</button>`).join("")}</div>
+    <div class="botoes"><button class="btn" data-a="mvvoltar">Cancelar</button><button class="btn prim" data-a="mvanunciar">Anunciar no chat</button></div></div>`);
+  const r=$("#mv-pr");if(r)r.addEventListener("input",()=>{AMG.mvPreco=+r.value;$("#mv-pv").textContent=dinheiro(+r.value)+$("#mv-pv").dataset.suf})}
+async function mvAnunciar(){const p=G.players[AMG.mvPid];if(!p||p.club!==G.user.club){toastErro("Esse jogador não está mais no seu elenco.");return}const e=mvPodeVender();if(e){toastErro(e);return}
+  const emp=AMG.mvTipo==="e",snap=mvSnap(p),preco=emp?0:clamp(Math.round(AMG.mvPreco/5)*5,MV_MIN,mvMax(snap.val)),mensal=emp?clamp(Math.round(AMG.mvPreco/5)*5,MV_EMP_MIN,Math.max(MV_EMP_MIN,snap.ref*MV_EMP_X)):0;
+  const j=await amgPost("vendaCriar",{jog:JSON.stringify(snap),preco,tipo:emp?"e":"v",mensal}).catch(()=>({erro:"Sem conexão com o servidor."}));if(j.erro){toastErro(j.erro);return}
+  G.mercV=G.mercV||{};G.mercV[j.n]=JSON.parse(JSON.stringify(p));
+  if(G.janela&&G.janela.listados)retirarNegocio(p.id);G.user.lineup=G.user.lineup.map(id=>id===p.id?null:id);delete G.players[p.id];tocou();validarEscalacao();
+  G.inbox.unshift({t:"msg",d:hojeJogo(),m:emp?`${p.n} foi oferecido por empréstimo no chat por ${dinheiro(mensal)} por mês. Se ninguém pegar em 24 h, ele volta para o elenco.`:`${p.n} foi anunciado no chat por ${dinheiro(preco)}. Se ninguém comprar em 24 h, ele volta para o elenco.`});salvar();
+  toast(`${emp?"🔁":"💰"} ${p.n} anunciado no chat`);AMG.rkAba="chat";AMG.chatRolou=0;modalAmigos(true)}
+/* comprador: confere caixa, elenco e regra de série */
+function mvMsg(n){return (AMG.chat||[]).find(m=>m.vd===n)}
+function mvPodeComprar(J,preco){if(G.live)return "Termine a partida antes.";if(preco>G.cash)return "Caixa insuficiente para esse negócio.";
+  if(jogadoresDo(G.user.club).length>=32)return "O elenco já tem 32 jogadores. Venda ou dispense alguém antes.";
+  const t=minhaSerie(),lim=t>=2?75:t===1?80:999;if(J.serie===0&&J.ov>lim)return `${J.n} não aceita jogar na ${esc(pais().ligas[t]||"sua série")}. Só vai para times de série mais alta.`;return null}
+function modalComprarChat(n){const m=mvMsg(n),J=m&&mvJog(m);if(!J)return;const emp=m.vtipo==="e",e=mvPodeComprar(J,emp?m.vmensal:m.vpreco);if(e){toastErro(e);return}
+  if(emp){modal(`<div class="mv-folha"><h3>🔁 Pegar ${esc(J.n)} emprestado?</h3><div class="chat-msg chat-vd mv-conf">${cardVenda({...m,vst:"conf"},true).replace(/<div class="mv-rod">[\s\S]*<\/div>$/,"")}</div>
+    <p class="muted peq">Emprestado por <b>${esc(m.nome||"outro jogador")}</b>. Ele joga no seu time até o fim desta temporada. Você paga ${dinheiro(m.vmensal)} por mês (entra nas despesas do mês) e o salário dele.</p>
+    <div class="botoes"><button class="btn" data-a="mvvoltar">Voltar</button><button class="btn prim" data-a="mvconf" data-v="${n}">Pegar por ${dinheiro(m.vmensal)}/mês</button></div></div>`);return}
+  modal(`<div class="mv-folha"><h3>🤝 Comprar ${esc(J.n)}?</h3><div class="chat-msg chat-vd mv-conf">${cardVenda({...m,vst:"conf"},true).replace(/<div class="mv-rod">[\s\S]*<\/div>$/,"")}</div>
+    <p class="muted peq">Vendido por <b>${esc(m.nome||"outro jogador")}</b>. Você paga ${dinheiro(m.vpreco)} agora e ele entra no seu elenco na hora (contrato de 3 temporadas).</p>
+    <div class="botoes"><button class="btn" data-a="mvvoltar">Voltar</button><button class="btn prim" data-a="mvconf" data-v="${n}">Comprar por ${dinheiro(m.vpreco)}</button></div></div>`)}
+const mvFeitos=()=>{try{return JSON.parse(localStorage.getItem("fut-mv-feito")||"[]")}catch(e){return []}};
+function mvFeito(k){const L=mvFeitos();if(!L.includes(k)){L.push(k);try{localStorage.setItem("fut-mv-feito",JSON.stringify(L.slice(-200)))}catch(e){}}}
+function mvReceber(n,J,preco,de,mensal){if(mvFeitos().includes(n+":ent"))return false;mvFeito(n+":ent");
+  const uid=G.user.club,id=G.nextId++,p={...J,id,club:uid,cAt:uid,inj:0,g:0,j:0,gc:0,fis:100,ct:3,exU:1};["val","clube","serie","pais"].forEach(k=>delete p[k]);
+  p.ant=[[null,J.clube||"outro clube"]];G.players[id]=p;p.sal=salarioPedido({...p,club:null,sal:J.sal||0});tocou();
+  if(mensal){p.empC={n,mensal,ate:G.year,de:de||"",clube:J.clube||""};garantirContratos();G.inbox.unshift({t:"bom",d:hojeJogo(),m:`${p.n} (${p.pos}, ${p.ov}) chegou emprestado do ${J.clube||"outro clube"}${de?` (${de})`:""} até o fim da temporada. Custo: ${dinheiro(mensal)} por mês.`});salvar();return true}
+  G.cash-=preco;garantirContratos();
+  perfil().comp=(perfil().comp||0)+1;G.inbox.unshift({t:"bom",d:hojeJogo(),m:`${p.n} (${p.pos}, ${p.ov}) chegou do ${J.clube||"outro clube"}${de?` (${de})`:""} por ${dinheiro(preco)}.`});salvar();return true}
+async function mvComprar(n){const m=mvMsg(n),J=m&&mvJog(m);if(!J)return;const e=mvPodeComprar(J,m.vtipo==="e"?m.vmensal:m.vpreco);if(e){toastErro(e);return}
+  const j=await amgPost("vendaComprar",{n}).catch(()=>({erro:"Sem conexão com o servidor."}));if(j.erro){toastErro(j.erro);AMG.rkAba="chat";modalAmigos(true);return}
+  let JJ=J;try{JJ=JSON.parse(j.jog)}catch(x){}mvReceber(n,JJ,j.preco,j.de,j.tipo==="e"?j.mensal:0);amgPost("vendaOk",{n,k:"ent"}).catch(()=>{});
+  try{somDinheiro()}catch(x){}toast(j.tipo==="e"?`🔁 ${JJ.n} chegou emprestado!`:`🤝 ${JJ.n} é do seu time!`);AMG.rkAba="chat";AMG.chatRolou=0;modalAmigos(true)}
+/* sync: dinheiro da venda, jogador que voltou e compra que não terminou */
+function mvPendentes(L){const c=conta();if(!c||!L||!L.length||!G)return;let mudou=false;
+  L.forEach(v=>{let J=null;try{J=JSON.parse(v.jog)}catch(e){}const emp=v.tipo==="e";
+    if(v.comp===c.id&&v.st==="vend"&&!v.ent){if(J&&mvReceber(v.n,J,v.preco,null,emp?v.mensal:0))mudou=true;amgPost("vendaOk",{n:v.n,k:"ent"}).catch(()=>{});return}
+    if(v.comp===c.id&&v.st==="fim"){const p=Object.values(G.players).find(x=>x.empC&&x.empC.n===v.n);
+      if(p){mvTirarEmp(p);G.inbox.unshift({t:"msg",d:hojeJogo(),m:`O empréstimo de ${p.n} terminou e ele voltou para o ${p.empC.clube||"clube dele"}.`});mudou=true}amgPost("vendaOk",{n:v.n,k:"fimok"}).catch(()=>{});return}
+    if(v.de!==c.id||!G.mercV||!G.mercV[v.n])return; // vendedor: só a carreira que anunciou
+    const p=G.mercV[v.n];mudou=true;
+    if(emp&&v.st==="vend"){if(!p.mvEmp){p.mvEmp={mensal:v.mensal,comp:v.compNome||"outro jogador"};G.inbox.unshift({t:"bom",d:hojeJogo(),m:`${v.compNome||"Outro jogador"} pegou ${p.n} emprestado pelo chat. Você recebe ${dinheiro(v.mensal)} por mês até ele voltar.`});toast(`🔁 ${p.n} emprestado para ${v.compNome||"outro jogador"}!`)}amgPost("vendaOk",{n:v.n,k:"pago"}).catch(()=>{});return}
+    delete G.mercV[v.n];
+    if(v.st==="fim"){delete p.mvEmp;p.club=G.user.club;p.cAt=G.user.club;G.players[p.id]=p;tocou();G.inbox.unshift({t:"bom",d:hojeJogo(),m:`${p.n} terminou o empréstimo e voltou ao seu elenco.`});toast(`🔁 ${p.n} voltou do empréstimo`);amgPost("vendaOk",{n:v.n,k:"dev"}).catch(()=>{});return}
+    if(v.st==="vend"){G.cash+=v.preco;perfil().vend=(perfil().vend||0)+1;G.inbox.unshift({t:"bom",d:hojeJogo(),m:`${p.n} foi vendido para ${v.compNome||"outro jogador"} pelo chat. Entraram ${dinheiro(v.preco)} no caixa.`});toast(`💰 ${p.n} vendido para ${v.compNome||"outro jogador"}!`);amgPost("vendaOk",{n:v.n,k:"pago"}).catch(()=>{})}
+    else{p.club=G.user.club;p.cAt=G.user.club;G.players[p.id]=p;tocou();G.inbox.unshift({t:"msg",d:hojeJogo(),m:`Ninguém ${emp?"pegou":"comprou"} ${p.n} no chat. Ele voltou para o elenco.`});
+      if(v.st==="exp"){(G.mvAvisos=G.mvAvisos||[]).push({n:v.n,pid:p.id,nome:p.n,emp});G.mvAvisos=G.mvAvisos.slice(-5)}amgPost("vendaOk",{n:v.n,k:"dev"}).catch(()=>{})}});
+  if(mudou){salvar();if(!document.querySelector(".veu"))render()}}
+/* empréstimo do chat: quem pegou devolve no fim da temporada dele (ou o servidor encerra em 15 dias) */
+function mvTirarEmp(p){G.user.lineup=G.user.lineup.map(id=>id===p.id?null:id);delete G.players[p.id];tocou();validarEscalacao()}
+function mvDevolver(){Object.values(G.players).filter(p=>p.empC&&G.year>=p.empC.ate).forEach(p=>{(G.mvDevPend=G.mvDevPend||[]).push(p.empC.n);
+  G.inbox.unshift({t:"msg",d:hojeJogo(),m:`O empréstimo de ${p.n} terminou e ele voltou para o ${p.empC.clube||"clube dele"}.`});mvTirarEmp(p)});mvDevEnviar()}
+function mvDevEnviar(){(G.mvDevPend||[]).slice().forEach(n=>amgPost("vendaOk",{n,k:"fim"}).then(j=>{if(!j.erro){G.mvDevPend=(G.mvDevPend||[]).filter(x=>x!==n);salvar()}}).catch(()=>{}))}
+const mvCustoEmp=()=>G?Object.values(G.players).reduce((a,p)=>a+(p.empC&&p.club===G.user.club?p.empC.mensal:0),0):0; // quem pegou emprestado paga por mês
+const mvRendaEmp=()=>G&&G.mercV?Object.values(G.mercV).reduce((a,p)=>a+(p.mvEmp?p.mvEmp.mensal:0),0):0; // quem emprestou recebe por mês
 async function chatPuxa(){if(!document.querySelector("#chat-lista")){clearInterval(AMG.chatT);AMG.chatT=null;return}
   const j=await amgPost("chatLer",{}).catch(()=>({erro:1}));if(j.erro){AMG.chatOk=false;chatDesenha();return}
   AMG.chatOk=true;AMG.chat=j.msgs||[];AMG.chatAdmin=!!j.admin;AMG.chatUlt=j.ultimo||0;chatMarcarVisto(AMG.chatUlt);chatDesenha()}
@@ -3184,10 +3303,10 @@ function modalAmigos(soAtualiza){
   else corpo+=`<p class="muted">${AMG.ok===false?"Sem conexão com o servidor. Confira a internet.":"Carregando o ranking..."}</p>`;
   const expl=ab==="mes"?`Quem ganhar mais coroas em <b>${mesAt}</b> é o <b>🏅 campeão do mês</b>. Zera todo dia 1. Vitória +3, empate +1, derrota −1; títulos valem muito mais.`:`Quem tem mais <b>👑 coroas</b> fica em cima. Vitória +3, empate +1, derrota −1, W.O. −3, rebaixamento −45; títulos dão muito mais (Champions 300, Série A 150). ▲▼ = posições desde segunda-feira.`;
   const abas=[["geral","Geral"],["mes","Do mês"],["chat","💬 Chat"]].map(([k,n])=>`<button data-a="rkaba" data-v="${k}" aria-pressed="${ab===k}">${n}${k==="chat"&&chatNovas()&&ab!=="chat"?'<i class="chat-dot"></i>':""}</button>`).join("");
-  if(ab==="chat"){modal(`<div class="amg-folha rk-folha chat-folha"><h3>${ICO_AMIGOS} Ranking</h3><div class="seg" role="group">${abas}</div><p class="muted peq rk-expl">Converse com todo mundo que joga. Toque na foto ou no nome para ver o perfil. Seja gentil: palavrão é bloqueado.</p>
-      <div class="chat-lista" id="chat-lista">${chatHTML()}</div><div class="chat-env"><input id="chat-txt" type="text" maxlength="200" placeholder="Escreva uma mensagem..." autocomplete="off"><button class="btn prim" data-a="chatenv">Enviar</button></div>
+  if(ab==="chat"){modal(`<div class="amg-folha rk-folha chat-folha"><h3>${ICO_AMIGOS} Ranking</h3><div class="seg" role="group">${abas}</div><p class="muted peq rk-expl">Toque na foto para ver o perfil. Segure a sua mensagem para apagar. Palavrão é bloqueado.</p>
+      <div class="chat-lista" id="chat-lista">${chatHTML()}</div><div class="chat-env"><button class="btn chat-vender" data-a="mvender" aria-label="Vender jogador">💰</button><input id="chat-txt" type="text" maxlength="200" placeholder="Escreva uma mensagem..." autocomplete="off"><button class="btn prim" data-a="chatenv">Enviar</button></div>
       <div class="botoes"><button class="btn" data-a="fechar">Fechar</button></div></div>`);
-    const i=$("#chat-txt");if(i)i.addEventListener("keydown",e=>{if(e.key==="Enter")chatEnviar()});AMG.chatRolou=0;chatDesenha();chatPuxa();if(!AMG.chatT)AMG.chatT=setInterval(chatPuxa,3000);return}
+    const i=$("#chat-txt");if(i)i.addEventListener("keydown",e=>{if(e.key==="Enter")chatEnviar()});AMG.chatRolou=0;AMG.chatH=null;AMG.chatDelN=null;chatLigar();chatDesenha();chatPuxa();if(!AMG.chatT)AMG.chatT=setInterval(chatPuxa,3000);return}
   modal(`<div class="amg-folha rk-folha"><h3>${ICO_AMIGOS} Ranking</h3><div class="seg" role="group">${abas}</div><p class="muted peq rk-expl">${expl} Toque em alguém para ver o perfil e jogar.</p><div class="amg-lista">${corpo}</div><div class="botoes"><button class="btn" data-a="fechar">Fechar</button></div></div>`);
   const b=document.querySelector(".amg-btn");if(b)b.innerHTML=ICO_AMIGOS+amgBadge()}
 async function amgBuscar(){const i=$("#amg-q"),q=(i?i.value:AMG.q).trim();AMG.q=q;if(q.replace(/^#/,"").length<2){toastErro("Digite o ID ou pelo menos 2 letras do nome.");return}
@@ -3752,7 +3871,7 @@ function retirarNegocio(pid){
 }
 function novasOfertas(pid){const p=G.players[pid];if(!p||p.reofertou)return "Esse jogador já recebeu uma segunda rodada de propostas.";p.ofertas=gerarOfertas(p);p.reofertou=true;return null}
 function aceitarOferta(pid,i){
-  const p=G.players[pid];if(!p||!p.ofertas||!p.ofertas[i])return "Proposta não encontrada.";
+  const p=G.players[pid];if(!p||!p.ofertas||!p.ofertas[i])return "Proposta não encontrada.";if(p.empC)return "Jogador emprestado não pode ser negociado.";
   if(jogadoresDo(G.user.club).length<=16)return "O elenco precisa ter pelo menos 16 jogadores.";
   const of=p.ofertas[i];
   G.cash+=of.v;p.club=of.c;p.exU=1;tocou();delete p.ofertas;
@@ -3792,7 +3911,7 @@ function contratar(pid){
   return null;
 }
 function dispensar(pid){
-  const p=G.players[pid];if(!p||p.club!==G.user.club)return "Jogador indisponível.";
+  const p=G.players[pid];if(!p||p.club!==G.user.club)return "Jogador indisponível.";if(p.empC)return "Jogador emprestado não pode ser dispensado.";
   if(jogadoresDo(G.user.club).length<=16)return "O elenco precisa ter pelo menos 16 jogadores.";
   const multa=Math.round(p.sal*3);
   G.cash-=multa;p.club=null;tocou();retirarNegocio(pid);
@@ -4145,7 +4264,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793673276";
+const VERSAO="1793789611";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7783,7 +7902,16 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "rkaba":AMG.rkAba=v;modalAmigos(true);return;
     case "rkpremios":modalPremiosMes();return;
     case "chatenv":chatEnviar();return;
-    case "chatdel":amgPost("chatApagar",{n:+v}).then(j=>{if(j.erro)toastErro(j.erro);chatPuxa()}).catch(()=>{});return;
+    case "chatdel":AMG.chatDelN=null;amgPost("chatApagar",{n:+v}).then(j=>{if(j.erro)toastErro(j.erro);chatPuxa()}).catch(()=>{});return;
+    case "mvender":modalNegociarChat();return;
+    case "mvsel":modalPrecoVenda(+v);return;
+    case "mvrap":{AMG.mvPreco=+v;const r=$("#mv-pr");if(r)r.value=v;const t=$("#mv-pv");if(t)t.textContent=dinheiro(+v)+t.dataset.suf;return}
+    case "mvtipo":AMG.mvTipo=v;modalVenderChat();return;
+    case "mvanunciar":mvAnunciar();return;
+    case "mvvoltar":AMG.rkAba="chat";modalAmigos(true);return;
+    case "mvcomprar":modalComprarChat(+v);return;
+    case "mvconf":mvComprar(+v);return;
+    case "mvcancel":amgPost("vendaCancelar",{n:+v}).then(j=>{if(j.erro)toastErro(j.erro);else toast("Anúncio cancelado. O jogador volta para o elenco.");AMG.ult=0;amgSync(true);chatPuxa()}).catch(()=>{});return;
     case "tecver":modalTec(v);return;
     case "amgaba":AMG.aba=v;AMG.busca=null;modalAmigos(true);if(v==="add"){const i=$("#amg-q");if(i){i.addEventListener("keydown",e=>{if(e.key==="Enter")acao("amgbusca")});i.focus()}}return;
     case "amgbusca":amgBuscar();return;
