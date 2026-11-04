@@ -3211,7 +3211,7 @@ function cardVenda(m,meu){const J=mvJog(m);if(!J)return `<p>${esc(m.txt)}</p>`;c
     :`<span class="mv-acaba">acaba em ${Math.max(1,Math.ceil(resta/36e5))} h</span><button class="btn prim mv-btn" data-a="mvcomprar" data-v="${m.vd}">${emp?"Pegar emprestado?":"Comprar jogador?"}</button>`;
   const temp=J.j!=null?`⚽ ${J.g||0} gol${J.g===1?"":"s"} em ${J.j} jogo${J.j===1?"":"s"}`:"";
   return `<div class="jog of mv-of" data-a="mvver" data-v="${m.vd}" role="button"><span class="promo-canto mv-canto">${emp?"🔁 Empréstimo":"Oferta"}</span><div class="jfoto">${rostoSVG(J,40)}<span class="posb ${J.pos}">${J.pos}</span></div>
-    <div class="nm"><b>${esc(J.n)}</b><span>${J.age} anos${temp?` · ${temp}`:""}</span><span class="time-of"><b>${esc(J.clube||"")}</b>${J.serie>=0&&J.pais&&PAISES[J.pais]?` · ${esc(PAISES[J.pais].ligas[J.serie]||"")}`:""}</span></div>
+    <div class="nm"><b>${esc(J.n)}</b><span>${J.age} anos${(J.habX||[]).length?` · ✨ ${esc(J.habX[0])}`:temp?` · ${temp}`:""}</span><span class="time-of"><b>${esc(J.clube||"")}</b>${J.serie>=0&&J.pais&&PAISES[J.pais]?` · ${esc(PAISES[J.pais].ligas[J.serie]||"")}`:""}</span></div>
     <div class="ov num">${J.ov}</div><small class="mv-ver">Ver ficha ›</small></div><div class="mv-rod"><span class="preco-pill">${ICO_NOTA}<b class="num">${mvPreco(m)}</b></span>${rodape}</div>`}
 /* ficha do jogador anunciado: tudo que o comprador precisa saber */
 function modalMvFicha(n){const m=mvMsg(n),J=m&&mvJog(m);if(!J)return;const emp=m.vtipo==="e",c=conta(),meu=c&&m.de===c.id,aberto=m.vst==="ab"&&!mvVencido(m);
@@ -4293,7 +4293,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793793647";
+const VERSAO="1793793882";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
