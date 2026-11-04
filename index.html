@@ -559,7 +559,11 @@ nav.abas[hidden]{display:none}
 .chat-msg.del-on{border-color:#ff4d4d;box-shadow:0 0 0 1px #ff4d4d inset}
 .chat-excl{display:block;width:100%;margin-top:5px;padding:6px 8px;border-radius:9px;border:1px solid #ff4d4d;background:rgba(255,60,60,.16);color:#ff6b6b;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 .chat-vender{flex:none;padding:0 12px;font-size:19px}
-.chat-vd{min-width:min(84%,290px)}
+.chat-vd .jog.mv-of{position:relative;margin:4px 0 0;cursor:pointer;padding-top:14px}
+.mv-ver{position:absolute;right:8px;bottom:5px;font-size:10.5px;color:#d9ffe8;opacity:.9}.mv-of .nm b{white-space:normal}
+.mv-rod{flex-wrap:wrap}.mv-rod .mv-acaba{order:3;width:100%;text-align:left}
+.mv-of .nm>span{display:block;font-size:12px}.mv-ficha-preco{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;padding:8px 10px;border-radius:12px;background:linear-gradient(135deg,#1f8a4c,#136b39);border:1px solid #4fd68a;font-weight:700}
+.chat-vd{min-width:min(92%,330px)}
 .mv-card{display:flex;align-items:center;gap:8px;margin-top:4px;padding:6px;border-radius:10px;background:rgba(0,0,0,.25);border:1px solid rgba(255,210,63,.45)}
 .mv-card .jfoto{flex:none}.mv-info{flex:1;min-width:0;display:flex;flex-direction:column;font-size:12px;line-height:1.25;color:var(--cal-2)}.mv-info>b{font-size:14px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mv-card .preco-pill{flex:none}
@@ -3195,7 +3199,8 @@ function chatLigar(){const box=$("#chat-lista");if(!box)return;let tm=null;const
 const MV_MIN=50,MV_MAX_X=5; // preço em mil: mínimo 50 mil, máximo 5x o valor (Carlos, 04/11)
 const mvMax=val=>Math.max(MV_MIN,Math.floor(val*MV_MAX_X/5)*5);
 function mvSnap(p){const c=G.clubs[G.user.club],o={n:p.n,pos:p.pos,ov:p.ov,pot:p.pot,age:p.age,sal:p.sal,val:valor(p),ref:refEmprestimo(p),clube:c.name,serie:c.tier,pais:c.pais};
-  ["real","oc","ap","acc","selos","vb","bInt","apos","pe"].forEach(k=>{if(p[k]!=null)o[k]=p[k]});if(!rostoRealK(p)&&!(p.real&&typeof ROSTOS_REAIS==="undefined"))o.rf=rostoIdx(p);return o}
+  ["real","oc","ap","acc","selos","vb","bInt","apos","pe","j","g","as","nt","nn","hist","lesoes"].forEach(k=>{if(p[k]!=null)o[k]=p[k]});
+  o.oid=p.id;o.ano=G.year;try{o.habX=habilidadesDe(p);o.pdet=posDetalhe(p);o.peTxt=peDe(p);o.multa=multaVenda(p);o.ct=contratoAcabou(p)?"Encerrado":fimContratoTxt(p)}catch(e){}if(!rostoRealK(p)&&!(p.real&&typeof ROSTOS_REAIS==="undefined"))o.rf=rostoIdx(p);return o}
 function mvJog(m){try{return JSON.parse(m.vjog)}catch(e){return null}}
 const mvVencido=m=>m.vst==="exp"||(m.vst==="ab"&&m.vt+864e5<=Date.now());
 const mvPreco=m=>m.vtipo==="e"?`${dinheiro(m.vmensal)}/mês`:dinheiro(m.vpreco);
@@ -3203,9 +3208,33 @@ function cardVenda(m,meu){const J=mvJog(m);if(!J)return `<p>${esc(m.txt)}</p>`;c
   const emp=m.vtipo==="e";
   const rodape=st==="vend"||st==="fim"?`<b class="mv-st ok">✅ ${emp?"Emprestado":"Vendido"} para ${esc(m.vcomp||"outro jogador")}</b>`:st==="canc"?`<b class="mv-st">Anúncio cancelado</b>`:st==="exp"||resta<=0?`<b class="mv-st">Anúncio encerrado</b>`
     :meu?`<span class="mv-acaba">acaba em ${Math.max(1,Math.ceil(resta/36e5))} h</span><button class="btn mv-btn" data-a="mvcancel" data-v="${m.vd}">Cancelar</button>`
-    :`<span class="mv-acaba">acaba em ${Math.max(1,Math.ceil(resta/36e5))} h</span><button class="btn prim mv-btn" data-a="mvcomprar" data-v="${m.vd}">${emp?"Pegar emprestado":"Comprar"}</button>`;
-  return `<div class="mv-card"><div class="jfoto">${rostoSVG(J,42)}<span class="posb ${J.pos}">${J.pos}</span></div><div class="mv-info"><b>${esc(J.n)}</b><span>${J.age} anos · Força <b class="num">${J.ov}</b></span><span>${emp?"🔁 Empréstimo · 1 temporada":`${esc(J.clube||"")}${J.serie>=0&&J.pais&&PAISES[J.pais]?` · ${esc(PAISES[J.pais].ligas[J.serie]||"")}`:""}`}</span></div>
-    <span class="preco-pill">${ICO_NOTA}<b class="num">${mvPreco(m)}</b></span></div><div class="mv-rod">${rodape}</div>`}
+    :`<span class="mv-acaba">acaba em ${Math.max(1,Math.ceil(resta/36e5))} h</span><button class="btn prim mv-btn" data-a="mvcomprar" data-v="${m.vd}">${emp?"Pegar emprestado?":"Comprar jogador?"}</button>`;
+  const temp=J.j!=null?`⚽ ${J.g||0} gol${J.g===1?"":"s"} em ${J.j} jogo${J.j===1?"":"s"}`:"";
+  return `<div class="jog of mv-of" data-a="mvver" data-v="${m.vd}" role="button"><span class="promo-canto mv-canto">${emp?"🔁 Empréstimo":"Oferta"}</span><div class="jfoto">${rostoSVG(J,46)}<span class="posb ${J.pos}">${J.pos}</span></div>
+    <div class="nm"><b>${esc(J.n)}</b><span>${J.age} anos · ${esc(J.pdet||J.pos)}</span>${temp?`<span>${temp}</span>`:""}<span class="time-of"><b>${esc(J.clube||"")}</b>${J.serie>=0&&J.pais&&PAISES[J.pais]?` · ${esc(PAISES[J.pais].ligas[J.serie]||"")}`:""}</span></div>
+    <div class="ov num">${J.ov}</div><small class="mv-ver">Ver ficha ›</small></div><div class="mv-rod"><span class="preco-pill">${ICO_NOTA}<b class="num">${mvPreco(m)}</b></span>${rodape}</div>`}
+/* ficha do jogador anunciado: tudo que o comprador precisa saber */
+function modalMvFicha(n){const m=mvMsg(n),J=m&&mvJog(m);if(!J)return;const emp=m.vtipo==="e",c=conta(),meu=c&&m.de===c.id,aberto=m.vst==="ab"&&!mvVencido(m);
+  const media=J.nn?(J.nt/J.nn).toFixed(1):"—",hist=(J.hist||[]).slice().reverse(),les=J.lesoes||[];let atr="";try{atr=barrasAtr({...J,id:J.oid??0},false)}catch(e){}
+  modal(`<div class="perfil"><div class="perfil-foto">${rostoSVG(J,110)}</div><div class="nm"><h3 style="margin:0">${esc(J.n)}</h3><span class="muted">${J.pos} · ${J.age} anos · ${esc(J.clube||"")}</span>
+    <div class="kpis" style="margin-top:10px"><div class="cartao kpi"><small>Força</small><b class="num">${J.ov}</b></div><div class="cartao kpi"><small>Potencial</small><b class="num">${J.age<=23&&J.pot?J.pot:"—"}</b></div></div></div></div>
+    <div class="mv-ficha-preco"><span>${emp?"🔁 Empréstimo por 1 temporada":"🏷️ À venda no chat"}</span><span class="preco-pill">${ICO_NOTA}<b class="num">${mvPreco(m)}</b></span></div>
+    <div class="extrato num" style="margin-top:10px">
+      <div><span>Dono do jogador</span><span>${esc(m.nome||"—")}</span></div>
+      <div><span>Posição</span><span>${esc(J.pdet||J.pos)}</span></div>
+      ${J.peTxt?`<div><span>Melhor pé</span><span>${esc(J.peTxt)}</span></div>`:""}
+      ${(J.habX||[]).length?`<div><span>${J.habX.length>1?"Habilidades":"Habilidade"}</span><span class="hab-chips">${J.habX.map(x=>`<i>${esc(x)}</i>`).join("")}</span></div>`:""}
+      <div><span>Valor de mercado</span><span>${dinheiro(J.val||0)}</span></div>
+      <div><span>Salário</span><span>${dinheiro(J.sal||0)}/mês</span></div>
+      <div><span>Contrato</span><span>${J.ct?(J.ct==="Encerrado"?"Encerrado":"até "+esc(J.ct)):"—"}</span></div>
+      <div><span>Multa rescisória</span><span>${J.multa==null?"—":J.multa>0?dinheiro(J.multa):"Sem multa"}</span></div>
+      ${(J.selos||[]).length?`<div><span>Prêmios</span><span class="hab-chips ant-chips selos">${J.selos.slice().reverse().map(x=>`<i>🏅 ${esc(x)}</i>`).join("")}</span></div>`:""}
+    </div>
+    <h2>Temporada ${J.ano||""}</h2><div class="kpis"><div class="cartao kpi"><small>Jogos</small><b class="num">${J.j||0}</b></div><div class="cartao kpi"><small>Gols</small><b class="num">${J.g||0}</b></div><div class="cartao kpi"><small>Assistências</small><b class="num">${J.as||0}</b></div><div class="cartao kpi"><small>Nota média</small><b class="num">${media}</b></div></div>
+    ${atr?`<h2>Atributos</h2>${atr}`:""}
+    <h2>Histórico de lesões</h2>${les.length?`<div class="extrato num">${les.slice().reverse().map(([a,j,ms])=>`<div><span>${a} · ${esc(ms)}</span><span>${j} jogo${j>1?"s":""} fora</span></div>`).join("")}</div>`:'<p class="muted peq" style="margin:0">Nenhuma lesão registrada.</p>'}
+    ${hist.length?`<h2>Temporadas anteriores</h2><div class="rolar"><table><thead><tr><th>Ano</th><th>Força</th><th>J</th><th>G</th><th>A</th><th>Nota</th></tr></thead><tbody>${hist.map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td><td>${x[2]}</td><td>${x[3]}</td><td>${x[4]}</td><td>${x[5]??"—"}</td></tr>`).join("")}</tbody></table></div>`:""}
+    <div class="botoes"><button class="btn" data-a="mvvoltar">‹ Voltar ao chat</button>${aberto?(meu?`<button class="btn" data-a="mvcancel" data-v="${n}">Cancelar anúncio</button>`:`<button class="btn prim" data-a="mvcomprar" data-v="${n}">${emp?"Pegar emprestado?":"Comprar jogador?"}</button>`):""}</div>`)}
 function mvPodeVender(){if(!conta())return "Entre no ranking primeiro (precisa de internet).";if(G.live)return "Termine a partida antes.";
   if(jogadoresDo(G.user.club).length<=18)return "O elenco precisa ficar com pelo menos 18 jogadores.";return null}
 function modalNegociarChat(){const e=mvPodeVender();if(e){toastErro(e);return}
@@ -3240,16 +3269,16 @@ function mvPodeComprar(J,preco){if(G.live)return "Termine a partida antes.";if(p
   if(jogadoresDo(G.user.club).length>=32)return "O elenco já tem 32 jogadores. Venda ou dispense alguém antes.";
   const t=minhaSerie(),lim=t>=2?75:t===1?80:999;if(J.serie===0&&J.ov>lim)return `${J.n} não aceita jogar na ${esc(pais().ligas[t]||"sua série")}. Só vai para times de série mais alta.`;return null}
 function modalComprarChat(n){const m=mvMsg(n),J=m&&mvJog(m);if(!J)return;const emp=m.vtipo==="e",e=mvPodeComprar(J,emp?m.vmensal:m.vpreco);if(e){toastErro(e);return}
-  if(emp){modal(`<div class="mv-folha"><h3>🔁 Pegar ${esc(J.n)} emprestado?</h3><div class="chat-msg chat-vd mv-conf">${cardVenda({...m,vst:"conf"},true).replace(/<div class="mv-rod">[\s\S]*<\/div>$/,"")}</div>
+  if(emp){modal(`<div class="mv-folha"><h3>🔁 Pegar ${esc(J.n)} emprestado?</h3><div class="chat-msg chat-vd mv-conf">${cardVenda({...m,vst:"conf"},true).replace(/<div class="mv-rod">[\s\S]*<\/div>$/,"").replace('data-a="mvver"','')}</div>
     <p class="muted peq">Emprestado por <b>${esc(m.nome||"outro jogador")}</b>. Ele joga no seu time até o fim desta temporada. Você paga ${dinheiro(m.vmensal)} por mês (entra nas despesas do mês) e o salário dele.</p>
     <div class="botoes"><button class="btn" data-a="mvvoltar">Voltar</button><button class="btn prim" data-a="mvconf" data-v="${n}">Pegar por ${dinheiro(m.vmensal)}/mês</button></div></div>`);return}
-  modal(`<div class="mv-folha"><h3>🤝 Comprar ${esc(J.n)}?</h3><div class="chat-msg chat-vd mv-conf">${cardVenda({...m,vst:"conf"},true).replace(/<div class="mv-rod">[\s\S]*<\/div>$/,"")}</div>
+  modal(`<div class="mv-folha"><h3>🤝 Comprar ${esc(J.n)}?</h3><div class="chat-msg chat-vd mv-conf">${cardVenda({...m,vst:"conf"},true).replace(/<div class="mv-rod">[\s\S]*<\/div>$/,"").replace('data-a="mvver"','')}</div>
     <p class="muted peq">Vendido por <b>${esc(m.nome||"outro jogador")}</b>. Você paga ${dinheiro(m.vpreco)} agora e ele entra no seu elenco na hora (contrato de 3 temporadas).</p>
     <div class="botoes"><button class="btn" data-a="mvvoltar">Voltar</button><button class="btn prim" data-a="mvconf" data-v="${n}">Comprar por ${dinheiro(m.vpreco)}</button></div></div>`)}
 const mvFeitos=()=>{try{return JSON.parse(localStorage.getItem("fut-mv-feito")||"[]")}catch(e){return []}};
 function mvFeito(k){const L=mvFeitos();if(!L.includes(k)){L.push(k);try{localStorage.setItem("fut-mv-feito",JSON.stringify(L.slice(-200)))}catch(e){}}}
 function mvReceber(n,J,preco,de,mensal){if(mvFeitos().includes(n+":ent"))return false;mvFeito(n+":ent");
-  const uid=G.user.club,id=G.nextId++,p={...J,id,club:uid,cAt:uid,inj:0,g:0,j:0,gc:0,fis:100,ct:3,exU:1};["val","clube","serie","pais"].forEach(k=>delete p[k]);
+  const uid=G.user.club,id=G.nextId++,p={...J,id,club:uid,cAt:uid,inj:0,g:0,j:0,gc:0,fis:100,ct:3,exU:1};["val","ref","clube","serie","pais","oid","ano","pdet","peTxt","multa","ct","as","nt","nn"].forEach(k=>delete p[k]);
   p.ant=[[null,J.clube||"outro clube"]];G.players[id]=p;p.sal=salarioPedido({...p,club:null,sal:J.sal||0});tocou();
   if(mensal){p.empC={n,mensal,ate:G.year,de:de||"",clube:J.clube||""};garantirContratos();G.inbox.unshift({t:"bom",d:hojeJogo(),m:`${p.n} (${p.pos}, ${p.ov}) chegou emprestado do ${J.clube||"outro clube"}${de?` (${de})`:""} até o fim da temporada. Custo: ${dinheiro(mensal)} por mês.`});salvar();return true}
   G.cash-=preco;garantirContratos();
@@ -4264,7 +4293,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793789720";
+const VERSAO="1793793385";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7911,6 +7940,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "mvvoltar":AMG.rkAba="chat";modalAmigos(true);return;
     case "mvcomprar":modalComprarChat(+v);return;
     case "mvconf":mvComprar(+v);return;
+    case "mvver":modalMvFicha(+v);return;
     case "mvcancel":amgPost("vendaCancelar",{n:+v}).then(j=>{if(j.erro)toastErro(j.erro);else toast("Anúncio cancelado. O jogador volta para o elenco.");AMG.ult=0;amgSync(true);chatPuxa()}).catch(()=>{});return;
     case "tecver":modalTec(v);return;
     case "amgaba":AMG.aba=v;AMG.busca=null;modalAmigos(true);if(v==="add"){const i=$("#amg-q");if(i){i.addEventListener("keydown",e=>{if(e.key==="Enter")acao("amgbusca")});i.focus()}}return;
