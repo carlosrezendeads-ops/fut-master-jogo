@@ -2296,6 +2296,7 @@ function dirAvisos(){const uid=G.user.club,c=G.clubs[uid],cl=esc(c.name),A=[],fm
   {const tot=(n-1)*2,falta=tot-nj;if(pos&&falta>0&&falta<=5&&(pos===1||(t>0&&pos<=kk)||(t===0&&pos<=CC.mq)))add({k:"reta|"+G.year,foto:"pensa",tit:"Reta final!",txt:`Faltam <b>${falta} rodada${falta>1?"s":""}</b> e estamos em ${pos}º. ${pos===1?"O título está nas nossas mãos.":t>0?"O acesso está perto.":`A vaga na ${CC.main} está perto.`} Não dá para vacilar agora, chefe!`})}
   if(u&&d>=3)add({k:"der|"+G.year+"|"+nj,foto:"preocupado",tit:"Fase difícil",txt:`Chefe, foram ${d} derrotas seguidas. Calma, isso acontece. Que tal revisar a escalação ou a tática para o próximo jogo?`,aba:"prejogo",bt:"Ver escalação"});
   [1e3,5e3,1e4,5e4].forEach(m=>{if(G.cash>=m)add({k:"rico|"+m,foto:"festa",tit:"O caixa está forte!",txt:`Chefe, passamos de <b>${dinheiro(m)}</b> em caixa. As contas estão em dia e dá para pensar em reforços ou em obras no estádio.`})});
+  dirResenha(add); // resenha do Wagner: frase informal, de ranking ou do amigo (por último)
   return A}
 // textos para cada competição do país da carreira (liga, copa nacional e copa continental)
 function dirCompeticoes(add){const uid=G.user.club,cl=esc(G.clubs[uid].name),t=userTier(),D=G.diretor||{},P=pais(),CC=COPAS[P.cont],L=esc(nomeLiga(t)),kk=P.k||4;
@@ -2332,13 +2333,195 @@ function dirCompeticoes(add){const uid=G.user.club,cl=esc(G.clubs[uid].name),t=u
   if(m&&!m.amistoso){
     if(ehClassico(m)){const r=G.clubs[m.h===uid?m.a:m.h];add({k:"cla|"+G.ev,foto:"pensa",tit:"Semana de clássico!",txt:`O próximo jogo é contra o <b>${esc(r.name)}</b>, clássico${G.cidade?` de ${esc(G.cidade.rn)}`:""}. A torcida não aceita perder, e uma vitória rende muito mais dinheiro. Vamos preparar o melhor time.`,aba:"prejogo",bt:"Preparar o time"})}
     else if(/Final/.test(m.rot||"")&&!/Semifinal|Oitavas|Quartas/.test(m.rot||""))add({k:"dec|"+G.ev,foto:"pensa",tit:"Hoje é decisão!",txt:`O próximo jogo é a <b>${esc(m.rot)}</b>. Escale os titulares descansados e vamos buscar essa taça!`,aba:"prejogo",bt:"Preparar o time"})}}
+/* Resenha do Wagner (04/11): frases informais (jeito brasileiro), de ranking e específicas dos amigos (pelo ID da conta, vale mesmo se trocar o nome).
+   Entra por último em dirAvisos: no máx. 1 por dia de jogo (~55% dos dias), sem repetir as últimas 40. Formato "foto|título|texto".
+   Marcas: {n} = como o Wagner chama o dono (nome ou chefe/professor…), {cl} seu clube, {adv} adversário, {pl} placar (seus gols primeiro), {r} amigo do ranking, {dif} coroas de diferença, {lider} 1º do ranking.
+   Amigo novo: acrescentar em AMIGOS (id da conta → apelidos, time do coração, rivais) e, se quiser, frases em RS_AMIGO. */
+const AMIGOS={
+  QF7JHZ:{ap:["Paulo"],time:"Palmeiras",riv:["Corinthians","São Paulo","Santos"]},
+  NPHHA6:{ap:["Pedro","Pedro Lucas"]},
+  FDRXER:{ap:["Maurício"],time:"São Paulo",riv:["Corinthians","Palmeiras","Santos"]},
+  ZZWQUT:{ap:["João","João Vitor"],time:"Cruzeiro",riv:["Atlético-MG"],kid:1},
+  ZQ3F5Z:{ap:["Mateus","Mateusão"],time:"Corinthians",riv:["Palmeiras","São Paulo","Santos"]},
+  "4Y7CZE":{ap:["Davi"],time:"Atlético-MG",riv:["Cruzeiro"],kid:1},
+  "7HMHTR":{ap:["Carlos"]}};
+const RS={
+  vit:["joinha|É isso!|Boa, {n}! {pl} e mais três pontinhos na conta. Assim que eu gosto!",
+    "palmas|Trabalho bem feito|Vitória, {n}! O vestiário tá uma festa, tem até pagode rolando. 🎶",
+    "joinha|Tá tranquilo, tá favorável|{pl} no {adv}, {n}! Tá tranquilo, tá favorável. 😎",
+    "festa|Vamo que vamo!|Mais uma vitória, {n}! A torcida já tá falando que esse ano vai!",
+    "joinha|Do jeito que o povo gosta|Ganhamos do {adv}, {n}! Agora é descansar a rapaziada e pensar no próximo.",
+    "palmas|Aí sim!|{n}, que jogo! Meu coração não aguenta, mas meu bolso agradece o bicho da vitória. 💸"],
+  gol:["festa|Que isso, {n}?!|{pl} no {adv}! Foi aula! Os caras vão ter pesadelo com a gente essa semana. 😂",
+    "palmas|Passeio!|{pl}, {n}! O goleiro do {adv} trabalhou tanto que vai pedir hora extra.",
+    "festa|Chocolate!|{pl} no {adv}! Isso não foi jogo, {n}, foi chocolate! 🍫",
+    "festa|Ninguém segura|{pl}, {n}! Se fosse luta, o juiz tinha parado no primeiro tempo. 😂",
+    "palmas|Tem que respeitar|{n}, {pl} no {adv}! O pessoal do ranking vai ver esse placar e ficar com medo. 😏"],
+  emp:["pensa|Empate…|{pl} com o {adv}, {n}. Empate é igual café sem açúcar: dá pra tomar, mas ninguém gosta. ☕",
+    "pensa|Nem lá nem cá|{pl}, {n}. Um pontinho é melhor que nada… mas dava pra mais, né?",
+    "joinha|Ponto é ponto|{pl} com o {adv}. Na pior das hipóteses, {n}, não perdemos. Bola pra frente!",
+    "pensa|Morno|{n}, esse jogo com o {adv} foi tipo arroz sem sal. Próximo tem que ter mais tempero! 🧂"],
+  der:["pensa|Faz parte|Perdemos pro {adv}, {n}. Faz parte do futebol… mas não acostuma, hein! 😅",
+    "preocupado|Dia ruim|{pl}, {n}. Teve gente que esqueceu de acordar hoje. Vou ter uma conversa no vestiário.",
+    "pensa|Cabeça erguida|Não deu, {n}. Mas time grande se conhece na derrota. Próximo jogo a gente devolve!",
+    "preocupado|Ih, rapaz…|{pl}, {n}. A torcida já tá pedindo reunião. Calma que eu seguro eles. 😅"],
+  derF:["preocupado|Vergonha…|{pl}, {n}?! Até meu sobrinho de 8 anos marcava melhor que essa zaga hoje.",
+    "preocupado|Que vexame|{pl} pro {adv}, {n}… Já tem meme rodando no grupo dos torcedores. Melhor nem abrir o celular hoje.",
+    "preocupado|Apagão|{n}, o que foi aquilo? Parecia que o time entrou em campo de chinelo. 😩"],
+  zeb:["preocupado|Zebra!|Perder pro {adv}, {n}?! Esse time jogou como se fosse final de Copa do Mundo. Zebra das grandes! 🦓",
+    "pensa|O {adv} tava inspirado|{n}, não sei o que deram pros jogadores do {adv} no café da manhã, mas eles jogaram demais hoje. 🦓",
+    "preocupado|Salto alto?|{pl} pro {adv}, {n}… Acho que nosso time entrou de salto alto. Futebol não perdoa!"],
+  rk1:["festa|Rei do pedaço|{n}, primeiro lugar no ranking! O {r} tá {dif} coroas atrás. Aproveita a vista lá de cima! 👑"],
+  rk1Perto:["pensa|Cuidado com o trono|{n}, liderar o ranking é bom, mas o {r} tá {dif} coroas atrás e jogando muito. Não dá pra relaxar!"],
+  rkPerto:["pensa|Tá logo ali!|{n}, faltam só {dif} coroas pra gente passar o {r} no ranking. Bora fazer isso essa semana!",
+    "festa|Caçada aberta|{n}, o {r} tá {dif} coroas na nossa frente. Já tô até preparando a zoeira pro chat. 😏"],
+  rkCola:["preocupado|Olha o retrovisor!|{n}, o {r} tá só {dif} coroas atrás da gente no ranking. Ele tá chegando!",
+    "pensa|Respirando no cangote|{n}, dá pra sentir o {r} respirando no nosso cangote: {dif} coroas de diferença. Não pode vacilar!"],
+  rkLonge:["pensa|Lá em cima|{n}, o {lider} tá lá no topo do ranking… mas ninguém é rei pra sempre. Uma hora o trono cai! 😏",
+    "pensa|Meta da temporada|{n}, minha meta é simples: ver o {lider} olhando pra trás preocupado com a gente. Bora!"],
+  rkUlt:["pensa|Lanterninha|{n}, tamo em último no ranking. Mas olha pelo lado bom: daqui só dá pra subir! 😅"],
+  timeAmigo:["festa|Jogo com resenha|O próximo jogo é contra o <b>{adv}</b>, {n}… o time do coração do {r}! Ganhar esse vale zoeira garantida no chat. 😏"],
+  venceuAmigo:["festa|Manda print!|{pl} no {adv}, {n}! O {r} torce pra eles… já pode mandar print no chat. 😂"],
+  geral:["joinha|Papo de diretor|{n}, passei no CT hoje e a rapaziada tá treinando forte. Tô gostando do clima!",
+    "pensa|Café com o diretor|{n}, a dona do bar da esquina do estádio disse que torce pra gente. Já é uma torcedora a mais! ☕",
+    "festa|Resenha no vestiário|{n}, o roupeiro disse que o pagode do vestiário tá melhor que o futebol de muito time por aí. 😂",
+    "pensa|Rumor no mercado|{n}, um empresário me ligou oferecendo um \"novo Neymar\". Pedi o vídeo: o rapaz tropeçou na bola. Recusei. 😂",
+    "joinha|Torcida empolgada|{n}, a torcida tá cantando o nome do senhor na arquibancada. Não deixa subir pra cabeça, hein! 😎",
+    "pensa|Pergunta séria|{n}, posso pedir um aumento? Brincadeira… por enquanto. 😂"]};
+const RS_AMIGO={
+  QF7JHZ:{ // Paulo: palmeirense, zagueiro de várzea, líder do ranking, rei dos comandos
+    sempre:["pensa|Pergunta sincera|{n}, me tira uma dúvida: no domingo, lá na várzea, o senhor também fica gritando \"Vamos atacar!\" pro time? Porque aqui o senhor gritou tanto que a federação mudou a regra. 😂",
+      "festa|A mamata acabou?|{n}, tô sabendo que mexeram nos comandos da partida… Dizem que foi por causa de um técnico que gritava \"Vamos atacar!\" de 15 em 15 minutos. Não vou falar nomes, mas o time dele é o {cl}. 😏",
+      "joinha|Zagueiro raiz|{n}, como bom zagueiro de várzea, o senhor sabe: na dúvida, é bola pro mato que o jogo é de campeonato! Tá liberado usar isso aqui também.",
+      "pensa|Saudade do Mundial?|{n}, ouvi o pessoal do chat comentando que o Palmeiras não tem Mundial… Eu não disse nada, hein! Só tô repassando. 🤐",
+      "pensa|Agora é no talento|{n}, sem o \"Vamos atacar!\" milagroso, agora vai ter que ganhar no talento, hein! Quero ver! 😂",
+      "joinha|Conselho de zagueiro|{n}, o senhor que é zagueiro de verdade: dá uma olhada na nossa defesa e me fala se esse pessoal jogaria no seu time de domingo.",
+      "festa|Ideia de marketing|Tive uma ideia, {n}: camisa do {cl} escrito \"VAMOS ATACAR!\" nas costas. Ia esgotar em 5 minutos! 😂",
+      "pensa|Domingo de manhã|{n}, se domingo o senhor tiver jogo na várzea, já deixa o time escalado aqui antes, hein. Não quero o {cl} órfão! 😂"],
+    coracao:["pensa|Coração dividido?|Próximo jogo é contra o <b>Palmeiras</b>, {n}! Vai torcer pra quem? Lembra que quem paga seu salário aqui é o {cl}, hein! 😂",
+      "serio|Sem corpo mole|{n}, contra o Verdão eu quero ver o senhor gritando igual no domingo. Nada de deixar o Palmeiras ganhar por saudade, combinado?"],
+    venceuTime:["festa|Traidor do Verdão?|Ganhou do Palmeiras, {n}! Os palmeirenses do bairro vão querer conversar com o senhor… 😂"],
+    perdeuTime:["pensa|Entregou?|Perdeu pro Palmeiras, {n}… Vou fingir que acredito que não foi de propósito. 🤨"],
+    rival:["festa|Clássico paulista!|Contra o <b>{adv}</b>, {n}! Esse aqui não é só jogo, é questão de honra pra todo palmeirense. Bora!"],
+    venceuRival:["festa|Freguês!|{pl} no {adv}! {n}, esse resultado vale print pro grupo da família. 😂"],
+    perdeu:["pensa|Cadê a zaga?|{pl}, {n}? Logo o senhor, zagueiro de várzea, deixando a defesa passear assim?",
+      "preocupado|Bateu saudade do grito|Perdemos, {n}… Vi o senhor gritando \"Vamos atacar!\" e o time olhando pra sua cara. Os tempos mudaram! 😂"],
+    venceu:["palmas|Coisa de Imperador|Mais uma, {n}! O pessoal no chat já tá pedindo pro senhor dar palestra de tática."],
+    lider:["festa|Lá de cima é outra vista|Primeiro lugar no ranking, {n}! O {r} tá {dif} coroas atrás. Dá pra ouvir a respiração dele daqui. 😂",
+      "pensa|Sem o grito mágico|{n}, o senhor tá em primeiro, mas sem o \"Vamos atacar!\" de antes o {r} tá vindo aí, hein. Segura essa coroa! 👑"]},
+  NPHHA6:{ // Pedro Lucas
+    sempre:["pensa|Hora do bote|{n}, ouvi dizer que os comandos do pessoal perderam força… Essa é a hora de dar o bote no ranking!",
+      "joinha|Bora, Pedro!|{n}, tô sentindo que essa temporada vai ser nossa. O vestiário tá fechado com o senhor.",
+      "festa|Fama boa|{n}, os outros técnicos tão comentando: \"esse tal de Pedro Lucas monta time, hein\". Fama boa começa assim!",
+      "pensa|Resposta em campo|{n}, o senhor viu o chat do ranking? Tem gente falando muito e jogando pouco. Vamos responder dentro de campo. 😏"],
+    venceu:["festa|Ritmo de campeão|Mais uma, {n}! Desse jeito o pessoal do ranking vai começar a ter medo do {cl}."],
+    perdeu:["pensa|Calma, Pedro|Perdemos, {n}. Respira. Um tropeço não apaga o trabalho. Próximo jogo a gente devolve!"],
+    lider:["festa|Pedro no topo!|{n}, primeiro do ranking! O {r} tá {dif} coroas atrás, olhando pra cima e se perguntando como o senhor fez isso. 😂"]},
+  FDRXER:{ // Maurício: são-paulino roxo, duas filhas pequenas, muito competitivo
+    sempre:["pensa|Pai de duas|{n}, criar duas filhas pequenas e ainda comandar o {cl}? O senhor é guerreiro! Quem aguenta birra em casa aguenta pressão de torcida. 😂",
+      "festa|Competitivo demais|{n}, já percebi que o senhor não aceita perder nem no par ou ímpar. Ótimo! É desse técnico que o {cl} precisa.",
+      "joinha|Tricolor de coração|{n}, falaram que o senhor é são-paulino roxo. Já pensou em pintar o vestiário de vermelho, branco e preto? Brincadeira… ou não. 😂",
+      "pensa|Missão de pai|{n}, vamos ganhar esse campeonato pras meninas verem que o pai é o melhor técnico do grupo! 👧👧",
+      "pensa|Não dorme direito|{n}, o {lider} tá em primeiro no ranking… e eu sei que o senhor não dorme direito enquanto tiver alguém na sua frente. 😏"],
+    coracao:["pensa|Logo o São Paulo?|Próximo jogo é contra o <b>São Paulo</b>, {n}. Vai doer no coração, mas o salário é do {cl}, hein!"],
+    venceuTime:["festa|Ganhou do Tricolor|{n}, ganhou do São Paulo! Metade do coração comemorou e a outra metade ficou de luto. 😂"],
+    perdeuTime:["pensa|Deu uma aliviada?|Perdeu pro São Paulo, {n}… Tô desconfiado que o senhor aliviou pro Tricolor. 🤨"],
+    rival:["festa|Clássico!|Contra o <b>{adv}</b>, {n}! Pra um são-paulino roxo, esse jogo vale mais que campeonato. Bora!"],
+    venceuRival:["festa|Dorme sorrindo|{pl} no {adv}! {n}, hoje o senhor dorme sorrindo. 😂"],
+    perdeu:["preocupado|Eu sei que doeu|Perdemos, {n}. Eu sei que o senhor é competitivo e tá bravo… Respira, conta até dez e a gente vira na próxima.",
+      "pensa|Não conta pras meninas|{pl}, {n}… Se as meninas perguntarem, fala que o papai deixou o outro time ganhar de propósito. 😂"],
+    venceu:["palmas|Do jeito que o senhor gosta|Vitória, {n}! E eu sei que pro senhor não basta ganhar: tem que ganhar dos amigos também. 😏"],
+    lider:["festa|O mais competitivo no topo|Primeiro do ranking, {n}! Agora aguenta, porque o {r} tá {dif} coroas atrás e na cola."]},
+  ZZWQUT:{ // João Vitor (criança): cruzeirense roxo (o pai também), videogame e Minecraft
+    sempre:["festa|Craque do controle|{n}, ouvi dizer que você é fera no futebol de videogame. Aqui é igualzinho, só que você é o técnico! Bora mostrar pros adultos como se faz. 🎮",
+      "joinha|Bloco por bloco|{n}, montar um time campeão é tipo Minecraft: bloco por bloco, jogador por jogador, até virar um castelo! 🧱",
+      "pensa|Cuidado com os creepers|{n}, nossa defesa tá parecendo base de Minecraft sem tocha: entrando tudo quanto é creeper! Bora arrumar isso. 😂",
+      "festa|Cabuloso!|{n}, manda um abraço pro seu pai! Dois cruzeirenses roxos torcendo pelo {cl}… não tem como dar errado. 💙",
+      "pensa|Mostra pros grandões|{n}, tem um monte de adulto no ranking. Que tal passar eles e mostrar quem manda? 😎",
+      "joinha|Diamante|{n}, achar jogador bom no mercado é igual achar diamante no Minecraft: tem que cavar bastante, mas vale a pena! 💎"],
+    coracao:["festa|Contra o Cruzeiro?!|{n}, o próximo jogo é contra o <b>Cruzeiro</b>! E agora? Vai torcer pro {cl} ou pra Raposa? Seu pai vai querer saber! 😂"],
+    venceuTime:["festa|Melhor não contar|{n}, ganhou do Cruzeiro! Melhor nem contar pro seu pai hoje… 😂"],
+    perdeuTime:["pensa|Feliz ou triste?|Perdemos pro Cruzeiro, {n}. Pelo menos em casa todo mundo comemorou, né? 😂💙"],
+    rival:["festa|Clássico mineiro!|É contra o <b>Atlético-MG</b>, {n}! Esse você e seu pai querem ganhar de qualquer jeito, né? E o Davi tá torcendo contra! 😂"],
+    venceuRival:["festa|Galo no chão!|{pl} no Atlético-MG, {n}! Já pode mandar mensagem pro Davi zoando! 😂"],
+    perdeu:["pensa|Respawn!|Perdemos, {n}, mas tudo bem: igual no Minecraft, a gente renasce e volta mais forte no próximo jogo! 💪"],
+    venceu:["festa|GG!|Vitória, {n}! GG, easy! Igual no videogame. 🎮"],
+    lider:["festa|Moleque no topo!|{n}, você tá em PRIMEIRO no ranking! Os adultos tão todos embaixo de você! 😂"]},
+  "4Y7CZE":{ // Davi (criança): atleticano, era goleiro e agora joga na linha
+    sempre:["pensa|Olho de goleiro|{n}, você que já foi goleiro sabe: goleiro bom ganha jogo! Dá uma olhada no nosso e vê se ele tá à altura. 🧤",
+      "festa|Aqui é Galo!|{n}, atleticano de coração comandando o {cl}! Aqui é raça, igual o Galo! 🐓",
+      "joinha|Técnico completo|{n}, saiu do gol e foi pra linha? Então você conhece o jogo dos dois lados. Técnico completo! 👏",
+      "pensa|Mostra pros grandões|{n}, tem muito adulto no ranking. Bora passar eles e mostrar que criança também entende de futebol! 😎",
+      "pensa|Ex-goleiro bravo|{n}, nosso goleiro tomou cada frango… Você, que já jogou no gol, deve ter ficado bravo, né? 😂"],
+    coracao:["festa|Contra o Galo?!|{n}, o próximo jogo é contra o <b>Atlético-MG</b>! Vai ter coragem de ganhar do Galo? 😂🐓"],
+    venceuTime:["festa|Que coisa!|{n}, ganhou do Galo! Você tá feliz ou triste? Eu não sei se comemoro… 😂"],
+    perdeuTime:["pensa|Pelo menos o Galo ganhou|Perdemos pro Atlético-MG, {n}. Mas o Galo ganhou, então metade de você tá feliz, né? 😂"],
+    rival:["festa|Clássico mineiro!|Contra o <b>Cruzeiro</b>, {n}! Esse é obrigação ganhar. E o João Vitor vai estar torcendo contra! 😂"],
+    venceuRival:["festa|Raposa caçada!|{pl} no Cruzeiro, {n}! Pode mandar mensagem pro João Vitor! 😂🐓"],
+    perdeu:["pensa|Cabeça erguida|Perdemos, {n}, mas faz parte. Até o Galo perde às vezes. Próximo jogo a gente devolve!"],
+    venceu:["festa|Joga muito!|Vitória, {n}! Esse time tá voando! 🐓"],
+    lider:["festa|Moleque no topo!|{n}, você tá em PRIMEIRO no ranking! Os adultos tão todos embaixo de você! 😂"]},
+  ZQ3F5Z:{ // Mateus / Mateusão: corintiano
+    sempre:["festa|Fiel torcedor|{n}, corintiano de verdade não desiste nunca! É com essa raça que o {cl} vai subir. 🦅",
+      "pensa|A camisa é outra|{n}, sei que o coração é alvinegro, mas aqui a camisa é do {cl}, hein! 😂",
+      "joinha|Respeito|{n}, com esse nome de respeito, o vestiário até fica quieto quando o senhor chega. 😎",
+      "pensa|Bora jogar!|{n}, o ranking tá andando e o pessoal tá passando na frente. Bora jogar, que o {cl} tá com saudade! 😂"],
+    coracao:["pensa|Contra o Timão?|O próximo é contra o <b>Corinthians</b>, {n}! Vai ter coragem de ganhar do Timão? 😂"],
+    venceuTime:["festa|A Fiel quer explicação|{n}, ganhou do Corinthians! A Fiel vai pedir explicações… 😂"],
+    perdeuTime:["pensa|Deixou o Timão ganhar?|Perdemos pro Corinthians, {n}… Tô desconfiado. 🤨"],
+    rival:["festa|Clássico!|Contra o <b>{adv}</b>, {n}! Corintiano não perde clássico, né? Bora!"],
+    venceuRival:["festa|Vai, Corinthians!|{pl} no {adv}! {n}, hoje é dia de zoar os amigos no chat! 😂"],
+    perdeu:["preocupado|Sofrimento alvinegro|Perdemos, {n}. Mas corintiano tá acostumado a sofrer e dar a volta por cima, né? 😂"],
+    venceu:["festa|Bando de loucos!|Vitória, {n}! O {cl} tá jogando com raça de Fiel!"]},
+  "7HMHTR":{ // Carlos (criador do jogo)
+    sempre:["pensa|Pedido ao criador|{n}, dizem por aí que foi o senhor que inventou esse jogo… Então me arruma um aumento aí! 😂",
+      "joinha|Sem moleza|{n}, o pessoal reclamou que o jogo ficou difícil. Falei que reclamação é com o criador. 😏"]}};
+// como o Wagner chama o dono: nome (amigo conhecido) ou chefe/professor…
+function dirVoc(){const c=conta(),A=c&&AMIGOS[c.id],g=A&&A.kid?["chefe","professor","técnico","craque"]:["chefe","professor","presidente","patrão","mister"];
+  if(A&&rnd()<(A.kid?.65:.55))return pick(A.ap);const pn=(G.user.coach||"").trim().split(" ")[0];if(!A&&pn&&rnd()<.25)return pn;return pick(g)}
+function dirFmt(s,ctx){return s.replace(/\{(\w+)\}/g,(m,k,i)=>{if(k!=="n")return ctx[k]!=null?ctx[k]:m;let v=esc(dirVoc());const antes=s.slice(0,i).trimEnd();
+  return !antes||/[.!?…]$/.test(antes)||/>$/.test(antes)?v.charAt(0).toUpperCase()+v.slice(1):v})}
+function dirResenha(add){const D=G.diretor;if(!D||!D.on||G.seasonEnd)return;const ev=G.ev;
+  if(((ev*9301+49297)%233280)/233280>=.55)return; // ~metade dos dias de jogo
+  const c=conta(),eu=c&&c.id,A=eu&&AMIGOS[eu],X=(eu&&RS_AMIGO[eu])||{},uid=G.user.club,cand=[],ctx={cl:esc(G.clubs[uid].name)};
+  const tem=(L,w,extra)=>{if(L&&L.length)cand.push([L,w,extra||{}])};
+  const donoDe=nome=>{for(const k in AMIGOS){if(k!==eu&&AMIGOS[k].time===nome)return AMIGOS[k].ap[0]}return null};
+  // próximo jogo
+  const m=G.fase!=="pre"&&partidaAtual();if(m&&!m.amistoso&&!G.amgM){const adv=G.clubs[m.h===uid?m.a:m.h],an=adv&&adv.name;
+    if(an){const ex={adv:esc(an)};if(A&&A.time===an)tem(X.coracao,6,ex);else if(A&&(A.riv||[]).includes(an))tem(X.rival,5,ex);else{const d=donoDe(an);if(d)tem(RS.timeAmigo,4,{...ex,r:esc(d)})}}}
+  // último jogo
+  const L=G.last;if(L&&L.h!=null&&(L.h===uid||L.a===uid)){const casa=L.h===uid,gf=casa?L.gh:L.ga,golsC=casa?L.ga:L.gh,adv=G.clubs[casa?L.a:L.h];
+    if(adv){const an=adv.name,ex={adv:esc(an),pl:`${gf} a ${golsC}`},r=gf>golsC?"v":gf<golsC?"d":"e";
+      if(A&&A.time===an){if(r==="v")tem(X.venceuTime,6,ex);if(r==="d")tem(X.perdeuTime,6,ex)}
+      else if(A&&(A.riv||[]).includes(an)&&r==="v")tem(X.venceuRival,5,ex);
+      else if(r==="v"){const d=donoDe(an);if(d)tem(RS.venceuAmigo,4,{...ex,r:esc(d)})}
+      if(r==="v"){tem(gf-golsC>=3?RS.gol:RS.vit,gf-golsC>=3?3:2,ex);tem(X.venceu,2,ex)}
+      else if(r==="e")tem(RS.emp,2,ex);
+      else{const fraco=(adv.rating||0)<forcaXI()-3;if(golsC-gf>=3)tem(RS.derF,3,ex);else if(fraco)tem(RS.zeb,3,ex);else tem(RS.der,2,ex);tem(X.perdeu,2,ex)}}}
+  // ranking (coroas)
+  const R=(typeof AMG!=="undefined"&&AMG.rank||[]).slice().sort((a,b)=>(b.tp||0)-(a.tp||0)),me=R.findIndex(x=>x.eu||x.id===eu);
+  const nm=x=>esc(AMIGOS[x.id]?AMIGOS[x.id].ap[0]:x.nome);
+  if(R.length>=3&&me>=0){const M=R[me];
+    if(me===0){const ex={r:nm(R[1]),dif:(M.tp||0)-(R[1].tp||0)};tem(ex.dif<=100?RS.rk1Perto:RS.rk1,2,ex);tem(X.lider,3,ex)}
+    else{const up=R[me-1],dif=(up.tp||0)-(M.tp||0);if(dif<=80)tem(RS.rkPerto,2,{r:nm(up),dif:Math.max(1,dif)});if(me>=2)tem(RS.rkLonge,1,{lider:nm(R[0])})}
+    const dn=R[me+1];if(dn&&(M.tp||0)-(dn.tp||0)<=50)tem(RS.rkCola,2,{r:nm(dn),dif:(M.tp||0)-(dn.tp||0)});
+    if(me===R.length-1&&R.length>=4)tem(RS.rkUlt,1)}
+  if(R.length&&me>0)ctx.lider=nm(R[0]);
+  tem(X.sempre,2);tem(RS.geral,1);
+  // escolhe a lista pelo peso e uma frase ainda não usada
+  const usados=D.rsU||[],ok=cand.map(([l,w,e])=>[l.filter(s=>!usados.includes(s.slice(0,40))&&(ctx.lider||!s.includes("{lider}"))),w,e]).filter(x=>x[0].length);if(!ok.length)return;
+  let t=ok.reduce((a,x)=>a+x[1],0)*rnd(),esc1=ok[0];for(const x of ok){t-=x[1];if(t<=0){esc1=x;break}}
+  const s=pick(esc1[0]),[foto,tit,txt]=s.split("|"),cx={...ctx,...esc1[2]};
+  add({k:"rs|"+ev,foto,tit:dirFmt(tit,cx),txt:dirFmt(txt,cx),rs:s.slice(0,40)})}
 function diretorChecar(){if(!G||G.over||G.live||abertura||TUTA||document.querySelector(".veu,.tut-veu"))return;
   if(["visual","partida","resultado","prejogo"].includes(aba))return;
   if(!G.diretor||!G.diretor.on){if((((G.st[G.user.club]||{}).j||0)>=1||(G.history||[]).length)&&!tvPendente()&&!G.tradOferta)modalDiretorOferta();return} // oferta depois da 1ª partida do campeonato (carreira já em andamento: aparece na hora)
   const D=G.diretor;D.vistos=D.vistos||{};if(D.ano==null){D.ano=G.year;D.tier=userTier()}
   if(D.ev===G.ev&&D.n>=2)return; // no máximo 2 avisos por dia de jogo
   const a=dirAvisos().find(x=>!D.vistos[x.k]);if(D.ano!==G.year&&(!a||a.ini)){D.ano=G.year;D.tier=userTier()}if(!a)return;
-  D.vistos[a.k]=1;D.n=D.ev===G.ev?(D.n||0)+1:1;D.ev=G.ev;salvar();window._dirAv=a;
+  D.vistos[a.k]=1;D.n=D.ev===G.ev?(D.n||0)+1:1;D.ev=G.ev;if(a.rs){D.rsU=(D.rsU||[]).concat(a.rs).slice(-40)}
+  else if(rnd()<.5)a.txt=a.txt.replace(/([Cc])hefe/,(m,c)=>{const v=esc(dirVoc());return c==="C"?v.charAt(0).toUpperCase()+v.slice(1):v}); // às vezes chama pelo nome / professor…
+  salvar();window._dirAv=a;
   dirQuadro(a.foto,a.tit,a.txt,a.bt?`<button class="btn" data-a="fechar">Ok, obrigado</button><button class="btn prim" data-a="dirir">${a.bt}</button>`:`<button class="btn prim" data-a="fechar">${pick(["Obrigado!","Valeu, Wagner!","Ok, obrigado!"])}</button>`)} // sempre dá para responder o diretor
 // destaca o botão certo: o resto da tela escurece e o alvo brilha; tocar nele faz a ação
 function diretorFoco(sel){const el=document.querySelector(sel);if(!el)return;nav.classList.remove("some");
@@ -4367,7 +4550,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793813703";
+const VERSAO="1793827816";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
