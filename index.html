@@ -559,7 +559,7 @@ nav.abas[hidden]{display:none}
 .chat-msg.del-on{border-color:#ff4d4d;box-shadow:0 0 0 1px #ff4d4d inset}
 .chat-excl{display:block;width:100%;margin-top:5px;padding:6px 8px;border-radius:9px;border:1px solid #ff4d4d;background:rgba(255,60,60,.16);color:#ff6b6b;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 .chat-vender{flex:none;padding:0 12px;font-size:19px}
-.chat-vd .jog.mv-of{position:relative;margin:4px 0 0;cursor:pointer;padding-top:14px}
+.chat-vd .jog.mv-of{position:relative;margin:3px 0 0;cursor:pointer;padding:6px 8px 5px;line-height:1.2}.chat-vd .jog.mv-of .ov{width:34px;height:34px;font-size:15px}
 .mv-ver{position:absolute;right:8px;bottom:5px;font-size:10.5px;color:#d9ffe8;opacity:.9}.mv-of .nm b{white-space:normal}
 .mv-rod{flex-wrap:wrap}.mv-rod .mv-acaba{order:3;width:100%;text-align:left}
 .mv-of .nm>span{display:block;font-size:12px}.mv-ficha-preco{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;padding:8px 10px;border-radius:12px;background:linear-gradient(135deg,#1f8a4c,#136b39);border:1px solid #4fd68a;font-weight:700}
@@ -567,8 +567,8 @@ nav.abas[hidden]{display:none}
 .mv-card{display:flex;align-items:center;gap:8px;margin-top:4px;padding:6px;border-radius:10px;background:rgba(0,0,0,.25);border:1px solid rgba(255,210,63,.45)}
 .mv-card .jfoto{flex:none}.mv-info{flex:1;min-width:0;display:flex;flex-direction:column;font-size:12px;line-height:1.25;color:var(--cal-2)}.mv-info>b{font-size:14px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mv-card .preco-pill{flex:none}
-.mv-rod{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:5px;min-height:20px}.mv-acaba{font-size:11px;color:var(--cal-2)}
-.mv-btn{padding:6px 14px;font-size:13px;min-height:0}.mv-st{font-size:12.5px;color:var(--cal-2)}.mv-st.ok{color:#5be08a}
+.mv-rod{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:4px;min-height:20px}.mv-acaba{font-size:11px;color:var(--cal-2)}
+.mv-btn{padding:5px 12px;font-size:12.5px;min-height:0}.mv-st{font-size:12.5px;color:var(--cal-2)}.mv-st.ok{color:#5be08a}
 .mv-lista{max-height:56vh;overflow-y:auto;display:flex;flex-direction:column;gap:4px;margin:8px 0}
 .mv-preco{display:flex;flex-direction:column;align-items:center;gap:8px;margin:10px 0}.mv-preco b{font-size:26px;color:#ffd23f}.mv-preco input{width:100%}
 .mv-rap{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}.mv-rap .btn{padding:6px 10px;font-size:13px;min-height:0}
@@ -3210,8 +3210,8 @@ function cardVenda(m,meu){const J=mvJog(m);if(!J)return `<p>${esc(m.txt)}</p>`;c
     :meu?`<span class="mv-acaba">acaba em ${Math.max(1,Math.ceil(resta/36e5))} h</span><button class="btn mv-btn" data-a="mvcancel" data-v="${m.vd}">Cancelar</button>`
     :`<span class="mv-acaba">acaba em ${Math.max(1,Math.ceil(resta/36e5))} h</span><button class="btn prim mv-btn" data-a="mvcomprar" data-v="${m.vd}">${emp?"Pegar emprestado?":"Comprar jogador?"}</button>`;
   const temp=J.j!=null?`⚽ ${J.g||0} gol${J.g===1?"":"s"} em ${J.j} jogo${J.j===1?"":"s"}`:"";
-  return `<div class="jog of mv-of" data-a="mvver" data-v="${m.vd}" role="button"><span class="promo-canto mv-canto">${emp?"🔁 Empréstimo":"Oferta"}</span><div class="jfoto">${rostoSVG(J,46)}<span class="posb ${J.pos}">${J.pos}</span></div>
-    <div class="nm"><b>${esc(J.n)}</b><span>${J.age} anos · ${esc(J.pdet||J.pos)}</span>${temp?`<span>${temp}</span>`:""}<span class="time-of"><b>${esc(J.clube||"")}</b>${J.serie>=0&&J.pais&&PAISES[J.pais]?` · ${esc(PAISES[J.pais].ligas[J.serie]||"")}`:""}</span></div>
+  return `<div class="jog of mv-of" data-a="mvver" data-v="${m.vd}" role="button"><span class="promo-canto mv-canto">${emp?"🔁 Empréstimo":"Oferta"}</span><div class="jfoto">${rostoSVG(J,40)}<span class="posb ${J.pos}">${J.pos}</span></div>
+    <div class="nm"><b>${esc(J.n)}</b><span>${J.age} anos${temp?` · ${temp}`:""}</span><span class="time-of"><b>${esc(J.clube||"")}</b>${J.serie>=0&&J.pais&&PAISES[J.pais]?` · ${esc(PAISES[J.pais].ligas[J.serie]||"")}`:""}</span></div>
     <div class="ov num">${J.ov}</div><small class="mv-ver">Ver ficha ›</small></div><div class="mv-rod"><span class="preco-pill">${ICO_NOTA}<b class="num">${mvPreco(m)}</b></span>${rodape}</div>`}
 /* ficha do jogador anunciado: tudo que o comprador precisa saber */
 function modalMvFicha(n){const m=mvMsg(n),J=m&&mvJog(m);if(!J)return;const emp=m.vtipo==="e",c=conta(),meu=c&&m.de===c.id,aberto=m.vst==="ab"&&!mvVencido(m);
@@ -4293,7 +4293,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793793385";
+const VERSAO="1793793647";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
