@@ -3202,6 +3202,7 @@ function chatHTML(){const L=AMG.chat||[],c=conta(),eu=c&&c.id;
     return `<div class="chat-msg${meu?" meu":""}${m.vd?" chat-vd":""}${del?" del-on":""}"${pode?` data-del="${m.n}"`:""}><button class="chat-quem" data-a="amgver" data-v="${esc(m.de)}">${rkFoto(meu?meuAv():m.av,m.nome,22)}<b>${esc(m.nome||"Jogador")}</b></button>${m.temAu?auHTML(m):m.vd&&m.vjog?(mvVencido(m)?`<p class="mv-exp">⏰ ${m.vtipo==="e"?"Tempo do empréstimo expirado":"Tempo de venda expirado"} · ${esc((mvJog(m)||{}).n||"")}</p>`:cardVenda(m,meu)):`<p>${esc(m.txt)}</p>`}<small>${String(h.getHours()).padStart(2,"0")}:${String(h.getMinutes()).padStart(2,"0")}</small>${del?`<button class="chat-excl" data-a="chatdel" data-v="${m.n}">🗑️ Excluir?</button>`:""}</div>`}).join("")}
 function chatDesenha(){const box=$("#chat-lista");if(!box)return;const h=chatHTML();if(h===AMG.chatH&&box.innerHTML)return;AMG.chatH=h;const fim=box.scrollHeight-box.scrollTop-box.clientHeight<60;box.innerHTML=h;if(fim||!AMG.chatRolou){box.scrollTop=box.scrollHeight;AMG.chatRolou=1}auMarca()}
 /* ---------- áudio no chat (04/11): segura o 🎤 para gravar (até 1 min), solta para enviar, arrasta para o lado para cancelar ---------- */
+function auMudo(k,on){AMG[k]=on?1:0;if(on){const s=SOM.el&&SOM.el[SOM.cur];if(s&&!s.a.paused){s.id++;s.a.pause()}}try{somModo(modoDesejado())}catch(e){}} // pausa a música na hora (não entra na gravação) e volta depois
 const AU_MAX=60,durTxt=d=>`${Math.floor(d/60)}:${String(d%60).padStart(2,"0")}`;
 function auHTML(m){const d=m.dur||0;return `<div class="au" data-n="${m.n}" data-d="${d}"><button class="au-play" data-a="auplay" data-v="${m.n}" aria-label="Ouvir áudio">▶</button><span class="au-barra"><i></i></span><b class="au-dur num">${durTxt(d)}</b></div>`}
 function auMarca(){const P=AMG.auPl;document.querySelectorAll(".au").forEach(el=>{const n=+el.dataset.n,on=P&&P.n===n,d=+el.dataset.d||1;
@@ -3209,26 +3210,28 @@ function auMarca(){const P=AMG.auPl;document.querySelectorAll(".au").forEach(el=
   const t=el.querySelector(".au-dur");if(t)t.textContent=on&&P.a.currentTime>0?durTxt(Math.floor(P.a.currentTime)):durTxt(d)})}
 async function auTocar(n){const P=AMG.auPl;if(P&&P.n===n){if(P.a.paused)P.a.play().catch(()=>{});else P.a.pause();auMarca();return}if(P)P.a.pause();
   const C=AMG.auCache=AMG.auCache||{},a=new Audio();AMG.auPl={n,a,load:!C[n]};auMarca();
-  if(!C[n]){const j=await amgPost("chatAudio",{n}).catch(()=>({erro:"Sem conexão com o servidor."}));if(j.erro||!j.au){if(AMG.auPl&&AMG.auPl.n===n)AMG.auPl=null;auMarca();toastErro(j.erro||"Não deu para carregar o áudio.");return}C[n]=j.au}
-  if(!AMG.auPl||AMG.auPl.n!==n)return;AMG.auPl.load=false;a.src=C[n];["timeupdate","play","pause"].forEach(k=>a.addEventListener(k,auMarca));a.addEventListener("ended",()=>{if(AMG.auPl&&AMG.auPl.a===a)AMG.auPl=null;auMarca()});
-  a.play().catch(()=>{AMG.auPl=null;auMarca();toastErro("Não deu para tocar o áudio.")})}
+  if(!C[n]){const j=await amgPost("chatAudio",{n}).catch(()=>({erro:"Sem conexão com o servidor."}));if(j.erro||!j.au){if(AMG.auPl&&AMG.auPl.n===n)AMG.auPl=null;auMarca();auMudo("mudoPl",false);toastErro(j.erro||"Não deu para carregar o áudio.");return}C[n]=j.au}
+  if(!AMG.auPl||AMG.auPl.n!==n)return;AMG.auPl.load=false;a.src=C[n];["timeupdate","play","pause"].forEach(k=>a.addEventListener(k,auMarca));a.addEventListener("play",()=>auMudo("mudoPl",true));
+  a.addEventListener("pause",()=>{if(!a.ended&&!(AMG.auPl&&AMG.auPl.a!==a&&!AMG.auPl.a.paused))auMudo("mudoPl",false)});
+  a.addEventListener("ended",()=>{if(AMG.auPl&&AMG.auPl.a===a)AMG.auPl=null;auMarca();auMudo("mudoPl",false)});
+  auMudo("mudoPl",true);a.play().catch(()=>{AMG.auPl=null;auMarca();auMudo("mudoPl",false);toastErro("Não deu para tocar o áudio.")})}
 function auUI(on){const env=document.querySelector(".chat-env");if(env)env.classList.toggle("gravando",!!on);if(!on){const c=document.querySelector(".au-rec");if(c)c.classList.remove("cancela")}}
 async function auIniciar(){if(AMG.auRec||AMG.auPedindo)return;
   if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){toastErro("Este aparelho não grava áudio aqui.");return}
-  let st;AMG.auPedindo=1;try{st=await navigator.mediaDevices.getUserMedia({audio:true})}catch(x){AMG.auPedindo=0;toastErro("Libere o microfone para mandar áudio.");return}AMG.auPedindo=0;
-  if(!AMG.auSegura){st.getTracks().forEach(t=>t.stop());toast("Microfone liberado! Agora segure o 🎤 para gravar.");return} // 1ª vez: soltou durante a pergunta de permissão
+  let st;AMG.auPedindo=1;auMudo("mudoRec",true);try{st=await navigator.mediaDevices.getUserMedia({audio:true})}catch(x){AMG.auPedindo=0;auMudo("mudoRec",false);toastErro("Libere o microfone para mandar áudio.");return}AMG.auPedindo=0;
+  if(!AMG.auSegura){st.getTracks().forEach(t=>t.stop());auMudo("mudoRec",false);toast("Microfone liberado! Agora segure o 🎤 para gravar.");return} // 1ª vez: soltou durante a pergunta de permissão
   const mt=["audio/webm;codecs=opus","audio/mp4","audio/ogg;codecs=opus","audio/webm"].find(t=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(t))||"";
   let r;try{r=new MediaRecorder(st,{...(mt?{mimeType:mt}:{}),audioBitsPerSecond:32000})}catch(x){r=new MediaRecorder(st)}
   const pd=[],R={r,st,pd,t0:Date.now(),cancel:false};AMG.auRec=R;
   r.ondataavailable=ev=>{if(ev.data&&ev.data.size)pd.push(ev.data)};
   r.onstop=()=>{st.getTracks().forEach(t=>t.stop());clearInterval(AMG.auT);AMG.auRec=null;auUI(false);
-    const dur=Math.min(AU_MAX,Math.round((Date.now()-R.t0)/1000));if(R.cancel){toast("Áudio cancelado");return}if(dur<1){toast("Segure o 🎤 enquanto fala");return}
+    const dur=Math.min(AU_MAX,Math.round((Date.now()-R.t0)/1000));if(R.cancel){auMudo("mudoRec",false);toast("Áudio cancelado");return}if(dur<1){auMudo("mudoRec",false);toast("Segure o 🎤 enquanto fala");return}
     const fr=new FileReader();fr.onload=()=>auEnviar(fr.result,dur);fr.readAsDataURL(new Blob(pd,{type:r.mimeType||mt||"audio/webm"}))};
-  r.start(250);vibrar(30);auUI(true);const t=$("#au-t");if(t)t.textContent="0:00";
+  r.start(250);vibrar([220]);auUI(true);const t=$("#au-t");if(t)t.textContent="0:00";
   AMG.auT=setInterval(()=>{if(!AMG.auRec)return;const sg=Math.floor((Date.now()-AMG.auRec.t0)/1000),el=$("#au-t");if(el)el.textContent=durTxt(Math.min(AU_MAX,sg));if(sg>=AU_MAX)auParar(false)},250)}
 function auParar(cancel){const R=AMG.auRec;if(!R)return;R.cancel=!!cancel;try{R.r.stop()}catch(e){}}
-async function auEnviar(dataUrl,dur){if(dataUrl.length>1150000){toastErro("Áudio muito grande.");return}
-  const j=await amgPost("chatEnviar",{au:dataUrl,dur}).catch(()=>({erro:"Sem conexão com o servidor."}));if(j.erro){toastErro(j.erro);return}AMG.chatRolou=0;chatPuxa()}
+async function auEnviar(dataUrl,dur){if(dataUrl.length>1150000){auMudo("mudoRec",false);toastErro("Áudio muito grande.");return}
+  const j=await amgPost("chatEnviar",{au:dataUrl,dur}).catch(()=>({erro:"Sem conexão com o servidor."}));auMudo("mudoRec",false);if(j.erro){toastErro(j.erro);return}AMG.chatRolou=0;chatPuxa()}
 function auLigar(){const mic=document.querySelector(".au-mic");if(!mic)return;let x0=0;
   mic.addEventListener("pointerdown",e=>{e.preventDefault();x0=e.clientX;AMG.auSegura=1;try{mic.setPointerCapture(e.pointerId)}catch(x){}auIniciar()});
   mic.addEventListener("pointermove",e=>{if(!AMG.auRec)return;const c=document.querySelector(".au-rec");if(c)c.classList.toggle("cancela",x0-e.clientX>70)});
@@ -3357,7 +3360,7 @@ function mvDevolver(){Object.values(G.players).filter(p=>p.empC&&G.year>=p.empC.
 function mvDevEnviar(){(G.mvDevPend||[]).slice().forEach(n=>amgPost("vendaOk",{n,k:"fim"}).then(j=>{if(!j.erro){G.mvDevPend=(G.mvDevPend||[]).filter(x=>x!==n);salvar()}}).catch(()=>{}))}
 const mvCustoEmp=()=>G?Object.values(G.players).reduce((a,p)=>a+(p.empC&&p.club===G.user.club?p.empC.mensal:0),0):0; // quem pegou emprestado paga por mês
 const mvRendaEmp=()=>G&&G.mercV?Object.values(G.mercV).reduce((a,p)=>a+(p.mvEmp?p.mvEmp.mensal:0),0):0; // quem emprestou recebe por mês
-async function chatPuxa(){if(!document.querySelector("#chat-lista")){clearInterval(AMG.chatT);AMG.chatT=null;if(AMG.auPl){AMG.auPl.a.pause();AMG.auPl=null}if(AMG.auRec)auParar(true);return}
+async function chatPuxa(){if(!document.querySelector("#chat-lista")){clearInterval(AMG.chatT);AMG.chatT=null;if(AMG.auPl){AMG.auPl.a.pause();AMG.auPl=null}if(AMG.auRec)auParar(true);if(AMG.mudoPl||AMG.mudoRec){AMG.mudoPl=0;auMudo("mudoRec",false)}return}
   const j=await amgPost("chatLer",AMG.chat&&AMG.chatV!=null?{v:AMG.chatV}:{}).catch(()=>({erro:1}));if(j.erro){AMG.chatOk=false;chatDesenha();return}
   if(j.same){AMG.chatOk=true;chatDesenha();return} // nada mudou: só redesenha (anúncio que venceu pelo relógio)
   AMG.chatV=j.v;AMG.chatOk=true;AMG.chat=j.msgs||[];AMG.chatAdmin=!!j.admin;AMG.chatUlt=j.ultimo||0;chatMarcarVisto(AMG.chatUlt);chatDesenha()}
@@ -4355,7 +4358,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793795613";
+const VERSAO="1793797688";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -5404,7 +5407,8 @@ document.addEventListener("pointerdown",()=>{somIniciar();trilhaDesbloquear();so
 document.addEventListener("pointerdown",()=>{try{const app=matchMedia("(display-mode: standalone)").matches||matchMedia("(display-mode: fullscreen)").matches||navigator.standalone;
   const de=document.documentElement;if(app&&!document.fullscreenElement&&de.requestFullscreen)de.requestFullscreen({navigationUI:"hide"}).catch(()=>{})}catch(e){}},{capture:true});
 document.addEventListener("pointerdown",e=>{if(e.target.closest&&e.target.closest("button:disabled,.sim-bloq"))somErro()},{capture:true});
-function modoDesejado(){if(abertura&&(CARGA.intro||CARGA.on||performance.now()<(CARGA.musAte||0)))return"silencio"; // 02/11: logo e carregamento sem música; capa só depois do som de transição
+function modoDesejado(){if(typeof AMG!=="undefined"&&(AMG.mudoRec||AMG.mudoPl))return"silencio"; // 04/11: gravando ou ouvindo áudio do chat
+if(abertura&&(CARGA.intro||CARGA.on||performance.now()<(CARGA.musAte||0)))return"silencio"; // 02/11: logo e carregamento sem música; capa só depois do som de transição
   if(abertura)return"abertura";if(G&&G.live&&aba==="partida")return"torcida";if(G&&aba==="prejogo")return"prejogo";if(G&&aba==="partida")return"silencio";return"musica"}
 /* ---------- navegação ---------- */
 const ICONES={
