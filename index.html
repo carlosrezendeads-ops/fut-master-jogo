@@ -1558,12 +1558,17 @@ const FORMACOES={
   "4-4-2":{s:["GOL","LAT","ZAG","ZAG","LAT","VOL","VOL","MEI","MEI","ATA","ATA"],a:0,d:0},
   "4-3-3":{s:["GOL","LAT","ZAG","ZAG","LAT","VOL","MEI","MEI","ATA","ATA","ATA"],a:2.5,d:-2.5},
   "4-2-3-1":{s:["GOL","LAT","ZAG","ZAG","LAT","VOL","VOL","MEI","MEI","MEI","ATA"],a:1,d:-.5},
+  "4-2-1-3":{s:["GOL","LAT","ZAG","ZAG","LAT","VOL","VOL","MEI","ATA","ATA","ATA"],a:2,d:-1.5},
   "3-5-2":{s:["GOL","ZAG","ZAG","ZAG","LAT","LAT","VOL","MEI","MEI","ATA","ATA"],a:1.5,d:-1.5},
   "5-3-2":{s:["GOL","LAT","ZAG","ZAG","ZAG","LAT","VOL","VOL","MEI","ATA","ATA"],a:-2,d:2.5},
   "3-4-3":{s:["GOL","ZAG","ZAG","ZAG","LAT","LAT","VOL","MEI","ATA","ATA","ATA"],a:3,d:-3},
   "4-1-4-1":{s:["GOL","LAT","ZAG","ZAG","LAT","VOL","MEI","MEI","MEI","MEI","ATA"],a:-.5,d:1},
   "5-4-1":{s:["GOL","LAT","ZAG","ZAG","ZAG","LAT","VOL","VOL","MEI","MEI","ATA"],a:-3,d:3}
 };
+/* estilo x formação (04/11, Carlos): escolheu um estilo e a formação não combina → troca pela mais ofensiva/defensiva/equilibrada da lista */
+const FORM_EST={of:"3-4-3",def:"5-4-1",eq:"4-4-2"};
+function tipoForm(f){const a=(FORMACOES[f]||{}).a||0;return a>1?"of":a<-1?"def":"eq"}
+function formParaEst(est,form){return tipoForm(form)===est?null:FORM_EST[est]}
 const ESTILOS={def:{n:"Defensivo",a:-2.5,d:2.5},eq:{n:"Equilibrado",a:0,d:0},of:{n:"Ofensivo",a:2.5,d:-2.5}};
 const W_ATT={GOL:0,LAT:1,ZAG:.3,VOL:1,MEI:2,ATA:3};
 const W_DEF={GOL:2.5,LAT:1.5,ZAG:3,VOL:1.5,MEI:.5,ATA:.2};
@@ -4609,7 +4614,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793831234";
+const VERSAO="1793838789";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -5001,7 +5006,7 @@ function somRoleta(){if(!SOM.ctx||SOM.mudo)return;const t=SOM.ctx.currentTime;if
 /* regras do jogo (02/11): tudo o que existe no jogo, em seções; abre pela capa e pelas Configurações */
 const REGRAS=[
  ["🎯","Objetivo",["Você é o dono do clube: cria o time, começa na terceira divisão e leva o clube até a elite do país e às copas continentais (Libertadores ou Champions).","Os primeiros colocados sobem de divisão (no Brasil, os 4 primeiros) e os últimos caem. Subir deixa o elenco um pouco mais forte; cair, um pouco mais fraco."]],
- ["⚽","Partidas",["Antes da 1ª rodada de cada temporada tem um amistoso de preparação.","Dá para assistir ao vivo (velocidade 1×, 2× e, a partir do nível 20, 3×), pausar, substituir, mudar formação, estilo e posição dos jogadores no campinho. Ou simular sem assistir, pagando uma taxa que sobe a cada simulação e volta ao preço inicial todo dia, à meia-noite.","Clássico: jogo contra um time do mesmo estado (ou região) da cidade do seu clube. Vitória no clássico vale o prêmio da partida ×3. Vale na Série C, B e A.","Na partida acontecem VAR, pênaltis, faltas, cartões, acréscimos e pausa para hidratação. No mata-mata, empate vai para os pênaltis: você escolhe os 5 batedores.","Comandos do técnico (modo manual): gritos como atacar ou segurar mudam de verdade a chance de gol, mas cansam os jogadores."]],
+ ["⚽","Partidas",["Antes da 1ª rodada de cada temporada tem um amistoso de preparação.","Dá para assistir ao vivo (velocidade 1×, 2× e, a partir do nível 20, 3×), pausar, substituir, mudar formação, estilo e posição dos jogadores no campinho. Se o estilo não combinar com a formação, ela muda sozinha: Ofensivo vai para 3-4-3, Defensivo para 5-4-1 e Equilibrado para 4-4-2. Ou simular sem assistir, pagando uma taxa que sobe a cada simulação e volta ao preço inicial todo dia, à meia-noite.","Clássico: jogo contra um time do mesmo estado (ou região) da cidade do seu clube. Vitória no clássico vale o prêmio da partida ×3. Vale na Série C, B e A.","Na partida acontecem VAR, pênaltis, faltas, cartões, acréscimos e pausa para hidratação. No mata-mata, empate vai para os pênaltis: você escolhe os 5 batedores.","Comandos do técnico (modo manual): gritos como atacar ou segurar mudam de verdade a chance de gol, mas cansam os jogadores."]],
  ["🔋","Energia, lesões e cartões",["A energia cai durante o jogo (quem tem mais Preparo físico cansa menos) e volta a 100% antes de cada partida.","Lesionado fica fora alguns jogos; expulso ou com cartões acumulados fica suspenso."]],
  ["🏋️","Pontos de treino",["Servem para evoluir os jogadores: cada ponto no atributo principal dá +1 de força (metade disso acima de 85).","Bola Dourada: só em vitória de partida do campeonato (liga). Quanto mais gols, maior a chance: 2 gols = 15% (1 ponto) · 3 gols = 25% (1) · 4 gols = 30% (2 pontos) · 5 a 7 gols = 40% (2) · 8 ou mais = 50% (3 pontos). Vitória por 1 gol não dá bola.","No fim do campeonato, os 3 primeiros também ganham pontos de treino.","Toque na bola para estourar e distribua os pontos em sequência. Também dá para treinar habilidades especiais: cobrador de pênaltis, de faltas, pegador de pênaltis e reflexos."]],
  ["🛒","Mercado e loja",["A loja renova a cada 2 horas, com jogadores e técnicos. Às vezes aparece uma oportunidade com bom preço ou um craque em destaque de time grande.","Lendas: pagas com cupons dourados ou com muito dinheiro. Têm passivas especiais.","Na janela de transferências são até 3 contratações. Jogador forte pode recusar clube de divisão baixa.","Outros clubes mandam propostas pelos seus jogadores (caixa de entrada ✈️): você vende ou empresta."]],
@@ -6867,6 +6872,7 @@ const POS_FORM={
   "4-4-2":[[.045,.5],[.17,.12],[.15,.37],[.15,.63],[.17,.88],[.29,.37],[.29,.63],[.31,.12],[.31,.88],[.43,.37],[.43,.63]],
   "4-3-3":[[.045,.5],[.17,.12],[.15,.37],[.15,.63],[.17,.88],[.26,.5],[.33,.28],[.33,.72],[.42,.14],[.45,.5],[.42,.86]],
   "4-2-3-1":[[.045,.5],[.17,.12],[.15,.37],[.15,.63],[.17,.88],[.25,.37],[.25,.63],[.35,.14],[.35,.5],[.35,.86],[.45,.5]],
+  "4-2-1-3":[[.045,.5],[.17,.12],[.15,.37],[.15,.63],[.17,.88],[.25,.37],[.25,.63],[.34,.5],[.43,.14],[.45,.5],[.43,.86]],
   "3-5-2":[[.045,.5],[.15,.25],[.15,.5],[.15,.75],[.3,.08],[.3,.92],[.25,.5],[.34,.32],[.34,.68],[.44,.37],[.44,.63]],
   "5-3-2":[[.045,.5],[.2,.08],[.15,.28],[.15,.5],[.15,.72],[.2,.92],[.28,.3],[.28,.7],[.33,.5],[.43,.37],[.43,.63]],
   "3-4-3":[[.045,.5],[.15,.25],[.15,.5],[.15,.75],[.3,.08],[.3,.92],[.27,.37],[.27,.63],[.43,.14],[.45,.5],[.43,.86]],
@@ -8178,7 +8184,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "fpsai":formAjuste={slot:+v};break;
     case "fpmanter":formAjuste={ok:1};break;
     case "fpentra":{const V=G.live,s2=V.lado,L=V.L[s2],i=formAjuste&&formAjuste.slot;if(i==null)return;const er=substituir(s2,i,+v,false,"ajuste da formação");if(er){toastErro(er);return}formAjuste=null;V.ultSub=null;salvar();break}
-    case "lvest":trocarFormacao(G.live.lado,null,v);salvar();break;
+    case "lvest":{const L=G.live.L[G.live.lado],nf=formParaEst(v,L.form);formAjuste=null;trocarFormacao(G.live.lado,nf,v);if(nf)toast(`Estilo ${ESTILOS[v].n.toLowerCase()}: formação trocada para ${nf}.`);salvar();break}
     case "lvsair":if(G.live&&G.live.m.amg){modal(`<div class="aviso-box"><b>Sair do amistoso?</b><p>O jogo contra o time do seu amigo acaba aqui e você não ganha XP.</p><div class="botoes"><button class="btn" data-a="fechar">Continuar jogando</button><button class="btn perigo" data-a="lvamgsair">Sair</button></div></div>`);return}
     if(G.live&&G.live.m.amistoso){toast("No amistoso não dá para desistir. Jogue até o fim!");return}modal(`<div class="aviso-box"><b>Desistir da partida?</b><p>Se sair agora, seu time perde por W.O. (0 × 3) e os 3 pontos vão para o adversário.</p><div class="botoes"><button class="btn" data-a="fechar">Continuar jogando</button><button class="btn perigo" data-a="lvdesistir">Desistir</button></div></div>`);return;
     case "lvdesistir":{fecharModal();const V=G.live;if(!V||V.est==="fim")break;pararTimer();if(!V.m.amistoso&&!V.m.amg){const PF=perfil();PF.wo=(PF.wo||0)+1} // W.O. tira coroas
@@ -8353,7 +8359,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "ddabre":{const d=el.closest(".dd"),ab=!d.classList.contains("aberto");document.querySelectorAll(".dd.aberto").forEach(x=>x.classList.remove("aberto"));d.classList.toggle("aberto",ab);return}
     case "ddform":if(v===G.user.form){el.closest(".dd").classList.remove("aberto");return}G.user.form=v;G.user.posAjuste=null; // posições arrastadas só ficam se a formação for salva
 adaptarEscalacao(v);salvar();el.closest(".dd").classList.remove("aberto");if(animarForm()){setTimeout(()=>{if(G&&!G.live)render()},700);return}break;
-    case "ddest":G.user.est=v;salvar();break;
+    case "ddest":{G.user.est=v;const nf=formParaEst(v,G.user.form);if(nf){G.user.form=nf;G.user.posAjuste=null;adaptarEscalacao(nf);toast(`Estilo ${ESTILOS[v].n.toLowerCase()}: formação trocada para ${nf}.`)}salvar();break}
     case "formsalvar":{const FS=G.formSalvas||[];if(FS.length>=3){toastErro("Você já tem 3 formações salvas. Apague uma para salvar outra.");return}
       modal(`<b class="etapa">Salvar esta formação</b><p class="muted peq">${esc(fAtual())} · ${esc(ESTILOS[estAtual()].n)} · com as posições que você ajustou.</p><input id="form-nome" class="campo-txt" maxlength="20" placeholder="Nome da formação" style="width:100%;margin:6px 0 12px"><div class="botoes"><button class="btn" data-a="fechar">Cancelar</button><button class="btn prim" data-a="formsalvarok">Salvar</button></div>`);setTimeout(()=>{const i=$("#form-nome");if(i)i.focus()},100);return}
     case "formsalvarok":{const nome=(($("#form-nome")||{}).value||"").trim();if(!nome){toastErro("Dê um nome para a formação.");return}
