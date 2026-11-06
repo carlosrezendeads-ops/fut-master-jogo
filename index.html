@@ -1509,7 +1509,7 @@ const MANUT=false;
 <script src="dados/elencos.js?v=bb464417"></script>
 <script src="dados/regioes.js?v=1d168c1a"></script><script src="dados/pes.js?v=266905da"></script>
 <script src="img/escudos-img.js?v=df90de51"></script>
-<script src="dados/idiomas.js?v=f248f583"></script>
+<script src="dados/idiomas.js?v=aaedffc8"></script>
 <script>
 /* 02/11: todos começam do zero (limpeza única "R1" em cada aparelho): carreiras, perfil, nível, conta do ranking e rascunho; mantém som/vibração/notificações */
 (function(){try{const R="R1";if(localStorage.getItem("fut-reset")===R)return;
@@ -3848,6 +3848,7 @@ setInterval(()=>{if(document.visibilityState!=="visible"||!G||!G.user||VIVO||G.l
 /* FUT Master Assistente (04/11): lista de novidades na caixa de entrada de todos (1 vez por perfil).
    Nova leva = novo item NO COMEÇO de NOVIDADES (a cada 3+ novidades ou quando o Carlos pedir). Quem nunca recebeu ganha só a mais recente. */
 const NOVIDADES=[
+ {id:"n2",itens:["🛒 Loja nova: os jogadores agora combinam com a divisão do seu clube","⭐ Mais lendas na loja para quem está na primeira divisão","🔥 Primeira divisão e copas bem mais difíceis","😂 Wagner mais amigão, zoando e puxando a disputa do ranking","📋 Formação nova 4-2-1-3, e a formação acompanha o estilo de jogo"]},
  {id:"n1",itens:["💬 Chat no Ranking: converse com todo mundo que joga","🎤 Mensagens de áudio de até 1 minuto (segure o microfone)","🗑️ Segure a sua mensagem para apagar","💰 Venda e empréstimo de jogadores entre treinadores, direto no chat","🟢 Aviso quando alguém entra no jogo","👑 Ranking por coroas, com prêmios para o pódio do mês"]},
 ];
 const FM_LOGO="app/icon-192.png";
@@ -3953,18 +3954,31 @@ function candidatosSerie(t,lo,hi){const uid=G.user.club;return G.tiers[t].filter
 /* jogadores sorteados de qualquer série (A, B ou C), bons e ruins, posições variadas */
 /* regras de mercado por divisão do seu clube */
 function minhaSerie(){return G.clubs[G.user.club].tier}
-function naLibertadores(){const uid=G.user.club;return !!(G.cup&&G.cup.tipo==="main"&&G.cup.groups&&G.cup.groups.flat().includes(uid))}
-// de quantas em quantas trocas da loja aparece lenda: Série C nunca; B a cada 5; A a cada 3; A com Libertadores/Champions a cada 2
-function intervaloLenda(){const t=minhaSerie();return t>=2?0:t===1?5:naLibertadores()?2:3}
+// de quantas em quantas trocas da loja aparece lenda: Série C nunca; B a cada 10 (raro); A a cada 2
+function intervaloLenda(){const t=minhaSerie();return t>=2?0:t===1?10:2}
 const RECUSA="__recusa__";
 function recusaJogador(nome,frase){modal(`<h3>${esc(nome)} recusou</h3><p class="fala-jog">“${frase}”</p><div class="botoes"><button class="btn prim" data-a="fechar">Entendi</button></div>`);somErro();return RECUSA}
+/* loja por divisão (05/11): de qual série vem cada vaga, [série, força mín, força máx] ou "fora".
+   Série C: melhores da C, bons da B e alguns da A (até 75, senão recusam).
+   Série B: A e B, maioria até 75 (máx 80); da C só um achado raro.
+   Série A: Série A, às vezes destaque da B e internacionais. */
+function vagaLoja(me,fixo){const B=G.tierBase,r=rnd();
+  if(me>=2){const t=fixo??(r<.5?2:r<.82?1:0);return t===2?[2,B[2]+2,B[2]+15]:t===1?[1,B[1],B[1]+8]:[0,Math.min(B[0]-6,72),75]}
+  if(me===1){if(r<.03)return [2,B[1]+3,99];const hi=rnd()<.8?75:80;return r<.38?[1,Math.min(B[1],hi-3),Math.min(B[1]+8,hi)]:[0,Math.min(B[0]-6,hi-3),hi]}
+  if(r<.08)return [1,B[0]-4,99];
+  if(r<.25)return "fora";
+  return rnd()<.7?[0,B[0]-4,B[0]+3]:[0,B[0]+3,B[0]+14]}
+function foraLoja(out){const b=G.tierBase[minhaSerie()];
+  const c=[...(G.foreign||[]),...(G.exterior||[])].filter(id=>G.clubs[id]&&G.clubs[id].pais!==G.country).flatMap(id=>jogadoresDo(id)).filter(p=>p.ov>=b-3&&p.ov<=b+10&&p.inj<=0&&!out.includes(p.id));
+  if(c.length&&rnd()<.7)return pick(c).id; // usa clube que já existe no save antes de criar outro
+  const f=jogadorExterior();return out.includes(f)?null:f}
 function sortearJogadoresMercado(n){
-  const POS=["GOL","LAT","ZAG","VOL","MEI","ATA"],out=[];let tent=0;
-  const serieB=minhaSerie()===1;
-  while(out.length<n&&tent++<60){const t=serieB?pick([0,0,1,1,1,2]):ri(0,2),b=G.tierBase[t],pos=pick(POS),faixa=rnd();
-    // na Série B, da Série C só aparecem os destaques
-    const [lo,hi]=serieB&&t===2?[b+5,b+14]:faixa<.3?[b-12,b-4]:faixa<.75?[b-4,b+3]:[b+3,b+12];
-    const c=candidatosSerie(t,lo,hi).filter(p=>p.pos===pos&&!out.includes(p.id));if(c.length)out.push(pick(c).id)}
+  const POS=["GOL","LAT","ZAG","VOL","MEI","ATA"],out=[],me=minhaSerie();let tent=0;
+  const mix=me>=2&&rnd()<.3?shuffle([0,1,2]):null; // às vezes, na Série C: um de cada série
+  while(out.length<n&&tent++<60){const v=vagaLoja(me,mix?mix[out.length%3]:null);
+    if(v==="fora"){const f=foraLoja(out);if(f!=null)out.push(f);continue}
+    const [t,lo,hi]=v,pos=pick(POS);
+    const c=candidatosSerie(t,lo,hi).filter(p=>(t>me||p.pos===pos)&&!out.includes(p.id));if(c.length)out.push(pick(c).id)}
   return out;
 }
 function ofertaJanela(){return sortearJogadoresMercado(5)}
@@ -4614,7 +4628,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793838789";
+const VERSAO="1793925495";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -5009,7 +5023,7 @@ const REGRAS=[
  ["⚽","Partidas",["Antes da 1ª rodada de cada temporada tem um amistoso de preparação.","Dá para assistir ao vivo (velocidade 1×, 2× e, a partir do nível 20, 3×), pausar, substituir, mudar formação, estilo e posição dos jogadores no campinho. Se o estilo não combinar com a formação, ela muda sozinha: Ofensivo vai para 3-4-3, Defensivo para 5-4-1 e Equilibrado para 4-4-2. Ou simular sem assistir, pagando uma taxa que sobe a cada simulação e volta ao preço inicial todo dia, à meia-noite.","Clássico: jogo contra um time do mesmo estado (ou região) da cidade do seu clube. Vitória no clássico vale o prêmio da partida ×3. Vale na Série C, B e A.","Na partida acontecem VAR, pênaltis, faltas, cartões, acréscimos e pausa para hidratação. No mata-mata, empate vai para os pênaltis: você escolhe os 5 batedores.","Comandos do técnico (modo manual): gritos como atacar ou segurar mudam de verdade a chance de gol, mas cansam os jogadores."]],
  ["🔋","Energia, lesões e cartões",["A energia cai durante o jogo (quem tem mais Preparo físico cansa menos) e volta a 100% antes de cada partida.","Lesionado fica fora alguns jogos; expulso ou com cartões acumulados fica suspenso."]],
  ["🏋️","Pontos de treino",["Servem para evoluir os jogadores: cada ponto no atributo principal dá +1 de força (metade disso acima de 85).","Bola Dourada: só em vitória de partida do campeonato (liga). Quanto mais gols, maior a chance: 2 gols = 15% (1 ponto) · 3 gols = 25% (1) · 4 gols = 30% (2 pontos) · 5 a 7 gols = 40% (2) · 8 ou mais = 50% (3 pontos). Vitória por 1 gol não dá bola.","No fim do campeonato, os 3 primeiros também ganham pontos de treino.","Toque na bola para estourar e distribua os pontos em sequência. Também dá para treinar habilidades especiais: cobrador de pênaltis, de faltas, pegador de pênaltis e reflexos."]],
- ["🛒","Mercado e loja",["A loja renova a cada 2 horas, com jogadores e técnicos. Às vezes aparece uma oportunidade com bom preço ou um craque em destaque de time grande.","Lendas: pagas com cupons dourados ou com muito dinheiro. Têm passivas especiais.","Na janela de transferências são até 3 contratações. Jogador forte pode recusar clube de divisão baixa.","Outros clubes mandam propostas pelos seus jogadores (caixa de entrada ✈️): você vende ou empresta."]],
+ ["🛒","Mercado e loja",["A loja renova a cada 2 horas, com jogadores e técnicos. Às vezes aparece uma oportunidade com bom preço ou um craque em destaque de time grande.","Os jogadores da loja mudam com a sua divisão: quanto mais alto o clube, melhores as opções. Na elite aparecem também jogadores de outros países.","Lendas: pagas com cupons dourados ou com muito dinheiro. Têm passivas especiais. Aparecem bastante na primeira divisão e raramente na segunda.","Na janela de transferências são até 3 contratações. Jogador forte pode recusar clube de divisão baixa.","Outros clubes mandam propostas pelos seus jogadores (caixa de entrada ✈️): você vende ou empresta."]],
  ["📋","Técnicos",["O técnico dá bônus de ataque e defesa ao time todo e acelera a evolução dos jogadores. Cada um tem passivas (efeitos em certas situações do jogo).","Para contratar paga as luvas; trocar de técnico custa 6 meses de salário do atual. Toque em qualquer técnico para ver o perfil completo."]],
  ["📝","Contratos",["Todo jogador tem data de fim de contrato. Quando vence, o diretor avisa: renove ou venda, senão ele sai de graça no fim da temporada.","Jogadores se aposentam entre 36 e 40 anos."]],
  ["💰","Dinheiro",["Entram: bilheteria, prêmios, patrocinadores, material esportivo, transmissão de TV e vendas. Saem: salários e custos todo mês.","Se faltar, dá para pegar empréstimo (com juros). Cupons dourados podem ser trocados por dinheiro (e vice-versa) no Câmbio da loja."]],
@@ -7878,11 +7892,11 @@ function telaMercado(){
   const dia=mercadoDia();
   if(ab){
     h+=`<div class="aviso-janela aberta">Janela aberta · ${G.janela.compras} de ${MAX_COMPRAS} contratações feitas</div>`;
-    h+=`<h2>5 jogadores da janela</h2><p class="muted peq" style="margin:-4px 0 8px">Jogadores das Séries A, B e C, bons e mais modestos. Toque para contratar. Os 2 técnicos da janela estão em Técnicos.</p><div class="cartao" style="padding-block:4px">${ofertasJ().map(id=>G.players[id]).filter(Boolean).map(linhaOferta).join("")||'<p class="muted">Nenhum jogador disponível.</p>'}</div>`;
+    h+=`<h2>5 jogadores da janela</h2><p class="muted peq" style="margin:-4px 0 8px">Jogadores escolhidos para a divisão do seu clube. Toque para contratar. Os 2 técnicos da janela estão em Técnicos.</p><div class="cartao" style="padding-block:4px">${ofertasJ().map(id=>G.players[id]).filter(Boolean).map(linhaOferta).join("")||'<p class="muted">Nenhum jogador disponível.</p>'}</div>`;
     h+=`<div class="cartao tec-mini" data-a="morig" data-v="tec" style="cursor:pointer;margin-top:10px"><b>2 técnicos disponíveis</b><span class="muted peq">Ver técnicos ›</span></div>`;
   }else if(dia){
-    const D=diario(),tc=D.tec[0];
-    h+=`<div class="loja-topo"><div><b>Loja de jogadores</b><span class="muted peq">${D.lenda!=null?"★ Lenda disponível nesta renovação!":`Lenda em ${4-((G.lojaN||0)%4)} renovação${4-((G.lojaN||0)%4)>1?"ões":""}`} · venda: ${D.vendas>=1?"já usada":"disponível"}</span></div><div class="relogio"><small>Renova em</small><b class="num" id="loja-relogio">${fmtRelogio(msParaRenovar())}</b></div></div>`;
+    const D=diario(),tc=D.tec[0],ivL=intervaloLenda(),faltaL=ivL?ivL-((G.lojaN||0)%ivL):0;
+    h+=`<div class="loja-topo"><div><b>Loja de jogadores</b><span class="muted peq">${D.lenda!=null?"★ Lenda disponível nesta renovação! · ":ivL?`Lenda em ${faltaL} renovação${faltaL>1?"ões":""} · `:""}venda: ${D.vendas>=1?"já usada":"disponível"}</span></div><div class="relogio"><small>Renova em</small><b class="num" id="loja-relogio">${fmtRelogio(msParaRenovar())}</b></div></div>`;
     if(D.lenda!=null){
       h+=`<h2>★ Lenda da vez</h2><div class="cartao lenda-vez">${linhaLenda(D.lenda,true)}</div>`}
     h+=`<h2>3 jogadores</h2><p class="muted peq" style="margin:-4px 0 8px">Posições e séries sorteadas. Quanto mais forte o jogador e mais alta a divisão, mais caro. Para vender, toque no jogador no Elenco e use "Vender jogador".</p><div class="cartao" style="padding-block:4px">${D.jog.map(id=>G.players[id]).filter(Boolean).map(linhaOferta).join("")||'<p class="muted">Nenhum jogador agora.</p>'}</div>`;
