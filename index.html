@@ -3713,7 +3713,7 @@ function modalResAmigo(r){
    Quem convida (host) roda a partida e manda o estado pelo servidor a cada segundo; o convidado mostra os lances e manda os comandos dele
    (trocas, formação, pausa, pronto). Jogador = posição na lista do perfil ("h:3" do host, "c:5" do convidado). Pausa vale para os dois
    (3 por jogador, até 90 s, cada um aperta ▶); intervalo de 10 s (se alguém mexer no time, espera os dois); sem sinal por 30 s = o computador assume. */
-let VIVO=null,VIVO_T=null,VIVO_CONV=null,VIVO_ULT=null;const VIVO_VISTO={},LADO_K=["form","est","xi","subs","part","saiu","ordem","grito"];
+let VIVO=null,VIVO_T=null,VIVO_CONV=null,VIVO_ULT=null,VIVO_VOLTA=false;const VIVO_VISTO={},LADO_K=["form","est","xi","subs","part","saiu","ordem","grito"];
 function vivoMapas(meus,deles,tEu,tEle){const tok={},id={};(meus||[]).forEach((x,i)=>{if(x!=null){tok[x]=tEu+i;id[tEu+i]=x}});(deles||[]).forEach((x,i)=>{if(x!=null){tok[x]=tEle+i;id[tEle+i]=x}});return {tok,id}}
 const vivoK=(o,M)=>{const r={};for(const k in o||{}){const t=M[k];if(t!=null)r[t]=o[k]}return r};
 function vivoTrocaL(L,M){const P=x=>x==null?null:(M[x]??null);
@@ -3749,7 +3749,7 @@ async function vivoTickHost(){if(VIVO.ocupado)return;VIVO.ocupado=1;const V=G.li
     else if(j.st==="recusado"){vivoParar();modal(`<div class="aviso-box"><b>${esc(nome)} não pode jogar agora</b><p>O amistoso ao vivo foi recusado. Você pode jogar contra o time dele no computador.</p></div><div class="botoes"><button class="btn" data-a="fechar">Fechar</button><button class="btn prim" data-a="amgjogar" data-v="${VIVO_ULT}">Contra o computador</button></div>`)}
     else if(ag-VIVO.t0>40000){vivoParar();amgPost("vivoHost",{sala:corpo.sala,sair:1}).catch(()=>{});modal(`<div class="aviso-box"><b>${esc(nome)} não respondeu</b><p>Talvez o jogo dele esteja fechado. Quer jogar contra o time dele no computador?</p></div><div class="botoes"><button class="btn" data-a="fechar">Fechar</button><button class="btn prim" data-a="amgjogar" data-v="${VIVO_ULT}">Contra o computador</button></div>`)}
     return}
-  if(V.est==="fim"){vivoParar();return}
+  if(V.est==="fim"){if(corpo.fim)vivoParar();return} // só para depois de o servidor confirmar o estado final (senão o próximo tique manda)
   if(j.st==="saiu"){vivoSolo(`${nome} saiu do jogo.`);return}
   vivoComandos(j.cmds||[]);
   if(j.tc&&j.agora-j.tc>30000)vivoSolo(`A conexão com ${nome} caiu.`)}
@@ -3839,10 +3839,10 @@ function vivoDepois(a){if(!VIVO||!G||!G.live||!G.live.m.vivo||VIVO.papel==="solo
     if(VIVO.antesEst==="intervalo"&&a==="lvretomar"&&V.vi&&!V.vi.ok){V.vi.pr.h=1;if(!V.vi.pr.c){V.est="intervalo";pararTimer()}else V.vi.ok=1}
     if(V.est==="intervalo"&&V.vi&&!V.vi.ok&&VIVO_SEGURA.includes(a))V.vi.hold=1}
   VIVO.antesEst=null}
-/* convites ao vivo: confere a cada 6 s se algum amigo chamou (só com o jogo aberto e com amigos na lista) */
-setInterval(()=>{if(document.visibilityState!=="visible"||!G||!G.user||VIVO||G.live||abertura||!conta()||document.querySelector(".veu"))return;
-  if(!(AMG.est&&(AMG.est.amigos||[]).length))return; // a lista de online só atualiza a cada 60 s: confere sempre que tiver amigos
-  amgPost("vivoConvites",{}).then(j=>{const c=(j.convites||[]).find(x=>!VIVO_VISTO[x.sala]);if(!c||G.live||VIVO||document.querySelector(".veu"))return;VIVO_VISTO[c.sala]=1;VIVO_CONV=c;
+/* convites ao vivo: confere a cada 6 s se alguém chamou (qualquer jogador do ranking pode chamar). Aparece por cima do Ranking/chat/perfil; outros quadros, tutorial e gravação de áudio fazem esperar */
+const vivoOcupado=()=>{if(TUTA||AMG.auRec)return true;const v=document.querySelector(".veu");return !!v&&!v.querySelector(".amg-folha")};
+setInterval(()=>{if(document.visibilityState!=="visible"||!G||!G.user||VIVO||G.live||abertura||!conta()||vivoOcupado())return;
+  amgPost("vivoConvites",{}).then(j=>{const c=(j.convites||[]).find(x=>!VIVO_VISTO[x.sala]);if(!c||G.live||VIVO||vivoOcupado())return;VIVO_VISTO[c.sala]=1;VIVO_CONV=c;VIVO_VOLTA=!!document.querySelector(".amg-folha");
     try{vibrar("capa");somConquista()}catch(e){}
     modal(`<div class="aviso-box vivo-conv"><b>● ${esc(c.nome)} te chamou para um amistoso AO VIVO!</b><p>${esc(c.clube||"")} × seu time, agora. Cada um comanda o seu time ao mesmo tempo; se alguém pausar, pausa para os dois. Vale só XP.</p></div><div class="botoes"><button class="btn" data-a="vivonao">Agora não</button><button class="btn prim" data-a="vivosim">Jogar agora</button></div>`)}).catch(()=>{})},6000);
 /* FUT Master Assistente (04/11): lista de novidades na caixa de entrada de todos (1 vez por perfil).
@@ -4628,7 +4628,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1793928231";
+const VERSAO="1794241326";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -5731,7 +5731,7 @@ function render(){try{if(G&&G.user){perfil();garantirContratos()}}catch(e){}
   const corpo={inicio:telaInicio,elenco:telaElenco,tabela:telaTabela,mercado:telaMercado,clube:telaClube,escudo:telaEscudo,upgrades:telaUpgrades,copa:telaAbaCopa,jogar:telaInicio,liga:telaLiga,perfil:telaPerfil,financas:telaFinancas,config:telaConfig,visual:telaVisual,prejogo:telaPreJogo,partida:telaPartida,resultado:telaResultado}[aba]();
   app.innerHTML=(telaCheia?"":topo)+corpo+(telaCheia?"":bolaHTML());
   videoVS();ligarCampinho();
-  if(G&&!TUTA&&!document.querySelector(".veu")){const ta=G.tutAmi||{},ami1=!(G.history||[]).length;if(aba==="prejogo"&&ami1&&!ta.pre&&partidaAtual()&&partidaAtual().amistoso)setTimeout(()=>tutAmistoso("pre"),600);else if(aba==="jogar"&&tvPendente()&&!ta["tv"+userTier()])setTimeout(()=>{if(!TUTA&&tvPendente())tutAmistoso("tv"+userTier())},700);else if(aba==="partida"&&ami1&&G.live&&G.live.m.amistoso&&!ta.vivo)setTimeout(()=>tutAmistoso("vivo"),500);else if(aba==="jogar"&&!ta.tela&&G.amistoso==="feito"&&!tvPendente()&&!((G.st[G.user.club]||{}).j)&&ami1)setTimeout(()=>{if(!TUTA&&!document.querySelector(".veu")&&aba==="jogar")tutAmistoso("tela")},900);else if(aba==="perfil"&&!ta.perfil&&!perfil().avatar)setTimeout(()=>{if(!TUTA&&!document.querySelector(".veu")&&aba==="perfil")tutAmistoso("perfil")},600)}if(aba==="financas")ligarGrafico();{const b=document.querySelector('.lg-abas [aria-pressed="true"]');if(b)b.scrollIntoView({inline:"center",block:"nearest"})}
+  if(G&&!TUTA&&!document.querySelector(".veu")){const ta=G.tutAmi||{},ami1=!(G.history||[]).length;if(aba==="prejogo"&&ami1&&!ta.pre&&partidaAtual()&&partidaAtual().amistoso)setTimeout(()=>tutAmistoso("pre"),600);else if(aba==="jogar"&&tvPendente()&&!ta["tv"+userTier()])setTimeout(()=>{if(!TUTA&&aba==="jogar"&&!document.querySelector(".veu")&&tvPendente())tutAmistoso("tv"+userTier())},700);else if(aba==="partida"&&ami1&&G.live&&G.live.m.amistoso&&!ta.vivo)setTimeout(()=>tutAmistoso("vivo"),500);else if(aba==="jogar"&&!ta.tela&&G.amistoso==="feito"&&!tvPendente()&&!((G.st[G.user.club]||{}).j)&&ami1)setTimeout(()=>{if(!TUTA&&!document.querySelector(".veu")&&aba==="jogar")tutAmistoso("tela")},900);else if(aba==="perfil"&&!ta.perfil&&!perfil().avatar)setTimeout(()=>{if(!TUTA&&!document.querySelector(".veu")&&aba==="perfil")tutAmistoso("perfil")},600)}if(aba==="financas")ligarGrafico();{const b=document.querySelector('.lg-abas [aria-pressed="true"]');if(b)b.scrollIntoView({inline:"center",block:"nearest"})}
   if(ligaRolar){ligaRolar=false;const ag=$("#lg-agora");if(ag&&aba==="liga"&&ligaAba==="mais")window.scrollTo(0,ag.getBoundingClientRect().top+scrollY-90)}
   if(aba==="partida"){if(G.live&&G.live.est==="rodando")iniciarTimer();else pararTimer();const fd=$("#lv-feed");if(fd)fd.scrollTop=0}
   if(window._relLoja){clearInterval(window._relLoja);window._relLoja=null}
@@ -8304,7 +8304,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
         VIVO={papel:"host",fase:"espera",sala:j.sala,amigo:{id:v,nome:A.nome},meus,seq:0,ackC:0,t0:Date.now()};vivoLoop()}).catch(()=>{fecharModal();toastErro("Sem conexão com o servidor de amigos.")});return}
     case "vivocancel":if(VIVO&&VIVO.fase==="espera"){amgPost("vivoHost",{sala:VIVO.sala,sair:1}).catch(()=>{});vivoParar()}fecharModal();return;
     case "vivosim":fecharModal();vivoAceitar(VIVO_CONV);return;
-    case "vivonao":fecharModal();if(VIVO_CONV)amgPost("vivoResponder",{sala:VIVO_CONV.sala,ok:0}).catch(()=>{});return;
+    case "vivonao":fecharModal();if(VIVO_CONV)amgPost("vivoResponder",{sala:VIVO_CONV.sala,ok:0}).catch(()=>{});if(VIVO_VOLTA)modalAmigos(true);return;
     case "vivosair":{const vv=VIVO;if(vv)amgPost(vv.papel==="host"?"vivoHost":"vivoConv",{sala:vv.sala,sair:1}).catch(()=>{});vivoParar();acao("lvamgsair");return}
     case "amgjogar":{const er=amgMontar(v);if(er){toastErro(er);return}fecharModal();aba="prejogo";window.scrollTo(0,0);break}
     case "amgcopiar":{const c=conta();if(!c)return;const t=idTxt(c.id),ok=()=>toast("ID copiado: "+t);if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,()=>copiarAntigo(t,ok));else copiarAntigo(t,ok);return}
