@@ -499,6 +499,8 @@ nav.abas[hidden]{display:none}
 .tec-chips.vivo{margin:6px 0}.tec-chips.vivo .tec-chip{padding:4px 6px}
 .tec-chip>:first-child{width:34px!important;height:34px!important;min-width:34px;overflow:hidden;border-radius:8px}.tec-chip>:first-child img,.tec-chip>:first-child svg{width:34px!important;height:34px!important}
 .tec-chip i{margin-left:auto;font-style:normal;font-weight:800;color:#ffd23f}.tec-chip svg,.tec-chip img{flex:none;border-radius:8px}
+.sala-tit{margin:14px 0 2px;font-size:19px;color:#ffe28a}.sala-comp{margin:10px 0 6px;font-size:14px;color:var(--cal-1,#fff);border-left:3px solid #ffd23f;padding-left:8px}.sala-comp small{color:var(--cal-2);font-weight:400}
+.sala-fila{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px}.trofeu-g.sala-mini{padding:6px 4px;gap:2px}.trofeu-g.sala-mini img{width:46px;height:46px}.trofeu-g.sala-mini .tg-ico svg{width:38px;height:38px}.trofeu-g.sala-mini small{font-size:12px;color:#ffe28a;font-weight:700}
 .trofeus-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:8px;margin-top:8px}
 .trofeu-g{display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;padding:10px 6px;border-radius:12px;background:radial-gradient(circle at 50% 30%,rgba(255,210,63,.22),rgba(255,210,63,.04) 70%);border:1.5px solid rgba(255,210,63,.55)}
 .trofeu-g img{width:72px;height:72px;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}
@@ -3368,8 +3370,10 @@ async function amgPost(rota,corpo){const r=await fetch(AMG_URL+"/"+rota,{method:
 /* cópia do time que os amigos enfrentam: elenco (40 melhores), escalação, formação, estilo, técnico, escudo e uniformes */
 function perfilAmg(){const c=G.clubs[G.user.club],ps=jogadoresDo(c.id).sort((a,b)=>b.ov-a.ov).slice(0,40);AMG.pIds=ps.map(p=>p.id);
   let e=c.escudo;if(e&&e.img&&e.img.length>40000){e={...e};delete e.img}
-  return JSON.stringify({v:1,pais:c.pais,clube:{name:c.name,short:c.short,c1:c.c1,c2:c.c2,escudo:e,unis:c.unis,cap:c.cap},form:G.user.form,est:G.user.est,
-    tec:G.tec?{n:G.tec.n,q:G.tec.q}:null,xi:(G.user.lineup||[]).map(id=>ps.findIndex(p=>p.id===id)),jog:ps.map(p=>[p.n,p.pos,p.age,p.ov]),nivel:perfil().nivel})}
+  const base={v:1,pais:c.pais,clube:{name:c.name,short:c.short,c1:c.c1,c2:c.c2,escudo:e,unis:c.unis,cap:c.cap},form:G.user.form,est:G.user.est,
+    tec:G.tec?{n:G.tec.n,q:G.tec.q}:null,xi:(G.user.lineup||[]).map(id=>ps.findIndex(p=>p.id===id)),jog:ps.map(p=>[p.n,p.pos,p.age,p.ov]),nivel:perfil().nivel};
+  const fic=ps.map(p=>{let o;try{o=mvSnap(p)}catch(e){return null};["ref","clube","serie","pais","ano"].forEach(k=>delete o[k]);if(o.hist)o.hist=o.hist.slice(-3);if(o.lesoes)o.lesoes=o.lesoes.slice(-3);o.fis=Math.round(p.fis??100);if(p.inj>0)o.inj=p.inj;if(p.lenda)o.lenda=1;return o});
+  const s1=JSON.stringify({...base,fic,ano:G.year});return s1.length<85000?s1:JSON.stringify(base)} // fichas dos jogadores (perfil do time no ranking); se ficar grande demais vai só o básico
 /* ranking (02/11): todos os jogadores num grupo só, pontuação = média de nível, títulos e força */
 function forcaXI(){const L=(G.user.lineup||[]).map(id=>G.players[id]).filter(Boolean);const T=L.length>=11?L:jogadoresDo(G.user.club).sort((a,b)=>b.ov-a.ov).slice(0,11);return T.length?Math.round(T.reduce((a,p)=>a+p.ov,0)/T.length):0}
 // taças por título (Carlos, 02/11): pela força do campeonato, Champions = 300
@@ -3649,11 +3653,12 @@ function modalAmigos(soAtualiza){
 async function amgBuscar(){const i=$("#amg-q"),q=(i?i.value:AMG.q).trim();AMG.q=q;if(q.replace(/^#/,"").length<2){toastErro("Digite o ID ou pelo menos 2 letras do nome.");return}
   AMG.busca="...";modalAmigos(true);const j=await amgPost("buscar",{q}).catch(()=>({erro:1}));AMG.busca=j.lista||[];if(j.erro)toastErro("Sem conexão com o servidor de amigos.");if(document.querySelector(".amg-folha"))modalAmigos(true)}
 async function amgAcao(rota,corpo,msg){const j=await amgPost(rota,corpo).catch(()=>({erro:"Sem conexão com o servidor de amigos."}));if(j.erro){toastErro(j.erro);return false}if(msg)toast(msg);await amgSync(true);return true}
-async function modalPerfilAmigo(id){
+async function modalPerfilAmigo(id,cache){let j,P;
+  if(cache&&AMG.perfis[id]){j=AMG.perfis[id];P=j.P}else{
   modal(`<div class="amg-folha"><p class="muted">Carregando o perfil...</p></div>`);
-  const j=await amgPost("time",{outro:id}).catch(()=>({erro:"Sem conexão com o servidor de amigos."}));
+  j=await amgPost("time",{outro:id}).catch(()=>({erro:"Sem conexão com o servidor de amigos."}));
   if(j.erro||!j.perfil){modal(`<div class="aviso-box"><b>Não deu para abrir o perfil</b><p>${esc(j.erro||"Esse amigo ainda não tem time salvo.")}</p><div class="botoes"><button class="btn" data-a="amigos">Voltar</button></div></div>`);return}
-  let P;try{P=JSON.parse(j.perfil)}catch(e){P=null}if(!P||!P.clube)return;AMG.perfis[id]={...j,P};
+  try{P=JSON.parse(j.perfil)}catch(e){P=null}if(!P||!P.clube)return;AMG.perfis[id]={...j,P}}
   const eu=conta()&&conta().id===id;
   const cl=P.clube,jog=P.jog||[],xi=(P.xi||[]).map(i=>jog[i]).filter(Boolean),top=(xi.length>=11?xi:jog.slice(0,11));
   const media=j.forca||(top.length?Math.round(top.reduce((a,x)=>a+x[3],0)/top.length):0),craque=jog.slice().sort((a,b)=>b[3]-a[3])[0];
@@ -3664,14 +3669,42 @@ async function modalPerfilAmigo(id){
       <small class="${j.on?"amg-on":"muted"}">${j.on?"● Online agora":"Offline"} · Nível ${j.nivel||1}</small>${pos>=0?`<small class="rk-lugar">${pos+1}º no ranking</small>`:""}</div></div>
     <div class="rk-tacas"><div><b class="num">${j.tp||0}</b><small>👑 coroas</small></div><div><b class="num">${j.ttit||0}</b><small>de títulos e prêmios</small></div><div><b class="num">${j.tjog||0}</b><small>das partidas</small></div></div>
     ${(j.coroas||[]).length?`<div class="emblemas rk-selos">${emblemaCard({n:"Campeão do mês",e:"🏅",d:j.coroas.map(mesTxt).join(", "),c:j.coroas.length})}</div>`:""}
-    <h4 class="amg-sub">🏆 Sala de troféus</h4>${tits.length?`<div class="trofeus-g">${tits.slice().reverse().map(trofeuCard).join("")}</div>`:`<p class="muted peq">Ainda sem títulos.</p>`}
+    <h3 class="sala-tit">🏆 Sala de troféus</h3>${tits.length?salaPorComp(tits):`<p class="muted peq">Ainda sem títulos.</p>`}
     <h4 class="amg-sub">Time</h4>
     <div class="amg-topo">${escudoSVG(cl.escudo||{forma:0,estampa:1,c1:cl.c1,c2:cl.c2,c3:contrasteHex(cl.c1||"#888888")},cl.short,64,cl.name)}<div><b style="font-size:17px">${esc(cl.name)}</b><br><span class="muted">${esc(PAIS_NOME[P.pais]||"")}</span></div></div>
     <div class="kpis"><div class="cartao kpi"><small>Força do time</small><b class="num">${media}</b></div><div class="cartao kpi"><small>Formação</small><b class="num">${esc(P.form||"4-4-2")}</b></div><div class="cartao kpi"><small>Técnico</small><b style="font-size:13px">${esc(P.tec?P.tec.n:"Interino")}</b></div></div>
-    ${craque?`<div class="cartao rk-craque"><small>Melhor jogador</small><b>${esc(craque[0])}</b><span class="muted">${esc(craque[1])} · ${craque[2]} anos</span><b class="num rk-ov">${craque[3]}</b></div>`:""}
-    <h4 class="amg-sub">Titulares</h4><div class="amg-xi">${top.map(x=>`<span><i>${esc(x[1])}</i>${esc(x[0])}<b class="num">${x[3]}</b></span>`).join("")}</div>
+    ${craque?`<div class="cartao rk-craque" data-a="amgjog" data-v="${id}|${jog.indexOf(craque)}" role="button" style="cursor:pointer"><small>Melhor jogador · toque para ver</small><b>${esc(craque[0])}</b><span class="muted">${esc(craque[1])} · ${craque[2]} anos</span><b class="num rk-ov">${craque[3]}</b></div>`:""}
+    ${elencoAmigo(id,P,cl)}
     ${eu?`<p class="muted peq">Esse é o seu perfil, do jeito que os outros veem.</p><div class="botoes"><button class="btn" data-a="amigos">Voltar</button></div>`:`<p class="muted peq">${j.on?`${esc(j.nome)} está online: no <b>amistoso ao vivo</b> cada um comanda o seu time ao mesmo tempo. No amistoso normal, o time dele joga com o computador.`:`No amistoso, o time de ${esc(j.nome)} joga comandado pelo computador.`} Não vale pontos: rende XP, torcida e transmissão (com os gastos do jogo).</p>
     <div class="botoes"><button class="btn" data-a="amigos">Voltar</button><button class="btn${j.on?"":" prim"}" data-a="amgjogar" data-v="${id}">${j.on?"Contra o computador":"Jogar amistoso"}</button>${j.on?`<button class="btn prim" data-a="vivoconv" data-v="${id}">● Jogar ao vivo</button>`:""}</div>`}</div>`)}
+/* elenco do amigo em cards iguais aos do seu elenco (foto, posição, força); cada um abre a ficha (modalAmgJog) */
+function jogAmigo(P,i){const x=(P.jog||[])[i];if(!x)return null;const f=(P.fic||[])[i];return f?{...f,id:f.oid??i}:{n:x[0],pos:x[1],age:x[2],ov:x[3],id:i}}
+function elencoAmigo(id,P,cl){const jog=P.jog||[],xiI=(P.xi||[]).filter(i=>i>=0&&jog[i]),tit=new Set(xiI),ord={GOL:0,LAT:1,ZAG:2,VOL:3,MEI:4,ATA:5};
+  const slots=(FORMACOES[P.form]||FORMACOES["4-4-2"]).s,res=jog.map((x,i)=>i).filter(i=>!tit.has(i)).sort((a,b)=>(ord[jog[a][1]]??9)-(ord[jog[b][1]]??9)||jog[b][3]-jog[a][3]);
+  const card=(i,pos)=>{const J=jogAmigo(P,i);if(!J)return "";const temp=J.j?` · ${J.g||0} gol${J.g===1?"":"s"}`:"";
+    return `<div class="jog${J.lenda?" lenda":""}" data-a="amgjog" data-v="${id}|${i}" role="button" style="cursor:pointer"><div class="jfoto">${rostoSVG(J,46)}${J.inj>0?`<span class="atadura">${ATADURA}</span>`:""}<span class="posb ${pos||J.pos}">${pos||J.pos}</span></div>
+      <div class="nm"><b>${esc(J.n)}${J.inj>0?`<span class="tag les">Lesionado</span>`:""}</b><span>${J.age} anos${J.val?` · ${dinheiro(J.val)}`:""}${temp}</span><span class="time-of"><b>${esc(cl.name)}</b></span></div><div class="ov num${J.lenda?" ov-lenda":""}">${J.ov}</div></div>`};
+  return `<h4 class="amg-sub">Titulares · ${esc(P.form||"4-4-2")}</h4><div class="cartao" style="padding-block:4px">${xiI.length?xiI.map((i,k)=>card(i,slots[k])).join(""):jog.slice(0,11).map((x,i)=>card(i)).join("")}</div>
+    ${res.length&&xiI.length?`<h4 class="amg-sub">Reservas · ${res.length}</h4><div class="cartao" style="padding-block:4px">${res.map(i=>card(i)).join("")}</div>`:""}
+    <p class="muted peq" style="margin:4px 0 8px">Toque num jogador para ver a ficha completa.</p>`}
+function modalAmgJog(v){const [id,i]=String(v).split("|"),A=AMG.perfis[id];if(!A)return;const P=A.P,J=jogAmigo(P,+i);if(!J)return;
+  const cl=P.clube,media=J.nn?(J.nt/J.nn).toFixed(1):"—",hist=(J.hist||[]).slice().reverse(),les=J.lesoes||[],det=!!(P.fic&&P.fic[+i]);let atr="";try{atr=barrasAtr(J,false)}catch(e){}
+  modal(`<div class="perfil"><div class="perfil-foto">${rostoSVG(J,110)}</div><div class="nm"><h3 style="margin:0">${esc(J.n)}</h3><span class="muted">${J.pos} · ${J.age} anos · ${esc(cl.name)}</span>
+    <div class="kpis" style="margin-top:10px"><div class="cartao kpi"><small>Força</small><b class="num">${J.ov}</b></div><div class="cartao kpi"><small>Potencial</small><b class="num">${J.age<=23&&J.pot?J.pot:"—"}</b></div></div></div></div>
+    ${J.inj>0?`<p class="tag les" style="display:inline-flex;align-items:center;gap:6px;margin-top:10px"><span class="atadura-in">${ATADURA}</span>Lesionado · fora por ${J.inj} jogo${J.inj>1?"s":""}</p>`:""}
+    <div class="extrato num" style="margin-top:10px">
+      <div><span>Dono do time</span><span>${esc(A.nome||"—")}</span></div>
+      <div><span>Posição</span><span>${esc(J.pdet||J.pos)}</span></div>
+      ${J.peTxt?`<div><span>Melhor pé</span><span>${esc(J.peTxt)}</span></div>`:""}
+      ${(J.habX||[]).length?`<div><span>${J.habX.length>1?"Habilidades":"Habilidade"}</span><span class="hab-chips">${J.habX.map(x=>`<i>${esc(x)}</i>`).join("")}</span></div>`:""}
+      ${det?`<div><span>Condição física</span><span>${J.fis??100}%</span></div><div><span>Valor de mercado</span><span>${dinheiro(J.val||0)}</span></div><div><span>Salário</span><span>${dinheiro(J.sal||0)}/mês</span></div><div><span>Contrato</span><span>${J.ct?(J.ct==="Encerrado"?"Encerrado":"até "+esc(J.ct)):"—"}</span></div>`:""}
+      ${(J.selos||[]).length?`<div><span>Prêmios</span><span class="hab-chips ant-chips selos">${J.selos.slice().reverse().map(x=>`<i>🏅 ${esc(x)}</i>`).join("")}</span></div>`:""}
+    </div>
+    ${det?`<h2>Temporada ${P.ano||""}</h2><div class="kpis"><div class="cartao kpi"><small>Jogos</small><b class="num">${J.j||0}</b></div><div class="cartao kpi"><small>Gols</small><b class="num">${J.g||0}</b></div><div class="cartao kpi"><small>Assistências</small><b class="num">${J.as||0}</b></div><div class="cartao kpi"><small>Nota média</small><b class="num">${media}</b></div></div>`:`<p class="muted peq">${esc(A.nome||"Esse jogador")} ainda não abriu o jogo na versão nova: os detalhes aparecem quando ele entrar de novo.</p>`}
+    ${atr?`<h2>Atributos</h2>${atr}`:""}
+    ${det?`<h2>Histórico de lesões</h2>${les.length?`<div class="extrato num">${les.slice().reverse().map(([a,jj,ms])=>`<div><span>${a} · ${esc(ms)}</span><span>${jj} jogo${jj>1?"s":""} fora</span></div>`).join("")}</div>`:'<p class="muted peq" style="margin:0">Nenhuma lesão registrada.</p>'}`:""}
+    ${hist.length?`<h2>Temporadas anteriores</h2><div class="rolar"><table><thead><tr><th>Ano</th><th>Força</th><th>J</th><th>G</th><th>A</th><th>Nota</th></tr></thead><tbody>${hist.map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td><td>${x[2]}</td><td>${x[3]}</td><td>${x[4]}</td><td>${x[5]??"—"}</td></tr>`).join("")}</tbody></table></div>`:""}
+    <div class="botoes"><button class="btn prim" data-a="amgvolta" data-v="${id}">‹ Voltar ao ${esc(cl.short||cl.name)}</button></div>`)}
 /* monta o time do amigo como um clube temporário (AMG) e guarda o seu elenco para voltar igual depois do amistoso */
 function amgMontar(id){const A=AMG.perfis[id];if(!A)return "Abra o perfil do amigo de novo.";
   if(G.live)return "Termine a partida atual primeiro.";const P=A.P,okp=x=>ELENCO_BASE.includes(x[1])||FORMACOES["4-4-2"].s.includes(x[1]),jogT=P.jog||[],jog=jogT.filter(okp);
@@ -4628,7 +4661,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794241326";
+const VERSAO="1794268199";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7232,6 +7265,11 @@ function chaveTitulo(t){for(const [k,P] of Object.entries(PAISES)){const L=P.lig
   for(const [c,o] of Object.entries(COPAS)){if(t.startsWith(o.main+" "))return `${c}|main`;if(t.startsWith(o.sec+" "))return `${c}|sec`}return ""}
 function trofeuCard(x){const m=x.match(/^(.*) (\d{4})$/),k=chaveTitulo(x),src=k?imgTitulo(k):"";
   return `<div class="trofeu-g">${src?`<img src="${src}" alt="">`:`<span class="tg-ico">${ICO_TROFEU}</span>`}<b>${esc(m?m[1]:x)}</b><small>${m?m[2]:""}</small></div>`}
+/* sala de troféus por campeonato (perfil do ranking): subtítulo com o nome e as taças em fileira com o ano embaixo, do mais antigo ao mais novo */
+function salaPorComp(tits){const G2={};tits.forEach(t=>{const m=t.match(/^(.*) (\d{4})$/),n=m?m[1]:t;(G2[n]=G2[n]||[]).push({t,a:m?+m[2]:0})});
+  const L=Object.entries(G2).map(([n,xs])=>[n,xs.sort((a,b)=>a.a-b.a)]).sort((a,b)=>a[1][0].a-b[1][0].a);
+  return L.map(([n,xs])=>{const k=chaveTitulo(xs[0].t),src=k?imgTitulo(k):"";
+    return `<h5 class="sala-comp">${esc(n)}${xs.length>1?` <small>×${xs.length}</small>`:""}</h5><div class="sala-fila">${xs.map(x=>`<div class="trofeu-g sala-mini">${src?`<img src="${src}" alt="">`:`<span class="tg-ico">${ICO_TROFEU}</span>`}<small>${x.a||""}</small></div>`).join("")}</div>`}).join("")}
 /* emblemas e selos (02/11): não repetem; mostram quantas vezes embaixo */
 function emblemaCard(x){return `<div class="emblema on"><span class="em-ico">${x.e||"🏅"}</span><b>${esc(x.n)}</b><small>${esc(x.d||"")}</small>${x.c>1?`<span class="em-num">×${x.c}</span>`:""}</div>`}
 function emblemasAgrupados(){const g={};(G.emblemas||[]).forEach(x=>{const k=x.n;if(!g[k])g[k]={...x,c:0};g[k].c++});
@@ -8295,6 +8333,8 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "amgsim":amgAcao("responder",{de:v,ok:true},"Agora vocês são amigos!").then(ok=>{if(ok){AMG.aba="amigos";modalAmigos(true)}});return;
     case "amgnao":amgAcao("responder",{de:v,ok:false}).then(()=>modalAmigos(true));return;
     case "amgver":modalPerfilAmigo(v);return;
+    case "amgvolta":modalPerfilAmigo(v,1);return;
+    case "amgjog":modalAmgJog(v);return;
     case "amgdel":modal(`<div class="aviso-box"><b>Remover amigo?</b><p>Vocês deixam de ser amigos no jogo.</p><div class="botoes"><button class="btn" data-a="amgver" data-v="${v}">Cancelar</button><button class="btn perigo" data-a="amgdelok" data-v="${v}">Remover</button></div></div>`);return;
     case "amgdelok":amgAcao("remover",{outro:v},"Amigo removido.").then(()=>{AMG.aba="amigos";modalAmigos(true)});return;
         case "vivoconv":{const A=AMG.perfis[v];if(!A){toastErro("Abra o perfil do amigo de novo.");return}if(G.live){toastErro("Termine a partida atual primeiro.");return}if(VIVO){toastErro("Já tem um amistoso ao vivo em andamento.");return}
