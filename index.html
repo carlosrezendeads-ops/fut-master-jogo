@@ -499,6 +499,8 @@ nav.abas[hidden]{display:none}
 .tec-chips.vivo{margin:6px 0}.tec-chips.vivo .tec-chip{padding:4px 6px}
 .tec-chip>:first-child{width:34px!important;height:34px!important;min-width:34px;overflow:hidden;border-radius:8px}.tec-chip>:first-child img,.tec-chip>:first-child svg{width:34px!important;height:34px!important}
 .tec-chip i{margin-left:auto;font-style:normal;font-weight:800;color:#ffd23f}.tec-chip svg,.tec-chip img{flex:none;border-radius:8px}
+.amg-el{display:grid;grid-template-columns:1fr 1fr;gap:6px;align-items:start}.amg-el .cartao{padding:2px 5px}.amg-el .jog{gap:5px;padding:4px 0;grid-template-columns:auto 1fr auto}.amg-el .jfoto{width:36px}.amg-el .jfoto .posb{font-size:8px;padding:0 3px}
+.amg-el .nm{min-width:0}.amg-el .nm b{font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}.amg-el .nm span{font-size:9.5px}.amg-el .ov{font-size:13px;width:30px;height:30px;flex-basis:30px}
 .sala-tit{margin:14px 0 2px;font-size:19px;color:#ffe28a}.sala-comp{margin:10px 0 6px;font-size:14px;color:var(--cal-1,#fff);border-left:3px solid #ffd23f;padding-left:8px}.sala-comp small{color:var(--cal-2);font-weight:400}
 .sala-fila{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px}.trofeu-g.sala-mini{padding:6px 4px;gap:2px}.trofeu-g.sala-mini img{width:46px;height:46px}.trofeu-g.sala-mini .tg-ico svg{width:38px;height:38px}.trofeu-g.sala-mini small{font-size:12px;color:#ffe28a;font-weight:700}
 .trofeus-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:8px;margin-top:8px}
@@ -3682,10 +3684,10 @@ function jogAmigo(P,i){const x=(P.jog||[])[i];if(!x)return null;const f=(P.fic||
 function elencoAmigo(id,P,cl){const jog=P.jog||[],xiI=(P.xi||[]).filter(i=>i>=0&&jog[i]),tit=new Set(xiI),ord={GOL:0,LAT:1,ZAG:2,VOL:3,MEI:4,ATA:5};
   const slots=(FORMACOES[P.form]||FORMACOES["4-4-2"]).s,res=jog.map((x,i)=>i).filter(i=>!tit.has(i)).sort((a,b)=>(ord[jog[a][1]]??9)-(ord[jog[b][1]]??9)||jog[b][3]-jog[a][3]);
   const card=(i,pos)=>{const J=jogAmigo(P,i);if(!J)return "";const temp=J.j?` · ${J.g||0} gol${J.g===1?"":"s"}`:"";
-    return `<div class="jog${J.lenda?" lenda":""}" data-a="amgjog" data-v="${id}|${i}" role="button" style="cursor:pointer"><div class="jfoto">${rostoSVG(J,46)}${J.inj>0?`<span class="atadura">${ATADURA}</span>`:""}<span class="posb ${pos||J.pos}">${pos||J.pos}</span></div>
-      <div class="nm"><b>${esc(J.n)}${J.inj>0?`<span class="tag les">Lesionado</span>`:""}</b><span>${J.age} anos${J.val?` · ${dinheiro(J.val)}`:""}${temp}</span><span class="time-of"><b>${esc(cl.name)}</b></span></div><div class="ov num${J.lenda?" ov-lenda":""}">${J.ov}</div></div>`};
-  return `<h4 class="amg-sub">Titulares · ${esc(P.form||"4-4-2")}</h4><div class="cartao" style="padding-block:4px">${xiI.length?xiI.map((i,k)=>card(i,slots[k])).join(""):jog.slice(0,11).map((x,i)=>card(i)).join("")}</div>
-    ${res.length&&xiI.length?`<h4 class="amg-sub">Reservas · ${res.length}</h4><div class="cartao" style="padding-block:4px">${res.map(i=>card(i)).join("")}</div>`:""}
+    return `<div class="jog${J.lenda?" lenda":""}" data-a="amgjog" data-v="${id}|${i}" role="button" style="cursor:pointer"><div class="jfoto">${rostoSVG(J,34)}${J.inj>0?`<span class="atadura">${ATADURA}</span>`:""}<span class="posb ${pos||J.pos}">${pos||J.pos}</span></div>
+      <div class="nm"><b>${esc(J.n)}</b><span>${J.inj>0?"🚑 ":""}${J.age} anos${J.val?` · ${dinheiro(J.val)}`:""}</span></div><div class="ov num${J.lenda?" ov-lenda":""}">${J.ov}</div></div>`};
+  return `<div class="amg-el"><div><h4 class="amg-sub">Titulares · ${esc(P.form||"4-4-2")}</h4><div class="cartao">${xiI.length?xiI.map((i,k)=>card(i,slots[k])).join(""):jog.slice(0,11).map((x,i)=>card(i)).join("")}</div></div>
+    ${res.length&&xiI.length?`<div><h4 class="amg-sub">Reservas · ${res.length}</h4><div class="cartao">${res.map(i=>card(i)).join("")}</div></div>`:""}</div>
     <p class="muted peq" style="margin:4px 0 8px">Toque num jogador para ver a ficha completa.</p>`}
 function modalAmgJog(v){const [id,i]=String(v).split("|"),A=AMG.perfis[id];if(!A)return;const P=A.P,J=jogAmigo(P,+i);if(!J)return;
   const cl=P.clube,media=J.nn?(J.nt/J.nn).toFixed(1):"—",hist=(J.hist||[]).slice().reverse(),les=J.lesoes||[],det=!!(P.fic&&P.fic[+i]);let atr="";try{atr=barrasAtr(J,false)}catch(e){}
@@ -4661,7 +4663,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794268199";
+const VERSAO="1794268308";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
