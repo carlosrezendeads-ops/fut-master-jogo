@@ -1070,7 +1070,7 @@ nav.abas button{font-size:11px}
 .estadio-prev{border:1px solid var(--gramado-3);border-radius:16px;overflow:hidden;background:#0a1440;line-height:0}
 .estadio-svg{display:block}
 .jog.of{grid-template-columns:52px minmax(0,1fr) auto auto}
-.of-dir{display:flex;flex-direction:column;align-items:flex-end;gap:3px;text-align:right}
+.of-dir{display:flex;flex-direction:column;align-items:flex-end;gap:3px;text-align:right;max-width:44vw;min-width:0}.of-dir .tag.serie{max-width:100%;overflow:hidden;text-overflow:ellipsis}.jog.of .nm{min-width:96px}
 .tag.serie{background:var(--gramado-3);color:var(--cal);white-space:nowrap}
 .tec-mini{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .reforma{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--gramado-3)}
@@ -1538,7 +1538,7 @@ const MANUT=false;
 <script src="img/fotos-vs.js?v=365600e7"></script>
 <script src="img/kit-homens.js?v=0ed6e386"></script>
 <script src="img/tec-fotos.js?v=fe782a52"></script>
-<script src="dados/elencos.js?v=bb464417"></script>
+<script src="dados/elencos.js?v=8b8eff29"></script>
 <script src="dados/regioes.js?v=1d168c1a"></script><script src="dados/pes.js?v=266905da"></script>
 <script src="dados/idiomas.js?v=bb7f71b0"></script>
 <script>
@@ -4663,6 +4663,7 @@ function migrar(g){
   if(g.tradOferta===undefined&&g.tradutor===undefined&&g.country&&IDIOMA_PAIS[g.country])g.tradOferta=true;
   if(!g.perfil)g.perfil={xp:0,nivel:1,j:0,v:0,e:0,d:0,gp:0,gc:0,aviso:null,dica:false};
   if(!g.tec)g.tec=TEC_INTERINO();if(!g.news)g.news=[];if(g.tut==null)g.tut=TUTORIAL.length;IDX=null;
+  Object.values(g.players||{}).forEach(p=>{if(p&&p.n&&(/[{}=<>|]|&nbsp;/.test(p.n)||p.n.trim().length<3||/^\S{1,2}\.+$/.test(p.n.trim()))){p.n=nomeJogador();delete p.real}}); // 10/11: nomes quebrados vindos da Wikipédia ({{Abbr...)
   {const G0=G;G=g;IDX=null;aplicarElencosReais();G=G0;IDX=null}
   Object.values(g.clubs).forEach(c=>{if(c.ab){c.name=orig[c.pais+"|"+c.name]||c.name;delete c.ab}if(c.user){
     if(c.uni&&!c.unis){c.unis=[c.uni,inverterUni(c.uni)];delete c.uni}
@@ -4700,7 +4701,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794309665";
+const VERSAO="1794315965";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7208,7 +7209,7 @@ function versus(m,semLista){
 }
 
 
-function serieTag(p){if(p.club==null)return "Sem clube";const c=G.clubs[p.club];return c.tier===-1?(c.tierExt!=null&&PAISES[c.pais]?`${PAISES[c.pais].ligas[c.tierExt]} · ${PAIS_NOME[c.pais]}`:(PAIS_NOME[c.pais]||"Exterior")):nomeLiga(c.tier)}
+function serieTag(p){if(p.club==null)return "Sem clube";const c=G.clubs[p.club];return c.tier===-1?(PAIS_NOME[c.pais]||"Exterior"):nomeLiga(c.tier)} // 10/11: de fora mostra só o país (a liga comprida espremia o nome no card)
 function fmtRelogio(ms){const s=Math.max(0,Math.floor(ms/1000)),hh=Math.floor(s/3600),mm=Math.floor(s%3600/60),ss=s%60;return `${hh}:${String(mm).padStart(2,"0")}:${String(ss).padStart(2,"0")}`}
 function linhaOferta(p){const meu=p.club===G.user.club,pr=precoPedido(p),promo=!meu&&G.diario&&G.diario.promo===p.id,dest=!meu&&G.diario&&G.diario.dest===p.id;
   return `<div class="jog of${lendaCls(p)}${promo||dest?" of-promo":""}" ${meu?"":`data-a="comprar" data-v="${p.id}" style="cursor:pointer"`}>${dest?`<span class="promo-canto dest">⭐ Destaque</span>`:promo?`<span class="promo-canto">Oportunidade</span>`:""}${linhaJog(p)}<div class="of-dir"><span class="tag serie">${esc(meu?"Contratado":serieTag(p))}</span>${meu?"":`<span class="preco-pill">${ICO_NOTA}<b class="num">${pr?dinheiro(pr):"sem custo"}</b></span>`}</div></div>`}
