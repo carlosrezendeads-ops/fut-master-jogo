@@ -1265,9 +1265,8 @@ nav.abas button{font-size:11px}
 .splash.arte img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center top}
 .splash.arte .capa-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center top}
 .splash.arte .capa-fundo{object-fit:cover;filter:blur(18px) brightness(.7);transform:scale(1.1)}
-.capa-jogar{display:flex;align-items:center;justify-content:center;gap:14px;width:100%;padding:18px 0;font:inherit;font-family:var(--f-display);font-style:italic;font-weight:900;text-transform:uppercase;font-size:34px;letter-spacing:.04em;color:#fff;border:0;border-top:2px solid #19c3ff;border-bottom:2px solid #19c3ff;background:linear-gradient(90deg,transparent,rgba(25,195,255,.35),transparent);text-shadow:0 0 14px rgba(25,195,255,.8);cursor:pointer;margin-bottom:21vh}@keyframes capaPulso{0%,100%{transform:scale(1);box-shadow:0 0 0 rgba(25,195,255,0);text-shadow:0 0 14px rgba(25,195,255,.8)}50%{transform:scale(1.05);box-shadow:0 0 34px rgba(25,195,255,.55);text-shadow:0 0 24px rgba(25,195,255,1),0 0 6px #fff}}
-.capa-jogar{animation:capaPulso 1.6s ease-in-out infinite}.capa-jogar:active{transform:scale(.96)}
-.capa-jogar svg{width:30px;height:30px;fill:#fff}
+.capa-jogar{display:flex;align-items:center;justify-content:center;gap:14px;width:100%;padding:18px 0;font:inherit;font-family:var(--f-display);font-style:italic;font-weight:900;text-transform:uppercase;font-size:48px;letter-spacing:.06em;color:#fff;border:0;position:relative;overflow:hidden;border-top:2px solid #19c3ff;border-bottom:2px solid #19c3ff;background:linear-gradient(90deg,transparent,rgba(25,195,255,.35),transparent);text-shadow:0 0 14px rgba(25,195,255,.8);cursor:pointer;margin-bottom:21vh}@keyframes capaPulso{0%,100%{transform:scale(1);box-shadow:0 0 0 rgba(25,195,255,0);text-shadow:0 0 12px rgba(25,195,255,.7)}14%{transform:scale(1.09);box-shadow:0 0 44px rgba(25,195,255,.8);text-shadow:0 0 28px #19c3ff,0 0 8px #fff}28%{transform:scale(1.01)}42%{transform:scale(1.06);box-shadow:0 0 30px rgba(25,195,255,.6);text-shadow:0 0 22px #19c3ff,0 0 6px #fff}60%{transform:scale(1)}}@keyframes capaVarre{0%{left:-60%}55%,100%{left:130%}}
+.capa-jogar{animation:capaPulso 1s ease-out infinite}.capa-jogar::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:capaVarre 1.6s ease-in-out infinite;pointer-events:none}.capa-jogar:active{transform:scale(.96)}
 .capa-engr{position:absolute;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:3;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;color:#fff;background:rgba(6,16,42,.75);border:2px solid rgba(25,195,255,.6);box-shadow:0 0 14px rgba(25,195,255,.4);cursor:pointer}.capa-engr svg{width:32px;height:32px}
 .roda-sp{position:relative;z-index:1;width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center;gap:6px}
 .roda{--h:56px;width:100%;height:calc(var(--h)*3);overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none;padding-block:var(--h);box-sizing:border-box;-webkit-mask-image:linear-gradient(180deg,transparent,#000 30%,#000 70%,transparent);mask-image:linear-gradient(180deg,transparent,#000 30%,#000 70%,transparent)}
@@ -4765,7 +4764,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794326106";
+const VERSAO="1794351244";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -5075,7 +5074,7 @@ function renderAbertura(){
     <div class="fut">FUT</div><div class="master">MASTER</div></div>
   ${arte?"":`<div class="lema"><b>FUT</b><span>Monte seu time.<br>Conquiste seu sonho.</span></div>`}
   ${c?`<div class="clube-sp"><b>${esc(c.name)}</b> · ${esc(nomeLiga(c.tier))} · ${G.year}${info?`<br>Arquivo de save: temporada ${info.ano}, ${esc(info.quando)}`:""}</div>`:""}
-  <div class="roda-sp"><button class="capa-jogar" data-a="spjogar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span>Jogar</span></button></div>
+  <div class="roda-sp"><button class="capa-jogar" data-a="spjogar"><span>Jogar</span></button></div>
   <button class="capa-engr" data-a="splajustes" aria-label="Configurações"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
   <input type="file" id="arq-save" accept=".json,application/json,text/plain" hidden>`;
   const cv=sp.querySelector("canvas");if(cv)pincel(cv);
