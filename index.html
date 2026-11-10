@@ -1311,7 +1311,7 @@ nav.abas button{font-size:11px}
 @media (prefers-reduced-motion:reduce){.splash.carga-sai{animation:spSaiR .3s forwards}.splash.carga-entra{animation:none}}
 .beta-tag{position:fixed;z-index:3;left:-999px;top:0;opacity:0;font-family:var(--f-display);font-weight:800;letter-spacing:.12em;color:#031026;background:#19c3ff;padding:.12em .5em .1em;border-radius:.35em;transform:rotate(-8deg);box-shadow:0 2px 8px rgba(0,0,0,.45);pointer-events:none;transition:opacity .3s}
 .beta-tag.on{opacity:.92}
-.intro-games{display:block;margin-top:14px;text-align:center;font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-weight:300;font-size:min(7vw,30px);letter-spacing:.62em;padding-left:.62em;text-transform:uppercase;
+.intro-mega{position:relative;display:block;line-height:0}.intro-games{display:block;margin-top:2px;text-align:center;font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-weight:300;font-size:min(7vw,30px);letter-spacing:.62em;padding-left:.62em;text-transform:uppercase;
   background:linear-gradient(to top right,rgba(255,255,255,.78) 41%,#fff 46%,#fff 54%,rgba(255,255,255,.78) 59%) no-repeat;background-size:300% 300%;background-position:90% 10%;-webkit-background-clip:text;background-clip:text;color:transparent;
   animation:inBrilho 1.3s .75s cubic-bezier(.45,0,.25,1) both,inGamesAcende .35s 1.85s ease-out forwards;filter:drop-shadow(0 0 0 transparent)}
 @keyframes inGamesAcende{to{filter:drop-shadow(0 0 6px rgba(255,255,255,.55))}}
@@ -4761,7 +4761,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794323511";
+const VERSAO="1794325496";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -5097,7 +5097,7 @@ function telaIntro(sp,c){ // 02/11: tela preta com a logo MEGA e brilho (3 s) an
   sp.classList.add("intro");
   if(!CARGA.verOk){sp.innerHTML="";if(!CARGA.verT)CARGA.verT=setTimeout(versaoOk,1500);return} // tela preta até conferir a versão (no máx. 1,5 s)
   if(CARGA.introT)return;
-  sp.innerHTML=`<div class="intro-logo" aria-label="MEGA Games"><img src="img/mega.png" alt="MEGA"><i class="intro-brilho"></i><span class="intro-games">GAMES</span></div>`;
+  sp.innerHTML=`<div class="intro-logo" aria-label="MEGA Games"><span class="intro-mega"><img src="img/mega.png" alt="MEGA"><i class="intro-brilho"></i></span><span class="intro-games">GAMES</span></div>`;
   CARGA.introT=setTimeout(()=>somArquivo("carga",false,.9),750); // 02/11: som de transição (sons/carga.mp3) começa junto com o brilho
   setTimeout(()=>{CARGA.intro=false;sp.classList.remove("intro");if(abertura)render()},4500); // 02/11: +1,5 s parada depois do brilho, depois corte seco pro carregamento
 }
