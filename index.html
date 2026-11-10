@@ -4701,7 +4701,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794306708";
+const VERSAO="1794307491";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -8238,7 +8238,7 @@ function reNovoW(){return {nome:"",num:10,nat:"BRA",pos:"ATA",est:"art",ment:"pr
 function reCriar(){const w=REW;const nome=(w.nome||"").trim();if(nome.length<2)return "Escreva o nome que vai na camisa.";
   const est=RE_ESTILOS.find(e=>e[0]===w.est&&(!!e[4])===(w.pos==="GOL"))||RE_ESTILOS.find(e=>(!!e[4])===(w.pos==="GOL"));
   const a={};reAtrs(w.pos).forEach(k=>{a[k]=38+ri(0,9)+((RE_PESO[w.pos][k]||0)>=.15?6:0)+(est[3][k]||0)});
-  let pot=Math.round(58+rnd()*17+rnd()*12+(rnd()<.08?6:0));if(w.ment==="pro")pot+=2;
+  let pot=Math.round(60+rnd()*18+rnd()*12+(rnd()<.08?5:0));if(w.ment==="pro")pot+=2;
   const pais=PAISES[w.nat]?w.nat:"BRA";
   RE.car={v:1,nome,num:+w.num||10,nat:w.nat,pos:w.pos,est:est[0],ment:w.ment,rf:w.rf,foto:w.fmodo==="foto"&&w.foto?w.foto:null,idade:16,ano:new Date().getFullYear(),a,pot,pais,
     m:{},fila:[],marc:[],fama:w.ment==="mar"?8:3,torc:50,tec:w.ment==="lid"?60:50,inj:0,base:true,clube:null,fase:"peneira",tot:{j:0,g:0,a:0},tits:[],clubes:[],selec:{j:0,g:0},premios:[],log:[],ganho:0,temps:[],pico:0,usados:[]};
@@ -8395,7 +8395,7 @@ function reNovaTemporada(c){c.m=c.m||{};c.fila=c.fila||[];c.marc=c.marc||[];c.T0
 function reSimular(c){const ov=reOv(c),r=c.clube.rating,st=reStatus(c),pais=c.clube.pais,tier=c.clube.tier;
   const pct=c.base?.75:{"Titular absoluto":.9,"Titular":.76,"Rotação":.5,"Reserva":.2}[st];
   const total=c.base?30:[52,46,40][tier]||40;let j=Math.round(total*pct*(1-(c.inj||0)/10)*(c.susp?.94:1)*(.9+rnd()*.15));
-  if(!c.inj&&rnd()<.12+(c.ment==="fes"?.06:0)+(c.a.fis<50?.06:0)-(c.dieta?.04:0)){const m=ri(1,3);j=Math.round(j*(1-m/10));reLog(c,`${c.nome} sofre lesão e fica ${m} ${m>1?"meses":"mês"} fora`)}
+  if(!c.inj&&rnd()<.1+(c.ment==="fes"?.06:0)+(c.a.fis<50?.06:0)-(c.dieta?.04:0)){const m=ri(1,3);j=Math.round(j*(1-m/10));reLog(c,`${c.nome} sofre lesão e fica ${m} ${m>1?"meses":"mês"} fora`)}
   const fx=c.base?1:Math.max(.4,Math.min(1.8,1+(ov-r)/35));
   const gb={ATA:.32,MEI:.14,VOL:.05,LAT:.035,ZAG:.045,GOL:0}[c.pos]*Math.pow((c.a.fin||30)/75,1.2)*fx,ab={ATA:.12,MEI:.18,LAT:.1,VOL:.07,ZAG:.02,GOL:.004}[c.pos]*Math.pow((c.a.pas||40)/75,1.2)*fx;
   const g=Math.round(j*gb*(.75+rnd()*.5)),as=Math.round(j*ab*(.75+rnd()*.5)),nota=Math.max(5.2,Math.min(9.2,6.2+(ov-r)/12+(j?(g+as*.6)/j:0)*1.6+(rnd()-.5)*.6));
@@ -8406,25 +8406,25 @@ function reSimular(c){const ov=reOv(c),r=c.clube.rating,st=reStatus(c),pais=c.cl
   const L=reClubes(pais,tier).filter(x=>x.name!==c.clube.name),forca=r+(pct>=.7?(ov-r)*.25:0)+(rnd()-.5)*6,pos=1+L.filter(x=>x.rating+(rnd()-.5)*8>forca).length,n=L.length+1;T.pos=pos;T.liga=reLiga(c);
   const fin=[];
   if(pos===1)fin.push({comp:T.liga,tipo:"lance",txt:`Última rodada ${reDa(T.liga)}: empate dá o título ao rival. Jogo 0×0 aos 44 do segundo tempo.`});
-  const cn=COPA_NAC[pais];if(cn&&rnd()<Math.max(.02,Math.min(.25,.03+(forca-62)/90)))fin.push({comp:cn,tipo:"pen",txt:`Final da ${cn}: empate no tempo normal. Vai para os pênaltis!`});
-  const cont=COPAS[(PAISES[pais]||{}).cont];if(cont&&tier===0&&(c.vaga||0)>0){const main=c.vaga===1,nm=main?cont.main:cont.sec;if(rnd()<Math.max(.02,Math.min(.25,(main?.02:.06)+(forca-74)/55)))fin.push({comp:nm,tipo:rnd()<.5?"pen":"lance",txt:`Final da ${nm}! ${rnd()<.5?"Empate no fim da prorrogação: pênaltis.":"Jogo empatado nos acréscimos."}`})}
+  const cn=COPA_NAC[pais];if(cn&&rnd()<Math.max(.03,Math.min(.32,.05+(forca-61)/75)))fin.push({comp:cn,tipo:"pen",txt:`Final da ${cn}: empate no tempo normal. Vai para os pênaltis!`});
+  const cont=COPAS[(PAISES[pais]||{}).cont];if(cont&&tier===0&&(c.vaga||0)>0){const main=c.vaga===1,nm=main?cont.main:cont.sec;if(rnd()<Math.max(.03,Math.min(.3,(main?.03:.08)+(forca-73)/50)))fin.push({comp:nm,tipo:rnd()<.5?"pen":"lance",txt:`Final da ${nm}! ${rnd()<.5?"Empate no fim da prorrogação: pênaltis.":"Jogo empatado nos acréscimos."}`})}
   c.vaga=tier===0?(pos<=4?1:pos<=8?2:0):0;
   if(tier>0&&(pos<=4)){T.acesso=1;c.clube.tier=tier-1;reLog(c,`${c.clube.name} conquista o acesso com ${c.nome} em campo`)}
   else if(tier<2&&pos>n-4){T.queda=1;c.clube.tier=tier+1;c.torc-=5;reLog(c,`${c.clube.name} é rebaixado`)}
   // finais: a maior vira o momento decisivo; as outras se resolvem sozinhas
   const peso=x=>x.comp===(cont&&cont.main)?4:x.comp===T.liga&&tier===0?3:x.comp===cn?2:1;fin.sort((a,b)=>peso(b)-peso(a));
-  fin.slice(1).forEach(x=>{if(x.comp===T.liga||rnd()<.42)T.tits.push(`${x.comp} ${c.ano}`)});
+  fin.slice(1).forEach(x=>{if(x.comp===T.liga||rnd()<.5)T.tits.push(`${x.comp} ${c.ano}`)});
   // prêmios
   const art={ATA:22,MEI:14}[c.pos];if(art&&g>=art&&rnd()<.6){T.prem=`Artilheiro ${reDa(T.liga)}`}else if(T.nota>=7.5&&pct>=.7&&rnd()<.5)T.prem=`Craque ${reDa(T.liga)}`;
-  if(ov>=91&&rnd()<.22){T.bola=1}
+  if(ov>=90&&rnd()<.3){T.bola=1}
   if(ov>=76&&rnd()<(ov-70)/20){const sj=ri(2,7),sg=Math.round(sj*gb*(.6+rnd()*.8));c.selec.j+=sj;c.selec.g+=sg;T.sel=sj;if(c.selec.j===sj)reLog(c,`${c.nome} estreia pela seleção ${c.nat==="BRA"?"brasileira":"de "+(PAIS_NOME[c.nat]||"")}`)}
   c.mom=fin[0]?{...fin[0],res:null}:null;
   if(g>=15)reLog(c,`${c.nome} marca ${g} gols na temporada pelo ${c.clube.name}`);else if(T.nota>=7.3)reLog(c,`${c.nome} é um dos destaques ${reDa(T.liga)}`)}
-function reOpsMomento(c){const m=c.mom,gol=c.pos==="GOL",A=c.a,cl=x=>Math.max(.15,Math.min(.8,x));
-  if(m.tipo==="pen")return gol?[["🧤 Pular no canto que estudou",cl(.22+(A.pdp-50)/120),1],["👀 Esperar até o último segundo",cl(.18+(A.ref-50)/130),1]]
-    :[["⚽ Bater o pênalti decisivo",cl(.38+(A.cpe-50)/130),1],["🤝 Deixar para o mais experiente",.5,0]];
+function reOpsMomento(c){const m=c.mom,gol=c.pos==="GOL",A=c.a,cl=x=>Math.max(.2,Math.min(.88,x));
+  if(m.tipo==="pen")return gol?[["🧤 Pular no canto que estudou",cl(.3+(A.pdp-50)/110),1],["👀 Esperar até o último segundo",cl(.25+(A.ref-50)/120),1]]
+    :[["⚽ Bater o pênalti decisivo",cl(.48+(A.cpe-50)/110),1],["🤝 Deixar para o mais experiente",.58,0]];
   return gol?[["🧤 Ir para a área no último escanteio",cl(.12+(A.cab||40)/400),1],["🛡️ Segurar o empate atrás",.45,0]]
-    :[["🚀 Chutar de fora da área",cl(.22+(A.fin-50)/120),1],["🎯 Tocar para o companheiro livre",cl(.3+(A.pas-50)/130),1]]}
+    :[["🚀 Chutar de fora da área",cl(.3+(A.fin-50)/100),1],["🎯 Tocar para o companheiro livre",cl(.38+(A.pas-50)/120),1]]}
 function reResolverMomento(c,i){const m=c.mom,op=reOpsMomento(c)[i];if(!op||m.res)return;const ok=rnd()<op[1];m.res={i,ok,eu:op[2]};
   if(ok){c.T.tits.push(`${m.comp} ${c.ano}`);if(op[2]){c.fama+=8;c.torc+=10;m.res.txt=c.pos==="GOL"&&m.tipo==="pen"?"DEFENDEU! Você é o herói do título!":"GOOOL! Você decide e é o herói do título!";reLog(c,`${c.nome} decide e o ${c.clube.name} é campeão da ${m.comp}`)}else m.res.txt="O companheiro resolve. É campeão!"}
   else{if(m.comp===c.T.liga)c.T.pos=2;if(op[2]){c.fama-=2;c.torc-=4;m.res.txt=c.pos==="GOL"&&m.tipo==="pen"?"A bola entrou no outro canto. O título escapou.":"Para fora... o título escapou."}else m.res.txt="Não deu. O título escapou."}}
@@ -8451,7 +8451,7 @@ function reOfertas(c){const ov=reOv(c),out=[];
     return {promo:0,ofs:L.map(x=>({c:reClube(x),sal:reSal(ov,c.idade+1,x.tier)}))}}
   if(c.base)return {ofs:[]};
   if(c.arabe||c.m.arabia){return {ofs:[{c:{name:"Al-Nassr",pais:"ARA",tier:0,rating:70,c1:"#f5d000",c2:"#0047ab"},sal:Math.round(reSal(ov,c.idade,0)*3),arabe:1}]}}
-  let n=(rnd()<.18+c.fama/220?ri(1,2):0)+(c.querSair?1:0)+(c.emp&&rnd()<.6?1:0);if(reStatus(c)==="Reserva")n++;
+  let n=(rnd()<.22+c.fama/200?ri(1,2):0)+(c.querSair?1:0)+(c.emp&&rnd()<.6?1:0);if(reStatus(c)==="Reserva")n++;
   const fora=ov>=68||c.emp,paises=Object.keys(PAISES).filter(k=>fora||k===c.pais);
   const L=paises.flatMap(k=>[0,1,2].flatMap(t=>reClubes(k,t))).filter(x=>x.name!==c.clube.name&&x.rating>=Math.max(ov-9,c.clube.rating-6)&&x.rating<=ov+4);
   shuffle(L).slice(0,Math.min(3,n)).forEach(x=>out.push({c:reClube(x),sal:Math.round(reSal(ov,c.idade+1,x.tier)*(1+rnd()*.35))}));
