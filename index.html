@@ -501,6 +501,10 @@ nav.abas[hidden]{display:none}
 .tec-chip i{margin-left:auto;font-style:normal;font-weight:800;color:#ffd23f}.tec-chip svg,.tec-chip img{flex:none;border-radius:8px}
 .amg-el{display:grid;grid-template-columns:1fr 1fr;gap:6px;align-items:start}.amg-el .cartao{padding:2px 5px}.amg-el .jog{gap:5px;padding:4px 0;grid-template-columns:auto 1fr auto}.amg-el .jfoto{width:36px}.amg-el .jfoto .posb{font-size:8px;padding:0 3px}
 .amg-el .nm{min-width:0}.amg-el .nm b{font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}.amg-el .nm span{font-size:9.5px}.amg-el .ov{font-size:13px;width:30px;height:30px;flex-basis:30px}
+.re-fmodo{display:flex;gap:6px;justify-content:center;margin:4px 0 10px}.re-foto{border-radius:10px;object-fit:cover;display:block}.re-foto-vazia{width:96px;height:108px;border-radius:10px;border:2px dashed var(--gramado-3);display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;color:var(--cal-2)}
+.re-foto-ajuda{margin:10px 0;padding:10px 12px;border-radius:12px;background:var(--gramado-2);border:1px solid var(--gramado-3);font-size:13px}.re-foto-ajuda ol{margin:6px 0 8px;padding-left:18px}.re-foto-ajuda li{margin:3px 0}
+.re-copiar{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 10px;border-radius:12px;border:1.5px solid #ffd23f;background:rgba(255,210,63,.12);color:#ffe28a;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.re-copiar-ic{flex:none;width:36px;height:36px;border-radius:50%;background:#ffd23f;color:#2a1d00;display:grid;place-items:center}.re-copiar-ic svg{width:18px;height:18px}.re-foto-btn{margin-top:8px;cursor:pointer;display:flex;justify-content:center;align-items:center;width:100%;box-sizing:border-box}
 .modos{margin:6px 0 12px;position:relative;z-index:1}.modos-tit{margin:4px 0 8px}.modo{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:10px 12px;border-radius:14px;margin-bottom:6px;background:rgba(17,31,69,.85);border:1.5px solid var(--gramado-3);color:inherit;font:inherit}
 .modo b{display:block;font-size:15px}.modo small{color:var(--cal-2);font-size:12px}.modo-ic{font-size:22px}.modo.on{border-color:var(--ok)}.modo.est{border-color:#ffd23f;background:linear-gradient(120deg,rgba(255,210,63,.18),rgba(17,31,69,.9) 60%);cursor:pointer}.modo.est b{color:#ffe28a}.modo i{margin-left:auto;font-style:normal;font-size:22px;color:#ffd23f}
 .re{padding:10px 12px 40px;max-width:560px;margin:0 auto}.re-topo{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.re-topo b{color:#ffe28a;font-size:16px}
@@ -4697,7 +4701,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794271944";
+const VERSAO="1794272116";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -8208,7 +8212,21 @@ const reGrana=v=>fmtGrana("R$",Math.max(0,Math.round(v)));
 const reValor=c=>valorDe(reOv(c),c.idade,c.pot);
 const reSal=(ov,idade,tier,base)=>base?2:Math.max([40,15,6][tier]??6,Math.round(valorDe(ov,idade,ov)*.012*([1.3,1,.8][tier]??1)));
 const reLiga=c=>c.clube.pais==="ARA"?"Saudi Pro League":(PAISES[c.clube.pais]||PAISES.BRA).ligas[c.clube.tier]||"Liga";
-const reRosto=(c,px)=>rostoSVG({id:900000+(c.rf||0),rf:c.rf||0,n:c.nome,pos:c.pos},px);
+const reRosto=(c,px)=>c.foto&&(c.fmodo!=="banco")?`<img class="re-foto" src="${c.foto}" width="${px}" height="${Math.round(px*1.12)}" alt="">`:rostoSVG({id:900000+(c.rf||0),rf:c.rf||0,n:c.nome,pos:c.pos},px);
+const PROMPT_ATLETA=`Use a foto do meu rosto que anexei para criar a foto de perfil de um jogador de futebol profissional, no estilo das fotos oficiais de elenco.
+
+- Mantenha meu rosto, cabelo, tom de pele e traços exatamente iguais aos da foto (tem que dar para me reconhecer).
+- Enquadramento do peito para cima, de frente, olhando para a câmera, com expressão confiante.
+- Camisa de futebol branca e lisa, sem escudo, sem número e sem patrocínio.
+- Fundo cinza claro e liso, com luz de estúdio suave.
+- Imagem realista, como uma fotografia, no formato vertical (4:5).
+- Sem texto, sem moldura e sem marca d'água.`;
+/* foto enviada: recorta no formato do card (100x112, puxando para o alto) e comprime */
+function reFotoUpload(file){return new Promise((ok,erro)=>{if(!file||!/^image\//.test(file.type))return erro("Escolha uma imagem.");
+  const fr=new FileReader();fr.onerror=()=>erro("Não deu para ler a foto.");fr.onload=()=>{const im=new Image();im.onerror=()=>erro("Não deu para abrir a foto.");im.onload=()=>{
+    const W=240,H=269,cv=document.createElement("canvas");cv.width=W;cv.height=H;const x=cv.getContext("2d"),r=Math.max(W/im.width,H/im.height),w=im.width*r,h=im.height*r;
+    x.drawImage(im,(W-w)/2,Math.min(0,(H-h)*.25),w,h);ok(cv.toDataURL("image/jpeg",.85))};im.src=fr.result};fr.readAsDataURL(file)})}
+document.addEventListener("change",e=>{if(e.target.id!=="re-foto-arq")return;reLerCampos();reFotoUpload(e.target.files&&e.target.files[0]).then(u=>{if(REW){REW.foto=u;REW.fmodo="foto"}render();toast("Foto enviada!")}).catch(m=>toastErro(m))});
 function reStatus(c){if(c.base)return "Categoria de base";const d=reOv(c)-c.clube.rating+(c.tec<30?-4:c.tec>75?2:0);return d>=2?"Titular absoluto":d>=-4?"Titular":d>=-9?"Rotação":"Reserva"}
 function reCor(ov){return ov>=85?"lenda":ov>=75?"ouro":ov>=65?"prata":"bronze"}
 const reDa=n=>/^(Championship|League|Brasileirão|Campeonato)/.test(n)?"do "+n:"da "+n; // "da Série A", "do Championship"
@@ -8222,12 +8240,18 @@ function reCriar(){const w=REW;const nome=(w.nome||"").trim();if(nome.length<2)r
   const a={};reAtrs(w.pos).forEach(k=>{a[k]=38+ri(0,9)+((RE_PESO[w.pos][k]||0)>=.15?6:0)+(est[3][k]||0)});
   let pot=Math.round(62+rnd()*18+rnd()*12);if(w.ment==="pro")pot+=2;
   const pais=PAISES[w.nat]?w.nat:"BRA";
-  RE.car={v:1,nome,num:+w.num||10,nat:w.nat,pos:w.pos,est:est[0],ment:w.ment,rf:w.rf,idade:16,ano:new Date().getFullYear(),a,pot,pais,
+  RE.car={v:1,nome,num:+w.num||10,nat:w.nat,pos:w.pos,est:est[0],ment:w.ment,rf:w.rf,foto:w.fmodo==="foto"&&w.foto?w.foto:null,idade:16,ano:new Date().getFullYear(),a,pot,pais,
     fama:w.ment==="mar"?8:3,torc:50,tec:w.ment==="lid"?60:50,inj:0,base:true,clube:null,fase:"peneira",tot:{j:0,g:0,a:0},tits:[],clubes:[],selec:{j:0,g:0},premios:[],log:[],ganho:0,temps:[],pico:0,usados:[]};
   RE.car.pico=reOv(RE.car);REW=null;reSalvar();return null}
 function reTelaCriar(){const w=REW||(REW=reNovoW()),gol=w.pos==="GOL",ests=RE_ESTILOS.filter(e=>(!!e[4])===gol);if(!ests.some(e=>e[0]===w.est))w.est=ests[0][0];
   return `<div class="re-sec"><h3>Seu atleta</h3>
-  <div class="re-rosto-esc"><button class="btn mini" data-a="re_rosto" data-v="-1" aria-label="Rosto anterior">◀</button>${reRosto(w,96)}<button class="btn mini" data-a="re_rosto" data-v="1" aria-label="Próximo rosto">▶</button></div>
+  <div class="re-fmodo"><button class="re-chip${w.fmodo!=="foto"?" on":""}" data-a="re_fmodo" data-v="banco">🖼️ Banco de imagens</button><button class="re-chip${w.fmodo==="foto"?" on":""}" data-a="re_fmodo" data-v="foto">📷 Enviar foto</button></div>
+  ${w.fmodo!=="foto"?`<div class="re-rosto-esc"><button class="btn mini" data-a="re_rosto" data-v="-1" aria-label="Rosto anterior">◀</button>${reRosto({...w,fmodo:"banco"},96)}<button class="btn mini" data-a="re_rosto" data-v="1" aria-label="Próximo rosto">▶</button></div>`
+  :`<div class="re-rosto-esc">${w.foto?reRosto(w,96):`<span class="re-foto-vazia">Sua foto<br>aparece aqui</span>`}</div>
+  <div class="re-foto-ajuda"><b>Como criar a sua foto de jogador</b>
+    <ol><li>Toque no botão abaixo para copiar o prompt (o texto com o pedido).</li><li>Abra o <b>ChatGPT</b>, <b>anexe uma foto do seu rosto</b> (de frente e bem iluminada) e cole o prompt.</li><li>Salve a imagem que ele criar e envie aqui em "Escolher foto".</li></ol>
+    <button class="re-copiar" data-a="re_prompt"><span class="re-copiar-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span><span>Clique aqui para copiar o prompt e criar a sua foto de perfil neste modo</span></button>
+    <label class="btn full re-foto-btn">📷 ${w.foto?"Trocar a foto":"Escolher foto"}<input id="re-foto-arq" type="file" accept="image/*" hidden></label></div>`}
   <label class="re-campo">Nome na camisa<input id="re-nome" maxlength="18" value="${esc(w.nome)}" placeholder="Ex.: Vitinho"></label>
   <div class="re-linha2"><label class="re-campo">Número<input id="re-num" type="number" min="1" max="99" value="${w.num}"></label>
   <label class="re-campo">Nacionalidade<select id="re-nat">${reNat().map(([k,n])=>`<option value="${k}"${k===w.nat?" selected":""}>${esc(n)}</option>`).join("")}</select></label></div></div>
@@ -8413,6 +8437,8 @@ function reAcao(a,v){reLer();const c=RE.car;
     case "re_pos":reLerCampos();REW.pos=v;break;
     case "re_est":reLerCampos();REW.est=v;break;
     case "re_ment":reLerCampos();REW.ment=v;break;
+    case "re_fmodo":reLerCampos();REW.fmodo=v;break;
+    case "re_prompt":reLerCampos();copiarTexto(PROMPT_ATLETA);return;
     case "re_criar":{reLerCampos();const e=reCriar();if(e){toastErro(e);return}break}
     case "re_hist":reLerCampos();RE_VER=+v;break;
     case "re_voltacriar":RE_VER=null;break;
