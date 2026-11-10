@@ -553,6 +553,14 @@ nav.abas[hidden]{display:none}
 .v2 .re-news{border-bottom:1px solid rgba(120,170,255,.18)}.v2 .re-news small{font-family:var(--f-display);font-size:15px;color:#ffd23f}
 .v2 .re-dec,.v2 .re-mom,.v2 .re-res .re-dec{border-radius:12px;background:linear-gradient(180deg,rgba(16,32,80,.9),rgba(8,18,48,.94));border:1.5px solid rgba(255,210,63,.6)}
 .v2 .re-sec h3,.v2 .re-tag{font-family:var(--f-display);font-style:italic;text-transform:uppercase}
+.re-card.mold{clip-path:none!important;background-position:center!important;background-size:100% 100%!important;background-repeat:no-repeat!important;background-color:transparent!important;aspect-ratio:300/440;padding:0!important;border-radius:0;box-shadow:none;filter:drop-shadow(0 6px 14px rgba(0,0,0,.55))}
+.re-card.mold .re-card-ov{left:11%;top:8%}.re-card.mold .re-card-foto{position:absolute;top:6.5%;right:9%;left:auto;padding:0;width:64%;justify-content:center}
+.re-card.mold .re-card-foto svg,.re-card.mold .re-card-foto img{width:100%!important;height:auto!important;border-radius:8px;-webkit-mask-image:linear-gradient(180deg,#000 80%,transparent);mask-image:linear-gradient(180deg,#000 80%,transparent)}
+.re-card.mold .re-card-nome{position:absolute;left:8%;right:8%;top:68.5%;height:13%;margin:0;padding:0;border:0;display:flex;align-items:center;justify-content:center;gap:6px;font-size:16px;line-height:1;white-space:nowrap;overflow:hidden}
+.re-card.mold .re-card-pe{position:absolute;left:11%;right:11%;top:84.5%;display:flex;justify-content:space-between;align-items:center;gap:4px;font-size:9px;white-space:nowrap;overflow:hidden}.re-card.mold .re-card-pe span{overflow:hidden;text-overflow:ellipsis}.re-card.mold .re-flag{font-size:11px;margin-right:2px}
+.re-card.mold.grande .re-card-nome{font-size:21px}.re-card.mold.grande .re-card-pe{font-size:12.5px}.re-card.mold.grande .re-card-ov b{font-size:40px}
+.re-card.mold.lenda{color:#ffe28a}.re-card.mold.lenda .re-card-nome{color:#ffd23f}.re-card.mold.lenda .re-card-pe i{background:rgba(255,226,138,.4)}
+.re-flag{font-style:normal;font-size:13px;margin-right:4px;vertical-align:-1px}
 .re-fmodo{display:flex;gap:6px;justify-content:center;margin:4px 0 10px}.re-foto{border-radius:10px;object-fit:cover;display:block}.re-foto-vazia{width:96px;height:108px;border-radius:10px;border:2px dashed var(--gramado-3);display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;color:var(--cal-2)}
 .re-foto-ajuda{margin:10px 0;padding:10px 12px;border-radius:12px;background:var(--gramado-2);border:1px solid var(--gramado-3);font-size:13px}.re-foto-ajuda ol{margin:6px 0 8px;padding-left:18px}.re-foto-ajuda li{margin:3px 0}
 .re-copiar{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 10px;border-radius:12px;border:1.5px solid #ffd23f;background:rgba(255,210,63,.12);color:#ffe28a;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
@@ -4753,7 +4761,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794319051";
+const VERSAO="1794321768";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -5344,7 +5352,7 @@ function rostoSVG(p,px){
     return `<svg class="rosto" viewBox="0 0 100 112" width="${px}" height="${Math.round(px*1.12)}" aria-hidden="true"><defs><mask id="${id}" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="112"><image href="${up.m}" width="100" height="112"/></mask></defs><image href="${up.s}" width="100" height="112"/><g mask="url(#${id})" style="mix-blend-mode:multiply"><rect x="0" y="56" width="100" height="56" fill="${u.camisa}"/><g transform="translate(0 72) scale(1 .34) translate(-50 -16)">${pat}</g></g></svg>`}
   const i=rostoIdx(p)%ROSTOS.n,cx=(i%10)*ROSTOS.w,cy=Math.floor(i/10)*ROSTOS.h,id="rf"+(++svgN);
   const c=p.club!=null&&G.clubs[p.club];
-  const u=c?unisDe(c)[0]:{camisa:"#e9e9e9",estilo:"liso",detalhe:"#ffffff",d2:"#ffffff"};
+  const u=p.uniX||(c?unisDe(c)[0]:{camisa:"#e9e9e9",estilo:"liso",detalhe:"#ffffff",d2:"#ffffff"}); // p.uniX: uniforme pronto (Rumo ao Estrelato)
   const pat=padraoUni(u,id+"p")[u.estilo]||"";
   return `<svg class="rosto" viewBox="${cx} ${cy} 100 112" width="${px}" height="${Math.round(px*1.12)}" aria-hidden="true"><defs><mask id="${id}" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="${ROSTOS.H}"><use href="#rostoMask"/></mask></defs><use href="#rostoImg"/><g mask="url(#${id})" style="mix-blend-mode:multiply"><rect x="${cx}" y="${cy+56}" width="100" height="56" fill="${u.camisa}"/><g transform="translate(${cx} ${cy+72}) scale(1 .34) translate(-50 -16)">${pat}</g></g></svg>`;
 }
@@ -8264,7 +8272,15 @@ const reGrana=v=>fmtGrana("R$",Math.max(0,Math.round(v)));
 const reValor=c=>valorDe(reOv(c),c.idade,c.pot);
 const reSal=(ov,idade,tier,base)=>base?2:Math.max([40,15,6][tier]??6,Math.round(valorDe(ov,idade,ov)*.012*([1.3,1,.8][tier]??1)));
 const reLiga=c=>c.clube.pais==="ARA"?"Saudi Pro League":(PAISES[c.clube.pais]||PAISES.BRA).ligas[c.clube.tier]||"Liga";
-const reRosto=(c,px)=>c.foto&&(c.fmodo!=="banco")?`<img class="re-foto" src="${c.foto}" width="${px}" height="${Math.round(px*1.12)}" alt="">`:rostoSVG({id:900000+(c.rf||0),rf:c.rf||0,n:c.nome,pos:c.pos},px);
+const reRosto=(c,px)=>c.foto&&(c.fmodo!=="banco")?`<img class="re-foto" src="${c.foto}" width="${px}" height="${Math.round(px*1.12)}" alt="">`:rostoSVG({id:900000+(c.rf||0),rf:c.rf||0,n:c.nome,pos:c.pos,uniX:c.clube?reUni(c.clube):null},px);
+/* camisa do clube atual no rosto do atleta (10/11): uniforme do clube do jogo com o mesmo nome; senão, liso nas cores dele */
+const RE_UNI=new Map();
+function reUni(cl){const k=cl.name+"|"+cl.pais;if(!RE_UNI.has(k)){const g=G&&Object.values(G.clubs).find(x=>x.name===cl.name&&!x.user&&!x.amigo);let u=null;try{u=g?unisDe(g)[0]:null}catch(e){}
+  RE_UNI.set(k,u||{camisa:cl.c1||"#e9e9e9",estilo:"liso",detalhe:cl.c2||"#ffffff",d2:cl.c2||"#ffffff"})}return RE_UNI.get(k)}
+/* bandeira do país (emoji; Inglaterra e Escócia com a sequência própria) */
+const RE_ISO={BRA:"BR",ARG:"AR",ESP:"ES",GER:"DE",FRA:"FR",URU:"UY",COL:"CO",CHI:"CL",PAR:"PY",EQU:"EC",PER:"PE",BOL:"BO",VEN:"VE",ITA:"IT",POR:"PT",NED:"NL",TUR:"TR",BEL:"BE",AUT:"AT",GRE:"GR",UCR:"UA",TCH:"CZ",SER:"RS",DIN:"DK",CRO:"HR",SUI:"CH"};
+function reBandeira(k){const tag=t=>String.fromCodePoint(0x1F3F4,...[...t].map(ch=>0xE0000+ch.charCodeAt(0)),0xE007F);if(k==="ENG")return tag("gbeng");if(k==="SCO")return tag("gbsct");
+  const i=RE_ISO[k];return i?String.fromCodePoint(...[...i].map(ch=>0x1F1E6+ch.charCodeAt(0)-65)):""}
 const PROMPT_ATLETA=`Use a foto do meu rosto que anexei para criar a foto de perfil de um jogador de futebol profissional, no estilo das fotos oficiais de elenco.
 
 - Mantenha meu rosto, cabelo, tom de pele e traços exatamente iguais aos da foto (tem que dar para me reconhecer).
@@ -8315,10 +8331,10 @@ function reTelaCriar(){const w=REW||(REW=reNovoW()),gol=w.pos==="GOL",ests=RE_ES
 function reLerCampos(){if(!REW)return;const n=$("#re-nome"),u=$("#re-num"),t=$("#re-nat");if(n)REW.nome=n.value;if(u)REW.num=Math.max(1,Math.min(99,+u.value||10));if(t)REW.nat=t.value}
 
 /* ---------- card do atleta ---------- */
-function reCard(c,grande,ovFix){const ov=ovFix||reOv(c);
-  return `<div class="re-card ${reCor(ov)}${grande?" grande":""}"><div class="re-card-ov"><b class="num">${ov}</b><small>${c.pos}</small>${c.clube?reEsc(c.clube,22):""}</div>
+function reCard(c,grande,ovFix){const ov=ovFix||reOv(c),mol=typeof CARTAS_RE!=="undefined"&&CARTAS_RE[reCor(ov)];
+  return `<div class="re-card ${reCor(ov)}${grande?" grande":""}${mol?" mold":""}"${mol?` style="background-image:url(${mol})"`:""}><div class="re-card-ov"><b class="num">${ov}</b><small>${c.pos}</small>${c.clube?reEsc(c.clube,22):""}</div>
     <div class="re-card-foto">${reRosto(c,grande?120:86)}</div><div class="re-card-nome">${esc(c.nome)}<span class="num">${c.num}</span></div>
-    <div class="re-card-pe"><span>${esc(PAIS_NOME[c.nat]||"")}</span><i></i><span>${c.idade} anos</span></div></div>`}
+    <div class="re-card-pe"><span><em class="re-flag">${reBandeira(c.nat)}</em>${esc(PAIS_NOME[c.nat]||"")}</span><i></i><span>${c.idade} anos</span></div></div>`}
 function reBarras(c){return `<div class="atrs">${reAtrs(c.pos).map(k=>{const v=reCl(c.a[k]),[n,ic]=RE_ATR[k];return `<div class="atr"><span>${ic} ${n}</span><div class="atr-b"><i style="width:${v}%;background:${corAtr(v)}"></i></div><b class="num">${v}</b></div>`}).join("")}</div>`}
 function reRel(c){const b=(n,v,ic)=>`<div class="re-rel"><span>${ic} ${n}</span><div class="atr-b"><i style="width:${reCl(v)}%;background:${corAtr(v)}"></i></div></div>`;
   return b("Fama",c.fama,"📣")+b("Torcida",c.torc,"🏟️")+b("Técnico",c.tec,"📋")}
@@ -9027,7 +9043,7 @@ setTimeout(()=>{try{amgSync(true)}catch(e){}},2500); // cria o ID do dono (1ª v
 try{somIniciar();somModo(modoDesejado())}catch(e){}
 try{carregarKits()}catch(e){}
 // imagens que não aparecem na abertura carregam logo depois da 1ª tela (abre mais rápido no celular); quando chegam, redesenha a tela
-const IMG_TARDE=["img/escudos-img.js?v=655f7708","img/patro-logos.js?v=3e44eabc","img/rostos-reais.js?v=0bcaf037","img/titulos.js?v=9ecffff6","dados/titulos.js?v=a01a43e3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=67cfbd62","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
+const IMG_TARDE=["img/cartas-re.js?v=6bdf0053","img/escudos-img.js?v=655f7708","img/patro-logos.js?v=3e44eabc","img/rostos-reais.js?v=0bcaf037","img/titulos.js?v=9ecffff6","dados/titulos.js?v=a01a43e3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=67cfbd62","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
 // 27/10: redesenha a cada arquivo que chega (logos dos patrocinadores não esperam as fotos); com aviso aberto, redesenha quando ele fechar
 let TARDE_T=null,TARDE_PEND=false;
 function tardeRender(){clearTimeout(TARDE_T);TARDE_T=setTimeout(()=>{if(!G||abertura||G.live||aba==="prejogo")return;if(document.querySelector(".veu")){TARDE_PEND=true;return}TARDE_PEND=false;render()},250)}
