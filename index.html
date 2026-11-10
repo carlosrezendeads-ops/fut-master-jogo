@@ -516,6 +516,13 @@ nav.abas[hidden]{display:none}
 .re-at-b{grid-column:1/-1;display:block;height:5px;border-radius:99px;background:var(--gramado-3);overflow:hidden}.re-at-b i{display:block;height:100%;border-radius:99px}
 .re-meds{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.re-med{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:2px 6px;padding:7px 8px;border-radius:11px;background:rgba(5,10,30,.4)}.re-med small{font-size:11px;color:var(--cal-2)}.re-med b{grid-column:1/-1;font-size:17px;font-family:var(--f-display)}.re-med>i{grid-column:1/-1;display:block;height:5px;border-radius:99px;background:var(--gramado-3);overflow:hidden}.re-med>i i{display:block;height:100%}
 .re-news{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--gramado-3);font-size:13px}.re-news:last-child{border:0}.re-news small{color:#ffd23f;font-weight:800}
+.re-kv{display:flex;flex-direction:column}.re-kv div{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.08)}.re-kv span{color:var(--cal-2)}.re-kv b{text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.re-ls{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.re-l{display:grid;grid-template-columns:minmax(0,1fr) 34px 22px 20px;align-items:center;gap:5px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:12.5px}
+.re-l-n{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#dfe6ff}.re-l-b{display:block;height:4px;border-radius:99px;background:var(--gramado-3);overflow:hidden}.re-l-b i{display:block;height:100%}.re-l>b{font-size:14px;text-align:right;font-family:var(--f-display)}
+.re-l em{font-style:normal;font-size:10.5px;font-weight:900;text-align:left}.re-l em.bom{color:#39d67a}.re-l em.ruim{color:#ff6b6b}
+.re-evo{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;margin:10px 0 0;padding:7px 10px;border-radius:10px;background:rgba(57,214,122,.08);border-left:3px solid #39d67a;font-size:12.5px}.re-evo span{color:var(--cal-2)}.re-evo span b{color:#ffe28a}.re-evo .re-fxs{flex-basis:100%;margin-top:2px}
+.re-fxs{display:flex;flex-wrap:wrap;align-items:center;gap:2px 5px;margin-top:4px}.re-fx,.re-fx.bom,.re-fx.ruim,.re-fx.neu{font-size:12px;font-weight:800;padding:0;border:0;background:none}.re-sep{font-style:normal;color:var(--cal-2)}
+.re-box{padding:10px 12px}.re-box-t{margin-bottom:4px}.re-feito{padding:6px 10px}
 .re-fmodo{display:flex;gap:6px;justify-content:center;margin:4px 0 10px}.re-foto{border-radius:10px;object-fit:cover;display:block}.re-foto-vazia{width:96px;height:108px;border-radius:10px;border:2px dashed var(--gramado-3);display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;color:var(--cal-2)}
 .re-foto-ajuda{margin:10px 0;padding:10px 12px;border-radius:12px;background:var(--gramado-2);border:1px solid var(--gramado-3);font-size:13px}.re-foto-ajuda ol{margin:6px 0 8px;padding-left:18px}.re-foto-ajuda li{margin:3px 0}
 .re-copiar{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 10px;border-radius:12px;border:1.5px solid #ffd23f;background:rgba(255,210,63,.12);color:#ffe28a;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
@@ -4716,7 +4723,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794317498";
+const VERSAO="1794317749";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -8331,7 +8338,7 @@ const RE_DIL=[
  {id:"contrato_longo",f:"J",c:c=>!c.base,t:"O {cl} oferece renovar por 5 anos com aumento pequeno.",o:[["✍️ Assinar já",{tec:4,torc:4,din:20,m:"fiel",r:"Segurança para a carreira. Talvez pudesse ganhar mais."}],["⏳ Esperar valorizar",RC(.6,{din:60,r:"Você jogou bem e renovou ganhando muito mais."},{torc:-4,sair:1,r:"Não rendeu e o clube perdeu o interesse."})]]},
  {id:"comparacao",f:"J",t:"A imprensa diz que você é 'o novo craque' e te compara a uma lenda.",o:[["😁 Abraçar a comparação",{fama:6,m:"pressao",r:"A expectativa ficou enorme."}],["🙏 'Sou só eu mesmo'",{tec:2,torc:2,r:"Pé no chão. A torcida gostou."}]]},
  {id:"festa_aniv",f:"JA",t:"Seu aniversário cai na véspera de jogo. Os amigos querem festa.",o:[["🎉 Festa grande",RC(.6,{fama:4,tec:-3,a:{fis:-1},r:"Festa boa e ninguém soube."},{fama:3,torc:-7,tec:-6,log:"Festa de {n} na véspera do jogo vira polêmica",m:"baladeiro",r:"Vazou vídeo. Polêmica."})],["🎂 Bolo com a família",{tec:2,r:"Simples e sem problema."}]]},
- {id:"chamado_fora",f:"J",c:c=>ovRE(c)>=62&&!c.base,t:"Um clube europeu médio quer te levar já, mesmo jovem.",o:[["✈️ Ir agora para a Europa",{sair:1,m:"europajovem",r:"No fim da temporada você vai poder aceitar propostas de fora."}],["🏠 Amadurecer no Brasil",{torc:5,pot:1,r:"Mais minutos e mais calma."}]]},
+ {id:"chamado_fora",f:"J",c:c=>ovRE(c)>=62&&!c.base&&c.clube.pais===c.pais&&["BRA","ARG"].includes(c.pais),t:"Um clube europeu médio quer te levar já, mesmo jovem.",o:[["✈️ Ir agora para a Europa",{sair:1,m:"europajovem",r:"No fim da temporada você vai poder aceitar propostas de fora."}],["🏠 Amadurecer em casa",{torc:5,pot:1,r:"Mais minutos e mais calma."}]]},
  {id:"lesao_jovem",f:"JA",t:"Exames mostram uma inflamação no joelho. O médico sugere parar 1 mês.",o:[["🛌 Parar e tratar",{inj:1,r:"Voltou 100%."}],["💉 Infiltração e seguir jogando",{tec:2,m:"joelho",f:[["joelho2",3]],r:"Jogou sem dor... por enquanto."}]]},
 
  /* ---------- AUGE (23-30) ---------- */
@@ -8411,7 +8418,7 @@ function reDiff(c,s){const out=[];reAtrs(c.pos).forEach(k=>{const d=Math.round(c
   if((c.fila||[]).length>s.fila)out.push([0,"⏳ Isso vai voltar no futuro","x"]);
   if(c.querSair&&!s.sair)out.push([0,"📨 Clubes de olho em você","x"]);return out}
 function reChips(L,anim){return (L||[]).length?`<div class="re-fxs">${L.map(([d,n,t],i)=>{const cls=t==="x"?(d<0?"ruim":"neu"):d>0?"bom":"ruim",txt=t==="x"?n:t==="$"?(d>0?"+ ":"− ")+n:`${d>0?"+":"−"}${Math.abs(d)} ${n}`;
-    return `<span class="re-fx ${cls}${anim?" pop":""}" style="animation-delay:${i*110}ms">${esc(txt)}</span>`}).join("")}</div>`:""}
+    return `<span class="re-fx ${cls}${anim?" pop":""}" style="animation-delay:${i*110}ms">${esc(txt)}</span>`}).join(`<i class="re-sep">·</i>`)}</div>`:""}
 function reNovaTemporada(c){c.m=c.m||{};c.fila=c.fila||[];c.marc=c.marc||[];c.T0=[];const d1=reSortearDil(c,[]),d2=reSortearDil(c,[d1]);c.pend=["foco",d1,d2];c.resp=[];c.foco=null;c.fase="temp";
   if(c.m.empfamoso&&!c.fila.some(x=>x.id==="empgolpe")&&!c.m.golpeMarc&&rnd()<.25){c.m.golpeMarc=1;c.fila.push({id:"empgolpe",ano:c.ano+ri(2,4)})}}
 
@@ -8509,21 +8516,21 @@ function reTelaFim(c,hist){const tits=c.tits.filter(t=>!t.startsWith("Sub-20"));
 
 /* ---------- painel da temporada (10/11: visual novo, atributos à mostra, efeitos de cada escolha) ---------- */
 function reAtrGrade(c){const soma={};(c.resp||[]).forEach(r=>(r[2]||[]).forEach(x=>{if(x[2]==="a")soma[x[3]]=(soma[x[3]]||0)+x[0]}));
-  return `<div class="re-ats">${reAtrs(c.pos).map(k=>{const v=reCl(c.a[k]),[n,ic]=RE_ATR[k],d=soma[k]||0;
-    return `<div class="re-at${d>0?" mudou":d<0?" caiu":""}"><span class="re-at-ic">${ic}</span><span class="re-at-n">${n}</span><b class="num" style="color:${corAtr(v)}">${v}</b>${d?`<em class="${d>0?"bom":"ruim"}">${d>0?"+":"−"}${Math.abs(d)}</em>`:""}<i class="re-at-b"><i style="width:${v}%;background:${corAtr(v)}"></i></i></div>`}).join("")}</div>`}
-function reMedidor(n,v,ic){v=reCl(v);return `<div class="re-med"><span>${ic}</span><small>${n}</small><b class="num">${v}</b><i><i style="width:${v}%;background:${corAtr(v)}"></i></i></div>`}
+  return `<div class="re-ls">${reAtrs(c.pos).map(k=>reLinha({cpe:"Pênaltis",fal:"Faltas",pdp:"Pega pênalti",fis:"Físico"}[k]||RE_ATR[k][0],c.a[k],RE_ATR[k][1],soma[k]||0)).join("")}</div>`}
+function reLinha(n,v,ic,d){v=reCl(v);return `<div class="re-l"><span class="re-l-n">${ic} ${n}</span><i class="re-l-b"><i style="width:${v}%;background:${corAtr(v)}"></i></i><b class="num" style="color:${corAtr(v)}">${v}</b><em class="${d>0?"bom":d<0?"ruim":""}">${d?(d>0?"+":"−")+Math.abs(d):""}</em></div>`}
+function reMedidor(n,v,ic){return reLinha(n,v,ic,0)}
 function reTelaTemp(c){const d=c.pend&&c.pend[c.resp.length],D=d&&reDil(d),cl=c.clube,ov=reOv(c),ev=c.evo&&c.evo.ano===c.ano-1?c.evo:null,anim=c.anim;c.anim=0;
   const evoL=ev?Object.entries(ev.d).sort((a,b)=>b[1]-a[1]).map(([k,x])=>[x,RE_ATR[k][1]+" "+RE_ATR[k][0],"a"]):[];
   return `<div class="re-hero" style="--k1:${cl.c1||"#1d3166"};--k2:${cl.c2||"#fff"}">${reCard(c)}
     <div class="re-hero-dir"><div class="re-clube">${reEsc(cl,34)}<div><b>${esc(cl.name)}</b><small>${c.base?"Categoria de base":esc(reLiga(c))}</small></div></div>
-      <div class="re-tiles"><div><small>Temporada</small><b class="num">${c.ano}</b></div><div><small>Situação</small><b>${reStatus(c)}</b></div><div><small>Valor</small><b class="num">${reGrana(reValor(c))}</b></div><div><small>Salário</small><b class="num">${reGrana(reSal(ov,c.idade,cl.tier,c.base))}</b></div></div>
+      <div class="re-kv"><div><span>Temporada</span><b class="num">${c.ano}</b></div><div><span>Situação</span><b>${reStatus(c)}</b></div><div><span>Valor</span><b class="num">${reGrana(reValor(c))}</b></div><div><span>Salário</span><b class="num">${reGrana(reSal(ov,c.idade,cl.tier,c.base))}/mês</b></div></div>
       <div class="re-carr"><span>⚽ <b class="num">${c.tot.g}</b> gols</span><span>🎯 <b class="num">${c.tot.a}</b> assist.</span><span>👟 <b class="num">${c.tot.j}</b> jogos</span><span>🏆 <b class="num">${c.tits.filter(t=>!t.startsWith("Sub")).length}</b></span></div></div></div>
-  ${ev&&evoL.length?`<div class="re-evo"><div class="re-evo-top"><b>📈 Evolução em ${ev.ano}</b><span class="num">Força ${ev.ov[0]} → <b>${ev.ov[1]}</b></span></div>${reChips(evoL)}</div>`:""}
+  ${ev&&evoL.length?`<div class="re-evo"><b>📈 Evolução ${ev.ano}</b><span class="num">Força ${ev.ov[0]} → <b>${ev.ov[1]}</b></span>${reChips(evoL)}</div>`:""}
   ${c.resp.map((r,i)=>`<div class="re-feito"><small>${esc(r[0])}</small><span>${esc(r[1])}</span>${reChips(r[2],anim===i+1)}</div>`).join("")}
   ${D?`<div class="re-dec"><p class="re-tag">Decisão ${c.resp.length+1} de ${c.pend.length}</p><b>${esc(reTxt(c,D.t))}</b><div class="re-ops">${D.o.map((o,i)=>`<button class="re-op" data-a="re_dec" data-v="${i}"><b>${esc(o[0])}</b></button>`).join("")}</div></div>`
     :`<button class="btn prim full re-jogar" data-a="re_jogar">▶ Jogar a temporada ${c.ano}</button>`}
   <div class="re-box"><div class="re-box-t"><b>Atributos</b><span>Força <b class="num">${ov}</b></span></div>${reAtrGrade(c)}</div>
-  <div class="re-box"><div class="re-box-t"><b>Relação e fama</b></div><div class="re-meds">${reMedidor("Fama",c.fama,"📣")}${reMedidor("Torcida",c.torc,"🏟️")}${reMedidor("Técnico",c.tec,"📋")}</div></div>
+  <div class="re-box"><div class="re-box-t"><b>Relação e fama</b></div><div class="re-ls">${reMedidor("Fama",c.fama,"📣")}${reMedidor("Torcida",c.torc,"🏟️")}${reMedidor("Técnico",c.tec,"📋")}</div></div>
   ${c.log.length?`<div class="re-box"><div class="re-box-t"><b>📰 Manchetes</b></div>${c.log.slice(0,5).map(x=>`<div class="re-news"><small class="num">${x.ano}</small><span>${esc(x.t)}</span></div>`).join("")}</div>`:""}`}
 /* ---------- telas ---------- */
 let RE_VER=null; // ficha de carreira antiga aberta
