@@ -4763,7 +4763,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794325750";
+const VERSAO="1794325785";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -5119,8 +5119,8 @@ function telaCarga(sp,c){
   let ultFrase=performance.now();
   CARGA.timer=setInterval(()=>{
     const agora=performance.now(),t=agora-CARGA.t0;
-    // ritmo do Carlos (10/11): 1 s parado, 0→20% em 1,5 s, 2 s nos 20%, 20→100% em 1,5 s (6 s no total)
-    const p=t<1000?0:t<2500?.2*(t-1000)/1500:t<4500?.2:.2+.8*Math.min(1,(t-4500)/1500); // 10/11: espera 1 s, 0→20% em 1,5 s, para 2 s, 20→100% em 1,5 s
+    // ritmo do Carlos (10/11): 0,5 s parado, 0→20% em 1 s, 1,5 s nos 20%, 20→100% em 1,5 s (4,5 s no total)
+    const p=t<500?0:t<1500?.2*(t-500)/1000:t<3000?.2:.2+.8*Math.min(1,(t-3000)/1500); // 10/11: espera 0,5 s, 0→20% em 1 s, para 1,5 s, 20→100% em 1,5 s (4,5 s)
     const box=$("#splash .carga-box");if(!box)return;
     const pc=Math.floor(Math.min(1,p)*100);
     box.querySelector(".carga-barra i").style.width=pc+"%";box.querySelector(".carga-pct").textContent=pc+"%";box.setAttribute("aria-valuenow",pc);
