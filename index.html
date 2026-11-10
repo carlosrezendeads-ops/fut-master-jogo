@@ -4003,7 +4003,15 @@ function vagaLoja(me,fixo){const B=G.tierBase,r=rnd();
   if(r<.08)return [1,B[0]-4,99];
   if(r<.40)return "fora";
   return rnd()<.7?[0,B[0]-4,B[0]+3]:[0,B[0]+3,B[0]+14]}
+/* gigantes da Europa (09/11): aparecem bem mais entre os estrangeiros da loja e no destaque */
+const GIGANTES=["Real Madrid","Barcelona","Liverpool","Manchester City","Manchester United","Bayern München","Arsenal","Paris Saint-Germain"],CHANCE_GIGANTE=.55;
+function gigantesLoja(out,forte){const me=minhaSerie(),b=G.tierBase[me],teto=me>=2?75:me===1?80:99,hi=Math.min(teto,b+(forte?20:me===0?14:10)),res=reservadosMercado();
+  const L=[];Object.entries(PAISES).forEach(([k,P])=>{if(k===G.country)return;(P.t[0]||[]).forEach(s=>{if(GIGANTES.includes(s.split("|")[0]))L.push([k,s])})});
+  for(const [k,s] of shuffle(L)){const el=jogadoresDo(clubeExterior(k,0,s));if(el.length<=18)continue;
+    const c=el.filter(p=>!ehLenda(p)&&p.ov>=Math.min(b-3,hi-6)&&p.ov<=hi&&p.inj<=0&&!(out||[]).includes(p.id)&&!res.has(p.id));if(c.length)return pick(c).id}
+  return null}
 function foraLoja(out){const b=G.tierBase[minhaSerie()];
+  if(rnd()<CHANCE_GIGANTE){const g=gigantesLoja(out);if(g!=null)return g}
   const c=[...(G.foreign||[]),...(G.exterior||[])].filter(id=>G.clubs[id]&&G.clubs[id].pais!==G.country).flatMap(id=>jogadoresDo(id)).filter(p=>p.ov>=b-3&&p.ov<=b+10&&p.inj<=0&&!out.includes(p.id));
   if(c.length&&rnd()<.7)return pick(c).id; // usa clube que já existe no save antes de criar outro
   const f=jogadorExterior();return out.includes(f)?null:f}
@@ -4040,6 +4048,7 @@ function destaqueLoja(jog){const res=reservadosMercado(),outros=Object.keys(PAIS
   const vistos=G.destVistos||[],ok=p=>p.real&&!ehLenda(p)&&!vistos.includes(p.n)&&!jog.includes(p.id)&&!res.has(p.id)&&p.inj<=0&&p.club!==G.user.club&&jogadoresDo(p.club).length>18;
   for(let i=0;i<6;i++){let el;
     if(rnd()<.45){const L=G.tiers[0].filter(id=>!G.clubs[id].user).sort((a,b)=>G.clubs[b].rating-G.clubs[a].rating).slice(0,8);el=jogadoresDo(pick(L))}
+    else if(rnd()<.6){const g=gigantesLoja(jog,true);if(g!=null&&ok(G.players[g])){G.destVistos=[G.players[g].n,...vistos].slice(0,12);return g}continue}
     else{const k=pick(outros),T=(PAISES[k].t[0]||[]).slice().sort((a,b)=>+b.split("|")[1]-+a.split("|")[1]).slice(0,6);if(!T.length)continue;el=jogadoresDo(clubeExterior(k,0,pick(T)))}
     const c=el.filter(ok).sort((a,b)=>b.ov-a.ov).slice(0,3);if(c.length){const p=pick(c);G.destVistos=[p.n,...vistos].slice(0,12);return p.id}}
   return null}
@@ -4070,6 +4079,7 @@ function diario(){
 function clubeExterior(k,ti,s){const o=parseClube(s);const c=Object.values(G.clubs).find(x=>x.pais===k&&x.name===o.name&&!x.user);if(c){if(c.tierExt==null)c.tierExt=ti;return c.id}
   const id=criarClube(o,k,-1);G.clubs[id].tierExt=ti;(G.exterior=G.exterior||[]).push(id);return id}
 function jogadorExterior(){const b=G.tierBase[minhaSerie()],outros=Object.keys(PAISES).filter(x=>x!==G.country);
+  if(rnd()<CHANCE_GIGANTE){const g=gigantesLoja(G.diario?G.diario.jog:[]);if(g!=null)return g}
   for(let i=0;i<15;i++){const k=pick(outros),P=PAISES[k],ti=ri(0,2),L=P.t[ti].filter(s=>{const r=+s.split("|")[1];return r>=b-6&&r<=b+12});if(!L.length)continue;
     const cid=clubeExterior(k,ti,pick(L)),c=jogadoresDo(cid).filter(p=>p.ov>=b-3&&p.ov<=b+10&&p.inj<=0);if(c.length)return pick(c).id}
   return null}
@@ -4663,7 +4673,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794268308";
+const VERSAO="1794269711";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
