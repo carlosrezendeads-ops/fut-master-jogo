@@ -548,7 +548,7 @@ nav.abas[hidden]{display:none}
 .v2 .re-op{background:linear-gradient(180deg,#16285c,#0c1838);border:1.5px solid rgba(120,170,255,.35);clip-path:polygon(4% 0,100% 0,96% 100%,0 100%);border-radius:0;min-height:48px}
 .v2 .re-op.pri{background:linear-gradient(180deg,#1d4fd0,#0f2c86);border-color:#6fb0ff;box-shadow:0 0 16px rgba(80,160,255,.6)}
 .re-jogar2{display:block;width:100%;margin:12px 0 0;padding:14px;font:inherit;font-family:var(--f-display);font-style:italic;font-weight:900;text-transform:uppercase;font-size:20px;color:#2a1d00;border:0;background:linear-gradient(180deg,#ffe36b,#e9a400);clip-path:polygon(3% 0,100% 0,97% 100%,0 100%);box-shadow:0 0 18px rgba(255,210,63,.5);cursor:pointer}
-.v2 .re-l{grid-template-columns:minmax(0,1fr) 38px 24px 20px;gap:4px;font-size:12.5px;padding:5px 0;border-bottom:1px solid rgba(120,170,255,.14)}.v2 .re-l-b{height:6px}.v2 .re-l-b i{background-image:linear-gradient(90deg,rgba(255,255,255,.25),transparent)!important}.v2 .re-l>b{font-size:17px}
+.v2 .re-l{grid-template-columns:minmax(0,1fr) 26px 22px 16px;gap:3px;font-size:12px;padding:5px 0;border-bottom:1px solid rgba(120,170,255,.14)}.v2 .re-l-b{height:6px}.v2 .re-l-b i{background-image:linear-gradient(90deg,rgba(255,255,255,.25),transparent)!important}.v2 .re-l>b{font-size:17px}
 .v2 .re-ls{gap:0 12px}.v2 .re-ls>.re-l:nth-child(odd){position:relative}
 .v2 .re-news{border-bottom:1px solid rgba(120,170,255,.18)}.v2 .re-news small{font-family:var(--f-display);font-size:15px;color:#ffd23f}
 .v2 .re-dec,.v2 .re-mom,.v2 .re-res .re-dec{border-radius:12px;background:linear-gradient(180deg,rgba(16,32,80,.9),rgba(8,18,48,.94));border:1.5px solid rgba(255,210,63,.6)}
@@ -557,7 +557,7 @@ nav.abas[hidden]{display:none}
 .re-card.mold .re-card-ov{left:11%;top:8%}.re-card.mold .re-card-foto{position:absolute;top:6.5%;right:9%;left:auto;padding:0;width:64%;justify-content:center}
 .re-card.mold .re-card-foto img.re-foto{border-radius:0;transform:scale(1.12);transform-origin:50% 0}.re-card.mold .re-card-foto svg,.re-card.mold .re-card-foto img{width:100%!important;height:auto!important;border-radius:8px;-webkit-mask-image:linear-gradient(180deg,#000 80%,transparent);mask-image:linear-gradient(180deg,#000 80%,transparent)}
 .re-card.mold .re-card-nome{position:absolute;left:8%;right:8%;top:68.5%;height:13%;margin:0;padding:0;border:0;display:flex;align-items:center;justify-content:center;gap:6px;font-size:16px;line-height:1;white-space:nowrap;overflow:hidden}
-.re-card.mold .re-card-pe{position:absolute;left:11%;right:11%;top:84.5%;display:flex;justify-content:space-between;align-items:center;gap:4px;font-size:9px;white-space:nowrap;overflow:hidden}.re-card.mold .re-card-pe span{overflow:hidden;text-overflow:ellipsis}.re-card.mold .re-flag{font-size:11px;margin-right:2px}
+.re-card.mold .re-card-pe{position:absolute;left:13%;right:13%;top:83%;display:flex;justify-content:space-between;align-items:center;gap:4px;font-size:9px;white-space:nowrap;overflow:hidden}.re-card.mold .re-card-pe span{overflow:hidden;text-overflow:ellipsis}.re-card.mold .re-flag{font-size:11px;margin-right:2px}
 .re-card.mold.grande .re-card-nome{font-size:21px}.re-card.mold.grande .re-card-pe{font-size:12.5px}.re-card.mold.grande .re-card-ov b{font-size:40px}
 .re-card.mold.lenda{color:#ffe28a}.re-card.mold.lenda .re-card-nome{color:#ffd23f}.re-card.mold.lenda .re-card-pe i{background:rgba(255,226,138,.4)}
 .re-flag{font-style:normal;font-size:13px;margin-right:4px;vertical-align:-1px}
@@ -4761,7 +4761,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794323434";
+const VERSAO="1794323511";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -8250,7 +8250,7 @@ function guardarW(){const n=$("#w-nome"),t=$("#w-tec"),s=$("#w-sigla"),es=$("#w-
    Save próprio em localStorage CHAVE_RE (não mexe no G). Tela = aba "estrelato" (telaEstrelato), ações "re_*" em reAcao. ===== */
 const CHAVE_RE="fut-estrelato";
 let RE=null;
-function reLer(){if(RE)return RE;try{RE=JSON.parse(localStorage.getItem(CHAVE_RE))||{}}catch(e){RE={}}RE.hist=RE.hist||[];if(RE.car){RE.car.m=RE.car.m||{};RE.car.fila=RE.car.fila||[];RE.car.marc=RE.car.marc||[]}return RE}
+function reLer(){if(RE)return RE;try{RE=JSON.parse(localStorage.getItem(CHAVE_RE))||{}}catch(e){RE={}}RE.hist=RE.hist||[];if(RE.car&&RE.car.foto&&!RE.car.fotoSF){RE.car.fotoSF=1;reTirarFundo(RE.car.foto).then(u=>{RE.car.foto=u;reSalvar();if(aba==="estrelato")render()})}if(RE.car){RE.car.m=RE.car.m||{};RE.car.fila=RE.car.fila||[];RE.car.marc=RE.car.marc||[]}return RE}
 function reSalvar(){try{localStorage.setItem(CHAVE_RE,JSON.stringify(RE))}catch(e){}}
 const RE_POS={GOL:"Goleiro",ZAG:"Zagueiro",LAT:"Lateral",VOL:"Volante",MEI:"Meia",ATA:"Atacante"};
 const RE_PESO={GOL:{ref:.35,pdp:.15,def:.25,pas:.1,fis:.15},ZAG:{def:.4,cab:.2,fis:.15,vel:.1,pas:.15},LAT:{vel:.25,def:.25,pas:.2,fis:.15,dri:.15},VOL:{def:.3,pas:.3,fis:.2,atq:.1,cab:.1},MEI:{pas:.3,dri:.2,atq:.25,fin:.15,vel:.1},ATA:{fin:.35,atq:.2,dri:.15,vel:.15,cab:.15}};
@@ -8294,7 +8294,15 @@ function reFotoUpload(file){return new Promise((ok,erro)=>{if(!file||!/^image\//
   const fr=new FileReader();fr.onerror=()=>erro("Não deu para ler a foto.");fr.onload=()=>{const im=new Image();im.onerror=()=>erro("Não deu para abrir a foto.");im.onload=()=>{
     const W=240,H=269,cv=document.createElement("canvas");cv.width=W;cv.height=H;const x=cv.getContext("2d"),r=Math.max(W/im.width,H/im.height),w=im.width*r,h=im.height*r;
     x.drawImage(im,(W-w)/2,Math.min(0,(H-h)*.25),w,h);ok(cv.toDataURL("image/webp",.85))};im.src=fr.result};fr.readAsDataURL(file)})}
-document.addEventListener("change",e=>{if(e.target.id!=="re-foto-arq")return;reLerCampos();reFotoUpload(e.target.files&&e.target.files[0]).then(u=>{if(REW){REW.foto=u;REW.fmodo="foto"}render();toast("Foto enviada!")}).catch(m=>toastErro(m))});
+/* tira o fundo liso (cinza/branco) ligado às bordas da foto enviada (10/11) */
+function reTirarFundo(url){return new Promise(ok=>{const im=new Image();im.onerror=()=>ok(url);im.onload=()=>{const W=im.width,H=im.height,cv=document.createElement("canvas");cv.width=W;cv.height=H;const x=cv.getContext("2d");x.drawImage(im,0,0);
+  const D=x.getImageData(0,0,W,H),d=D.data,px=i=>[d[i*4],d[i*4+1],d[i*4+2]],cs=[0,W-1,(H-1)*W,H*W-1].map(px),ref=cs[0];
+  if(cs.some(c=>Math.abs(c[0]-ref[0])+Math.abs(c[1]-ref[1])+Math.abs(c[2]-ref[2])>60)||d[3]<250){ok(url);return} // fundo não é liso (ou já é transparente)
+  const vis=new Uint8Array(W*H),fila=[];for(let i=0;i<W;i++){fila.push(i,(H-1)*W+i)}for(let j=0;j<H;j++){fila.push(j*W,j*W+W-1)}
+  const perto=i=>{const o=i*4;return Math.abs(d[o]-ref[0])+Math.abs(d[o+1]-ref[1])+Math.abs(d[o+2]-ref[2])<48};
+  while(fila.length){const i=fila.pop();if(vis[i]||!perto(i))continue;vis[i]=1;d[i*4+3]=0;const a=i%W,b=(i/W)|0;if(a>0)fila.push(i-1);if(a<W-1)fila.push(i+1);if(b>0)fila.push(i-W);if(b<H-1)fila.push(i+W)}
+  x.putImageData(D,0,0);ok(cv.toDataURL("image/webp",.85))};im.src=url})}
+document.addEventListener("change",e=>{if(e.target.id!=="re-foto-arq")return;reLerCampos();reFotoUpload(e.target.files&&e.target.files[0]).then(reTirarFundo).then(u=>{if(REW){REW.foto=u;REW.fmodo="foto"}render();toast("Foto enviada!")}).catch(m=>toastErro(m))});
 function reStatus(c){if(c.base)return "Categoria de base";const d=reOv(c)-c.clube.rating+(c.tec<30?-4:c.tec>75?2:0);return d>=2?"Titular absoluto":d>=-4?"Titular":d>=-9?"Rotação":"Reserva"}
 function reCor(ov){return ov>=85?"lenda":ov>=75?"ouro":ov>=65?"prata":"bronze"}
 const reDa=n=>/^(Championship|League|Brasileirão|Campeonato)/.test(n)?"do "+n:"da "+n; // "da Série A", "do Championship"
