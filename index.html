@@ -523,6 +523,36 @@ nav.abas[hidden]{display:none}
 .re-evo{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;margin:10px 0 0;padding:7px 10px;border-radius:10px;background:rgba(57,214,122,.08);border-left:3px solid #39d67a;font-size:12.5px}.re-evo span{color:var(--cal-2)}.re-evo span b{color:#ffe28a}.re-evo .re-fxs{flex-basis:100%;margin-top:2px}
 .re-fxs{display:flex;flex-wrap:wrap;align-items:center;gap:2px 5px;margin-top:4px}.re-fx,.re-fx.bom,.re-fx.ruim,.re-fx.neu{font-size:12px;font-weight:800;padding:0;border:0;background:none}.re-sep{font-style:normal;color:var(--cal-2)}
 .re-box{padding:10px 12px}.re-box-t{margin-bottom:4px}.re-feito{padding:6px 10px}
+.re.v2{position:relative;isolation:isolate;padding-top:12px}
+.re-fundo{position:fixed;inset:0;z-index:-1;background:#06102a center/cover no-repeat;filter:blur(3px) brightness(.35) saturate(1.2)}
+.re-fundo::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 30% at 10% 0%,rgba(140,190,255,.35),transparent 70%),radial-gradient(60% 30% at 90% 0%,rgba(140,190,255,.35),transparent 70%),linear-gradient(180deg,rgba(6,16,42,.2),rgba(6,16,42,.85) 60%)}
+.v2 .re-topo{gap:6px}.re-tb{font:inherit;font-family:var(--f-display);font-style:italic;font-weight:800;text-transform:uppercase;font-size:14px;color:#dfe8ff;padding:8px 16px;border:1.5px solid rgba(120,170,255,.55);background:linear-gradient(180deg,#1b3470,#0d1d44);clip-path:polygon(10% 0,100% 0,90% 100%,0 100%);cursor:pointer}
+.re-tb.dir{clip-path:polygon(10% 0,100% 0,90% 100%,0 100%)}.re-tit{font-family:var(--f-display);font-style:italic;text-transform:uppercase;font-size:19px;color:#fff;letter-spacing:.02em;text-shadow:0 2px 8px rgba(0,0,0,.6)}.re-tit i{font-style:normal;color:#ffd23f;font-size:22px}
+.v2 .re-hero{background:linear-gradient(135deg,color-mix(in srgb,var(--k1) 35%,rgba(10,22,60,.85)),rgba(10,22,60,.75) 60%);border:1.5px solid rgba(120,170,255,.35);border-radius:14px;box-shadow:inset 0 0 30px rgba(80,140,255,.12),0 8px 24px rgba(0,0,0,.4)}
+.v2 .re-card{clip-path:polygon(9% 0,91% 0,100% 7%,100% 93%,91% 100%,9% 100%,0 93%,0 7%);border-radius:0;box-shadow:none;padding:9px 9px 10px}
+.v2 .re-card.ouro{background:linear-gradient(150deg,#fff3b0,#e2b33a 45%,#b8860b 80%,#f4d36b)}.v2 .re-card.prata{background:linear-gradient(150deg,#fff,#b9c2cc 50%,#8a939d)}.v2 .re-card.bronze{background:linear-gradient(150deg,#f1c39b,#b9733f 55%,#8a5128)}
+.v2 .re-card-nome{font-style:italic;font-weight:800}.v2 .re-card-pe{text-transform:uppercase;font-size:10.5px;align-items:center}.v2 .re-card-pe i{width:1px;height:12px;background:rgba(0,0,0,.35)}
+.v2 .re-clube b{font-family:var(--f-display);font-style:italic;text-transform:uppercase;font-size:21px;line-height:1}.v2 .re-clube small{font-weight:700;color:#cfe0ff}
+.v2 .re-kv div{border-bottom:1px solid rgba(120,170,255,.22);padding:4px 0;font-size:13px}.v2 .re-kv span{color:#cfd9f2}
+.v2 .re-carr{display:flex;justify-content:space-around;gap:4px;margin:8px 0 0;padding:7px 10px;border:1.5px solid rgba(120,170,255,.4);border-radius:12px;background:rgba(10,22,60,.8);font-size:13px;color:#dfe6ff}.v2 .re-carr span+span{border-left:1px solid rgba(120,170,255,.3);padding-left:8px}
+.re-pn{position:relative;margin:12px 0 0;padding:8px 12px 10px;border:1.5px solid rgba(120,170,255,.35);border-radius:12px;background:linear-gradient(180deg,rgba(16,32,80,.88),rgba(8,18,48,.92));box-shadow:inset 0 0 24px rgba(80,140,255,.1)}
+.re-pn.verde{border-color:rgba(57,214,122,.6);background:linear-gradient(180deg,rgba(10,60,40,.75),rgba(8,24,40,.9))}.re-pn.ouro{border-color:rgba(255,210,63,.7)}
+.re-h{display:flex;justify-content:space-between;align-items:center;margin:-8px -12px 8px;padding:0 12px 0 0}
+.re-h>b{font-family:var(--f-display);font-style:italic;text-transform:uppercase;font-size:17px;color:#fff;padding:6px 26px 6px 14px;background:linear-gradient(90deg,rgba(60,110,220,.55),rgba(30,60,140,.25));clip-path:polygon(0 0,100% 0,88% 100%,0 100%);border-top-left-radius:11px}
+.re-pn.verde .re-h>b{background:linear-gradient(90deg,rgba(57,214,122,.45),rgba(20,90,60,.2))}.re-h>b i{font-style:normal;margin-right:6px}
+.re-h-dir{font-size:14px;color:#cfd9f2}.re-h-dir b{font-size:22px;color:#fff;font-family:var(--f-display);font-style:italic}.re-h-dir em{font-style:normal;color:#39d67a}.re-pn.verde .re-h-dir b{color:#ffe28a}
+.re-evg{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}.re-evg span{display:flex;align-items:center;gap:6px;font-size:12.5px;padding:3px 0;border-bottom:1px solid rgba(57,214,122,.15)}.re-evg b{width:22px;font-size:14px}.re-evg .bom b{color:#39d67a}.re-evg .ruim b{color:#ff6b6b}
+.v2 .re-feito{border-left:1.5px solid rgba(255,210,63,.6)}.re-feito-t b{display:block;font-family:var(--f-display);font-style:italic;font-size:16px;color:#ffe28a}.re-feito-t span{font-size:12.5px;color:#dfe6ff}
+.re-tag2{display:inline-block;margin:-9px 0 8px -13px;padding:4px 22px 4px 12px;font-family:var(--f-display);font-style:italic;font-weight:800;text-transform:uppercase;font-size:14px;color:#2a1d00;background:linear-gradient(90deg,#ffd23f,#e9a400);clip-path:polygon(0 0,100% 0,88% 100%,0 100%);border-top-left-radius:11px}
+.re-perg{display:block;font-size:16px;line-height:1.3;text-align:center;margin:0 0 4px}
+.v2 .re-op{background:linear-gradient(180deg,#16285c,#0c1838);border:1.5px solid rgba(120,170,255,.35);clip-path:polygon(4% 0,100% 0,96% 100%,0 100%);border-radius:0;min-height:48px}
+.v2 .re-op.pri{background:linear-gradient(180deg,#1d4fd0,#0f2c86);border-color:#6fb0ff;box-shadow:0 0 16px rgba(80,160,255,.6)}
+.re-jogar2{display:block;width:100%;margin:12px 0 0;padding:14px;font:inherit;font-family:var(--f-display);font-style:italic;font-weight:900;text-transform:uppercase;font-size:20px;color:#2a1d00;border:0;background:linear-gradient(180deg,#ffe36b,#e9a400);clip-path:polygon(3% 0,100% 0,97% 100%,0 100%);box-shadow:0 0 18px rgba(255,210,63,.5);cursor:pointer}
+.v2 .re-l{grid-template-columns:minmax(0,1fr) 38px 24px 20px;gap:4px;font-size:12.5px;padding:5px 0;border-bottom:1px solid rgba(120,170,255,.14)}.v2 .re-l-b{height:6px}.v2 .re-l-b i{background-image:linear-gradient(90deg,rgba(255,255,255,.25),transparent)!important}.v2 .re-l>b{font-size:17px}
+.v2 .re-ls{gap:0 12px}.v2 .re-ls>.re-l:nth-child(odd){position:relative}
+.v2 .re-news{border-bottom:1px solid rgba(120,170,255,.18)}.v2 .re-news small{font-family:var(--f-display);font-size:15px;color:#ffd23f}
+.v2 .re-dec,.v2 .re-mom,.v2 .re-res .re-dec{border-radius:12px;background:linear-gradient(180deg,rgba(16,32,80,.9),rgba(8,18,48,.94));border:1.5px solid rgba(255,210,63,.6)}
+.v2 .re-sec h3,.v2 .re-tag{font-family:var(--f-display);font-style:italic;text-transform:uppercase}
 .re-fmodo{display:flex;gap:6px;justify-content:center;margin:4px 0 10px}.re-foto{border-radius:10px;object-fit:cover;display:block}.re-foto-vazia{width:96px;height:108px;border-radius:10px;border:2px dashed var(--gramado-3);display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;color:var(--cal-2)}
 .re-foto-ajuda{margin:10px 0;padding:10px 12px;border-radius:12px;background:var(--gramado-2);border:1px solid var(--gramado-3);font-size:13px}.re-foto-ajuda ol{margin:6px 0 8px;padding-left:18px}.re-foto-ajuda li{margin:3px 0}
 .re-copiar{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 10px;border-radius:12px;border:1.5px solid #ffd23f;background:rgba(255,210,63,.12);color:#ffe28a;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
@@ -4723,7 +4753,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794317749";
+const VERSAO="1794319051";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -8288,7 +8318,7 @@ function reLerCampos(){if(!REW)return;const n=$("#re-nome"),u=$("#re-num"),t=$("
 function reCard(c,grande,ovFix){const ov=ovFix||reOv(c);
   return `<div class="re-card ${reCor(ov)}${grande?" grande":""}"><div class="re-card-ov"><b class="num">${ov}</b><small>${c.pos}</small>${c.clube?reEsc(c.clube,22):""}</div>
     <div class="re-card-foto">${reRosto(c,grande?120:86)}</div><div class="re-card-nome">${esc(c.nome)}<span class="num">${c.num}</span></div>
-    <div class="re-card-pe"><span>${esc(PAIS_NOME[c.nat]||"")}</span><span>${c.idade} anos</span></div></div>`}
+    <div class="re-card-pe"><span>${esc(PAIS_NOME[c.nat]||"")}</span><i></i><span>${c.idade} anos</span></div></div>`}
 function reBarras(c){return `<div class="atrs">${reAtrs(c.pos).map(k=>{const v=reCl(c.a[k]),[n,ic]=RE_ATR[k];return `<div class="atr"><span>${ic} ${n}</span><div class="atr-b"><i style="width:${v}%;background:${corAtr(v)}"></i></div><b class="num">${v}</b></div>`}).join("")}</div>`}
 function reRel(c){const b=(n,v,ic)=>`<div class="re-rel"><span>${ic} ${n}</span><div class="atr-b"><i style="width:${reCl(v)}%;background:${corAtr(v)}"></i></div></div>`;
   return b("Fama",c.fama,"📣")+b("Torcida",c.torc,"🏟️")+b("Técnico",c.tec,"📋")}
@@ -8520,22 +8550,23 @@ function reAtrGrade(c){const soma={};(c.resp||[]).forEach(r=>(r[2]||[]).forEach(
 function reLinha(n,v,ic,d){v=reCl(v);return `<div class="re-l"><span class="re-l-n">${ic} ${n}</span><i class="re-l-b"><i style="width:${v}%;background:${corAtr(v)}"></i></i><b class="num" style="color:${corAtr(v)}">${v}</b><em class="${d>0?"bom":d<0?"ruim":""}">${d?(d>0?"+":"−")+Math.abs(d):""}</em></div>`}
 function reMedidor(n,v,ic){return reLinha(n,v,ic,0)}
 function reTelaTemp(c){const d=c.pend&&c.pend[c.resp.length],D=d&&reDil(d),cl=c.clube,ov=reOv(c),ev=c.evo&&c.evo.ano===c.ano-1?c.evo:null,anim=c.anim;c.anim=0;
-  const evoL=ev?Object.entries(ev.d).sort((a,b)=>b[1]-a[1]).map(([k,x])=>[x,RE_ATR[k][1]+" "+RE_ATR[k][0],"a"]):[];
-  return `<div class="re-hero" style="--k1:${cl.c1||"#1d3166"};--k2:${cl.c2||"#fff"}">${reCard(c)}
-    <div class="re-hero-dir"><div class="re-clube">${reEsc(cl,34)}<div><b>${esc(cl.name)}</b><small>${c.base?"Categoria de base":esc(reLiga(c))}</small></div></div>
-      <div class="re-kv"><div><span>Temporada</span><b class="num">${c.ano}</b></div><div><span>Situação</span><b>${reStatus(c)}</b></div><div><span>Valor</span><b class="num">${reGrana(reValor(c))}</b></div><div><span>Salário</span><b class="num">${reGrana(reSal(ov,c.idade,cl.tier,c.base))}/mês</b></div></div>
-      <div class="re-carr"><span>⚽ <b class="num">${c.tot.g}</b> gols</span><span>🎯 <b class="num">${c.tot.a}</b> assist.</span><span>👟 <b class="num">${c.tot.j}</b> jogos</span><span>🏆 <b class="num">${c.tits.filter(t=>!t.startsWith("Sub")).length}</b></span></div></div></div>
-  ${ev&&evoL.length?`<div class="re-evo"><b>📈 Evolução ${ev.ano}</b><span class="num">Força ${ev.ov[0]} → <b>${ev.ov[1]}</b></span>${reChips(evoL)}</div>`:""}
-  ${c.resp.map((r,i)=>`<div class="re-feito"><small>${esc(r[0])}</small><span>${esc(r[1])}</span>${reChips(r[2],anim===i+1)}</div>`).join("")}
-  ${D?`<div class="re-dec"><p class="re-tag">Decisão ${c.resp.length+1} de ${c.pend.length}</p><b>${esc(reTxt(c,D.t))}</b><div class="re-ops">${D.o.map((o,i)=>`<button class="re-op" data-a="re_dec" data-v="${i}"><b>${esc(o[0])}</b></button>`).join("")}</div></div>`
-    :`<button class="btn prim full re-jogar" data-a="re_jogar">▶ Jogar a temporada ${c.ano}</button>`}
-  <div class="re-box"><div class="re-box-t"><b>Atributos</b><span>Força <b class="num">${ov}</b></span></div>${reAtrGrade(c)}</div>
-  <div class="re-box"><div class="re-box-t"><b>Relação e fama</b></div><div class="re-ls">${reMedidor("Fama",c.fama,"📣")}${reMedidor("Torcida",c.torc,"🏟️")}${reMedidor("Técnico",c.tec,"📋")}</div></div>
-  ${c.log.length?`<div class="re-box"><div class="re-box-t"><b>📰 Manchetes</b></div>${c.log.slice(0,5).map(x=>`<div class="re-news"><small class="num">${x.ano}</small><span>${esc(x.t)}</span></div>`).join("")}</div>`:""}`}
+  const evoL=ev?Object.entries(ev.d).sort((a,b)=>b[1]-a[1]):[];
+  const H=(t,ic,dir)=>`<div class="re-h"><b>${ic?`<i>${ic}</i>`:""}${t}</b>${dir||""}</div>`;
+  return `<div class="re-hero" style="--k1:${cl.c1||"#1d3166"}">${reCard(c)}
+    <div class="re-hero-dir"><div class="re-clube">${reEsc(cl,40)}<div><b>${esc(cl.name)}</b><small>${c.base?"Categoria de base":esc(reLiga(c))}</small></div></div>
+      <div class="re-kv"><div><span>🗓️ Temporada</span><b class="num">${c.ano}</b></div><div><span>📋 Situação</span><b>${reStatus(c)}</b></div><div><span>💰 Valor</span><b class="num">${reGrana(reValor(c))}</b></div><div><span>💵 Salário</span><b class="num">${reGrana(reSal(ov,c.idade,cl.tier,c.base))}/mês</b></div></div></div></div>
+  <div class="re-carr"><span>⚽ <b class="num">${c.tot.g}</b> gols</span><span>🎯 <b class="num">${c.tot.a}</b> assist.</span><span>👟 <b class="num">${c.tot.j}</b> jogos</span><span>🏆 <b class="num">${c.tits.filter(t=>!t.startsWith("Sub")).length}</b></span></div>
+  ${ev&&evoL.length?`<div class="re-pn verde">${H(`Evolução ${ev.ano}`,"📶",`<span class="re-h-dir num">Força ${ev.ov[0]} <em>➜</em> <b>${ev.ov[1]}</b></span>`)}<div class="re-evg">${evoL.map(([k,x])=>`<span class="${x>0?"bom":"ruim"}"><b class="num">${x>0?"+":"−"}${Math.abs(x)}</b>${RE_ATR[k][1]} ${({cpe:"Pênaltis",fal:"Faltas",pdp:"Pega pênalti",fis:"Físico"})[k]||RE_ATR[k][0]}</span>`).join("")}</div></div>`:""}
+  ${c.resp.map((r,i)=>`<div class="re-pn re-feito"><div class="re-feito-t"><b>${esc(r[0])}</b><span>${esc(r[1])}</span></div>${reChips(r[2],anim===i+1)}</div>`).join("")}
+  ${D?`<div class="re-pn ouro re-dec"><span class="re-tag2">Decisão ${c.resp.length+1} de ${c.pend.length}</span><b class="re-perg">${esc(reTxt(c,D.t))}</b><div class="re-ops">${D.o.map((o,i)=>`<button class="re-op${i===0?" pri":""}" data-a="re_dec" data-v="${i}"><b>${esc(o[0])}</b></button>`).join("")}</div></div>`
+    :`<button class="re-jogar2" data-a="re_jogar">▶ Jogar a temporada ${c.ano}</button>`}
+  <div class="re-pn">${H("Atributos","",`<span class="re-h-dir">Força <b class="num">${ov}</b></span>`)}${reAtrGrade(c)}</div>
+  <div class="re-pn">${H("Relação e fama","⭐")}<div class="re-ls">${reMedidor("Fama",c.fama,"⭐")}${reMedidor("Torcida",c.torc,"👥")}${reMedidor("Técnico",c.tec,"📋")}</div></div>
+  ${c.log.length?`<div class="re-pn">${H("Manchetes","📰")}${c.log.slice(0,5).map(x=>`<div class="re-news"><small class="num">${x.ano}</small><span>${esc(x.t)}</span></div>`).join("")}</div>`:""}`}
 /* ---------- telas ---------- */
 let RE_VER=null; // ficha de carreira antiga aberta
 function telaEstrelato(){reLer();const c=RE.car;
-  const topo=`<div class="re-topo"><button class="btn mini" data-a="re_sair">‹ Jogar</button><b>⭐ Rumo ao Estrelato</b>${c&&c.fase!=="fim"?`<button class="btn mini" data-a="re_desistir">Recomeçar</button>`:"<span></span>"}</div>`;
+  const topo=`<div class="re-topo"><button class="re-tb" data-a="re_sair">‹ Jogar</button><b class="re-tit"><i>★</i> Rumo ao Estrelato</b>${c&&c.fase!=="fim"?`<button class="re-tb dir" data-a="re_desistir">⟳ Recomeçar</button>`:"<span></span>"}</div>`;
   let h="";
   if(RE_VER!=null&&RE.hist[RE_VER])h=reTelaFim(RE.hist[RE_VER],1);
   else if(!c)h=reTelaCriar();
@@ -8564,7 +8595,8 @@ function telaEstrelato(){reLer();const c=RE.car;
       <div class="re-ops">${M.ofs.map((o,i)=>`<button class="re-op re-of" data-a="re_aceitar" data-v="${i}">${reEsc(o.c,30)}<b>${esc(o.c.name)}</b><small>${esc((PAISES[o.c.pais]&&PAISES[o.c.pais].ligas[o.c.tier])||PAIS_NOME[o.c.pais]||"")}${o.c.pais!==c.pais?` · ${esc(PAIS_NOME[o.c.pais]||"Exterior")}`:""} · força ${o.c.rating}</small><small>Salário ${reGrana(o.sal)}/mês</small></button>`).join("")}</div>
       ${c.base&&M.ofs.length?"":`<button class="btn full" data-a="re_seguir">${M.ofs.length?"Recusar e ficar no "+esc(c.clube.name):"Seguir no "+esc(c.clube.name)}</button>`}
       ${c.idade>=33?`<button class="btn full perigo" data-a="re_aposentar">Pendurar as chuteiras</button>`:""}</div>`}</div>`}
-  return `<div class="re" data-notime>${topo}${h}</div>`}
+  const EF=typeof ESTADIO_FOTOS!=="undefined"?ESTADIO_FOTOS:[],bg=EF.length?EF[EF.length-1]:"";
+  return `<div class="re v2" data-notime>${bg?`<div class="re-fundo" style="background-image:url(${bg})"></div>`:`<div class="re-fundo"></div>`}${topo}${h}</div>`}
 function reAcao(a,v){reLer();const c=RE.car;
   switch(a){
     case "re_abrir":aba="estrelato";RE_VER=null;break;
