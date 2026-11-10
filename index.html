@@ -555,7 +555,7 @@ nav.abas[hidden]{display:none}
 .v2 .re-sec h3,.v2 .re-tag{font-family:var(--f-display);font-style:italic;text-transform:uppercase}
 .re-card.mold{clip-path:none!important;background-position:center!important;background-size:100% 100%!important;background-repeat:no-repeat!important;background-color:transparent!important;aspect-ratio:300/440;padding:0!important;border-radius:0;box-shadow:none;filter:drop-shadow(0 6px 14px rgba(0,0,0,.55))}
 .re-card.mold .re-card-ov{left:11%;top:8%}.re-card.mold .re-card-foto{position:absolute;top:6.5%;right:9%;left:auto;padding:0;width:64%;justify-content:center}
-.re-card.mold .re-card-foto svg,.re-card.mold .re-card-foto img{width:100%!important;height:auto!important;border-radius:8px;-webkit-mask-image:linear-gradient(180deg,#000 80%,transparent);mask-image:linear-gradient(180deg,#000 80%,transparent)}
+.re-card.mold .re-card-foto img.re-foto{border-radius:0;transform:scale(1.12);transform-origin:50% 0}.re-card.mold .re-card-foto svg,.re-card.mold .re-card-foto img{width:100%!important;height:auto!important;border-radius:8px;-webkit-mask-image:linear-gradient(180deg,#000 80%,transparent);mask-image:linear-gradient(180deg,#000 80%,transparent)}
 .re-card.mold .re-card-nome{position:absolute;left:8%;right:8%;top:68.5%;height:13%;margin:0;padding:0;border:0;display:flex;align-items:center;justify-content:center;gap:6px;font-size:16px;line-height:1;white-space:nowrap;overflow:hidden}
 .re-card.mold .re-card-pe{position:absolute;left:11%;right:11%;top:84.5%;display:flex;justify-content:space-between;align-items:center;gap:4px;font-size:9px;white-space:nowrap;overflow:hidden}.re-card.mold .re-card-pe span{overflow:hidden;text-overflow:ellipsis}.re-card.mold .re-flag{font-size:11px;margin-right:2px}
 .re-card.mold.grande .re-card-nome{font-size:21px}.re-card.mold.grande .re-card-pe{font-size:12.5px}.re-card.mold.grande .re-card-ov b{font-size:40px}
@@ -4761,7 +4761,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794322286";
+const VERSAO="1794323434";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -8284,16 +8284,16 @@ function reBandeira(k){const tag=t=>String.fromCodePoint(0x1F3F4,...[...t].map(c
 const PROMPT_ATLETA=`Use a foto do meu rosto que anexei para criar a foto de perfil de um jogador de futebol profissional, no estilo das fotos oficiais de elenco.
 
 - Mantenha meu rosto, cabelo, tom de pele e traços exatamente iguais aos da foto (tem que dar para me reconhecer).
-- Enquadramento do peito para cima, de frente, olhando para a câmera, com expressão confiante.
+- Enquadramento bem fechado: da metade do peito para cima, de frente, olhando para a câmera, com expressão confiante. A cabeça ocupa boa parte da imagem e fica perto do topo (pouco espaço acima do cabelo).
 - Camisa de futebol branca e lisa, sem escudo, sem número e sem patrocínio.
-- Fundo cinza claro e liso, com luz de estúdio suave.
-- Imagem realista, como uma fotografia, no formato vertical (4:5).
+- FUNDO TRANSPARENTE (PNG sem fundo), só o jogador recortado. Luz de estúdio suave.
+- Imagem realista, como uma fotografia, no formato vertical (4:5), salva em PNG com transparência.
 - Sem texto, sem moldura e sem marca d'água.`;
 /* foto enviada: recorta no formato do card (100x112, puxando para o alto) e comprime */
 function reFotoUpload(file){return new Promise((ok,erro)=>{if(!file||!/^image\//.test(file.type))return erro("Escolha uma imagem.");
   const fr=new FileReader();fr.onerror=()=>erro("Não deu para ler a foto.");fr.onload=()=>{const im=new Image();im.onerror=()=>erro("Não deu para abrir a foto.");im.onload=()=>{
     const W=240,H=269,cv=document.createElement("canvas");cv.width=W;cv.height=H;const x=cv.getContext("2d"),r=Math.max(W/im.width,H/im.height),w=im.width*r,h=im.height*r;
-    x.drawImage(im,(W-w)/2,Math.min(0,(H-h)*.25),w,h);ok(cv.toDataURL("image/jpeg",.85))};im.src=fr.result};fr.readAsDataURL(file)})}
+    x.drawImage(im,(W-w)/2,Math.min(0,(H-h)*.25),w,h);ok(cv.toDataURL("image/webp",.85))};im.src=fr.result};fr.readAsDataURL(file)})}
 document.addEventListener("change",e=>{if(e.target.id!=="re-foto-arq")return;reLerCampos();reFotoUpload(e.target.files&&e.target.files[0]).then(u=>{if(REW){REW.foto=u;REW.fmodo="foto"}render();toast("Foto enviada!")}).catch(m=>toastErro(m))});
 function reStatus(c){if(c.base)return "Categoria de base";const d=reOv(c)-c.clube.rating+(c.tec<30?-4:c.tec>75?2:0);return d>=2?"Titular absoluto":d>=-4?"Titular":d>=-9?"Rotação":"Reserva"}
 function reCor(ov){return ov>=85?"lenda":ov>=75?"ouro":ov>=65?"prata":"bronze"}
