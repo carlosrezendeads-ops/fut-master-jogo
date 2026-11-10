@@ -4701,7 +4701,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794272116";
+const VERSAO="1794306708";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -8190,7 +8190,7 @@ function guardarW(){const n=$("#w-nome"),t=$("#w-tec"),s=$("#w-sigla"),es=$("#w-
    Save próprio em localStorage CHAVE_RE (não mexe no G). Tela = aba "estrelato" (telaEstrelato), ações "re_*" em reAcao. ===== */
 const CHAVE_RE="fut-estrelato";
 let RE=null;
-function reLer(){if(RE)return RE;try{RE=JSON.parse(localStorage.getItem(CHAVE_RE))||{}}catch(e){RE={}}RE.hist=RE.hist||[];return RE}
+function reLer(){if(RE)return RE;try{RE=JSON.parse(localStorage.getItem(CHAVE_RE))||{}}catch(e){RE={}}RE.hist=RE.hist||[];if(RE.car){RE.car.m=RE.car.m||{};RE.car.fila=RE.car.fila||[];RE.car.marc=RE.car.marc||[]}return RE}
 function reSalvar(){try{localStorage.setItem(CHAVE_RE,JSON.stringify(RE))}catch(e){}}
 const RE_POS={GOL:"Goleiro",ZAG:"Zagueiro",LAT:"Lateral",VOL:"Volante",MEI:"Meia",ATA:"Atacante"};
 const RE_PESO={GOL:{ref:.35,pdp:.15,def:.25,pas:.1,fis:.15},ZAG:{def:.4,cab:.2,fis:.15,vel:.1,pas:.15},LAT:{vel:.25,def:.25,pas:.2,fis:.15,dri:.15},VOL:{def:.3,pas:.3,fis:.2,atq:.1,cab:.1},MEI:{pas:.3,dri:.2,atq:.25,fin:.15,vel:.1},ATA:{fin:.35,atq:.2,dri:.15,vel:.15,cab:.15}};
@@ -8238,10 +8238,10 @@ function reNovoW(){return {nome:"",num:10,nat:"BRA",pos:"ATA",est:"art",ment:"pr
 function reCriar(){const w=REW;const nome=(w.nome||"").trim();if(nome.length<2)return "Escreva o nome que vai na camisa.";
   const est=RE_ESTILOS.find(e=>e[0]===w.est&&(!!e[4])===(w.pos==="GOL"))||RE_ESTILOS.find(e=>(!!e[4])===(w.pos==="GOL"));
   const a={};reAtrs(w.pos).forEach(k=>{a[k]=38+ri(0,9)+((RE_PESO[w.pos][k]||0)>=.15?6:0)+(est[3][k]||0)});
-  let pot=Math.round(62+rnd()*18+rnd()*12);if(w.ment==="pro")pot+=2;
+  let pot=Math.round(58+rnd()*17+rnd()*12+(rnd()<.08?6:0));if(w.ment==="pro")pot+=2;
   const pais=PAISES[w.nat]?w.nat:"BRA";
   RE.car={v:1,nome,num:+w.num||10,nat:w.nat,pos:w.pos,est:est[0],ment:w.ment,rf:w.rf,foto:w.fmodo==="foto"&&w.foto?w.foto:null,idade:16,ano:new Date().getFullYear(),a,pot,pais,
-    fama:w.ment==="mar"?8:3,torc:50,tec:w.ment==="lid"?60:50,inj:0,base:true,clube:null,fase:"peneira",tot:{j:0,g:0,a:0},tits:[],clubes:[],selec:{j:0,g:0},premios:[],log:[],ganho:0,temps:[],pico:0,usados:[]};
+    m:{},fila:[],marc:[],fama:w.ment==="mar"?8:3,torc:50,tec:w.ment==="lid"?60:50,inj:0,base:true,clube:null,fase:"peneira",tot:{j:0,g:0,a:0},tits:[],clubes:[],selec:{j:0,g:0},premios:[],log:[],ganho:0,temps:[],pico:0,usados:[]};
   RE.car.pico=reOv(RE.car);REW=null;reSalvar();return null}
 function reTelaCriar(){const w=REW||(REW=reNovoW()),gol=w.pos==="GOL",ests=RE_ESTILOS.filter(e=>(!!e[4])===gol);if(!ests.some(e=>e[0]===w.est))w.est=ests[0][0];
   return `<div class="re-sec"><h3>Seu atleta</h3>
@@ -8273,64 +8273,158 @@ function reRel(c){const b=(n,v,ic)=>`<div class="re-rel"><span>${ic} ${n}</span>
 
 /* ---------- decisões (dilemas) ---------- */
 // cada: [id, condição, texto, [[rótulo, efeito(c) → texto do resultado]]]
-const RE_FOCO=["foco",()=>true,"Foco da temporada: o que você vai priorizar nos treinos?",[
+/* decisões (10/11): banco grande por fase da carreira (B base, J jovem até 22, A auge 23-30, V veterano 31+), sem repetir na carreira enquanto houver outra.
+   Efeito = objeto (reFx) ou função. Marcas em c.m (flags), capítulos futuros em c.fila [{id,ano}] (perguntas com f:"" só saem pela fila), decisões marcantes em c.marc */
+function reTxt(c,s){return String(s||"").replace(/\{n\}/g,c.nome).replace(/\{cl\}/g,c.clube?c.clube.name:"clube").replace(/\{sel\}/g,c.nat==="BRA"?"Seleção Brasileira":"seleção de "+(PAIS_NOME[c.nat]||"seu país")).replace(/\{idade\}/g,c.idade).replace(/\{liga\}/g,c.clube?reLiga(c):"liga")}
+function reFx(c,o){if(o.fama)c.fama+=o.fama;if(o.torc)c.torc+=o.torc;if(o.tec)c.tec+=o.tec;if(o.fis)c.a.fis+=o.fis;
+  if(o.a)for(const k in o.a)if(c.a[k]!=null)c.a[k]+=o.a[k];if(o.din)c.ganho+=o.din;if(o.inj)c.inj=Math.max(c.inj||0,o.inj);if(o.pot)c.pot+=o.pot;
+  if(o.m)[].concat(o.m).forEach(k=>c.m[k]=(c.m[k]||0)+1);if(o.tira)[].concat(o.tira).forEach(k=>delete c.m[k]);if(o.f)o.f.forEach(([id,a])=>c.fila.push({id,ano:c.ano+a}));
+  if(o.mar)c.marc.push(`${c.ano} · ${reTxt(c,o.mar)}`);if(o.log)reLog(c,reTxt(c,o.log));if(o.sair)c.querSair=1;if(o.susp)c.susp=1;if(o.emp!=null)c.emp=o.emp;if(o.cap)c.cap=1;
+  if(o.sel){c.selec.j+=o.sel;c.selec.g+=o.selg||0}if(o.tit)c.T0=(c.T0||[]).concat(o.tit);return reTxt(c,o.r||"")}
+const RC=(p,a,b)=>c=>reFx(c,rnd()<p?a:b); // resultado com sorte
+const RE_FOCO={id:"foco",t:"Foco da temporada: o que você vai priorizar nos treinos?",o:[
   ["💪 Treino físico",c=>{c.foco="fis";return "Academia todo dia: velocidade e fôlego vão subir."}],
   ["🎯 Técnica e finalização",c=>{c.foco="tec";return c.pos==="GOL"?"Horas de treino com o preparador de goleiros.":"Fica depois do treino chutando a gol."}],
   ["🧠 Tática e passe",c=>{c.foco="tat";return "Estuda vídeo dos adversários e melhora o posicionamento."}],
-  ["😎 Curtir a fama",c=>{c.foco="fama";c.fama+=6;c.torc+=2;return "Muita rede social e evento. A fama sobe, o físico sente."}]]];
+  ["😎 Curtir a fama",c=>{c.foco="fama";c.fama+=5;c.torc+=1;return "Muita rede social e evento. A fama sobe, o físico sente."}]]};
+const ovRE=c=>reOv(c),G_=c=>c.pos==="GOL",L_=c=>c.pos!=="GOL";
 const RE_DIL=[
- ["festa",c=>!c.base,"Convite para uma festa de famosos na véspera do clássico.",[["🎉 Ir à festa",c=>{c.fama+=6;c.tec-=8;c.a.fis-=2;if(rnd()<.35){c.torc-=8;reLog(c,`Flagrado na balada, ${c.nome} irrita a torcida antes do clássico`);return "Apareceu em foto na balada. A torcida não gostou nada."}return "Ninguém viu. Você curtiu e ainda apareceu bem nas redes."}],["🛌 Ficar em casa",c=>{c.tec+=4;c.a.fis+=1;return "Dormiu cedo. O técnico elogiou sua postura."}]]],
- ["banco",c=>!c.base&&rnd()<.7,"O técnico te deixou no banco no jogo mais importante do mês.",[["🎤 Reclamar na imprensa",c=>{c.torc+=4;c.tec-=15;c.fama+=3;reLog(c,`${c.nome} critica o técnico: "Mereço jogar"`);return "Virou manchete. A torcida ficou do seu lado, o técnico não."}],["🤐 Treinar calado",c=>{c.tec+=9;return "Respondeu no treino. Voltou a ser titular duas semanas depois."}],["🚪 Pedir para sair",c=>{c.querSair=1;c.tec-=6;return "O clube vai ouvir propostas no fim da temporada."}]]],
- ["empresario",c=>!c.emp&&c.idade>=17,"Um empresário famoso quer cuidar da sua carreira. Ele fica com 10% de tudo.",[["✍️ Assinar",c=>{c.emp=1;return "Agora chovem contatos de clubes, inclusive de fora."}],["👨‍👩‍👦 Seguir com a família",c=>{c.torc+=2;return "Seu pai continua cuidando de tudo."}]]],
- ["chuteira",c=>c.fama>=25&&!c.patro,"Uma marca de chuteiras quer você como garoto-propaganda.",[["🤝 Aceitar",c=>{c.patro=1;const v=Math.round(80+c.fama*12);c.ganho+=v;c.fama+=4;return `Contrato assinado: ${reGrana(v)} e chuteira personalizada.`}],["🙅 Recusar e focar no futebol",c=>{c.tec+=3;return "O técnico gostou do foco."}]]],
- ["dor",c=>!c.base,"Você sente uma fisgada na coxa antes da decisão do estadual.",[["🩹 Jogar no sacrifício",c=>{if(rnd()<.4){c.inj=ri(2,4);c.a.fis-=2;reLog(c,`${c.nome} se machuca e desfalca o time por ${c.inj} meses`);return `Lesão muscular: ${c.inj} meses fora.`}c.torc+=8;return "Jogou no sacrifício e a torcida cantou seu nome."}],["🧊 Poupar",c=>{c.tec+=2;c.torc-=2;return "Ficou fora. Foi a escolha mais segura."}]]],
- ["rival",c=>!c.base&&c.fama>=15,"Um jornalista pergunta se você jogaria no maior rival do clube.",[["❤️ \"Nunca. Sou apaixonado por esse clube\"",c=>{c.torc+=10;c.fiel=(c.fiel||0)+1;return "A frase virou faixa na arquibancada."}],["🤷 \"Penso no meu futuro\"",c=>{c.torc-=8;c.fama+=3;c.querSair=1;return "Clubes anotaram seu nome. A torcida ficou desconfiada."}]]],
- ["aulas",c=>c.idade<=27,"Um ex-craque oferece aulas particulares.",[["📚 Aceitar (custa caro)",c=>{const ks=c.pos==="GOL"?["ref","pdp"]:["fin","fal","cpe"];ks.forEach(k=>c.a[k]+=ri(2,3));c.ganho-=40;return "Aprendeu segredos que nenhum treinador ensina."}],["⏭️ Agradecer e recusar",c=>"Fica pra próxima."]]],
- ["viral",c=>c.pos!=="GOL","Um vídeo seu dando caneta no treino viralizou.",[["📱 Postar mais vídeos",c=>{c.fama+=8;c.tec-=3;return "Milhões de visualizações. O técnico achou exagero."}],["⚽ Focar no jogo",c=>{c.a.dri+=1;return "Discreto, mas o drible melhorou."}]]],
- ["capitao",c=>!c.base&&c.idade>=23&&(c.ment==="lid"||c.torc>=65),"O técnico oferece a braçadeira de capitão.",[["©️ Aceitar",c=>{c.cap=1;c.tec+=5;c.torc+=5;reLog(c,`${c.nome} é o novo capitão do ${c.clube.name}`);return "Agora você fala pelo grupo."}],["🙏 Recusar",c=>"Prefere liderar dentro de campo."]]],
- ["briga",c=>!c.base&&(c.ment==="mar"?rnd()<.9:rnd()<.5),"Discussão feia com um companheiro no treino.",[["🤝 Pedir desculpa",c=>{c.tec+=3;return "Abraço no fim do treino. Vida que segue."}],["😤 Partir pra cima",c=>{c.tec-=10;c.fama+=2;c.susp=1;reLog(c,`Briga no treino: ${c.nome} é afastado por alguns jogos`);return "Afastado por três jogos."}]]],
- ["selecao",c=>!c.base&&reOv(c)>=72&&rnd()<.75,`Convocado para a Seleção! Mas o clube quer que você seja poupado do amistoso.`,[["🌎 Ir à Seleção",c=>{const j=ri(2,5),g=c.pos==="ATA"?ri(0,3):c.pos==="MEI"?ri(0,1):0;c.selec.j+=j;c.selec.g+=g;c.fama+=6;c.tec-=3;reLog(c,`${c.nome} entra em campo pela seleção ${c.nat==="BRA"?"brasileira":"de "+(PAIS_NOME[c.nat]||"")}`);return `${j} jogos pela Seleção${g?` e ${g} gol${g>1?"s":""}`:""}.`}],["🏠 Ficar no clube",c=>{c.tec+=6;return "O técnico agradeceu. A Seleção vai esperar."}]]],
- ["dieta",c=>c.idade>=24,"O nutricionista propõe uma dieta bem rígida.",[["🥗 Seguir à risca",c=>{c.a.fis+=2;c.dieta=1;return "Menos açúcar, mais fôlego."}],["🍔 Ignorar",c=>"Churrasco de domingo garantido."]]],
- ["mentor",c=>c.idade>=30,"Um garoto da base pede para treinar ao seu lado.",[["🧑‍🏫 Virar mentor",c=>{c.torc+=6;c.tec+=4;return "O garoto já te chama de ídolo."}],["⏭️ Sem tempo",c=>"Cada um no seu canto."]]],
- ["arabia",c=>c.idade>=31&&reOv(c)>=68&&!c.arabe,"Proposta milionária do futebol árabe para o fim da temporada.",[["💰 Topar",c=>{c.arabe=1;return "No fim da temporada você vai para a Arábia."}],["🏆 Seguir competindo aqui",c=>{c.torc+=5;return "Ainda tem lenha pra queimar."}]]],
+ /* ---------- BASE (16-18) ---------- */
+ {id:"escola",f:"B",t:"Sua mãe quer que você termine a escola. O treino da base é no mesmo horário das aulas.",o:[["📚 Estudar à noite e treinar de dia",{fis:-1,tec:3,m:"estudou",r:"Cansativo, mas você terminou o ensino médio."}],["⚽ Largar a escola",{a:{fin:1,dri:1,def:1},m:"largou",r:"Mais tempo de bola. Sua mãe ficou triste."}]]},
+ {id:"alojamento",f:"B",t:"No alojamento da base, os mais velhos fazem 'trote' com os novatos.",o:[["😶 Aguentar calado",{tec:2,r:"Passou. Agora você é um deles."}],["🗣️ Contar para o coordenador",{tec:4,torc:-1,m:"dedurou",r:"O trote acabou, mas alguns ficaram de cara virada."}],["👊 Enfrentar os veteranos",RC(.5,{fama:2,tec:-4,r:"Ganhou respeito na marra, mas levou uma advertência."},{tec:-6,susp:1,r:"Deu briga e você foi suspenso da base."})]]},
+ {id:"saudade",f:"B",t:"Saudade de casa bate forte. Você mora longe da família pela primeira vez.",o:[["📞 Ligar todo dia e aguentar",{tec:2,r:"A família te deu força. Você seguiu firme."}],["🏠 Voltar para casa por um mês",{a:{fis:-2},tec:-4,r:"Recarregou a cabeça, mas perdeu espaço no time."}]]},
+ {id:"olheiro",f:"B",t:"Um olheiro de um clube rival te procura escondido com uma proposta.",o:[["🤫 Ouvir a proposta",{sair:1,tec:-3,r:"No fim do ano vão aparecer propostas."}],["❌ Recusar por respeito ao clube",{torc:4,tec:4,r:"O coordenador soube e gostou."}]]},
+ {id:"sub17",f:"B",c:c=>ovRE(c)>=52,t:"Convocação para a seleção sub-17! Mas a final do campeonato da base é na mesma semana.",o:[["🌎 Ir para a seleção",{fama:6,sel:0,a:{pas:1},m:"sub17",tec:-2,log:"{n} é convocado para a seleção sub-17",r:"Experiência internacional e muitos olheiros vendo."}],["🏆 Jogar a final da base",RC(.5,{torc:5,tit:["Sub-20"],r:"Campeão da base com você em campo!"},{torc:2,r:"Perdeu a final, mas o clube agradeceu."})]]},
+ {id:"prim_emp",f:"B",c:c=>!c.emp,t:"Dois empresários querem te agenciar: um famoso e cheio de jogadores, outro pequeno que cuida de poucos.",o:[["💼 O famoso",{emp:1,m:"empfamoso",r:"Agora você está na vitrine. Mas é só mais um na lista dele."}],["🤝 O pequeno e dedicado",{emp:1,m:"empfiel",r:"Ele atende até de madrugada."}],["👨‍👩‍👦 Nenhum, a família cuida",{r:"Seu pai segue cuidando de tudo."}]]},
+ {id:"chuteira1",f:"B",t:"Sua chuteira rasgou e o clube só entrega a nova no mês que vem.",o:[["🩹 Jogar com ela costurada",{tec:3,a:{fis:-1},r:"Bolhas no pé, mas não perdeu treino."}],["💸 Pedir dinheiro emprestado e comprar",{din:-2,r:"Chuteira nova. Dívida com o colega do quarto."}]]},
+ {id:"posicao",f:"B",c:L_,t:"O treinador da base quer testar você em outra posição.",o:[["🔄 Aceitar o teste",RC(.5,{a:{def:2,pas:2},tec:5,r:"Funcionou! Você ficou mais completo."},{tec:2,a:{fin:-1},r:"Não rendeu, mas o treinador gostou da boa vontade."})],["🙅 Pedir para continuar na sua",{tec:-3,r:"Ele aceitou, mas anotou."}]]},
+ {id:"copinha",f:"B",t:"Você foi relacionado para um torneio de base com transmissão na TV.",o:[["🎥 Jogar para a câmera (firulas)",RC(.45,{fama:7,r:"Seu drible virou lance mais visto do torneio!"},{tec:-4,fama:1,r:"Perdeu a bola tentando firula e o time tomou gol."})],["⚽ Jogar simples e para o time",{tec:5,a:{pas:1},r:"Seguro e eficiente. O treinador do profissional estava assistindo."}]]},
+ {id:"dieta_base",f:"B",t:"O nutricionista diz que você precisa ganhar massa muscular.",o:[["🏋️ Academia e dieta",{a:{fis:2,cab:1},r:"Ganhou corpo de profissional."}],["🍕 Comer de tudo, você é jovem",{a:{fis:-1},r:"O shape não mudou."}]]},
+ {id:"irmao",f:"B",t:"Seu irmão mais velho largou o emprego para cuidar da sua carreira.",o:[["🤝 Aceitar a ajuda",{m:"irmao",din:-3,r:"Agora é ele quem cuida das suas coisas."}],["🙏 Pedir para ele voltar ao emprego",{r:"Ele entendeu. A família segue unida."}]]},
+ {id:"treino_extra_b",f:"B",t:"Um ex-jogador do clube se oferece para treinar você de graça aos sábados.",o:[["✅ Aceitar",{pot:1,r:"Cada sábado uma aula. O potencial cresce."}],["😴 Sábado é dia de descanso",{r:"Você descansou."}]]},
+
+ /* ---------- JOVEM PROFISSIONAL (até 22) ---------- */
+ {id:"prim_sal",f:"J",t:"Primeiro salário de verdade na conta! O que fazer com ele?",o:[["🏠 Comprar uma casa para os pais",{torc:3,din:-30,m:"casapais",mar:"Deu uma casa para os pais com o primeiro salário",r:"Sua mãe chorou. Você também."}],["🚗 Comprar um carrão",{fama:4,din:-25,tec:-2,m:"carrao",r:"Chegou no CT de carro importado. O técnico torceu o nariz."}],["💰 Guardar tudo",{din:5,m:"poupador",r:"Educação financeira desde cedo."}]]},
+ {id:"emprestimo",f:"J",c:c=>!c.base&&reStatus(c)!=="Titular absoluto",t:"O clube quer te emprestar para um time menor ganhar minutos.",o:[["✈️ Aceitar o empréstimo",{a:{fis:1,fin:1,def:1},tec:2,pot:1,r:"Jogou bastante e voltou mais maduro."}],["🛡️ Ficar e brigar por posição",RC(.4,{tec:6,r:"Você ganhou a vaga na marra!"},{tec:-3,a:{fis:-1},r:"Passou a temporada no banco."})]]},
+ {id:"namoro",f:"JA",c:c=>!c.m.namoro&&!c.m.casado,t:"Você começa a sair com uma influenciadora famosa. Os paparazzi já descobriram.",o:[["📸 Assumir o namoro",{fama:8,m:"namoro",f:[["namoro2",2]],r:"Vocês viraram o casal do momento."}],["🤐 Manter em segredo",{m:"namoro",f:[["namoro2",2]],r:"Discreto. Por enquanto."}],["🚪 Terminar antes de virar notícia",{tec:2,r:"Foco total no futebol."}]]},
+ {id:"veterano_mala",f:"J",t:"Um veterano do elenco implica com você em todo treino.",o:[["🙇 Ignorar e trabalhar",{tec:3,r:"Com o tempo ele parou."}],["🗨️ Conversar de homem para homem",RC(.6,{tec:4,m:"amigoveterano",r:"Viraram amigos. Ele te dá dicas até hoje."},{tec:-2,r:"Não adiantou nada."})],["😠 Responder na mesma moeda",{tec:-6,fama:2,r:"O clima pesou no vestiário."}]]},
+ {id:"tatuagem",f:"JA",t:"Você quer fazer uma tatuagem grande antes de um jogo importante.",o:[["🖋️ Fazer agora",{fama:2,tec:-2,a:{fis:-1},r:"Ficou bonita, mas jogou com o braço enfaixado."}],["⏳ Esperar as férias",{r:"Fez nas férias, sem problema."}]]},
+ {id:"cabelo",f:"J",t:"Um cabeleireiro famoso quer fazer um visual exclusivo e pintar seu cabelo de loiro platinado.",o:[["💇 Topar o visual",{fama:5,torc:-1,r:"Virou meme e sucesso ao mesmo tempo."}],["🙂 Manter o estilo",{r:"Sem mudanças."}]]},
+ {id:"psicologo",f:"JAV",t:"Você está com ansiedade antes dos jogos grandes. O clube oferece um psicólogo.",o:[["🧠 Começar a terapia",{tec:2,a:{cpe:2,fin:1},m:"terapia",r:"A cabeça ficou mais leve em campo."}],["💪 Resolver sozinho",RC(.5,{r:"Você superou sozinho."},{a:{cpe:-2},r:"Tremeu em jogos decisivos."})]]},
+ {id:"redes_hater",f:"JA",t:"Depois de um jogo ruim, você recebe uma enxurrada de ataques nas redes.",o:[["📵 Sair das redes por um tempo",{fama:-3,tec:2,r:"Paz de espírito."}],["⌨️ Responder os haters",{fama:3,torc:-5,log:"{n} bate boca com torcedores nas redes",r:"Virou briga pública."}],["🎬 Fazer um vídeo pedindo desculpas",{torc:4,r:"A torcida gostou da humildade."}]]},
+ {id:"tecnico_novo",f:"JAV",c:c=>!c.base,t:"Chegou um técnico novo no {cl}. Ele não te conhece.",o:[["🏃 Ser o primeiro a chegar no treino",{tec:7,a:{fis:1},r:"Ele reparou. Você está nos planos."}],["😎 Deixar o futebol falar",RC(.5,{tec:4,r:"Seu futebol convenceu."},{tec:-5,r:"Ele preferiu outro jogador."})]]},
+ {id:"contrato_longo",f:"J",c:c=>!c.base,t:"O {cl} oferece renovar por 5 anos com aumento pequeno.",o:[["✍️ Assinar já",{tec:4,torc:4,din:20,m:"fiel",r:"Segurança para a carreira. Talvez pudesse ganhar mais."}],["⏳ Esperar valorizar",RC(.6,{din:60,r:"Você jogou bem e renovou ganhando muito mais."},{torc:-4,sair:1,r:"Não rendeu e o clube perdeu o interesse."})]]},
+ {id:"comparacao",f:"J",t:"A imprensa diz que você é 'o novo craque' e te compara a uma lenda.",o:[["😁 Abraçar a comparação",{fama:6,m:"pressao",r:"A expectativa ficou enorme."}],["🙏 'Sou só eu mesmo'",{tec:2,torc:2,r:"Pé no chão. A torcida gostou."}]]},
+ {id:"festa_aniv",f:"JA",t:"Seu aniversário cai na véspera de jogo. Os amigos querem festa.",o:[["🎉 Festa grande",RC(.6,{fama:4,tec:-3,a:{fis:-1},r:"Festa boa e ninguém soube."},{fama:3,torc:-7,tec:-6,log:"Festa de {n} na véspera do jogo vira polêmica",m:"baladeiro",r:"Vazou vídeo. Polêmica."})],["🎂 Bolo com a família",{tec:2,r:"Simples e sem problema."}]]},
+ {id:"chamado_fora",f:"J",c:c=>ovRE(c)>=62&&!c.base,t:"Um clube europeu médio quer te levar já, mesmo jovem.",o:[["✈️ Ir agora para a Europa",{sair:1,m:"europajovem",r:"No fim da temporada você vai poder aceitar propostas de fora."}],["🏠 Amadurecer no Brasil",{torc:5,pot:1,r:"Mais minutos e mais calma."}]]},
+ {id:"lesao_jovem",f:"JA",t:"Exames mostram uma inflamação no joelho. O médico sugere parar 1 mês.",o:[["🛌 Parar e tratar",{inj:1,r:"Voltou 100%."}],["💉 Infiltração e seguir jogando",{tec:2,m:"joelho",f:[["joelho2",3]],r:"Jogou sem dor... por enquanto."}]]},
+
+ /* ---------- AUGE (23-30) ---------- */
+ {id:"festa",f:"JA",t:"Convite para uma festa de famosos na véspera do clássico.",o:[["🎉 Ir à festa",RC(.65,{fama:6,tec:-4,r:"Ninguém viu. Você curtiu e ainda apareceu bem nas redes."},{fama:4,torc:-8,tec:-8,a:{fis:-2},m:"baladeiro",log:"Flagrado na balada, {n} irrita a torcida antes do clássico",r:"Apareceu em foto na balada. A torcida não gostou nada."})],["🛌 Ficar em casa",{tec:4,a:{fis:1},r:"Dormiu cedo. O técnico elogiou sua postura."}]]},
+ {id:"banco",f:"AV",c:c=>!c.base,t:"O técnico te deixou no banco no jogo mais importante do mês.",o:[["🎤 Reclamar na imprensa",{torc:4,tec:-15,fama:3,m:"brigatec",f:[["tecvolta",3]],log:"{n} critica o técnico: \"Mereço jogar\"",r:"Virou manchete. A torcida ficou do seu lado, o técnico não."}],["🤐 Treinar calado",{tec:9,r:"Respondeu no treino. Voltou a ser titular duas semanas depois."}],["🚪 Pedir para sair",{sair:1,tec:-6,r:"O clube vai ouvir propostas no fim da temporada."}]]},
+ {id:"chuteira",f:"AV",c:c=>c.fama>=25&&!c.m.patro,t:"Uma marca de chuteiras quer você como garoto-propaganda.",o:[["🤝 Aceitar",c=>{c.m.patro=1;const v=Math.round(80+c.fama*12);c.ganho+=v;c.fama+=4;return `Contrato assinado: ${reGrana(v)} e chuteira personalizada.`}],["🙅 Recusar e focar",{tec:3,r:"O técnico gostou do foco."}]]},
+ {id:"dor",f:"AV",c:c=>!c.base,t:"Você sente uma fisgada na coxa antes de uma decisão.",o:[["🩹 Jogar no sacrifício",RC(.55,{torc:8,m:"sacrificio",f:[["lesvolta",2]],r:"Jogou no sacrifício e a torcida cantou seu nome."},{inj:3,a:{fis:-2},log:"{n} se machuca e desfalca o time por 3 meses",r:"Lesão muscular: 3 meses fora."})],["🧊 Poupar",{tec:2,torc:-2,r:"Ficou fora. Foi a escolha mais segura."}]]},
+ {id:"rival",f:"AV",c:c=>c.fama>=15,t:"Um jornalista pergunta se você jogaria no maior rival do {cl}.",o:[["❤️ \"Nunca. Sou apaixonado por esse clube\"",{torc:10,m:"juramento",r:"A frase virou faixa na arquibancada."}],["🤷 \"Penso no meu futuro\"",{torc:-8,fama:3,sair:1,r:"Clubes anotaram seu nome. A torcida ficou desconfiada."}]]},
+ {id:"aulas",f:"JA",t:"Um ex-craque oferece aulas particulares, mas cobra caro.",o:[["📚 Pagar as aulas",c=>{const ks=c.pos==="GOL"?["ref","pdp"]:["fin","fal","cpe"];ks.forEach(k=>c.a[k]+=ri(2,3));c.ganho-=40;return "Aprendeu segredos que nenhum treinador ensina."}],["⏭️ Agradecer e recusar",{r:"Fica pra próxima."}]]},
+ {id:"viral",f:"JA",c:L_,t:"Um vídeo seu dando caneta no treino viralizou.",o:[["📱 Postar mais vídeos",{fama:8,tec:-3,r:"Milhões de visualizações. O técnico achou exagero."}],["⚽ Focar no jogo",{a:{dri:1},r:"Discreto, mas o drible melhorou."}]]},
+ {id:"capitao",f:"AV",c:c=>!c.base&&!c.cap&&(c.ment==="lid"||c.torc>=60),t:"O técnico oferece a braçadeira de capitão.",o:[["©️ Aceitar",{cap:1,tec:5,torc:5,m:"capitao",mar:"Virou capitão do {cl}",log:"{n} é o novo capitão do {cl}",r:"Agora você fala pelo grupo."}],["🙏 Recusar",{r:"Prefere liderar dentro de campo."}]]},
+ {id:"briga",f:"JAV",c:c=>!c.base,t:"Discussão feia com um companheiro no treino.",o:[["🤝 Pedir desculpa",{tec:3,r:"Abraço no fim do treino. Vida que segue."}],["😤 Partir pra cima",{tec:-10,fama:2,susp:1,log:"Briga no treino: {n} é afastado por alguns jogos",r:"Afastado por três jogos."}]]},
+ {id:"selecao",f:"AV",rep:1,c:c=>!c.base&&ovRE(c)>=73,t:"Convocado para a {sel}! Mas o {cl} pede que você seja poupado do amistoso.",o:[["🌎 Ir à Seleção",c=>{const j=ri(2,5),g=c.pos==="ATA"?ri(0,2):c.pos==="MEI"?ri(0,1):0;c.selec.j+=j;c.selec.g+=g;c.fama+=6;c.tec-=3;reLog(c,reTxt(c,"{n} entra em campo pela {sel}"));return `${j} jogos pela Seleção${g?` e ${g} gol${g>1?"s":""}`:""}.`}],["🏠 Ficar no clube",{tec:6,r:"O técnico agradeceu. A Seleção vai esperar."}]]},
+ {id:"copa",f:"AV",c:c=>!c.base&&ovRE(c)>=79&&c.ano%4===2&&!c.m["copa"+c.ano],t:"Ano de Copa do Mundo! Você está na lista provisória da {sel}.",o:[["🔥 Treinar pesado para garantir a vaga",c=>{c.m["copa"+c.ano]=1;if(rnd()<.35+(ovRE(c)-79)/30){c.selec.j+=ri(3,7);c.fama+=10;const tit=rnd()<.12+(ovRE(c)-80)/60;if(tit){c.T0=(c.T0||[]).concat("Copa do Mundo");c.marc.push(`${c.ano} · Campeão da Copa do Mundo`);reLog(c,reTxt(c,"{n} é campeão da Copa do Mundo!"));return "Convocado, titular e CAMPEÃO DO MUNDO!"}reLog(c,reTxt(c,"{n} disputa a Copa do Mundo"));return "Convocado! Você jogou a Copa, mas a taça ficou com outro país."}c.a.fis-=1;return "Ficou fora da lista final. Doeu."}],["🧘 Deixar acontecer naturalmente",c=>{c.m["copa"+c.ano]=1;if(rnd()<.25){c.selec.j+=ri(1,4);c.fama+=6;return "Foi convocado como reserva e entrou em alguns jogos."}return "Não foi chamado desta vez."}]]},
+ {id:"dieta",f:"AV",c:c=>!c.m.dieta,t:"O nutricionista propõe uma dieta bem rígida.",o:[["🥗 Seguir à risca",{a:{fis:2},m:"dieta",r:"Menos açúcar, mais fôlego."}],["🍔 Ignorar",{r:"Churrasco de domingo garantido."}]]},
+ {id:"arbitro",f:"AV",c:c=>!c.base,t:"O árbitro marca um pênalti inexistente contra o seu time no fim do jogo.",o:[["😡 Reclamar muito",{susp:1,torc:4,tec:-3,r:"Cartão vermelho e três jogos de gancho."}],["🫡 Acalmar o time",{tec:4,a:{pas:1},r:"Você segurou o grupo. O empate veio no fim."}]]},
+ {id:"apostas",f:"AV",c:c=>c.fama>=20,t:"Uma casa de apostas oferece muito dinheiro para você fazer propaganda.",o:[["💰 Aceitar",{din:150,fama:3,torc:-4,m:"apostas",f:[["apostas2",2]],r:"Dinheiro na conta. Parte da torcida criticou."}],["🚫 Recusar",{torc:3,r:"Você preferiu não associar seu nome a isso."}]]},
+ {id:"investir",f:"AV",c:c=>c.ganho>=300,t:"Um amigo te chama para investir num negócio: uma rede de academias.",o:[["📈 Investir alto",{din:-200,m:"invest",f:[["invest2",3]],r:"Dinheiro aplicado. Agora é esperar."}],["🏦 Deixar no banco",{din:20,r:"Rendeu pouco, mas está seguro."}]]},
+ {id:"caridade",f:"AV",c:c=>c.ganho>=150,t:"Você pode criar um instituto social no bairro onde cresceu.",o:[["❤️ Criar o instituto",{din:-60,torc:8,fama:5,m:"instituto",mar:"Criou um instituto social no bairro onde cresceu",r:"Centenas de crianças atendidas."}],["⏳ Deixar para depois",{r:"Um dia, quem sabe."}]]},
+ {id:"proposta_rival",f:"AV",c:c=>!c.base&&ovRE(c)>=68,t:"O maior rival do {cl} faz uma proposta salarial bem maior.",o:[["💸 Aceitar e ir para o rival",c=>{if(c.m.juramento){c.torc-=25;c.marc.push(`${c.ano} · Quebrou o juramento e foi para o rival`)}c.querSair=1;c.m.traidor=1;return c.m.juramento?"A torcida lembrou do seu juramento. Você virou o maior vilão da cidade.":"A torcida ficou revoltada, mas o salário é outro."}],["🛡️ Recusar",{torc:9,m:"fiel",r:"Você virou símbolo do clube."}]]},
+ {id:"vestiario",f:"AV",c:c=>!c.base,t:"O vestiário rachou: metade quer a saída do técnico.",o:[["📋 Ficar do lado do técnico",{tec:8,torc:-2,r:"Você segurou o grupo junto com ele."}],["👥 Ficar do lado dos jogadores",{tec:-8,torc:2,r:"O técnico caiu duas semanas depois."}],["🤐 Ficar neutro",{r:"Cada um que resolva."}]]},
+ {id:"cirurgia_n",f:"AV",t:"Um problema no tornozelo pode ser operado agora (3 meses fora) ou tratado aos poucos.",o:[["🏥 Operar agora",{inj:3,a:{fis:1},r:"Cirurgia ok. Voltou novo em folha."}],["🩼 Tratar aos poucos",RC(.6,{r:"Deu certo, sem precisar operar."},{a:{vel:-2},m:"tornozelo",r:"Nunca mais foi o mesmo arranque."})]]},
+ {id:"programa",f:"AV",c:c=>c.fama>=35,t:"Convite para participar de um programa de TV de domingo.",o:[["📺 Aceitar",{fama:7,tec:-2,r:"Você foi o assunto da semana."}],["🙅 Recusar",{r:"Prefere a discrição."}]]},
+ {id:"livro",f:"AV",c:c=>c.fama>=40,t:"Uma editora quer lançar a sua biografia.",o:[["📖 Contar tudo, sem filtro",{fama:6,tec:-4,din:60,r:"Polêmico e campeão de vendas."}],["✍️ Uma história bonita e leve",{fama:3,din:40,r:"Os fãs adoraram."}],["❌ Não é a hora",{r:"Talvez depois da aposentadoria."}]]},
+ {id:"filho",f:"AV",c:c=>!c.m.filho&&(c.m.casado||rnd()<.4),t:"Você vai ser pai! O bebê nasce na semana de um jogo decisivo.",o:[["👶 Estar no parto",{tec:-2,torc:3,m:"filho",mar:"Nasceu o primeiro filho",r:"Momento mais feliz da sua vida."}],["⚽ Jogar e ver por vídeo",{tec:3,torc:-1,m:"filho",r:"Você dedicou o gol ao bebê."}]]},
+ {id:"companheiro",f:"AV",c:c=>!c.base,t:"Seu melhor amigo no elenco está sendo encostado pela diretoria.",o:[["🗣️ Defender ele publicamente",{torc:2,tec:-5,r:"Você comprou a briga dele."}],["🤝 Ajudar por trás, sem polêmica",{tec:2,r:"Ele conseguiu ser emprestado e voltou a jogar."}]]},
+ {id:"treino_noturno",f:"JA",t:"Você descobre que rende mais treinando sozinho à noite.",o:[["🌙 Treinar todas as noites",{a:{fin:2,dri:1},fis:-1,r:"Técnica melhor, sono pior."}],["🛏️ Respeitar o descanso",{a:{fis:1},r:"O corpo agradece."}]]},
+ {id:"mudar_pe",f:"JA",c:L_,t:"Um auxiliar diz que você precisa melhorar a perna ruim.",o:[["🦶 Treinar a perna ruim todo dia",{a:{fin:1,pas:1,fal:2},r:"Agora você bate com as duas."}],["⚽ Focar no que já faz bem",{a:{dri:1},r:"Especialista no que sabe."}]]},
+ {id:"penal_treino",f:"AV",c:L_,t:"O técnico pergunta quem quer ser o cobrador oficial de pênaltis.",o:[["🙋 Eu bato",{a:{cpe:3},fama:2,m:"batedor",r:"Agora a bola é sua."}],["👉 Deixa com o capitão",{r:"Sem pressão extra."}]]},
+ {id:"gol_treino",f:"AV",c:G_,t:"O preparador de goleiros quer mudar seu jeito de sair do gol.",o:[["🔁 Aceitar a mudança",RC(.6,{a:{ref:2,def:1},r:"Ficou mais seguro."},{a:{ref:-1},tec:2,r:"Demorou a se adaptar."})],["🧤 Manter o seu estilo",{r:"Em time que está ganhando..."}]]},
+ {id:"intercambio",f:"A",c:c=>c.clube&&c.clube.pais!==c.pais,t:"Você ainda não fala o idioma do país e se sente isolado no vestiário.",o:[["📘 Aulas intensivas do idioma",{tec:5,r:"Agora você entende as piadas do vestiário."}],["🇧🇷 Andar só com os brasileiros",{tec:-3,r:"Ficou isolado do resto do grupo."}]]},
+ {id:"saudade_br",f:"AV",c:c=>c.clube&&c.clube.pais!==c.pais,t:"Saudade do Brasil. Sua família não se adaptou ao frio.",o:[["🏠 Pedir para voltar ao Brasil",{sair:1,r:"Seu empresário vai procurar clubes brasileiros."}],["🧥 Aguentar mais um ano",{tec:2,r:"Mais um inverno."}]]},
+ {id:"doping",f:"AV",c:c=>rnd()<.5,t:"Um remédio para gripe pode dar problema no antidoping.",o:[["💊 Tomar mesmo assim",RC(.7,{r:"Nada aconteceu."},{susp:1,inj:2,fama:-4,torc:-6,log:"{n} é suspenso em caso de doping",mar:"Pego no antidoping",r:"Pego no antidoping: suspenso."})],["🤧 Jogar gripado",{a:{fis:-1},r:"Jogou mal, mas limpo."}]]},
+ {id:"ingresso",f:"AV",c:c=>c.torc<45,t:"A torcida está na bronca com você.",o:[["🎟️ Comprar ingressos para torcedores",{torc:8,din:-20,r:"Gesto simpático, clima melhorou."}],["⚽ Responder em campo",RC(.5,{torc:10,r:"Fez gol e beijou o escudo. Fez as pazes."},{torc:-4,r:"Jogou mal e a vaia aumentou."})]]},
+ {id:"ofensa",f:"AV",t:"Você é alvo de racismo/xingamento da arquibancada adversária.",o:[["🛑 Parar o jogo e denunciar",{fama:6,torc:6,mar:"Denunciou ofensas da arquibancada e virou exemplo",r:"O jogo parou. O caso virou exemplo no país."}],["😶 Seguir jogando",{r:"Você engoliu, mas não esqueceu."}]]},
+ {id:"melhor_amigo",f:"AV",c:c=>c.m.irmao,t:"Seu irmão, que cuida das suas finanças, fez um investimento ruim sem te avisar.",o:[["🗣️ Tirar ele do cargo",{din:-50,tira:"irmao",r:"A família ficou estremecida."}],["🤝 Perdoar e seguir",{din:-80,r:"Perdeu dinheiro, mas manteve a família unida."}]]},
+
+ /* ---------- VETERANO (31+) ---------- */
+ {id:"mentor",f:"V",c:c=>!c.m.mentor,t:"Um garoto da base pede para treinar ao seu lado.",o:[["🧑‍🏫 Virar mentor",{torc:6,tec:4,m:"mentor",f:[["pupilo",3]],r:"O garoto já te chama de ídolo."}],["⏭️ Sem tempo",{r:"Cada um no seu canto."}]]},
+ {id:"arabia",f:"AV",c:c=>c.idade>=29&&ovRE(c)>=68&&!c.arabe,t:"Proposta milionária do futebol árabe para o fim da temporada.",o:[["💰 Topar",{m:"arabia",r:"No fim da temporada você vai para a Arábia."}],["🏆 Seguir competindo aqui",{torc:5,r:"Ainda tem lenha pra queimar."}]]},
+ {id:"vet_reserva",f:"V",c:c=>!c.base,t:"Aos {idade} anos, o técnico quer você saindo do banco.",o:[["🤝 Aceitar o novo papel",{tec:6,torc:3,r:"Virou o 12º jogador. Decide quando entra."}],["😤 Exigir ser titular",RC(.35,{tec:-2,r:"Ganhou a queda de braço."},{tec:-10,sair:1,r:"Ficou ainda mais no banco."})]]},
+ {id:"selecao_adeus",f:"V",c:c=>c.selec.j>=10&&!c.m.adeussel,t:"Você pensa em se despedir da {sel}.",o:[["👋 Anunciar a despedida",{fama:5,m:"adeussel",mar:"Despediu-se da Seleção",r:"Jogo de despedida emocionante."}],["🌎 Seguir à disposição",{r:"A porta continua aberta."}]]},
+ {id:"curso_tec",f:"V",t:"A CBF abre vagas para o curso de técnico.",o:[["📋 Fazer o curso",{a:{pas:1},tec:3,m:"cursotec",r:"Você já pensa como treinador."}],["⚽ Só pensar nisso depois",{r:"Ainda é jogador."}]]},
+ {id:"comentarista",f:"V",c:c=>c.fama>=30,t:"Uma emissora quer você como comentarista quando parar.",o:[["🎙️ Assinar pré-contrato",{din:40,m:"comentarista",r:"Futuro garantido na TV."}],["🙅 Recusar",{r:"Microfone não é para você."}]]},
+ {id:"corpo",f:"V",t:"O corpo já não responde como antes. O preparador sugere reduzir a carga.",o:[["🧘 Reduzir e cuidar do corpo",{a:{fis:2},tec:2,r:"Mais longevidade."}],["🏋️ Treinar igual aos jovens",RC(.4,{a:{vel:1,fis:1},r:"Você ainda corre como garoto!"},{inj:2,r:"Lesão muscular: 2 meses fora."})]]},
+ {id:"volta_casa",f:"V",c:c=>c.clubes.length>1,t:"O clube que te revelou quer você de volta para encerrar a carreira lá.",o:[["🏠 Voltar para casa",{sair:1,torc:5,m:"voltacasa",r:"No fim da temporada a proposta vai chegar."}],["⏳ Ainda não",{r:"Quem sabe mais para frente."}]]},
+ {id:"homenagem",f:"V",c:c=>c.torc>=70,t:"O {cl} quer fazer uma estátua sua na porta do estádio.",o:[["🗿 Aceitar emocionado",{fama:6,mar:"Ganhou uma estátua no estádio do {cl}",r:"Agora você é eterno."}],["🙏 Pedir para homenagearem o time todo",{torc:6,r:"Humildade de ídolo."}]]},
+ {id:"cirurgia_v",f:"V",t:"Uma cirurgia no joelho pode te dar mais 2 anos de carreira, mas é arriscada.",o:[["🏥 Operar",RC(.6,{inj:3,a:{fis:2},r:"Deu certo! Mais lenha pra queimar."},{inj:4,a:{vel:-3,fis:-3},r:"A recuperação foi complicada."})],["🩹 Seguir até onde der",{a:{vel:-1},r:"Vai até o corpo aguentar."}]]},
+ {id:"dono_clube",f:"V",c:c=>c.ganho>=1500,t:"Você tem dinheiro para comprar parte de um clube pequeno.",o:[["🏟️ Virar sócio",{din:-500,m:"socio",mar:"Virou sócio de um clube",r:"Já se prepara para a vida de dirigente."}],["💼 Investir em outra coisa",{r:"Futebol, só dentro de campo."}]]},
+
+ /* ---------- capítulos (só saem pela fila) ---------- */
+ {id:"namoro2",f:"",c:c=>c.m.namoro&&!c.m.casado,t:"O namoro ficou sério. Ela quer casar, mas a imprensa vive atrás de vocês.",o:[["💍 Pedir em casamento",{m:"casado",tira:"namoro",fama:5,mar:"Casou com uma influenciadora famosa",r:"Casamento do ano!"}],["⏳ Esperar mais um pouco",{f:[["namoro3",2]],r:"Ela não gostou muito."}],["💔 Terminar",{tira:"namoro",fama:3,tec:2,log:"{n} termina namoro famoso",r:"Fim de relacionamento. Foco no futebol."}]]},
+ {id:"namoro3",f:"",c:c=>c.m.namoro,t:"Uma revista de fofoca publica fotos suas com outra pessoa.",o:[["🙏 Pedir perdão em público",RC(.5,{m:"casado",tira:"namoro",torc:2,r:"Ela te perdoou. Vocês casaram."},{tira:"namoro",fama:4,torc:-4,r:"Ela não perdoou. Separação em todas as revistas."})],["🤐 Não comentar",{tira:"namoro",fama:5,tec:-3,torc:-5,log:"Escândalo amoroso envolve {n}",r:"Escândalo. Ficou semanas no noticiário."}]]},
+ {id:"lesvolta",f:"",c:c=>c.m.sacrificio,t:"A lesão que você ignorou voltou a doer, agora mais forte.",o:[["🏥 Parar e tratar de vez",{inj:3,tira:"sacrificio",r:"3 meses fora, mas resolveu."}],["💉 Jogar de novo no sacrifício",RC(.4,{torc:5,r:"Aguentou mais uma vez."},{inj:5,a:{vel:-3,fis:-2},tira:"sacrificio",mar:"Lesão grave por jogar machucado",log:"Lesão grave tira {n} de combate por meses",r:"Lesão grave: 5 meses fora."})]]},
+ {id:"joelho2",f:"",c:c=>c.m.joelho,t:"O joelho da infiltração começou a travar.",o:[["🏥 Cirurgia",{inj:4,a:{vel:-1},tira:"joelho",r:"Operou. Voltou depois de 4 meses."}],["💉 Mais uma infiltração",RC(.5,{r:"Segurou mais um ano."},{inj:5,a:{vel:-3},tira:"joelho",r:"Rompeu o ligamento. Temporada perdida."})]]},
+ {id:"tecvolta",f:"",c:c=>c.m.brigatec&&!c.base,t:"Aquele técnico com quem você brigou foi contratado pelo {cl}.",o:[["🤝 Pedir desculpas pessoalmente",RC(.6,{tec:10,tira:"brigatec",r:"Ele aceitou. Página virada."},{tec:-5,r:"Ele ouviu, mas não esqueceu."})],["😤 Manter a postura",{tec:-15,sair:1,r:"Você vai para o banco. O jeito é sair."}]]},
+ {id:"apostas2",f:"",c:c=>c.m.apostas,t:"A casa de apostas que você divulgou é investigada pela polícia.",o:[["📢 Romper o contrato publicamente",{fama:-2,torc:4,tira:"apostas",r:"Você saiu antes de piorar."}],["🤐 Ficar quieto",RC(.5,{r:"A investigação não chegou até você."},{fama:-8,torc:-10,tira:"apostas",mar:"Envolvido em escândalo de apostas",log:"Nome de {n} aparece em investigação de apostas",r:"Seu nome foi parar no noticiário policial."})]]},
+ {id:"invest2",f:"",c:c=>c.m.invest,t:"Seu amigo liga: o negócio das academias...",o:[["📞 Atender",RC(.55,{din:500,tira:"invest",mar:"Investimento em academias deu muito certo",r:"Deu muito certo! Você recebeu o dobro de volta."},{din:-100,tira:"invest",r:"Faliu. Você perdeu tudo que investiu."})]]},
+ {id:"pupilo",f:"",c:c=>c.m.mentor,t:"Aquele garoto que você ajudou estreou no profissional e fez gol.",o:[["🥹 Comemorar com ele",{torc:8,fama:3,mar:"O garoto que você ajudou virou titular e te homenageou",r:"Ele correu para te abraçar e disse que deve tudo a você."}]]},
+ {id:"empgolpe",f:"",c:c=>c.m.empfamoso&&c.ganho>200,t:"Seu empresário famoso some e uma auditoria mostra contas estranhas.",o:[["⚖️ Processar",RC(.5,{din:-50,emp:0,tira:"empfamoso",r:"Recuperou parte do dinheiro na Justiça."},{din:-150,emp:0,tira:"empfamoso",r:"Perdeu o processo e muito dinheiro."})],["🤝 Fazer acordo",{din:-90,emp:0,tira:"empfamoso",r:"Acordo fechado. Prejuízo, mas acabou."}]]},
 ];
-function reSortearDil(c){const L=RE_DIL.filter(d=>!(c.usados||[]).slice(0,6).includes(d[0])&&d[1](c));const d=L.length?pick(L):RE_DIL[0];c.usados=[d[0],...(c.usados||[])].slice(0,10);return d[0]}
-const reDil=id=>id==="foco"?RE_FOCO:RE_DIL.find(d=>d[0]===id);
-function reNovaTemporada(c){c.pend=["foco",reSortearDil(c)];c.resp=[];c.foco=null;c.fase="temp"}
+const RE_DIL_ID=Object.fromEntries(RE_DIL.map(d=>[d.id,d]));
+const reFase=c=>c.base?"B":c.idade<=22?"J":c.idade<=30?"A":"V";
+function reSortearDil(c,ja){const us=c.usados||[],ok=d=>!ja.includes(d.id)&&(!d.c||d.c(c));
+  c.fila=(c.fila||[]).filter(x=>x.ano>=c.ano-3);
+  const i=c.fila.findIndex(x=>x.ano<=c.ano&&RE_DIL_ID[x.id]&&ok(RE_DIL_ID[x.id]));if(i>=0){const id=c.fila[i].id;c.fila.splice(i,1);return id}
+  const f=reFase(c),base=RE_DIL.filter(d=>d.f.includes(f)&&ok(d));
+  let L=base.filter(d=>d.rep?!us.slice(0,6).includes(d.id):!us.includes(d.id));
+  if(!L.length)L=base.filter(d=>!us.slice(0,10).includes(d.id));if(!L.length)L=base;if(!L.length)L=RE_DIL.filter(d=>d.f.includes("A")&&!ja.includes(d.id));
+  const d=pick(L);c.usados=[d.id,...us].slice(0,120);return d.id}
+const reDil=id=>id==="foco"?RE_FOCO:RE_DIL_ID[id];
+function reNovaTemporada(c){c.m=c.m||{};c.fila=c.fila||[];c.marc=c.marc||[];c.T0=[];const d1=reSortearDil(c,[]),d2=reSortearDil(c,[d1]);c.pend=["foco",d1,d2];c.resp=[];c.foco=null;c.fase="temp";
+  if(c.m.empfamoso&&!c.fila.some(x=>x.id==="empgolpe")&&!c.m.golpeMarc&&rnd()<.25){c.m.golpeMarc=1;c.fila.push({id:"empgolpe",ano:c.ano+ri(2,4)})}}
 
 /* ---------- simulação da temporada ---------- */
 function reSimular(c){const ov=reOv(c),r=c.clube.rating,st=reStatus(c),pais=c.clube.pais,tier=c.clube.tier;
   const pct=c.base?.75:{"Titular absoluto":.9,"Titular":.76,"Rotação":.5,"Reserva":.2}[st];
   const total=c.base?30:[52,46,40][tier]||40;let j=Math.round(total*pct*(1-(c.inj||0)/10)*(c.susp?.94:1)*(.9+rnd()*.15));
-  if(!c.inj&&rnd()<.08+(c.ment==="fes"?.06:0)+(c.a.fis<50?.06:0)-(c.dieta?.04:0)){const m=ri(1,3);j=Math.round(j*(1-m/10));reLog(c,`${c.nome} sofre lesão e fica ${m} ${m>1?"meses":"mês"} fora`)}
+  if(!c.inj&&rnd()<.12+(c.ment==="fes"?.06:0)+(c.a.fis<50?.06:0)-(c.dieta?.04:0)){const m=ri(1,3);j=Math.round(j*(1-m/10));reLog(c,`${c.nome} sofre lesão e fica ${m} ${m>1?"meses":"mês"} fora`)}
   const fx=c.base?1:Math.max(.4,Math.min(1.8,1+(ov-r)/35));
   const gb={ATA:.32,MEI:.14,VOL:.05,LAT:.035,ZAG:.045,GOL:0}[c.pos]*Math.pow((c.a.fin||30)/75,1.2)*fx,ab={ATA:.12,MEI:.18,LAT:.1,VOL:.07,ZAG:.02,GOL:.004}[c.pos]*Math.pow((c.a.pas||40)/75,1.2)*fx;
   const g=Math.round(j*gb*(.75+rnd()*.5)),as=Math.round(j*ab*(.75+rnd()*.5)),nota=Math.max(5.2,Math.min(9.2,6.2+(ov-r)/12+(j?(g+as*.6)/j:0)*1.6+(rnd()-.5)*.6));
   const T={ano:c.ano,idade:c.idade,clube:c.clube.name,j,g,a:as,nota:+nota.toFixed(1),st,ov,tits:[],base:!!c.base};c.T=T;c.inj=0;c.susp=0;
+  (c.T0||[]).forEach(x=>T.tits.push(x==="Sub-20"?`Sub-20 · ${c.ano}`:`${x} ${c.ano}`));c.T0=[];
   if(c.base){if(rnd()<.25+(ov-50)/60){T.tits.push(`Sub-20 · ${c.ano}`)}reLog(c,`${c.nome} faz ${g} gols na base do ${c.clube.name}`);return}
   // liga: posição pela força (o seu peso conta se você joga)
   const L=reClubes(pais,tier).filter(x=>x.name!==c.clube.name),forca=r+(pct>=.7?(ov-r)*.25:0)+(rnd()-.5)*6,pos=1+L.filter(x=>x.rating+(rnd()-.5)*8>forca).length,n=L.length+1;T.pos=pos;T.liga=reLiga(c);
   const fin=[];
   if(pos===1)fin.push({comp:T.liga,tipo:"lance",txt:`Última rodada ${reDa(T.liga)}: empate dá o título ao rival. Jogo 0×0 aos 44 do segundo tempo.`});
-  const cn=COPA_NAC[pais];if(cn&&rnd()<Math.max(.03,Math.min(.35,.06+(forca-60)/70)))fin.push({comp:cn,tipo:"pen",txt:`Final da ${cn}: empate no tempo normal. Vai para os pênaltis!`});
-  const cont=COPAS[(PAISES[pais]||{}).cont];if(cont&&tier===0&&(c.vaga||0)>0){const main=c.vaga===1,nm=main?cont.main:cont.sec;if(rnd()<Math.max(.03,Math.min(.35,(main?.04:.1)+(forca-72)/45)))fin.push({comp:nm,tipo:rnd()<.5?"pen":"lance",txt:`Final da ${nm}! ${rnd()<.5?"Empate no fim da prorrogação: pênaltis.":"Jogo empatado nos acréscimos."}`})}
+  const cn=COPA_NAC[pais];if(cn&&rnd()<Math.max(.02,Math.min(.25,.03+(forca-62)/90)))fin.push({comp:cn,tipo:"pen",txt:`Final da ${cn}: empate no tempo normal. Vai para os pênaltis!`});
+  const cont=COPAS[(PAISES[pais]||{}).cont];if(cont&&tier===0&&(c.vaga||0)>0){const main=c.vaga===1,nm=main?cont.main:cont.sec;if(rnd()<Math.max(.02,Math.min(.25,(main?.02:.06)+(forca-74)/55)))fin.push({comp:nm,tipo:rnd()<.5?"pen":"lance",txt:`Final da ${nm}! ${rnd()<.5?"Empate no fim da prorrogação: pênaltis.":"Jogo empatado nos acréscimos."}`})}
   c.vaga=tier===0?(pos<=4?1:pos<=8?2:0):0;
   if(tier>0&&(pos<=4)){T.acesso=1;c.clube.tier=tier-1;reLog(c,`${c.clube.name} conquista o acesso com ${c.nome} em campo`)}
   else if(tier<2&&pos>n-4){T.queda=1;c.clube.tier=tier+1;c.torc-=5;reLog(c,`${c.clube.name} é rebaixado`)}
   // finais: a maior vira o momento decisivo; as outras se resolvem sozinhas
   const peso=x=>x.comp===(cont&&cont.main)?4:x.comp===T.liga&&tier===0?3:x.comp===cn?2:1;fin.sort((a,b)=>peso(b)-peso(a));
-  fin.slice(1).forEach(x=>{if(x.comp===T.liga||rnd()<.5)T.tits.push(`${x.comp} ${c.ano}`)});
+  fin.slice(1).forEach(x=>{if(x.comp===T.liga||rnd()<.42)T.tits.push(`${x.comp} ${c.ano}`)});
   // prêmios
   const art={ATA:22,MEI:14}[c.pos];if(art&&g>=art&&rnd()<.6){T.prem=`Artilheiro ${reDa(T.liga)}`}else if(T.nota>=7.5&&pct>=.7&&rnd()<.5)T.prem=`Craque ${reDa(T.liga)}`;
-  if(ov>=90&&rnd()<.35){T.bola=1}
+  if(ov>=91&&rnd()<.22){T.bola=1}
   if(ov>=76&&rnd()<(ov-70)/20){const sj=ri(2,7),sg=Math.round(sj*gb*(.6+rnd()*.8));c.selec.j+=sj;c.selec.g+=sg;T.sel=sj;if(c.selec.j===sj)reLog(c,`${c.nome} estreia pela seleção ${c.nat==="BRA"?"brasileira":"de "+(PAIS_NOME[c.nat]||"")}`)}
   c.mom=fin[0]?{...fin[0],res:null}:null;
   if(g>=15)reLog(c,`${c.nome} marca ${g} gols na temporada pelo ${c.clube.name}`);else if(T.nota>=7.3)reLog(c,`${c.nome} é um dos destaques ${reDa(T.liga)}`)}
-function reOpsMomento(c){const m=c.mom,gol=c.pos==="GOL",A=c.a,cl=x=>Math.max(.2,Math.min(.92,x));
-  if(m.tipo==="pen")return gol?[["🧤 Pular no canto que estudou",cl(.28+(A.pdp-50)/110),1],["👀 Esperar até o último segundo",cl(.22+(A.ref-50)/120),1]]
-    :[["⚽ Bater o pênalti decisivo",cl(.5+(A.cpe-50)/100),1],["🤝 Deixar para o mais experiente",.6,0]];
+function reOpsMomento(c){const m=c.mom,gol=c.pos==="GOL",A=c.a,cl=x=>Math.max(.15,Math.min(.8,x));
+  if(m.tipo==="pen")return gol?[["🧤 Pular no canto que estudou",cl(.22+(A.pdp-50)/120),1],["👀 Esperar até o último segundo",cl(.18+(A.ref-50)/130),1]]
+    :[["⚽ Bater o pênalti decisivo",cl(.38+(A.cpe-50)/130),1],["🤝 Deixar para o mais experiente",.5,0]];
   return gol?[["🧤 Ir para a área no último escanteio",cl(.12+(A.cab||40)/400),1],["🛡️ Segurar o empate atrás",.45,0]]
-    :[["🚀 Chutar de fora da área",cl(.3+(A.fin-50)/90),1],["🎯 Tocar para o companheiro livre",cl(.38+(A.pas-50)/110),1]]}
+    :[["🚀 Chutar de fora da área",cl(.22+(A.fin-50)/120),1],["🎯 Tocar para o companheiro livre",cl(.3+(A.pas-50)/130),1]]}
 function reResolverMomento(c,i){const m=c.mom,op=reOpsMomento(c)[i];if(!op||m.res)return;const ok=rnd()<op[1];m.res={i,ok,eu:op[2]};
   if(ok){c.T.tits.push(`${m.comp} ${c.ano}`);if(op[2]){c.fama+=8;c.torc+=10;m.res.txt=c.pos==="GOL"&&m.tipo==="pen"?"DEFENDEU! Você é o herói do título!":"GOOOL! Você decide e é o herói do título!";reLog(c,`${c.nome} decide e o ${c.clube.name} é campeão da ${m.comp}`)}else m.res.txt="O companheiro resolve. É campeão!"}
   else{if(m.comp===c.T.liga)c.T.pos=2;if(op[2]){c.fama-=2;c.torc-=4;m.res.txt=c.pos==="GOL"&&m.tipo==="pen"?"A bola entrou no outro canto. O título escapou.":"Para fora... o título escapou."}else m.res.txt="Não deu. O título escapou."}}
@@ -8356,15 +8450,15 @@ function reOfertas(c){const ov=reOv(c),out=[];
     const L=[1,2].flatMap(t=>reClubes(c.pais,t)).filter(x=>x.rating<=ov+14&&x.rating>=ov-2).sort(()=>rnd()-.5).slice(0,3);if(!L.length)L.push(...reClubes(c.pais,2).slice(-3));
     return {promo:0,ofs:L.map(x=>({c:reClube(x),sal:reSal(ov,c.idade+1,x.tier)}))}}
   if(c.base)return {ofs:[]};
-  if(c.arabe){return {ofs:[{c:{name:"Al-Nassr",pais:"ARA",tier:0,rating:70,c1:"#f5d000",c2:"#0047ab"},sal:Math.round(reSal(ov,c.idade,0)*3),arabe:1}]}}
-  let n=(rnd()<.25+c.fama/180?ri(1,2):0)+(c.querSair?1:0)+(c.emp&&rnd()<.6?1:0);if(reStatus(c)==="Reserva")n++;
+  if(c.arabe||c.m.arabia){return {ofs:[{c:{name:"Al-Nassr",pais:"ARA",tier:0,rating:70,c1:"#f5d000",c2:"#0047ab"},sal:Math.round(reSal(ov,c.idade,0)*3),arabe:1}]}}
+  let n=(rnd()<.18+c.fama/220?ri(1,2):0)+(c.querSair?1:0)+(c.emp&&rnd()<.6?1:0);if(reStatus(c)==="Reserva")n++;
   const fora=ov>=68||c.emp,paises=Object.keys(PAISES).filter(k=>fora||k===c.pais);
   const L=paises.flatMap(k=>[0,1,2].flatMap(t=>reClubes(k,t))).filter(x=>x.name!==c.clube.name&&x.rating>=Math.max(ov-9,c.clube.rating-6)&&x.rating<=ov+4);
   shuffle(L).slice(0,Math.min(3,n)).forEach(x=>out.push({c:reClube(x),sal:Math.round(reSal(ov,c.idade+1,x.tier)*(1+rnd()*.35))}));
   return {ofs:out}}
 function reAposentaObrigado(c){return c.idade>=40||(c.idade>=34&&reOv(c)<64)||(c.idade>=36&&rnd()<.4)||(c.idade>=38&&rnd()<.6)}
 function reAceitar(c,i){const o=c.mer&&c.mer.ofs[i];if(!o)return;const de=c.clube.name;c.clube={...o.c};if(c.base)c.base=false;
-  c.tec=50;c.torc=Math.max(35,c.torc*.4+25);c.cap=0;c.querSair=0;c.vaga=0;c.arabe=0;reLog(c,`${c.nome} deixa o ${de} e assina com o ${o.c.name}`);reProximo(c)}
+  c.tec=50;c.torc=Math.max(35,c.torc*.4+25);c.cap=0;c.querSair=0;c.vaga=0;c.arabe=0;delete c.m.arabia;reLog(c,`${c.nome} deixa o ${de} e assina com o ${o.c.name}`);reProximo(c)}
 function reProximo(c){reEvoluir(c);c.mer=null;c.mom=null;c.T=null;if(c.fase!=="fim")reNovaTemporada(c)}
 
 /* ---------- fim da carreira ---------- */
@@ -8383,6 +8477,7 @@ function reTelaFim(c,hist){const tits=c.tits.filter(t=>!t.startsWith("Sub-20"));
     <div class="kpis"><div class="cartao kpi"><small>Títulos</small><b class="num">${tits.length}</b></div><div class="cartao kpi"><small>Força máxima</small><b class="num">${c.pico}</b></div><div class="cartao kpi"><small>Seleção</small><b class="num">${c.selec.j}<small> j · ${c.selec.g} g</small></b></div></div>
     <p class="muted peq">Ganhou na carreira: <b>${reGrana(c.ganho)}</b></p>
     <h3 class="sala-tit">🏆 Títulos</h3>${tits.length?salaPorComp(tits):`<p class="muted peq">Nenhum título como profissional.</p>`}
+    ${(c.marc||[]).length?`<h3 class="sala-tit">📌 Decisões marcantes</h3><div class="cartao">${c.marc.map(x=>`<p class="re-man">${esc(x)}</p>`).join("")}</div>`:""}
     ${c.premios.length?`<h3 class="sala-tit">🏅 Prêmios</h3><div class="hab-chips ant-chips selos">${c.premios.map(x=>`<i>🏅 ${esc(x)}</i>`).join("")}</div>`:""}
     <h3 class="sala-tit">Clubes</h3><div class="cartao">${c.clubes.map(h=>`<div class="re-cl">${reEsc(h,26)}<div><b>${esc(h.name)}${h.base?" (base)":""}</b><small>${h.de}${h.ate>h.de?"–"+h.ate:""} · ${h.j} jogos · ${h.g} gols · ${h.a} assist.</small></div>${h.tits?`<span>🏆${h.tits}</span>`:""}</div>`).join("")}</div>
     <div class="botoes">${hist?`<button class="btn" data-a="re_voltacriar">‹ Voltar</button>`:`<button class="btn" data-a="re_sair">Sair</button><button class="btn prim" data-a="re_nova">⭐ Nova carreira</button>`}</div></div>`}
@@ -8406,7 +8501,7 @@ function telaEstrelato(){reLer();const c=RE.car;
       <div class="re-num"><span>Temporada</span><b>${c.ano}</b></div><div class="re-num"><span>Situação</span><b>${reStatus(c)}</b></div><div class="re-num"><span>Valor</span><b>${reGrana(reValor(c))}</b></div><div class="re-num"><span>Salário</span><b>${reGrana(reSal(reOv(c),c.idade,c.clube.tier,c.base))}/mês</b></div>
       <div class="re-num"><span>Carreira</span><b>${c.tot.j} j · ${c.tot.g} g · ${c.tot.a} a</b></div></div></div>
       ${c.resp.map(r=>`<div class="re-feito"><small>${esc(r[0])}</small><span>${esc(r[1])}</span></div>`).join("")}
-      ${D?`<div class="re-dec"><p class="re-tag">Decisão ${c.resp.length+1} de ${c.pend.length}</p><b>${esc(D[2])}</b><div class="re-ops">${D[3].map((o,i)=>`<button class="re-op" data-a="re_dec" data-v="${i}"><b>${esc(o[0])}</b></button>`).join("")}</div></div>`
+      ${D?`<div class="re-dec"><p class="re-tag">Decisão ${c.resp.length+1} de ${c.pend.length}</p><b>${esc(reTxt(c,D.t))}</b><div class="re-ops">${D.o.map((o,i)=>`<button class="re-op" data-a="re_dec" data-v="${i}"><b>${esc(o[0])}</b></button>`).join("")}</div></div>`
         :`<button class="btn prim full re-jogar" data-a="re_jogar">▶ Jogar a temporada ${c.ano}</button>`}
       <details class="sanf re-sanf"><summary>Atributos · força ${reOv(c)}</summary>${reBarras(c)}</details>
       <details class="sanf re-sanf"><summary>Relação e fama</summary>${reRel(c)}</details>
@@ -8450,7 +8545,7 @@ function reAcao(a,v){reLer();const c=RE.car;
       if(!ok){x=reClube(pick(reClubes(c.pais,2)));reLog(c,`Reprovado na peneira do ${c.penC.name}, ${c.nome} vai para a base do ${x.name}`);toast(`Não foi dessa vez. O ${x.name} te chamou para a base.`)}
       else{reLog(c,`${c.nome} é aprovado na peneira do ${x.name}!`);toast(`Aprovado! Bem-vindo à base do ${x.name}.`)}
       c.clube=x;delete c.penOps;delete c.penC;reNovaTemporada(c);break}
-    case "re_dec":{const D=reDil(c.pend[c.resp.length]);if(!D)return;const o=D[3][+v];const txt=o[1](c);c.resp.push([o[0],txt]);reAtrs(c.pos).forEach(k=>c.a[k]=reCl(c.a[k]));["fama","torc","tec"].forEach(k=>c[k]=Math.max(0,Math.min(100,c[k])));break}
+    case "re_dec":{const D=reDil(c.pend[c.resp.length]);if(!D)return;const o=D.o[+v];if(!o)return;const txt=typeof o[1]==="function"?o[1](c):reFx(c,o[1]);c.resp.push([o[0],txt]);reAtrs(c.pos).forEach(k=>c.a[k]=reCl(c.a[k]));["fama","torc","tec"].forEach(k=>c[k]=Math.max(0,Math.min(100,c[k])));break}
     case "re_jogar":reSimular(c);if(c.mom)c.fase="momento";else reFecharTemporada(c);break;
     case "re_mom":reResolverMomento(c,+v);reSalvar();render();setTimeout(()=>{if(RE.car&&RE.car.mom){RE.car.mom.rev=1;reSalvar();if(aba==="estrelato")render();if(RE.car.mom.res.ok&&RE.car.mom.res.eu&&typeof confete==="function")try{confete()}catch(e){}}},1400);return;
     case "re_resumo":reFecharTemporada(c);break;
