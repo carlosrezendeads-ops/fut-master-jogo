@@ -1265,7 +1265,9 @@ nav.abas button{font-size:11px}
 .splash.arte img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center top}
 .splash.arte .capa-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center top}
 .splash.arte .capa-fundo{object-fit:cover;filter:blur(18px) brightness(.7);transform:scale(1.1)}
-.capa-jogar{display:flex;align-items:center;justify-content:center;gap:14px;width:100%;padding:18px 0;font:inherit;font-family:var(--f-display);font-style:italic;font-weight:900;text-transform:uppercase;font-size:34px;letter-spacing:.04em;color:#fff;border:0;border-top:2px solid #19c3ff;border-bottom:2px solid #19c3ff;background:linear-gradient(90deg,transparent,rgba(25,195,255,.35),transparent);text-shadow:0 0 14px rgba(25,195,255,.8);cursor:pointer;margin-bottom:21vh}.capa-jogar svg{width:30px;height:30px;fill:#fff}
+.capa-jogar{display:flex;align-items:center;justify-content:center;gap:14px;width:100%;padding:18px 0;font:inherit;font-family:var(--f-display);font-style:italic;font-weight:900;text-transform:uppercase;font-size:34px;letter-spacing:.04em;color:#fff;border:0;border-top:2px solid #19c3ff;border-bottom:2px solid #19c3ff;background:linear-gradient(90deg,transparent,rgba(25,195,255,.35),transparent);text-shadow:0 0 14px rgba(25,195,255,.8);cursor:pointer;margin-bottom:21vh}@keyframes capaPulso{0%,100%{transform:scale(1);box-shadow:0 0 0 rgba(25,195,255,0);text-shadow:0 0 14px rgba(25,195,255,.8)}50%{transform:scale(1.05);box-shadow:0 0 34px rgba(25,195,255,.55);text-shadow:0 0 24px rgba(25,195,255,1),0 0 6px #fff}}
+.capa-jogar{animation:capaPulso 1.6s ease-in-out infinite}.capa-jogar:active{transform:scale(.96)}
+.capa-jogar svg{width:30px;height:30px;fill:#fff}
 .capa-engr{position:absolute;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:3;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;color:#fff;background:rgba(6,16,42,.75);border:2px solid rgba(25,195,255,.6);box-shadow:0 0 14px rgba(25,195,255,.4);cursor:pointer}.capa-engr svg{width:32px;height:32px}
 .roda-sp{position:relative;z-index:1;width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center;gap:6px}
 .roda{--h:56px;width:100%;height:calc(var(--h)*3);overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none;padding-block:var(--h);box-sizing:border-box;-webkit-mask-image:linear-gradient(180deg,transparent,#000 30%,#000 70%,transparent);mask-image:linear-gradient(180deg,transparent,#000 30%,#000 70%,transparent)}
@@ -4763,7 +4765,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794325834";
+const VERSAO="1794326106";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -8950,7 +8952,7 @@ adaptarEscalacao(v);salvar();el.closest(".dd").classList.remove("aberto");if(ani
     case "verrodada":{const n=ultimaRodada();if(!n)return;const t=userTier(),uid=G.user.club,rs=G.res[t][n-1]||[];
       modal(`<h3 style="margin:0 0 8px">Rodada ${n} · ${esc(nomeLiga(t))}</h3><div style="padding-block:4px">${rs.map(([a,b,x,y])=>`<div class="res${a===uid||b===uid?" meu":""}"><span>${esc(G.clubs[a].name)}</span><span class="c num">${x} × ${y}</span><span>${esc(G.clubs[b].name)}</span></div>`).join("")||'<p class="muted">Sem resultados.</p>'}</div><div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div>`);return}
     case "entrar":if(!G)W=lerW()||W||novoW();abertura=false;aba="inicio";break;
-    case "spjogar":if(!G)W=lerW()||W||novoW();abertura=false;aba=G?"jogar":"inicio";break; // 10/11: botão único da capa → tela Jogar (modos de jogo)
+    case "spjogar":somArquivo("clique",false,2.6);setTimeout(()=>{if(!G)W=lerW()||W||novoW();abertura=false;aba=G?"jogar":"inicio";render()},120);return; // clique no máximo e logo depois a transição (em render) // 10/11: botão único da capa → tela Jogar (modos de jogo)
     case "som":somIniciar();somMudo(!SOM.mudo);if(aba==="config"&&G)render();document.querySelectorAll(".som-btn").forEach(b=>{b.innerHTML=iconeSom();b.setAttribute("aria-label",SOM.mudo?"Ligar som":"Desligar som")});if(!SOM.mudo)somModo(modoDesejado());return;
     case "carreiras":modalCarreiras();return;
     case "carabre":abrirCar(v);return;
