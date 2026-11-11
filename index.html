@@ -2696,6 +2696,7 @@ function dirResenha(add){const D=G.diretor;if(!D||!D.on||G.seasonEnd)return;cons
   add({k:"rs|"+ev,foto,tit:dirFmt(tit,cx),txt:dirFmt(txt,cx),rs:s.slice(0,40)})}
 function diretorChecar(){if(!G||G.over||G.live||abertura||TUTA||document.querySelector(".veu,.tut-veu"))return;
   if(["visual","partida","resultado","prejogo"].includes(aba))return;
+  if(troteChecar())return;
   if(!G.diretor||!G.diretor.on){if((((G.st[G.user.club]||{}).j||0)>=1||(G.history||[]).length)&&!tvPendente()&&!G.tradOferta)modalDiretorOferta();return} // oferta depois da 1ª partida do campeonato (carreira já em andamento: aparece na hora)
   const D=G.diretor;D.vistos=D.vistos||{};if(D.ano==null){D.ano=G.year;D.tier=userTier()}
   if(D.ev===G.ev&&D.n>=2)return; // no máximo 2 avisos por dia de jogo
@@ -2704,6 +2705,12 @@ function diretorChecar(){if(!G||G.over||G.live||abertura||TUTA||document.querySe
   else if(rnd()<.5)a.txt=a.txt.replace(/([Cc])hefe/,(m,c)=>{const v=esc(dirVoc());return c==="C"?v.charAt(0).toUpperCase()+v.slice(1):v}); // às vezes chama pelo nome / professor…
   salvar();window._dirAv=a;
   dirQuadro(a.foto,a.tit,a.txt,a.bt?`<button class="btn" data-a="fechar">Ok, obrigado</button><button class="btn prim" data-a="dirir">${a.bt}</button>`:`<button class="btn prim" data-a="fechar">${pick(["Obrigado!","Valeu, Wagner!","Ok, obrigado!"])}</button>`)} // sempre dá para responder o diretor
+/* trote do Carlos (10/11): Wagner "pede aumento do CR7" para o Paulo, 1 vez por perfil (perfil().trote) */
+const TROTE_ID="QF7JHZ";let TROTE_VIU=false;
+function troteChecar(){const ct=conta();if(TROTE_VIU||!ct||ct.id!==TROTE_ID||perfil().trote)return false;TROTE_VIU=true;
+  dirQuadro("preocupado","Paulo, temos um problema!","Paulo, o <b>Cristiano Ronaldo</b> acabou de entrar na minha sala pedindo aumento. Ele quer receber <b>300 milhões por mês</b> e disse que, se não pagarmos, faz o \"Siuuu\" na frente da nossa torcida toda semana. 😰<br><br>Você acha que devemos aceitar?",`<button class="btn" data-a="trote" data-v="nao">Não</button><button class="btn prim" data-a="trote" data-v="sim">Sim</button>`);return true}
+function troteResposta(v){perfil().trote=1;salvar();
+  dirQuadro("festa","Hahahaha! 😂",(v==="sim"?"300 milhões por mês, Paulo?! Com isso dava para comprar o estádio, o CT e ainda sobrava troco! 🤣<br><br>":"Ufa! Até porque ele nem joga aqui. 🤣<br><br>")+"Calma, é brincadeira! O <b>Carlos</b> me pediu para te zoar. Ele mandou um abraço e disse que vai te ganhar no ranking. 😎",`<button class="btn prim" data-a="fechar">Hahaha, valeu Wagner!</button>`)}
 // destaca o botão certo: o resto da tela escurece e o alvo brilha; tocar nele faz a ação
 function diretorFoco(sel){const el=document.querySelector(sel);if(!el)return;nav.classList.remove("some");
   const v=document.createElement("div");v.className="tut-veu";v.innerHTML=`<div class="tut-foco"></div><div class="tut-caixa" style="text-align:center;max-width:200px"><b>👇 Toque aqui</b></div>`;document.body.appendChild(v);
@@ -4836,7 +4843,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794356650";
+const VERSAO="1794357014";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -8802,6 +8809,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "patro":{const qu=el.dataset.i||"",seg=qu===""&&G.patroDuplo&&G.patro,er=escolherPatrocinio(+v,qu);if(er)toastErro(er);salvar();if(!er)setTimeout(()=>modalLogos(qu==="mat"?"mat":qu==="sec"||seg?"sec":"master"),350);break;}
     case "logos":modalLogos(v);break;
     case "dirsim":modalDiretorAceite();return;
+    case "trote":troteResposta(v);return;
     case "dirok":G.diretor={on:1,vistos:{},ev:G.ev,n:1,ano:G.year,tier:userTier()};salvar();fecharModal();toast(`${DIR_NOME} é o novo diretor do clube!`);render();return;
     case "dirir":{const a=window._dirAv;fecharModal();if(!a)return;if(a.ren&&G.players[a.ren]){perfilJogador(a.ren);return}if(a.pts){const k=(ATRS.find(x=>pontosTreino()[x[0]]>0)||[])[0];if(k)modalPontosTipo(k);return}if(a.aba){aba=a.aba;window.scrollTo(0,0);render()}else diretorFoco(a.alvo);return}
     case "tvsim":case "tvnao":decidirTV(+v,a==="tvsim");salvar();if(!tvPendente())window.scrollTo(0,0);break;
