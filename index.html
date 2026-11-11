@@ -4897,7 +4897,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794398655";
+const VERSAO="1794399333";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -8672,17 +8672,22 @@ const RE_EXTRA={
  pupilo:[["🎁 Dar sua chuteira para ele",{torc:5,fama:2,r:"Ele guardou e vai usar na final."}],["📸 Postar uma foto com ele",{fama:4,r:"Foto mais curtida da semana."}],["🧑‍🏫 Seguir treinando com ele",{tec:3,a:{pas:1},r:"Ensinando, você também aprende."}]],
  empgolpe:[["🕵️ Contratar um detetive",RC(.5,{din:80,emp:0,tira:"empfamoso",r:"O detetive achou o dinheiro escondido!"},{din:-120,emp:0,tira:"empfamoso",r:"Nada encontrado."})],["📢 Expor tudo na imprensa",{fama:3,din:-100,emp:0,tira:"empfamoso",r:"Todo mundo ficou do seu lado, mas o dinheiro sumiu."}]]};
 /* exames médicos (aparecem algumas vezes na carreira pela fila). Pular 2 vezes = risco alto de problema no coração; um exame completo depois pode descobrir e tratar */
-const reExame=(id,t)=>({id,f:"",t,o:[
-  ["🩺 Fazer o check-up completo",c=>{const pul=c.m.pulouExame||0;if(pul>=1&&!c.m.coracaoOk&&rnd()<.6){c.m.coracaoOk=1;c.inj=Math.max(c.inj||0,2);c.marc.push(`${c.ano} · Exame descobriu um problema no coração a tempo`);reLog(c,`Exames detectam problema cardíaco em ${c.nome}, que passa por tratamento`);return "O exame achou uma arritmia no coração! Tratamento de 2 meses. O médico disse: 'esse exame salvou sua vida'."}
+const RE_EXV=[["🩺 Fazer os exames","⏳ Deixar para depois","🐂 'Tô ótimo, saudável igual um touro!'"],["🩺 Fazer tudo direitinho","📅 Remarcar para a semana que vem","💪 'Nunca senti nada, não preciso'"],["🩺 Ir agora mesmo","⏳ Depois do jogo eu vou","🐎 'Tenho saúde de cavalo, doutor'"],["🩺 Fazer o check-up completo","📺 Deixar para depois da entrevista","🦁 'Sou forte igual um leão!'"],["🩺 Topar e fazer todos","😴 Tô cansado, deixa para outro dia","🏃 'Corro 12 km por jogo, tô voando'"],["🩺 Fazer: saúde em primeiro lugar","🎮 Depois, hoje tem jogatina","😎 'Exame é para quem está doente'"],["🩺 Fazer e levar a família junto","✈️ Deixar para depois das férias","🐂 'Coração de touro, doutor!'"],["🩺 Fazer com o cardiologista","⏳ Mês que vem, sem falta","💯 'Tô 100%, pode me escalar'"]];
+const RE_EXR=["O médico balançou a cabeça: 'até touro faz exame'.","O doutor anotou na sua ficha: 'atleta recusou exames'.","Você saiu rindo. O médico, não.","O preparador físico ficou preocupado com a sua resposta."];
+const reExame=(id,t,v)=>({id,f:"",t,o:[
+  [RE_EXV[v||0][0],c=>{const pul=c.m.pulouExame||0;if(pul>=1&&!c.m.coracaoOk&&rnd()<.6){c.m.coracaoOk=1;c.inj=Math.max(c.inj||0,2);c.marc.push(`${c.ano} · Exame descobriu um problema no coração a tempo`);reLog(c,`Exames detectam problema cardíaco em ${c.nome}, que passa por tratamento`);return "O exame achou uma arritmia no coração! Tratamento de 2 meses. O médico disse: 'esse exame salvou sua vida'."}
     if(rnd()<.2){c.a.fis+=2;return "Achou uma deficiência de vitamina. Corrigiu e o físico melhorou."}c.tec+=1;return "Tudo certo. Coração de atleta."}],
-  ["⚡ Só o básico, rapidinho",c=>{if(rnd()<.35){c.m.pulouExame=(c.m.pulouExame||0)+1;return "Saiu em 20 minutos. O médico pediu para voltar e fazer o resto... você não voltou."}return "Exame simples, nada de errado."}],
-  ["📸 Pular para gravar um comercial",{m:"pulouExame",din:15,fama:3,r:"Comercial gravado. O exame ficou para outro dia."}],
-  ["🎉 Pular para viajar com os amigos",{m:["pulouExame","festa"],fama:1,r:"Viagem incrível. O médico ligou três vezes."}]]});
+  [RE_EXV[v||0][1],{m:"pulouExame",r:"O exame ficou para depois... e o depois nunca chegou."}],
+  [RE_EXV[v||0][2],c=>{c.m.pulouExame=(c.m.pulouExame||0)+1;c.tec-=1;return pick(RE_EXR)}]]});
 const RE_DIL2=[
+ reExame("exame5","O novo plano de saúde do {cl} exige exames de todos os atletas, com teste de esforço na esteira.",4),
+ reExame("exame6","Depois de uma maratona de jogos, o médico quer repetir seus exames de coração e de sangue.",5),
+ reExame("exame7","O médico te chama no consultório: 'faz tempo que você não faz exames completos, hein?'",6),
+ reExame("exame8","Sua mãe ligou preocupada: viu na TV um jogador passando mal em campo e pediu para você fazer exames.",7),
  reExame("exame1","O departamento médico marcou seus exames anuais: coração, sangue e esforço. Leva o dia inteiro."),
- reExame("exame2","Exames médicos obrigatórios da pré-temporada. O doutor quer uma bateria completa, inclusive do coração."),
- reExame("exame3","O médico do {cl} pede exames cardíacos detalhados em todo o elenco depois que um jogador de outro time passou mal."),
- reExame("exame4","Aos {idade} anos, o médico insiste: check-up completo, sem pular nada desta vez."),
+ reExame("exame2","Exames médicos obrigatórios da pré-temporada. O doutor quer uma bateria completa, inclusive do coração.",1),
+ reExame("exame3","O médico do {cl} pede exames cardíacos detalhados em todo o elenco depois que um jogador de outro time passou mal.",2),
+ reExame("exame4","Aos {idade} anos, o médico insiste: check-up completo, sem pular nada desta vez.",3),
  {id:"dorpeito",f:"JAV",c:c=>(c.m.pulouExame||0)>=1&&!c.m.coracaoOk,t:"No treino, o coração disparou e você ficou tonto por alguns segundos.",o:[
   ["🏥 Ir direto fazer exames",c=>{c.m.coracaoOk=1;c.inj=Math.max(c.inj||0,1);c.marc.push(`${c.ano} · Tratou um problema no coração depois de passar mal no treino`);return "Achou um problema e tratou a tempo. Um mês fora, coração em dia."}],
   ["😅 'Foi só calor', seguir treinando",{m:"pulouExame",r:"Passou. Você nem contou para ninguém."}],
@@ -8985,7 +8990,24 @@ const RE_DIL2=[
  {id:"k_jogo_cidade_natal",f:"JAV",c:c=>!c.base,t:"O {cl} vai jogar na sua cidade natal.",o:[["🎟️ Comprar ingressos para o bairro",{din:-3,torc:3,r:"Arquibancada cheia de conhecidos."}],["⚽ Prometer gol para a cidade",RC(.5,{fama:4,torc:4,r:"Cumpriu! A cidade parou."},{r:"Não saiu, mas foi aplaudido."})],["🏠 Visitar a escola onde estudou",{torc:3,r:"Os alunos enlouqueceram."}],["😶 Tratar como jogo normal",{tec:1,r:"Profissional."}]]},
  {id:"k_contrato_tv",f:"V",c:c=>c.fama>=40,t:"No último ano de carreira, uma emissora quer você comentando jogos ao vivo já.",o:[["🎙️ Fazer as duas coisas",{fama:4,a:{fis:-1},r:"Comentarista e jogador."}],["⏳ Só depois de parar",{r:"Foco no fim de carreira."}],["🧑‍🏫 Fazer um teste",RC(.6,{fama:3,r:"Você leva jeito!"},{r:"Precisa treinar a dicção."})],["🙅 Não quer ser comentarista",{r:"Outro caminho."}]]},
  {id:"k_ultimo_ano",f:"V",c:c=>c.idade>=35,t:"Você sente que esta pode ser sua última temporada.",o:[["📢 Anunciar a despedida",{torc:6,fama:4,r:"Turnê de despedida. Homenagens em todo estádio."}],["🤐 Decidir no fim",{r:"Sem pressão."}],["💪 Treinar para jogar mais 2 anos",{a:{fis:2},r:"O corpo ainda aguenta."}],["🏆 Prometer sair com um título",RC(.3,{tit:["Campeonato Estadual"],torc:8,r:"Saiu campeão!"},{r:"Não veio. Mas valeu a luta."})]]},
- {id:"k_reencontro",f:"V",t:"Você reencontra o técnico da escolinha que te ensinou a chutar.",o:[["🥹 Dar um abraço e agradecer",{torc:2,r:"Ele chorou."}],["🎁 Dar sua camisa da seleção/clube",{torc:3,r:"Emoldurada na escolinha."}],["💸 Reformar a escolinha",{din:-15,torc:5,r:"Campo novo para as crianças."}],["📹 Gravar um vídeo juntos",{fama:3,r:"Milhões de visualizações."}]]}
+ {id:"k_reencontro",f:"V",t:"Você reencontra o técnico da escolinha que te ensinou a chutar.",o:[["🥹 Dar um abraço e agradecer",{torc:2,r:"Ele chorou."}],["🎁 Dar sua camisa da seleção/clube",{torc:3,r:"Emoldurada na escolinha."}],["💸 Reformar a escolinha",{din:-15,torc:5,r:"Campo novo para as crianças."}],["📹 Gravar um vídeo juntos",{fama:3,r:"Milhões de visualizações."}]]},
+ /* 11/11: famosos (só com o jogador já conhecido) */
+ {id:"fm_cr7",f:"JAV",c:c=>c.fama>=45,t:"O Cristiano Ronaldo te chamou para a festa de aniversário dele, em Riad. Jatinho pago e tudo.",o:[["🎂 Ir, mas voltar cedo para o treino",{fama:5,tec:-1,r:"Você tirou foto com o CR7 e ele disse: 'dorme cedo, foi isso que me fez campeão'."}],["🎉 Ir e curtir até o sol nascer",RC(.6,{fama:8,r:"Festa histórica. Até o Cristiano dançou."},{fama:4,tec:-4,a:{fis:-1},r:"Chegou atrasado e de ressaca ao treino. O técnico não gostou."})],["🙏 Agradecer e mandar um presente",{torc:2,tec:2,r:"Ele postou o seu presente nos stories. E você treinou firme."}]]},
+ {id:"fm_virginia",f:"JAV",c:c=>c.fama>=45&&!c.m.casou&&!c.m.casado&&!c.m.namoro,t:"A Virgínia te chamou para sair, para te conhecer melhor. Amanhã tem jogo.",o:[["😴 Recusar, focar e descansar para o jogo",{tec:3,a:{fis:1},r:"Dormiu cedo e jogou muito. Ela comentou 'focado, gostei' na sua foto."}],["✨ Sair e deixar acontecer",RC(.55,{fama:10,m:"famosa",mar:"Viveu um romance com a Virgínia",r:"Jantar discreto... que viralizou. Vocês viraram o assunto do Brasil!"},{fama:5,tec:-3,r:"A noite foi ótima, mas você jogou mal no dia seguinte e virou meme."})],["📅 Marcar para depois do jogo",RC(.5,{fama:6,r:"Ela topou. Vocês saíram depois da vitória e foi muito divertido."},{r:"Ela viajou e o encontro nunca aconteceu."})]]},
+ {id:"fm_anitta",f:"JAV",c:c=>c.fama>=45,t:"A Anitta te convidou para subir no palco no show dela no Rio, sábado à noite.",o:[["🎤 Subir e dançar com ela",{fama:7,tec:-1,r:"Vídeo com 40 milhões de visualizações. O técnico fingiu que não viu."}],["🎉 Ir ao show e emendar a festa",{fama:5,tec:-3,a:{fis:-1},r:"Virou amigo da Anitta... e chegou zumbi no treino."}],["🏠 Recusar: sábado é concentração",{tec:3,torc:2,r:"O técnico soube e te elogiou na coletiva."}]]},
+ {id:"fm_marquezine",f:"JAV",c:c=>c.fama>=50&&!c.m.casou&&!c.m.casado&&!c.m.namoro,t:"A Bruna Marquezine curtiu suas fotos e mandou mensagem: 'bora tomar um café?'",o:[["☕ Topar o café, sem alarde",RC(.5,{fama:7,m:"famosa",mar:"Saiu com a Bruna Marquezine",r:"Café de três horas. Os paparazzi não descobriram!"},{fama:9,m:"famosa",r:"Os paparazzi descobriram. Foi capa de todos os sites."})],["😶 Responder com educação e não ir",{tec:1,r:"Ela respondeu: 'outro dia, então'."}],["📱 Postar o print nos stories",{fama:4,torc:-3,r:"Pegou muito mal. Ela te bloqueou."}]]},
+ {id:"fm_sonza",f:"JAV",c:c=>c.fama>=50&&!c.m.casou&&!c.m.casado&&!c.m.namoro,t:"A Luísa Sonza quer gravar um clipe com você e te chamou para jantar depois.",o:[["🎬 Gravar o clipe e ir ao jantar",RC(.5,{fama:9,din:20,m:"famosa",mar:"Fez participação num clipe da Luísa Sonza",r:"O clipe estourou e o jantar rendeu muita risada."},{fama:6,tec:-3,r:"A gravação foi até as 4 da manhã, véspera de jogo."})],["🎬 Só o clipe, sem jantar",{fama:5,din:15,r:"Profissional. Clipe gravado numa tarde."}],["⚽ Recusar: o foco é a temporada",{tec:2,a:{fis:1},r:"Ficou só no futebol. E jogou muito."}]]},
+ {id:"fm_shakira",f:"AV",c:c=>c.fama>=65&&!c.m.casou&&!c.m.casado&&!c.m.namoro,t:"A Shakira está na cidade e te chamou para sair depois de um evento de patrocinador.",o:[["💃 Sair e deixar acontecer",RC(.45,{fama:12,m:"famosa",mar:"Saiu com a Shakira e o mundo comentou",r:"Vocês foram fotografados rindo num restaurante. Notícia no mundo todo!"},{fama:6,r:"Foi só um jantar animado. Ela disse que você é um ótimo papo."})],["😴 Recusar e dormir: amanhã tem treino",{tec:3,r:"Treinou como nunca. O preparador físico agradece."}],["🤝 Ir, mas levar o elenco todo junto",{torc:3,fama:4,r:"Virou uma noite divertida com o time todo. União total."}]]},
+ {id:"fm_hollywood",f:"AV",c:c=>c.fama>=65&&!c.m.casou&&!c.m.casado&&!c.m.namoro,t:"Depois do seu golaço, uma atriz famosa de Hollywood começou a te seguir e te chamou para conhecer Los Angeles nas férias.",o:[["✈️ Ir e deixar acontecer",RC(.5,{fama:10,m:"famosa",mar:"Passou as férias em Hollywood",r:"Fotos em Los Angeles rodaram o mundo!"},{fama:5,r:"Foi legal, mas ela só queria divulgar um filme."})],["😴 Recusar e fazer a pré-temporada em casa",{a:{fis:1},tec:2,r:"Voltou voando. O preparador físico te ama."}],["📱 Ficar só nas mensagens",{fama:2,r:"Vocês conversam de vez em quando. Quem sabe um dia."}]]},
+ {id:"fm_neymar",f:"JAV",c:c=>c.fama>=45,t:"O Neymar te chamou para o famoso torneio de pôquer na mansão dele.",o:[["🃏 Ir e jogar valendo",RC(.4,{din:60,fama:5,r:"Você ganhou do Neymar no pôquer!"},{din:-50,fama:3,r:"Perdeu uma bolada. O Neymar riu muito."})],["🎉 Ir só pela resenha",{fama:5,tec:-2,r:"Resenha até de madrugada. Fotos ótimas, sono péssimo."}],["🙅 Recusar e mandar um abraço",{tec:2,r:"Ele mandou um áudio: 'da próxima você não escapa!'"}]]},
+ {id:"fm_messi",f:"JAV",c:c=>c.fama>=55,t:"O Messi te chamou para jantar com a família dele depois de um jogo beneficente.",o:[["🍝 Ir e ouvir tudo o que ele fala",{fama:5,a:{dri:1,pas:1},r:"Ele te deu dicas de jogo desenhando num guardanapo."}],["📸 Ir e pedir uma foto com a camisa",{fama:6,r:"Foto emoldurada na sala da sua casa."}],["😳 Ficar tímido e recusar",{fama:-1,r:"Você travou de nervoso. Vai se arrepender por anos."}]]},
+ {id:"fm_ronaldinho",f:"JAV",c:c=>c.fama>=45,t:"O Ronaldinho Gaúcho te chamou para uma roda de samba que vai até de manhã.",o:[["🎉 Ir e virar a noite no pagode",RC(.5,{fama:6,a:{dri:1},r:"Ele te ensinou um elástico no meio da roda de samba!"},{fama:4,tec:-4,r:"Chegou cantando no treino. O técnico te barrou."})],["🎶 Passar lá rapidinho e ir embora",{fama:4,r:"Tirou foto, deu risada e foi dormir."}],["🏠 Recusar: tem jogo na quarta",{tec:2,r:"Ele respondeu com um sorriso: 'tranquilo, bruxo'."}]]},
+ {id:"fm_fenomeno",f:"JAV",c:c=>c.fama>=45,t:"O Ronaldo Fenômeno te convidou para um podcast ao vivo, com milhões de pessoas assistindo.",o:[["🎙️ Ir e contar suas histórias",{fama:7,torc:3,r:"Episódio mais visto do mês. Ele disse que você lembra ele quando era novo."}],["🔥 Ir e alfinetar o rival",RC(.5,{fama:9,torc:5,r:"A torcida amou. A frase virou camiseta."},{fama:5,tec:-3,torc:-2,r:"O clube não gostou da polêmica e te multou."})],["🙅 Recusar: só falo em campo",{tec:2,r:"Discreto. O técnico gosta disso."}]]},
+ {id:"fm_caze",f:"JAV",c:c=>c.fama>=45,t:"O Casimiro quer transmitir um dia inteiro da sua rotina ao vivo na CazéTV.",o:[["📺 Topar e mostrar tudo",{fama:8,din:10,r:"Live com recorde de audiência. 'Meu Deus do céu!'"}],["📺 Topar, mas só o treino",{fama:4,tec:1,r:"Mostrou o lado profissional. Ganhou respeito."}],["🙅 Recusar: privacidade em primeiro lugar",{r:"Ele entendeu e mandou um abraço na live."}]]},
+ {id:"fm_mbappe",f:"JAV",c:c=>c.fama>=55,t:"O Mbappé te desafiou para uma partida de videogame transmitida ao vivo para milhões.",o:[["🎮 Aceitar e jogar para ganhar",RC(.5,{fama:6,r:"Você ganhou de virada e ele pediu revanche!"},{fama:3,r:"Perdeu de 4 a 0. Virou meme por uma semana."})],["🎮 Aceitar, mas jogando com o seu clube",{fama:4,torc:3,r:"Usou o seu próprio time no jogo. A torcida adorou."}],["😴 Recusar: é véspera de jogo",{tec:2,r:"Dormiu cedo. Ele brincou que você é 'chato'."}]]},
+ {id:"fm_cr7treino",f:"AV",c:c=>c.fama>=55,t:"O Cristiano Ronaldo te chamou para treinar com ele nas férias, às 6 da manhã.",o:[["💪 Ir e aguentar o ritmo",RC(.65,{a:{fis:2},tec:2,mar:"Treinou nas férias com o Cristiano Ronaldo",r:"Treino puxado. Ele disse que você tem mentalidade de campeão."},{inj:1,r:"Puxou demais e sentiu a coxa. 1 mês fora."})],["🏖️ Recusar: férias são férias",{r:"Descansou na praia. Ele postou o treino e te marcou: 'cadê?'"}],["📸 Ir só para a foto",{fama:5,tec:-1,r:"Foto linda. Treino nem tanto."}]]},
+ {id:"fm_galvao",f:"JAV",c:c=>c.fama>=50,t:"O Galvão Bueno quer fazer uma entrevista especial com você e a sua família.",o:[["🎙️ Aceitar e levar todo mundo",{fama:6,torc:4,r:"Sua mãe chorou ao vivo. O Brasil chorou junto."}],["😂 Aceitar e imitar o 'Haja coração!'",{fama:7,r:"O Galvão gargalhou. Virou o vídeo do ano."}],["🙅 Recusar por timidez",{fama:-1,r:"Ficou para a próxima. Será que vai ter?"}]]},
+ {id:"fm_tapete",f:"JAV",c:c=>c.fama>=45,t:"Você foi convidado para o tapete vermelho de uma grande premiação da música, cheia de artistas famosos.",o:[["🕺 Ir de terno chique",{fama:6,r:"Eleito o mais bem vestido da noite."}],["🎉 Ir e ficar para a festa depois",{fama:7,tec:-2,r:"Dançou com metade dos famosos do Brasil."}],["🏠 Recusar e ver pela TV",{tec:1,r:"Sofá, pipoca e treino no dia seguinte."}]]}
 ];
 RE_DIL.push(...RE_DIL2);
 RE_DIL.forEach(d=>{const ex=RE_EXTRA[d.id]||[];for(const o of ex){if(d.o.length>=4)break;d.o.push(o)}
@@ -9012,6 +9034,8 @@ function reTragedia(c){c.m=c.m||{};let fim=null;
   c.fim=fim;const T=c.T,f=fim.t==="morte"?.15+rnd()*.6:.3+rnd()*.5;if(T){T.j=Math.round(T.j*f);T.g=Math.round(T.g*f);T.a=Math.round(T.a*f);T.tits=[];T.prem=null;T.bola=0}c.mom=null;
   fim.txt=reTxt(c,fim.t==="morte"?RE_MORTE[fim.k][1]:RE_LESAO_FIM[fim.k]);fim.tit=fim.t==="morte"?RE_MORTE[fim.k][0]:"Carreira encerrada por lesão";
   reLog(c,fim.t==="morte"?`Luto no futebol: ${c.nome} morre aos ${c.idade} anos`:`${c.nome} encerra a carreira por recomendação médica aos ${c.idade} anos`);return true}
+/* 11/11: sempre 3 respostas — tira a última que não mexe em risco/capítulo */
+RE_DIL.forEach(d=>{while(d.o.length>3){const imp=o=>/pulouExame|festa|velo|carrao|vooFatal|fila|tira|coracao/.test(typeof o[1]==="function"?o[1].toString():JSON.stringify(o[1]))||/^🎉/.test(o[0]);let k=-1;for(let i=d.o.length-1;i>=0;i--)if(!imp(d.o[i])){k=i;break}d.o.splice(k<0?d.o.length-1:k,1)}});
 const RE_DIL_ID=Object.fromEntries(RE_DIL.map(d=>[d.id,d]));
 const reFase=c=>c.base?"B":c.idade<=22?"J":c.idade<=30?"A":"V";
 function reSortearDil(c,ja){const us=c.usados||[],ok=d=>!ja.includes(d.id)&&(!d.c||d.c(c));
@@ -9033,7 +9057,7 @@ function reDiff(c,s){const out=[];reAtrs(c.pos).forEach(k=>{const d=Math.round(c
   if(c.querSair&&!s.sair)out.push([0,"📨 Clubes de olho em você","x"]);return out}
 function reChips(L,anim){return (L||[]).length?`<div class="re-fxs">${L.map(([d,n,t],i)=>{const cls=t==="x"?(d<0?"ruim":"neu"):d>0?"bom":"ruim",txt=t==="x"?n:t==="$"?(d>0?"+ ":"− ")+n:`${d>0?"+":"−"}${Math.abs(d)} ${n}`;
     return `<span class="re-fx ${cls}${anim?" pop":""}" style="animation-delay:${i*110}ms">${esc(txt)}</span>`}).join(`<i class="re-sep">·</i>`)}</div>`:""}
-function reNovaTemporada(c){c.m=c.m||{};c.fila=c.fila||[];c.marc=c.marc||[];c.T0=[];if(!c.m.exAg&&!c.base){c.m.exAg=1;[["exame1",ri(1,2)],["exame2",ri(4,6)],["exame3",ri(8,10)],["exame4",ri(12,15)]].forEach(([id,a])=>c.fila.push({id,ano:c.ano+a}))}const d1=reSortearDil(c,[]),d2=reSortearDil(c,[d1]);c.pend=["foco",d1,d2];c.resp=[];c.foco=null;c.fase="temp";
+function reNovaTemporada(c){c.m=c.m||{};c.fila=c.fila||[];c.marc=c.marc||[];c.T0=[];if(!c.m.exAg&&!c.base){c.m.exAg=1;[["exame1",ri(1,2)],["exame2",ri(4,6)],["exame3",ri(8,10)],["exame4",ri(12,15)]].forEach(([id,a])=>c.fila.push({id,ano:c.ano+a}))}if(!c.m.exAg2&&!c.base){c.m.exAg2=1;[["exame5",ri(2,3)],["exame6",ri(6,7)],["exame7",ri(10,11)],["exame8",ri(15,17)]].forEach(([id,a])=>c.fila.push({id,ano:c.ano+a}))}const d1=reSortearDil(c,[]),d2=reSortearDil(c,[d1]);c.pend=["foco",d1,d2];c.resp=[];c.foco=null;c.fase="temp";
   if(c.m.empfamoso&&!c.fila.some(x=>x.id==="empgolpe")&&!c.m.golpeMarc&&rnd()<.25){c.m.golpeMarc=1;c.fila.push({id:"empgolpe",ano:c.ano+ri(2,4)})}}
 
 /* ---------- simulação da temporada ---------- */
@@ -9065,7 +9089,8 @@ function reSimular(c){c.lesT=(c.inj||0)>0;const ov=reOv(c),r=c.clube.rating,st=r
   if(ov>=76&&rnd()<(ov-70)/20){const sj=ri(2,7),sg=Math.round(sj*gb*(.6+rnd()*.8));c.selec.j+=sj;c.selec.g+=sg;T.sel=sj;if(c.selec.j===sj)reLog(c,`${c.nome} estreia pela seleção ${c.nat==="BRA"?"brasileira":"de "+(PAIS_NOME[c.nat]||"")}`)}
   c.mom=fin[0]?{...fin[0],res:null}:null;
   if(g>=15)reLog(c,`${c.nome} marca ${g} gols na temporada pelo ${c.clube.name}`);else if(T.nota>=7.3)reLog(c,`${c.nome} é um dos destaques ${reDa(T.liga)}`)}
-function reOpsMomento(c){const m=c.mom,gol=c.pos==="GOL",A=c.a,cl=x=>Math.max(.2,Math.min(.88,x));
+const reOpsMomento=c=>reOpsMomentoX(c).slice(0,3);
+function reOpsMomentoX(c){const m=c.mom,gol=c.pos==="GOL",A=c.a,cl=x=>Math.max(.2,Math.min(.88,x));
   if(m.tipo==="pen")return gol?[["🧤 Pular no canto que estudou",cl(.3+(A.pdp-50)/110),1],["👀 Esperar até o último segundo",cl(.25+(A.ref-50)/120),1],["🕺 Dançar na linha para desconcentrar",cl(.22+(A.pdp-50)/140),1],["🎯 Bater o último pênalti você mesmo",cl(.35+(A.pas-50)/150),1]]
     :[["⚽ Bater forte no canto",cl(.48+(A.cpe-50)/110),1],["🥄 Bater de cavadinha",cl(.36+(A.cpe-50)/90),1],["💥 Encher o pé no meio",cl(.42+(A.fis-50)/120),1],["🤝 Deixar para o mais experiente",.58,0]];
   return gol?[["🧤 Ir para a área no último escanteio",cl(.12+(A.cab||40)/400),1],["🛡️ Segurar o empate atrás",.45,0],["🚀 Lançamento longo para o atacante",cl(.18+(A.pas-50)/150),1],["⏱️ Fazer cera e gritar com a zaga",.4,0]]
@@ -9155,9 +9180,9 @@ function telaEstrelato(){reLer();const c=RE.car;
   if(RE_VER!=null&&RE.hist[RE_VER])h=reTelaFim(RE.hist[RE_VER],1);
   else if(!c)h=reTelaCriar();
   else if(c.fase==="fim")h=reTelaFim(c);
-  else if(c.fase==="peneira"){const g0=reClubes(c.pais,0),op=[g0.slice(0,5),g0.slice(5).length?g0.slice(5):g0,reClubes(c.pais,1),reClubes(c.pais,2)].map(pick).map(reClube);if(c.penOps&&c.penOps.length<4)c.penOps=null;c.penOps=c.penOps||op;
+  else if(c.fase==="peneira"){const g0=reClubes(c.pais,0),op=[g0.slice(0,5),reClubes(c.pais,1),reClubes(c.pais,2)].map(pick).map(reClube);if(c.penOps&&c.penOps.length!==3)c.penOps=null;c.penOps=c.penOps||op;
     h=`${reCard(c)}<div class="re-dec"><p class="re-tag">Peneira · 16 anos</p><b>Três clubes abriram peneira. Onde você vai tentar a sorte?</b>
-    <div class="re-ops">${c.penOps.map((x,i)=>`<button class="re-op" data-a="re_pen" data-v="${i}">${reEsc(x,30)}<b>${esc(x.name)}</b><small>${["Gigante: pouquíssimos passam","Clube grande","Clube médio","Clube pequeno: mais fácil passar"][i]}</small></button>`).join("")}</div></div>`}
+    <div class="re-ops">${c.penOps.map((x,i)=>`<button class="re-op" data-a="re_pen" data-v="${i}">${reEsc(x,30)}<b>${esc(x.name)}</b><small>${["Gigante: pouquíssimos passam","Clube médio","Clube pequeno: mais fácil passar"][i]}</small></button>`).join("")}</div></div>`}
   else if(c.fase==="peneira2"){const gol=c.pos==="GOL",ops=gol?[["Sair do gol e abafar","ref"],["Ficar e esperar o chute","def"],["Fechar o ângulo e pular no último segundo","pdp"],["Gritar e organizar a zaga","pas"]]:[["Chutar de primeira","fin"],["Driblar o zagueiro","dri"],["Tocar para quem chega","pas"],["Arrancar na velocidade","vel"]];
     h=`${reCard(c)}<div class="re-dec"><p class="re-tag">Peneira do ${esc(c.penC.name)}</p><b>${gol?"Último lance do coletivo: o atacante sai cara a cara com você.":"Último lance do coletivo: a bola sobra pra você na entrada da área."}</b><p class="muted peq">Os olheiros estão anotando tudo.</p>
     <div class="re-ops">${ops.map(o=>`<button class="re-op" data-a="re_pen2" data-v="${o[1]}"><b>${o[0]}</b><small>${RE_ATR[o[1]][1]} ${RE_ATR[o[1]][0]}: ${reCl(c.a[o[1]])}</small></button>`).join("")}</div></div>`}
@@ -9204,7 +9229,7 @@ function reAcao(a,v){reLer();const c=RE.car;
     case "re_desistir":modal(`<div class="aviso-box"><b>Recomeçar do zero?</b><p>A carreira de ${esc(c.nome)} será apagada.</p><div class="botoes"><button class="btn" data-a="fechar">Cancelar</button><button class="btn perigo" data-a="re_desok">Recomeçar</button></div></div>`);return;
     case "re_desok":fecharModal();RE.car=null;REW=null;reSalvar();break;
     case "re_pen":{const x=c.penOps[+v];c.penC=x;c.penI=+v;c.fase="peneira2";break}
-    case "re_pen2":{const ch=[.22,.38,.58,.85][c.penI]+(reCl(c.a[v])-50)/100,ok=rnd()<ch;let x=c.penC;
+    case "re_pen2":{const ch=[.22,.5,.85][c.penI]+(reCl(c.a[v])-50)/100,ok=rnd()<ch;let x=c.penC;
       if(!ok){x=reClube(pick(reClubes(c.pais,2)));reLog(c,`Reprovado na peneira do ${c.penC.name}, ${c.nome} vai para a base do ${x.name}`);toast(`Não foi dessa vez. O ${x.name} te chamou para a base.`)}
       else{reLog(c,`${c.nome} é aprovado na peneira do ${x.name}!`);toast(`Aprovado! Bem-vindo à base do ${x.name}.`)}
       c.clube=x;delete c.penOps;delete c.penC;reNovaTemporada(c);break}
@@ -10024,6 +10049,106 @@ const QUIZ=[
  [4,"Depois de uma bola ao chão, o que precisa acontecer para valer o gol?","A bola ser tocada por pelo menos dois jogadores","A bola tocar no goleiro","A bola sair da área","Nada, vale direto","r"],
  [4,"Desde 2019, por onde o jogador substituído deve sair do campo?","Pelo ponto mais perto da linha","Sempre pelo meio-campo","Pela frente do seu banco","Por trás do gol","r"],
  [4,"No tiro livre indireto, até quando o árbitro mantém o braço levantado?","Até a bola tocar outro jogador ou sair de jogo","Até apitar","Por 3 segundos","Até o chute","r"],
+ /* ---------- escudos ---------- */
+ [1,"Qual clube brasileiro tem um escudo preto com uma única estrela branca, a 'Estrela Solitária'?","Botafogo","Vasco","Corinthians","Santos","e"],
+ [1,"Qual clube carioca tem escudo com faixas horizontais vermelhas e pretas?","Flamengo","Vasco","Fluminense","Botafogo","e"],
+ [1,"Qual clube tem escudo com faixas verde, branca e grená?","Fluminense","Palmeiras","Goiás","Coritiba","e"],
+ [1,"Qual clube tem um grande P branco dentro de um círculo verde no escudo?","Palmeiras","Paysandu","Ponte Preta","Paraná","e"],
+ [1,"Qual clube tem no escudo uma âncora com dois remos cruzados?","Corinthians","Vasco","Flamengo","Santos","e"],
+ [1,"Qual clube tem cinco estrelas brancas formando uma constelação num escudo azul?","Cruzeiro","Grêmio","Bahia","Avaí","e"],
+ [1,"Qual clube francês tem a Torre Eiffel no escudo?","PSG","Olympique de Marseille","Lyon","Monaco","e"],
+ [1,"Qual seleção tem três leões no escudo?","Inglaterra","Holanda","Bélgica","Escócia","e"],
+ [1,"Quantas estrelas ficam acima do escudo da Seleção Brasileira?","5","4","6","3","e"],
+ [1,"Qual clube inglês tem um canhão no escudo?","Arsenal","Chelsea","Tottenham","West Ham","e"],
+ [1,"Qual clube inglês tem um diabo vermelho com tridente no escudo?","Manchester United","Liverpool","Arsenal","Nottingham Forest","e"],
+ [1,"Qual clube italiano tem no escudo a loba amamentando dois gêmeos, Rômulo e Remo?","Roma","Lazio","Napoli","Milan","e"],
+ [1,"Qual clube inglês tem uma raposa no escudo?","Leicester City","Wolverhampton","Norwich","Brighton","e"],
+ [1,"Quantas estrelas aparecem acima do escudo da seleção da Argentina?","3","2","4","1","e"],
+ [2,"Qual clube tem no escudo a cruz de São Jorge, as listras da Catalunha e uma bola sobre listras azul-grená?","Barcelona","Espanyol","Girona","Valencia","e"],
+ [2,"Qual clube tem escudo redondo com uma coroa em cima e uma faixa diagonal roxa?","Real Madrid","Real Betis","Real Sociedad","Monaco","e"],
+ [2,"Qual clube tem no escudo um urso apoiado numa árvore, com listras vermelhas e brancas?","Atlético de Madrid","Athletic Bilbao","Sevilla","Rayo Vallecano","e"],
+ [2,"Qual clube tem escudo redondo com listras vermelhas e pretas de um lado e a cruz de São Jorge do outro?","Milan","Inter de Milão","Genoa","Barcelona","e"],
+ [2,"Qual clube italiano tem uma águia no escudo?","Lazio","Roma","Napoli","Torino","e"],
+ [2,"Qual clube italiano tem a letra N dentro de um círculo azul no escudo?","Napoli","Inter de Milão","Lazio","Atalanta","e"],
+ [2,"Qual clube italiano tem um lírio vermelho (flor de lis) no escudo?","Fiorentina","Roma","Genoa","Bologna","e"],
+ [2,"Qual clube inglês tem no escudo um pássaro com um ramo no bico e duas chamas nas laterais?","Liverpool","Crystal Palace","Brighton","Everton","e"],
+ [2,"Qual clube inglês tem um leão azul segurando um cajado no escudo?","Chelsea","Aston Villa","Everton","Manchester City","e"],
+ [2,"Qual clube inglês tem um galo em cima de uma bola no escudo?","Tottenham","Arsenal","Fulham","Brighton","e"],
+ [2,"Qual clube inglês tem um escudo redondo azul-celeste com um navio dourado e uma rosa vermelha?","Manchester City","Manchester United","Everton","Chelsea","e"],
+ [2,"Qual clube inglês tem dois martelos cruzados no escudo?","West Ham","Arsenal","Sheffield United","Burnley","e"],
+ [2,"Qual clube inglês tem uma cabeça de lobo no escudo?","Wolverhampton","Leicester City","Bournemouth","Brentford","e"],
+ [2,"Qual clube alemão tem losangos azuis e brancos no centro do escudo?","Bayern de Munique","Schalke 04","Hertha Berlim","Hamburgo","e"],
+ [2,"Qual clube tem escudo redondo amarelo com as letras pretas BVB e o número 09?","Borussia Dortmund","Borussia Mönchengladbach","Bayer Leverkusen","Schalke 04","e"],
+ [2,"Qual clube português tem uma águia em cima de uma roda de bicicleta no escudo?","Benfica","Porto","Sporting","Braga","e"],
+ [2,"Qual clube português tem um dragão no topo do escudo?","Porto","Benfica","Sporting","Boavista","e"],
+ [2,"Qual clube português tem um leão no escudo verde e branco?","Sporting","Benfica","Porto","Vitória de Guimarães","e"],
+ [2,"Qual clube argentino tem escudo azul com uma faixa amarela no meio?","Boca Juniors","River Plate","Racing","Rosario Central","e"],
+ [2,"Qual clube argentino tem escudo branco com uma faixa diagonal vermelha?","River Plate","Independiente","Huracán","Estudiantes","e"],
+ [2,"Qual clube espanhol tem um morcego no escudo?","Valencia","Villarreal","Sevilla","Levante","e"],
+ [2,"Qual seleção tem um galo no escudo?","França","Bélgica","Portugal","Itália","e"],
+ [2,"Qual seleção tem uma águia preta no escudo?","Alemanha","Suíça","Polônia","Sérvia","e"],
+ [2,"Qual clube italiano tem o escudo moderno com um grande J estilizado?","Juventus","Genoa","Lazio","Napoli","e"],
+ [2,"Qual clube italiano tem escudo redondo com as letras I e M entrelaçadas?","Inter de Milão","Milan","Napoli","Roma","e"],
+ [2,"Qual clube tem dois touros vermelhos frente a frente e um sol amarelo no escudo, no Brasil?","Red Bull Bragantino","Ituano","Novorizontino","Mirassol","e"],
+ [2,"Qual clube tem escudo com faixas horizontais vermelhas e pretas e um leão no topo?","Sport","Vitória","Flamengo","Athletico-PR","e"],
+ [2,"Qual clube tem escudo em forma de triângulo com uma faixa vermelha, branca e preta?","São Paulo","Flamengo","Santa Cruz","Botafogo","e"],
+ [2,"Qual clube tem uma caravela no escudo preto, cortado por uma faixa diagonal branca?","Vasco","Botafogo","Ceará","Figueirense","e"],
+ [2,"Qual clube paulista tem escudo com as letras SFC e listras verticais pretas e brancas?","Santos","São Paulo","Corinthians","Ponte Preta","e"],
+ [2,"Qual clube mineiro tem escudo com listras verticais pretas e brancas e as letras C, A e M?","Atlético-MG","Cruzeiro","América-MG","Tombense","e"],
+ [2,"Qual clube gaúcho tem escudo com as cores azul, preta e branca?","Grêmio","Internacional","Juventude","Caxias","e"],
+ [2,"Qual clube tem escudo vermelho com as letras S, C e I entrelaçadas em branco?","Internacional","Sport","Santa Cruz","São Caetano","e"],
+ [2,"Qual bandeira aparece no centro do escudo do Corinthians?","A do estado de São Paulo","A do Brasil","A da cidade de São Paulo","A da Inglaterra","e"],
+ [2,"Quantas estrelas aparecem acima do escudo da seleção da Alemanha?","4","3","5","2","e"],
+ [2,"Quantas estrelas aparecem acima do escudo da seleção da França?","2","1","3","4","e"],
+ [2,"Quantas estrelas aparecem acima do escudo da seleção da Espanha?","1","2","3","Nenhuma","e"],
+ [3,"Quantas estrelas aparecem acima do escudo da seleção do Uruguai?","4","2","3","1","e"],
+ [3,"Quantas estrelas formam o Cruzeiro do Sul no escudo do Cruzeiro?","5","4","6","7","e"],
+ [3,"Qual clube nordestino tem escudo redondo com listras azul, vermelha e branca e duas estrelas em cima?","Bahia","Fortaleza","Ceará","Santa Cruz","e"],
+ [3,"Qual clube cearense tem escudo com as cores vermelha, azul e branca?","Fortaleza","Ceará","Ferroviário","Icasa","e"],
+ [3,"Qual clube cearense tem escudo com listras verticais pretas e brancas?","Ceará","Fortaleza","Ferroviário","Floresta","e"],
+ [3,"Qual clube baiano tem escudo com faixas horizontais vermelhas e pretas?","Vitória","Bahia","Jacuipense","Atlético de Alagoinhas","e"],
+ [3,"Qual clube trocou o escudo em 2018 por um desenho só de faixas diagonais vermelhas e pretas, sem letras?","Athletico-PR","Sport","Vitória","Flamengo","e"],
+ [3,"Qual clube alemão também usa dois touros vermelhos frente a frente no escudo?","RB Leipzig","Bayern de Munique","Eintracht Frankfurt","Stuttgart","e"],
+ [3,"Qual clube alemão tem uma águia no escudo?","Eintracht Frankfurt","Bayern de Munique","Werder Bremen","Borussia Dortmund","e"],
+ [3,"Qual clube inglês tem uma torre no escudo?","Everton","Arsenal","Newcastle","Aston Villa","e"],
+ [3,"Qual clube inglês tem uma gaivota no escudo?","Brighton","Tottenham","Crystal Palace","Southampton","e"],
+ [3,"Qual clube inglês tem dois cavalos-marinhos e um castelo no escudo?","Newcastle","Everton","West Ham","Sunderland","e"],
+ [3,"Qual clube holandês tem o rosto de um herói grego desenhado com linhas no escudo?","Ajax","PSV","Feyenoord","AZ Alkmaar","e"],
+ [3,"Qual clube escocês tem um trevo de quatro folhas no escudo?","Celtic","Rangers","Aberdeen","Hearts","e"],
+ [3,"Qual clube uruguaio tem escudo com listras verticais amarelas e pretas?","Peñarol","Nacional","Defensor","Danubio","e"],
+ [3,"Qual clube chileno tem um cacique indígena no escudo?","Colo-Colo","Universidad de Chile","Universidad Católica","Cobreloa","e"],
+ [3,"Qual clube italiano tem uma zebra no escudo?","Udinese","Juventus","Parma","Cagliari","e"],
+ [3,"Qual clube italiano tem um touro no escudo?","Torino","Juventus","Bologna","Verona","e"],
+ [3,"Qual clube francês tem um leão no escudo?","Lyon","PSG","Marseille","Lille","e"],
+ [3,"Qual clube francês tem as letras OM e uma estrela em cima no escudo?","Olympique de Marseille","Olympique de Lyon","Monaco","Nice","e"],
+ [3,"Qual clube espanhol tem escudo com listras verticais verdes e brancas e uma coroa em cima?","Real Betis","Real Madrid","Elche","Racing Santander","e"],
+ [3,"Qual seleção tem um leão laranja no escudo?","Holanda","Croácia","Inglaterra","Costa do Marfim","e"],
+ [3,"Qual clube americano tem duas garças formando a letra M no escudo?","Inter Miami","LA Galaxy","New York City","Orlando City","e"],
+ [3,"Qual clube inglês tem uma águia no escudo, sobre o desenho de um palácio?","Crystal Palace","Arsenal","Fulham","Brighton","e"],
+ [3,"Qual é o objeto náutico que aparece no escudo do Manchester United, além do diabo?","Um navio","Uma âncora","Um farol","Um remo","e"],
+ [3,"O que o leão do escudo do Chelsea segura?","Um cajado","Uma espada","Uma bola","Uma coroa","e"],
+ [3,"O que fica em cima da bola no escudo do Tottenham?","Um galo","Uma águia","Um leão","Uma coroa","e"],
+ [3,"No escudo do Benfica, sobre o que a águia está pousada?","Uma roda de bicicleta","Uma bola","Um escudo com coroa","Um globo","e"],
+ [3,"Qual animal aparece no escudo do Atlético de Madrid?","Um urso","Um leão","Um touro","Uma águia","e"],
+ [3,"Que árvore aparece no escudo do Atlético de Madrid, junto do urso?","Um medronheiro","Uma oliveira","Um pinheiro","Uma laranjeira","e"],
+ [3,"No escudo do Barcelona, o que aparece na parte de baixo, sobre as listras azul-grená?","Uma bola","Uma coroa","Um morcego","Uma estrela","e"],
+ [3,"No escudo do Real Madrid, o que fica em cima do círculo?","Uma coroa","Uma estrela","Uma bola","Uma águia","e"],
+ [4,"No escudo antigo da Juventus, antes de 2017, que animal aparecia no alto?","Um touro","Uma zebra","Um cavalo","Uma águia","e"],
+ [4,"Qual clube italiano tem o rosto de uma mulher, heroína da mitologia grega, no escudo?","Atalanta","Sampdoria","Genoa","Fiorentina","e"],
+ [4,"Qual clube italiano tem um grifo (meio águia, meio leão) no escudo?","Genoa","Sampdoria","Lazio","Perugia","e"],
+ [4,"Qual clube italiano tem no escudo um marinheiro fumando cachimbo?","Sampdoria","Genoa","Napoli","Venezia","e"],
+ [4,"Qual clube alemão tem um W branco dentro de um losango verde no escudo?","Werder Bremen","Wolfsburg","Wehen Wiesbaden","Würzburger Kickers","e"],
+ [4,"Qual clube alemão tem no escudo a cruz de uma farmacêutica e um leão?","Bayer Leverkusen","Hoffenheim","Mainz","Freiburg","e"],
+ [4,"Qual clube tem escudo com uma coroa em cima e losangos vermelhos e brancos?","Monaco","Olympique de Marseille","Nice","Lille","e"],
+ [4,"Qual clube chileno tem uma coruja (o 'chuncho') no escudo?","Universidad de Chile","Colo-Colo","Universidad Católica","Audax Italiano","e"],
+ [4,"Qual clube mexicano tem o mapa do continente americano no escudo?","América","Chivas","Cruz Azul","Pumas","e"],
+ [4,"Qual seleção tem um corvo de três pernas no escudo?","Japão","Coreia do Sul","China","Austrália","e"],
+ [4,"Qual clube inglês tem um leão amarelo sobre fundo vinho no escudo?","Aston Villa","Chelsea","Fulham","West Ham","e"],
+ [4,"No escudo do Liverpool, o que as duas chamas nas laterais homenageiam?","As vítimas da tragédia de Hillsborough","Os títulos europeus","O incêndio do estádio antigo","Os fundadores do clube","e"],
+ [4,"Que flor aparece no escudo atual do Manchester City?","Uma rosa vermelha","Um lírio","Uma tulipa","Um girassol","e"],
+ [4,"No escudo do PSG, que símbolo aparece embaixo da Torre Eiffel?","Uma flor de lis","Uma estrela","Uma coroa","Um galo","e"],
+ [4,"Qual a cor da cruz no escudo do Vasco?","Vermelha","Branca","Preta","Dourada","e"],
+ [4,"Qual clube carioca tem escudo com as letras entrelaçadas F, F e C?","Fluminense","Flamengo","Friburguense","Fortaleza","e"],
 ];
 /* o quiz vira à meia-noite de Brasília (UTC-3) para todos, em qualquer fuso */
 const quizDia=()=>{const d=new Date(Date.now()-3*3600000);return d.getUTCFullYear()+"-"+(d.getUTCMonth()+1)+"-"+d.getUTCDate()},quizMeiaNoite=()=>{const d=new Date(Date.now()-3*3600000);return Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()+1)+3*3600000};
