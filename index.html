@@ -4104,7 +4104,7 @@ setInterval(()=>{if(document.visibilityState!=="visible"||!G||!G.user||VIVO||G.l
 /* FUT Master Assistente (04/11): lista de novidades na caixa de entrada de todos (1 vez por perfil).
    Nova leva = novo item NO COMEÇO de NOVIDADES (a cada 3+ novidades ou quando o Carlos pedir). Quem nunca recebeu ganha só a mais recente. */
 const NOVIDADES=[
- {id:"n3",itens:["🧠 Quiz do Dia: perguntas de futebol valendo caixas surpresa","🎮 Amistoso ao vivo com pré-jogo: arrume o time, aperte Jogar e espere o amigo ficar Pronto!","⏸️ Pausa ao vivo com Voltar à partida → Pronto! e Editar time","💬 Chat com o adversário durante o amistoso ao vivo, com recados rápidos","🔁 Jogar novamente: revanche na hora, no fim do amistoso ao vivo"]},
+ {id:"n3",itens:["🎮 Amistoso ao vivo com pré-jogo: arrume o time, aperte Jogar e espere o amigo ficar Pronto!","⏸️ Pausa ao vivo com Voltar à partida → Pronto! e Editar time","💬 Chat com o adversário durante o amistoso ao vivo, com recados rápidos","🔁 Jogar novamente: revanche na hora, no fim do amistoso ao vivo"]},
  {id:"n2",itens:["🛒 Loja nova: os jogadores agora combinam com a divisão do seu clube","⭐ Mais lendas na loja para quem está na primeira divisão","🔥 Primeira divisão e copas bem mais difíceis","😂 Wagner mais amigão, zoando e puxando a disputa do ranking","📋 Formação nova 4-2-1-3, e a formação acompanha o estilo de jogo"]},
  {id:"n1",itens:["💬 Chat no Ranking: converse com todo mundo que joga","🎤 Mensagens de áudio de até 1 minuto (segure o microfone)","🗑️ Segure a sua mensagem para apagar","💰 Venda e empréstimo de jogadores entre treinadores, direto no chat","🟢 Aviso quando alguém entra no jogo","👑 Ranking por coroas, com prêmios para o pódio do mês"]},
 ];
@@ -4896,7 +4896,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794368300";
+const VERSAO="1794368773";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -5297,7 +5297,6 @@ const REGRAS=[
  ["🏟️","Estádio e clube",["Amplie e reforme o estádio para ter mais público e renda.","Na aba Clube você edita escudo, uniformes, logos na camisa e vê a sala de troféus. O diretor do clube dá avisos importantes."]],
  ["⭐","Nível do dono",["Cada partida dá XP: vitória 50, empate 25, derrota 10. São 30 níveis, cada um com prêmio em dinheiro e cupons, e com um título novo (Sonhador, Cartola, Presidente, Lenda…)."]],
  ["🏆","Conquistas",["Troféus (títulos de campeonato e copas) aparecem um por um na sala de troféus.","Prêmios do jogo, emblemas e selos aparecem uma vez, com o número de vezes embaixo (×2, ×3)."]],
- ["🧠","Quiz do Dia",["Em Jogar > Modos de jogo. Um quiz por dia, valendo uma caixa surpresa."]],
  ["👑","Ranking",["Todo mundo que joga aparece no Ranking (ícone de pessoas no topo). Toque em alguém para ver o perfil, os troféus e o time, e para jogar um amistoso: contra o computador ou ao vivo, se a pessoa estiver online. No amistoso ao vivo, os dois arrumam o time no pré-jogo e apertam Jogar (vira Pronto!); a bola rola quando os dois estiverem prontos. Na pausa é igual: Voltar à partida vira Pronto!, e Editar time desfaz. Tem chat (💬) durante o jogo.","Coroas: vitória +3, empate +1, derrota −1, desistir (W.O.) −3 e rebaixamento −45, em qualquer partida oficial. Nunca ficam abaixo de zero. Títulos dão muito mais: Champions 300, Premier League 225, Libertadores 210, LaLiga e Bundesliga 195, Ligue 1 180, Série A e Primera (ARG) 150, Europa League 150, copas nacionais 105 a 120, Sul-Americana 105, segundas divisões 75 a 105, terceiras 45.","Ranking Geral: quem tem mais coroas fica em cima (empate: nível do dono e depois força do time). As setas ▲▼ mostram quanto você subiu ou desceu desde segunda-feira.","Ranking do Mês: conta só as coroas ganhas no mês e zera todo dia 1. Pódio do mês: 🥇 R$ 3 mi, 100 coroas, 30 cupons e 1000 XP · 🥈 R$ 1,5 mi, 60 coroas, 15 cupons e 600 XP · 🥉 R$ 800 mil, 30 coroas, 8 cupons e 300 XP. O campeão ganha o selo 🏅 Campeão do mês.","Amistoso entre jogadores não vale coroas: rende XP, torcida e transmissão."]],
  ["💾","Salvar e carreiras",["O jogo salva sozinho neste aparelho. Dá para ter até 6 carreiras (em Configurações: Nova carreira e Minhas carreiras); para começar a 7ª, apague uma. Salve também o arquivo (Ajustes) para não perder a carreira se trocar de celular."]]];
 function modalRegras(){
@@ -9221,7 +9220,7 @@ function reAcao(a,v){reLer();const c=RE.car;
 /* 10/11: Rumo ao Estrelato liberado só para o Carlos (conta 7HMHTR ou aparelho com ?dev=carlos) até ficar pronto */
 function reLiberado(){try{return (conta()&&conta().id==="7HMHTR")||localStorage.getItem("fut-dev")==="1"||location.protocol==="file:"}catch(e){return false}}
 /* ---------- Quiz do Dia (11/11): 3 perguntas por dia (fácil, média, difícil), 10 s cada; errou/saiu = acabou. Caixa bronze/prata/ouro.
-   QUIZ: [nível 1-3, pergunta, CERTA, errada, errada, errada, tema b=Brasil/c=Copa e Champions/o=outros] (as respostas são embaralhadas na tela) */
+   QUIZ: [nível 1-4 (1ª pergunta fácil/média, 2ª difícil, 3ª muito difícil), pergunta, CERTA, errada, errada, errada, tema b=Brasil/c=Copa e Champions/o=outros] (as respostas são embaralhadas na tela) */
 const QUIZ=[
  [1,"Quantas Copas do Mundo o Brasil já ganhou?","5","4","6","3","b"],
  [1,"Em que ano o Brasil ganhou a sua primeira Copa do Mundo?","1958","1962","1950","1970","b"],
@@ -9509,9 +9508,83 @@ const QUIZ=[
  [2,"Qual seleção eliminou o Brasil na Copa de 2022?","Croácia","Argentina","Holanda","Marrocos","b"],
  [2,"Qual seleção eliminou o Brasil na Copa de 2018?","Bélgica","França","Uruguai","Croácia","b"],
  [3,"Qual seleção eliminou o Brasil na Copa de 2010?","Holanda","Alemanha","Paraguai","Gana","b"],
- [3,"Qual seleção eliminou o Brasil na Copa de 2006?","França","Itália","Portugal","Alemanha","b"]
+ [3,"Qual seleção eliminou o Brasil na Copa de 2006?","França","Itália","Portugal","Alemanha","b"],
+ [4,"Contra qual clube inglês a Seleção Brasileira fez o seu primeiro jogo, em 1914?","Exeter City","Corinthian","Southampton","Arsenal","b"],
+ [4,"Qual foi o placar da final da Copa de 1958, Brasil x Suécia?","5 x 2","4 x 1","3 x 1","5 x 1","b"],
+ [4,"Qual foi o placar da final da Copa de 1962, Brasil x Tchecoslováquia?","3 x 1","2 x 1","4 x 2","3 x 0","b"],
+ [4,"Qual brasileiro perdeu o pênalti na disputa da final de 1994?","Márcio Santos","Branco","Romário","Dunga","b"],
+ [4,"Quem fez o gol de falta que eliminou a Holanda nas quartas da Copa de 1994?","Branco","Bebeto","Romário","Jorginho","b"],
+ [4,"Quem fez o gol do Brasil na semifinal da Copa de 1994, contra a Suécia?","Romário","Bebeto","Mazinho","Márcio Santos","b"],
+ [4,"Quem fez o gol de falta, por cobertura, contra a Inglaterra na Copa de 2002?","Ronaldinho Gaúcho","Rivaldo","Roberto Carlos","Juninho Pernambucano","b"],
+ [4,"Quem fez o primeiro gol do Brasil na final da Copa de 1970?","Pelé","Gérson","Jairzinho","Tostão","b"],
+ [4,"Qual jogador marcou gol em todos os jogos do Brasil na Copa de 1970?","Jairzinho","Pelé","Tostão","Rivellino","b"],
+ [4,"Quem era o goleiro titular do Brasil na Copa de 1970?","Félix","Leão","Ado","Gylmar","b"],
+ [4,"Quem era o goleiro titular do Brasil no título de 1958?","Gylmar","Castilho","Barbosa","Félix","b"],
+ [4,"Quem foi o artilheiro da Copa do Mundo de 1938?","Leônidas da Silva","Silvio Piola","György Sárosi","Ernst Wilimowski","b"],
+ [4,"Quem foi o artilheiro da Copa do Mundo de 1950?","Ademir de Menezes","Óscar Míguez","Zizinho","Juan Schiaffino","b"],
+ [4,"Quem foi o técnico do Brasil na Copa de 1950?","Flávio Costa","Zezé Moreira","Vicente Feola","Aymoré Moreira","b"],
+ [4,"Quem foi o técnico do Brasil na Copa de 1978?","Cláudio Coutinho","Zagallo","Telê Santana","Osvaldo Brandão","b"],
+ [4,"Quem foi o técnico do Brasil na Copa de 1990?","Sebastião Lazaroni","Telê Santana","Carlos Alberto Parreira","Paulo Roberto Falcão","b"],
+ [4,"Qual clube ganhou a primeira Taça Brasil, em 1959?","Bahia","Santos","Palmeiras","Vasco","b"],
+ [4,"Qual clube foi campeão brasileiro três vezes seguidas, em 2006, 2007 e 2008?","São Paulo","Corinthians","Internacional","Cruzeiro","b"],
+ [4,"Qual clube catarinense ganhou a Copa do Brasil de 1991?","Criciúma","Avaí","Figueirense","Joinville","b"],
+ [4,"Qual clube surpreendeu o Flamengo no Maracanã e ganhou a Copa do Brasil de 2004?","Santo André","Paulista","Juventude","São Caetano","b"],
+ [4,"Qual clube do interior paulista ganhou a Copa do Brasil de 2005?","Paulista","Santo André","Ponte Preta","Guarani","b"],
+ [4,"Qual clube gaúcho ganhou a Copa do Brasil de 1999?","Juventude","Grêmio","Internacional","Caxias","b"],
+ [4,"Quantos pontos o Flamengo fez no Brasileirão recordista de 2019?","90","88","86","92","b"],
+ [4,"Em que ano Zico foi jogar na Udinese, da Itália?","1983","1981","1985","1979","b"],
+ [4,"Zico é ídolo de qual clube japonês?","Kashima Antlers","Yokohama Marinos","Júbilo Iwata","Urawa Reds","b"],
+ [4,"Em que ano Romário comemorou o seu milésimo gol?","2007","2005","2008","2006","b"],
+ [4,"Em qual clube Ronaldo Fenômeno estreou como profissional?","Cruzeiro","São Cristóvão","Flamengo","Corinthians","b"],
+ [4,"Em que área Sócrates se formou na faculdade?","Medicina","Direito","Engenharia","Educação Física","b"],
+ [4,"Qual é o nome verdadeiro de Pelé?","Edson Arantes do Nascimento","Edson Arantes da Silva","Édson Antunes do Nascimento","Edinho Arantes dos Santos","b"],
+ [4,"Qual é o nome verdadeiro de Zico?","Arthur Antunes Coimbra","Arthur Arantes Coimbra","Antônio Antunes Coimbra","Arthur Coimbra Neto","b"],
+ [4,"Qual é o nome verdadeiro de Kaká?","Ricardo Izecson dos Santos Leite","Ricardo Kaká dos Santos","Carlos Izecson dos Santos","Ricardo Leite Izidoro","b"],
+ [4,"Qual era o nome verdadeiro de Garrincha?","Manuel Francisco dos Santos","Manoel Garrincha da Silva","Francisco Manuel dos Santos","Manuel dos Santos Pereira","b"],
+ [4,"Em que cidade Pelé nasceu?","Três Corações","Bauru","Santos","Pouso Alegre","b"],
+ [4,"Quantas vezes o Brasil foi vice-campeão da Copa do Mundo?","2","1","3","4","b"],
+ [4,"Em qual Copa o Brasil ficou em 3º lugar pela primeira vez?","1938","1950","1978","1934","b"],
+ [4,"Quem foi o artilheiro do Brasileirão de 2019, com 25 gols?","Gabigol","Bruno Henrique","Germán Cano","Everaldo","b"],
+ [4,"Quem foi o técnico do Flamengo no título da Libertadores de 2019?","Jorge Jesus","Abel Braga","Rogério Ceni","Renato Gaúcho","b"],
+ [4,"Qual foi o primeiro país africano a chegar às quartas de final de uma Copa, em 1990?","Camarões","Nigéria","Egito","Marrocos","c"],
+ [4,"Qual atacante marcou gol na Copa de 1994 com 42 anos?","Roger Milla","Teófilo Cubillas","Hristo Stoichkov","Rashidi Yekini","c"],
+ [4,"Qual foi o placar da final da primeira Copa do Mundo, em 1930?","Uruguai 4 x 2 Argentina","Uruguai 2 x 1 Argentina","Uruguai 3 x 1 Brasil","Uruguai 4 x 1 Argentina","c"],
+ [4,"Qual país sediou a Copa do Mundo de 1954?","Suíça","Suécia","França","Alemanha Ocidental","c"],
+ [4,"Qual país sediou a Copa do Mundo de 1938?","França","Itália","Alemanha","Suíça","c"],
+ [4,"Qual país sediou a Copa do Mundo de 1982?","Espanha","Itália","Argentina","México","c"],
+ [4,"Quem foi o artilheiro da Copa de 1986?","Gary Lineker","Diego Maradona","Careca","Emilio Butragueño","c"],
+ [4,"Quem foi o artilheiro da Copa de 1990?","Salvatore Schillaci","Gary Lineker","Lothar Matthäus","Roger Milla","c"],
+ [4,"Quem foi o artilheiro da Copa de 1978?","Mario Kempes","Rob Rensenbrink","Teófilo Cubillas","Leopoldo Luque","c"],
+ [4,"Quem foi o artilheiro da Copa de 1966?","Eusébio","Geoff Hurst","Bobby Charlton","Franz Beckenbauer","c"],
+ [4,"Quem foi o artilheiro da Copa de 1970?","Gerd Müller","Jairzinho","Pelé","Teófilo Cubillas","c"],
+ [4,"Qual clube ganhou a primeira edição com o nome 'Champions League', em 1993?","Olympique de Marseille","Milan","Barcelona","Ajax","c"],
+ [4,"Qual clube da Romênia ganhou a Copa dos Campeões da Europa em 1986?","Steaua Bucareste","Dinamo Bucareste","Rapid Bucareste","Universitatea Craiova","c"],
+ [4,"Qual foi o primeiro clube britânico campeão europeu, em 1967?","Celtic","Manchester United","Liverpool","Rangers","c"],
+ [4,"Qual clube inglês ganhou a Copa dos Campeões em 1979 e 1980, seguidas?","Nottingham Forest","Liverpool","Aston Villa","Leeds United","c"],
+ [4,"Quem tem o recorde de gols numa única edição da Champions League?","Cristiano Ronaldo","Lionel Messi","Robert Lewandowski","Erling Haaland","c"],
+ [4,"Quem marcou o gol mais rápido da história das finais de Champions, em 2005?","Paolo Maldini","Hernán Crespo","Andriy Shevchenko","Kaká","c"],
+ [4,"Em qual estádio a Inter de Milão ganhou a Champions de 2010?","Santiago Bernabéu","Wembley","Allianz Arena","Stade de France","c"],
+ [4,"Qual jogo da Copa de 1954 ficou conhecido como 'Batalha de Berna'?","Brasil x Hungria","Hungria x Alemanha","Uruguai x Hungria","Brasil x Iugoslávia","c"],
+ [4,"Qual jogo da Copa de 1962 ficou conhecido como 'Batalha de Santiago'?","Chile x Itália","Brasil x Chile","Chile x Alemanha","Argentina x Itália","c"],
+ [4,"Como foi decidido o campeão da Copa do Mundo de 1950?","Num quadrangular final","Numa final única","Nos pênaltis","Num jogo extra","c"],
+ [4,"Qual clube ganhou a primeira Premier League, em 1992-93?","Manchester United","Blackburn Rovers","Arsenal","Leeds United","o"],
+ [4,"Qual clube tem mais títulos do Campeonato Italiano?","Juventus","Milan","Inter de Milão","Torino","o"],
+ [4,"Quem ganhou a primeira Bola de Ouro, em 1956?","Stanley Matthews","Alfredo Di Stéfano","Raymond Kopa","Ferenc Puskás","o"],
+ [4,"Quem foi o primeiro africano a ganhar a Bola de Ouro, em 1995?","George Weah","Abedi Pelé","Roger Milla","Samuel Eto'o","o"],
+ [4,"George Weah, ex-craque, virou presidente de qual país?","Libéria","Gana","Costa do Marfim","Serra Leoa","o"],
+ [4,"Qual seleção tem mais títulos da Copa Africana de Nações?","Egito","Camarões","Gana","Nigéria","o"],
+ [4,"Qual seleção tem mais títulos da Copa América?","Argentina","Uruguai","Brasil","Chile","o"],
+ [4,"Quem era o técnico do Leicester campeão inglês em 2016?","Claudio Ranieri","Nigel Pearson","Brendan Rodgers","Craig Shakespeare","o"],
+ [4,"Lev Yashin foi ídolo de qual clube?","Dínamo de Moscou","Spartak Moscou","CSKA Moscou","Lokomotiv Moscou","o"],
+ [4,"Qual foi o primeiro jogo oficial entre seleções da história, em 1872?","Escócia x Inglaterra","Inglaterra x País de Gales","Escócia x Irlanda","Inglaterra x Irlanda","o"],
+ [4,"Qual é o clube de futebol mais antigo do mundo, reconhecido pela FIFA?","Sheffield FC","Notts County","Hallam FC","Queen's Park","o"],
+ [4,"Em que ano a FIFA foi fundada?","1904","1930","1900","1920","o"],
+ [4,"Em qual cidade fica a sede da FIFA?","Zurique","Genebra","Paris","Nyon","o"],
+ [4,"Qual seleção ganhou a primeira Eurocopa, em 1960?","União Soviética","Espanha","Iugoslávia","França","o"],
+ [4,"Qual seleção ganhou a Eurocopa de 1992, mesmo entrando no lugar da Iugoslávia?","Dinamarca","Alemanha","Holanda","Suécia","o"],
+ [4,"Qual seleção surpreendeu e ganhou a Eurocopa de 2004?","Grécia","Portugal","República Tcheca","Holanda","o"]
 ];
-const QZ_T=10,QZ_NIV=["","Fácil","Média","Difícil"],QZ_CX=["","bronze","prata","ouro"],QZ={on:false,t0:0,tm:null,trava:false};
+const QZ_T=10,QZ_NIV=["","Fácil","Média","Difícil","Muito difícil"],QZ_CX=["","bronze","prata","ouro"],QZ={on:false,t0:0,tm:null,trava:false};
 /* estado do quiz no perfil (1 por dia para o dono, vale em qualquer carreira). Fechou o jogo no meio = perdeu o quiz do dia */
 function quizEstado(){const P=perfil();P.quiz=P.quiz||{};const q=P.quiz;
   if(q.fase==="jogando"&&!QZ.on){q.fase="fim";q.saiu=1;q.ac=0;q.caixa=null}
@@ -9519,7 +9592,7 @@ function quizEstado(){const P=perfil();P.quiz=P.quiz||{};const q=P.quiz;
     P.quiz={dia:diaReal(),fase:"novo",i:0,ac:0,...(pend?{caixa:pend.caixa,premio:pend.premio,acAnt:pend.ac,pend:1}:{})};return P.quiz}
   return q}
 function quizSortear(){const P=perfil(),vis=P.quizVis||[],out=[];
-  [1,2,3].forEach(n=>{const r=rnd(),cat=r<.5?"b":r<.8?"c":"o",T=QUIZ.map((x,i)=>i).filter(i=>QUIZ[i][0]===n),L=T.filter(i=>QUIZ[i][6]===cat),nv=L.filter(i=>!vis.includes(i)),nv2=T.filter(i=>!vis.includes(i));out.push(pick(nv.length?nv:nv2.length?nv2:T))}); // 50% Brasil, 30% Copa/Champions, 20% outros
+  [1,2,3].forEach(k=>{const n=k===1?(rnd()<.5?1:2):k===2?3:4,r=rnd(),cat=r<.5?"b":r<.8?"c":"o",T=QUIZ.map((x,i)=>i).filter(i=>QUIZ[i][0]===n),L=T.filter(i=>QUIZ[i][6]===cat),nv=L.filter(i=>!vis.includes(i)),nv2=T.filter(i=>!vis.includes(i));out.push(pick(nv.length?nv:nv2.length?nv2:T))}); // 50% Brasil, 30% Copa/Champions, 20% outros
   P.quizVis=[...out,...vis].slice(0,Math.floor(QUIZ.length*.8));return out}
 function quizComecar(){const q=quizEstado();if(q.fase!=="novo")return;if(q.pend){toastErro("Abra a sua caixa primeiro!");return}
   q.qs=quizSortear();q.ops=q.qs.map(i=>shuffle([1,2,3,4].slice()));q.i=0;q.ac=0;q.fase="jogando";q.fb=null;QZ.on=true;salvar();quizRelogio()}
@@ -9564,7 +9637,7 @@ function quizPremioHTML(pr){if(!pr)return "";
     lenda:pr.jog?`<div class="qz-pr-ic">${fotoLendaG(pr.nome,96)}</div><b>★ ${esc(pr.nome)}</b><span>Lenda contratada de graça! Já está no seu elenco.</span>`:pr.tec?`<div class="qz-pr-ic">${tecRosto(pr.nome,96)}</div><b>★ ${esc(pr.nome)}</b><span>Técnico lenda contratado de graça!</span>`:`<div class="qz-pr-ic">★</div><b>Lenda</b>`}[pr.t]||"";
   return `<div class="qz-premio ${pr.t}">${nm}</div>`}
 function caixaHTML(tipo,grande){return `<div class="qz-caixa ${tipo}${grande?" grande":""}"${grande?' data-a="qz_abrir" role="button" aria-label="Abrir a caixa"':""}><i class="cx-luz"></i><i class="cx-tampa"></i><i class="cx-corpo"></i><i class="cx-fita"></i>${grande?'<i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i>':""}</div>`}
-function telaQuiz(){const q=quizEstado(),jog=q.fase==="jogando";
+function telaQuiz(){if(!reLiberado()){aba="jogar";return telaInicio()}const q=quizEstado(),jog=q.fase==="jogando";
   let h=`<div class="qz"><div class="qz-topo">${jog?"<span></span>":`<button class="re-tb" data-a="aba" data-v="jogar">‹ Jogar</button>`}<b class="qz-tit">🧠 Quiz do Dia</b><span></span></div>`;
   if(q.caixa&&!q.aberta){const n=q.pend?q.acAnt:q.ac;
     h+=`<div class="qz-meio"><p class="qz-tag">${n===3?"🔥 Gabaritou!":n===2?"Muito bem!":"Boa!"} ${n} acerto${n>1?"s":""}</p><h2 class="qz-h">Caixa de ${q.caixa==="ouro"?"OURO":q.caixa==="prata"?"PRATA":"BRONZE"}</h2>${caixaHTML(q.caixa,1)}<p class="qz-dica">Toque na caixa para abrir</p></div>`}
@@ -9582,14 +9655,15 @@ function telaQuiz(){const q=quizEstado(),jog=q.fase==="jogando";
     <button class="qz-comecar" data-a="qz_comecar" style="margin-top:18px">Começar</button></div>`}
   return h+"</div>"}
 function quizAcao(a,v){switch(a){
-  case "qz_abrir_modo":aba="quiz";window.scrollTo(0,0);break;
+  case "qz_breve":toast("Quiz do Dia: em breve!");return;
+  case "qz_abrir_modo":if(!reLiberado()){toast("Quiz do Dia: em breve!");return}aba="quiz";window.scrollTo(0,0);break;
   case "qz_comecar":QZ.mostrar=0;quizComecar();break;
   case "qz_ok":QZ.mostrar=0;break;
   case "qz_resp":quizResponder(+v);return;
   case "qz_abrir":quizAbrir();return}
   render()}
 setInterval(()=>{const el=document.getElementById("qz-relogio");if(el)el.textContent=fmtRelogio(Math.max(0,meiaNoite()-Date.now()))},1000);
-function cartaoQuiz(){const q=quizEstado(),pend=q.caixa&&!q.aberta,feito=q.fase==="fim"&&!pend;
+function cartaoQuiz(){if(!reLiberado())return `<button class="modo quiz bloq" data-a="qz_breve"><span class="modo-ic">🧠</span><div><b>Quiz do Dia</b><small>Em breve</small></div><i>🔒</i></button>`;const q=quizEstado(),pend=q.caixa&&!q.aberta,feito=q.fase==="fim"&&!pend;
   return `<button class="modo quiz${pend?" pulsa":""}" data-a="qz_abrir_modo"><span class="modo-ic">🧠</span><div><b>Quiz do Dia</b><small>${pend?`Sua caixa de ${q.caixa} está esperando!`:feito?`Feito hoje: ${q.ac||0} acerto${q.ac===1?"":"s"} · volta à meia-noite`:"Será que você manja de futebol? 🤔"}</small></div><i>${pend?"🎁":feito?"✓":"›"}</i></button>`}
 function cartaoModos(){reLer();const c=RE.car,cl=G.clubs[G.user.club];
   return `<div class="modos"><h2 class="modos-tit">Modos de jogo</h2>
