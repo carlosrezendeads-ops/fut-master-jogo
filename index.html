@@ -4896,7 +4896,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794368245";
+const VERSAO="1794368300";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -9578,9 +9578,8 @@ function telaQuiz(){const q=quizEstado(),jog=q.fase==="jogando";
   else if(q.fase==="fim"){const pr=q.aberta&&q.premio;
     h+=`<div class="qz-meio">${pr?`<p class="qz-tag">Seu prêmio de hoje</p>${quizPremioHTML(pr)}`:q.saiu?`<div class="qz-grande">🚪</div><h2 class="qz-h">Você saiu do jogo</h2><p class="qz-dica">O quiz de hoje foi perdido.</p>`:`<div class="qz-grande">😬</div><h2 class="qz-h">${q.mot==="tempo"?"O tempo acabou!":"Errou a primeira!"}</h2><p class="qz-dica">Não foi dessa vez.</p>`}
       <div class="qz-volta"><small>Novo quiz em</small><b class="num" id="qz-relogio">${fmtRelogio(meiaNoite()-Date.now())}</b></div></div>`}
-  else{h+=`<div class="qz-meio"><p class="qz-tag">Quiz do Dia</p><h2 class="qz-h">Você manja de futebol?</h2>
-    <div class="qz-cxs">${[1,2,3].map(n=>`<div>${caixaHTML(QZ_CX[n])}<b>${"❓".repeat(1)}</b></div>`).join("")}</div>
-    <button class="qz-comecar" data-a="qz_comecar">Começar</button></div>`}
+  else{h+=`<div class="qz-meio" style="padding-top:22vh"><div class="qz-grande">🧠</div><h2 class="qz-h">Quiz</h2>
+    <button class="qz-comecar" data-a="qz_comecar" style="margin-top:18px">Começar</button></div>`}
   return h+"</div>"}
 function quizAcao(a,v){switch(a){
   case "qz_abrir_modo":aba="quiz";window.scrollTo(0,0);break;
