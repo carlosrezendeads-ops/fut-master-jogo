@@ -1142,6 +1142,7 @@ nav.abas button{font-size:11px}
 @keyframes qzTampa{to{transform:translateY(-260px) rotate(-40deg);opacity:0}}
 @keyframes qzSome{to{transform:scale(1.8);opacity:0}}
 @keyframes qzPart{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(.4) rotate(200deg)}}
+.qz-teste{display:block;margin:28px auto 0;border:1px dashed rgba(255,255,255,.3);background:none;color:var(--cal-2);border-radius:10px;padding:8px 14px;font-size:13px;cursor:pointer}
 .qz-flash{position:fixed;inset:0;z-index:90;background:#fff;pointer-events:none;animation:qzFlash .9s ease-out forwards}
 @keyframes qzFlash{0%{opacity:0}25%{opacity:1}100%{opacity:0}}
 .vivo-faixa.off{background:rgba(255,90,90,.12);border-color:rgba(255,90,90,.45)}.vivo-on{color:#2ecc71;font-weight:800;letter-spacing:.5px}
@@ -4896,7 +4897,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794368832";
+const VERSAO="1794368970";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -9655,8 +9656,10 @@ function telaQuiz(){if(!reLiberado()){aba="jogar";return telaInicio()}const q=qu
       <div class="qz-volta"><small>Novo quiz em</small><b class="num" id="qz-relogio">${fmtRelogio(quizMeiaNoite()-Date.now())}</b></div></div>`}
   else{h+=`<div class="qz-meio" style="padding-top:22vh"><div class="qz-grande">🧠</div><h2 class="qz-h">Quiz</h2>
     <button class="qz-comecar" data-a="qz_comecar" style="margin-top:18px">Começar</button></div>`}
+  if(!jog&&reLiberado())h+=`<button class="qz-teste" data-a="qz_reset">🔄 Zerar quiz (teste do Carlos)</button>`; // botão de teste: só o Carlos vê
   return h+"</div>"}
 function quizAcao(a,v){switch(a){
+  case "qz_reset":if(!reLiberado())return;QZ.on=false;QZ.mostrar=0;clearInterval(QZ.tm);perfil().quiz={};salvar();toast("Quiz zerado. Pode jogar de novo!");break;
   case "qz_breve":toast("Quiz do Dia: em breve!");return;
   case "qz_abrir_modo":if(!reLiberado()){toast("Quiz do Dia: em breve!");return}aba="quiz";window.scrollTo(0,0);break;
   case "qz_comecar":QZ.mostrar=0;quizComecar();break;
