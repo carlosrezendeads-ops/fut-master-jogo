@@ -4896,7 +4896,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794368773";
+const VERSAO="1794368832";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -9584,12 +9584,14 @@ const QUIZ=[
  [4,"Qual seleção ganhou a Eurocopa de 1992, mesmo entrando no lugar da Iugoslávia?","Dinamarca","Alemanha","Holanda","Suécia","o"],
  [4,"Qual seleção surpreendeu e ganhou a Eurocopa de 2004?","Grécia","Portugal","República Tcheca","Holanda","o"]
 ];
+/* o quiz vira à meia-noite de Brasília (UTC-3) para todos, em qualquer fuso */
+const quizDia=()=>{const d=new Date(Date.now()-3*3600000);return d.getUTCFullYear()+"-"+(d.getUTCMonth()+1)+"-"+d.getUTCDate()},quizMeiaNoite=()=>{const d=new Date(Date.now()-3*3600000);return Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()+1)+3*3600000};
 const QZ_T=10,QZ_NIV=["","Fácil","Média","Difícil","Muito difícil"],QZ_CX=["","bronze","prata","ouro"],QZ={on:false,t0:0,tm:null,trava:false};
 /* estado do quiz no perfil (1 por dia para o dono, vale em qualquer carreira). Fechou o jogo no meio = perdeu o quiz do dia */
 function quizEstado(){const P=perfil();P.quiz=P.quiz||{};const q=P.quiz;
   if(q.fase==="jogando"&&!QZ.on){q.fase="fim";q.saiu=1;q.ac=0;q.caixa=null}
-  if(q.dia!==diaReal()){const pend=q.caixa&&!q.aberta?{caixa:q.caixa,premio:q.premio,ac:q.ac}:null;
-    P.quiz={dia:diaReal(),fase:"novo",i:0,ac:0,...(pend?{caixa:pend.caixa,premio:pend.premio,acAnt:pend.ac,pend:1}:{})};return P.quiz}
+  if(q.dia!==quizDia()){const pend=q.caixa&&!q.aberta?{caixa:q.caixa,premio:q.premio,ac:q.ac}:null;
+    P.quiz={dia:quizDia(),fase:"novo",i:0,ac:0,...(pend?{caixa:pend.caixa,premio:pend.premio,acAnt:pend.ac,pend:1}:{})};return P.quiz}
   return q}
 function quizSortear(){const P=perfil(),vis=P.quizVis||[],out=[];
   [1,2,3].forEach(k=>{const n=k===1?(rnd()<.5?1:2):k===2?3:4,r=rnd(),cat=r<.5?"b":r<.8?"c":"o",T=QUIZ.map((x,i)=>i).filter(i=>QUIZ[i][0]===n),L=T.filter(i=>QUIZ[i][6]===cat),nv=L.filter(i=>!vis.includes(i)),nv2=T.filter(i=>!vis.includes(i));out.push(pick(nv.length?nv:nv2.length?nv2:T))}); // 50% Brasil, 30% Copa/Champions, 20% outros
@@ -9650,7 +9652,7 @@ function telaQuiz(){if(!reLiberado()){aba="jogar";return telaInicio()}const q=qu
 `}
   else if(q.fase==="fim"){const pr=q.aberta&&q.premio;
     h+=`<div class="qz-meio">${pr?`<p class="qz-tag">Seu prêmio de hoje</p>${quizPremioHTML(pr)}`:q.saiu?`<div class="qz-grande">🚪</div><h2 class="qz-h">Você saiu do jogo</h2><p class="qz-dica">O quiz de hoje foi perdido.</p>`:`<div class="qz-grande">😬</div><h2 class="qz-h">${q.mot==="tempo"?"O tempo acabou!":"Errou a primeira!"}</h2><p class="qz-dica">Não foi dessa vez.</p>`}
-      <div class="qz-volta"><small>Novo quiz em</small><b class="num" id="qz-relogio">${fmtRelogio(meiaNoite()-Date.now())}</b></div></div>`}
+      <div class="qz-volta"><small>Novo quiz em</small><b class="num" id="qz-relogio">${fmtRelogio(quizMeiaNoite()-Date.now())}</b></div></div>`}
   else{h+=`<div class="qz-meio" style="padding-top:22vh"><div class="qz-grande">🧠</div><h2 class="qz-h">Quiz</h2>
     <button class="qz-comecar" data-a="qz_comecar" style="margin-top:18px">Começar</button></div>`}
   return h+"</div>"}
@@ -9662,7 +9664,7 @@ function quizAcao(a,v){switch(a){
   case "qz_resp":quizResponder(+v);return;
   case "qz_abrir":quizAbrir();return}
   render()}
-setInterval(()=>{const el=document.getElementById("qz-relogio");if(el)el.textContent=fmtRelogio(Math.max(0,meiaNoite()-Date.now()))},1000);
+setInterval(()=>{const el=document.getElementById("qz-relogio");if(el)el.textContent=fmtRelogio(Math.max(0,quizMeiaNoite()-Date.now()))},1000);
 function cartaoQuiz(){if(!reLiberado())return `<button class="modo quiz bloq" data-a="qz_breve"><span class="modo-ic">🧠</span><div><b>Quiz do Dia</b><small>Em breve</small></div><i>🔒</i></button>`;const q=quizEstado(),pend=q.caixa&&!q.aberta,feito=q.fase==="fim"&&!pend;
   return `<button class="modo quiz${pend?" pulsa":""}" data-a="qz_abrir_modo"><span class="modo-ic">🧠</span><div><b>Quiz do Dia</b><small>${pend?`Sua caixa de ${q.caixa} está esperando!`:feito?`Feito hoje: ${q.ac||0} acerto${q.ac===1?"":"s"} · volta à meia-noite`:"Será que você manja de futebol? 🤔"}</small></div><i>${pend?"🎁":feito?"✓":"›"}</i></button>`}
 function cartaoModos(){reLer();const c=RE.car,cl=G.clubs[G.user.club];
