@@ -4929,7 +4929,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794919748";
+const VERSAO="1794951438";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -8717,8 +8717,10 @@ const RE_EXR=["O médico balançou a cabeça: 'até touro faz exame'.","O doutor
 const reExame=(id,t,v)=>({id,f:"",t,o:[
   [RE_EXV[v||0][0],c=>{const pul=c.m.pulouExame||0;if(pul>=1&&!c.m.coracaoOk&&rnd()<.6){c.m.coracaoOk=1;c.inj=Math.max(c.inj||0,2);c.marc.push(`${c.ano} · Exame descobriu um problema no coração a tempo`);reLog(c,`Exames detectam problema cardíaco em ${c.nome}, que passa por tratamento`);return "O exame achou uma arritmia no coração! Tratamento de 2 meses. O médico disse: 'esse exame salvou sua vida'."}
     if(rnd()<.2){c.a.fis+=2;return "Achou uma deficiência de vitamina. Corrigiu e o físico melhorou."}c.tec+=1;return "Tudo certo. Coração de atleta."}],
-  [RE_EXV[v||0][1],{m:"pulouExame",r:"O exame ficou para depois... e o depois nunca chegou."}],
-  [RE_EXV[v||0][2],c=>{c.m.pulouExame=(c.m.pulouExame||0)+1;c.tec-=1;return pick(RE_EXR)}]]});
+  [RE_EXV[v||0][2],c=>{c.m.pulouExame=(c.m.pulouExame||0)+1;c.tec-=1;return pick(RE_EXR)}],
+  [RE_EXT[(v||0)%RE_EXT.length],c=>{c.m.pulouExame=(c.m.pulouExame||0)+1;c.a.fis+=rnd()<.5?2:1;return pick(RE_EXTR)}]]}); // 17/11: saída pelo treino (melhora o físico, mas conta como exame pulado)
+const RE_EXT=["🏃 Vou focar no preparo físico: 2 horas de cardio","🏋️ Prefiro treinar: academia e corrida hoje","🚴 Bike e piscina: quero o físico no topo","🏃 Treino extra de resistência no lugar do exame","💪 Cardio de 2 horas e alongamento, isso sim","⛰️ Subir morro correndo: meu exame é o treino","🏊 Natação e esteira até cansar","🥵 Treino em dobro com o preparador físico"];
+const RE_EXTR=["Você suou a camisa: o preparo físico melhorou. O exame ficou na gaveta.","Duas horas de cardio. O fôlego está em dia, mas o médico ficou esperando.","O preparador adorou. O departamento médico, nem tanto.","Físico lá em cima. O exame? Fica para outra hora."];
 const RE_DIL2=[
  reExame("exame5","O novo plano de saúde do {cl} exige exames de todos os atletas, com teste de esforço na esteira.",4),
  reExame("exame6","Depois de uma maratona de jogos, o médico quer repetir seus exames de coração e de sangue.",5),
@@ -9223,7 +9225,7 @@ function reTelaTemp(c){const d=c.pend&&c.pend[c.resp.length],D=d&&reDil(d),cl=c.
   <div class="re-carr"><span>⚽ <b class="num">${c.tot.g}</b> gols</span><span>🎯 <b class="num">${c.tot.a}</b> assist.</span><span>👟 <b class="num">${c.tot.j}</b> jogos</span><span>🏆 <b class="num">${c.tits.filter(t=>!t.startsWith("Sub")).length}</b></span></div>
   ${ev&&evoL.length?`<div class="re-pn verde">${H(`Evolução ${ev.ano}`,"📶",`<span class="re-h-dir num">Força ${ev.ov[0]} <em>➜</em> <b>${ev.ov[1]}</b></span>`)}<div class="re-evg">${evoL.map(([k,x])=>`<span class="${x>0?"bom":"ruim"}"><b class="num">${x>0?"+":"−"}${Math.abs(x)}</b>${RE_ATR[k][1]} ${({cpe:"Pênaltis",fal:"Faltas",pdp:"Pega pênalti",fis:"Físico"})[k]||RE_ATR[k][0]}</span>`).join("")}</div></div>`:""}
   ${c.resp.map((r,i)=>`<div class="re-pn re-feito"><div class="re-feito-t"><b>${esc(r[0])}</b><span>${esc(r[1])}</span></div>${reChips(r[2],anim===i+1)}</div>`).join("")}
-  ${D?`<div class="re-pn ouro re-dec"><span class="re-tag2">Decisão ${c.resp.length+1} de ${c.pend.length}</span><b class="re-perg">${esc(reTxt(c,D.t))}</b><div class="re-ops">${D.o.map((o,i)=>`<button class="re-op${i===0?" pri":""}" data-a="re_dec" data-v="${i}"><b>${esc(o[0])}</b></button>`).join("")}</div></div>`
+  ${D?`<div class="re-pn ouro re-dec"><span class="re-tag2">Decisão ${c.resp.length+1} de ${c.pend.length}</span><b class="re-perg">${esc(reTxt(c,D.t))}</b><div class="re-ops">${D.o.map((o,i)=>`<button class="re-op" data-a="re_dec" data-v="${i}"><b>${esc(o[0])}</b></button>`).join("")}</div></div>`
     :`<button class="re-jogar2" data-a="re_jogar">▶ Jogar a temporada ${c.ano}</button>`}
   <div class="re-pn">${H("Atributos","",`<span class="re-h-dir">Força <b class="num">${ov}</b></span>`)}${reAtrGrade(c)}</div>
   <div class="re-pn">${H("Relação e fama","⭐")}<div class="re-ls">${reMedidor("Fama",c.fama,"⭐")}${reMedidor("Torcida",c.torc,"👥")}${reMedidor("Técnico",c.tec,"📋")}</div></div>
