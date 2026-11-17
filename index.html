@@ -4937,7 +4937,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794952029";
+const VERSAO="1794952252";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -8723,10 +8723,15 @@ const RE_EXTRA={
 const RE_EXV=[["🩺 Fazer os exames","⏳ Deixar para depois","🐂 'Tô ótimo, saudável igual um touro!'"],["🩺 Fazer tudo direitinho","📅 Remarcar para a semana que vem","💪 'Nunca senti nada, não preciso'"],["🩺 Ir agora mesmo","⏳ Depois do jogo eu vou","🐎 'Tenho saúde de cavalo, doutor'"],["🩺 Fazer o check-up completo","📺 Deixar para depois da entrevista","🦁 'Sou forte igual um leão!'"],["🩺 Topar e fazer todos","😴 Tô cansado, deixa para outro dia","🏃 'Corro 12 km por jogo, tô voando'"],["🩺 Fazer: saúde em primeiro lugar","🎮 Depois, hoje tem jogatina","😎 'Exame é para quem está doente'"],["🩺 Fazer e levar a família junto","✈️ Deixar para depois das férias","🐂 'Coração de touro, doutor!'"],["🩺 Fazer com o cardiologista","⏳ Mês que vem, sem falta","💯 'Tô 100%, pode me escalar'"]];
 const RE_EXR=["O médico balançou a cabeça: 'até touro faz exame'.","O doutor anotou na sua ficha: 'atleta recusou exames'.","Você saiu rindo. O médico, não.","O preparador físico ficou preocupado com a sua resposta."];
 const reExame=(id,t,v)=>({id,f:"",t,o:[
-  [RE_EXV[v||0][0],c=>{const pul=c.m.pulouExame||0;if(pul>=1&&!c.m.coracaoOk&&rnd()<.6){c.m.coracaoOk=1;c.inj=Math.max(c.inj||0,2);c.marc.push(`${c.ano} · Exame descobriu um problema no coração a tempo`);reLog(c,`Exames detectam problema cardíaco em ${c.nome}, que passa por tratamento`);return "O exame achou uma arritmia no coração! Tratamento de 2 meses. O médico disse: 'esse exame salvou sua vida'."}
+  [RE_EXV[v||0][0],c=>{reExFez(c);const pul=c.m.pulouExame||0;if(pul>=1&&!c.m.coracaoOk&&rnd()<.6){c.m.coracaoOk=1;c.inj=Math.max(c.inj||0,2);c.marc.push(`${c.ano} · Exame descobriu um problema no coração a tempo`);reLog(c,`Exames detectam problema cardíaco em ${c.nome}, que passa por tratamento`);return "O exame achou uma arritmia no coração! Tratamento de 2 meses. O médico disse: 'esse exame salvou sua vida'."}
     if(rnd()<.2){c.a.fis+=2;return "Achou uma deficiência de vitamina. Corrigiu e o físico melhorou."}c.tec+=1;return "Tudo certo. Coração de atleta."}],
-  [RE_EXV[v||0][2],c=>{c.m.pulouExame=(c.m.pulouExame||0)+1;c.tec-=1;return pick(RE_EXR)}],
-  [RE_EXT[(v||0)%RE_EXT.length],c=>{c.m.pulouExame=(c.m.pulouExame||0)+1;c.a.fis+=rnd()<.5?2:1;return pick(RE_EXTR)}]]}); // 17/11: saída pelo treino (melhora o físico, mas conta como exame pulado)
+  [RE_EXV[v||0][2],c=>{reExPulou(c);c.tec-=1;return pick(RE_EXR)}],
+  [RE_EXT[(v||0)%RE_EXT.length],c=>{reExPulou(c);c.a.fis+=rnd()<.5?2:1;return pick(RE_EXTR)}]]});
+/* 17/11: pulou 2+ exames seguidos → o clube cobra na temporada seguinte, cada vez mais duro (nível 1 preocupado, 2 sério, 3 ultimato). Fazer o exame zera. */
+const RE_EXC={1:["exc1a","exc1b","exc1c"],2:["exc2a","exc2b","exc2c"],3:["exc3a","exc3b","exc3c"]};
+function reExPulou(c){c.m.pulouExame=(c.m.pulouExame||0)+1;c.m.exSeg=(c.m.exSeg||0)+1;c.fila=(c.fila||[]).filter(x=>!/^exc/.test(x.id));
+  if(c.m.exSeg>=2){const n=Math.min(3,c.m.exSeg-1);c.fila.push({id:pick(RE_EXC[n]),ano:c.ano+1})}}
+function reExFez(c){c.m.exSeg=0;c.fila=(c.fila||[]).filter(x=>!/^exc/.test(x.id))} // 17/11: saída pelo treino (melhora o físico, mas conta como exame pulado)
 const RE_EXT=["🏃 Vou focar no preparo físico: 2 horas de cardio","🏋️ Prefiro treinar: academia e corrida hoje","🚴 Bike e piscina: quero o físico no topo","🏃 Treino extra de resistência no lugar do exame","💪 Cardio de 2 horas e alongamento, isso sim","⛰️ Subir morro correndo: meu exame é o treino","🏊 Natação e esteira até cansar","🥵 Treino em dobro com o preparador físico"];
 const RE_EXTR=["Você suou a camisa: o preparo físico melhorou. O exame ficou na gaveta.","Duas horas de cardio. O fôlego está em dia, mas o médico ficou esperando.","O preparador adorou. O departamento médico, nem tanto.","Físico lá em cima. O exame? Fica para outra hora."];
 const RE_DIL2=[
@@ -8734,6 +8739,15 @@ const RE_DIL2=[
  reExame("exame6","Depois de uma maratona de jogos, o médico quer repetir seus exames de coração e de sangue.",5),
  reExame("exame7","O médico te chama no consultório: 'faz tempo que você não faz exames completos, hein?'",6),
  reExame("exame8","Sua mãe ligou preocupada: viu na TV um jogador passando mal em campo e pediu para você fazer exames.",7),
+ reExame("exc1a","O departamento médico do {cl} está preocupado com você: você faltou aos últimos exames. O doutor remarcou para esta semana.",1),
+ reExame("exc1b","A enfermeira do clube te para no corredor: 'você sumiu dos últimos exames, o doutor está perguntando de você'.",5),
+ reExame("exc1c","Chegou um e-mail do médico do {cl}: 'Você não compareceu aos dois últimos exames. Precisamos te ver o quanto antes.'",7),
+ reExame("exc2a","O médico do {cl} te chama na sala, sério: 'Estamos preocupados com a sua saúde. Você está fugindo dos exames, e o seu coração precisa ser avaliado.'",3),
+ reExame("exc2b","O treinador e o médico te chamam juntos: 'Já são vários exames perdidos. Isso não é mais brincadeira, {n}. Estamos preocupados com você.'",2),
+ reExame("exc2c","Os últimos testes de esforço do elenco mostraram que os batimentos de quem pulou exames precisam de atenção. O médico insiste: 'faz por você, não pelo clube'.",4),
+ reExame("exc3a","ÚLTIMO AVISO: o presidente do {cl} te chama na sala com o médico. 'Ou você faz os exames esta semana, ou não entra mais em campo. Estamos com medo de te perder.'",6),
+ reExame("exc3b","O médico perdeu a paciência: 'Eu não vou assinar sua liberação para jogar. Você está arriscando a sua vida, {n}. Já vi isso acabar mal antes.'",0),
+ reExame("exc3c","Sua família recebeu uma ligação do clube. O médico contou que você não faz exames há muito tempo. Sua mãe chorou no telefone pedindo para você ir.",7),
  reExame("exame1","O departamento médico marcou seus exames anuais: coração, sangue e esforço. Leva o dia inteiro."),
  reExame("exame2","Exames médicos obrigatórios da pré-temporada. O doutor quer uma bateria completa, inclusive do coração.",1),
  reExame("exame3","O médico do {cl} pede exames cardíacos detalhados em todo o elenco depois que um jogador de outro time passou mal.",2),
