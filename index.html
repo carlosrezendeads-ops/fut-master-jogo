@@ -1173,6 +1173,7 @@ nav.abas button{font-size:11px}
 @keyframes qzNuc{0%{opacity:0;transform:scale(1)}100%{opacity:1;transform:scale(14)}}
 .qz-caixa.grande.boom{animation:none;transform:scale(1.45)}
 .qz-caixa.grande.boom .cx-img{animation:qzCxSai .35s ease-in forwards}.qz-caixa.grande.boom .cx-p{animation:qzPart .7s ease-out forwards}.qz-caixa.grande.boom .cx-r,.qz-caixa.grande.boom .cx-nuc{opacity:0}
+.qz-cxmini{width:30px;height:30px;object-fit:contain;display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.5))}.modo-ic .qz-cxmini{width:34px;height:34px}
 .qz-teste{display:block;margin:28px auto 0;border:1px dashed rgba(255,255,255,.3);background:none;color:var(--cal-2);border-radius:10px;padding:8px 14px;font-size:13px;cursor:pointer}
 .qz-flash{position:fixed;inset:0;z-index:90;background:#fff;pointer-events:none;animation:qzFlash .9s ease-out forwards}
 @keyframes qzFlash{0%{opacity:0}25%{opacity:1}100%{opacity:0}}
@@ -4928,7 +4929,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794909249";
+const VERSAO="1794909326";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -10098,7 +10099,7 @@ function telaQuiz(){if(!reLiberado()){aba="jogar";return telaInicio()}const q=qu
     h+=`<div class="qz-meio"><p class="qz-tag">${n===3?"🔥 Gabaritou!":n===2?"Muito bem!":"Boa!"} ${n} acerto${n>1?"s":""}</p><h2 class="qz-h">Caixa de ${q.caixa==="ouro"?"OURO":q.caixa==="prata"?"PRATA":"BRONZE"}</h2>${caixaHTML(q.caixa,1)}<p class="qz-dica">Toque na caixa para abrir</p></div>`}
   else if(QZ.mostrar&&q.premio&&q.fase==="novo"){h+=`<div class="qz-meio"><p class="qz-tag">Seu prêmio</p>${quizPremioHTML(q.premio)}<button class="qz-comecar" data-a="qz_ok" style="margin-top:16px">Ir para o quiz de hoje</button></div>`}
   else if(jog){const i=q.qs[q.i],Q=QUIZ[i],ops=q.ops[q.i],fb=q.fb;
-    h+=`<div class="qz-prog">${[0,1,2].map(k=>`<span class="${k<q.i||(k===q.i&&fb&&fb.ok)?"ok":k===q.i?"agora":""}">${QZ_CX[k+1]==="ouro"?"🥇":QZ_CX[k+1]==="prata"?"🥈":"🥉"}</span>`).join("<i></i>")}</div>
+    h+=`<div class="qz-prog">${[0,1,2].map(k=>`<span class="${k<q.i||(k===q.i&&fb&&fb.ok)?"ok":k===q.i?"agora":""}"><img class="qz-cxmini" src="img/cx-${QZ_CX[k+1]}.png" alt=""></span>`).join("<i></i>")}</div>
     <div class="qz-card"><div class="qz-cab"><span>Pergunta ${q.i+1} de 3 · ${QZ_NIV[Q[0]]}</span><b class="num" id="qz-seg">${QZ_T}</b></div><div class="qz-tempo"><i id="qz-barra" style="width:100%"></i></div>
     <p class="qz-perg">${esc(Q[1])}</p><div class="qz-ops">${ops.map((o,k)=>{const cls=fb?(o===1?" certa":fb.sel===k?" errada":" apaga"):"";return `<button class="qz-op${cls}" data-a="qz_resp" data-v="${k}"${fb?" disabled":""}><i>${"ABCD"[k]}</i>${esc(Q[o+1])}</button>`}).join("")}</div>
     ${fb&&!fb.ok?`<p class="qz-erro">${fb.sel<0?"⏰ O tempo acabou!":"❌ Resposta errada!"}</p>`:""}</div>
@@ -10120,7 +10121,7 @@ function quizAcao(a,v){switch(a){
   render()}
 setInterval(()=>{const el=document.getElementById("qz-relogio");if(el)el.textContent=fmtRelogio(Math.max(0,quizMeiaNoite()-Date.now()))},1000);
 function cartaoQuiz(){if(!reLiberado())return `<button class="modo quiz bloq" data-a="qz_breve"><span class="modo-ic">🧠</span><div><b>Quiz do Dia</b><small>Em breve</small></div><i>🔒</i></button>`;const q=quizEstado(),pend=q.caixa&&!q.aberta,feito=q.fase==="fim"&&!pend;
-  return `<button class="modo quiz${pend?" pulsa":""}" data-a="qz_abrir_modo"><span class="modo-ic">🧠</span><div><b>Quiz do Dia</b><small>${pend?`Sua caixa de ${q.caixa} está esperando!`:feito?`Feito hoje: ${q.ac||0} acerto${q.ac===1?"":"s"} · volta à meia-noite`:"Será que você manja de futebol? 🤔"}</small></div><i>${pend?"🎁":feito?"✓":"›"}</i></button>`}
+  return `<button class="modo quiz${pend?" pulsa":""}" data-a="qz_abrir_modo"><span class="modo-ic">${pend?`<img class="qz-cxmini" src="img/cx-${q.caixa}.png" alt="">`:"🧠"}</span><div><b>Quiz do Dia</b><small>${pend?`Sua caixa de ${q.caixa} está esperando!`:feito?`Feito hoje: ${q.ac||0} acerto${q.ac===1?"":"s"} · volta à meia-noite`:"Será que você manja de futebol? 🤔"}</small></div><i>${pend?"🎁":feito?"✓":"›"}</i></button>`}
 function cartaoModos(){reLer();const c=RE.car,cl=G.clubs[G.user.club];
   return `<div class="modos"><h2 class="modos-tit">Modos de jogo</h2>
     <div class="modo on"><span class="modo-ic">⚽</span><div><b>Modo Carreira</b><small>${esc(cl.name)} · você está aqui</small></div></div>
