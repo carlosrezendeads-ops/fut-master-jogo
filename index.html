@@ -587,13 +587,13 @@ nav.abas[hidden]{display:none}
 @keyframes reBola{from{transform:translateY(0) rotate(0)}to{transform:translateY(-18px) rotate(180deg)}}
 .re-res .kpis{margin:8px 0}.re-tits{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.re-tits span{padding:6px 10px;border-radius:10px;background:rgba(255,210,63,.15);border:1px solid rgba(255,210,63,.5);color:#ffe28a;font-weight:700;font-size:13px}
 .rip{position:fixed;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;background:#050505;cursor:pointer}
-.rip-art{position:relative;width:min(100vw,calc(100vh*841/1870));aspect-ratio:841/1870;container-type:inline-size;animation:ripEntra 2.5s ease-out}.rip-art>img{width:100%;height:100%;display:block}
+.rip-art{position:relative;width:min(100vw,calc(100vh*841/1870));aspect-ratio:841/1870;container-type:inline-size;animation:ripEntra 4s ease-in both}.rip-foto,.rip-art>img.rip-laco{animation:ripEntra 3s 2s ease-in both}.rip-nome{animation:ripEntra 2.5s 3.5s ease-in both}.rip-toque{animation:ripEntra 1s 6s both,ripPisca 2s 7s ease-in-out infinite}.rip-art>img{width:100%;height:100%;display:block}
 .rip-foto{position:absolute;left:19.86%;top:15.08%;width:60.17%;height:33.26%;border-radius:4.5% / 3.7%;overflow:hidden;background:#222}.rip-foto>*{width:100%!important;height:100%!important;object-fit:cover;object-position:50% 20%;display:block;filter:grayscale(1) contrast(1.05)}
 .rip-art>img.rip-laco{position:absolute;left:61.83%;top:36.9%;width:23.78%;height:14.97%;pointer-events:none}
 .rip-nome{position:absolute;left:7.37%;top:63.74%;width:85.14%;height:4.71%;display:flex;align-items:center;justify-content:center;font-family:Georgia,"Times New Roman",serif;font-size:6cqw;color:#f2f2f2;letter-spacing:.04em;text-shadow:0 0 8px rgba(255,255,255,.35);white-space:nowrap;overflow:hidden}
 .rip-anos{position:absolute;left:0;right:0;top:68.9%;text-align:center;font-family:Georgia,serif;font-size:3.6cqw;color:#bbb}
-.rip-toque{position:absolute;left:0;right:0;bottom:1.5%;text-align:center;font-size:3.4cqw;color:#ddd;animation:ripPisca 2s ease-in-out infinite}
-@keyframes ripEntra{from{opacity:0;filter:brightness(.3)}to{opacity:1;filter:none}}@keyframes ripPisca{0%,100%{opacity:.25}50%{opacity:.9}}
+.rip-toque{position:absolute;left:0;right:0;bottom:1.5%;text-align:center;font-size:3.4cqw;color:#ddd}
+@keyframes ripEntra{from{opacity:0;filter:brightness(0)}to{opacity:1;filter:none}}@keyframes ripPisca{0%,100%{opacity:.25}50%{opacity:.9}}
 .re-trag-box{margin:12px 0;padding:14px;border-radius:14px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);text-align:center}.re-trag-box b{display:block;font-family:var(--f-display);font-size:20px;color:#fff;margin-bottom:6px}.re-trag-box p{margin:0;font-size:15px;line-height:1.45;color:var(--cal)}
 .re-trag-card .re-card,.re-fim-morte>.re-card{filter:grayscale(1) brightness(.85);margin:8px auto}.re-trag-card{display:flex;justify-content:center}.re-fim-morte .re-trag-box{border-color:rgba(255,255,255,.35)}.re-fim-lesao .re-trag-box{border-color:rgba(255,107,91,.5)}
 .re-of{align-items:center}.re-fim>.re-card{margin:8px auto}.re-status{text-align:center;margin:10px 0}.re-status small{display:block;color:var(--cal-2)}.re-status b{display:block;font-family:var(--f-display);font-size:26px;color:#ffd23f}.re-status span{color:#fff}
@@ -4937,7 +4937,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794952252";
+const VERSAO="1794956049";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -5790,7 +5790,7 @@ function somModo(m){
 }
 // trilha de fundo em mp3 (pasta musica/): na capa a música 3 em loop a 80%; nas telas do jogo as músicas se revezam a 60%, no pré-jogo as dele a 70%, com cruzamento (fade)
 const TRILHA_FADE=4;
-const LISTAS={musica:{faixas:[3,5,6,7,8,9,12].map(n=>`musica/musica${n}.mp3`),vol:.6},prejogo:{faixas:["musica/prejogo1.mp3","musica/prejogo2.mp3"],vol:.8},torcida:{faixas:["musica/prejogo1.mp3","musica/prejogo2.mp3"],vol:.3}};LISTAS.abertura={faixas:LISTAS.musica.faixas,vol:.8};LISTAS.quiz={faixas:["musica/quiz.mp3"],vol:.7};LISTAS.funebre={faixas:["musica/funebre.mp3"],vol:.8}; // 17/11: música do Quiz, em loop (lista de uma faixa só) // partida ao vivo: músicas do pré-jogo bem baixas
+const LISTAS={musica:{faixas:[3,5,6,7,8,9,12].map(n=>`musica/musica${n}.mp3`),vol:.6},prejogo:{faixas:["musica/prejogo1.mp3","musica/prejogo2.mp3"],vol:.8},torcida:{faixas:["musica/prejogo1.mp3","musica/prejogo2.mp3"],vol:.3}};LISTAS.abertura={faixas:LISTAS.musica.faixas,vol:.8};LISTAS.quiz={faixas:["musica/quiz.mp3"],vol:.7};LISTAS.funebre={faixas:["musica/funebre.mp3"],vol:.9};LISTAS.estrelato={faixas:["musica/estrelato.mp3"],vol:.7}; // 17/11: música do Quiz, em loop (lista de uma faixa só) // partida ao vivo: músicas do pré-jogo bem baixas
 function trilhaIniciar(){const c=SOM.ctx;SOM.trilha=c.createGain();SOM.trilha.connect(SOM.master);SOM.cur=-1;SOM.ult={};
   SOM.el=[0,1].map(k=>{const a=new Audio();a.preload="auto";const g=c.createGain();g.gain.value=0;try{c.createMediaElementSource(a).connect(g)}catch(e){}g.connect(SOM.trilha);
     const s={a,g,id:0,vol:0};a.addEventListener("ended",()=>{if(SOM.el[SOM.cur]===s&&SOM.modo===s.lista&&LISTAS[s.lista])trilhaProxima(s.lista,1)});
@@ -5987,7 +5987,7 @@ document.addEventListener("pointerdown",()=>{try{const app=matchMedia("(display-
 document.addEventListener("pointerdown",e=>{if(e.target.closest&&e.target.closest("button:disabled,.sim-bloq"))somErro()},{capture:true});
 function modoDesejado(){if(typeof AMG!=="undefined"&&(AMG.mudoRec||AMG.mudoPl))return"silencio"; // 04/11: gravando ou ouvindo áudio do chat
 if(abertura&&(CARGA.intro||CARGA.on||performance.now()<(CARGA.musAte||0)))return"silencio"; // 02/11: logo e carregamento sem música; capa só depois do som de transição
-  if(abertura)return"abertura";if(G&&G.live&&aba==="partida")return"torcida";if(G&&aba==="prejogo")return"prejogo";if(G&&aba==="partida")return"silencio";if(aba==="quiz")return"quiz";if(aba==="estrelato"&&typeof RE!=="undefined"&&RE.car&&RE.car.fase==="tragedia"&&RE.car.fim&&RE.car.fim.t==="morte")return"funebre";return"musica"}
+  if(abertura)return"abertura";if(G&&G.live&&aba==="partida")return"torcida";if(G&&aba==="prejogo")return"prejogo";if(G&&aba==="partida")return"silencio";if(aba==="quiz")return"quiz";if(aba==="estrelato"&&typeof RE!=="undefined"&&RE.car&&RE.car.fase==="tragedia"&&RE.car.fim&&RE.car.fim.t==="morte")return"funebre";if(aba==="estrelato")return"estrelato";return"musica"}
 /* ---------- navegação ---------- */
 const ICONES={
   config:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
@@ -8433,7 +8433,8 @@ function guardarW(){const n=$("#w-nome"),t=$("#w-tec"),s=$("#w-sigla"),es=$("#w-
    Save próprio em localStorage CHAVE_RE (não mexe no G). Tela = aba "estrelato" (telaEstrelato), ações "re_*" em reAcao. ===== */
 const CHAVE_RE="fut-estrelato";
 let RE=null;
-function reLer(){if(RE)return RE;try{RE=JSON.parse(localStorage.getItem(CHAVE_RE))||{}}catch(e){RE={}}RE.hist=RE.hist||[];if(RE.car&&RE.car.foto&&!RE.car.fotoSF){RE.car.fotoSF=1;reTirarFundo(RE.car.foto).then(u=>{RE.car.foto=u;reSalvar();if(aba==="estrelato")render()})}if(RE.car){RE.car.m=RE.car.m||{};RE.car.fila=RE.car.fila||[];RE.car.marc=RE.car.marc||[]}return RE}
+function reLer(){if(RE)return RE;try{RE=JSON.parse(localStorage.getItem(CHAVE_RE))||{}}catch(e){RE={}}RE.hist=RE.hist||[];if(RE.car){delete RE.car;reSalvar()} // 17/11: fechou o jogo = carreira do Estrelato recomeça do zero (fica só o histórico)
+  if(RE.car&&RE.car.foto&&!RE.car.fotoSF){RE.car.fotoSF=1;reTirarFundo(RE.car.foto).then(u=>{RE.car.foto=u;reSalvar();if(aba==="estrelato")render()})}if(RE.car){RE.car.m=RE.car.m||{};RE.car.fila=RE.car.fila||[];RE.car.marc=RE.car.marc||[]}return RE}
 function reSalvar(){try{localStorage.setItem(CHAVE_RE,JSON.stringify(RE))}catch(e){}}
 const RE_POS={GOL:"Goleiro",ZAG:"Zagueiro",LAT:"Lateral",VOL:"Volante",MEI:"Meia",ATA:"Atacante"};
 const RE_PESO={GOL:{ref:.35,pdp:.15,def:.25,pas:.1,fis:.15},ZAG:{def:.4,cab:.2,fis:.15,vel:.1,pas:.15},LAT:{vel:.25,def:.25,pas:.2,fis:.15,dri:.15},VOL:{def:.3,pas:.3,fis:.2,atq:.1,cab:.1},MEI:{pas:.3,dri:.2,atq:.25,fin:.15,vel:.1},ATA:{fin:.35,atq:.2,dri:.15,vel:.15,cab:.15}};
@@ -9312,7 +9313,7 @@ function reAcao(a,v){reLer();const c=RE.car;
   switch(a){
     case "re_breve":toast("Rumo ao Estrelato: em breve!");return;
     case "re_abrir":if(!reLiberado()){toast("Rumo ao Estrelato: em breve!");return}aba="estrelato";RE_VER=null;break;
-    case "re_sair":reLerCampos();aba="jogar";RE_VER=null;break;
+    case "re_sair":aba="jogar";RE_VER=null;if(RE.car){delete RE.car;reSalvar()}REW=null;break; // 17/11: saiu do modo = recomeça do zero
     case "re_rosto":reLerCampos();REW.rf=((REW.rf||0)+(+v)+(ROSTOS.n||50))%(ROSTOS.n||50);break;
     case "re_pos":reLerCampos();REW.pos=v;break;
     case "re_est":reLerCampos();REW.est=v;break;
