@@ -4929,7 +4929,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794918283";
+const VERSAO="1794919748";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -10080,10 +10080,33 @@ function quizAplicar(pr){const P=perfil();
       if(L.length){const i=pick(L),l=TEC_LENDAS[i],multa=G.tec&&!G.tec.interino?Math.round(G.tec.sal*6):0;G.cupons=cupons()+l[2];G.cash+=multa;const er=contratarTecLenda(i,"c");if(er){G.cupons-=l[2];G.cash-=multa}else{ok=true;pr.nome=l[0];pr.tec=1}}}
     if(!ok){pr.t="cup";pr.n=ri(20,30);G.cupons=cupons()+pr.n}}
   salvar()}
+/* 17/11: abertura da caixa do quiz — carga futurista subindo (dur s) e explosão + fanfarra moderna */
+function somCaixaCarga(dur){if(!SOM.ctx||SOM.mudo)return;const c=SOM.ctx,t=c.currentTime,o=SOM.fx,e=t+dur;
+  const g=c.createGain();g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.22,e-.05);g.gain.linearRampToValueAtTime(0,e+.02);g.connect(o);
+  const f=c.createBiquadFilter();f.type="lowpass";f.Q.value=9;f.frequency.setValueAtTime(300,t);f.frequency.exponentialRampToValueAtTime(7000,e);f.connect(g);
+  [0,7,-5].forEach(d=>{const s=c.createOscillator();s.type="sawtooth";s.detune.value=d;s.frequency.setValueAtTime(70,t);s.frequency.exponentialRampToValueAtTime(880,e);s.connect(f);s.start(t);s.stop(e+.05)});
+  // tremolo acelerando (pulso "vai explodir")
+  const lfo=c.createOscillator(),lg=c.createGain();lfo.frequency.setValueAtTime(4,t);lfo.frequency.exponentialRampToValueAtTime(28,e);lg.gain.value=.5;lfo.connect(lg);lg.connect(g.gain);lfo.start(t);lfo.stop(e+.05);
+  // vento subindo
+  const n=c.createBufferSource();n.buffer=SOM.ruido;const nf=c.createBiquadFilter();nf.type="bandpass";nf.Q.value=3;nf.frequency.setValueAtTime(400,t);nf.frequency.exponentialRampToValueAtTime(9000,e);
+  const ng=c.createGain();ng.gain.setValueAtTime(.0001,t);ng.gain.exponentialRampToValueAtTime(.35,e);ng.gain.linearRampToValueAtTime(0,e+.02);n.connect(nf);nf.connect(ng);ng.connect(o);n.start(t);n.stop(e+.05);
+  // bipes eletrônicos cada vez mais rápidos
+  let k=t,i=0;while(k<e-.05){nota(k,mtof(84+(i%2)*7),.05,"square",.06,o,5000);k+=Math.max(.045,.32*Math.pow(.86,i));i++}}
+function somCaixaBoom(){vibrar("premio");if(!SOM.ctx||SOM.mudo)return;const c=SOM.ctx,t=c.currentTime,o=SOM.fx;
+  // explosão: grave caindo + estouro de ruído
+  const b=c.createOscillator(),bg=c.createGain();b.type="sine";b.frequency.setValueAtTime(140,t);b.frequency.exponentialRampToValueAtTime(32,t+.7);bg.gain.setValueAtTime(.7,t);bg.gain.exponentialRampToValueAtTime(.001,t+.9);b.connect(bg);bg.connect(o);b.start(t);b.stop(t+.95);
+  ruidoCurto(t,.9,.55,200,o);ruidoCurto(t,.35,.35,3000,o);
+  // fanfarra moderna: acorde de synth com brilho + arpejo subindo + faíscas
+  const A=[60,64,67,71,74];A.forEach((m,i)=>{nota(t+.12,mtof(m),1.6,"sawtooth",.07,o,3800);nota(t+.12,mtof(m+12),1.6,"sawtooth",.04,o,5200)});
+  [72,76,79,83,84,88,91,96].forEach((m,i)=>nota(t+.15+i*.065,mtof(m),.22,"square",.09,o,6000));
+  [79,84,88].forEach((m,i)=>nota(t+.75+i*.12,mtof(m),.5,"triangle",.14,o));
+  for(let i=0;i<10;i++)nota(t+.4+Math.random()*1.1,mtof(96+Math.floor(Math.random()*12)),.12,"sine",.07,o);
+  ruidoCurto(t+.15,1.2,.18,8000,o);
+  if(typeof gritoTorcida==="function")gritoTorcida(.1,2,.25)}
 function quizAbrir(){const q=quizEstado();if(!q.caixa||q.aberta||QZ.abrindo)return;QZ.abrindo=1;
-  const cx=$(".qz-caixa"),T=2300;if(cx)cx.classList.add("abrindo");vibrar(Array(23).fill(0).flatMap((_,i)=>[60+i*4,40-i]));// 17/11: treme cada vez mais, cresce e solta luz → explode
-  setTimeout(()=>{if(cx){cx.classList.remove("abrindo");cx.classList.add("boom")}vibrar([400]);const f=document.createElement("div");f.className="qz-flash";document.body.appendChild(f);setTimeout(()=>f.remove(),900)},T);
-  setTimeout(()=>{quizAplicar(q.premio);q.aberta=1;if(q.pend){delete q.pend;QZ.mostrar=1}QZ.abrindo=0;salvar();if(aba==="quiz")render();try{somConquista()}catch(e){}try{confete()}catch(e){}},T+380)}
+  const cx=$(".qz-caixa"),T=2300;if(cx)cx.classList.add("abrindo");try{somCaixaCarga(T/1000)}catch(e){}vibrar(Array(23).fill(0).flatMap((_,i)=>[60+i*4,40-i]));// 17/11: treme cada vez mais, cresce e solta luz → explode
+  setTimeout(()=>{if(cx){cx.classList.remove("abrindo");cx.classList.add("boom")}try{somCaixaBoom()}catch(e){}vibrar([400]);const f=document.createElement("div");f.className="qz-flash";document.body.appendChild(f);setTimeout(()=>f.remove(),900)},T);
+  setTimeout(()=>{quizAplicar(q.premio);q.aberta=1;if(q.pend){delete q.pend;QZ.mostrar=1}QZ.abrindo=0;salvar();if(aba==="quiz")render();try{confete()}catch(e){}},T+380)}
 function quizPremioHTML(pr){if(!pr)return "";
   const nm={din:`<div class="qz-pr-ic">${ICO_GRANA(3)}</div><b class="num">${dinheiro(pr.n)}</b><span>em dinheiro para o clube</span>`,
     cup:`<div class="qz-pr-ic">${ICO_CUPOM}</div><b class="num">${pr.n} cupons dourados</b><span>para gastar na loja</span>`,
