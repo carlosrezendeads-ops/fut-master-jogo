@@ -4937,7 +4937,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794958421";
+const VERSAO="1794958945";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -10094,7 +10094,7 @@ const QZ_T=10,QZ_NIV=["","Fácil","Média","Difícil","Muito difícil"],QZ_CX=["
 function quizEstado(){const P=perfil();P.quiz=P.quiz||{};const q=P.quiz;
   if(q.fase==="jogando"&&!QZ.on){q.fase="fim";q.saiu=1;q.ac=0;q.caixa=null}
   if(q.dia!==quizDia()){const pend=q.caixa&&!q.aberta?{caixa:q.caixa,premio:q.premio,ac:q.ac}:null;
-    P.quiz={dia:quizDia(),fase:"novo",i:0,ac:0,...(pend?{caixa:pend.caixa,premio:pend.premio,acAnt:pend.ac,pend:1}:{})};return P.quiz}
+    P.quiz={dia:quizDia(),fase:"novo",i:0,ac:0};return P.quiz} // 17/11: caixa não aberta até a meia-noite se perde
   return q}
 function quizSortear(){const P=perfil(),vis=P.quizVis||[],out=[];
   [1,2,3].forEach(k=>{const n=k,T=QUIZ.map((x,i)=>i).filter(i=>QUIZ[i][0]===n&&!out.includes(i)),nv=T.filter(i=>!vis.includes(i));out.push(pick(nv.length?nv:T))}); // tudo misturado (Brasil, Copa, Champions, outros, regras)
@@ -10167,7 +10167,8 @@ function quizPremioHTML(pr){if(!pr)return "";
 function caixaHTML(tipo,grande){return `<div class="qz-caixa ${tipo}${grande?" grande":""}"${grande?' data-a="qz_abrir" role="button" aria-label="Abrir a caixa"':""}><i class="cx-luz"></i><img class="cx-img" src="img/cx-${tipo}.png" alt="">${grande?'<i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i>'+CX_RAIOS.map(([x,y,r,d])=>`<i class="cx-r" style="left:${x}%;top:${y}%;--r:${r}deg;--d:${d}s"></i>`).join("")+'<i class="cx-nuc"></i>':""}</div>`}
 const CX_RAIOS=[[50,22,0,.1],[22,40,-60,.5],[78,42,60,.3],[30,70,-130,.8],[70,72,130,.6],[50,52,-20,1],[15,62,-95,1.2],[86,60,95,1.1],[42,30,-25,1.4],[62,36,30,1.5]]; // 17/11: raios de luz saindo da caixa ao abrir (x%,y%,ângulo,atraso)
 function telaQuiz(){if(!reLiberado()){aba="jogar";return telaInicio()}const q=quizEstado(),jog=q.fase==="jogando";
-  let h=`<div class="qz"><div class="qz-topo">${jog?"<span></span>":`<button class="re-tb" data-a="aba" data-v="jogar">‹ Jogar</button>`}<b class="qz-tit">🧠 Quiz do Dia</b><span></span></div>`;
+  const cxPend=q.caixa&&!q.aberta; // 17/11: com caixa para abrir não tem como sair da tela
+  let h=`<div class="qz"><div class="qz-topo">${jog||cxPend?"<span></span>":`<button class="re-tb" data-a="aba" data-v="jogar">‹ Jogar</button>`}<b class="qz-tit">🧠 Quiz do Dia</b><span></span></div>`;
   if(q.caixa&&!q.aberta){const n=q.pend?q.acAnt:q.ac;
     h+=`<div class="qz-meio"><p class="qz-tag">${n===3?"🔥 Gabaritou!":n===2?"Muito bem!":"Boa!"} ${n} acerto${n>1?"s":""}</p><h2 class="qz-h">Caixa de ${q.caixa==="ouro"?"OURO":q.caixa==="prata"?"PRATA":"BRONZE"}</h2>${caixaHTML(q.caixa,1)}<p class="qz-dica">Toque na caixa para abrir</p></div>`}
   else if(QZ.mostrar&&q.premio&&q.fase==="novo"){h+=`<div class="qz-meio"><p class="qz-tag">Seu prêmio</p>${quizPremioHTML(q.premio)}<button class="qz-comecar" data-a="qz_ok" style="margin-top:16px">Ir para o quiz de hoje</button></div>`}
