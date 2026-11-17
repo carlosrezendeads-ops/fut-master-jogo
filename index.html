@@ -4929,7 +4929,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794909326";
+const VERSAO="1794918283";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -5782,7 +5782,7 @@ function somModo(m){
 }
 // trilha de fundo em mp3 (pasta musica/): na capa a música 3 em loop a 80%; nas telas do jogo as músicas se revezam a 60%, no pré-jogo as dele a 70%, com cruzamento (fade)
 const TRILHA_FADE=4;
-const LISTAS={musica:{faixas:[3,5,6,7,8,9,12].map(n=>`musica/musica${n}.mp3`),vol:.6},prejogo:{faixas:["musica/prejogo1.mp3","musica/prejogo2.mp3"],vol:.8},torcida:{faixas:["musica/prejogo1.mp3","musica/prejogo2.mp3"],vol:.3}};LISTAS.abertura={faixas:LISTAS.musica.faixas,vol:.8}; // partida ao vivo: músicas do pré-jogo bem baixas
+const LISTAS={musica:{faixas:[3,5,6,7,8,9,12].map(n=>`musica/musica${n}.mp3`),vol:.6},prejogo:{faixas:["musica/prejogo1.mp3","musica/prejogo2.mp3"],vol:.8},torcida:{faixas:["musica/prejogo1.mp3","musica/prejogo2.mp3"],vol:.3}};LISTAS.abertura={faixas:LISTAS.musica.faixas,vol:.8};LISTAS.quiz={faixas:["musica/quiz.mp3"],vol:.7}; // 17/11: música do Quiz, em loop (lista de uma faixa só) // partida ao vivo: músicas do pré-jogo bem baixas
 function trilhaIniciar(){const c=SOM.ctx;SOM.trilha=c.createGain();SOM.trilha.connect(SOM.master);SOM.cur=-1;SOM.ult={};
   SOM.el=[0,1].map(k=>{const a=new Audio();a.preload="auto";const g=c.createGain();g.gain.value=0;try{c.createMediaElementSource(a).connect(g)}catch(e){}g.connect(SOM.trilha);
     const s={a,g,id:0,vol:0};a.addEventListener("ended",()=>{if(SOM.el[SOM.cur]===s&&SOM.modo===s.lista&&LISTAS[s.lista])trilhaProxima(s.lista,1)});
@@ -5979,7 +5979,7 @@ document.addEventListener("pointerdown",()=>{try{const app=matchMedia("(display-
 document.addEventListener("pointerdown",e=>{if(e.target.closest&&e.target.closest("button:disabled,.sim-bloq"))somErro()},{capture:true});
 function modoDesejado(){if(typeof AMG!=="undefined"&&(AMG.mudoRec||AMG.mudoPl))return"silencio"; // 04/11: gravando ou ouvindo áudio do chat
 if(abertura&&(CARGA.intro||CARGA.on||performance.now()<(CARGA.musAte||0)))return"silencio"; // 02/11: logo e carregamento sem música; capa só depois do som de transição
-  if(abertura)return"abertura";if(G&&G.live&&aba==="partida")return"torcida";if(G&&aba==="prejogo")return"prejogo";if(G&&aba==="partida")return"silencio";return"musica"}
+  if(abertura)return"abertura";if(G&&G.live&&aba==="partida")return"torcida";if(G&&aba==="prejogo")return"prejogo";if(G&&aba==="partida")return"silencio";if(aba==="quiz")return"quiz";return"musica"}
 /* ---------- navegação ---------- */
 const ICONES={
   config:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
