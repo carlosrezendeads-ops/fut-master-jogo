@@ -1152,11 +1152,27 @@ nav.abas button{font-size:11px}
 @keyframes qzCxSai{to{transform:scale(1.5);opacity:0;filter:brightness(2.5)}}
 .qz-caixa .cx-img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:contain;z-index:2;filter:drop-shadow(0 6px 10px rgba(0,0,0,.5))}
 .qz-caixa.boom .cx-p{animation:qzPart .7s .42s ease-out forwards}
-.qz-caixa.boom .cx-p:nth-of-type(5){--x:-140px;--y:-120px}.qz-caixa.boom .cx-p:nth-of-type(6){--x:140px;--y:-120px}.qz-caixa.boom .cx-p:nth-of-type(7){--x:-170px;--y:30px}.qz-caixa.boom .cx-p:nth-of-type(8){--x:170px;--y:30px}.qz-caixa.boom .cx-p:nth-of-type(9){--x:-60px;--y:-180px}.qz-caixa.boom .cx-p:nth-of-type(10){--x:60px;--y:-180px}
+.qz-caixa.boom .cx-p:nth-of-type(2){--x:-224px;--y:-192px}.qz-caixa.boom .cx-p:nth-of-type(3){--x:224px;--y:-192px}.qz-caixa.boom .cx-p:nth-of-type(4){--x:-272px;--y:48px}.qz-caixa.boom .cx-p:nth-of-type(5){--x:272px;--y:48px}.qz-caixa.boom .cx-p:nth-of-type(6){--x:-96px;--y:-288px}.qz-caixa.boom .cx-p:nth-of-type(7){--x:96px;--y:-288px}
 @keyframes qzTremeBox{0%,100%{transform:scale(1.1)}20%{transform:scale(1.15) rotate(-6deg)}40%{transform:scale(1.2) rotate(6deg)}60%{transform:scale(1.25) rotate(-8deg)}80%{transform:scale(1.3) rotate(8deg)}}
 @keyframes qzTampa{to{transform:translateY(-260px) rotate(-40deg);opacity:0}}
 @keyframes qzSome{to{transform:scale(1.8);opacity:0}}
 @keyframes qzPart{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(.4) rotate(200deg)}}
+.qz-caixa.grande{width:min(78vw,300px);height:min(72vw,280px);margin:20px auto 14px;animation:qzVivo 2.6s ease-in-out infinite}
+@keyframes qzVivo{0%,52%,100%{transform:scale(1) rotate(0)}55%{transform:scale(1.04) translateY(-6px) rotate(-5deg)}58%{transform:scale(1.04) translateY(-4px) rotate(5deg)}61%{transform:scale(1.03) rotate(-4deg)}64%{transform:scale(1.02) rotate(3deg)}67%{transform:scale(1) rotate(0)}78%{transform:translateX(0)}80%{transform:translateX(-4px) rotate(-2deg)}82%{transform:translateX(4px) rotate(2deg)}84%{transform:translateX(0)}}
+.qz-caixa .cx-r{position:absolute;width:14px;height:150%;margin-left:-7px;transform-origin:50% 0;transform:rotate(calc(var(--r) + 180deg)) scaleY(0);opacity:0;z-index:3;pointer-events:none;mix-blend-mode:screen;border-radius:50%;background:linear-gradient(180deg,#fff,var(--c1) 30%,transparent);filter:blur(1.5px)}
+.qz-caixa .cx-nuc{position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-10px;border-radius:50%;background:radial-gradient(circle,#fff,var(--c1) 40%,transparent 70%);opacity:0;z-index:3;pointer-events:none;mix-blend-mode:screen}
+.qz-caixa.grande.abrindo{animation:qzTreme .09s linear infinite,qzCresce 2.3s ease-in forwards}
+.qz-caixa.grande.abrindo .cx-img{animation:qzEsquenta 2.3s ease-in forwards}
+.qz-caixa.grande.abrindo .cx-r{animation:qzRaio 2.3s ease-in forwards;animation-delay:var(--d)}
+.qz-caixa.grande.abrindo .cx-nuc{animation:qzNuc 2.3s ease-in forwards}
+.qz-caixa.grande.abrindo .cx-luz{animation:qzGira .8s linear infinite;opacity:1}
+@keyframes qzTreme{0%{translate:0 0;rotate:0deg}25%{translate:-5px 2px;rotate:-3deg}50%{translate:4px -3px;rotate:3deg}75%{translate:-3px -2px;rotate:-2deg}100%{translate:0 0;rotate:0deg}}
+@keyframes qzCresce{from{transform:scale(1)}to{transform:scale(1.45)}}
+@keyframes qzEsquenta{to{filter:brightness(1.9) drop-shadow(0 0 30px var(--brilho))}}
+@keyframes qzRaio{0%{opacity:0;transform:rotate(calc(var(--r) + 180deg)) scaleY(0)}30%{opacity:.9}100%{opacity:1;width:26px;transform:rotate(calc(var(--r) + 180deg)) scaleY(1.2)}}
+@keyframes qzNuc{0%{opacity:0;transform:scale(1)}100%{opacity:1;transform:scale(14)}}
+.qz-caixa.grande.boom{animation:none;transform:scale(1.45)}
+.qz-caixa.grande.boom .cx-img{animation:qzCxSai .35s ease-in forwards}.qz-caixa.grande.boom .cx-p{animation:qzPart .7s ease-out forwards}.qz-caixa.grande.boom .cx-r,.qz-caixa.grande.boom .cx-nuc{opacity:0}
 .qz-teste{display:block;margin:28px auto 0;border:1px dashed rgba(255,255,255,.3);background:none;color:var(--cal-2);border-radius:10px;padding:8px 14px;font-size:13px;cursor:pointer}
 .qz-flash{position:fixed;inset:0;z-index:90;background:#fff;pointer-events:none;animation:qzFlash .9s ease-out forwards}
 @keyframes qzFlash{0%{opacity:0}25%{opacity:1}100%{opacity:0}}
@@ -4912,7 +4928,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794909116";
+const VERSAO="1794909249";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -10064,9 +10080,9 @@ function quizAplicar(pr){const P=perfil();
     if(!ok){pr.t="cup";pr.n=ri(20,30);G.cupons=cupons()+pr.n}}
   salvar()}
 function quizAbrir(){const q=quizEstado();if(!q.caixa||q.aberta||QZ.abrindo)return;QZ.abrindo=1;
-  const cx=$(".qz-caixa");if(cx)cx.classList.add("boom");try{vibrar("premio")}catch(e){}
-  setTimeout(()=>{const f=document.createElement("div");f.className="qz-flash";document.body.appendChild(f);setTimeout(()=>f.remove(),900)},480);
-  setTimeout(()=>{quizAplicar(q.premio);q.aberta=1;if(q.pend){delete q.pend;QZ.mostrar=1}QZ.abrindo=0;salvar();if(aba==="quiz")render();try{somConquista()}catch(e){}try{confete()}catch(e){}},700)}
+  const cx=$(".qz-caixa"),T=2300;if(cx)cx.classList.add("abrindo");vibrar(Array(23).fill(0).flatMap((_,i)=>[60+i*4,40-i]));// 17/11: treme cada vez mais, cresce e solta luz → explode
+  setTimeout(()=>{if(cx){cx.classList.remove("abrindo");cx.classList.add("boom")}vibrar([400]);const f=document.createElement("div");f.className="qz-flash";document.body.appendChild(f);setTimeout(()=>f.remove(),900)},T);
+  setTimeout(()=>{quizAplicar(q.premio);q.aberta=1;if(q.pend){delete q.pend;QZ.mostrar=1}QZ.abrindo=0;salvar();if(aba==="quiz")render();try{somConquista()}catch(e){}try{confete()}catch(e){}},T+380)}
 function quizPremioHTML(pr){if(!pr)return "";
   const nm={din:`<div class="qz-pr-ic">${ICO_GRANA(3)}</div><b class="num">${dinheiro(pr.n)}</b><span>em dinheiro para o clube</span>`,
     cup:`<div class="qz-pr-ic">${ICO_CUPOM}</div><b class="num">${pr.n} cupons dourados</b><span>para gastar na loja</span>`,
@@ -10074,7 +10090,8 @@ function quizPremioHTML(pr){if(!pr)return "";
     pts:`<div class="qz-pr-ic qz-coroa">⚽</div><b class="num">${pr.n} atributos</b><span>${(pr.ks||[]).map(k=>{const a=ATRS.find(x=>x[0]===k);return a?a[2]+" "+a[1]:k}).join(" · ")}<br>Use nos seus jogadores em Clube › Pontos de treino</span>`,
     lenda:pr.jog?`<div class="qz-pr-ic">${fotoLendaG(pr.nome,96)}</div><b>★ ${esc(pr.nome)}</b><span>Lenda contratada de graça! Já está no seu elenco.</span>`:pr.tec?`<div class="qz-pr-ic">${tecRosto(pr.nome,96)}</div><b>★ ${esc(pr.nome)}</b><span>Técnico lenda contratado de graça!</span>`:`<div class="qz-pr-ic">★</div><b>Lenda</b>`}[pr.t]||"";
   return `<div class="qz-premio ${pr.t}">${nm}</div>`}
-function caixaHTML(tipo,grande){return `<div class="qz-caixa ${tipo}${grande?" grande":""}"${grande?' data-a="qz_abrir" role="button" aria-label="Abrir a caixa"':""}><i class="cx-luz"></i><img class="cx-img" src="img/cx-${tipo}.png" alt="">${grande?'<i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i>':""}</div>`}
+function caixaHTML(tipo,grande){return `<div class="qz-caixa ${tipo}${grande?" grande":""}"${grande?' data-a="qz_abrir" role="button" aria-label="Abrir a caixa"':""}><i class="cx-luz"></i><img class="cx-img" src="img/cx-${tipo}.png" alt="">${grande?'<i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i>'+CX_RAIOS.map(([x,y,r,d])=>`<i class="cx-r" style="left:${x}%;top:${y}%;--r:${r}deg;--d:${d}s"></i>`).join("")+'<i class="cx-nuc"></i>':""}</div>`}
+const CX_RAIOS=[[50,22,0,.1],[22,40,-60,.5],[78,42,60,.3],[30,70,-130,.8],[70,72,130,.6],[50,52,-20,1],[15,62,-95,1.2],[86,60,95,1.1],[42,30,-25,1.4],[62,36,30,1.5]]; // 17/11: raios de luz saindo da caixa ao abrir (x%,y%,ângulo,atraso)
 function telaQuiz(){if(!reLiberado()){aba="jogar";return telaInicio()}const q=quizEstado(),jog=q.fase==="jogando";
   let h=`<div class="qz"><div class="qz-topo">${jog?"<span></span>":`<button class="re-tb" data-a="aba" data-v="jogar">‹ Jogar</button>`}<b class="qz-tit">🧠 Quiz do Dia</b><span></span></div>`;
   if(q.caixa&&!q.aberta){const n=q.pend?q.acAnt:q.ac;
