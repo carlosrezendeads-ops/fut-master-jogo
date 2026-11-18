@@ -594,6 +594,9 @@ nav.abas[hidden]{display:none}
 .rip-anos{position:absolute;left:0;right:0;top:68.9%;text-align:center;font-family:Georgia,serif;font-size:3.6cqw;color:#bbb}
 .rip-toque{position:absolute;left:0;right:0;bottom:1.5%;text-align:center;font-size:3.4cqw;color:#ddd}
 @keyframes ripEntra{from{opacity:0;filter:brightness(0)}to{opacity:1;filter:none}}@keyframes ripPisca{0%,100%{opacity:.25}50%{opacity:.9}}
+.re-nota{text-align:center}.re-nota-num{font-family:var(--f-display);font-size:96px;line-height:1;margin:18px 0 6px;color:var(--cor);text-shadow:0 0 30px var(--cor);animation:reNotaPop .9s cubic-bezier(.2,1.6,.4,1)}
+.re-nota-tit{display:block;font-size:22px;margin-bottom:14px}.re-nota-pr{display:flex;flex-direction:column;gap:8px;align-items:center;margin:10px 0 14px}.re-nota-pr>div{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:10px 18px;font-size:20px}.re-nota-pr span{display:flex;width:30px;height:30px;align-items:center;justify-content:center}.re-nota-pr span svg,.re-nota-pr span img{width:30px;height:30px}
+@keyframes reNotaPop{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
 .re-trag-box{margin:12px 0;padding:14px;border-radius:14px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);text-align:center}.re-trag-box b{display:block;font-family:var(--f-display);font-size:20px;color:#fff;margin-bottom:6px}.re-trag-box p{margin:0;font-size:15px;line-height:1.45;color:var(--cal)}
 .re-trag-card .re-card,.re-fim-morte>.re-card{filter:grayscale(1) brightness(.85);margin:8px auto}.re-trag-card{display:flex;justify-content:center}.re-fim-morte .re-trag-box{border-color:rgba(255,255,255,.35)}.re-fim-lesao .re-trag-box{border-color:rgba(255,107,91,.5)}
 .re-of{align-items:center}.re-fim>.re-card{margin:8px auto}.re-status{text-align:center;margin:10px 0}.re-status small{display:block;color:var(--cal-2)}.re-status b{display:block;font-family:var(--f-display);font-size:26px;color:#ffd23f}.re-status span{color:#fff}
@@ -4937,7 +4940,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794959998";
+const VERSAO="1794960343";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -9242,8 +9245,18 @@ function reFrase(c){const longo=c.clubes.filter(h=>!h.base).sort((a,b)=>(b.ate-b
   if(c.pot>=86&&c.pico<74)return "Promessa que não vingou";if(c.premios.some(p=>p.startsWith("Bola de Ouro")))return "Melhor do mundo";
   if(longo&&longo.ate-longo.de>=7&&c.torc>=65)return `Ídolo eterno do ${longo.name}`;if(c.selec.j>=50)return "Lenda da Seleção";
   if(c.clubes.filter(h=>!h.base).length>=6)return "Rodou o mundo";if(c.tot.g>=250)return "Goleador histórico";return c.pico>=80?"Carreira de respeito":"Operário da bola"}
-function reAposentar(c){c.fase="fim";c.titulo=reTituloFinal(c);c.frase=c.fim?(c.fim.t==="morte"?"Partiu cedo demais":"Carreira interrompida pelas lesões"):reFrase(c);if(!c.fim)reLog(c,`${c.nome} pendura as chuteiras aos ${c.idade} anos`);
-  RE.hist=[{...c},...RE.hist].slice(0,10);reSalvar()}
+/* 17/11: nota da carreira (0 a 10 = reNota/3) e prêmio em XP (+ dinheiro só no 10) */
+const reNota10=c=>Math.round(reNota(c)/3*10)/10;
+const RE_PREMIO_NOTA=[[10,1000,300000],[9,500,0],[8,300,0],[7,150,0],[6,50,0]];
+function rePremioNota(n){const r=RE_PREMIO_NOTA.find(([m])=>n>=m);return r?{xp:r[1],din:r[2]}:{xp:0,din:0}}
+function reTelaNota(c){const n=c.nota10,p=c.prNota||{xp:0,din:0},cor=n>=9?"#ffd23f":n>=7?"#5ee07a":n>=6?"#8fc3ff":"#ff8a7a";
+  return `<div class="re-res re-nota"><p class="re-tag">Fim da carreira · ${esc(c.nome)}</p><div class="re-nota-num num" style="--cor:${cor}">${n.toFixed(1).replace(".",",")}</div><b class="re-nota-tit">${esc(c.titulo)}</b>
+    <div class="re-nota-pr">${p.xp?`<div><span>${ICO_XP}</span><b class="num">+${p.xp} XP</b></div>`:""}${p.din?`<div><span>${ICO_GRANA(2)}</span><b class="num">+${dinheiro(p.din)}</b></div>`:""}${!p.xp&&!p.din?`<p class="muted">Nota abaixo de 6 não dá prêmio. Na próxima carreira, você chega lá!</p>`:""}</div>
+    <p class="muted peq">6 a 7: 50 XP · 7 a 8: 150 XP · 8 a 9: 300 XP · 9 a 10: 500 XP · 10: 1000 XP + ${dinheiro(300000)}</p>
+    <button class="btn prim full" data-a="re_notaok">Ver a ficha da carreira</button></div>`}
+function reAposentar(c){c.fase="nota";c.titulo=reTituloFinal(c);c.frase=c.fim?(c.fim.t==="morte"?"Partiu cedo demais":"Carreira interrompida pelas lesões"):reFrase(c);if(!c.fim)reLog(c,`${c.nome} pendura as chuteiras aos ${c.idade} anos`);
+  c.nota10=reNota10(c);if(!c.pagoNota){c.pagoNota=1;c.prNota=rePremioNota(c.nota10);try{if(G&&c.prNota.din)G.cash+=c.prNota.din;if(c.prNota.xp)somarXP(c.prNota.xp);if(G)salvar()}catch(e){}}
+  RE.hist=[{...c,fase:"fim"},...RE.hist].slice(0,10);reSalvar()}
 function reTelaFim(c,hist){const tits=c.tits.filter(t=>!t.startsWith("Sub-20"));
   const F=c.fim;return `<div class="re-fim${F?" re-fim-"+F.t:""}"><p class="re-tag">${F?(F.t==="morte"?`🕊️ Descanse em paz · ${F.idade} anos`:`🏥 Carreira interrompida · ${F.idade} anos`):`Fim de carreira · ${c.idade} anos · melhor fase`}</p>${reCard(c,true,c.pico)}${F?`<div class="re-trag-box"><b>${esc(F.tit)}</b><p>${esc(F.txt)}</p></div>`:""}
     <div class="re-status"><small>Status final</small><b>${esc(c.titulo)}</b><span>${esc(c.frase)}</span></div>
@@ -9278,10 +9291,11 @@ function reTelaTemp(c){const d=c.pend&&c.pend[c.resp.length],D=d&&reDil(d),cl=c.
 /* ---------- telas ---------- */
 let RE_VER=null; // ficha de carreira antiga aberta
 function telaEstrelato(){reLer();const c=RE.car;
-  const topo=`<div class="re-topo"><button class="re-tb" data-a="re_sair">‹ Jogar</button><b class="re-tit"><i>★</i> Rumo ao Estrelato</b>${c&&c.fase!=="fim"?`<button class="re-tb dir" data-a="re_desistir">⟳ Recomeçar</button>`:"<span></span>"}</div>`;
+  const topo=`<div class="re-topo"><button class="re-tb" data-a="re_sair">‹ Jogar</button><b class="re-tit"><i>★</i> Rumo ao Estrelato</b>${c&&c.fase!=="fim"&&c.fase!=="nota"?`<button class="re-tb dir" data-a="re_desistir">⟳ Recomeçar</button>`:"<span></span>"}</div>`;
   let h="";
   if(RE_VER!=null&&RE.hist[RE_VER])h=reTelaFim(RE.hist[RE_VER],1);
   else if(!c)h=reTelaCriar();
+  else if(c.fase==="nota")h=reTelaNota(c);
   else if(c.fase==="fim")h=reTelaFim(c);
   else if(c.fase==="peneira"){const g0=reClubes(c.pais,0),op=[g0.slice(0,5),reClubes(c.pais,1),reClubes(c.pais,2)].map(pick).map(reClube);if(c.penOps&&c.penOps.length!==3)c.penOps=null;c.penOps=c.penOps||op;
     h=`${reCard(c)}<div class="re-dec"><p class="re-tag">Peneira · 16 anos</p><b>Três clubes abriram peneira. Onde você vai tentar a sorte?</b>
@@ -9347,6 +9361,7 @@ function reAcao(a,v){reLer();const c=RE.car;
     case "re_aceitar":reAceitar(c,+v);break;
     case "re_rip":if(c&&c.fim){c.fim.rip=1;reSalvar()}break;
     case "re_aposentar":reAposentar(c);break;
+    case "re_notaok":if(c)c.fase="fim";reSalvar();break;
   }
   reSalvar();render();window.scrollTo(0,0)}
 /* 10/11: Rumo ao Estrelato liberado só para o Carlos (conta 7HMHTR ou aparelho com ?dev=carlos) até ficar pronto */
