@@ -4937,7 +4937,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794958945";
+const VERSAO="1794959998";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -9120,7 +9120,7 @@ const RE_LESAO_FIM=["Depois de tantas lesões, os médicos deram o veredito: o c
 function reRiscos(c){const m=c.m||{},R=[],fs=(m.festa||0)+(m.baladeiro||0)*2+(c.ment==="fes"?2:0),ve=(m.velo||0)+(m.carrao?1:0);
   if(m.vooFatal)R.push(["voo",1]);
   R.push(["subito",c.base?.0005:.0016]);
-  const pul=m.pulouExame||0;if(pul>=1&&(!m.coracaoOk||pul>=2))R.push([reKeyCor(pul),pul===1?.004:reChanceCor(pul)]); // 17/11: quanto mais exames pulados, maior o risco
+  const pul=m.pulouExame||0;if(pul===1&&!m.coracaoOk)R.push([reKeyCor(pul),.004]); // 2+ exames pulados: sorteio a cada resposta (reMorteNaHora) // 17/11: quanto mais exames pulados, maior o risco
   if(fs>=4)R.push(["festa",Math.min(.04,.008*(fs-3))]); // 17/11: baladeiro tem ~20-25% de chance na carreira
   if(ve>=3)R.push(["velo",Math.min(.03,.006*(ve-2)+(fs>=4?.005:0))]);
   return R}
@@ -9129,7 +9129,7 @@ const RE_COR_P=[.25,.4,.7,.9,1],RE_FESTA_P=[.3,.45,.75,1];
 const reChanceCor=pul=>pul<2?0:RE_COR_P[Math.min(pul-2,4)],reKeyCor=pul=>pul>=5?"coracao3":pul>=3?"coracao2":"coracao1";
 function reMorteNaHora(c,f0,p0){const m=c.m,f=m.festa||0,p=m.pulouExame||0;
   if(f>f0&&rnd()<RE_FESTA_P[Math.min(f,4)-1])return "festa";
-  if(p>p0&&rnd()<reChanceCor(p))return reKeyCor(p);return null}
+  if(p>=2&&rnd()<reChanceCor(p))return reKeyCor(p);return null} // 17/11: a cada resposta depois de 2+ exames pulados
 function reTragedia(c){c.m=c.m||{};let fim=c.m.morteJa?{t:"morte",k:c.m.morteJa,idade:c.idade,ano:c.ano}:null;delete c.m.morteJa;
   if(!fim)for(const [k,p] of reRiscos(c))if(rnd()<p){fim={t:"morte",k,idade:c.idade,ano:c.ano};break}
   if(!fim&&c.lesT){const n=c.lesN||0,g=c.lesG||0;if(n>=5||g>=2){const p=Math.min(.25,.025+.025*Math.max(0,n-5)+.04*Math.max(0,g-2)+(c.m.limite?.1:0));if(rnd()<p)fim={t:"lesao",k:ri(0,RE_LESAO_FIM.length-1),idade:c.idade,ano:c.ano}}}
