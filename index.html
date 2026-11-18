@@ -4940,7 +4940,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794960343";
+const VERSAO="1794960779";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -9247,12 +9247,12 @@ function reFrase(c){const longo=c.clubes.filter(h=>!h.base).sort((a,b)=>(b.ate-b
   if(c.clubes.filter(h=>!h.base).length>=6)return "Rodou o mundo";if(c.tot.g>=250)return "Goleador histórico";return c.pico>=80?"Carreira de respeito":"Operário da bola"}
 /* 17/11: nota da carreira (0 a 10 = reNota/3) e prêmio em XP (+ dinheiro só no 10) */
 const reNota10=c=>Math.round(reNota(c)/3*10)/10;
-const RE_PREMIO_NOTA=[[10,1000,300000],[9,500,0],[8,300,0],[7,150,0],[6,50,0]];
+const RE_PREMIO_NOTA=[[10,150,300000],[9,90,0],[8,70,0],[7,50,0],[6,30,0]];
 function rePremioNota(n){const r=RE_PREMIO_NOTA.find(([m])=>n>=m);return r?{xp:r[1],din:r[2]}:{xp:0,din:0}}
 function reTelaNota(c){const n=c.nota10,p=c.prNota||{xp:0,din:0},cor=n>=9?"#ffd23f":n>=7?"#5ee07a":n>=6?"#8fc3ff":"#ff8a7a";
   return `<div class="re-res re-nota"><p class="re-tag">Fim da carreira · ${esc(c.nome)}</p><div class="re-nota-num num" style="--cor:${cor}">${n.toFixed(1).replace(".",",")}</div><b class="re-nota-tit">${esc(c.titulo)}</b>
     <div class="re-nota-pr">${p.xp?`<div><span>${ICO_XP}</span><b class="num">+${p.xp} XP</b></div>`:""}${p.din?`<div><span>${ICO_GRANA(2)}</span><b class="num">+${dinheiro(p.din)}</b></div>`:""}${!p.xp&&!p.din?`<p class="muted">Nota abaixo de 6 não dá prêmio. Na próxima carreira, você chega lá!</p>`:""}</div>
-    <p class="muted peq">6 a 7: 50 XP · 7 a 8: 150 XP · 8 a 9: 300 XP · 9 a 10: 500 XP · 10: 1000 XP + ${dinheiro(300000)}</p>
+    <p class="muted peq">6 a 7: 30 XP · 7 a 8: 50 XP · 8 a 9: 70 XP · 9 a 10: 90 XP · 10: 150 XP + ${dinheiro(300000)}</p>
     <button class="btn prim full" data-a="re_notaok">Ver a ficha da carreira</button></div>`}
 function reAposentar(c){c.fase="nota";c.titulo=reTituloFinal(c);c.frase=c.fim?(c.fim.t==="morte"?"Partiu cedo demais":"Carreira interrompida pelas lesões"):reFrase(c);if(!c.fim)reLog(c,`${c.nome} pendura as chuteiras aos ${c.idade} anos`);
   c.nota10=reNota10(c);if(!c.pagoNota){c.pagoNota=1;c.prNota=rePremioNota(c.nota10);try{if(G&&c.prNota.din)G.cash+=c.prNota.din;if(c.prNota.xp)somarXP(c.prNota.xp);if(G)salvar()}catch(e){}}
