@@ -1114,6 +1114,7 @@ nav.abas button{font-size:11px}
 .lei-hs{position:absolute;background:transparent;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .lei-hs.ir{left:13.67%;top:82.57%;width:72.06%;height:9.95%}.lei-hs.ir img{width:100%;height:100%;display:block;pointer-events:none;animation:leiBt 1.2s ease-in-out infinite;transform-origin:center}
 @keyframes leiBt{0%,100%{transform:scale(1);filter:drop-shadow(0 0 4px rgba(255,200,40,.4)) brightness(1)}50%{transform:scale(1.06);filter:drop-shadow(0 0 22px rgba(255,210,60,.95)) brightness(1.18)}}
+.jc-capa::before{background-image:url(img/jornada-capa.jpg)}.lei-hs.jc-ir{left:11.65%;top:69.2%;width:76.46%;height:10.75%}.lei-hs.jc-ir img{width:100%;height:100%;display:block;pointer-events:none;animation:leiBt 1.2s ease-in-out infinite;transform-origin:center}
 .lei-volta{position:fixed;z-index:6;left:10px;top:10px}
 .lei{position:fixed;inset:0;z-index:5;overflow-y:auto;overflow-x:hidden;background:radial-gradient(ellipse at 50% 0,#173a6b,#0a1630 60%,#060d1f);color:#fff;padding:10px 10px 30px;box-sizing:border-box}
 .lei-topo{margin-bottom:8px}.lei-meio{max-width:440px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
@@ -5036,7 +5037,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795200791";
+const VERSAO="1795201589";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -5408,7 +5409,7 @@ const MENU_SP=[
  ["sploja","Loja",'<path d="M7 8h13l-2 8H8L6 4H3"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/>'],
  ["carreiras","Carregar jogo",'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'],
  ["novacarreira","Nova carreira",'<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>'],
- ["embreve","Rumo ao Estrelato",'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',1],
+ ["embreve","Jornada de Craque",'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',1],
  ["splajustes","Ajustes",'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>'],
  ["splregras","Regras do jogo",'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h7M8 11h7"/>']];
 function rodaIniciar(r){
@@ -9343,7 +9344,7 @@ function reFrase(c){const longo=c.clubes.filter(h=>!h.base).sort((a,b)=>(b.ate-b
   if(c.clubes.filter(h=>!h.base).length>=6)return "Rodou o mundo";if(c.tot.g>=250)return "Goleador histórico";return c.pico>=80?"Carreira de respeito":"Operário da bola"}
 /* 17/11: nota da carreira (0 a 10 = reNota/3) e prêmio em XP (+ dinheiro só no 10) */
 const reNota10=c=>Math.round(reNota(c)/3*10)/10;
-const RE_PREMIO_NOTA=[[10,150,300000],[9,90,0],[8,70,0],[7,50,0],[6,30,0]];
+const RE_PREMIO_NOTA=[[10,150,300],[9,90,0],[8,70,0],[7,50,0],[6,30,0]];
 function rePremioNota(n){const r=RE_PREMIO_NOTA.find(([m])=>n>=m);return r?{xp:r[1],din:r[2]}:{xp:0,din:0}}
 function reTelaNota(c){const n=c.nota10,p=c.prNota||{xp:0,din:0},cor=n>=9?"#ffd23f":n>=7?"#5ee07a":n>=6?"#8fc3ff":"#ff8a7a";
   return `<div class="re-res re-nota"><p class="re-tag">Fim da carreira · ${esc(c.nome)}</p><div class="re-nota-num num" style="--cor:${cor}">${n.toFixed(1).replace(".",",")}</div><b class="re-nota-tit">${esc(c.titulo)}</b>
@@ -9386,8 +9387,10 @@ function reTelaTemp(c){const d=c.pend&&c.pend[c.resp.length],D=d&&reDil(d),cl=c.
   ${c.log.length?`<div class="re-pn">${H("Manchetes","📰")}${c.log.slice(0,5).map(x=>`<div class="re-news"><small class="num">${x.ano}</small><span>${esc(x.t)}</span></div>`).join("")}</div>`:""}`}
 /* ---------- telas ---------- */
 let RE_VER=null; // ficha de carreira antiga aberta
+let RE_CAPA=0; // 20/11: capa "Jornada de Craque" (img/jornada-capa.jpg) antes de entrar no modo
 function telaEstrelato(){reLer();const c=RE.car;
-  const topo=`<div class="re-topo"><button class="re-tb" data-a="re_sair">‹ Jogar</button><b class="re-tit"><i>★</i> Rumo ao Estrelato</b>${c&&c.fase!=="fim"&&c.fase!=="nota"?`<button class="re-tb dir" data-a="re_desistir">⟳ Recomeçar</button>`:"<span></span>"}</div>`;
+  if(RE_CAPA)return `<div class="lei-capa jc-capa"><div class="lei-art"><img src="img/jornada-capa.jpg" alt="Jornada de Craque"><button class="lei-hs jc-ir" data-a="re_capaok" aria-label="Jogar"><img src="img/jornada-botao.png" alt=""></button></div><button class="re-tb lei-volta" data-a="re_sair">‹ Jogar</button></div>`;
+  const topo=`<div class="re-topo"><button class="re-tb" data-a="re_sair">‹ Jogar</button><b class="re-tit"><i>★</i> Jornada de Craque</b>${c&&c.fase!=="fim"&&c.fase!=="nota"?`<button class="re-tb dir" data-a="re_desistir">⟳ Recomeçar</button>`:"<span></span>"}</div>`;
   let h="";
   if(RE_VER!=null&&RE.hist[RE_VER])h=reTelaFim(RE.hist[RE_VER],1);
   else if(!c)h=reTelaCriar();
@@ -9427,8 +9430,9 @@ function telaEstrelato(){reLer();const c=RE.car;
   return `<div class="re v2" data-notime>${bg?`<div class="re-fundo" style="background-image:url(${bg})"></div>`:`<div class="re-fundo"></div>`}${topo}${h}</div>`}
 function reAcao(a,v){reLer();const c=RE.car;
   switch(a){
-    case "re_breve":toast("Rumo ao Estrelato: em breve!");return;
-    case "re_abrir":if(!reLiberado()){toast("Rumo ao Estrelato: em breve!");return}aba="estrelato";RE_VER=null;break;
+    case "re_breve":toast("Jornada de Craque: em breve!");return;
+    case "re_abrir":if(!reLiberado()){toast("Jornada de Craque: em breve!");return}aba="estrelato";RE_VER=null;RE_CAPA=1;break;
+    case "re_capaok":RE_CAPA=0;window.scrollTo(0,0);break;
     case "re_sair":aba="jogar";RE_VER=null;if(RE.car){delete RE.car;reSalvar()}REW=null;break; // 17/11: saiu do modo = recomeça do zero
     case "re_rosto":reLerCampos();REW.rf=((REW.rf||0)+(+v)+(ROSTOS.n||50))%(ROSTOS.n||50);break;
     case "re_pos":reLerCampos();REW.pos=v;break;
@@ -10479,7 +10483,7 @@ function cartaoLeilao(){if(!reLiberado())return `<button class="modo lei bloq" d
 function cartaoModos(){reLer();const c=RE.car,cl=G.clubs[G.user.club];
   return `<div class="modos"><h2 class="modos-tit">Modos de jogo</h2>
     <div class="modo on"><span class="modo-ic">⚽</span><div><b>Modo Carreira</b><small>${esc(cl.name)} · você está aqui</small></div></div>
-    <button class="modo est${reLiberado()?"":" bloq"}" data-a="${reLiberado()?"re_abrir":"re_breve"}"><span class="modo-ic">⭐</span><div><b>Rumo ao Estrelato</b><small>${c&&c.fase!=="fim"?`${esc(c.nome)} · ${c.idade} anos · ${esc(c.clube?c.clube.name:"peneira")}`:"Jogo rápido: crie seu atleta e viva a carreira"}</small></div><i>${reLiberado()?"›":"🔒"}</i></button>${cartaoLeilao()}${cartaoQuiz()}</div>`}
+    <button class="modo est${reLiberado()?"":" bloq"}" data-a="${reLiberado()?"re_abrir":"re_breve"}"><span class="modo-ic">⭐</span><div><b>Jornada de Craque</b><small>${c&&c.fase!=="fim"?`${esc(c.nome)} · ${c.idade} anos · ${esc(c.clube?c.clube.name:"peneira")}`:"Jogo rápido: crie seu atleta e viva a carreira"}</small></div><i>${reLiberado()?"›":"🔒"}</i></button>${cartaoLeilao()}${cartaoQuiz()}</div>`}
 
 function acao(a,v,el){
   if(a&&a.startsWith("re_")){reAcao(a,v,el);return}
