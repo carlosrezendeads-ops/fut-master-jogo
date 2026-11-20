@@ -5037,7 +5037,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795201589";
+const VERSAO="1795201709";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -10477,8 +10477,8 @@ function leiAcao(a,v){const ti=document.getElementById("lei-time");if(ti)LEI.tim
   case "lei_jogo":LEI.ver=LEI.ver===v?null:v;break;
   case "lei_rodada":if(LEI.r>=LEI.rods.length-1){LEI.fase="fim";window.scrollTo(0,0);break}LEI.r++;LEI.rods[LEI.r].forEach(leiAplicar);LEI.ver=null;window.scrollTo(0,0);break}
   render()}
-function cartaoLeilao(){if(!reLiberado())return `<button class="modo lei bloq" data-a="lei_breve"><span class="modo-ic">🔨</span><div><b>Leilão FUT Master</b><small>Em breve</small></div><i>🔒</i></button>`;
-  return `<button class="modo lei" data-a="lei_abrir"><span class="modo-ic">🔨</span><div><b>Leilão FUT Master</b><small>${LEI.cs&&LEI.fase!=="fim"&&LEI.fase!=="capa"?"Leilão em andamento · toque para voltar":"Monte um time de craques no leilão da Leila"}</small></div><i>›</i></button>`}
+function cartaoLeilao(){if(!reLiberado())return `<button class="modo leil bloq" data-a="lei_breve"><span class="modo-ic">🔨</span><div><b>Leilão FUT Master</b><small>Em breve</small></div><i>🔒</i></button>`;
+  return `<button class="modo leil" data-a="lei_abrir"><span class="modo-ic">🔨</span><div><b>Leilão FUT Master</b><small>${LEI.cs&&LEI.fase!=="fim"&&LEI.fase!=="capa"?"Leilão em andamento · toque para voltar":"Monte um time de craques no leilão da Leila"}</small></div><i>›</i></button>`}
 
 function cartaoModos(){reLer();const c=RE.car,cl=G.clubs[G.user.club];
   return `<div class="modos"><h2 class="modos-tit">Modos de jogo</h2>
