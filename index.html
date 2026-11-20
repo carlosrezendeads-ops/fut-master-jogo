@@ -1107,6 +1107,102 @@ nav.abas button{font-size:11px}
 .vivo-faixa{margin:8px 0;padding:8px 10px;border-radius:12px;background:rgba(46,204,113,.12);border:1px solid rgba(46,204,113,.45);font-size:13px;line-height:1.45;text-align:center}
 /* Quiz do Dia (11/11) */
 .modo.quiz{border-color:rgba(108,182,255,.55);background:linear-gradient(90deg,rgba(61,139,255,.16),rgba(10,20,48,.6))}.modo.quiz.pulsa{animation:vivoBrilho 1.2s infinite}
+/* Leilão FUT Master (20/11) */
+.lei-capa{position:fixed;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;background:#0b1838;overflow:hidden}
+.lei-capa::before{content:"";position:absolute;inset:-30px;background:url(img/leilao-capa.jpg) center/cover;filter:blur(18px) brightness(.55)}
+.lei-art{position:relative;width:min(100vw,calc(100vh*841/1870));aspect-ratio:841/1870}.lei-art>img{width:100%;height:100%;display:block}
+.lei-hs{position:absolute;background:transparent;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.lei-hs.ir{left:13.67%;top:82.57%;width:72.06%;height:9.95%}.lei-hs.ir img{width:100%;height:100%;display:block;pointer-events:none;animation:leiBt 1.2s ease-in-out infinite;transform-origin:center}
+@keyframes leiBt{0%,100%{transform:scale(1);filter:drop-shadow(0 0 4px rgba(255,200,40,.4)) brightness(1)}50%{transform:scale(1.06);filter:drop-shadow(0 0 22px rgba(255,210,60,.95)) brightness(1.18)}}
+.lei-volta{position:fixed;z-index:6;left:10px;top:10px}
+.lei{position:fixed;inset:0;z-index:5;overflow-y:auto;overflow-x:hidden;background:radial-gradient(ellipse at 50% 0,#173a6b,#0a1630 60%,#060d1f);color:#fff;padding:10px 10px 30px;box-sizing:border-box}
+.lei-topo{margin-bottom:8px}.lei-meio{max-width:440px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.lei-leila{display:flex;align-items:center;gap:10px}.lei-leila img{width:54px;height:54px;border-radius:50%;border:2px solid #ffd23f;box-shadow:0 0 12px rgba(255,210,63,.5);flex:none;object-fit:cover}
+.lei-leila p{margin:0;background:#fff;color:#14213d;border-radius:14px 14px 14px 4px;padding:8px 11px;font-size:13.5px;font-weight:600;line-height:1.3}
+.lei-leila.mini img{width:44px;height:44px}
+.lei-op{display:flex;align-items:center;gap:12px;text-align:left;background:linear-gradient(135deg,#ffd23f,#f0a500);color:#2a1a00;border:0;border-radius:14px;padding:14px;font:inherit;cursor:pointer;box-shadow:0 4px 16px rgba(240,165,0,.35)}
+.lei-op span{font-size:30px}.lei-op b{display:block;font-size:16px}.lei-op small{font-size:12px;opacity:.8}
+.lei-op.off{background:#1c2c4d;color:#c9d6f2;box-shadow:none;border:1px solid #2e4370}
+.lei-h{margin:6px 0 2px;font-size:15px;font-style:italic;text-transform:uppercase;letter-spacing:.5px;color:#ffd23f}.lei-dica{margin:0;color:#9fb3da;font-size:12.5px;text-align:center}
+.lei-qtd{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.lei-qtd button{font:inherit;font-size:24px;font-weight:800;padding:14px 0;border-radius:12px;border:2px solid #ffd23f;background:#13254a;color:#ffd23f;cursor:pointer}
+.lei-lb{display:flex;flex-direction:column;gap:4px;font-size:12px;color:#9fb3da;font-weight:700;margin:0;text-transform:uppercase}
+.lei-lb input{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:10px 12px;border-radius:10px;border:1px solid #2e4370;background:#0f1e3d;color:#fff;text-transform:none}.lei-lb input:disabled{opacity:.7}
+.lei-forms{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.lei-forms button{font:inherit;font-weight:800;font-size:17px;padding:10px 0;border-radius:10px;border:1px solid #2e4370;background:#13254a;color:#fff;cursor:pointer}
+.lei-forms button.sel{background:#ffd23f;color:#2a1a00;border-color:#ffd23f}
+.lei-campo-g{display:flex;justify-content:center}.lei-campo{display:block;border-radius:6px;box-shadow:0 2px 10px rgba(0,0,0,.4)}
+.lei-prox{font:inherit;font-weight:800;font-size:16px;padding:14px;border:0;border-radius:12px;background:linear-gradient(135deg,#ffd23f,#f0a500);color:#2a1a00;cursor:pointer;width:100%;box-shadow:0 4px 14px rgba(240,165,0,.35)}
+.lei-sair2{font:inherit;background:none;border:0;color:#9fb3da;padding:10px;cursor:pointer;width:100%}
+.lei.sala{padding:8px 6px 14px;display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden}
+.lei-sala{display:flex;flex-direction:column;gap:6px;flex:1;min-height:0}
+.lei-top{display:flex;justify-content:center;gap:6px}.lei-top .lei-comp{flex:1;max-width:120px}
+.lei-mid{display:grid;grid-template-columns:auto 1fr auto;gap:6px;flex:1;min-height:0;align-items:center}
+.lei-comp{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:5px 4px;display:flex;flex-direction:column;align-items:center;gap:1px;text-align:center;cursor:pointer;transition:.2s;min-width:0}
+.lei-mid .lei-comp{width:74px}
+.lei-comp b{font-size:11.5px;line-height:1.1;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lei-comp small{font-size:9.5px;color:#9fb3da;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lei-comp.fora{opacity:.45}.lei-comp.luz{border-color:#ffd23f;box-shadow:0 0 18px #ffd23f;background:rgba(255,210,63,.25);opacity:1}
+.lei-comp.ganhou,.lei-eu.ganhou{border-color:#5ee07a;box-shadow:0 0 18px rgba(94,224,122,.7)}
+.lei-din{font-size:11px;font-weight:800;color:#ffd23f}
+.lei-comp-f{position:relative}
+.lei-av{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:#26406f;border:2px solid #ffd23f;position:relative;flex:none}
+.lei-av img{width:100%;height:100%;border-radius:50%;object-fit:cover}.lei-av b{font-size:12px}
+.lei-av.bot{border-color:#b8c2cc;box-shadow:0 0 0 1px #6c7a88}
+.lei-robo{position:absolute;right:-3px;bottom:-3px;font-size:9px;line-height:1;background:#1a2433;border-radius:50%;padding:1px;font-style:normal}
+.lei-placa{position:absolute;top:-14px;right:-22px;display:flex;flex-direction:column;align-items:center;animation:leiPl .35s ease-out;z-index:2}
+.lei-placa b{background:#fff;color:#14213d;border:2px solid #c0392b;border-radius:6px;padding:1px 5px;font-size:11px;font-weight:900;min-width:20px;text-align:center;white-space:nowrap}
+.lei-placa i{font-style:normal;font-size:14px;margin-top:-3px}
+.lei-placa.vira b{animation:leiVira .5s ease-out;background:#ffd23f;border-color:#8a5a00}
+@keyframes leiPl{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+@keyframes leiVira{0%{transform:rotateY(90deg)}100%{transform:none}}
+.lei-centro{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.lei-centro .lei-leila{width:100%}.lei-centro .lei-leila img{width:46px;height:46px}.lei-centro .lei-leila p{font-size:12.5px}
+.lei-card{position:relative;width:min(150px,100%);background:linear-gradient(160deg,#ffe8a0,#d9a520 45%,#9c6b05);border-radius:12px;padding:8px 6px 7px;text-align:center;color:#2a1a00;box-shadow:0 0 22px rgba(255,210,63,.45);animation:leiEntra .45s ease-out}
+@keyframes leiEntra{from{transform:scale(.6) rotate(-6deg);opacity:0}to{transform:none;opacity:1}}
+.lei-pos{position:absolute;left:6px;top:6px;font-size:10px;font-weight:900;padding:2px 5px;border-radius:5px}
+.lei-nota{position:absolute;right:7px;top:3px;font-size:22px;font-weight:900}
+.lei-cfoto{width:76px;height:84px;margin:10px auto 3px;border-radius:8px;overflow:hidden;background:rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center}
+.lei-cfoto img{width:100%;height:100%;object-fit:cover}.lei-cfoto b{font-size:28px;color:#fff6d0}
+.lei-cnome{display:block;font-size:13.5px;line-height:1.15}.lei-card small{font-size:10.5px;font-weight:700;text-transform:uppercase}
+.lei-martelo{position:absolute;right:-8px;top:18px;font-size:38px;transform-origin:80% 80%;animation:leiMart .6s ease-in 2}
+@keyframes leiMart{0%{transform:rotate(-50deg)}60%{transform:rotate(20deg)}100%{transform:rotate(0)}}
+.lei-selo{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) rotate(-12deg);background:#c0392b;color:#fff;font-weight:900;font-size:20px;padding:3px 10px;border-radius:6px;border:3px solid #fff;letter-spacing:1px;animation:leiSelo .4s .5s both;white-space:nowrap}
+.lei-selo small{display:block;font-size:9px;letter-spacing:0;text-transform:none}
+@keyframes leiSelo{from{transform:translate(-50%,-50%) rotate(-12deg) scale(2.4);opacity:0}to{opacity:1}}
+.lei-tempo{width:min(150px,100%);text-align:center}.lei-tempo b{font-size:26px;color:#ffd23f}
+.lei-tempo div{height:7px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden}.lei-tempo i{display:block;height:100%;background:linear-gradient(90deg,#ff5a4a,#ffd23f);transition:width .2s linear}
+.lei-espera{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12.5px;color:#c9d6f2}.lei-espera b{color:#ffd23f}
+.lei-eu{display:grid;grid-template-columns:auto auto 1fr;gap:8px;align-items:center;background:rgba(255,210,63,.08);border:1px solid rgba(255,210,63,.35);border-radius:14px;padding:7px}
+.lei-eu-info{display:flex;flex-direction:column;align-items:center;gap:1px;text-align:center;max-width:84px}.lei-eu-info b{font-size:12.5px}.lei-eu-info small{font-size:10px;color:#9fb3da}
+.lei-eu-ac{display:flex;flex-direction:column;align-items:stretch;justify-content:center;min-width:0}
+.lei-placa-bt{font:inherit;font-weight:900;font-size:15px;border:0;border-radius:12px;padding:10px 6px;background:linear-gradient(135deg,#ffd23f,#f0a500);color:#2a1a00;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;animation:leiBt 1.2s ease-in-out infinite}
+.lei-pl-ic{display:flex;flex-direction:column;align-items:center}.lei-pl-ic b{background:#fff;border:3px solid #c0392b;border-radius:8px;padding:3px 9px;font-size:15px;color:#14213d}.lei-pl-ic i{width:5px;height:16px;background:#8a5a2b;border-radius:2px}
+.lei-painel{display:flex;flex-direction:column;gap:5px}
+.lei-val{display:grid;grid-template-columns:auto auto 1fr auto auto;gap:3px;align-items:center}.lei-val b{text-align:center;font-size:16px;color:#ffd23f}
+.lei-val button,.lei-val2 button{font:inherit;font-size:11.5px;font-weight:800;padding:7px 4px;border-radius:8px;border:1px solid #2e4370;background:#13254a;color:#fff;cursor:pointer}
+.lei-val2{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.lei-levanta{font:inherit;font-weight:900;font-size:14px;padding:9px;border:0;border-radius:10px;background:#c0392b;color:#fff;cursor:pointer}
+.lei-ok,.lei-fora{margin:0;font-size:12.5px;text-align:center;color:#c9d6f2}.lei-ok b{color:#ffd23f;font-size:16px}
+.lei-tut{position:fixed;inset:0;z-index:50;background:rgba(3,8,20,.78);display:flex;align-items:center;justify-content:center;padding:16px}
+.lei-tut-box{background:#fff;color:#14213d;border-radius:18px;padding:16px;max-width:340px;text-align:center;border:3px solid #ffd23f;animation:leiEntra .35s ease-out}
+.lei-tut-box img{width:74px;height:74px;border-radius:50%;border:3px solid #ffd23f;margin-top:-50px;object-fit:cover;background:#fff}
+.lei-tut-box p{font-size:15px;line-height:1.35;margin:8px 0 4px}.lei-tut-box small{color:#7a869a}
+.lei-tut-box div{display:flex;gap:8px;margin-top:10px}.lei-tut-box button{flex:1;font:inherit;font-weight:800;padding:11px;border-radius:10px;border:0;cursor:pointer}
+.lei-tut-pular{background:#e5e9f0;color:#4a5568}.lei-tut-ok{background:#f0a500;color:#2a1a00}
+.lei-jogos,.lei-fim{max-width:460px;margin:0 auto;display:flex;flex-direction:column;gap:9px}
+.lei-times{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.lei-tc{background:rgba(255,255,255,.06);border-radius:12px;padding:7px;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}.lei-tc b{font-size:12.5px}.lei-tc small{font-size:10.5px;color:#9fb3da}
+.lei-jogo{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px;cursor:pointer}.lei-jogo.meu{border-color:#ffd23f;background:rgba(255,210,63,.09)}
+.lei-placar{display:grid;grid-template-columns:auto 1fr auto 1fr auto;gap:6px;align-items:center;font-size:12.5px;font-weight:700}.lei-placar span:nth-of-type(2){text-align:right}.lei-placar b{font-size:19px;color:#ffd23f}
+.lei-jogo ul{margin:6px 0 0;padding:0;list-style:none;font-size:12.5px;line-height:1.45;color:#dce5f7}
+.lei-why{margin:5px 0 0;font-size:12.5px;color:#ffe08a;font-style:italic}.lei-mais{display:block;text-align:center;color:#7d8fb5;font-size:10.5px;margin-top:3px}
+.lei-tab{background:rgba(255,255,255,.05);border-radius:12px;overflow:hidden}
+.lei-tl{display:grid;grid-template-columns:24px 1fr 26px 26px 26px 32px;gap:3px;align-items:center;padding:5px 8px;font-size:12.5px;border-top:1px solid rgba(255,255,255,.06)}
+.lei-tl span:nth-child(2){display:flex;align-items:center;gap:5px;overflow:hidden;white-space:nowrap}.lei-tl.cab{font-size:10.5px;color:#9fb3da;border:0;font-weight:800}.lei-tl.eu{background:rgba(255,210,63,.14)}.lei-tl b{color:#ffd23f}
+.lei-fim{text-align:center}.lei-trofeu{font-size:76px;animation:leiEntra .6s ease-out;filter:drop-shadow(0 0 20px rgba(255,210,63,.7))}
+.lei-tag{margin:0;color:#ffd23f;font-weight:800;text-transform:uppercase;font-style:italic;letter-spacing:1px}.lei-fim h2{margin:0;font-size:24px}.lei-sub{margin:0;color:#9fb3da}
+.lei-podio{display:flex;justify-content:center;align-items:flex-end;gap:8px;margin:8px 0}.lei-pd{display:flex;flex-direction:column;align-items:center;gap:3px;width:100px}.lei-pd b{font-size:11.5px}
+.lei-deg{display:block;width:100%;background:linear-gradient(#ffd23f,#b8860b);color:#2a1a00;font-weight:900;border-radius:6px 6px 0 0;padding:6px 0}.lei-pd.p1 .lei-deg{height:58px}.lei-pd.p2 .lei-deg{height:40px;background:linear-gradient(#e2e8f0,#94a3b8)}.lei-pd.p3 .lei-deg{height:28px;background:linear-gradient(#f0b27a,#a0522d)}
+.lei-premio{background:rgba(94,224,122,.13);border:1px solid #5ee07a;border-radius:12px;padding:10px;font-size:14px}
+.lei-lista{list-style:none;padding:0;margin:10px 0 0;font-size:14px}.lei-lista li{padding:4px 0;border-bottom:1px solid rgba(127,127,127,.2)}.lei-lista span{font-weight:800;display:inline-block;width:38px}
 .qz-capa{position:fixed;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;background:#0b1838;overflow:hidden}
 .qz-capa::before{content:"";position:absolute;inset:-30px;background:url(img/quiz-capa.jpg) center/cover;filter:blur(18px) brightness(.6)}
 .qz-art{position:relative;width:min(100vw,calc(100vh*841/1870));aspect-ratio:841/1870}.qz-art img{width:100%;height:100%;display:block}
@@ -4940,7 +5036,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1794960779";
+const VERSAO="1795200758";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -6031,7 +6127,7 @@ function render(){try{if(G&&G.user){perfil();garantirContratos()}}catch(e){}
   if(aba==="inicio")aba="jogar"; // Jogar = tela do próximo jogo (antigo Início)
   if(aba==="tabela"||aba==="copa")aba="liga";
   if(G.amgM&&!G.live&&aba!=="prejogo"&&!VIVO)limparAmigo(); // saiu do pré-jogo do amistoso entre amigos sem jogar
-  if(QZ.on&&aba!=="quiz")quizSaiu();const telaCheia=["visual","partida","resultado","prejogo","estrelato","quiz"].includes(aba);
+  if(QZ.on&&aba!=="quiz")quizSaiu();const telaCheia=["visual","partida","resultado","prejogo","estrelato","quiz","leilao"].includes(aba);
   nav.hidden=telaCheia;
   nav.classList.remove("some");
   nav.innerHTML=`<div class="wrap">${abasNav().map(k=>`<button data-a="aba" data-v="${k}" aria-current="${aba===k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES[k]}</svg>${k==="copa"?nomeCurtoCopa():ROTULOS[k]}</button>`).join("")}</div>`;
@@ -6039,7 +6135,7 @@ function render(){try{if(G&&G.user){perfil();garantirContratos()}}catch(e){}
   const Pf=perfil(),xpPct=Pf.nivel>=NIVEL_MAX?100:Math.round(Pf.xp/xpParaSubir(Pf.nivel)*100); // topo: foto do dono + nível + nome + XP (leva ao Perfil)
   const dataTopo=new Date(hojeJogo()).toLocaleDateString(FMT_LG[typeof idioma==="function"?idioma():"pt"][0],{day:"numeric",month:"short",year:"numeric"}); // dia do calendário do jogo
   const topo=`<header class="topo"><span class="topo-data" data-notr>${dataTopo}</span><button class="dono-foto" data-a="aba" data-v="perfil" aria-label="Perfil do dono">${avatarSrc()?`<img src="${avatarSrc()}" alt="">`:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">${ICONES.perfil}</svg>`}<b class="num">${Pf.nivel}</b></button><div class="info" data-a="aba" data-v="perfil" style="cursor:pointer"><h1 class="dono-nome">${esc(G.user.coach||"Dono do clube")}</h1><div class="xp-barra dono-xp"><i style="width:${xpPct}%"></i></div></div><div class="topo-grana"><button class="gr-btn" data-a="cambioir" aria-label="Comprar cupons dourados">${ICO_CUPOM}<b class="num">${cupons()}</b></button><button class="gr-btn${G.cash<0?" neg":""}" data-a="cambioir" aria-label="Dinheiro do clube">${ICO_NOTA}<b class="num">${dinheiroCurto(G.cash)}</b></button></div><button class="som-btn msg-btn amg-btn" data-a="amigos" aria-label="Amigos">${ICO_AMIGOS}${amgBadge()}</button><button class="som-btn msg-btn" data-a="caixa" aria-label="Caixa de entrada">${ICO_AVIAO}${naoLidas()?`<span class="msg-badge">${Math.min(naoLidas(),99)}</span>`:""}</button><button class="som-btn" data-a="aba" data-v="config" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES.config}</svg></button></header>`;
-  const corpo={inicio:telaInicio,elenco:telaElenco,tabela:telaTabela,mercado:telaMercado,clube:telaClube,escudo:telaEscudo,upgrades:telaUpgrades,copa:telaAbaCopa,jogar:telaInicio,liga:telaLiga,perfil:telaPerfil,financas:telaFinancas,config:telaConfig,visual:telaVisual,prejogo:telaPreJogo,partida:telaPartida,resultado:telaResultado,estrelato:telaEstrelato,quiz:telaQuiz}[aba]();
+  const corpo={inicio:telaInicio,elenco:telaElenco,tabela:telaTabela,mercado:telaMercado,clube:telaClube,escudo:telaEscudo,upgrades:telaUpgrades,copa:telaAbaCopa,jogar:telaInicio,liga:telaLiga,perfil:telaPerfil,financas:telaFinancas,config:telaConfig,visual:telaVisual,prejogo:telaPreJogo,partida:telaPartida,resultado:telaResultado,estrelato:telaEstrelato,quiz:telaQuiz,leilao:telaLeilao}[aba]();
   app.innerHTML=(telaCheia?"":topo)+corpo+(telaCheia?"":bolaHTML());
   videoVS();ligarCampinho();try{vivoChat()}catch(e){}
   if(G&&!TUTA&&!document.querySelector(".veu")){const ta=G.tutAmi||{},ami1=!(G.history||[]).length;if(aba==="prejogo"&&ami1&&!ta.pre&&partidaAtual()&&partidaAtual().amistoso)setTimeout(()=>tutAmistoso("pre"),600);else if(aba==="jogar"&&tvPendente()&&!ta["tv"+userTier()])setTimeout(()=>{if(!TUTA&&aba==="jogar"&&!document.querySelector(".veu")&&tvPendente())tutAmistoso("tv"+userTier())},700);else if(aba==="partida"&&ami1&&G.live&&G.live.m.amistoso&&!ta.vivo)setTimeout(()=>tutAmistoso("vivo"),500);else if(aba==="jogar"&&!ta.tela&&G.amistoso==="feito"&&!tvPendente()&&!((G.st[G.user.club]||{}).j)&&ami1)setTimeout(()=>{if(!TUTA&&!document.querySelector(".veu")&&aba==="jogar")tutAmistoso("tela")},900);else if(aba==="perfil"&&!ta.perfil&&!perfil().avatar)setTimeout(()=>{if(!TUTA&&!document.querySelector(".veu")&&aba==="perfil")tutAmistoso("perfil")},600)}if(aba==="financas")ligarGrafico();{const b=document.querySelector('.lg-abas [aria-pressed="true"]');if(b)b.scrollIntoView({inline:"center",block:"nearest"})}
@@ -10211,14 +10307,184 @@ function quizAcao(a,v){switch(a){
 setInterval(()=>{const el=document.getElementById("qz-relogio");if(el)el.textContent=fmtRelogio(Math.max(0,quizMeiaNoite()-Date.now()))},1000);
 function cartaoQuiz(){if(!reLiberado())return `<button class="modo quiz bloq" data-a="qz_breve"><span class="modo-ic">🧠</span><div><b>Quiz do Dia</b><small>Em breve</small></div><i>🔒</i></button>`;const q=quizEstado(),pend=q.caixa&&!q.aberta,feito=q.fase==="fim"&&!pend;
   return `<button class="modo quiz${pend?" pulsa":""}" data-a="qz_abrir_modo"><span class="modo-ic">${pend?`<img class="qz-cxmini" src="img/cx-${q.caixa}.png" alt="">`:"🧠"}</span><div><b>Quiz do Dia</b><small>${pend?`Sua caixa de ${q.caixa} está esperando!`:feito?`Feito hoje: ${q.ac||0} acerto${q.ac===1?"":"s"} · volta à meia-noite`:"Será que você manja de futebol? 🤔"}</small></div><i>${pend?"🎁":feito?"✓":"›"}</i></button>`}
+/* ===== LEILÃO FUT MASTER (20/11) — plano em Leilao/plano.md. Aba "leilao", ações "lei_*" em leiAcao, estado LEI (só na memória).
+   Fluxo: capa → modo (máquina/amigos) → nº de competidores → nome do time + formação → sala (tutorial 1ª vez) → leilão → partidas → campeão. ===== */
+const LEI_JOG=[ // [nome, posição GOL/ZAG/MEI/ATA, nota]
+ ["Lev Yashin","GOL",93],["Gianluigi Buffon","GOL",94],["Manuel Neuer","GOL",93],["Oliver Kahn","GOL",92],["Iker Casillas","GOL",92],["Peter Schmeichel","GOL",90],["Dino Zoff","GOL",90],["Gordon Banks","GOL",89],["Taffarel","GOL",87],["Marcos","GOL",87],["Dida","GOL",86],["Alisson","GOL",89],["Thibaut Courtois","GOL",89],["Edwin van der Sar","GOL",88],["Rogério Ceni","GOL",86],["Petr Čech","GOL",88],
+ ["Franz Beckenbauer","ZAG",96],["Paolo Maldini","ZAG",95],["Franco Baresi","ZAG",93],["Fabio Cannavaro","ZAG",92],["Sergio Ramos","ZAG",92],["Alessandro Nesta","ZAG",91],["Carles Puyol","ZAG",90],["Virgil van Dijk","ZAG",90],["Cafu","ZAG",91],["Roberto Carlos","ZAG",91],["Philipp Lahm","ZAG",91],["Carlos Alberto Torres","ZAG",90],["Nilton Santos","ZAG",90],["Thiago Silva","ZAG",89],["Dani Alves","ZAG",89],["Lilian Thuram","ZAG",89],["Lúcio","ZAG",88],["John Terry","ZAG",88],["Rio Ferdinand","ZAG",88],["Marcelo","ZAG",88],["Gerard Piqué","ZAG",88],["Giorgio Chiellini","ZAG",88],["Marquinhos","ZAG",87],["Pepe","ZAG",87],["Nemanja Vidić","ZAG",87],["Aldair","ZAG",86],
+ ["Johan Cruyff","MEI",96],["Zinedine Zidane","MEI",96],["Ronaldinho","MEI",94],["Zico","MEI",94],["Michel Platini","MEI",94],["Andrés Iniesta","MEI",93],["Xavi","MEI",93],["Kaká","MEI",92],["Luka Modrić","MEI",92],["Lothar Matthäus","MEI",92],["Andrea Pirlo","MEI",91],["Kevin De Bruyne","MEI",91],["Rivaldo","MEI",91],["Ruud Gullit","MEI",91],["Bobby Charlton","MEI",91],["Steven Gerrard","MEI",90],["Luís Figo","MEI",90],["Toni Kroos","MEI",90],["Sócrates","MEI",90],["Rivelino","MEI",90],["Frank Lampard","MEI",89],["Clarence Seedorf","MEI",89],["Patrick Vieira","MEI",89],["Didi","MEI",89],["Gérson","MEI",89],["Jude Bellingham","MEI",89],["Pedri","MEI",89],["David Beckham","MEI",88],["Paul Scholes","MEI",88],["Falcão","MEI",88],["Gheorghe Hagi","MEI",88],["Juninho Pernambucano","MEI",87],["Claude Makélélé","MEI",87],["Dunga","MEI",86],
+ ["Pelé","ATA",99],["Lionel Messi","ATA",98],["Diego Maradona","ATA",98],["Cristiano Ronaldo","ATA",97],["Ronaldo Fenômeno","ATA",97],["Garrincha","ATA",95],["Alfredo Di Stéfano","ATA",95],["Ferenc Puskás","ATA",95],["Romário","ATA",94],["Marco van Basten","ATA",94],["Gerd Müller","ATA",94],["Eusébio","ATA",93],["Kylian Mbappé","ATA",93],["Neymar Jr","ATA",92],["Thierry Henry","ATA",92],["Roberto Baggio","ATA",92],["Zlatan Ibrahimović","ATA",91],["Robert Lewandowski","ATA",91],["Erling Haaland","ATA",91],["Lamine Yamal","ATA",90],["Karim Benzema","ATA",90],["Luis Suárez","ATA",90],["Gabriel Batistuta","ATA",90],["Andriy Shevchenko","ATA",90],["Alessandro Del Piero","ATA",90],["Francesco Totti","ATA",90],["Mohamed Salah","ATA",90],["Jairzinho","ATA",90],["Raúl","ATA",89],["Samuel Eto'o","ATA",89],["Didier Drogba","ATA",89],["Wayne Rooney","ATA",89],["Vinícius Júnior","ATA",89],["Tostão","ATA",89],["George Weah","ATA",89],["Hristo Stoichkov","ATA",89],["Harry Kane","ATA",89],["Bebeto","ATA",87],["Adriano Imperador","ATA",87]];
+const LEI_FORM={"1-2-1":["GOL","ZAG","MEI","MEI","ATA"],"1-1-2":["GOL","ZAG","MEI","ATA","ATA"],"2-1-1":["GOL","ZAG","ZAG","MEI","ATA"]};
+const LEI_XY={GOL:[[50,117]],ZAG:[[50,90],[29,88,71,88]],MEI:[[50,60],[27,59,73,59]],ATA:[[50,27],[29,28,71,28]]};
+const LEI_COR={GOL:["#5b4a12","#ffe08a"],ZAG:["#14405e","#a8dcff"],MEI:["#1f5a33","#b9f5cc"],ATA:["#5e1f1a","#ffb8ad"]};
+const LEI_POSN={GOL:"goleiro",ZAG:"zagueiro",MEI:"meio-campo",ATA:"atacante"};
+const LEI_BOTS=["Jhonny","Lucas","Juninho","Caio","Enzo","Biel","Gui","Davi","Pedrinho","Kauã","Arthur","Miguel","Kaique","Ryan","Matheus","Vitinho","Gabriel","Heitor","Théo","Nicolas","Samuel","Bernardo","Rafinha","Dudu"];
+const LEI_TIMES=["{n} FC","Os Crias","Real Quebrada","Bonde do {n}","Galáticos do {n}","Esporte Clube {n}","Os Brabos","{n} United","Atlético Resenha","Tropa do {n}","Racing do {n}","Inter de Várzea"];
+const LEI_ESTILOS=["gastador","tecnico","defensivo","economico"];
+const LEI_T=15000;
+const LEI_CURTO={"Edwin van der Sar":"Van der Sar","Vinícius Júnior":"Vini Jr","Neymar Jr":"Neymar","Cristiano Ronaldo":"CR7","Ronaldo Fenômeno":"Ronaldo","Marco van Basten":"Van Basten","Virgil van Dijk":"Van Dijk","Kevin De Bruyne":"De Bruyne","Alfredo Di Stéfano":"Di Stéfano","Alessandro Del Piero":"Del Piero","Carlos Alberto Torres":"Carlos Alberto","Nilton Santos":"Nilton Santos","Roberto Carlos":"Roberto Carlos","Juninho Pernambucano":"Juninho","Adriano Imperador":"Adriano","Thiago Silva":"Thiago Silva","Rogério Ceni":"Rogério Ceni","Lionel Messi":"Messi","Diego Maradona":"Maradona","Samuel Eto'o":"Eto'o","Luis Suárez":"Suárez","Ferenc Puskás":"Puskás","Gerd Müller":"Müller","Lothar Matthäus":"Matthäus"};
+const leiCurto=n=>LEI_CURTO[n]||n.split(" ").slice(-1)[0];
+const leiMedia=c=>c.slots.reduce((s,j)=>s+j[2],0)/c.slots.length;
+const LEI_TUT=["Bem-vindo ao <b>Leilão FUT Master</b>! Você tem <b>R$ 50</b> para montar um time de 5 craques.","Eu leiloo um jogador por vez. Você tem <b>15 segundos</b> para dar o seu lance.","Toque na <b>plaquinha</b>, escolha o valor e levante a mão! Mínimo R$ 1, pode valor quebrado (R$ 1,35...).","O maior lance leva. Empatou? Leilão de novo só entre quem empatou. Empatou de novo? Meu martelo decide!","Posição completa no seu time? Você fica de fora dessa rodada. Guarde dinheiro para completar o time!","Com os times prontos, <b>todos jogam contra todos</b>. Quem vencer mais leva o Leilão!"];
+let LEI={fase:"capa"};
+const leiR=c=>"R$ "+(c%100?(c/100).toFixed(2).replace(".",","):String(c/100));
+const leiPick=a=>a[Math.floor(Math.random()*a.length)];
+function leiFotoSrc(n){return typeof ROSTOS_REAIS!=="undefined"&&(ROSTOS_REAIS["Lenda|"+n])||null}
+function leiIni(n){const p=n.split(" ");return (p[0][0]+(p.length>1?p[p.length-1][0]:"")).toUpperCase()}
+function leiAv(c,px){const s=c.av;return `<span class="lei-av${c.bot?" bot":""}" style="width:${px}px;height:${px}px">${s?`<img src="${s}" alt="">`:`<b>${esc(leiIni(c.nome))}</b>`}${c.bot?'<i class="lei-robo">🤖</i>':""}</span>`}
+let LEI_CID=0;
+function leiCampo(c,w,big){ // campinho vertical: bolinha "?" até comprar; depois foto + nome em cima
+  const form=c.form,sl=LEI_FORM[form],cnt={},id="lc"+(++LEI_CID);let h="";
+  sl.forEach((pos,i)=>{const n=sl.filter(x=>x===pos).length,k=cnt[pos]=(cnt[pos]||0)+1,xy=n===1?LEI_XY[pos][0]:[LEI_XY[pos][1][(k-1)*2],LEI_XY[pos][1][(k-1)*2+1]],[x,y]=xy,j=c.slots[i],[bg,fg]=LEI_COR[pos];
+    const f=j&&leiFotoSrc(j[0]);
+    h+=`<g transform="translate(${x} ${y})"><circle r="10" fill="${j?"#0d1d3a":"rgba(255,255,255,.18)"}" stroke="${j?fg:"rgba(255,255,255,.7)"}" stroke-width="1.6"/>${j?(f?`<image href="${f}" x="-9" y="-9" width="18" height="20" clip-path="url(#${id})"/>`:`<text y="3.2" text-anchor="middle" font-size="8" font-weight="800" fill="#fff" font-family="Archivo,Arial">${esc(leiIni(j[0]))}</text>`):`<text y="3.6" text-anchor="middle" font-size="10" font-weight="800" fill="#fff" font-family="Archivo,Arial">?</text>`}
+      <g transform="translate(0 14.5)"><rect x="-9.5" y="-4.2" width="19" height="8.4" rx="2.4" fill="${bg}"/><text y="2.4" text-anchor="middle" font-size="6" font-weight="800" fill="${fg}" font-family="Archivo,Arial">${pos}</text></g>
+      ${j&&big?`<text y="-13" text-anchor="middle" font-size="6.4" font-weight="800" fill="#fff" stroke="#0a1a12" stroke-width="1.6" paint-order="stroke" font-family="Archivo,Arial">${esc(leiCurto(j[0]))}</text>`:""}</g>`});
+  return `<svg class="lei-campo" viewBox="0 0 100 135" width="${w}" height="${Math.round(w*1.35)}" aria-hidden="true"><defs><clipPath id="${id}"><circle r="9"/></clipPath></defs><rect width="100" height="135" rx="6" fill="#1f7a3e"/>${[0,1,2,3,4,5,6].map(i=>`<rect y="${i*19.3}" width="100" height="9.6" fill="#22853f"/>`).join("")}<g fill="none" stroke="rgba(255,255,255,.55)" stroke-width=".9"><rect x="4" y="4" width="92" height="127" rx="2"/><line x1="4" y1="67.5" x2="96" y2="67.5"/><circle cx="50" cy="67.5" r="11"/><rect x="26" y="108" width="48" height="23"/><rect x="38" y="122" width="24" height="9"/><rect x="26" y="4" width="48" height="23"/></g>${h}</svg>`}
+function leiNovoComp(nome,time,av,bot,form){return {nome,time,av,bot,form,din:5000,slots:LEI_FORM[form].map(()=>null),est:bot?leiPick(LEI_ESTILOS):null,v:0,e:0,d:0,gp:0,gc:0}}
+function leiMontar(n){const nomes=[...LEI_BOTS].sort(()=>Math.random()-.5),avs=typeof AVATARES!=="undefined"?AVATARES.map((_,i)=>i).sort(()=>Math.random()-.5):[];
+  const eu=leiNovoComp(G.user.coach||"Você",LEI.time,avatarSrc(),0,LEI.form);const cs=[eu];
+  for(let i=1;i<n;i++){const nm=nomes[i],t=leiPick(LEI_TIMES).replace("{n}",nm);cs.push(leiNovoComp(nm,t,avs.length?AVATARES[avs[i]]:"",1,leiPick(Object.keys(LEI_FORM))))}
+  LEI.cs=cs;LEI.usados={};LEI.fala="Bem-vindos ao Leilão FUT Master! Preparem as plaquinhas.";LEI.fase="sala";LEI.rod=null;LEI.val=100}
+function leiVagas(c,pos){return c.slots.reduce((s,j,i)=>s+(!j&&(!pos||LEI_FORM[c.form][i]===pos)?1:0),0)}
+function leiMax(c){return c.din-(leiVagas(c)-1)*100}
+function leiProxima(){const cs=LEI.cs,need={};cs.forEach(c=>LEI_FORM[c.form].forEach((p,i)=>{if(!c.slots[i])need[p]=(need[p]||0)+1}));
+  const ps=Object.keys(need);if(!ps.length){leiComecarJogos();return}
+  const tot=ps.reduce((s,p)=>s+need[p],0);let r=Math.random()*tot,pos=ps[0];for(const p of ps){r-=need[p];if(r<=0){pos=p;break}}
+  const livres=LEI_JOG.map((j,i)=>i).filter(i=>LEI_JOG[i][1]===pos&&!LEI.usados[i]),ji=leiPick(livres);LEI.usados[ji]=1;
+  const part=cs.map((c,i)=>i).filter(i=>leiVagas(cs[i],pos)>0);
+  LEI.rod={ji,part,desemp:0};LEI.fala=leiPick(["Próximo craque: {j}! Quem dá mais?","Olha só quem chegou: {j}. Plaquinhas pra cima!","Agora é a vez de {j}. Façam seus lances!","{j} está no leilão! Vale cada centavo."]).replace("{j}",LEI_JOG[ji][0]);
+  leiAbrirLances()}
+function leiAbrirLances(){const R=LEI.rod,cs=LEI.cs;R.fase="lance";R.lances={};R.t0=Date.now();LEI.val=Math.min(LEI.val||100,leiMax(cs[0]));if(LEI.val<100)LEI.val=100;LEI.painel=0;
+  R.part.forEach(i=>{if(cs[i].bot){const t=1500+Math.random()*(LEI_T-4500);setTimeout(()=>{if(LEI.rod!==R||R.fase!=="lance")return;R.lances[i]=leiLanceBot(cs[i],LEI_JOG[R.ji],R);leiRedesenha();leiTodos()},t)}});
+  clearInterval(LEI.tm);LEI.tm=setInterval(leiTick,200);leiRedesenha()}
+function leiLanceBot(c,j,R){const vag=leiVagas(c),max=leiMax(c),media=c.din/vag,q=Math.max(0,Math.min(1.15,(j[2]-84)/13));
+  let m=c.est==="gastador"?.65+q*1.9:c.est==="tecnico"?.4+q*1.7*(j[2]>=93?1.2:1):c.est==="defensivo"?(.55+q*1.2)*(j[1]==="GOL"||j[1]==="ZAG"?1.45:.8):.45+q*1.05;
+  if(vag===1)m=Math.max(m,1);let v=media*m*(.85+Math.random()*.3);
+  if(R.desemp&&R.ant&&R.ant[LEI.cs.indexOf(c)])v=Math.max(v,R.ant[LEI.cs.indexOf(c)]*(1.05+Math.random()*.35));
+  v=Math.random()<.6?Math.round(v/100)*100:Math.round(v/5)*5;return Math.max(100,Math.min(max,v))}
+function leiTodos(){const R=LEI.rod;if(R&&R.fase==="lance"&&R.part.every(i=>R.lances[i]!=null))setTimeout(()=>{if(LEI.rod===R&&R.fase==="lance")leiRevelar()},900)}
+function leiTick(){const R=LEI.rod;if(!R||R.fase!=="lance"){clearInterval(LEI.tm);return}const rest=LEI_T-(Date.now()-R.t0),s=Math.max(0,Math.ceil(rest/1000));
+  const el=document.getElementById("lei-seg");if(el)el.textContent=s;const b=document.getElementById("lei-barra");if(b)b.style.width=Math.max(0,rest/LEI_T*100)+"%";
+  const f=s<=2?"Dou-lhe duas...":s<=5?"Dou-lhe uma...":null;if(f&&LEI.fala!==f){LEI.fala=f;const fe=document.getElementById("lei-fala");if(fe)fe.innerHTML=f}
+  if(rest<=0)leiRevelar()}
+function leiRevelar(){const R=LEI.rod;clearInterval(LEI.tm);R.fase="revela";R.part.forEach(i=>{if(R.lances[i]==null)R.lances[i]=100});LEI.painel=0;
+  const mx=Math.max(...R.part.map(i=>R.lances[i])),emp=R.part.filter(i=>R.lances[i]===mx);LEI.fala="Plaquinhas na mesa!";leiRedesenha();
+  setTimeout(()=>{if(LEI.rod!==R)return;if(emp.length>1&&!R.desemp){R.ant={...R.lances};R.desemp=1;R.part=emp;LEI.fala=`Empate em ${leiR(mx)}! Novo lance só entre ${emp.map(i=>LEI.cs[i].nome).join(", ")}.`;leiRedesenha();setTimeout(()=>{if(LEI.rod===R)leiAbrirLances()},2200)}
+    else if(emp.length>1){R.fase="sorteio";R.emp=emp;R.luz=0;LEI.fala="Empatou de novo! Meu martelo vai decidir...";leiRedesenha();let n=0,tot=14+Math.floor(Math.random()*emp.length);
+      const gira=()=>{if(LEI.rod!==R)return;R.luz=n%emp.length;leiRedesenha();n++;if(n<=tot)setTimeout(gira,120+n*18);else leiVender(emp[R.luz],mx)};gira()}
+    else leiVender(emp[0],mx)},2300)}
+function leiVender(i,v){const R=LEI.rod,c=LEI.cs[i],j=LEI_JOG[R.ji],k=LEI_FORM[c.form].findIndex((p,s)=>p===j[1]&&!c.slots[s]);c.slots[k]=j;c.din-=v;R.fase="vendido";R.venc=i;R.preco=v;
+  LEI.fala=`VENDIDO! ${j[0]} para ${i===0?"você":c.nome} por ${leiR(v)}!`;if(i===0){try{somDinheiro()}catch(e){}try{vibrar("premio")}catch(e){}}leiRedesenha();
+  setTimeout(()=>{if(LEI.rod===R)leiProxima()},2600)}
+function leiRedesenha(){if(aba==="leilao")render()}
+/* partidas: todos contra todos (só ida) */
+const leiV=n=>n-60;
+function leiForca(c){const g=p=>c.slots.filter((j,i)=>LEI_FORM[c.form][i]===p),s=a=>a.reduce((t,j)=>t+leiV(j[2]),0);
+  return {atk:s(g("ATA"))+s(g("MEI"))*.5,def:s(g("GOL"))*1.2+s(g("ZAG"))+s(g("MEI"))*.5}}
+function leiPoisson(l){let L=Math.exp(-l),k=0,p=1;do{k++;p*=Math.random()}while(p>L);return k-1}
+function leiJogo(a,b){const A=LEI.cs[a],B=LEI.cs[b],fa=leiForca(A),fb=leiForca(B),lam=(x,y)=>Math.max(.2,Math.min(4.5,1.4*Math.pow(x.atk/y.def/.625,1.3)));
+  const ga=leiPoisson(lam(fa,fb)),gb=leiPoisson(lam(fb,fa)),pos=(c,p)=>c.slots.filter((j,i)=>LEI_FORM[c.form][i]===p),sob=leiCurto;
+  const autor=c=>{const l=[];c.slots.forEach((j,i)=>{const p=LEI_FORM[c.form][i],w=(p==="ATA"?5:p==="MEI"?2.4:p==="ZAG"?.6:0)*leiV(j[2]);if(w)l.push([j,w])});let r=Math.random()*l.reduce((s,x)=>s+x[1],0);for(const x of l){r-=x[1];if(r<=0)return x[0]}return l[0][0]};
+  const ev=[];const gol=(c)=>{const s=autor(c),ms=[...pos(c,"MEI"),...pos(c,"ZAG")].filter(j=>j!==s),as=ms.length?leiPick(ms):null;
+    ev.push([1+Math.floor(Math.random()*90),leiPick(["⚽ {s} bate cruzado e marca.","⚽ GOL! {s} de cabeça, cruzamento de {a}.","⚽ {s} dribla o goleiro e empurra pro gol.","⚽ Golaço de {s} de fora da área!","⚽ {a} rola e {s} só escora.","⚽ {s} recebe de {a} e não perdoa."]).replace("{s}",sob(s[0])).replace("{a}",as?sob(as[0]):"um companheiro")+` (${c.time})`])};
+  for(let i=0;i<ga;i++)gol(A);for(let i=0;i<gb;i++)gol(B);
+  const extra=Math.max(1,3-ga-gb);for(let i=0;i<extra&&i<2;i++){const ata=Math.random()<.5?[A,B]:[B,A],gk=pos(ata[1],"GOL")[0],x=autor(ata[0]);ev.push([1+Math.floor(Math.random()*90),Math.random()<.6?`🧤 ${sob(gk[0])} faz milagre no chute de ${sob(x[0])}.`:`😱 ${sob(x[0])} acerta a trave!`])}
+  ev.sort((x,y)=>x[0]-y[0]);
+  let why;const W=ga>gb?A:B,L=ga>gb?B:A,fw=ga>gb?fa:fb,fl=ga>gb?fb:fa,tot=f=>f.atk+f.def;
+  if(ga===gb)why=ga===0?`Os goleiros ${sob(pos(A,"GOL")[0][0])} e ${sob(pos(B,"GOL")[0][0])} fecharam o gol. Jogo travado.`:`Jogo equilibrado: os dois ataques funcionaram e ninguém conseguiu segurar o outro.`;
+  else if(leiMedia(W)<leiMedia(L)-2)why=`Zebra! O ${L.time} era melhor no papel, mas o ${W.time} foi mais eficiente.`;
+  else if(fw.atk-fl.atk>=fw.def-fl.def)why=`O ataque do ${W.time} (${pos(W,"ATA").map(j=>sob(j[0])).join(" e ")}) foi forte demais para a defesa do ${L.time}.`;
+  else why=`A defesa do ${W.time}, com ${sob(pos(W,"GOL")[0][0])} no gol, segurou tudo e decidiu o jogo.`;
+  return {a,b,ga,gb,ev:ev.map(x=>`${x[0]}' ${x[1]}`),why}}
+function leiComecarJogos(){clearInterval(LEI.tm);const n=LEI.cs.length,ids=LEI.cs.map((_,i)=>i);if(n%2)ids.push(-1);const m=ids.length,rods=[];
+  for(let r=0;r<m-1;r++){const jg=[];for(let k=0;k<m/2;k++){const a=ids[k],b=ids[m-1-k];if(a>=0&&b>=0)jg.push(leiJogo(a,b))}rods.push(jg);ids.splice(1,0,ids.pop())}
+  LEI.rods=rods;LEI.r=-1;LEI.fase="pronto";LEI.rod=null;LEI.fala="Times prontos! Agora é com a bola: todos contra todos.";render()}
+function leiAplicar(jg){const A=LEI.cs[jg.a],B=LEI.cs[jg.b];A.gp+=jg.ga;A.gc+=jg.gb;B.gp+=jg.gb;B.gc+=jg.ga;if(jg.ga>jg.gb){A.v++;B.d++}else if(jg.ga<jg.gb){B.v++;A.d++}else{A.e++;B.e++}}
+function leiClass(){return LEI.cs.map((c,i)=>i).sort((x,y)=>{const a=LEI.cs[x],b=LEI.cs[y];return b.v-a.v||(b.gp-b.gc)-(a.gp-a.gc)||b.gp-a.gp||x-y})}
+const LEI_PREMIO=[[100,100],[60,0],[30,0]]; // dinheiro em mil (G.cash): 100 = R$ 100 mil
+function leiPagar(){if(LEI.pago)return;LEI.pago=1;const p=leiClass().indexOf(0),pr=LEI_PREMIO[p];LEI.minha=p;if(pr){xpBonus(pr[0],"Leilão FUT Master");if(pr[1])G.cash+=pr[1];salvar()}}
+/* telas */
+function leiCardComp(i,area){const c=LEI.cs[i],R=LEI.rod,part=R&&R.part.includes(i),l=R&&R.lances[i],rev=R&&R.fase!=="lance",luz=R&&R.fase==="sorteio"&&R.emp[R.luz]===i,ven=R&&R.fase==="vendido"&&R.venc===i;
+  const placa=part&&l!=null?`<span class="lei-placa${rev?" vira":""}"><b>${rev?leiR(l):"?"}</b><i>✋</i></span>`:"";
+  return `<div class="lei-comp ${area}${part?"":" fora"}${luz?" luz":""}${ven?" ganhou":""}" data-a="lei_ver" data-v="${i}" role="button"><div class="lei-comp-f">${leiAv(c,40)}${placa}</div><b>${esc(c.nome)}</b><small>${esc(c.time)}</small><span class="lei-din num">${leiR(c.din)}</span>${leiCampo(c,46)}</div>`}
+function leiSala(){const cs=LEI.cs,R=LEI.rod,n=cs.length,eu=cs[0],areas={2:["t2"],3:["t1","t3"],4:["t1","t2","t3"],5:["t1","t3","l","r"],6:["t1","t2","t3","l","r"]}[n];
+  const op=cs.slice(1).map((_,k)=>[k+1,areas[k]]),top=op.filter(x=>x[1][0]==="t").map(x=>leiCardComp(x[0],x[1])).join(""),L=op.find(x=>x[1]==="l"),Rr=op.find(x=>x[1]==="r");
+  const j=R&&LEI_JOG[R.ji],[bg,fg]=j?LEI_COR[j[1]]:["",""],f=j&&leiFotoSrc(j[0]);
+  const centro=`<div class="lei-centro"><div class="lei-leila"><img src="img/leilao-leila.jpg" alt="Leila"><p id="lei-fala">${LEI.fala||""}</p></div>
+    ${j?`<div class="lei-card${R.fase==="vendido"?" vendido":""}"><span class="lei-pos" style="background:${bg};color:${fg}">${j[1]}</span><span class="lei-nota num">${j[2]}</span><div class="lei-cfoto">${f?`<img src="${f}" alt="">`:`<b>${esc(leiIni(j[0]))}</b>`}</div><b class="lei-cnome">${esc(j[0])}</b><small>${LEI_POSN[j[1]]}${R.desemp?" · DESEMPATE":""}</small>${R.fase==="vendido"?`<div class="lei-martelo">🔨</div><div class="lei-selo">VENDIDO<small>${esc(R.venc===0?"para você":cs[R.venc].nome)} · ${leiR(R.preco)}</small></div>`:""}</div>
+      ${R.fase==="lance"?`<div class="lei-tempo"><b class="num" id="lei-seg">${Math.max(0,Math.ceil((LEI_T-(Date.now()-R.t0))/1000))}</b><div><i id="lei-barra" style="width:${Math.max(0,(LEI_T-(Date.now()-R.t0))/LEI_T*100)}%"></i></div></div>`:""}`:`<div class="lei-espera">${LEI.fase==="sala"?`<b>Aguardando jogadores...</b>${cs.map(c=>`<span>${c.bot?"🤖":"👤"} ${esc(c.nome)} ✔</span>`).join("")}`:""}</div>`}</div>`;
+  const euPart=R&&R.part.includes(0),meu=R&&R.lances[0],max=leiMax(eu);
+  let acao="";if(R&&R.fase==="lance"){if(!euPart)acao=`<p class="lei-fora">Você está fora desta rodada: ${LEI_POSN[j[1]]} completo ✔</p>`;
+    else if(meu!=null)acao=`<p class="lei-ok">✋ Placa levantada: <b class="num">${leiR(meu)}</b></p>`;
+    else if(LEI.painel)acao=`<div class="lei-painel"><div class="lei-val"><button data-a="lei_mais" data-v="-100">−1</button><button data-a="lei_mais" data-v="-10">−0,10</button><b class="num">${leiR(LEI.val)}</b><button data-a="lei_mais" data-v="10">+0,10</button><button data-a="lei_mais" data-v="100">+1</button></div><div class="lei-val2"><button data-a="lei_mais" data-v="500">+5</button><button data-a="lei_mais" data-v="max">Máx ${leiR(max)}</button></div><button class="lei-levanta" data-a="lei_lance">✋ Levantar placa</button></div>`;
+    else acao=`<button class="lei-placa-bt" data-a="lei_placa"><span class="lei-pl-ic"><b>R$</b><i></i></span>Dar lance</button>`}
+  const meuPl=euPart&&meu!=null?`<span class="lei-placa${R.fase!=="lance"?" vira":""}"><b>${leiR(meu)}</b><i>✋</i></span>`:"";
+  return `<div class="lei-sala">${top?`<div class="lei-top">${top}</div>`:""}<div class="lei-mid">${L?leiCardComp(L[0],"l"):"<span></span>"}${centro}${Rr?leiCardComp(Rr[0],"r"):"<span></span>"}</div>
+    <div class="lei-eu${R&&R.fase==="vendido"&&R.venc===0?" ganhou":""}"><div class="lei-eu-info"><div class="lei-comp-f">${leiAv(eu,46)}${meuPl}</div><b>${esc(eu.nome)}</b><small>${esc(eu.time)} · ${eu.form}</small><span class="lei-din num">${leiR(eu.din)}</span></div>${leiCampo(eu,92,1)}<div class="lei-eu-ac">${acao}</div></div></div>`}
+function leiTutorial(){const k=LEI.tut;return `<div class="lei-tut"><div class="lei-tut-box"><img src="img/leilao-leila.jpg" alt="Leila"><p>${LEI_TUT[k]}</p><small>${k+1} de ${LEI_TUT.length}</small><div><button class="lei-tut-pular" data-a="lei_tutfim">Pular</button><button class="lei-tut-ok" data-a="lei_tutprox">${k<LEI_TUT.length-1?"Próximo ›":"Começar o leilão!"}</button></div></div></div>`}
+function leiJogos(){const cs=LEI.cs,r=LEI.r,tot=LEI.rods.length;let h=`<div class="lei-jogos"><div class="lei-leila mini"><img src="img/leilao-leila.jpg" alt="Leila"><p>${r<0?"Times prontos! Agora é com a bola: todos contra todos. Quem vencer mais leva o Leilão!":r<tot-1?`Rodada ${r+1} de ${tot} encerrada!`:"Fim das partidas! Vamos ver quem levou o Leilão..."}</p></div>`;
+  if(r<0)h+=`<div class="lei-times">${cs.map(c=>`<div class="lei-tc">${leiAv(c,34)}<b>${esc(c.time)}</b><small>${esc(c.nome)} · ${c.form}</small>${leiCampo(c,70,1)}</div>`).join("")}</div>`;
+  else{h+=`<h3 class="lei-h">Rodada ${r+1} de ${tot}</h3>`;LEI.rods[r].forEach((jg,k)=>{const A=cs[jg.a],B=cs[jg.b],meu=jg.a===0||jg.b===0,ab=meu||LEI.ver===r+"|"+k;
+      h+=`<div class="lei-jogo${meu?" meu":""}" data-a="lei_jogo" data-v="${r}|${k}" role="button"><div class="lei-placar">${leiAv(A,28)}<span>${esc(A.time)}</span><b class="num">${jg.ga} × ${jg.gb}</b><span>${esc(B.time)}</span>${leiAv(B,28)}</div>${ab?`<ul>${jg.ev.map(e=>`<li>${esc(e)}</li>`).join("")}</ul><p class="lei-why">💬 ${esc(jg.why)}</p>`:`<small class="lei-mais">Toque para ver os lances</small>`}</div>`});
+    h+=`<h3 class="lei-h">Classificação</h3><div class="lei-tab"><div class="lei-tl cab"><span>#</span><span>Time</span><span>V</span><span>E</span><span>D</span><span>SG</span></div>${leiClass().map((i,p)=>{const c=cs[i];return `<div class="lei-tl${i===0?" eu":""}"><span class="num">${p+1}</span><span>${leiAv(c,22)}${esc(c.time)}</span><b class="num">${c.v}</b><span class="num">${c.e}</span><span class="num">${c.d}</span><span class="num">${c.gp-c.gc>0?"+":""}${c.gp-c.gc}</span></div>`}).join("")}</div>`}
+  h+=`<button class="lei-prox" data-a="lei_rodada">${r<0?"Começar as partidas ⚽":r<tot-1?"Próxima rodada ›":"Ver o campeão 🏆"}</button></div>`;return h}
+function leiFim(){leiPagar();const cs=LEI.cs,cl=leiClass(),p=LEI.minha,pr=LEI_PREMIO[p],c1=cs[cl[0]];
+  return `<div class="lei-fim"><div class="lei-trofeu">🏆</div><p class="lei-tag">Campeão do Leilão</p><h2>${esc(c1.time)}</h2><p class="lei-sub">${esc(c1.nome)} · ${c1.v} vitórias</p>
+    <div class="lei-podio">${[1,0,2].filter(k=>cl[k]!=null).map(k=>{const c=cs[cl[k]];return `<div class="lei-pd p${k+1}">${leiAv(c,k?42:56)}<b>${esc(c.time)}</b><span class="lei-deg num">${k+1}º</span></div>`}).join("")}</div>
+    <div class="lei-leila mini"><img src="img/leilao-leila.jpg" alt="Leila"><p>${p===0?"Parabéns, campeão! Você montou o melhor time do leilão!":p<3?`Você ficou em ${p+1}º lugar. Bela campanha!`:`Você ficou em ${p+1}º. Na próxima, capriche nos lances!`}</p></div>
+    ${pr?`<div class="lei-premio">🎁 Prêmio: <b>+${pr[0]} XP</b>${pr[1]?` e <b>${dinheiro(pr[1])}</b> na carreira`:""}</div>`:""}
+    <button class="lei-prox" data-a="lei_denovo">🔨 Jogar de novo</button><button class="lei-sair2" data-a="lei_sair">Sair</button></div>`}
+function telaLeilao(){if(!reLiberado()){aba="jogar";return telaInicio()}const F=LEI.fase;
+  if(F==="capa")return `<div class="lei-capa"><div class="lei-art"><img src="img/leilao-capa.jpg" alt="Leilão FUT Master"><button class="lei-hs ir" data-a="lei_jogar" aria-label="Jogar"><img src="img/leilao-botao.png" alt=""></button></div><button class="re-tb lei-volta" data-a="aba" data-v="jogar">‹ Jogar</button></div>`;
+  const topo=(tit,volta)=>`<div class="re-topo lei-topo">${volta?`<button class="re-tb" data-a="${volta}">‹ Voltar</button>`:"<span></span>"}<b class="re-tit"><i>🔨</i> ${tit}</b><span></span></div>`;
+  let h=`<div class="lei${F==="sala"||F==="leilao"?" sala":""}">`;
+  if(F==="modo")h+=topo("Leilão FUT Master","lei_capa")+`<div class="lei-meio"><div class="lei-leila"><img src="img/leilao-leila.jpg" alt="Leila"><p>Olá! Como você quer jogar o leilão de hoje?</p></div><button class="lei-op" data-a="lei_maquina"><span>🤖</span><div><b>Jogar contra a máquina</b><small>Você e até 5 bots</small></div></button><button class="lei-op off" data-a="lei_amigos"><span>👥</span><div><b>Jogar com amigos</b><small>Em breve: sala online com quem estiver no jogo</small></div></button></div>`;
+  else if(F==="qtd")h+=topo("Contra a máquina","lei_modo")+`<div class="lei-meio"><h3 class="lei-h">Quantos competidores?</h3><p class="lei-dica">Contando você. Os outros são bots.</p><div class="lei-qtd">${[2,3,4,5,6].map(n=>`<button data-a="lei_qtd" data-v="${n}">${n}</button>`).join("")}</div></div>`;
+  else if(F==="prep"){const fake={form:LEI.form,slots:LEI_FORM[LEI.form].map(()=>null)};
+    h+=topo("Monte seu time","lei_modo")+`<div class="lei-meio"><label class="lei-lb">Dono<input value="${esc(G.user.coach||"")}" disabled></label><label class="lei-lb">Nome do time<input id="lei-time" maxlength="22" placeholder="Ex.: Galáticos FC" value="${esc(LEI.time||"")}"></label>
+      <p class="lei-lb">Formação</p><div class="lei-forms">${Object.keys(LEI_FORM).map(f=>`<button class="${f===LEI.form?"sel":""}" data-a="lei_form" data-v="${f}">${f}</button>`).join("")}</div><div class="lei-campo-g">${leiCampo(fake,190,1)}</div><p class="lei-dica">Goleiro + ${LEI.form.split("-").map((x,i)=>`${x} ${["zagueiro","meia","atacante"][i]}${x>1?"s":""}`).join(", ")}</p><button class="lei-prox" data-a="lei_sala">Ir para a sala do leilão ›</button></div>`}
+  else if(F==="sala"||F==="leilao")h+=topo("Sala do leilão","lei_sairq")+leiSala()+(LEI.tut!=null?leiTutorial():"");
+  else if(F==="pronto")h+=topo("Partidas","")+leiJogos();
+  else if(F==="fim")h+=topo("Resultado","")+leiFim();
+  return h+"</div>"}
+function leiComecar(){LEI.fase="leilao";LEI.fala="Bem-vindos ao Leilão FUT Master! Preparem as plaquinhas.";render();setTimeout(()=>{if(LEI.fase==="leilao"&&!LEI.rod)leiProxima()},1600)}
+function leiAcao(a,v){const ti=document.getElementById("lei-time");if(ti)LEI.time=ti.value;
+  switch(a){
+  case "lei_breve":toast("Leilão FUT Master: em breve!");return;
+  case "lei_abrir":if(!reLiberado()){toast("Leilão FUT Master: em breve!");return}if(!LEI.cs||LEI.fase==="fim")LEI={fase:"capa"};aba="leilao";window.scrollTo(0,0);break;
+  case "lei_capa":LEI.fase="capa";break;
+  case "lei_jogar":case "lei_modo":LEI.fase="modo";break;
+  case "lei_amigos":toast("Jogar com amigos: em breve! 👥");return;
+  case "lei_maquina":LEI.fase="qtd";break;
+  case "lei_qtd":LEI.n=+v;LEI.form=LEI.form||"1-2-1";LEI.fase="prep";break;
+  case "lei_form":LEI.form=v;break;
+  case "lei_sala":if(!(LEI.time||"").trim()||LEI.time.trim().length<3){toastErro("Dê um nome ao time (3 letras ou mais).");return}LEI.time=LEI.time.trim();leiMontar(LEI.n);
+    if(!perfil().leiTut){LEI.tut=0;render();return}render();setTimeout(()=>{if(LEI.fase==="sala")leiComecar()},1800);return;
+  case "lei_tutprox":if(LEI.tut<LEI_TUT.length-1){LEI.tut++;break}/* fallthrough */
+  case "lei_tutfim":LEI.tut=null;perfil().leiTut=1;salvar();leiComecar();return;
+  case "lei_placa":LEI.painel=1;break;
+  case "lei_mais":{const mx=leiMax(LEI.cs[0]);LEI.val=v==="max"?mx:Math.max(100,Math.min(mx,LEI.val+(+v)));break}
+  case "lei_lance":{const R=LEI.rod;if(!R||R.fase!=="lance")return;R.lances[0]=LEI.val;LEI.painel=0;render();leiTodos();return}
+  case "lei_ver":{const c=LEI.cs[+v];modal(`<h2>${esc(c.time)}</h2><p class="muted">${esc(c.nome)}${c.bot?" 🤖":""} · ${c.form} · ${leiR(c.din)} sobrando</p><div style="display:flex;justify-content:center">${leiCampo(c,200,1)}</div><ul class="lei-lista">${c.slots.map((j,i)=>`<li><span style="color:${LEI_COR[LEI_FORM[c.form][i]][1]}">${LEI_FORM[c.form][i]}</span> ${j?`${esc(j[0])} <b class="num">${j[2]}</b>`:"—"}</li>`).join("")}</ul>`);return}
+  case "lei_sairq":if(LEI.fase==="sala"||LEI.fase==="leilao"){if(!confirm("Sair do leilão? Você perde este leilão."))return}/* fallthrough */
+  case "lei_sair":clearInterval(LEI.tm);LEI={fase:"capa"};aba="jogar";window.scrollTo(0,0);break;
+  case "lei_denovo":clearInterval(LEI.tm);LEI={fase:"modo",form:LEI.form,time:LEI.time};break;
+  case "lei_jogo":LEI.ver=LEI.ver===v?null:v;break;
+  case "lei_rodada":if(LEI.r>=LEI.rods.length-1){LEI.fase="fim";window.scrollTo(0,0);break}LEI.r++;LEI.rods[LEI.r].forEach(leiAplicar);LEI.ver=null;window.scrollTo(0,0);break}
+  render()}
+function cartaoLeilao(){if(!reLiberado())return `<button class="modo lei bloq" data-a="lei_breve"><span class="modo-ic">🔨</span><div><b>Leilão FUT Master</b><small>Em breve</small></div><i>🔒</i></button>`;
+  return `<button class="modo lei" data-a="lei_abrir"><span class="modo-ic">🔨</span><div><b>Leilão FUT Master</b><small>${LEI.cs&&LEI.fase!=="fim"&&LEI.fase!=="capa"?"Leilão em andamento · toque para voltar":"Monte um time de craques no leilão da Leila"}</small></div><i>›</i></button>`}
+
 function cartaoModos(){reLer();const c=RE.car,cl=G.clubs[G.user.club];
   return `<div class="modos"><h2 class="modos-tit">Modos de jogo</h2>
     <div class="modo on"><span class="modo-ic">⚽</span><div><b>Modo Carreira</b><small>${esc(cl.name)} · você está aqui</small></div></div>
-    <button class="modo est${reLiberado()?"":" bloq"}" data-a="${reLiberado()?"re_abrir":"re_breve"}"><span class="modo-ic">⭐</span><div><b>Rumo ao Estrelato</b><small>${c&&c.fase!=="fim"?`${esc(c.nome)} · ${c.idade} anos · ${esc(c.clube?c.clube.name:"peneira")}`:"Jogo rápido: crie seu atleta e viva a carreira"}</small></div><i>${reLiberado()?"›":"🔒"}</i></button>${cartaoQuiz()}</div>`}
+    <button class="modo est${reLiberado()?"":" bloq"}" data-a="${reLiberado()?"re_abrir":"re_breve"}"><span class="modo-ic">⭐</span><div><b>Rumo ao Estrelato</b><small>${c&&c.fase!=="fim"?`${esc(c.nome)} · ${c.idade} anos · ${esc(c.clube?c.clube.name:"peneira")}`:"Jogo rápido: crie seu atleta e viva a carreira"}</small></div><i>${reLiberado()?"›":"🔒"}</i></button>${cartaoLeilao()}${cartaoQuiz()}</div>`}
 
 function acao(a,v,el){
   if(a&&a.startsWith("re_")){reAcao(a,v,el);return}
   if(a&&a.startsWith("qz_")){quizAcao(a,v);return}
+  if(a&&a.startsWith("lei_")){leiAcao(a,v);return}
   const vis=()=>alvoVisual();
   if(vivoAntes(a))return; // amistoso ao vivo: velocidade, sair e limite de pausas
   switch(a){
