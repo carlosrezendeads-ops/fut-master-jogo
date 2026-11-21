@@ -5075,7 +5075,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795264067";
+const VERSAO="1795264212";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -10356,10 +10356,11 @@ const LEI_JOG=[ // [nome, posição GOL/ZAG/MEI/ATA, nota]
  ["Franz Beckenbauer","ZAG",96],["Paolo Maldini","ZAG",95],["Franco Baresi","ZAG",93],["Fabio Cannavaro","ZAG",92],["Sergio Ramos","ZAG",92],["Alessandro Nesta","ZAG",91],["Carles Puyol","ZAG",90],["Virgil van Dijk","ZAG",90],["Cafu","ZAG",91],["Roberto Carlos","ZAG",91],["Philipp Lahm","ZAG",91],["Carlos Alberto Torres","ZAG",90],["Nilton Santos","ZAG",90],["Thiago Silva","ZAG",89],["Dani Alves","ZAG",89],["Lilian Thuram","ZAG",89],["Lúcio","ZAG",88],["John Terry","ZAG",88],["Rio Ferdinand","ZAG",88],["Marcelo","ZAG",88],["Gerard Piqué","ZAG",88],["Giorgio Chiellini","ZAG",88],["Marquinhos","ZAG",87],["Pepe","ZAG",87],["Nemanja Vidić","ZAG",87],["Aldair","ZAG",86],
  ["Johan Cruyff","MEI",96],["Zinedine Zidane","MEI",96],["Ronaldinho","MEI",94],["Zico","MEI",94],["Michel Platini","MEI",94],["Andrés Iniesta","MEI",93],["Xavi","MEI",93],["Kaká","MEI",92],["Luka Modrić","MEI",92],["Lothar Matthäus","MEI",92],["Andrea Pirlo","MEI",91],["Kevin De Bruyne","MEI",91],["Rivaldo","MEI",91],["Ruud Gullit","MEI",91],["Bobby Charlton","MEI",91],["Steven Gerrard","MEI",90],["Luís Figo","MEI",90],["Toni Kroos","MEI",90],["Sócrates","MEI",90],["Rivelino","MEI",90],["Frank Lampard","MEI",89],["Clarence Seedorf","MEI",89],["Patrick Vieira","MEI",89],["Didi","MEI",89],["Gérson","MEI",89],["Jude Bellingham","MEI",89],["Pedri","MEI",89],["David Beckham","MEI",88],["Paul Scholes","MEI",88],["Falcão","MEI",88],["Gheorghe Hagi","MEI",88],["Juninho Pernambucano","MEI",87],["Claude Makélélé","MEI",87],["Dunga","MEI",86],
  ["Pelé","ATA",99],["Lionel Messi","ATA",98],["Diego Maradona","ATA",98],["Cristiano Ronaldo","ATA",97],["Ronaldo Fenômeno","ATA",97],["Garrincha","ATA",95],["Alfredo Di Stéfano","ATA",95],["Ferenc Puskás","ATA",95],["Romário","ATA",94],["Marco van Basten","ATA",94],["Gerd Müller","ATA",94],["Eusébio","ATA",93],["Kylian Mbappé","ATA",93],["Neymar Jr","ATA",92],["Thierry Henry","ATA",92],["Roberto Baggio","ATA",92],["Zlatan Ibrahimović","ATA",91],["Robert Lewandowski","ATA",91],["Erling Haaland","ATA",91],["Lamine Yamal","ATA",90],["Karim Benzema","ATA",90],["Luis Suárez","ATA",90],["Gabriel Batistuta","ATA",90],["Andriy Shevchenko","ATA",90],["Alessandro Del Piero","ATA",90],["Francesco Totti","ATA",90],["Mohamed Salah","ATA",90],["Jairzinho","ATA",90],["Raúl","ATA",89],["Samuel Eto'o","ATA",89],["Didier Drogba","ATA",89],["Wayne Rooney","ATA",89],["Vinícius Júnior","ATA",89],["Tostão","ATA",89],["George Weah","ATA",89],["Hristo Stoichkov","ATA",89],["Harry Kane","ATA",89],["Bebeto","ATA",87],["Adriano Imperador","ATA",87]];
-/* reservas (21/11): Série A do Brasil, bons mas não os melhores. Só vão a leilão para quem gastou tudo
+/* reservas (21/11): Série A do Brasil e Europa, bons mas não os melhores. Só vão a leilão para quem gastou tudo
    (sobrou só R$ 1 por vaga) e ainda tem vaga; aparecem como um lote normal. [nome, posição, nota, clube da foto] */
 const LEI_RES=[["Hugo Souza","GOL",81,"Corinthians"],["Léo Ortiz","ZAG",81,"Flamengo"],["Rodrigo Garro","MEI",82,"Corinthians"],
-  ["Andreas Pereira","MEI",82,"Palmeiras"],["Lucas Moura","ATA",83,"São Paulo"],["Bruno Henrique","ATA",82,"Flamengo"]];
+  ["Andreas Pereira","MEI",82,"Palmeiras"],["Lucas Moura","ATA",83,"São Paulo"],["Bruno Henrique","ATA",82,"Flamengo"],
+  ["Kepa Arrizabalaga","GOL",81,""],["Matthijs de Ligt","ZAG",82,""],["Leon Goretzka","MEI",82,""],["Marcus Rashford","ATA",83,""]]; // Europa (21/11)
 const LEI_RES0=LEI_JOG.length;LEI_JOG.push(...LEI_RES.map(x=>x.slice(0,3)));
 const LEI_FORM={"1-2-1":["GOL","ZAG","MEI","MEI","ATA"],"1-1-2":["GOL","ZAG","MEI","ATA","ATA"],"2-1-1":["GOL","ZAG","ZAG","MEI","ATA"]};
 const LEI_XY={GOL:[[50,117]],ZAG:[[50,90],[29,88,71,88]],MEI:[[50,60],[27,59,73,59]],ATA:[[50,27],[29,28,71,28]]};
