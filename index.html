@@ -1135,6 +1135,9 @@ nav.abas button{font-size:11px}
 .lei-forms{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.lei-forms button{font:inherit;font-weight:800;font-size:17px;padding:10px 0;border-radius:10px;border:1px solid #2e4370;background:#13254a;color:#fff;cursor:pointer}
 .lei-forms button.sel{background:#ffd23f;color:#2a1a00;border-color:#ffd23f}
 .lei-campo-g{display:flex;justify-content:center}.lei-campo{display:block;border-radius:6px;box-shadow:0 2px 10px rgba(0,0,0,.4)}
+.bt-luz{position:absolute;inset:0;pointer-events:none;overflow:hidden;mix-blend-mode:overlay;-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat;animation:leiBt 1.2s ease-in-out infinite;transform-origin:center}
+.bt-luz::before,.lei-prox::after{content:"";position:absolute;top:-30%;bottom:-30%;left:0;width:22%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.95) 50%,transparent);transform:translateX(-150%) skewX(-20deg);animation:modoLuz 3s ease-in-out infinite;pointer-events:none}
+.lei-prox{position:relative;overflow:hidden}.lei-prox::after{mix-blend-mode:overlay}
 .lei-prox{font:inherit;font-weight:800;font-size:16px;padding:14px;border:0;border-radius:12px;background:linear-gradient(135deg,#ffd23f,#f0a500);color:#2a1a00;cursor:pointer;width:100%;box-shadow:0 4px 14px rgba(240,165,0,.35)}
 .lei-sair2{font:inherit;background:none;border:0;color:#9fb3da;padding:10px;cursor:pointer;width:100%}
 .lei.sala{padding:8px 6px 14px;display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden}
@@ -5091,7 +5094,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795280058";
+const VERSAO="1795280840";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -10622,7 +10625,7 @@ function leiFim(){leiPagar();const cs=LEI.cs,cl=leiClass(),p=LEI.minha,pr=LEI_PR
     <h3 class="lei-h">Classificação final</h3>${leiTabela(1)}
     <button class="lei-prox" data-a="lei_denovo">🔨 Jogar de novo</button><button class="lei-sair2" data-a="lei_sair">Sair</button></div>`}
 function telaLeilao(){if(!reLiberado()){aba="jogar";return telaInicio()}const F=LEI.fase;
-  if(F==="capa")return `<div class="lei-capa"><div class="lei-art"><img src="img/leilao-capa.jpg" alt="Leilão FUT Master"><button class="lei-hs ir" data-a="lei_jogar" aria-label="Jogar"><img src="img/leilao-botao.png" alt=""></button></div><button class="re-tb lei-volta" data-a="aba" data-v="jogar">‹ Jogar</button></div>`;
+  if(F==="capa")return `<div class="lei-capa"><div class="lei-art"><img src="img/leilao-capa.jpg" alt="Leilão FUT Master"><button class="lei-hs ir" data-a="lei_jogar" aria-label="Jogar"><img src="img/leilao-botao.png" alt=""><i class="bt-luz" style="--m:url(img/leilao-botao.png)"></i></button></div><button class="re-tb lei-volta" data-a="aba" data-v="jogar">‹ Jogar</button></div>`;
   const topo=(tit,volta)=>`<div class="re-topo lei-topo">${volta?`<button class="re-tb" data-a="${volta}">‹ Voltar</button>`:"<span></span>"}<b class="re-tit"><i>🔨</i> ${tit}</b><span></span></div>`;
   let h=`<div class="lei${F==="sala"||F==="leilao"?" sala":""}">`;
   if(F==="modo")h+=topo("Leilão FUT Master","lei_capa")+`<div class="lei-meio"><div class="lei-leila"><img src="img/leilao-leila.jpg" alt="Leila"><p>Olá! Como você quer jogar o leilão de hoje?</p></div><button class="lei-op" data-a="lei_maquina"><span>🤖</span><div><b>Jogar contra a máquina</b><small>Você e até 5 bots</small></div></button><button class="lei-op off" data-a="lei_amigos"><span>👥</span><div><b>Jogar com amigos</b><small>Em breve: sala online com quem estiver no jogo</small></div></button></div>`;
