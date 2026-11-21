@@ -5081,7 +5081,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795268733";
+const VERSAO="1795270618";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -10403,17 +10403,19 @@ function leiMontar(n){const nomes=[...LEI_BOTS].sort(()=>Math.random()-.5),avs=t
   LEI.cs=cs;LEI.usados={};LEI.fala="Bem-vindos ao Leilão FUT Master! Preparem as plaquinhas.";LEI.fase="sala";LEI.rod=null;LEI.val=100}
 function leiVagas(c,pos){return c.slots.reduce((s,j,i)=>s+(!j&&(!pos||LEI_FORM[c.form][i]===pos)?1:0),0)}
 function leiMax(c){return c.din-(leiVagas(c)-1)*100}
-function leiProxima(){const cs=LEI.cs,need={};cs.forEach(c=>LEI_FORM[c.form].forEach((p,i)=>{if(!c.slots[i])need[p]=(need[p]||0)+1}));
-  const ps=Object.keys(need);if(!ps.length){leiComecarJogos();return}
+/* quem gastou tudo (sobrou só R$ 1 por vaga) fica fora dos lotes; os reservas são distribuídos para eles só no FINAL (21/11) */
+function leiProxima(){const cs=LEI.cs,need={},qb=cs.map((c,i)=>i).filter(i=>leiQuebrado(cs[i]));
+  cs.forEach((c,ci)=>{if(!qb.includes(ci))LEI_FORM[c.form].forEach((p,i)=>{if(!c.slots[i])need[p]=(need[p]||0)+1})});
+  const ps=Object.keys(need);if(!ps.length&&!qb.length){leiComecarJogos();return}
   const tot=ps.reduce((s,p)=>s+need[p],0);let r=Math.random()*tot,pos=ps[0];for(const p of ps){r-=need[p];if(r<=0){pos=p;break}}
-  const livre=(i,p)=>LEI_JOG[i][1]===p&&!LEI.usados[i],qb=cs.map((c,i)=>i).filter(i=>leiQuebrado(cs[i]));let ji,part;
-  if(qb.length){const pq=[];qb.forEach(i=>LEI_FORM[cs[i].form].forEach((p,k)=>{if(!cs[i].slots[k])pq.push(p)}));
+  const livre=(i,p)=>LEI_JOG[i][1]===p&&!LEI.usados[i];let ji,part;
+  if(!ps.length){const pq=[];qb.forEach(i=>LEI_FORM[cs[i].form].forEach((p,k)=>{if(!cs[i].slots[k])pq.push(p)}));
     const comRes=pq.filter(p=>LEI_JOG.some((_,i)=>i>=LEI_RES0&&livre(i,p)));pos=leiPick(comRes.length?comRes:pq);
     const res=LEI_JOG.map((_,i)=>i).filter(i=>i>=LEI_RES0&&livre(i,pos));ji=leiPick(res.length?res:LEI_JOG.map((_,i)=>i).filter(i=>i<LEI_RES0&&livre(i,pos)));
     part=qb.filter(i=>leiVagas(cs[i],pos)>0);LEI.usados[ji]=1;
     const w=leiPick(part),R={ji,part:[w],lances:{},desemp:0,fase:"dist",venc:w};LEI.rod=R;LEI.fala=`${LEI_JOG[ji][0]} vai para o time ${w===0?"seu":"de "+cs[w].nome}!`;leiRedesenha();
     setTimeout(()=>{if(LEI.rod!==R)return;R.fase="voa";leiRedesenha();setTimeout(()=>{if(LEI.rod===R)leiVender(w,100,1)},850)},1500);return}
-  else{ji=leiPick(LEI_JOG.map((_,i)=>i).filter(i=>i<LEI_RES0&&livre(i,pos)));part=cs.map((c,i)=>i).filter(i=>leiVagas(cs[i],pos)>0)}
+  else{ji=leiPick(LEI_JOG.map((_,i)=>i).filter(i=>i<LEI_RES0&&livre(i,pos)));part=cs.map((c,i)=>i).filter(i=>!qb.includes(i)&&leiVagas(cs[i],pos)>0)}
   LEI.usados[ji]=1;
   LEI.rod={ji,part,desemp:0};LEI.fala=leiPick(["Próximo craque: {j}! Quem dá mais?","Olha só quem chegou: {j}. Plaquinhas pra cima!","Agora é a vez de {j}. Façam seus lances!","{j} está no leilão! Vale cada centavo."]).replace("{j}",LEI_JOG[ji][0]);
   leiAbrirLances()}
