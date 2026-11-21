@@ -1203,6 +1203,11 @@ nav.abas button{font-size:11px}
 .lei-podio{display:flex;justify-content:center;align-items:flex-end;gap:8px;margin:8px 0}.lei-pd{display:flex;flex-direction:column;align-items:center;gap:3px;width:100px}.lei-pd b{font-size:11.5px}
 .lei-deg{display:block;width:100%;background:linear-gradient(#ffd23f,#b8860b);color:#2a1a00;font-weight:900;border-radius:6px 6px 0 0;padding:6px 0}.lei-pd.p1 .lei-deg{height:58px}.lei-pd.p2 .lei-deg{height:40px;background:linear-gradient(#e2e8f0,#94a3b8)}.lei-pd.p3 .lei-deg{height:28px;background:linear-gradient(#f0b27a,#a0522d)}
 .lei-premio{background:rgba(94,224,122,.13);border:1px solid #5ee07a;border-radius:12px;padding:10px;font-size:14px}
+.lei-tk{cursor:pointer}.lei-tl .lei-tk:last-child{text-decoration:underline dotted rgba(255,255,255,.35);text-underline-offset:3px}.lei-tl>span:nth-child(2){display:flex;align-items:center;gap:5px;min-width:0}
+.lei-fogo{animation:leiFogo .8s ease-in-out infinite alternate;filter:drop-shadow(0 0 2px #ff9a1f)}@keyframes leiFogo{from{stroke:#ffd23f;stroke-width:1.4}to{stroke:#ff8a1f;stroke-width:2.4}}
+.lei-fa{transform-box:fill-box;animation:leiFa 1.1s ease-out infinite}@keyframes leiFa{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(0,-7px) scale(.3);opacity:0}}
+.lei-li-mvp,.lei-li-d{background:linear-gradient(90deg,rgba(255,210,63,.18),transparent)}.lei-lst{color:#9fb3da;font-size:12px}.lei-mvp-tag{font-style:normal;font-weight:900;font-size:11px;background:#ffd23f;color:#3a2200;border-radius:4px;padding:1px 5px}
+.lei-perf{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;margin-bottom:10px}.lei-perf h2{margin:4px 0 0}.lei-perf .titulo-dono{align-self:center}
 .lei-lista{list-style:none;padding:0;margin:10px 0 0;font-size:14px}.lei-lista li{padding:4px 0;border-bottom:1px solid rgba(127,127,127,.2)}.lei-lista span{font-weight:800;display:inline-block;width:38px}
 /* Leilão: partidas e pódio v2 (20/11) */
 .lei-rod{margin:0;text-align:center;font-size:11.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#9fb3da}
@@ -5081,7 +5086,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795277756";
+const VERSAO="1795278852";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7075,6 +7080,8 @@ function telaPerfil(){
     <div class="cartao kpi"><small>Gols pró / contra</small><b class="num">${P.gp} / ${P.gc}</b></div>
     <div class="cartao kpi"><small>Títulos</small><b class="num">${G.titles.length}</b></div>
     <div class="cartao kpi"><small>Temporada</small><b class="num">${temp}ª</b></div>
+    <div class="cartao kpi"><small>🔨 Leilões ganhos</small><b class="num">${P.leiV||0}</b></div>
+    <div class="cartao kpi"><small>⭐ Notas 10 na Jornada</small><b class="num">${P.re10||0}</b></div>
     <div class="cartao kpi" style="grid-column:1/-1"><small>Valor do elenco</small><b class="num">${dinheiro(jogadoresDo(G.user.club).reduce((x,p)=>x+valor(p),0))}</b></div></div>`;
   h+=blocoConquistas();
   h+=`<h2>Como ganhar experiência</h2><div class="cartao extrato num">
@@ -9396,7 +9403,7 @@ function reTelaNota(c){const n=c.nota10,p=c.prNota||{xp:0,din:0},cor=n>=9?"#ffd2
     <p class="muted peq">6 a 7: 30 XP · 7 a 8: 50 XP · 8 a 9: 70 XP · 9 a 10: 90 XP · 10: 150 XP + ${dinheiro(300000)}</p>
     <button class="btn prim full" data-a="re_notaok">Ver a ficha da carreira</button></div>`}
 function reAposentar(c){c.fase="nota";c.titulo=reTituloFinal(c);c.frase=c.fim?(c.fim.t==="morte"?"Partiu cedo demais":"Carreira interrompida pelas lesões"):reFrase(c);if(!c.fim)reLog(c,`${c.nome} pendura as chuteiras aos ${c.idade} anos`);
-  c.nota10=reNota10(c);if(!c.pagoNota){c.pagoNota=1;c.prNota=rePremioNota(c.nota10);try{if(G&&c.prNota.din)G.cash+=c.prNota.din;if(c.prNota.xp)somarXP(c.prNota.xp);if(G)salvar()}catch(e){}}
+  c.nota10=reNota10(c);if(!c.pagoNota){c.pagoNota=1;try{if(c.nota10>=10){const P=perfil();P.re10=(P.re10||0)+1}}catch(e){}c.prNota=rePremioNota(c.nota10);try{if(G&&c.prNota.din)G.cash+=c.prNota.din;if(c.prNota.xp)somarXP(c.prNota.xp);if(G)salvar()}catch(e){}}
   RE.hist=[{...c,fase:"fim"},...RE.hist].slice(0,10);reSalvar()}
 function reTelaFim(c,hist){const tits=c.tits.filter(t=>!t.startsWith("Sub-20"));
   const F=c.fim;return `<div class="re-fim${F?" re-fim-"+F.t:""}"><p class="re-tag">${F?(F.t==="morte"?`🕊️ Descanse em paz · ${F.idade} anos`:`🏥 Carreira interrompida · ${F.idade} anos`):`Fim de carreira · ${c.idade} anos · melhor fase`}</p>${reCard(c,true,c.pico)}${F?`<div class="re-trag-box"><b>${esc(F.tit)}</b><p>${esc(F.txt)}</p></div>`:""}
@@ -10388,12 +10395,13 @@ const leiQuebrado=c=>leiVagas(c)>0&&leiMax(c)<=150; // gastou tudo: só sobrou o
 function leiIni(n){const p=n.split(" ");return (p[0][0]+(p.length>1?p[p.length-1][0]:"")).toUpperCase()}
 function leiAv(c,px){const s=c.av;return `<span class="lei-av${c.bot?" bot":""}" style="width:${px}px;height:${px}px">${s?`<img src="${s}" alt="">`:`<b>${esc(leiIni(c.nome))}</b>`}${c.bot?'<i class="lei-robo">🤖</i>':""}</span>`}
 let LEI_CID=0;
-function leiCampo(c,w,big){ // campinho vertical: bolinha "?" até comprar; depois foto + nome em cima
+function leiCampo(c,w,big,fx){ // campinho vertical: bolinha "?" até comprar; depois foto + nome em cima
   const form=c.form,sl=LEI_FORM[form],cnt={},id="lc"+(++LEI_CID);let h="";
   sl.forEach((pos,i)=>{const n=sl.filter(x=>x===pos).length,k=cnt[pos]=(cnt[pos]||0)+1,xy=n===1?LEI_XY[pos][0]:[LEI_XY[pos][1][(k-1)*2],LEI_XY[pos][1][(k-1)*2+1]],[x,y]=xy,j=c.slots[i],[bg,fg]=LEI_COR[pos];
     const f=j&&leiFotoSrc(j[0]);
     h+=`<g transform="translate(${x} ${y})"><circle r="10" fill="${j?"#0d1d3a":"rgba(255,255,255,.18)"}" stroke="${j?fg:"rgba(255,255,255,.7)"}" stroke-width="1.6"/>${j?(f?`<image href="${f}" x="-9" y="-9" width="18" height="20" clip-path="url(#${id})"/>`:`<text y="3.2" text-anchor="middle" font-size="8" font-weight="800" fill="#fff" font-family="Archivo,Arial">${esc(leiIni(j[0]))}</text>`):`<text y="3.6" text-anchor="middle" font-size="10" font-weight="800" fill="#fff" font-family="Archivo,Arial">?</text>`}
-      <g transform="translate(0 14.5)"><rect x="-9.5" y="-4.2" width="19" height="8.4" rx="2.4" fill="${bg}"/><text y="2.4" text-anchor="middle" font-size="6" font-weight="800" fill="${fg}" font-family="Archivo,Arial">${pos}</text></g>
+      ${(()=>{const t=fx&&fx[i];if(!t)return "";return `<circle r="11.6" class="lei-fogo" fill="none" stroke="#ffd23f" stroke-width="1.8"/>${[[-8,-6,0],[7,-7,.35],[-4,-9,.7],[9,0,.5],[-10,1,.2],[2,-10,.9]].map(([x,y,dl])=>`<circle cx="${x}" cy="${y}" r="${t==="mvp"?1.3:1}" class="lei-fa" fill="${dl>.4?"#ff8a1f":"#ffe066"}" style="animation-delay:${dl}s"/>`).join("")}`})()}
+      <g transform="translate(0 14.5)">${fx&&fx[i]==="mvp"?`<rect x="-11" y="-4.6" width="22" height="9.2" rx="2.4" fill="#ffd23f" stroke="#7a4b00" stroke-width=".6"/><text y="2.5" text-anchor="middle" font-size="6.4" font-weight="900" fill="#3a2200" font-family="Archivo,Arial">MVP</text>`:`<rect x="-9.5" y="-4.2" width="19" height="8.4" rx="2.4" fill="${bg}"/><text y="2.4" text-anchor="middle" font-size="6" font-weight="800" fill="${fg}" font-family="Archivo,Arial">${pos}</text>`}</g>
       ${j?`<text y="-12.5" text-anchor="middle" font-size="${big?6.4:7.6}" font-weight="800" fill="#fff" stroke="#0a1a12" stroke-width="1.6" paint-order="stroke" font-family="Archivo,Arial">${esc(leiCurto(j[0]))}</text>`:""}</g>`});
   return `<svg class="lei-campo" viewBox="0 0 100 135" width="${w}" height="${Math.round(w*1.35)}" aria-hidden="true"><defs><clipPath id="${id}"><circle r="9"/></clipPath></defs><rect width="100" height="135" rx="6" fill="#1f7a3e"/>${[0,1,2,3,4,5,6].map(i=>`<rect y="${i*19.3}" width="100" height="9.6" fill="#22853f"/>`).join("")}<g fill="none" stroke="rgba(255,255,255,.55)" stroke-width=".9"><rect x="4" y="4" width="92" height="127" rx="2"/><line x1="4" y1="67.5" x2="96" y2="67.5"/><circle cx="50" cy="67.5" r="11"/><rect x="26" y="108" width="48" height="23"/><rect x="38" y="122" width="24" height="9"/><rect x="26" y="4" width="48" height="23"/></g>${h}</svg>`}
 function leiNovoComp(nome,time,av,bot,form){return {nome,time,av,bot,form,din:5000,slots:LEI_FORM[form].map(()=>null),est:bot?leiPick(LEI_ESTILOS):null,v:0,e:0,d:0,gp:0,gc:0}}
@@ -10520,7 +10528,17 @@ function leiAdvPronto(jg){const o=LEI.cs[jg.a===0?jg.b:jg.a];return o.bot||!LEI.
 function leiClass(){return LEI.cs.map((c,i)=>i).sort((x,y)=>{const a=LEI.cs[x],b=LEI.cs[y];return b.v-a.v||(b.gp-b.gc)-(a.gp-a.gc)||b.gp-a.gp||x-y})}
 function leiMelhor(campo){let r=null;LEI.cs.forEach((c,i)=>(c.st||[]).forEach((s,k)=>{if(s[campo]&&(!r||s[campo]>r.v))r={c:i,k,v:s[campo]}}));return r}
 const LEI_PREMIO=[[100,100],[60,0],[30,0]]; // dinheiro em mil (G.cash): 100 = R$ 100 mil
-function leiPagar(){if(LEI.pago)return;LEI.pago=1;const p=leiClass().indexOf(0),pr=LEI_PREMIO[p];LEI.minha=p;if(pr){xpBonus(pr[0],"Leilão FUT Master");if(pr[1])G.cash+=pr[1];salvar()}}
+function leiPagar(){if(LEI.pago)return;LEI.pago=1;const p=leiClass().indexOf(0),pr=LEI_PREMIO[p];LEI.minha=p;{const P=perfil();P.leiJ=(P.leiJ||0)+1;if(p===0)P.leiV=(P.leiV||0)+1}if(pr){xpBonus(pr[0],"Leilão FUT Master");if(pr[1])G.cash+=pr[1]}salvar()}
+/* destaques do leilão (21/11): pontos = gols×2 + assistências + craque×3; os 5 maiores ganham borda de fogo, o 1º a placa MVP */
+function leiDestaques(){const L=[];(LEI.cs||[]).forEach((c,i)=>(c.st||[]).forEach((s,k)=>{if(!s)return;const v=(s.g||0)*2+(s.a||0)+(s.m||0)*3;if(v>=3)L.push({c:i,k,v})}));L.sort((a,b)=>b.v-a.v);const M={};L.slice(0,5).forEach((x,n)=>M[x.c+'|'+x.k]=n?'d':'mvp');return M}
+/* perfil de quem jogou o leilão: o seu vem do perfil(); robôs têm números fixos pelo nome */
+function leiPerfil(i){const c=LEI.cs[i],cl=leiClass(),pos=cl.indexOf(i)+1;let d;
+  if(!c.bot){const P=perfil();d={niv:P.nivel,lv:P.leiV||0,lj:P.leiJ||0,r10:P.re10||0,tit:G.titles.length,vit:P.v||0}}
+  else{let h=0;for(const ch of c.nome)h=(h*31+ch.charCodeAt(0))>>>0;const r=leiRng(h),niv=3+Math.floor(r()*38),lj=2+Math.floor(r()*25);d={niv,lv:Math.floor(lj*r()*.45),lj,r10:Math.floor(r()*r()*4),tit:Math.floor(r()*niv/8),vit:Math.floor(niv*(6+r()*10))}}
+  const k=(t,v)=>`<div class="cartao kpi"><small>${t}</small><b class="num">${v}</b></div>`;
+  modal(`<div class="lei-perf">${leiAv(c,84)}<h2>${esc(c.nome)}${c.bot?" 🤖":""}</h2><span class="titulo-dono">🏅 ${tituloNivel(d.niv)}</span><span class="muted peq">Nível ${d.niv} · dono do <b data-a="lei_ver" data-v="${i}" class="lei-tk">${esc(c.time)}</b></span></div>
+    <div class="kpis">${k("🔨 Leilões ganhos",d.lv)}${k("Leilões jogados",d.lj)}${k("⭐ Notas 10 na Jornada",d.r10)}${k("🏆 Títulos na carreira",d.tit)}${k("Vitórias na carreira",d.vit)}${k("Neste leilão",pos+"º lugar")}</div>
+    <p class="muted peq" style="text-align:center">Neste leilão: ${c.v}V ${c.e}E ${c.d}D · gastou ${leiR(5000-c.din)} · ${c.form}</p><div class="botoes"><button class="btn" data-a="lei_ver" data-v="${i}">Ver time</button><button class="btn prim" data-a="fechar">Fechar</button></div>`)}
 /* análise do campeão: decisões do leilão + desempenho */
 function leiAnalise(i){const c=LEI.cs[i],cs=LEI.cs,st=c.st||[],pg=c.pago||[],gast=5000-c.din,gk=c.slots[leiIdx(c,"GOL")[0]][0];
   const it=c.slots.map((j,k)=>{const s=st[k]||{g:0,a:0,m:0};return {j,k,p:pg[k]||100,pos:LEI_FORM[c.form][k],g:s.g,a:s.a,m:s.m,ct:s.g*3+s.a*2+s.m*3}});
@@ -10559,7 +10577,7 @@ function leiSala(){const cs=LEI.cs,R=LEI.rod,n=cs.length,eu=cs[0],areas={2:["t2"
   return `<div class="lei-sala">${top?`<div class="lei-top">${top}</div>`:""}<div class="lei-mid">${L?leiCardComp(L[0],"l"):"<span></span>"}${centro}${Rr?leiCardComp(Rr[0],"r"):"<span></span>"}</div>
     <div class="lei-eu${R&&R.fase==="vendido"&&R.venc===0?" ganhou":""}"><div class="lei-eu-info"><div class="lei-comp-f">${leiAv(eu,46)}${meuPl}</div><b>${esc(eu.nome)}</b><small>${esc(eu.time)} · ${eu.form}</small><span class="lei-din num">${leiR(eu.din)}</span></div><div class="lei-eu-campo" data-a="lei_ver" data-v="0" role="button">${leiCampo(eu,92,1)}</div><div class="lei-eu-ac">${acao}</div></div></div>`}
 function leiTutorial(){const k=LEI.tut;return `<div class="lei-tut"><div class="lei-tut-box"><img src="img/leilao-leila.jpg" alt="Leila"><p>${LEI_TUT[k]}</p><small>${k+1} de ${LEI_TUT.length}</small><div><button class="lei-tut-pular" data-a="lei_tutfim">Pular</button><button class="lei-tut-ok" data-a="lei_tutprox">${k<LEI_TUT.length-1?"Próximo ›":"Começar o leilão!"}</button></div></div></div>`}
-function leiTabela(fim){const cs=LEI.cs;return `<div class="lei-tab"><div class="lei-tl cab"><span>#</span><span>Time</span><span>V</span><span>E</span><span>D</span><span>SG</span></div>${leiClass().map((i,p)=>{const c=cs[i];return `<div class="lei-tl${i===0?" eu":""}${fim&&p<3?" m"+(p+1):""}"><span class="num">${p+1}</span><span>${leiAv(c,22)}${esc(c.time)}</span><b class="num">${c.v}</b><span class="num">${c.e}</span><span class="num">${c.d}</span><span class="num">${c.gp-c.gc>0?"+":""}${c.gp-c.gc}</span></div>`}).join("")}</div>`}
+function leiTabela(fim){const cs=LEI.cs;return `<div class="lei-tab"><div class="lei-tl cab"><span>#</span><span>Time</span><span>V</span><span>E</span><span>D</span><span>SG</span></div>${leiClass().map((i,p)=>{const c=cs[i];return `<div class="lei-tl${i===0?" eu":""}${fim&&p<3?" m"+(p+1):""}"><span class="num">${p+1}</span><span><span class="lei-tk" data-a="lei_perfil" data-v="${i}">${leiAv(c,22)}</span><span class="lei-tk" data-a="lei_ver" data-v="${i}">${esc(c.time)}</span></span><b class="num">${c.v}</b><span class="num">${c.e}</span><span class="num">${c.d}</span><span class="num">${c.gp-c.gc>0?"+":""}${c.gp-c.gc}</span></div>`}).join("")}</div>`}
 function leiJogos(){const cs=LEI.cs;
   return `<div class="lei-jogos"><div class="lei-leila mini"><img src="img/leilao-leila.jpg" alt="Leila"><p>Times prontos! Agora é com a bola: todos contra todos. Você joga ${leiE(LEI.meus.length,"partida","partidas")}. Quem vencer mais leva o Leilão!</p></div>
     <div class="lei-times">${cs.map(c=>`<div class="lei-tc">${leiAv(c,34)}<b>${esc(c.time)}</b><small>${esc(c.nome)} · ${c.form}</small>${leiCampo(c,70,1)}</div>`).join("")}</div>
@@ -10588,8 +10606,8 @@ function leiPartida(){const [r,k]=LEI.meus[LEI.mi],jg=LEI.rods[r][k],T=[LEI.cs[j
   return h+"</div>"}
 function leiFim(){leiPagar();const cs=LEI.cs,cl=leiClass(),p=LEI.minha,pr=LEI_PREMIO[p],c1=cs[cl[0]],an=leiAnalise(cl[0]),art=leiMelhor("g"),crq=leiMelhor("m"),def=cl.slice().sort((x,y)=>cs[x].gc-cs[y].gc)[0];
   const dest=(ic,rot,x,txt)=>x?`<div class="lei-dst"><span>${ic}</span><div><small>${rot}</small><b>${esc(x)}</b><small>${esc(txt)}</small></div></div>`:"";
-  return `<div class="lei-fim"><div class="lei-luzes"></div><div class="lei-trofeu">🏆</div><p class="lei-tag">Campeão do Leilão</p><h2 class="lei-camp">${esc(c1.time)}</h2><p class="lei-sub">${esc(c1.nome)} · ${leiE(c1.v,"vitória","vitórias")} · ${c1.gp-c1.gc>0?"+":""}${c1.gp-c1.gc} de saldo</p>
-    <div class="lei-podio">${[1,0,2].filter(k=>cl[k]!=null).map(k=>{const c=cs[cl[k]];return `<div class="lei-pd p${k+1}">${k===0?'<span class="lei-coroa">👑</span>':""}${leiAv(c,k?44:60)}<b>${esc(c.time)}</b><small>${["Campeão","Vice-campeão","3º colocado"][k]}</small><span class="lei-deg num">${k+1}º</span></div>`}).join("")}</div>
+  return `<div class="lei-fim"><div class="lei-luzes"></div><div class="lei-trofeu">🏆</div><p class="lei-tag">Campeão do Leilão</p><h2 class="lei-camp lei-tk" data-a="lei_ver" data-v="${cl[0]}">${esc(c1.time)}</h2><p class="lei-sub">${esc(c1.nome)} · ${leiE(c1.v,"vitória","vitórias")} · ${c1.gp-c1.gc>0?"+":""}${c1.gp-c1.gc} de saldo</p>
+    <div class="lei-podio">${[1,0,2].filter(k=>cl[k]!=null).map(k=>{const c=cs[cl[k]];return `<div class="lei-pd p${k+1}">${k===0?'<span class="lei-coroa">👑</span>':""}<span class="lei-tk" data-a="lei_perfil" data-v="${cl[k]}">${leiAv(c,k?44:60)}</span><b class="lei-tk" data-a="lei_ver" data-v="${cl[k]}">${esc(c.time)}</b><small>${["Campeão","Vice-campeão","3º colocado"][k]}</small><span class="lei-deg num">${k+1}º</span></div>`}).join("")}</div>
     <div class="lei-leila mini"><img src="img/leilao-leila.jpg" alt="Leila"><p>${p===0?"Parabéns, campeão! Você montou o melhor time do leilão!":p<3?`Você ficou em ${p+1}º lugar. Bela campanha!`:`Você ficou em ${p+1}º. Na próxima, capriche nos lances!`}</p></div>
     ${pr?`<div class="lei-premio">🎁 Prêmio: <b>+${pr[0]} XP</b>${pr[1]?` e <b>${dinheiro(pr[1])}</b> na carreira`:""}</div>`:""}
     <div class="lei-ana"><p class="lei-ana-tag">Análise do campeão</p><h3>${esc(c1.time)} — CAMPEÃO!</h3>${an.p.map(x=>`<p>${esc(x)}</p>`).join("")}<p class="lei-seg"><b>O segredo do título:</b> ${esc(an.seg)}.</p></div>
@@ -10628,7 +10646,10 @@ function leiAcao(a,v){const ti=document.getElementById("lei-time");if(ti)LEI.tim
   case "lei_placa":LEI.painel=1;break;
   case "lei_mais":{const mx=leiMax(LEI.cs[0]);LEI.val=v==="max"?mx:Math.max(100,Math.min(mx,LEI.val+(+v)));break}
   case "lei_lance":{const R=LEI.rod;if(!R||R.fase!=="lance")return;R.lances[0]=LEI.val;LEI.painel=0;render();leiTodos();return}
-  case "lei_ver":{const c=LEI.cs[+v];modal(`<h2>${esc(c.time)}</h2><p class="muted">${esc(c.nome)}${c.bot?" 🤖":""} · ${c.form} · ${leiR(c.din)} sobrando</p><div style="display:flex;justify-content:center">${leiCampo(c,200,1)}</div><ul class="lei-lista">${c.slots.map((j,i)=>`<li><span style="color:${LEI_COR[LEI_FORM[c.form][i]][1]}">${LEI_FORM[c.form][i]}</span> ${j?`${esc(j[0])} <b class="num">${j[2]}</b>`:"—"}</li>`).join("")}</ul>`);return}
+  case "lei_ver":{const c=LEI.cs[+v],ci=+v,D=c.st?leiDestaques():{},fx={};c.slots.forEach((_,i)=>{if(D[ci+"|"+i])fx[i]=D[ci+"|"+i]});
+    const est=i=>{const s=(c.st||[])[i];if(!s)return "";return `<small class="lei-lst">${s.g?` ⚽${s.g}`:""}${s.a?` 🅰️${s.a}`:""}${s.m?` ⭐${s.m}`:""}</small>`};
+    modal(`<h2>${esc(c.time)}</h2><p class="muted">${esc(c.nome)}${c.bot?" 🤖":""} · ${c.form} · ${leiR(c.din)} sobrando</p><div style="display:flex;justify-content:center">${leiCampo(c,220,1,fx)}</div><ul class="lei-lista">${c.slots.map((j,i)=>`<li${fx[i]?` class="lei-li-${fx[i]}"`:""}><span style="color:${LEI_COR[LEI_FORM[c.form][i]][1]}">${LEI_FORM[c.form][i]}</span> ${j?`${esc(j[0])} <b class="num">${j[2]}</b>${est(i)}${fx[i]==="mvp"?' <em class="lei-mvp-tag">MVP</em>':fx[i]?" 🔥":""}`:"—"}</li>`).join("")}</ul>`);return}
+  case "lei_perfil":leiPerfil(+v);return;
   case "lei_sairq":if(LEI.fase==="sala"||LEI.fase==="leilao"){if(!confirm("Sair do leilão? Você perde este leilão."))return}/* fallthrough */
   case "lei_sair":clearInterval(LEI.tm);LEI={fase:"capa"};aba="jogar";window.scrollTo(0,0);break;
   case "lei_denovo":clearInterval(LEI.tm);LEI={fase:"modo",form:LEI.form,time:LEI.time};break;
