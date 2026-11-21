@@ -5080,7 +5080,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795265799";
+const VERSAO="1795266570";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -10415,8 +10415,11 @@ function leiProxima(){const cs=LEI.cs,need={};cs.forEach(c=>LEI_FORM[c.form].for
   LEI.rod={ji,part,desemp:0};LEI.fala=leiPick(["Próximo craque: {j}! Quem dá mais?","Olha só quem chegou: {j}. Plaquinhas pra cima!","Agora é a vez de {j}. Façam seus lances!","{j} está no leilão! Vale cada centavo."]).replace("{j}",LEI_JOG[ji][0]);
   leiAbrirLances()}
 function leiAbrirLances(){const R=LEI.rod,cs=LEI.cs;R.fase="lance";R.lances={};R.t0=Date.now();LEI.val=Math.min(LEI.val||100,leiMax(cs[0]));if(LEI.val<100)LEI.val=100;LEI.painel=0;
-  R.part.forEach(i=>{if(cs[i].bot){const t=1500+Math.random()*(LEI_T-4500);setTimeout(()=>{if(LEI.rod!==R||R.fase!=="lance")return;R.lances[i]=leiLanceBot(cs[i],LEI_JOG[R.ji],R);leiRedesenha();leiTodos()},t)}});
-  clearInterval(LEI.tm);LEI.tm=setInterval(leiTick,200);leiRedesenha()}
+  /* rápido (21/11): sem esperar os 15 s quando você não está no lote ou quando você só pode dar R$ 1 (gastou tudo) */
+  const humano=i=>!cs[i].bot,rapido=!R.part.some(i=>humano(i)&&leiMax(cs[i])>100); // nenhum humano com escolha de lanceR.rapido=rapido;
+  if(rapido)R.part.forEach(i=>{if(humano(i))R.lances[i]=leiMax(cs[i])});
+  R.part.forEach(i=>{if(cs[i].bot){const t=rapido?250+Math.random()*700:1500+Math.random()*(LEI_T-4500);setTimeout(()=>{if(LEI.rod!==R||R.fase!=="lance")return;R.lances[i]=leiLanceBot(cs[i],LEI_JOG[R.ji],R);leiRedesenha();leiTodos()},t)}});
+  clearInterval(LEI.tm);LEI.tm=setInterval(leiTick,200);leiRedesenha();if(rapido)leiTodos()}
 function leiLanceBot(c,j,R){const vag=leiVagas(c),max=leiMax(c),media=c.din/vag,q=Math.max(0,Math.min(1.15,(j[2]-84)/13));
   let m=c.est==="gastador"?.65+q*1.9:c.est==="tecnico"?.4+q*1.7*(j[2]>=93?1.2:1):c.est==="defensivo"?(.55+q*1.2)*(j[1]==="GOL"||j[1]==="ZAG"?1.45:.8):.45+q*1.05;
   if(vag===1)m=Math.max(m,1);let v=media*m*(.85+Math.random()*.3);
