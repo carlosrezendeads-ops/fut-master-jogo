@@ -5075,7 +5075,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795264212";
+const VERSAO="1795264636";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -10360,7 +10360,7 @@ const LEI_JOG=[ // [nome, posição GOL/ZAG/MEI/ATA, nota]
    (sobrou só R$ 1 por vaga) e ainda tem vaga; aparecem como um lote normal. [nome, posição, nota, clube da foto] */
 const LEI_RES=[["Hugo Souza","GOL",81,"Corinthians"],["Léo Ortiz","ZAG",81,"Flamengo"],["Rodrigo Garro","MEI",82,"Corinthians"],
   ["Andreas Pereira","MEI",82,"Palmeiras"],["Lucas Moura","ATA",83,"São Paulo"],["Bruno Henrique","ATA",82,"Flamengo"],
-  ["Kepa Arrizabalaga","GOL",81,""],["Matthijs de Ligt","ZAG",82,""],["Leon Goretzka","MEI",82,""],["Marcus Rashford","ATA",83,""]]; // Europa (21/11)
+  ["Marc-André ter Stegen","GOL",83,""],["Antonio Rüdiger","ZAG",83,""],["Phil Foden","MEI",84,""],["Rodrygo","ATA",84,""]]; // Europa: Barcelona, Real Madrid, Man. City (21/11)
 const LEI_RES0=LEI_JOG.length;LEI_JOG.push(...LEI_RES.map(x=>x.slice(0,3)));
 const LEI_FORM={"1-2-1":["GOL","ZAG","MEI","MEI","ATA"],"1-1-2":["GOL","ZAG","MEI","ATA","ATA"],"2-1-1":["GOL","ZAG","ZAG","MEI","ATA"]};
 const LEI_XY={GOL:[[50,117]],ZAG:[[50,90],[29,88,71,88]],MEI:[[50,60],[27,59,73,59]],ATA:[[50,27],[29,28,71,28]]};
