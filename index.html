@@ -1262,9 +1262,9 @@ nav.abas button{font-size:11px}
 .qz-art{position:relative;width:min(100vw,calc(100vh*841/1870));aspect-ratio:841/1870}.qz-art img{width:100%;height:100%;display:block}
 .qz-hs{position:absolute;background:transparent;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .qz-hs.voltar{left:2.5%;top:3.8%;width:15.5%;height:4.8%;border-radius:14px}.qz-hs.engr{left:82.5%;top:3.8%;width:15%;height:4.8%;border-radius:14px}
-.qz-hs.ir{left:5.23%;top:66.74%;width:87.75%;height:12.19%;border-radius:60px}.qz-hs.ir img{width:100%;height:100%;display:block;pointer-events:none;animation:qzBt 1.1s ease-in-out infinite;transform-origin:center}.qz-hs.ir:active{background:transparent}
+.qz-hs.ir{left:4.76%;top:66.63%;width:88.7%;height:13.37%;border-radius:60px}.qz-hs.ir img{width:100%;height:100%;display:block;pointer-events:none;animation:qzBt 1.1s ease-in-out infinite;transform-origin:center}.qz-hs.ir:active{background:transparent}
 @keyframes qzBt{0%,100%{transform:scale(1);filter:drop-shadow(0 0 0 rgba(255,214,60,0))}12%{transform:scale(1.05)}24%{transform:scale(1)}36%{transform:scale(1.04);filter:drop-shadow(0 0 16px rgba(255,214,60,.8))}50%{transform:scale(1)}}
-.qz-luz{position:absolute;left:7%;top:15.5%;width:86%;height:36.5%;overflow:hidden;pointer-events:none;mix-blend-mode:overlay;-webkit-mask:radial-gradient(ellipse 50% 50% at 50% 50%,#000 70%,transparent 100%);mask:radial-gradient(ellipse 50% 50% at 50% 50%,#000 70%,transparent 100%)}
+.qz-luz{position:absolute;left:8%;top:17%;width:84%;height:34%;overflow:hidden;pointer-events:none;mix-blend-mode:overlay;-webkit-mask:radial-gradient(ellipse 50% 50% at 50% 50%,#000 70%,transparent 100%);mask:radial-gradient(ellipse 50% 50% at 50% 50%,#000 70%,transparent 100%)}
 .qz-luz::before{content:"";position:absolute;top:-20%;bottom:-20%;left:0;width:35%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.95) 50%,transparent);transform:translateX(-120%) skewX(-18deg);animation:qzLuz 4s ease-in-out infinite}
 @keyframes qzLuz{0%{transform:translateX(-120%) skewX(-18deg)}18%,100%{transform:translateX(320%) skewX(-18deg)}}
 .qz-hs:active{background:rgba(255,255,255,.18)}
@@ -5090,7 +5090,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795279777";
+const VERSAO="1795279986";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
