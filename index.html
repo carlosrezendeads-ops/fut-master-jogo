@@ -5075,7 +5075,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795227798";
+const VERSAO="1795264067";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -10356,6 +10356,11 @@ const LEI_JOG=[ // [nome, posição GOL/ZAG/MEI/ATA, nota]
  ["Franz Beckenbauer","ZAG",96],["Paolo Maldini","ZAG",95],["Franco Baresi","ZAG",93],["Fabio Cannavaro","ZAG",92],["Sergio Ramos","ZAG",92],["Alessandro Nesta","ZAG",91],["Carles Puyol","ZAG",90],["Virgil van Dijk","ZAG",90],["Cafu","ZAG",91],["Roberto Carlos","ZAG",91],["Philipp Lahm","ZAG",91],["Carlos Alberto Torres","ZAG",90],["Nilton Santos","ZAG",90],["Thiago Silva","ZAG",89],["Dani Alves","ZAG",89],["Lilian Thuram","ZAG",89],["Lúcio","ZAG",88],["John Terry","ZAG",88],["Rio Ferdinand","ZAG",88],["Marcelo","ZAG",88],["Gerard Piqué","ZAG",88],["Giorgio Chiellini","ZAG",88],["Marquinhos","ZAG",87],["Pepe","ZAG",87],["Nemanja Vidić","ZAG",87],["Aldair","ZAG",86],
  ["Johan Cruyff","MEI",96],["Zinedine Zidane","MEI",96],["Ronaldinho","MEI",94],["Zico","MEI",94],["Michel Platini","MEI",94],["Andrés Iniesta","MEI",93],["Xavi","MEI",93],["Kaká","MEI",92],["Luka Modrić","MEI",92],["Lothar Matthäus","MEI",92],["Andrea Pirlo","MEI",91],["Kevin De Bruyne","MEI",91],["Rivaldo","MEI",91],["Ruud Gullit","MEI",91],["Bobby Charlton","MEI",91],["Steven Gerrard","MEI",90],["Luís Figo","MEI",90],["Toni Kroos","MEI",90],["Sócrates","MEI",90],["Rivelino","MEI",90],["Frank Lampard","MEI",89],["Clarence Seedorf","MEI",89],["Patrick Vieira","MEI",89],["Didi","MEI",89],["Gérson","MEI",89],["Jude Bellingham","MEI",89],["Pedri","MEI",89],["David Beckham","MEI",88],["Paul Scholes","MEI",88],["Falcão","MEI",88],["Gheorghe Hagi","MEI",88],["Juninho Pernambucano","MEI",87],["Claude Makélélé","MEI",87],["Dunga","MEI",86],
  ["Pelé","ATA",99],["Lionel Messi","ATA",98],["Diego Maradona","ATA",98],["Cristiano Ronaldo","ATA",97],["Ronaldo Fenômeno","ATA",97],["Garrincha","ATA",95],["Alfredo Di Stéfano","ATA",95],["Ferenc Puskás","ATA",95],["Romário","ATA",94],["Marco van Basten","ATA",94],["Gerd Müller","ATA",94],["Eusébio","ATA",93],["Kylian Mbappé","ATA",93],["Neymar Jr","ATA",92],["Thierry Henry","ATA",92],["Roberto Baggio","ATA",92],["Zlatan Ibrahimović","ATA",91],["Robert Lewandowski","ATA",91],["Erling Haaland","ATA",91],["Lamine Yamal","ATA",90],["Karim Benzema","ATA",90],["Luis Suárez","ATA",90],["Gabriel Batistuta","ATA",90],["Andriy Shevchenko","ATA",90],["Alessandro Del Piero","ATA",90],["Francesco Totti","ATA",90],["Mohamed Salah","ATA",90],["Jairzinho","ATA",90],["Raúl","ATA",89],["Samuel Eto'o","ATA",89],["Didier Drogba","ATA",89],["Wayne Rooney","ATA",89],["Vinícius Júnior","ATA",89],["Tostão","ATA",89],["George Weah","ATA",89],["Hristo Stoichkov","ATA",89],["Harry Kane","ATA",89],["Bebeto","ATA",87],["Adriano Imperador","ATA",87]];
+/* reservas (21/11): Série A do Brasil, bons mas não os melhores. Só vão a leilão para quem gastou tudo
+   (sobrou só R$ 1 por vaga) e ainda tem vaga; aparecem como um lote normal. [nome, posição, nota, clube da foto] */
+const LEI_RES=[["Hugo Souza","GOL",81,"Corinthians"],["Léo Ortiz","ZAG",81,"Flamengo"],["Rodrigo Garro","MEI",82,"Corinthians"],
+  ["Andreas Pereira","MEI",82,"Palmeiras"],["Lucas Moura","ATA",83,"São Paulo"],["Bruno Henrique","ATA",82,"Flamengo"]];
+const LEI_RES0=LEI_JOG.length;LEI_JOG.push(...LEI_RES.map(x=>x.slice(0,3)));
 const LEI_FORM={"1-2-1":["GOL","ZAG","MEI","MEI","ATA"],"1-1-2":["GOL","ZAG","MEI","ATA","ATA"],"2-1-1":["GOL","ZAG","ZAG","MEI","ATA"]};
 const LEI_XY={GOL:[[50,117]],ZAG:[[50,90],[29,88,71,88]],MEI:[[50,60],[27,59,73,59]],ATA:[[50,27],[29,28,71,28]]};
 const LEI_COR={GOL:["#5b4a12","#ffe08a"],ZAG:["#14405e","#a8dcff"],MEI:["#1f5a33","#b9f5cc"],ATA:["#5e1f1a","#ffb8ad"]};
@@ -10371,7 +10376,8 @@ const LEI_TUT=["Bem-vindo ao <b>Leilão FUT Master</b>! Você tem <b>R$ 50</b> p
 let LEI={fase:"capa"};
 const leiR=c=>"R$ "+(c%100?(c/100).toFixed(2).replace(".",","):String(c/100));
 const leiPick=a=>a[Math.floor(Math.random()*a.length)];
-function leiFotoSrc(n){return typeof ROSTOS_REAIS!=="undefined"&&(ROSTOS_REAIS["Lenda|"+n])||null}
+function leiFotoSrc(n){if(typeof ROSTOS_REAIS==="undefined")return null;const r=LEI_RES.find(x=>x[0]===n);return (r?ROSTOS_REAIS[r[3]+"|"+n]:ROSTOS_REAIS["Lenda|"+n])||null}
+const leiQuebrado=c=>leiVagas(c)>0&&leiMax(c)<=150; // gastou tudo: só sobrou o mínimo pras vagas
 function leiIni(n){const p=n.split(" ");return (p[0][0]+(p.length>1?p[p.length-1][0]:"")).toUpperCase()}
 function leiAv(c,px){const s=c.av;return `<span class="lei-av${c.bot?" bot":""}" style="width:${px}px;height:${px}px">${s?`<img src="${s}" alt="">`:`<b>${esc(leiIni(c.nome))}</b>`}${c.bot?'<i class="lei-robo">🤖</i>':""}</span>`}
 let LEI_CID=0;
@@ -10393,8 +10399,13 @@ function leiMax(c){return c.din-(leiVagas(c)-1)*100}
 function leiProxima(){const cs=LEI.cs,need={};cs.forEach(c=>LEI_FORM[c.form].forEach((p,i)=>{if(!c.slots[i])need[p]=(need[p]||0)+1}));
   const ps=Object.keys(need);if(!ps.length){leiComecarJogos();return}
   const tot=ps.reduce((s,p)=>s+need[p],0);let r=Math.random()*tot,pos=ps[0];for(const p of ps){r-=need[p];if(r<=0){pos=p;break}}
-  const livres=LEI_JOG.map((j,i)=>i).filter(i=>LEI_JOG[i][1]===pos&&!LEI.usados[i]),ji=leiPick(livres);LEI.usados[ji]=1;
-  const part=cs.map((c,i)=>i).filter(i=>leiVagas(cs[i],pos)>0);
+  const livre=(i,p)=>LEI_JOG[i][1]===p&&!LEI.usados[i],qb=cs.map((c,i)=>i).filter(i=>leiQuebrado(cs[i]));let ji,part;
+  if(qb.length){const pq=[];qb.forEach(i=>LEI_FORM[cs[i].form].forEach((p,k)=>{if(!cs[i].slots[k])pq.push(p)}));
+    const comRes=pq.filter(p=>LEI_JOG.some((_,i)=>i>=LEI_RES0&&livre(i,p)));pos=leiPick(comRes.length?comRes:pq);
+    const res=LEI_JOG.map((_,i)=>i).filter(i=>i>=LEI_RES0&&livre(i,pos));ji=leiPick(res.length?res:LEI_JOG.map((_,i)=>i).filter(i=>i<LEI_RES0&&livre(i,pos)));
+    part=qb.filter(i=>leiVagas(cs[i],pos)>0)}
+  else{ji=leiPick(LEI_JOG.map((_,i)=>i).filter(i=>i<LEI_RES0&&livre(i,pos)));part=cs.map((c,i)=>i).filter(i=>leiVagas(cs[i],pos)>0)}
+  LEI.usados[ji]=1;
   LEI.rod={ji,part,desemp:0};LEI.fala=leiPick(["Próximo craque: {j}! Quem dá mais?","Olha só quem chegou: {j}. Plaquinhas pra cima!","Agora é a vez de {j}. Façam seus lances!","{j} está no leilão! Vale cada centavo."]).replace("{j}",LEI_JOG[ji][0]);
   leiAbrirLances()}
 function leiAbrirLances(){const R=LEI.rod,cs=LEI.cs;R.fase="lance";R.lances={};R.t0=Date.now();LEI.val=Math.min(LEI.val||100,leiMax(cs[0]));if(LEI.val<100)LEI.val=100;LEI.painel=0;
@@ -10525,7 +10536,7 @@ function leiSala(){const cs=LEI.cs,R=LEI.rod,n=cs.length,eu=cs[0],areas={2:["t2"
     ${j?`<div class="lei-card${R.fase==="vendido"?" vendido":""}"><span class="lei-pos" style="background:${bg};color:${fg}">${j[1]}</span><span class="lei-nota num">${j[2]}</span><div class="lei-cfoto">${f?`<img src="${f}" alt="">`:`<b>${esc(leiIni(j[0]))}</b>`}</div><b class="lei-cnome">${esc(j[0])}</b><small>${LEI_POSN[j[1]]}${R.desemp?" · DESEMPATE":""}</small>${R.fase==="vendido"?`<div class="lei-martelo">🔨</div><div class="lei-selo">VENDIDO<small>${esc(R.venc===0?"para você":cs[R.venc].nome)} · ${leiR(R.preco)}</small></div>`:""}</div>
       ${R.fase==="lance"?`<div class="lei-tempo"><b class="num" id="lei-seg">${Math.max(0,Math.ceil((LEI_T-(Date.now()-R.t0))/1000))}</b><div><i id="lei-barra" style="width:${Math.max(0,(LEI_T-(Date.now()-R.t0))/LEI_T*100)}%"></i></div></div>`:""}`:`<div class="lei-espera">${LEI.fase==="sala"?`<b>Aguardando jogadores...</b>${cs.map(c=>`<span>${c.bot?"🤖":"👤"} ${esc(c.nome)} ✔</span>`).join("")}`:""}</div>`}</div>`;
   const euPart=R&&R.part.includes(0),meu=R&&R.lances[0],max=leiMax(eu);
-  let acao="";if(R&&R.fase==="lance"){if(!euPart)acao=`<p class="lei-fora">Você está fora desta rodada: ${LEI_POSN[j[1]]} completo ✔</p>`;
+  let acao="";if(R&&R.fase==="lance"){if(!euPart)acao=`<p class="lei-fora">${leiVagas(eu,j[1])?"Você está fora deste lote.":`Você está fora desta rodada: ${LEI_POSN[j[1]]} completo ✔`}</p>`;
     else if(meu!=null)acao=`<p class="lei-ok">✋ Placa levantada: <b class="num">${leiR(meu)}</b></p>`;
     else if(LEI.painel)acao=`<div class="lei-painel"><div class="lei-val"><button data-a="lei_mais" data-v="-100">−1</button><button data-a="lei_mais" data-v="-10">−0,10</button><b class="num">${leiR(LEI.val)}</b><button data-a="lei_mais" data-v="10">+0,10</button><button data-a="lei_mais" data-v="100">+1</button></div><div class="lei-val2"><button data-a="lei_mais" data-v="500">+5</button><button data-a="lei_mais" data-v="max">Máx ${leiR(max)}</button></div><button class="lei-levanta" data-a="lei_lance">✋ Levantar placa</button></div>`;
     else acao=`<button class="lei-placa-bt" data-a="lei_placa"><span class="lei-pl-ic"><b>R$</b><i></i></span>Dar lance</button>`}
