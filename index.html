@@ -1242,6 +1242,11 @@ nav.abas button{font-size:11px}
 .lei-seg{padding-top:6px;border-top:1px solid rgba(255,210,63,.3)}.lei-seg b{color:#ffd23f}
 .lei-dsts{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.lei-dst{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px;border-radius:12px;background:rgba(255,255,255,.06);text-align:center}
 .lei-dst>span{font-size:20px}.lei-dst div{display:flex;flex-direction:column}.lei-dst b{font-size:12px;line-height:1.15}.lei-dst small{font-size:10px;color:#9fb3da}
+.modo-ban{position:relative;display:block;width:100%;padding:0;margin:0 0 8px;border:0;border-radius:16px;overflow:hidden;background:#0a1430;cursor:pointer;aspect-ratio:3/1;box-shadow:0 4px 14px rgba(0,0,0,.4);transition:transform .15s}
+.modo-ban:active{transform:scale(.98)}.modo-ban>img{display:block;width:100%;height:100%;object-fit:cover}
+.modo-ban-info{position:absolute;left:0;right:0;bottom:0;padding:5px 12px;font-size:12px;font-weight:700;color:#fff;text-align:left;background:linear-gradient(transparent,rgba(0,0,0,.85));display:flex;align-items:center;gap:6px}.modo-ban-info .qz-cxmini{width:20px;height:20px}
+.modo-ban.bloq>img{filter:grayscale(.75) brightness(.6)}.modo-ban-cad{position:absolute;top:8px;right:10px;padding:3px 9px;border-radius:20px;background:rgba(0,0,0,.7);color:#fff;font-size:12px;font-weight:800}
+.modo-ban.pulsa{animation:vivoBrilho 1.2s infinite}
 .qz-capa{position:fixed;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;background:#0b1838;overflow:hidden}
 .qz-capa::before{content:"";position:absolute;inset:-30px;background:url(img/quiz-capa.jpg) center/cover;filter:blur(18px) brightness(.6)}
 .qz-art{position:relative;width:min(100vw,calc(100vh*841/1870));aspect-ratio:841/1870}.qz-art img{width:100%;height:100%;display:block}
@@ -5075,7 +5080,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795264636";
+const VERSAO="1795264889";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -10347,8 +10352,8 @@ function quizAcao(a,v){switch(a){
   case "qz_abrir":quizAbrir();return}
   render()}
 setInterval(()=>{const el=document.getElementById("qz-relogio");if(el)el.textContent=fmtRelogio(Math.max(0,quizMeiaNoite()-Date.now()))},1000);
-function cartaoQuiz(){if(!reLiberado())return `<button class="modo quiz bloq" data-a="qz_breve"><span class="modo-ic">🧠</span><div><b>Quiz do Dia</b><small>Em breve</small></div><i>🔒</i></button>`;const q=quizEstado(),pend=q.caixa&&!q.aberta,feito=q.fase==="fim"&&!pend;
-  return `<button class="modo quiz${pend?" pulsa":""}" data-a="qz_abrir_modo"><span class="modo-ic">${pend?`<img class="qz-cxmini" src="img/cx-${q.caixa}.png" alt="">`:"🧠"}</span><div><b>Quiz do Dia</b><small>${pend?`Sua caixa de ${q.caixa} está esperando!`:feito?`Feito hoje: ${q.ac||0} acerto${q.ac===1?"":"s"} · volta à meia-noite`:"Será que você manja de futebol? 🤔"}</small></div><i>${pend?"🎁":feito?"✓":"›"}</i></button>`}
+function cartaoQuiz(){if(!reLiberado())return modoBanner("quiz","Quiz do Dia","qz_breve","",1);const q=quizEstado(),pend=q.caixa&&!q.aberta,feito=q.fase==="fim"&&!pend;
+  return modoBanner("quiz","Quiz do Dia","qz_abrir_modo",pend?`<img class="qz-cxmini" src="img/cx-${q.caixa}.png" alt=""> Sua caixa de ${q.caixa} está esperando! 🎁`:feito?`✓ Feito hoje: ${q.ac||0} acerto${q.ac===1?"":"s"} · volta à meia-noite`:"",0,pend?" pulsa":"")}
 /* ===== LEILÃO FUT MASTER (20/11) — plano em Leilao/plano.md. Aba "leilao", ações "lei_*" em leiAcao, estado LEI (só na memória).
    Fluxo: capa → modo (máquina/amigos) → nº de competidores → nome do time + formação → sala (tutorial 1ª vez) → leilão → partidas → campeão. ===== */
 const LEI_JOG=[ // [nome, posição GOL/ZAG/MEI/ATA, nota]
@@ -10625,13 +10630,15 @@ function leiProxPartida(){LEI.mi++;if(LEI.mi>=LEI.meus.length){leiAcao("lei_fim"
   const mi=LEI.mi,[r,k]=LEI.meus[mi],jg=LEI.rods[r][k],vale=()=>LEI.fase==="partida"&&LEI.mi===mi;LEI.fase="partida";window.scrollTo(0,0);
   const ir=()=>{if(!vale())return;if(!leiAdvPronto(jg)){LEI.sim="espera";render();setTimeout(ir,1500);return}LEI.sim=1;render();
     setTimeout(()=>{if(!vale())return;leiAte(r);LEI.sim=0;render();const e=jg.a===0?0:1,gs=[jg.ga,jg.gb];if(gs[e]>gs[1-e]){try{somVitoria();vibrar("premio")}catch(x){}}},2600)};ir()}
-function cartaoLeilao(){if(!reLiberado())return `<button class="modo leil bloq" data-a="lei_breve"><span class="modo-ic">🔨</span><div><b>Leilão FUT Master</b><small>Em breve</small></div><i>🔒</i></button>`;
-  return `<button class="modo leil" data-a="lei_abrir"><span class="modo-ic">🔨</span><div><b>Leilão FUT Master</b><small>${LEI.cs&&LEI.fase!=="fim"&&LEI.fase!=="capa"?"Leilão em andamento · toque para voltar":"Monte um time de craques no leilão da Leila"}</small></div><i>›</i></button>`}
+function cartaoLeilao(){if(!reLiberado())return modoBanner("leilao","Leilão FUT Master","lei_breve","",1);
+  return modoBanner("leilao","Leilão FUT Master","lei_abrir",LEI.cs&&LEI.fase!=="fim"&&LEI.fase!=="capa"?"🔨 Leilão em andamento · toque para voltar":"")}
 
+/* cards dos modos com a arte do Carlos (21/11): img/modo-<nome>.jpg 960x320; info = faixa embaixo (opcional) */
+function modoBanner(nome,alt,a,info,bloq,extra){return `<button class="modo-ban${bloq?" bloq":""}${extra||""}" data-a="${a}"><img src="img/modo-${nome}.jpg" alt="${alt}">${info?`<span class="modo-ban-info">${info}</span>`:""}${bloq?'<span class="modo-ban-cad">🔒 Em breve</span>':""}</button>`}
 function cartaoModos(){reLer();const c=RE.car,cl=G.clubs[G.user.club];
   return `<div class="modos"><h2 class="modos-tit">Modos de jogo</h2>
     <div class="modo on"><span class="modo-ic">⚽</span><div><b>Modo Carreira</b><small>${esc(cl.name)} · você está aqui</small></div></div>
-    <button class="modo est${reLiberado()?"":" bloq"}" data-a="${reLiberado()?"re_abrir":"re_breve"}"><span class="modo-ic">⭐</span><div><b>Jornada de Craque</b><small>${c&&c.fase!=="fim"?`${esc(c.nome)} · ${c.idade} anos · ${esc(c.clube?c.clube.name:"peneira")}`:"Jogo rápido: crie seu atleta e viva a carreira"}</small></div><i>${reLiberado()?"›":"🔒"}</i></button>${cartaoLeilao()}${cartaoQuiz()}</div>`}
+    ${modoBanner("jornada","Jornada de Craque",reLiberado()?"re_abrir":"re_breve",!reLiberado()?"":c&&c.fase!=="fim"?`${esc(c.nome)} · ${c.idade} anos · ${esc(c.clube?c.clube.name:"peneira")}`:"",!reLiberado())}${cartaoLeilao()}${cartaoQuiz()}</div>`}
 
 function acao(a,v,el){
   if(a&&a.startsWith("re_")){reAcao(a,v,el);return}
