@@ -1034,6 +1034,14 @@ nav.abas button{font-size:11px}
 .lenda-toque{display:block;font-size:11px;color:#5a3a00!important;font-weight:800}
 .folha.folha-lenda{background:linear-gradient(180deg,#3a2600,#160e00 32%,var(--gramado-2));border:1.5px solid #ffd23f;box-shadow:0 0 34px rgba(255,210,63,.5),inset 0 0 0 1px rgba(255,241,168,.25)}
 .folha-lenda h2{color:#ffd23f}
+.r9{text-align:center}.r9-tag{margin:0;font-size:11px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:#ffd23f}.r9-tit{margin:4px 0 2px;color:#fff;font-size:20px}.r9-sub{margin:0 0 10px;font-size:12.5px;color:#cfd8ee}
+.r9-campo{position:relative;width:100%;aspect-ratio:3/4;border-radius:14px;overflow:hidden;background:repeating-linear-gradient(180deg,#1f7a3e 0 9%,#22853f 9% 18%);border:2px solid rgba(255,210,63,.6);box-shadow:inset 0 0 40px rgba(0,0,0,.35)}
+.r9-linhas{position:absolute;inset:3%;border:1.5px solid rgba(255,255,255,.5);border-radius:4px;background:linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5)) center/100% 1.5px no-repeat}
+.r9-linhas::before{content:"";position:absolute;left:50%;top:50%;width:22%;aspect-ratio:1;border:1.5px solid rgba(255,255,255,.5);border-radius:50%;transform:translate(-50%,-50%)}
+.r9-card{position:absolute;transform:translate(-50%,-50%);width:19%;padding:3px 2px 3px;border:1.5px solid #fff1a8;border-radius:9px;background:linear-gradient(120deg,#6b4500,#ffd23f 30%,#fff1a8 45%,#e3a514 60%,#6b4500);background-size:250% 100%;box-shadow:0 0 10px rgba(255,210,63,.6),0 3px 8px rgba(0,0,0,.5);color:#2a1a00;cursor:pointer;display:flex;flex-direction:column;align-items:center;font:inherit}
+.r9-ov{position:absolute;left:4px;top:2px;font-weight:900;font-size:12px}.r9-f{width:78%;aspect-ratio:100/112;display:block;border-radius:6px;overflow:hidden;background:rgba(0,0,0,.25);margin-top:6px}.r9-f img{width:100%;height:100%;object-fit:cover;display:block}
+.r9-card b{font-size:9.5px;line-height:1.1;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.r9-card small{font-size:8.5px;font-weight:800}
+.modo.r9-ev{border-color:#e11d48;background:linear-gradient(120deg,rgba(225,29,72,.25),rgba(17,31,69,.9) 60%);margin-top:6px}
 .lc{position:relative;overflow:hidden;text-align:center;border-radius:16px;padding:12px 12px 16px;background:linear-gradient(120deg,#6b4500,#ffd23f 30%,#fff1a8 45%,#e3a514 60%,#6b4500);background-size:250% 100%;border:1.5px solid #fff1a8;box-shadow:0 0 24px rgba(255,210,63,.6)}
 .lc::after{content:"";position:absolute;top:-40%;bottom:-40%;left:-60%;width:38%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);pointer-events:none}
 @media (prefers-reduced-motion:no-preference){.lc{animation:ouroCorre 4s linear infinite}.lc::after{animation:lcBrilho 2.8s ease-in-out infinite}}
@@ -2290,7 +2298,15 @@ const PAS_JOG={
  xerife:["Xerife","Mais defesa o jogo todo.",0,1.4,"sempre"],
  muralha:["Paredão","Defesa muito mais forte o jogo todo.",0,1.6,"sempre"],
  fecha:["Segura o Resultado","Ganhando, a defesa fica bem mais forte.",0,2.2,"ganha"],
- finais:["Gigante nas Finais","Em jogo de mata-mata, defesa muito maior.",0,2.6,"ko"]};
+ finais:["Gigante nas Finais","Em jogo de mata-mata, defesa muito maior.",0,2.6,"ko"],
+ /* passivas dos maiores de todos os tempos (Seleção Perfeita do R9, 21/11) */
+ rei:["O Rei do Futebol","O time inteiro joga muito melhor, no ataque e na defesa.",2.2,1.2,"sempre"],
+ dios:["Mão de Deus","Mata-mata ou contra time mais forte: ataque enorme.",3.2,0,"grande"],
+ fenomeno:["Fenômeno","Arrancadas imparáveis: muito mais ataque o jogo todo.",2.4,0,"sempre"],
+ capitano:["Il Capitano","Defesa muito mais forte o jogo todo.",0,2.4,"sempre"],
+ santo:["São Goleiro","Defesa enorme o jogo todo.",0,2.8,"sempre"],
+ canhao:["Canhão na Canhota","Chutes de longe e bola parada: mais ataque o jogo todo.",1.6,0,"sempre"],
+ pendulo:["Pêndulo Incansável","Sobe e desce o jogo inteiro: ataque e defesa maiores.",1.2,1.2,"sempre"]};
 const LENDA_PAS={"Gianluigi Donnarumma":["finais","muralha"],"Thibaut Courtois":["muralha","fecha"],"Alisson":["fecha","finais"],"Yann Sommer":["muralha","fora"],
  "Virgil van Dijk":["xerife","lider"],"William Saliba":["xerife","fecha"],"Willian Pacho":["xerife","fora"],"Alessandro Bastoni":["maestro","xerife"],"Marquinhos":["lider","finais"],
  "Achraf Hakimi":["ala","contra"],"Nuno Mendes":["ala","inicio"],"Jules Koundé":["xerife","ala"],"Alejandro Grimaldo":["ala","goleada"],"Marc Cucurella":["ala","fecha"],
@@ -2299,7 +2315,9 @@ const LENDA_PAS={"Gianluigi Donnarumma":["finais","muralha"],"Thibaut Courtois":
  "Ousmane Dembélé":["decisivo","contra","matador"],"Lamine Yamal":["inicio","decisivo","contra"],"Kylian Mbappé":["contra","decisivo","matador"],"Erling Haaland":["matador","goleada","inicio"],
  "Vinícius Júnior":["decisivo","contra"],"Raphinha":["inicio","matador"],"Mohamed Salah":["matador","casa"],"Harry Kane":["matador","goleada"],"Khvicha Kvaratskhelia":["contra","inicio"],
  "Michael Olise":["contra","goleada"],"Désiré Doué":["decisivo","apagar"],"Lautaro Martínez":["lider","matador"],"Julián Álvarez":["inicio","virada"],"Viktor Gyökeres":["matador","goleada"],
- "Cristiano Ronaldo":["decisivo","apagar","virada"],"Lionel Messi":["genio","decisivo","virada"]};
+ "Cristiano Ronaldo":["decisivo","apagar","virada"],"Lionel Messi":["genio","decisivo","virada"],
+ "Gianluigi Buffon":["santo","finais","muralha"],"Roberto Carlos":["canhao","ala","fora"],"Fabio Cannavaro":["xerife","finais","lider"],"Paolo Maldini":["capitano","xerife","fecha"],
+ "Cafu":["pendulo","lider","finais"],"Zinedine Zidane":["maestro","decisivo","finais"],"Diego Maradona":["dios","genio","contra"],"Pelé":["rei","genio","decisivo"],"Ronaldo Fenômeno":["fenomeno","matador","decisivo"]};
 const LENDA_PAS_MAX=5;
 function passivasJog(p){if(!p||!ehLenda(p))return [];return (LENDA_PAS[LENDA_ALIAS[p.n]||p.n]||[]).map(k=>[k,...PAS_JOG[k]])}
 function passivasJogHTML(p){const ps=passivasJog(p);return ps.length?`<div class="tec-pas">${ps.map(x=>`<div class="tp"><b>${x[1]}</b><div>${x[2]}</div></div>`).join("")}</div>`:""}
@@ -5094,7 +5112,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795280840";
+const VERSAO="1795288241";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -6863,6 +6881,33 @@ const BRA2002={nome:"Brasil 2002",sigla:"BRA",tec:"Luiz Felipe Scolari",form:"3-
  ["Gilberto Silva","VOL",90,25,1],["Kléberson","VOL",89,23,1],["Ronaldinho Gaúcho","MEI",95,22,1],["Rivaldo","MEI",95,30,1],
  ["Juninho Paulista","MEI",89,29,0],["Vampeta","VOL",87,28,0],["Ricardinho","MEI",87,26,0],["Kaká","MEI",90,20,0],["Denílson","ATA",89,24,0],
  ["Ronaldo","ATA",97,25,1],["Edílson","ATA",88,31,0],["Luizão","ATA",88,26,0]]};
+/* Evento de Natal "Feliz Natal com Lionel Messi" (21/11): Seleção Perfeita do R9 = o time dos sonhos do Ronaldo Fenômeno (4-3-3, na ordem de FORMACOES["4-3-3"].s)
+   [nome, posição, força, idade no auge, país]; todos são lendas (p.lenda → atributos 93–99 e passivas de LENDA_PAS); fotos Lenda|/Leilao| em ROSTOS_REAIS */
+const R9_SEL={nome:"Seleção Perfeita do R9",sigla:"R9",sub:"O time dos sonhos de Ronaldo Fenômeno",tec:"Ronaldo Fenômeno",form:"4-3-3",jog:[
+ ["Gianluigi Buffon","GOL",97,28,"ITA"],["Roberto Carlos","LAT",96,27,"BRA"],["Fabio Cannavaro","ZAG",96,30,"ITA"],["Paolo Maldini","ZAG",98,26,"ITA"],["Cafu","LAT",96,28,"BRA"],
+ ["Diego Maradona","MEI",99,26,"ARG"],["Zinedine Zidane","MEI",98,26,"FRA"],["Pelé","MEI",99,29,"BRA"],
+ ["Cristiano Ronaldo","ATA",98,28,"POR"],["Ronaldo Fenômeno","ATA",99,21,"BRA"],["Lionel Messi","ATA",99,25,"ARG"]]};
+const R9_BAND={ITA:"🇮🇹",BRA:"🇧🇷",ARG:"🇦🇷",FRA:"🇫🇷",POR:"🇵🇹"};
+function r9Jog(i){const j=R9_SEL.jog[i];return {id:960000+i,n:j[0],pos:j[1],ov:j[2],age:j[3],lenda:1,bInt:0,nat:j[4]}}
+function r9Foto(n){return typeof ROSTOS_REAIS!=="undefined"&&(ROSTOS_REAIS["Lenda|"+n]||ROSTOS_REAIS["Leilao|"+n])||null}
+const r9Curto=n=>({"Gianluigi Buffon":"Buffon","Fabio Cannavaro":"Cannavaro","Paolo Maldini":"Maldini","Diego Maradona":"Maradona","Zinedine Zidane":"Zidane","Cristiano Ronaldo":"C. Ronaldo","Ronaldo Fenômeno":"Ronaldo","Lionel Messi":"Messi","Roberto Carlos":"R. Carlos"})[n]||n;
+/* campo vertical com cards de lenda (toque abre a ficha) */
+function modalR9(){const P=POS_FORM[R9_SEL.form],med=Math.round(R9_SEL.jog.reduce((a,j)=>a+j[2],0)/11);
+  modal(`<div class="r9"><p class="r9-tag">🎄 Evento de Natal · Desafio</p><h2 class="r9-tit">${R9_SEL.nome}</h2><p class="r9-sub">${R9_SEL.sub} · ${R9_SEL.form} · força média <b class="num">${med}</b></p>
+    <div class="r9-campo"><i class="r9-linhas"></i>${R9_SEL.jog.map((j,i)=>{const [d,l]=P[i],f=r9Foto(j[0]);
+      return `<button class="r9-card" data-a="r9jog" data-v="${i}" style="left:${(l*100).toFixed(1)}%;top:${(91-d/.45*78).toFixed(1)}%"><span class="r9-ov num">${j[2]}</span><span class="r9-f">${f?`<img src="${f}" alt="">`:"★"}</span><b>${esc(r9Curto(j[0]))}</b><small>${j[1]} ${R9_BAND[j[4]]||""}</small></button>`}).join("")}</div>
+    <p class="muted peq" style="text-align:center">Toque num jogador para ver habilidades e passivas.</p><div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div></div>`);
+  const fo=document.querySelector(".veu .folha");if(fo)fo.classList.add("folha-lenda")}
+function modalR9Jog(i){const p=r9Jog(i),f=r9Foto(p.n);
+  modal(`<div class="lc"><div class="lc-topo"><span class="lc-selo">★ LENDA ★</span><b class="ov ov-lenda num lc-ov">${p.ov}</b></div>
+    <div class="lc-foto">${f?`<svg viewBox="0 0 100 112" width="150" height="168" aria-hidden="true"><image href="${f}" width="100" height="112"/></svg>`:`<span class="lenda-sel lc-sem">★</span>`}<span class="posb ${p.pos}">${p.pos}</span></div>
+    <b class="lc-nome">${esc(p.n)}</b><span class="lc-sub">${R9_BAND[p.nat]||""} · auge aos ${p.age} anos</span></div>
+    <div class="extrato num lc-ficha"><div><span>Posição</span><span>${posDetalhe(p)}</span></div><div><span>Melhor pé</span><span>${peDe(p)}</span></div>
+      <div><span>Habilidades</span><span class="hab-chips">${habilidadesDe(p).map(x=>`<i class="top">${esc(x)}</i>`).join("")}</span></div></div>
+    <h2>★ Passivas de lenda</h2><p class="muted peq" style="margin:0">Valem para o time inteiro enquanto ele estiver em campo.</p>${passivasJogHTML(p)}
+    <h2>Atributos</h2>${barrasAtr(p,false)}
+    <div class="botoes"><button class="btn" data-a="r9ver">‹ Seleção</button><button class="btn prim" data-a="fechar">Fechar</button></div>`);
+  const fo=document.querySelector(".veu .folha");if(fo)fo.classList.add("folha-lenda")}
 const LENDAS=[ // [nome, posição, força, cupons, idade] — destaques em atividade, indicados à Bola de Ouro
  ["Gianluigi Donnarumma","GOL",90,28,27],["Thibaut Courtois","GOL",89,26,34],["Alisson","GOL",89,25,33],["Yann Sommer","GOL",86,20,37],
  ["Virgil van Dijk","ZAG",89,27,35],["William Saliba","ZAG",88,27,25],["Willian Pacho","ZAG",86,23,24],["Alessandro Bastoni","ZAG",87,24,27],["Marquinhos","ZAG",86,22,32],
@@ -10677,7 +10722,7 @@ function cartaoLeilao(){if(!reLiberado())return modoBanner("leilao","Leilão FUT
 function modoBanner(nome,alt,a,info,bloq,extra){return `<button class="modo-ban${bloq?" bloq":""}${extra||""}" data-a="${a}"><img src="img/modo-${nome}.jpg" alt="${alt}"><i class="modo-ban-luz" style="--d:${{jornada:0,leilao:1.3,quiz:2.6}[nome]||0}s"></i>${info?`<span class="modo-ban-info">${info}</span>`:""}${bloq?'<span class="modo-ban-cad">🔒 Em breve</span>':""}</button>`}
 function cartaoModos(){reLer();const c=RE.car,cl=G.clubs[G.user.club];
   return `<div class="modos"><div class="mini-div"><span>Mini Jogos</span></div>
-    ${modoBanner("jornada","Jornada de Craque",reLiberado()?"re_abrir":"re_breve",!reLiberado()?"":c&&c.fase!=="fim"?`${esc(c.nome)} · ${c.idade} anos · ${esc(c.clube?c.clube.name:"peneira")}`:"",!reLiberado())}${cartaoLeilao()}${cartaoQuiz()}</div>`}
+    ${modoBanner("jornada","Jornada de Craque",reLiberado()?"re_abrir":"re_breve",!reLiberado()?"":c&&c.fase!=="fim"?`${esc(c.nome)} · ${c.idade} anos · ${esc(c.clube?c.clube.name:"peneira")}`:"",!reLiberado())}${cartaoLeilao()}${cartaoQuiz()}${reLiberado()?`<button class="modo r9-ev" data-a="r9ver"><span class="modo-ic">🎄</span><div><b>Evento de Natal · prévia</b><small>Seleção Perfeita do R9 (só você vê)</small></div></button>`:""}</div>`}
 
 function acao(a,v,el){
   if(a&&a.startsWith("re_")){reAcao(a,v,el);return}
@@ -10936,6 +10981,8 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "fimresumo":FLUXO_FIM=false;fecharModal();if(G.over)modalFim();else modalTemporada();return;
     case "teclenda":{const er=contratarTecLenda(+v,el.dataset.i);if(er){toastErro(er);return}fecharModal();salvar();confete();toast(`${TEC_LENDAS[+v][0]} contratado!`);break;}
     case "lendaver":modalLenda(+v);return;
+    case "r9ver":modalR9();return;
+    case "r9jog":modalR9Jog(+v);return;
     case "lendacomp":pagarLenda(+v);return;
     case "lenda":{const er=comprarLenda(+v,el.dataset.i);if(er){if(er!==RECUSA)toastErro(er);return}fecharModal();avisoElencoCheio();salvar();confete();toast(`${LENDAS[+v][0]} contratado!`);break;}
     case "tecrosto":if(!editorOn)return;modalRostoTec(el.dataset.n);return;
@@ -11084,7 +11131,7 @@ setTimeout(()=>{try{amgSync(true)}catch(e){}},2500); // cria o ID do dono (1ª v
 try{somIniciar();somModo(modoDesejado())}catch(e){}
 try{carregarKits()}catch(e){}
 // imagens que não aparecem na abertura carregam logo depois da 1ª tela (abre mais rápido no celular); quando chegam, redesenha a tela
-const IMG_TARDE=["img/cartas-re.js?v=6bdf0053","img/escudos-img.js?v=655f7708","img/patro-logos.js?v=3e44eabc","img/rostos-reais.js?v=a986546d","img/titulos.js?v=9ecffff6","dados/titulos.js?v=a01a43e3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=67cfbd62","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
+const IMG_TARDE=["img/cartas-re.js?v=6bdf0053","img/escudos-img.js?v=655f7708","img/patro-logos.js?v=3e44eabc","img/rostos-reais.js?v=84c67dc5","img/titulos.js?v=9ecffff6","dados/titulos.js?v=a01a43e3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=67cfbd62","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
 // 27/10: redesenha a cada arquivo que chega (logos dos patrocinadores não esperam as fotos); com aviso aberto, redesenha quando ele fechar
 let TARDE_T=null,TARDE_PEND=false;
 function tardeRender(){clearTimeout(TARDE_T);TARDE_T=setTimeout(()=>{if(!G||abertura||G.live||aba==="prejogo")return;if(document.querySelector(".veu")){TARDE_PEND=true;return}TARDE_PEND=false;render()},250)}
