@@ -3213,7 +3213,7 @@ function passoMinuto(){
     }
     if(eu?(V.auto||V.cmd!=="manual"):(V.cmdC!=="manual"||L.cid!==AMG_CID||L.xi.some((id,i)=>id==null&&!L.bloq[i])))tecnicoAgir(s); // ao vivo no manual, o computador só repõe vaga aberta do amigo
   }
-  if(V.feed.length&&V.feed[V.feed.length-1].m!==V.min&&V.min!==45&&V.min<90&&rnd()<.34)lanceColorido(lam);
+  if(V.feed.length&&V.feed[V.feed.length-1].m!==V.min&&V.min!==45&&V.min<90&&rnd()<.30)lanceColorido(lam); // ~3 lances a menos por jogo (21/11)
   if(!V.add&&(V.min===22||V.min===67)&&!(V.agua||{})[V.min]){(V.agua=V.agua||{})[V.min]=1;narrar("info",`💧 Pausa para hidratação aos ${V.min===22?"22 minutos do 1º tempo":"22 minutos do 2º tempo"}.`);Object.assign(ultLance(),{pre:"💧 Pausa para hidratação",agua:1})}
   if(V.fk){V.fk.n--;const fimT=(V.min===45&&!V.ht&&V.acr1!=null&&(V.add||0)>=V.acr1)||(V.min>=90&&V.acr2!=null&&(V.add||0)>=V.acr2);if(V.fk.n<=0||fimT)fkResolver(F)}
   if(V.min===45&&!V.ht&&V.acr1==null){V.acr1=calcAcr(1);narrar("info",`⏱️ Acréscimos no primeiro tempo: +${V.acr1} minuto${V.acr1>1?"s":""}.`)}
@@ -5081,7 +5081,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795270618";
+const VERSAO="1795277756";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7983,7 +7983,7 @@ function iniciarTimer(){
       atualizarLive(revelado?V.feed.length:n0);
       if(V.min%10===0)salvar()};
     if(novos.some(f=>f.pre)&&!document.hidden&&$("#lv-feed"))revelarLances(novos,antes,()=>segue(true));else segue(false);
-  },Math.round(45000/45/velocidade));
+  },Math.round(35000/45/velocidade)); // 35 s por tempo (21/11)
 }
 /* suspense: lance de perigo aparece em etapas ("arma o chute..." → resultado); gol seu abre a tela de gol */
 let SUSP=false;
