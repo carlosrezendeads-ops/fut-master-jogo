@@ -1064,6 +1064,17 @@ nav.abas button{font-size:11px}
 .nt-live{margin:8px 0 0;padding:8px 10px;border-radius:12px;background:linear-gradient(120deg,rgba(185,28,28,.25),rgba(20,83,45,.25));border:1px solid rgba(255,210,63,.4);display:flex;flex-direction:column;gap:4px}
 .nt-lp{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:8px;font-size:12px}.nt-lp b{color:#ffd23f}.nt-lp i{height:6px;border-radius:4px;background:rgba(255,255,255,.15);overflow:hidden}.nt-lp em{display:block;height:100%;background:#ffd23f}
 .nt-ld{display:flex;gap:6px;align-items:center;font-size:12px;text-align:left}.nt-ld.e0{opacity:.55;text-decoration:line-through}.nt-ld.e3{opacity:.6}.nt-ld small{color:#9fb3da}
+/* cards diamante do Evento de Natal (roxo brilhante + brilho passando) */
+.r9-card.dia{overflow:hidden;color:#fff;border-color:#f3e8ff;background:linear-gradient(125deg,#2e0854,#7c3aed 28%,#e9d5ff 44%,#a855f7 56%,#4c1d95 78%,#2e0854);background-size:260% 100%;box-shadow:0 0 12px rgba(192,132,252,.85),0 0 3px #fff,0 3px 8px rgba(0,0,0,.5)}
+.r9-card.dia .r9-ov{color:#fff;text-shadow:0 0 6px #c084fc}.r9-card.dia b{text-shadow:0 1px 2px rgba(0,0,0,.7)}.r9-card.dia small{color:#f3e8ff}.r9-card.dia .r9-f{background:rgba(46,8,84,.55)}
+.r9-card.dia::after,.lc.dia .dia-fa{content:"";position:absolute;top:-30%;bottom:-30%;left:-70%;width:45%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);transform:skewX(-20deg);pointer-events:none}
+.r9-card.dia::before{content:"✦";position:absolute;right:3px;top:1px;font-size:10px;color:#fff;text-shadow:0 0 6px #fff,0 0 10px #c084fc}
+@media (prefers-reduced-motion:no-preference){.r9-card.dia{animation:ouroCorre 3.5s linear infinite}.r9-card.dia::after{animation:diaBrilho 2.6s ease-in-out infinite;animation-delay:var(--d,0s)}.r9-card.dia::before{animation:diaPisca 1.6s ease-in-out infinite;animation-delay:var(--d,0s)}.lc.dia .dia-fa{animation:diaBrilho 2.4s ease-in-out infinite}}
+@keyframes diaBrilho{0%{left:-70%}55%,100%{left:130%}}@keyframes diaPisca{50%{opacity:.2;transform:scale(.6) rotate(45deg)}}
+.lc.dia{background:linear-gradient(125deg,#2e0854,#7c3aed 28%,#e9d5ff 44%,#a855f7 56%,#4c1d95 78%,#2e0854);background-size:250% 100%;border-color:#f3e8ff;box-shadow:0 0 28px rgba(192,132,252,.8),0 0 4px #fff}
+.lc.dia::after{display:none}.lc.dia .lc-selo,.lc.dia .lc-sub{color:#fff;text-shadow:0 1px 3px rgba(46,8,84,.9)}.lc.dia .lc-nome{color:#fff;text-shadow:0 2px 0 #4c1d95,0 0 16px #c084fc}
+.lc.dia .ov-lenda{background:radial-gradient(circle at 35% 30%,#f3e8ff,#a855f7 55%,#4c1d95);color:#fff;border-color:#f3e8ff;box-shadow:0 0 14px #c084fc}
+.folha.folha-dia{background:linear-gradient(180deg,#2a0a4a,#12062a 32%,var(--gramado-2));border:1.5px solid #c084fc;box-shadow:0 0 34px rgba(192,132,252,.55)}.folha-dia h2{color:#d8b4fe}
 .modo.r9-ev{border-color:#e11d48;background:linear-gradient(120deg,rgba(225,29,72,.25),rgba(17,31,69,.9) 60%);margin-top:6px}
 .lc{position:relative;overflow:hidden;text-align:center;border-radius:16px;padding:12px 12px 16px;background:linear-gradient(120deg,#6b4500,#ffd23f 30%,#fff1a8 45%,#e3a514 60%,#6b4500);background-size:250% 100%;border:1.5px solid #fff1a8;box-shadow:0 0 24px rgba(255,210,63,.6)}
 .lc::after{content:"";position:absolute;top:-40%;bottom:-40%;left:-60%;width:38%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);pointer-events:none}
@@ -5147,7 +5158,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795310812";
+const VERSAO="1795311286";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7028,14 +7039,14 @@ function modalNatal(){const tot=natalTotal();
 function modalNatalTime(i){const T=NATAL[i],P=POS_FORM[T.form],fe=natalFeitos(T.k),n=fe.filter(Boolean).length;
   modal(`<div class="r9 nt"><p class="r9-tag">🎄 Feliz Natal · Desafio</p><h2 class="r9-tit">${esc(T.nome)}</h2><p class="r9-sub">${esc(T.sub)}<br>${T.form} · técnico ${esc(T.tec)} · força média <b class="num">${natalMed(T)}</b></p>
     <div class="r9-campo"><i class="r9-linhas"></i>${T.jog.map((j,k)=>{const [d,l]=P[k],f=natalFoto(j[0],T.k);
-      return `<button class="r9-card" data-a="ntjog" data-v="${i}:${k}" style="left:${(l*100).toFixed(1)}%;top:${(91-d/.45*78).toFixed(1)}%"><span class="r9-ov num">${j[2]}</span><span class="r9-f">${f?`<img src="${f}" alt="">`:"★"}</span><b>${esc(natalCurto(j[0]))}</b><small>${j[1]} ${R9_BAND[j[4]]||""}</small></button>`}).join("")}</div>
+      return `<button class="r9-card dia" data-a="ntjog" data-v="${i}:${k}" style="--d:${(k*.27).toFixed(2)}s;left:${(l*100).toFixed(1)}%;top:${(91-d/.45*78).toFixed(1)}%"><span class="r9-ov num">${j[2]}</span><span class="r9-f">${f?`<img src="${f}" alt="">`:"★"}</span><b>${esc(natalCurto(j[0]))}</b><small>${j[1]} ${R9_BAND[j[4]]||""}</small></button>`}).join("")}</div>
     <div class="nt-geral"><div class="nt-gl"><b>Desafios</b><span class="num">${n}/3</span></div><div class="nt-barra"><i style="width:${n/3*100}%"></i></div>
       <div class="nt-des">${T.des.map((d,j)=>`<div class="nt-di${fe[j]?" on":""}"><span>${fe[j]?"✅":"⬜"}</span><p>${esc(d[2])}</p></div>`).join("")}</div>
       <p class="nt-def">🎁 Bônus por completar os 3: ${n===3?"<b>conquistado!</b>":"prêmio em breve"}</p></div>
     <p class="nt-dica">💡 ${esc(T.dica)} Desafio feito fica salvo: jogue de novo para completar os outros.</p>
     <div class="botoes"><button class="btn" data-a="ntevento">‹ Evento</button><button class="btn prim" data-a="ntjogar" data-v="${i}">⚽ Jogar</button></div></div>`);natalFolha()}
 function modalNatalJog(i,k){const T=NATAL[i],p=natalJog(T,k),f=natalFoto(p.n,T.k);
-  modal(`<div class="lc"><div class="lc-topo"><span class="lc-selo">★ LENDA ★</span><b class="ov ov-lenda num lc-ov">${p.ov}</b></div>
+  modal(`<div class="lc dia"><i class="dia-fa"></i><div class="lc-topo"><span class="lc-selo">◆ DIAMANTE ◆</span><b class="ov ov-lenda num lc-ov">${p.ov}</b></div>
     <div class="lc-foto">${f?`<svg viewBox="0 0 100 112" width="150" height="168" aria-hidden="true"><image href="${f}" width="100" height="112"/></svg>`:`<span class="lenda-sel lc-sem">★</span>`}<span class="posb ${p.pos}">${p.pos}</span></div>
     <b class="lc-nome">${esc(p.n)}</b><span class="lc-sub">${R9_BAND[p.nat]||""} · ${esc(T.nome)} · ${p.age} anos</span></div>
     <div class="extrato num lc-ficha"><div><span>Posição</span><span>${posDetalhe(p)}</span></div><div><span>Melhor pé</span><span>${peDe(p)}</span></div>
@@ -7043,7 +7054,7 @@ function modalNatalJog(i,k){const T=NATAL[i],p=natalJog(T,k),f=natalFoto(p.n,T.k
     ${passivasJog(p).length?`<h2>★ Passivas de lenda</h2><p class="muted peq" style="margin:0">Valem para o time inteiro enquanto ele estiver em campo.</p>${passivasJogHTML(p)}`:""}
     <h2>Atributos</h2>${barrasAtr(p,false)}
     <div class="botoes"><button class="btn" data-a="ntver" data-v="${i}">‹ Time</button><button class="btn prim" data-a="fechar">Fechar</button></div>`);
-  const fo=document.querySelector(".veu .folha");if(fo)fo.classList.add("folha-lenda")}
+  const fo=document.querySelector(".veu .folha");if(fo)fo.classList.add("folha-dia")}
 const LENDAS=[ // [nome, posição, força, cupons, idade] — destaques em atividade, indicados à Bola de Ouro
  ["Gianluigi Donnarumma","GOL",90,28,27],["Thibaut Courtois","GOL",89,26,34],["Alisson","GOL",89,25,33],["Yann Sommer","GOL",86,20,37],
  ["Virgil van Dijk","ZAG",89,27,35],["William Saliba","ZAG",88,27,25],["Willian Pacho","ZAG",86,23,24],["Alessandro Bastoni","ZAG",87,24,27],["Marquinhos","ZAG",86,22,32],
