@@ -1041,6 +1041,29 @@ nav.abas button{font-size:11px}
 .r9-card{position:absolute;transform:translate(-50%,-50%);width:19%;padding:3px 2px 3px;border:1.5px solid #fff1a8;border-radius:9px;background:linear-gradient(120deg,#6b4500,#ffd23f 30%,#fff1a8 45%,#e3a514 60%,#6b4500);background-size:250% 100%;box-shadow:0 0 10px rgba(255,210,63,.6),0 3px 8px rgba(0,0,0,.5);color:#2a1a00;cursor:pointer;display:flex;flex-direction:column;align-items:center;font:inherit}
 .r9-ov{position:absolute;left:4px;top:2px;font-weight:900;font-size:12px}.r9-f{width:78%;aspect-ratio:100/112;display:block;border-radius:6px;overflow:hidden;background:rgba(0,0,0,.25);margin-top:6px}.r9-f img{width:100%;height:100%;object-fit:cover;display:block}
 .r9-card b{font-size:9.5px;line-height:1.1;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.r9-card small{font-size:8.5px;font-weight:800}
+.folha-natal{background:linear-gradient(170deg,#3b0a12,#0d1b3d 38%,#062a1a)!important;border:1.5px solid rgba(255,210,63,.55)!important}
+.nt{display:flex;flex-direction:column;gap:12px;text-align:center}.nt-tag{margin:0;font-size:11px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:#ffd23f}
+.nt-topo{position:relative;overflow:hidden;border-radius:16px;padding:18px 12px 14px;background:linear-gradient(135deg,#b91c1c,#7f1d1d 45%,#14532d);border:1.5px solid #ffd23f;box-shadow:0 0 24px rgba(255,210,63,.25)}
+.nt-topo h2{margin:2px 0;font-size:30px;color:#fff;text-shadow:0 0 14px rgba(255,210,63,.7);font-family:var(--f-display)}.nt-topo p{margin:0;position:relative;color:#fde68a;font-size:13px;font-weight:700}
+.nt-luzes{position:absolute;left:0;right:0;top:4px;height:10px;background:radial-gradient(circle,#ffd23f 2.5px,transparent 3.5px) 0 0/22px 10px,radial-gradient(circle,#ef4444 2.5px,transparent 3.5px) 11px 0/22px 10px,radial-gradient(circle,#4ade80 2.5px,transparent 3.5px) 5px 0/33px 10px;animation:ntPisca 1.4s steps(2) infinite}
+@keyframes ntPisca{50%{filter:brightness(.45)}}
+.nt-geral{text-align:left;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,210,63,.3);display:flex;flex-direction:column;gap:7px}
+.nt-gl{display:flex;justify-content:space-between;align-items:center;font-size:13px}.nt-gl span{color:#ffd23f;font-weight:900}
+.nt-barra{height:9px;border-radius:6px;background:rgba(0,0,0,.35);overflow:hidden}.nt-barra i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#16a34a,#ffd23f,#ef4444);box-shadow:0 0 8px rgba(255,210,63,.6)}
+.nt-trilha{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.nt-rec{display:flex;flex-direction:column;align-items:center;padding:6px 2px;border-radius:10px;background:rgba(0,0,0,.25);opacity:.55;filter:grayscale(.8)}
+.nt-rec span{font-size:22px}.nt-rec b{font-size:13px;color:#fff}.nt-rec small{font-size:9px;color:#cfd8ee;line-height:1.1;text-align:center}.nt-rec.on{opacity:1;filter:none;background:rgba(255,210,63,.18);box-shadow:0 0 10px rgba(255,210,63,.4)}
+.nt-def{margin:0;font-size:11.5px;color:#9fb3da;text-align:center}
+.nt-times{display:flex;flex-direction:column;gap:8px}
+.nt-card{display:flex;align-items:center;gap:10px;padding:10px;border-radius:14px;border:1.5px solid rgba(255,255,255,.14);background:linear-gradient(110deg,color-mix(in srgb,var(--c1) 45%,transparent),rgba(13,27,61,.9) 55%,color-mix(in srgb,var(--c2) 30%,transparent));color:#fff;font:inherit;text-align:left;cursor:pointer}
+.nt-card.full{border-color:#ffd23f;box-shadow:0 0 14px rgba(255,210,63,.4)}.nt-ce{flex:none;display:grid;place-items:center;width:44px}
+.nt-ct{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}.nt-ct>b{font-size:14px;line-height:1.15}.nt-ct small{font-size:11px;color:#cfd8ee}
+.nt-dots{display:flex;flex-direction:column;align-items:center;gap:3px}.nt-dots>span{display:flex;gap:3px}.nt-dots i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.2)}.nt-dots i.on{background:#ffd23f;box-shadow:0 0 6px #ffd23f}.nt-dots small{font-size:10.5px;color:#ffd23f;font-weight:800}
+.nt-des{display:flex;flex-direction:column;gap:5px}.nt-di{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:10px;background:rgba(0,0,0,.25);font-size:13px;text-align:left}.nt-di p{margin:0;flex:1}
+.nt-di.on{background:rgba(22,163,74,.22);border:1px solid rgba(74,222,128,.45)}.nt-di em{font-style:normal;font-size:10px;font-weight:900;padding:2px 6px;border-radius:5px;background:#ffd23f;color:#2a1a00;animation:leiPisca 1s infinite}
+.nt-dica{margin:0;font-size:12px;color:#fde68a;text-align:left}.nt-placar{font-family:var(--f-display);font-size:26px;margin:0}.nt-res h3{margin:4px 0 0}.nt-ok{margin:0;font-weight:800;color:#ffd23f}
+.nt-live{margin:8px 0 0;padding:8px 10px;border-radius:12px;background:linear-gradient(120deg,rgba(185,28,28,.25),rgba(20,83,45,.25));border:1px solid rgba(255,210,63,.4);display:flex;flex-direction:column;gap:4px}
+.nt-lp{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:8px;font-size:12px}.nt-lp b{color:#ffd23f}.nt-lp i{height:6px;border-radius:4px;background:rgba(255,255,255,.15);overflow:hidden}.nt-lp em{display:block;height:100%;background:#ffd23f}
+.nt-ld{display:flex;gap:6px;align-items:center;font-size:12px;text-align:left}.nt-ld.e0{opacity:.55;text-decoration:line-through}.nt-ld.e3{opacity:.6}.nt-ld small{color:#9fb3da}
 .modo.r9-ev{border-color:#e11d48;background:linear-gradient(120deg,rgba(225,29,72,.25),rgba(17,31,69,.9) 60%);margin-top:6px}
 .lc{position:relative;overflow:hidden;text-align:center;border-radius:16px;padding:12px 12px 16px;background:linear-gradient(120deg,#6b4500,#ffd23f 30%,#fff1a8 45%,#e3a514 60%,#6b4500);background-size:250% 100%;border:1.5px solid #fff1a8;box-shadow:0 0 24px rgba(255,210,63,.6)}
 .lc::after{content:"";position:absolute;top:-40%;bottom:-40%;left:-60%;width:38%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);pointer-events:none}
@@ -1940,6 +1963,9 @@ const FORMACOES={
   "4-1-4-1":{s:["GOL","LAT","ZAG","ZAG","LAT","VOL","MEI","MEI","MEI","MEI","ATA"],a:-.5,d:1},
   "5-4-1":{s:["GOL","LAT","ZAG","ZAG","ZAG","LAT","VOL","VOL","MEI","MEI","ATA"],a:-3,d:3}
 };
+/* formações só do Evento de Natal (21/11): não enumeráveis, então não entram no seletor nem no sorteio da IA */
+[["4-2-4",["GOL","LAT","ZAG","ZAG","LAT","VOL","MEI","ATA","ATA","ATA","ATA"],3.5,-3],["3-4-1-2",["GOL","ZAG","ZAG","ZAG","LAT","LAT","VOL","VOL","MEI","ATA","ATA"],1.5,-1],["4-3-1-2",["GOL","LAT","ZAG","ZAG","LAT","VOL","MEI","MEI","MEI","ATA","ATA"],1,-.5]]
+  .forEach(([f,sl,a,d])=>Object.defineProperty(FORMACOES,f,{value:{s:sl,a,d},enumerable:false}));
 /* estilo x formação (04/11, Carlos): escolheu um estilo e a formação não combina → troca pela mais ofensiva/defensiva/equilibrada da lista */
 const FORM_EST={of:"3-4-3",def:"5-4-1",eq:"4-4-2"};
 function tipoForm(f){const a=(FORMACOES[f]||{}).a||0;return a>1?"of":a<-1?"def":"eq"}
@@ -2317,7 +2343,15 @@ const LENDA_PAS={"Gianluigi Donnarumma":["finais","muralha"],"Thibaut Courtois":
  "Michael Olise":["contra","goleada"],"Désiré Doué":["decisivo","apagar"],"Lautaro Martínez":["lider","matador"],"Julián Álvarez":["inicio","virada"],"Viktor Gyökeres":["matador","goleada"],
  "Cristiano Ronaldo":["decisivo","apagar","virada"],"Lionel Messi":["genio","decisivo","virada"],
  "Gianluigi Buffon":["santo","finais","muralha"],"Roberto Carlos":["canhao","ala","fora"],"Fabio Cannavaro":["xerife","finais","lider"],"Paolo Maldini":["capitano","xerife","fecha"],
- "Cafu":["pendulo","lider","finais"],"Zinedine Zidane":["maestro","decisivo","finais"],"Diego Maradona":["dios","genio","contra"],"Pelé":["rei","genio","decisivo"],"Ronaldo Fenômeno":["fenomeno","matador","decisivo"]};
+ "Cafu":["pendulo","lider","finais"],"Zinedine Zidane":["maestro","decisivo","finais"],"Diego Maradona":["dios","genio","contra"],"Pelé":["rei","genio","decisivo"],"Ronaldo Fenômeno":["fenomeno","matador","decisivo"],
+ /* Evento de Natal (21/11): Barcelona 2011, Brasil 1970, Brasil 2002, Real Madrid 2017 */
+ "Víctor Valdés":["muralha","fecha"],"Daniel Alves":["ala","contra"],"Gerard Piqué":["xerife","finais"],"Javier Mascherano":["xerife","lider"],"Éric Abidal":["ala","fecha"],"Sergio Busquets":["maestro","xerife"],
+ "Xavi":["maestro","genio"],"Andrés Iniesta":["genio","decisivo"],"Pedro":["inicio","matador"],"David Villa":["matador","decisivo"],
+ "Félix":["fecha"],"Carlos Alberto Torres":["lider","ala","finais"],"Brito":["xerife"],"Piazza":["xerife","lider"],"Everaldo":["ala"],"Clodoaldo":["maestro","ala"],"Gérson":["maestro","canhao"],
+ "Jairzinho":["matador","decisivo","inicio"],"Tostão":["genio","matador"],"Rivellino":["canhao","genio"],
+ "Marcos":["santo","finais"],"Lúcio":["xerife","ala"],"Edmílson":["xerife","lider"],"Roque Júnior":["xerife"],"Gilberto Silva":["xerife","fecha"],"Kléberson":["ala","lider"],"Ronaldinho Gaúcho":["genio","inicio","decisivo"],"Rivaldo":["canhao","decisivo","matador"],
+ "Keylor Navas":["muralha","finais"],"Dani Carvajal":["ala","fecha"],"Raphaël Varane":["xerife","finais"],"Sergio Ramos":["capitano","apagar","finais"],"Marcelo":["ala","genio"],"Casemiro":["xerife","fecha"],
+ "Luka Modrić":["maestro","genio","finais"],"Toni Kroos":["maestro","canhao"],"Isco":["genio","contra"],"Karim Benzema":["matador","contra"]};
 const LENDA_PAS_MAX=5;
 function passivasJog(p){if(!p||!ehLenda(p))return [];return (LENDA_PAS[LENDA_ALIAS[p.n]||p.n]||[]).map(k=>[k,...PAS_JOG[k]])}
 function passivasJogHTML(p){const ps=passivasJog(p);return ps.length?`<div class="tec-pas">${ps.map(x=>`<div class="tp"><b>${x[1]}</b><div>${x[2]}</div></div>`).join("")}</div>`:""}
@@ -2362,7 +2396,7 @@ function forcasCfg(xi,form,est,cid){
   const qa=sa/wa,qd=sd/wd,c=cid&&G.clubs[cid],ref=c&&G.tierBase&&G.tierBase[c.tier]!=null?G.tierBase[c.tier]:60;
   let ea=E.a,ed=E.d;if(ed<0)ed*=clamp(1-(qd-ref)/12,.4,1);if(ea<0)ea*=clamp(1-(qa-ref)/12,.4,1);
   const pb=bonusPassivas(cid,xi);
-  return {att:qa+F.a+ea+b+pb.att,def:qd+F.d+ed+b+pb.def,xi,slots};
+  return {att:qa+F.a+ea+b+pb.att+(c&&c.evA||0),def:qd+F.d+ed+b+pb.def+(c&&c.evD||0),xi,slots};
 }
 function forcas(cid){
   const c=G.clubs[cid];
@@ -3030,7 +3064,7 @@ const PRE_CHUTE=["arma o chute...","invade a área...","fica cara a cara com o g
 const preChute=(p,nomeT)=>`${p?p.n:"O atacante"} (${nomeT}) ${pick(PRE_CHUTE)}`;
 /* gol ao vivo: placar, artilharia, assistência e narração; pen = cobrança de pênalti */
 function aplicarGol(s,F,p,pen,cruz){const V=G.live,nomeT=nomeLado(s);if(s==="h")V.gh++;else V.ga++; // pen: true = pênalti, 2 = falta direta, 3 = cabeçada após cruzamento de falta (cruz = quem cruzou)
-  (s==="h"?V.sh:V.sa).push([p?p.id:null,V.min]);
+  (s==="h"?V.sh:V.sa).push([p?p.id:null,V.min]);if(!V.ht){V.g1=V.g1||{h:0,a:0};V.g1[s]++} // gols do 1º tempo (desafios do Evento de Natal)
   let ass=null;if(p){gastar(p,1.5);ass=pen===3?cruz||null:pen?null:garcom(F[s],p);if(V.m.tipo==="L"){p.g++;if(ass)ass.as=(ass.as||0)+1}V.ev=V.ev||{};V.ev[p.id]=(V.ev[p.id]||0)+1;if(ass){V.as=V.as||{};V.as[ass.id]=(V.as[ass.id]||0)+1}}
   narrar("gol",`GOL do ${nomeT}! ${p?p.n+" "+(pen?(pen===3?pick(["sobe mais alto que todo mundo e cabeceia para o gol","testa firme no canto","aparece na segunda trave e cabeceia para as redes"]):pen===2?"cobra a falta no ângulo":"cobra o pênalti com categoria"):pick(FR_GOL)):"Gol contra"}${ass?`, passe de ${ass.n}`:""}. ${placarTxt()}`);
   const f=ultLance();f.s=s;f.pid=p?p.id:null;f.ph=[V.gh,V.ga];return f}
@@ -3182,6 +3216,7 @@ function passoMinuto(){
   const lam={h:clamp(mh*Math.exp((F.h.att-F.a.def)/k)*V.fat.h,.1,4.5),a:clamp(ma*Math.exp((F.a.att-F.h.def)/k)*V.fat.a,.08,4.2)};
   {const rf=s=>{const gk=penGoleiro(s);return gk?clamp(1-(atributos(gk).ref-70)/350,.88,1.1):1.1};lam.h*=rf("a");lam.a*=rf("h")} // atributo Reflexos do goleiro: defende mais chutes
   if(!V.m.amistoso)for(const s of ["h","a"]){const g=gritoAtivo(V.L[s]);if(!g)continue;const fg=forcaGrito(V.L[s],g),o=s==="h"?"a":"h";lam[s]=Math.min(lam[s]*fg.m,7);lam[o]*=fg.s}
+  if(V.m.ev)natalPosse(V,F);
   if(V.garante&&V.min>=80){const me=V.lado,gm=me==="h"?V.gh:V.ga,go=me==="h"?V.ga:V.gh;
     if(gm<=go&&(rnd()<.3||V.min>=88||V.add)){const p=artilheiro(F[me]);if(p)aplicarGol(me,F,p).pre=preChute(p,nomeLado(me))}}
   for(const s of ["h","a"]){
@@ -5112,7 +5147,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795288241";
+const VERSAO="1795310238";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -5670,7 +5705,7 @@ function rostoIdx(p){
 /* fotos reais (img/rostos-reais.js, gerado por fotos-jogadores.py): chave "Clube de origem|Nome" */
 let RR_NOME=null;
 /* chave da foto real do jogador em ROSTOS_REAIS ("Clube|Nome" ou "Lenda|Nome") */
-function rostoRealK(p){if(typeof ROSTOS_REAIS==="undefined")return null;
+function rostoRealK(p){if(typeof ROSTOS_REAIS==="undefined")return null;if(p.evF&&ROSTOS_REAIS[p.evF])return p.evF; // jogador do Evento de Natal
   const lk=ehLenda(p)?"Lenda|"+(LENDA_ALIAS[p.n]||p.n):null,lok=lk&&ROSTOS_REAIS[lk]?lk:null;
   if(!p.real)return lok;
   if(p.oc&&ROSTOS_REAIS[p.oc+"|"+p.n])return p.oc+"|"+p.n;
@@ -6891,22 +6926,123 @@ const R9_BAND={ITA:"🇮🇹",BRA:"🇧🇷",ARG:"🇦🇷",FRA:"🇫🇷",POR:"
 function r9Jog(i){const j=R9_SEL.jog[i];return {id:960000+i,n:j[0],pos:j[1],ov:j[2],age:j[3],lenda:1,bInt:0,nat:j[4]}}
 function r9Foto(n){return typeof ROSTOS_REAIS!=="undefined"&&(ROSTOS_REAIS["Lenda|"+n]||ROSTOS_REAIS["Leilao|"+n])||null}
 const r9Curto=n=>({"Gianluigi Buffon":"Buffon","Fabio Cannavaro":"Cannavaro","Paolo Maldini":"Maldini","Diego Maradona":"Maradona","Zinedine Zidane":"Zidane","Cristiano Ronaldo":"C. Ronaldo","Ronaldo Fenômeno":"Ronaldo","Lionel Messi":"Messi","Roberto Carlos":"R. Carlos"})[n]||n;
-/* campo vertical com cards de lenda (toque abre a ficha) */
-function modalR9(){const P=POS_FORM[R9_SEL.form],med=Math.round(R9_SEL.jog.reduce((a,j)=>a+j[2],0)/11);
-  modal(`<div class="r9"><p class="r9-tag">🎄 Evento de Natal · Desafio</p><h2 class="r9-tit">${R9_SEL.nome}</h2><p class="r9-sub">${R9_SEL.sub} · ${R9_SEL.form} · força média <b class="num">${med}</b></p>
-    <div class="r9-campo"><i class="r9-linhas"></i>${R9_SEL.jog.map((j,i)=>{const [d,l]=P[i],f=r9Foto(j[0]);
-      return `<button class="r9-card" data-a="r9jog" data-v="${i}" style="left:${(l*100).toFixed(1)}%;top:${(91-d/.45*78).toFixed(1)}%"><span class="r9-ov num">${j[2]}</span><span class="r9-f">${f?`<img src="${f}" alt="">`:"★"}</span><b>${esc(r9Curto(j[0]))}</b><small>${j[1]} ${R9_BAND[j[4]]||""}</small></button>`}).join("")}</div>
-    <p class="muted peq" style="text-align:center">Toque num jogador para ver habilidades e passivas.</p><div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div></div>`);
-  const fo=document.querySelector(".veu .folha");if(fo)fo.classList.add("folha-lenda")}
-function modalR9Jog(i){const p=r9Jog(i),f=r9Foto(p.n);
+/* ===== Evento Feliz Natal (21/11): 5 times históricos × 3 desafios. Joga com o time da carreira (clube temporário AMG_CID + G.amgM.ev, como o amistoso de amigo:
+   amgBak/limparAmigo devolvem elenco, energia e cartões). Força mostrada = a da época; a dificuldade real é relativa ao seu time (evA/evD = sua força + dA/dD).
+   Progresso em perfil().natal[k] = [d1,d2,d3]. Prêmios: a definir (NATAL_REC). ===== */
+const NATAL=[
+ {k:"r9",nome:"Time dos Sonhos de Ronaldo",sigla:"R9",sub:"O time perfeito escolhido por Ronaldo Fenômeno",form:"4-3-3",est:"of",tec:"Ronaldo Fenômeno",tq:95,c1:"#111827",c2:"#ffd23f",escR:null,dA:5,dD:2,posse:.04,jog:R9_SEL.jog,
+  dica:"O time mais forte do evento. Feche a zaga quando estiver ganhando.",
+  des:[["cs",0,"Terminar a partida sem sofrer gols"],["v",0,"Vencer a partida"],["gf",3,"Marcar pelo menos 3 gols"]]},
+ {k:"barca",nome:"Barcelona de Messi",sigla:"BAR",sub:"Campeão da Champions 2010/11 · final contra o Manchester United (3 × 1)",form:"4-3-3",est:"eq",tec:"Pep Guardiola",tq:96,c1:"#a50044",c2:"#004d98",escR:"Barcelona",dA:3,dD:3,posse:.06,
+  jog:[["Víctor Valdés","GOL",89,29,"ESP"],["Éric Abidal","LAT",86,31,"FRA"],["Gerard Piqué","ZAG",89,24,"ESP"],["Javier Mascherano","ZAG",87,26,"ARG"],["Daniel Alves","LAT",90,28,"BRA"],
+   ["Sergio Busquets","VOL",89,22,"ESP"],["Xavi","MEI",95,31,"ESP"],["Andrés Iniesta","MEI",95,27,"ESP"],["David Villa","ATA",91,29,"ESP"],["Lionel Messi","ATA",98,23,"ARG"],["Pedro","ATA",87,23,"ESP"]],
+  dica:"Eles ficam com a bola. Use o comando “Domina o meio-campo!” e uma formação com mais meias.",
+  des:[["semDe","Lionel Messi","Não sofrer gol do Messi"],["posse",50,"Terminar com pelo menos 50% de posse de bola"],["v",0,"Vencer a partida"]]},
+ {k:"bra70",nome:"Brasil 1970 — Tricampeão",sigla:"BRA",sub:"Final da Copa de 1970 contra a Itália (4 × 1)",form:"4-2-4",est:"of",tec:"Zagallo",tq:93,c1:"#ffdf00",c2:"#009c3b",escR:null,dA:4,dD:0,posse:.03,
+  jog:[["Félix","GOL",80,32,"BRA"],["Everaldo","LAT",84,26,"BRA"],["Brito","ZAG",86,30,"BRA"],["Piazza","ZAG",87,27,"BRA"],["Carlos Alberto Torres","LAT",92,25,"BRA"],
+   ["Clodoaldo","VOL",89,20,"BRA"],["Gérson","MEI",93,29,"BRA"],["Rivellino","ATA",93,24,"BRA"],["Tostão","ATA",92,23,"BRA"],["Pelé","ATA",99,29,"BRA"],["Jairzinho","ATA",94,25,"BRA"]],
+  dica:"Ataque fortíssimo, mas a defesa deixa espaço. Segure o 1º tempo e vá para cima no 2º.",
+  des:[["cs1",0,"Não sofrer gol no 1º tempo"],["vpor",2,"Vencer por 2 ou mais gols de diferença"],["maisQue","Pelé","Marcar mais gols que o Pelé"]]},
+ {k:"bra02",nome:"Brasil 2002 — Pentacampeão",sigla:"BRA",sub:"Final da Copa de 2002 contra a Alemanha (2 × 0)",form:"3-4-1-2",est:"of",tec:"Luiz Felipe Scolari",tq:90,c1:"#009c3b",c2:"#ffdf00",escR:null,dA:4,dD:1,posse:-.02,
+  jog:[["Marcos","GOL",89,28,"BRA"],["Roque Júnior","ZAG",86,25,"BRA"],["Edmílson","ZAG",87,25,"BRA"],["Lúcio","ZAG",89,24,"BRA"],["Roberto Carlos","LAT",93,29,"BRA"],["Cafu","LAT",92,32,"BRA"],
+   ["Gilberto Silva","VOL",87,25,"BRA"],["Kléberson","VOL",86,23,"BRA"],["Ronaldinho Gaúcho","MEI",92,22,"BRA"],["Rivaldo","ATA",94,30,"BRA"],["Ronaldo Fenômeno","ATA",97,25,"BRA"]],
+  dica:"Contra-ataque mortal pelas laterais. Mande no meio-campo e comece pressionando.",
+  des:[["posse",60,"Terminar com pelo menos 60% de posse de bola"],["gf1",2,"Marcar pelo menos 2 gols no 1º tempo"],["semDe","Ronaldo Fenômeno","Não sofrer gol do Ronaldo Fenômeno"]]},
+ {k:"real",nome:"Real Madrid de CR7",sigla:"RMA",sub:"Campeão da Champions 2016/17 · final contra a Juventus (4 × 1)",form:"4-3-1-2",est:"eq",tec:"Zinédine Zidane",tq:92,c1:"#ffffff",c2:"#febe10",escR:"Real Madrid",dA:4,dD:0,posse:0,
+  jog:[["Keylor Navas","GOL",88,30,"CRC"],["Marcelo","LAT",89,29,"BRA"],["Sergio Ramos","ZAG",91,31,"ESP"],["Raphaël Varane","ZAG",87,24,"FRA"],["Dani Carvajal","LAT",86,25,"ESP"],
+   ["Casemiro","VOL",88,25,"BRA"],["Toni Kroos","MEI",91,27,"GER"],["Luka Modrić","MEI",92,31,"CRO"],["Isco","MEI",89,25,"ESP"],["Karim Benzema","ATA",88,29,"FRA"],["Cristiano Ronaldo","ATA",97,32,"POR"]],
+  dica:"Letal no contra-ataque e na bola aérea. Cuidado com o Cristiano Ronaldo no fim do jogo.",
+  des:[["max",1,"Sofrer no máximo 1 gol"],["gf",3,"Marcar pelo menos 3 gols"],["semDe","Cristiano Ronaldo","Não sofrer gol do Cristiano Ronaldo"]]}];
+const NATAL_REC=[[3,"Inicial"],[6,"Bronze"],[9,"Prata"],[12,"Ouro"],[15,"Especial de Natal"]];
+Object.assign(R9_BAND,{ESP:"🇪🇸",CRC:"🇨🇷",GER:"🇩🇪",CRO:"🇭🇷"});
+const NATAL_CURTO={"Víctor Valdés":"Valdés","Éric Abidal":"Abidal","Gerard Piqué":"Piqué","Javier Mascherano":"Mascherano","Daniel Alves":"Dani Alves","Sergio Busquets":"Busquets","Andrés Iniesta":"Iniesta","David Villa":"Villa",
+ "Carlos Alberto Torres":"C. Alberto","Roque Júnior":"Roque Jr.","Roberto Carlos":"R. Carlos","Gilberto Silva":"Gilberto","Ronaldinho Gaúcho":"Ronaldinho","Ronaldo Fenômeno":"Ronaldo","Keylor Navas":"Navas","Sergio Ramos":"Ramos",
+ "Raphaël Varane":"Varane","Dani Carvajal":"Carvajal","Toni Kroos":"Kroos","Luka Modrić":"Modrić","Karim Benzema":"Benzema","Cristiano Ronaldo":"C. Ronaldo"};
+const natalCurto=n=>NATAL_CURTO[n]||r9Curto(n);
+const NATAL_FOTO_ALIAS={"Ronaldinho Gaúcho":"Ronaldinho"};
+function natalFotoK(n){if(typeof ROSTOS_REAIS==="undefined")return null;const a=NATAL_FOTO_ALIAS[n]||n;return ["Lenda|"+n,"Leilao|"+n,"Lenda|"+a,"Leilao|"+a].find(k=>ROSTOS_REAIS[k])||null}
+function natalFoto(n){const k=natalFotoK(n);return k?ROSTOS_REAIS[k]:null}
+function natalJog(T,i){const j=T.jog[i];return {id:960000+i,n:j[0],pos:j[1],ov:j[2],age:j[3],lenda:1,bInt:0,nat:j[4]}}
+function natalMed(T){return Math.round(T.jog.reduce((a,j)=>a+j[2],0)/11)}
+function natalEscudo(T){const ei=T.escR&&typeof ESCUDOS_IMG!=="undefined"&&ESCUDOS_IMG[T.escR];return ei?{img:ei}:{forma:2,estampa:T.k==="r9"?0:9,c1:T.c1,c2:T.c2,c3:T.k==="r9"?"#ffd23f":"#002776"}}
+function natalEsc(T,px){return escudoSVG(natalEscudo(T),T.sigla,px,T.sigla)}
+function natalFeitos(k){const N=perfil().natal||{};return N[k]||[0,0,0]}
+function natalTotal(){return NATAL.reduce((a,T)=>a+natalFeitos(T.k).filter(Boolean).length,0)}
+/* números da partida do evento */
+function natalPosse(V,F){const me=V.lado,o=me==="h"?"a":"h",mid=s=>{const L=V.L[s],sl=FORMACOES[L.form].s;return L.xi.filter((id,i)=>id!=null&&(sl[i]==="VOL"||sl[i]==="MEI")).length};
+  const gm=gritoAtivo(V.L[me]),perde=me==="h"?V.ga-V.gh:V.gh-V.ga,c=G.clubs[V.L[o].cid]||{};
+  let x=.5+((F[me].att+F[me].def)-(F[o].att+F[o].def))/120+(mid(me)-mid(o))*.015-(c.evPosse||0)+(gm&&gm.k==="meio"?.14:gm&&(gm.k==="fechar"||gm.k==="segurar")?-.05:0)+clamp(perde,-2,2)*.02+(rnd()-.5)*.12;
+  V.po=V.po||{s:0,n:0};V.po.s+=clamp(x,.2,.8);V.po.n++}
+function natalStats(V){const me=V.lado,o=me==="h"?"a":"h",g1=V.g1||{h:0,a:0},de={};
+  (o==="h"?V.sh:V.sa).forEach(([pid])=>{const p=pid!=null&&G.players[pid];if(p)de[p.n]=(de[p.n]||0)+1});
+  return {gf:me==="h"?V.gh:V.ga,gs:me==="h"?V.ga:V.gh,g1f:g1[me],g1s:g1[o],posse:V.po&&V.po.n?Math.round(V.po.s/V.po.n*100):50,de,ht:!!V.ht}}
+/* 2 = cumprido, 1 = em aberto, 0 = não dá mais (fim: decide tudo) */
+function natalEstado(d,st,fim){const [t,x]=d,ok=c=>c?2:fim?0:1;
+  switch(t){case "cs":return st.gs?0:fim?2:1;case "v":return ok(st.gf>st.gs);case "gf":return st.gf>=x?2:fim?0:1;case "semDe":return (st.de[x]||0)?0:fim?2:1;
+    case "posse":return ok(st.posse>=x);case "cs1":return st.g1s?0:st.ht||fim?2:1;case "vpor":return ok(st.gf-st.gs>=x);case "maisQue":return ok(st.gf>(st.de[x]||0));
+    case "gf1":return st.g1f>=x?2:st.ht||fim?0:1;case "max":return st.gs>x?0:fim?2:1}return 1}
+function natalFaixa(V){if(!V||!V.m.ev)return "";const T=NATAL.find(t=>t.k===V.m.ev),st=natalStats(V),fe=natalFeitos(T.k);
+  return `<div class="nt-live" id="lv-natal"><div class="nt-lp"><span>Posse de bola</span><b class="num">${st.posse}%</b><i><em style="width:${st.posse}%"></em></i></div>
+    ${T.des.map((d,j)=>{const e=fe[j]?3:natalEstado(d,st,false);return `<div class="nt-ld e${e}"><span>${e===3?"⭐":e===2?"✅":e===0?"❌":"⏳"}</span>${esc(d[2])}${e===3?" <small>(já feito)</small>":""}</div>`}).join("")}</div>`}
+/* monta a partida: clube temporário com os 11 lendários, força relativa ao seu time */
+function natalMontar(i){const T=NATAL[i];if(!T)return "Time não encontrado.";if(!G||!G.user)return "Crie uma carreira primeiro.";if(G.live)return "Termine a partida atual primeiro.";
+  limparAmigo();const uid=G.user.club,med=natalMed(T),h=[...T.k].reduce((a,c)=>a+c.charCodeAt(0),0);
+  G.clubs[AMG_CID]={id:AMG_CID,name:T.nome,short:T.sigla,rating:med,rep:med,pais:G.country,tier:userTier(),c1:T.c1,c2:T.c2,cap:80000,form:T.form,est:T.est,escudo:natalEscudo(T),amigo:true,natal:T.k,
+    tecIA:{n:T.tec,q:T.tq},bt:0,evPosse:T.posse};
+  const ids=T.jog.map(([n,pos,ov,age])=>{const pid=novoJogador(pos,ov,AMG_CID,age),p=G.players[pid];Object.assign(p,{n,pos,ov,pot:ov,sal:0,lenda:1,evF:natalFotoK(n),inj:0,susp:0,fis:100});return pid});
+  const c=G.clubs[AMG_CID];c.ids=ids;c.xiAmg=ids.slice();
+  const bak={};jogadoresDo(uid).forEach(p=>{bak[p.id]=JSON.parse(JSON.stringify(p))});
+  G.amgBak={pl:bak,user:{form:G.user.form,est:G.user.est,lineup:(G.user.lineup||[]).slice()}};
+  const xiU=(G.user.cmd||"tec")==="tec"?melhorXI(uid,G.user.form):G.user.lineup,uF=forcasCfg(xiU,G.user.form,G.user.est,uid),eF=forcasCfg(ids,T.form,T.est,AMG_CID);
+  c.evA=uF.def-eF.att+T.dA;c.evD=uF.att-eF.def+T.dD;
+  G.amgM={tipo:"A",h:uid,a:AMG_CID,neutro:true,ko:false,econ:eRec(userTier()),rot:`🎄 Feliz Natal · ${T.nome}`,ev:T.k};
+  tocou();salvar();return null}
+function concluirNatal(){const V=G.live,T=NATAL.find(t=>t.k===V.m.ev),st=natalStats(V),P=perfil();P.natal=P.natal||{};
+  const fe=(P.natal[T.k]||[0,0,0]).slice(),antes=natalTotal(),novos=[];
+  T.des.forEach((d,j)=>{if(!fe[j]&&natalEstado(d,st,true)===2){fe[j]=1;novos.push(j)}});P.natal[T.k]=fe;P.natal.j=(P.natal.j||0)+1;
+  const xp=XP_AMG[st.gf>st.gs?"v":st.gf<st.gs?"d":"e"]+novos.length*30;
+  const r={k:T.k,st,novos,fe,antes,depois:natalTotal(),xp,eu:G.clubs[G.user.club].short};
+  G.live=null;limparAmigo();somarXP(xp);salvar();return r}
+function modalResNatal(r){const T=NATAL.find(t=>t.k===r.k),st=r.st,v=st.gf>st.gs,rec=NATAL_REC.filter(([q])=>r.antes<q&&r.depois>=q);
+  modal(`<div class="nt nt-res"><p class="nt-tag">🎄 Feliz Natal · ${esc(T.nome)}</p><div style="font-size:44px">${r.novos.length?"🎁":v?"🏆":st.gf<st.gs?"😓":"🤝"}</div>
+    <p class="num nt-placar">${esc(r.eu)} ${st.gf} × ${st.gs} ${esc(T.sigla)}</p><p class="muted peq" style="margin:0">Posse de bola: <b class="num">${st.posse}%</b></p>
+    <h3>${r.novos.length?`${r.novos.length} desafio${r.novos.length>1?"s":""} novo${r.novos.length>1?"s":""}!`:"Nenhum desafio novo desta vez"}</h3>
+    <div class="nt-des">${T.des.map((d,j)=>`<div class="nt-di${r.fe[j]?" on":""}${r.novos.includes(j)?" novo":""}"><span>${r.fe[j]?"✅":"⬜"}</span><p>${esc(d[2])}</p>${r.novos.includes(j)?"<em>NOVO</em>":""}</div>`).join("")}</div>
+    ${r.fe.every(Boolean)&&r.novos.length?`<p class="nt-ok">🏅 Você completou os 3 desafios do ${esc(T.nome)}!</p>`:""}
+    ${rec.map(([q,n])=>`<p class="nt-ok">🎁 Recompensa ${n} liberada (${q}/15)!</p>`).join("")}
+    <div class="nt-geral"><div class="nt-gl"><b>Progresso do evento</b><span class="num">${r.depois}/15</span></div><div class="nt-barra"><i style="width:${r.depois/15*100}%"></i></div></div>
+    <div class="premio-recomp"><span>+${r.xp} XP</span></div>
+    <div class="botoes"><button class="btn" data-a="fechar">Fechar</button><button class="btn prim" data-a="ntevento">Ver evento</button></div></div>`);natalFolha()}
+function natalFolha(){const fo=document.querySelector(".veu .folha");if(fo)fo.classList.add("folha-natal")}
+/* tela do evento: progresso geral, recompensas e os 5 cards */
+function modalNatal(){const tot=natalTotal();
+  modal(`<div class="nt"><div class="nt-topo"><i class="nt-luzes"></i><p class="nt-tag">🎄 Evento especial</p><h2>Feliz Natal</h2><p>Supere os desafios e ganhe prêmios lendários</p></div>
+    <div class="nt-geral"><div class="nt-gl"><b>Progresso do evento</b><span class="num">${tot}/15 desafios</span></div><div class="nt-barra"><i style="width:${tot/15*100}%"></i></div>
+      <div class="nt-trilha">${NATAL_REC.map(([q,n])=>`<div class="nt-rec${tot>=q?" on":""}"><span>🎁</span><b class="num">${q}</b><small>${n}</small></div>`).join("")}</div>
+      <p class="nt-def">Prêmios em breve · completar os 3 desafios de um time também dá bônus</p></div>
+    <div class="nt-times">${NATAL.map((T,i)=>{const fe=natalFeitos(T.k),n=fe.filter(Boolean).length;
+      return `<button class="nt-card${n===3?" full":""}" data-a="ntver" data-v="${i}" style="--c1:${T.c1};--c2:${T.c2}"><span class="nt-ce">${natalEsc(T,38)}</span><span class="nt-ct"><b>${esc(T.nome)}</b><small>${T.form} · força média <b class="num">${natalMed(T)}</b></small></span>
+        <span class="nt-dots"><span>${[0,1,2].map(j=>`<i class="${fe[j]?"on":""}"></i>`).join("")}</span><small class="num">${n}/3</small></span></button>`}).join("")}</div>
+    <div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div></div>`);natalFolha()}
+/* card do time: escalação no campo vertical (cards de lenda), desafios e Jogar */
+function modalNatalTime(i){const T=NATAL[i],P=POS_FORM[T.form],fe=natalFeitos(T.k),n=fe.filter(Boolean).length;
+  modal(`<div class="r9 nt"><p class="r9-tag">🎄 Feliz Natal · Desafio</p><h2 class="r9-tit">${esc(T.nome)}</h2><p class="r9-sub">${esc(T.sub)}<br>${T.form} · técnico ${esc(T.tec)} · força média <b class="num">${natalMed(T)}</b></p>
+    <div class="r9-campo"><i class="r9-linhas"></i>${T.jog.map((j,k)=>{const [d,l]=P[k],f=natalFoto(j[0]);
+      return `<button class="r9-card" data-a="ntjog" data-v="${i}:${k}" style="left:${(l*100).toFixed(1)}%;top:${(91-d/.45*78).toFixed(1)}%"><span class="r9-ov num">${j[2]}</span><span class="r9-f">${f?`<img src="${f}" alt="">`:"★"}</span><b>${esc(natalCurto(j[0]))}</b><small>${j[1]} ${R9_BAND[j[4]]||""}</small></button>`}).join("")}</div>
+    <div class="nt-geral"><div class="nt-gl"><b>Desafios</b><span class="num">${n}/3</span></div><div class="nt-barra"><i style="width:${n/3*100}%"></i></div>
+      <div class="nt-des">${T.des.map((d,j)=>`<div class="nt-di${fe[j]?" on":""}"><span>${fe[j]?"✅":"⬜"}</span><p>${esc(d[2])}</p></div>`).join("")}</div>
+      <p class="nt-def">🎁 Bônus por completar os 3: ${n===3?"<b>conquistado!</b>":"prêmio em breve"}</p></div>
+    <p class="nt-dica">💡 ${esc(T.dica)} Desafio feito fica salvo: jogue de novo para completar os outros.</p>
+    <div class="botoes"><button class="btn" data-a="ntevento">‹ Evento</button><button class="btn prim" data-a="ntjogar" data-v="${i}">⚽ Jogar</button></div></div>`);natalFolha()}
+function modalNatalJog(i,k){const T=NATAL[i],p=natalJog(T,k),f=natalFoto(p.n);
   modal(`<div class="lc"><div class="lc-topo"><span class="lc-selo">★ LENDA ★</span><b class="ov ov-lenda num lc-ov">${p.ov}</b></div>
     <div class="lc-foto">${f?`<svg viewBox="0 0 100 112" width="150" height="168" aria-hidden="true"><image href="${f}" width="100" height="112"/></svg>`:`<span class="lenda-sel lc-sem">★</span>`}<span class="posb ${p.pos}">${p.pos}</span></div>
-    <b class="lc-nome">${esc(p.n)}</b><span class="lc-sub">${R9_BAND[p.nat]||""} · auge aos ${p.age} anos</span></div>
+    <b class="lc-nome">${esc(p.n)}</b><span class="lc-sub">${R9_BAND[p.nat]||""} · ${esc(T.nome)} · ${p.age} anos</span></div>
     <div class="extrato num lc-ficha"><div><span>Posição</span><span>${posDetalhe(p)}</span></div><div><span>Melhor pé</span><span>${peDe(p)}</span></div>
       <div><span>Habilidades</span><span class="hab-chips">${habilidadesDe(p).map(x=>`<i class="top">${esc(x)}</i>`).join("")}</span></div></div>
-    <h2>★ Passivas de lenda</h2><p class="muted peq" style="margin:0">Valem para o time inteiro enquanto ele estiver em campo.</p>${passivasJogHTML(p)}
+    ${passivasJog(p).length?`<h2>★ Passivas de lenda</h2><p class="muted peq" style="margin:0">Valem para o time inteiro enquanto ele estiver em campo.</p>${passivasJogHTML(p)}`:""}
     <h2>Atributos</h2>${barrasAtr(p,false)}
-    <div class="botoes"><button class="btn" data-a="r9ver">‹ Seleção</button><button class="btn prim" data-a="fechar">Fechar</button></div>`);
+    <div class="botoes"><button class="btn" data-a="ntver" data-v="${i}">‹ Time</button><button class="btn prim" data-a="fechar">Fechar</button></div>`);
   const fo=document.querySelector(".veu .folha");if(fo)fo.classList.add("folha-lenda")}
 const LENDAS=[ // [nome, posição, força, cupons, idade] — destaques em atividade, indicados à Bola de Ouro
  ["Gianluigi Donnarumma","GOL",90,28,27],["Thibaut Courtois","GOL",89,26,34],["Alisson","GOL",89,25,33],["Yann Sommer","GOL",86,20,37],
@@ -7405,6 +7541,9 @@ function jogadorFoto(u,lado,px){
 }
 function fsNome(n){const w=Math.max(...n.split(/[\s-]/).map(x=>x.length));return `font-size:${w>10?13:w>8?15:w>6?17:19}px;overflow-wrap:normal;word-break:normal;hyphens:none`}
 /* posição de cada vaga no campo (time da esquerda): x = profundidade (0 = gol, .5 = meio), y = 0 em cima, 1 embaixo; mesma ordem de FORMACOES[f].s */
+const POS_FORM_EV={"4-2-4":[[.045,.5],[.17,.12],[.15,.37],[.15,.63],[.17,.88],[.27,.37],[.27,.63],[.42,.12],[.45,.37],[.45,.63],[.42,.88]],
+  "3-4-1-2":[[.045,.5],[.15,.25],[.14,.5],[.15,.75],[.27,.1],[.27,.9],[.25,.38],[.25,.62],[.35,.5],[.45,.35],[.45,.65]],
+  "4-3-1-2":[[.045,.5],[.17,.12],[.15,.37],[.15,.63],[.17,.88],[.24,.5],[.29,.25],[.29,.75],[.36,.5],[.45,.35],[.45,.65]]};
 const POS_FORM={
   "4-4-2":[[.045,.5],[.17,.12],[.15,.37],[.15,.63],[.17,.88],[.29,.37],[.29,.63],[.31,.12],[.31,.88],[.43,.37],[.43,.63]],
   "4-3-3":[[.045,.5],[.17,.12],[.15,.37],[.15,.63],[.17,.88],[.26,.5],[.33,.28],[.33,.72],[.42,.14],[.45,.5],[.42,.86]],
@@ -7416,6 +7555,7 @@ const POS_FORM={
   "4-1-4-1":[[.045,.5],[.17,.12],[.15,.37],[.15,.63],[.17,.88],[.24,.5],[.34,.1],[.34,.37],[.34,.63],[.34,.9],[.45,.5]],
   "5-4-1":[[.045,.5],[.2,.08],[.15,.28],[.15,.5],[.15,.72],[.2,.92],[.28,.37],[.28,.63],[.35,.2],[.35,.8],[.45,.5]]
 };
+Object.entries(POS_FORM_EV).forEach(([f,v])=>Object.defineProperty(POS_FORM,f,{value:v,enumerable:false}));
 function posicoesForm(form,esq){
   return (POS_FORM[form]||POS_FORM["4-4-2"]).map(([x,y])=>({x:esq?x:1-x,y:esq?y:1-y}));
 }
@@ -8014,7 +8154,7 @@ function telaPreJogo(){
   const salvas=`<button class="btn mini prim-mini cp-salvar" id="cp-salvar" data-a="formsalvar"${aj?"":" hidden"}>💾 Salvar esta formação</button>${FS.length?`<div class="cp-salvas"><small>Minhas formações</small>${FS.map((f,i)=>`<span class="cp-salva"><button data-a="formusar" data-v="${i}">${esc(f.nome)} <small>${f.form}</small></button><button class="x" data-a="formapagar" data-v="${i}" aria-label="Apagar ${esc(f.nome)}">×</button></span>`).join("")}</div>`:""}<p class="muted peq" style="margin:0">Arraste as bolinhas do seu time para ajustar a posição de cada jogador.</p>`;
   const manualPre=(G.user.cmd||"tec")==="manual";
   h+=`<h2>Formação</h2><div class="cartao secao">${campinho(m)}${salvas}${seletorTatica()}<div class="cmd-sel cmd-pre" role="radiogroup" aria-label="Quem comanda o time"><button role="radio" aria-checked="${!manualPre}" class="${manualPre?"":"on"}" data-a="precmd" data-v="tec">Comando do técnico</button><button role="radio" aria-checked="${manualPre}" class="${manualPre?"on":""}" data-a="precmd" data-v="manual">Comando manual</button></div><p class="muted peq cmd-dica" style="margin:0">${manualPre?"Você escala o time e decide as trocas.":"O técnico escala os melhores e faz as trocas sozinho."}</p>${manualPre?`<button class="btn" data-a="auto">Escalar os melhores</button>`:""}</div>`;
-  if(!(m.amistoso||m.amg))h+=`<div class="secao sim-pre">${botaoSimular()}</div>`; // 02/11: simular sobe para o lugar da situação do elenco
+  if(!(m.amistoso||m.amg||m.ev))h+=`<div class="secao sim-pre">${botaoSimular()}</div>`; // 02/11: simular sobe para o lugar da situação do elenco
   if(trocas.length)h+=`<p class="peq" style="margin:10px 0 0;color:var(--aviso)">Saíram da escalação por estarem fora: ${trocas.map(esc).join(", ")}.</p>`;
   h+=`<h2>Técnico</h2>${cartaoTecClube(uid)}`; // 02/11: técnico em card de jogador, acima dos titulares
   h+='<div id="tut-tit">'+blocoTitulares().replace("<h2>Titulares</h2>",`<h2>Titulares</h2><p class="muted peq" style="margin:-4px 0 8px">Toque num titular para substituí-lo por um reserva.</p>`)+'</div>';
@@ -8089,6 +8229,7 @@ function atualizarLive(n0){
   const pg=$("#lv-prog");if(pg)pg.style.width=Math.min(V.min,90)/90*100+"%";
   const tm=$("#lv-time");if(tm)tm.innerHTML=blocoEmCampo(V);
   const gs=$("#lv-grito");if(gs){const L=V.L[V.lado],at=gritoAtivo(L);gs.textContent=V.fk&&V.fk.s===V.lado?"🦶 Falta a favor: escolha a cobrança":at?`📣 ${at.n} · até os ${L.grito.ate}'`:L.grito&&V.min<L.grito.ate+GRITO_ESPERA?`Novo comando a partir dos ${L.grito.ate+GRITO_ESPERA}'`:"Fale com o time"}
+  const nt=$("#lv-natal");if(nt)nt.outerHTML=natalFaixa(V);
   const fd=$("#lv-feed");
   if(fd&&V.feed.length>n0){V.feed.slice(n0).forEach((f,i)=>{fd.insertAdjacentHTML("afterbegin",linhaFeed(f,true,i));if(f.t==="gol"&&pl){pl.classList.remove("gol");void pl.offsetWidth;pl.classList.add("gol")}})}
 }
@@ -8099,7 +8240,7 @@ function telaPartida(){
   <div class="placar-vivo"><div class="time">${marcaDe(H,44)}<b>${esc(H.name)}</b></div>
     <div class="centro"><div class="placar num" id="lv-placar">${V.gh}<span class="x">×</span>${V.ga}</div><div class="relogio num" id="lv-rel">${relogio(V)}</div></div>
     <div class="time">${marcaDe(A,44)}<b>${esc(A.name)}</b></div></div>
-  ${ehClassico(V.m)?cardClassico().replace('class="classico"','class="classico" style="margin-inline:0"'):""}<div class="prog" aria-hidden="true"><i id="lv-prog" style="width:${Math.min(V.min,90)/90*100}%"></i><span></span></div>${vivoFaixa(V)}`;
+  ${ehClassico(V.m)?cardClassico().replace('class="classico"','class="classico" style="margin-inline:0"'):""}<div class="prog" aria-hidden="true"><i id="lv-prog" style="width:${Math.min(V.min,90)/90*100}%"></i><span></span></div>${vivoFaixa(V)}${natalFaixa(V)}`;
   if(V.est!=="fim"){const tec=(V.cmd||"tec")==="tec";
     h+=`<button class="btn-sair-jogo" data-a="lvsair" aria-label="Desistir da partida"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg></button>`;
     if(V.est!=="penais")h+=`<div class="cmd-sel" role="radiogroup" aria-label="Quem comanda as trocas"><button role="radio" aria-checked="${tec}" class="${tec?"on":""}" data-a="lvcmd" data-v="tec">Comando do técnico</button>${V.m.vivo&&VIVO&&VIVO.papel!=="solo"?"":V.est==="rodando"?`<button class="cmd-pausa" data-a="lvpausar" aria-label="Pausar o jogo"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>`:`<button class="cmd-pausa" data-a="lvretomar" aria-label="Continuar o jogo"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg></button>`}<button role="radio" aria-checked="${!tec}" class="${tec?"":"on"}" data-a="lvcmd" data-v="manual">Comando manual</button></div>
@@ -10722,7 +10863,7 @@ function cartaoLeilao(){if(!reLiberado())return modoBanner("leilao","Leilão FUT
 function modoBanner(nome,alt,a,info,bloq,extra){return `<button class="modo-ban${bloq?" bloq":""}${extra||""}" data-a="${a}"><img src="img/modo-${nome}.jpg" alt="${alt}"><i class="modo-ban-luz" style="--d:${{jornada:0,leilao:1.3,quiz:2.6}[nome]||0}s"></i>${info?`<span class="modo-ban-info">${info}</span>`:""}${bloq?'<span class="modo-ban-cad">🔒 Em breve</span>':""}</button>`}
 function cartaoModos(){reLer();const c=RE.car,cl=G.clubs[G.user.club];
   return `<div class="modos"><div class="mini-div"><span>Mini Jogos</span></div>
-    ${modoBanner("jornada","Jornada de Craque",reLiberado()?"re_abrir":"re_breve",!reLiberado()?"":c&&c.fase!=="fim"?`${esc(c.nome)} · ${c.idade} anos · ${esc(c.clube?c.clube.name:"peneira")}`:"",!reLiberado())}${cartaoLeilao()}${cartaoQuiz()}${reLiberado()?`<button class="modo r9-ev" data-a="r9ver"><span class="modo-ic">🎄</span><div><b>Evento de Natal · prévia</b><small>Seleção Perfeita do R9 (só você vê)</small></div></button>`:""}</div>`}
+    ${modoBanner("jornada","Jornada de Craque",reLiberado()?"re_abrir":"re_breve",!reLiberado()?"":c&&c.fase!=="fim"?`${esc(c.nome)} · ${c.idade} anos · ${esc(c.clube?c.clube.name:"peneira")}`:"",!reLiberado())}${cartaoLeilao()}${cartaoQuiz()}${reLiberado()?`<button class="modo r9-ev" data-a="ntevento"><span class="modo-ic">🎄</span><div><b>Feliz Natal · prévia</b><small>5 times históricos, 15 desafios (só você vê)</small></div></button>`:""}</div>`}
 
 function acao(a,v,el){
   if(a&&a.startsWith("re_")){reAcao(a,v,el);return}
@@ -10828,7 +10969,8 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "fpmanter":formAjuste={ok:1};break;
     case "fpentra":{const V=G.live,s2=V.lado,L=V.L[s2],i=formAjuste&&formAjuste.slot;if(i==null)return;const er=substituir(s2,i,+v,false,"ajuste da formação");if(er){toastErro(er);return}formAjuste=null;V.ultSub=null;salvar();break}
     case "lvest":{const L=G.live.L[G.live.lado],nf=formParaEst(v,L.form);formAjuste=null;trocarFormacao(G.live.lado,nf,v);if(nf)toast(`Estilo ${ESTILOS[v].n.toLowerCase()}: formação trocada para ${nf}.`);salvar();break}
-    case "lvsair":if(G.live&&G.live.m.amg){modal(`<div class="aviso-box"><b>Sair do amistoso?</b><p>O jogo contra o time do seu amigo acaba aqui e você não ganha XP.</p><div class="botoes"><button class="btn" data-a="fechar">Continuar jogando</button><button class="btn perigo" data-a="lvamgsair">Sair</button></div></div>`);return}
+    case "lvsair":if(G.live&&G.live.m.ev){modal(`<div class="aviso-box"><b>Sair do desafio?</b><p>A partida contra o ${esc(G.clubs[AMG_CID].name)} acaba aqui e nenhum desafio é contado.</p><div class="botoes"><button class="btn" data-a="fechar">Continuar jogando</button><button class="btn perigo" data-a="lvamgsair">Sair</button></div></div>`);return}
+      if(G.live&&G.live.m.amg){modal(`<div class="aviso-box"><b>Sair do amistoso?</b><p>O jogo contra o time do seu amigo acaba aqui e você não ganha XP.</p><div class="botoes"><button class="btn" data-a="fechar">Continuar jogando</button><button class="btn perigo" data-a="lvamgsair">Sair</button></div></div>`);return}
     if(G.live&&G.live.m.amistoso){toast("No amistoso não dá para desistir. Jogue até o fim!");return}modal(`<div class="aviso-box"><b>Desistir da partida?</b><p>Se sair agora, seu time perde por W.O. (0 × 3) e os 3 pontos vão para o adversário.</p><div class="botoes"><button class="btn" data-a="fechar">Continuar jogando</button><button class="btn perigo" data-a="lvdesistir">Desistir</button></div></div>`);return;
     case "lvdesistir":{fecharModal();const V=G.live;if(!V||V.est==="fim")break;pararTimer();if(!V.m.amistoso&&!V.m.amg){const PF=perfil();PF.wo=(PF.wo||0)+1} // W.O. tira coroas
       const meu=V.lado,adv=meu==="h"?"a":"h",ga=Math.max(3,adv==="h"?V.gh:V.ga);
@@ -10845,7 +10987,8 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "lvvel":velocidade=velocidade===2?1:2;if(G.live&&G.live.est==="rodando")iniciarTimer();break;
     case "lvvel3":if(perfil().nivel<NIVEL_3X){toastErro(`🔒 Bloqueado. Libera no nível ${NIVEL_3X}.`);return}velocidade=velocidade===3?1:3;if(G.live&&G.live.est==="rodando")iniciarTimer();break;
     case "lvamgsair":fecharModal();pararTimer();G.live=null;limparAmigo();aba="jogar";salvar();window.scrollTo(0,0);break;
-    case "lvconcluir":if(G.live&&G.live.m.amg){pararTimer();const r=concluirAmigo();aba="jogar";window.scrollTo(0,0);render();setTimeout(()=>{somResultado();modalResAmigo(r)},300);return}
+    case "lvconcluir":if(G.live&&G.live.m.ev){pararTimer();const r=concluirNatal();aba="jogar";window.scrollTo(0,0);render();setTimeout(()=>{somResultado();modalResNatal(r)},300);return}
+      if(G.live&&G.live.m.amg){pararTimer();const r=concluirAmigo();aba="jogar";window.scrollTo(0,0);render();setTimeout(()=>{somResultado();modalResAmigo(r)},300);return}
     if(G.live&&G.live.m.amistoso){pararTimer();const r=concluirAmistoso();aba="jogar";window.scrollTo(0,0);render();setTimeout(()=>{somResultado();modalAmistoso(r)},300);return}
     {pararTimer();concluirAoVivo();if(G.ultimoJogo)G.ultimoJogo.pendente=true;aba="resultado";salvar();window.scrollTo(0,0);setTimeout(somResultado,300);break;}
     case "resok":if(G.ultimoJogo)G.ultimoJogo.pendente=false;aba="inicio";salvar();window.scrollTo(0,0);break;
@@ -10981,8 +11124,10 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "fimresumo":FLUXO_FIM=false;fecharModal();if(G.over)modalFim();else modalTemporada();return;
     case "teclenda":{const er=contratarTecLenda(+v,el.dataset.i);if(er){toastErro(er);return}fecharModal();salvar();confete();toast(`${TEC_LENDAS[+v][0]} contratado!`);break;}
     case "lendaver":modalLenda(+v);return;
-    case "r9ver":modalR9();return;
-    case "r9jog":modalR9Jog(+v);return;
+    case "r9ver":case "ntevento":modalNatal();return;
+    case "ntver":modalNatalTime(+v);return;
+    case "ntjog":{const [a1,b1]=String(v).split(":");modalNatalJog(+a1,+b1);return}
+    case "ntjogar":{const er=natalMontar(+v);if(er){toastErro(er);return}fecharModal();aba="prejogo";window.scrollTo(0,0);render();return}
     case "lendacomp":pagarLenda(+v);return;
     case "lenda":{const er=comprarLenda(+v,el.dataset.i);if(er){if(er!==RECUSA)toastErro(er);return}fecharModal();avisoElencoCheio();salvar();confete();toast(`${LENDAS[+v][0]} contratado!`);break;}
     case "tecrosto":if(!editorOn)return;modalRostoTec(el.dataset.n);return;
