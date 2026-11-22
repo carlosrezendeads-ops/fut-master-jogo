@@ -1035,8 +1035,8 @@ nav.abas button{font-size:11px}
 .folha.folha-lenda{background:linear-gradient(180deg,#3a2600,#160e00 32%,var(--gramado-2));border:1.5px solid #ffd23f;box-shadow:0 0 34px rgba(255,210,63,.5),inset 0 0 0 1px rgba(255,241,168,.25)}
 .folha-lenda h2{color:#ffd23f}
 .r9{text-align:center}.r9-tag{margin:0;font-size:11px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:#ffd23f}.r9-tit{margin:4px 0 2px;color:#fff;font-size:20px}.r9-sub{margin:0 0 10px;font-size:12.5px;color:#cfd8ee}
-.r9-campo{position:relative;width:100%;aspect-ratio:3/4;border-radius:14px;overflow:hidden;background:repeating-linear-gradient(180deg,#1f7a3e 0 9%,#22853f 9% 18%);border:2px solid rgba(255,210,63,.6);box-shadow:inset 0 0 40px rgba(0,0,0,.35)}
-.r9-linhas{position:absolute;inset:3%;border:1.5px solid rgba(255,255,255,.5);border-radius:4px;background:linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5)) center/100% 1.5px no-repeat}
+.r9-campo{position:relative;width:100%;aspect-ratio:900/1310;border-radius:14px;overflow:hidden;background:url(img/campo.jpg) center/100% 100%;border:2px solid rgba(255,210,63,.6);box-shadow:inset 0 0 40px rgba(0,0,0,.35)}
+.r9-linhas{display:none;position:absolute;inset:3%;border:1.5px solid rgba(255,255,255,.5);border-radius:4px;background:linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5)) center/100% 1.5px no-repeat}
 .r9-linhas::before{content:"";position:absolute;left:50%;top:50%;width:22%;aspect-ratio:1;border:1.5px solid rgba(255,255,255,.5);border-radius:50%;transform:translate(-50%,-50%)}
 .r9-card{position:absolute;transform:translate(-50%,-50%);width:19%;padding:3px 2px 3px;border:1.5px solid #fff1a8;border-radius:9px;background:linear-gradient(120deg,#6b4500,#ffd23f 30%,#fff1a8 45%,#e3a514 60%,#6b4500);background-size:250% 100%;box-shadow:0 0 10px rgba(255,210,63,.6),0 3px 8px rgba(0,0,0,.5);color:#2a1a00;cursor:pointer;display:flex;flex-direction:column;align-items:center;font:inherit}
 .r9-ov{position:absolute;left:4px;top:2px;font-weight:900;font-size:12px}.r9-f{width:78%;aspect-ratio:100/112;display:block;border-radius:6px;overflow:hidden;background:rgba(0,0,0,.25);margin-top:6px}.r9-f img{width:100%;height:100%;object-fit:cover;display:block}
@@ -1065,7 +1065,7 @@ nav.abas button{font-size:11px}
 .nt-lp{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:8px;font-size:12px}.nt-lp b{color:#ffd23f}.nt-lp i{height:6px;border-radius:4px;background:rgba(255,255,255,.15);overflow:hidden}.nt-lp em{display:block;height:100%;background:#ffd23f}
 .nt-ld{display:flex;gap:6px;align-items:center;font-size:12px;text-align:left}.nt-ld.e0{opacity:.55;text-decoration:line-through}.nt-ld.e3{opacity:.6}.nt-ld small{color:#9fb3da}
 /* cards diamante do Evento de Natal (roxo brilhante + brilho passando) */
-.nt .r9-campo{aspect-ratio:3/4.3}.r9-card.dia{width:16%;overflow:hidden;color:#fff;border-color:#f3e8ff;background:linear-gradient(125deg,#2e0854,#7c3aed 28%,#e9d5ff 44%,#a855f7 56%,#4c1d95 78%,#2e0854);background-size:260% 100%;box-shadow:0 0 12px rgba(192,132,252,.85),0 0 3px #fff,0 3px 8px rgba(0,0,0,.5)}
+.r9-card.dia{width:16%;overflow:hidden;color:#fff;border-color:#f3e8ff;background:linear-gradient(125deg,#2e0854,#7c3aed 28%,#e9d5ff 44%,#a855f7 56%,#4c1d95 78%,#2e0854);background-size:260% 100%;box-shadow:0 0 12px rgba(192,132,252,.85),0 0 3px #fff,0 3px 8px rgba(0,0,0,.5)}
 .r9-card.dia .r9-ov{color:#fff;text-shadow:0 0 6px #c084fc}.r9-card.dia b{text-shadow:0 1px 2px rgba(0,0,0,.7)}.r9-card.dia small{color:#f3e8ff}.r9-card.dia .r9-f{background:rgba(46,8,84,.55)}
 .r9-card.dia::after,.lc.dia .dia-fa{content:"";position:absolute;top:-30%;bottom:-30%;left:-70%;width:45%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);transform:skewX(-20deg);pointer-events:none}
 .r9-card.dia::before{content:"✦";position:absolute;right:3px;top:1px;font-size:10px;color:#fff;text-shadow:0 0 6px #fff,0 0 10px #c084fc}
@@ -1136,7 +1136,7 @@ nav.abas button{font-size:11px}
 .pr-foto{flex:0 0 auto;display:flex;border-radius:12px;overflow:hidden;background:rgba(0,0,0,.25)}.pr-semfoto{display:block}.pr-info{display:flex;flex-direction:column;gap:1px;min-width:0}
 .pr-info small{font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:11px;color:var(--canario)}.pr-info>b{font-size:16px}.pr-clube{display:flex;align-items:center;gap:4px;font-size:12px;opacity:.85}.pr-num{font-size:12px;opacity:.8}.pr-big{color:var(--canario)}
 .pr-bonus{margin:10px 0 0;padding:8px 10px;border-radius:12px;background:rgba(255,210,63,.12);border:1px solid rgba(255,210,63,.45);font-size:13px;text-align:center}
-.pr-sel-tit{text-align:center;margin:16px 0 8px}.pr-campo{padding:12px 4px;border-radius:14px;background:repeating-linear-gradient(0deg,#1f7a3a 0 36px,#238443 36px 72px);border:2px solid rgba(255,255,255,.35);display:flex;flex-direction:column;gap:10px}
+.pr-sel-tit{text-align:center;margin:16px 0 8px}.pr-campo{padding:28px 4px;border-radius:14px;background:url(img/campo.jpg) center/100% 100%;border:2px solid rgba(255,255,255,.35);display:flex;flex-direction:column;gap:22px}
 .pr-fila{display:flex;justify-content:space-around}.pr-sj{display:flex;flex-direction:column;align-items:center;gap:2px;width:23%;font-size:11px;text-align:center;border-radius:10px;padding:2px 0}.pr-sj b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-shadow:0 1px 3px #000}.pr-sj .rosto{border-radius:8px;background:rgba(0,0,0,.25)}
 .car-lista{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}.car-lin{display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;background:var(--gramado-3)}.car-lin .nm{flex:1;display:flex;flex-direction:column;min-width:0}.car-lin small{font-size:12px}.car-esc{flex:0 0 auto;display:flex}.car-bt{display:flex;gap:6px}
 .titulo-dono{display:inline-block;align-self:flex-start;width:fit-content;margin:2px 0 4px;padding:2px 10px;border-radius:999px;font-size:13px;font-weight:800;color:#3a2a00;background:linear-gradient(160deg,#ffe27a,#c99a1a)}
@@ -1756,7 +1756,7 @@ nav.abas .wrap button:not([data-v="jogar"])[aria-current="true"] svg{background-
 .lg-est-l{display:grid;grid-template-columns:56px 1fr 56px;align-items:center;padding:9px 0;font-size:14px}
 .lg-est-l small{text-align:center;color:var(--cal-2);font-size:13.5px}.lg-est-l span:last-child{justify-self:end}
 .lg-est-l span{font-weight:600;padding:3px 8px;border-radius:999px}.lg-est-l span.mais{background:#000;color:#fff}
-.lg-campo{border-radius:18px;overflow:hidden;background:repeating-linear-gradient(180deg,#3f7d4f 0 46px,#3a7549 46px 92px);border:2px solid rgba(255,255,255,.25);padding-bottom:4px}
+.lg-campo{border-radius:18px;overflow:hidden;background:url(img/campo.jpg) center/100% 100%;border:2px solid rgba(255,255,255,.25);padding-bottom:4px}
 .lg-cab-t{display:flex;align-items:center;gap:8px;padding:10px 12px;background:rgba(0,0,0,.18)}.lg-cab-t b{flex:1;font-size:15px}.lg-cab-t span{font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px;background:#1f5130}
 .lg-linha{display:flex;justify-content:space-around;padding:8px 4px}
 .lg-jog{display:flex;flex-direction:column;align-items:center;gap:1px;background:none;border:0;color:#fff;cursor:pointer;font:inherit;min-width:0;width:64px}
@@ -1765,7 +1765,7 @@ nav.abas .wrap button:not([data-v="jogar"])[aria-current="true"] svg{background-
 .nota{font-style:normal;font-size:11px;font-weight:800;padding:0 5px;border-radius:6px;margin-top:-8px;position:relative}
 .nota.n7{background:#1e8e3e;color:#fff}.nota.n6{background:#9acd32;color:#102}.nota.n5{background:#ffd23f;color:#201600}.nota.n4{background:#c62828;color:#fff}
 .lg-jog small{font-size:10.5px;line-height:1.1;text-align:center;overflow-wrap:anywhere;text-shadow:0 1px 2px rgba(0,0,0,.6)}
-.lg-meio-c{height:2px;background:rgba(255,255,255,.35);margin:6px 0}
+.lg-meio-c{height:2px;margin:6px 0}
 .lg-banco{display:flex;flex-direction:column;gap:8px}.lg-banco-j{display:flex;align-items:center;gap:8px;font-size:14px}.lg-banco-j small{margin-left:auto;color:var(--ok)}
 .lg-tecs{display:flex;justify-content:space-between;margin-top:10px}.lg-tecs div{display:flex;flex-direction:column}.lg-tecs div:last-child{text-align:right}.lg-tecs small{color:var(--cal-2);font-size:12px}
 .lg-tab{padding:0;overflow:hidden}.lg-rolar{overflow-x:auto}
@@ -5165,7 +5165,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795312417";
+const VERSAO="1795312838";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7585,7 +7585,7 @@ Object.entries(POS_FORM_EV).forEach(([f,v])=>Object.defineProperty(POS_FORM,f,{v
 function posicoesForm(form,esq){
   return (POS_FORM[form]||POS_FORM["4-4-2"]).map(([x,y])=>({x:esq?x:1-x,y:esq?y:1-y}));
 }
-const cpXY=pt=>`translate(${(8+pt.x*324).toFixed(1)}px,${(8+pt.y*204).toFixed(1)}px)`;
+const cpXY=pt=>`translate(${(8+pt.x*324).toFixed(1)}px,${(8+pt.y*218).toFixed(1)}px)`;
 /* troca de formação: as bolinhas do seu time andam até as novas posições, depois redesenha a tela */
 /* posições do seu time no campinho: as que você arrastou (G.user.posAjuste) ou as da formação */
 function posicoesEu(f){f=f||G.user.form;const pa=G.user.posAjuste;return pa&&pa.form===f&&pa.pts&&pa.pts.length===11?pa.pts.map(p=>({...p})):posicoesForm(f,true)}
@@ -7599,7 +7599,7 @@ function ligarCampinho(){const sv=document.querySelector(".campinho svg");if(!sv
     g.addEventListener("pointermove",e=>{if(!ativo)return;
       if(!moveu){if(Math.hypot(e.clientX-sx,e.clientY-sy)<7)return;moveu=true;g.classList.add("arrasta");document.documentElement.classList.add("trava-rolagem")} // só vira arrasto depois de mexer um pouco
       const pt=sv.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const q=pt.matrixTransform(sv.getScreenCTM().inverse());
-      const p={x:Math.round(clamp((q.x-8)/324,.02,.98)*1000)/1000,y:Math.round(clamp((q.y-8)/204,.03,.97)*1000)/1000};g.style.transform=cpXY(p);g._p=p});
+      const p={x:Math.round(clamp((q.x-8)/324,.02,.98)*1000)/1000,y:Math.round(clamp((q.y-8)/218,.03,.97)*1000)/1000};g.style.transform=cpXY(p);g._p=p});
     const solta=()=>{if(!ativo)return;ativo=false;g.classList.remove("arrasta");document.documentElement.classList.remove("trava-rolagem");
       if(!moveu){campToque(+g.dataset.i);return} // toque: seleciona e mostra o jogador
       if(!g._p)return;const fm=G.live?G.live.L[G.live.lado].form:G.user.form,pts=posicoesEu(fm);pts[+g.dataset.i]=g._p;G.user.posAjuste={form:fm,pts,salvo:false};salvar();const b=$("#cp-salvar");if(b)b.hidden=false};
@@ -7626,7 +7626,7 @@ function seletorTatica(){const u=G.user;
 function campinho(m,V){ // V = partida ao vivo (usa os times em campo; sem arrastar)
   const uid=G.user.club,H=G.clubs[m.h],A=G.clubs[m.a],eu=G.clubs[uid],ad=m.h===uid?A:H;
   const kv=kitVisitante(H,A),uEu=m.h===uid?unisDe(H)[0]:unisDe(A)[kv],uAd=m.h===uid?unisDe(A)[kv]:unisDe(H)[0];
-  const W=340,Hh=220,pad=8,fw=W-2*pad,fh=Hh-2*pad;
+  const W=340,Hh=234,pad=8,fw=W-2*pad,fh=Hh-2*pad;
   const bola=(pt,u,id,i)=>{const p=id===true||(id!=null&&G.players[id]);return `<circle${i!=null?` class="cp-eu" data-i="${i}"`:""} cx="0" cy="0" style="transform:${cpXY(pt)}" r="8.5" fill="${u.camisa}" stroke="${u.detalhe&&distCor(u.detalhe,u.camisa)>60?u.detalhe:"#ffffff"}" stroke-width="2.6"${p?"":` opacity=".35"`}/>`};
   const Lu=V?V.L[V.lado]:null,Lo=V?V.L[V.lado==="h"?"a":"h"]:null,fEu=Lu?Lu.form:G.user.form,fAd=Lo?Lo.form:ad.form,xiEu=Lu?Lu.xi:G.user.lineup;
   const pE=posicoesEu(fEu),pD=posicoesForm(fAd,false);
@@ -7637,13 +7637,7 @@ function campinho(m,V){ // V = partida ao vivo (usa os times em campo; sem arras
   const lc="rgba(255,255,255,.55)";
   return `<div class="campinho"><div class="cp-leg"><span><i style="background:${uEu.camisa}"></i>${esc(eu.short)} · ${fEu}</span><span>${fAd} · ${esc(ad.short)}<i style="background:${uAd.camisa}"></i></span></div>
   <svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Campo com as formações ${fEu} e ${fAd}">
-    <defs><pattern id="gramaCp" width="${fw/10}" height="${fh}" patternUnits="userSpaceOnUse"><rect width="${fw/20}" height="${fh}" fill="#2f8f46"/><rect x="${fw/20}" width="${fw/20}" height="${fh}" fill="#2a8340"/></pattern></defs>
-    <rect x="0" y="0" width="${W}" height="${Hh}" rx="10" fill="#267a3b"/>
-    <rect x="${pad}" y="${pad}" width="${fw}" height="${fh}" fill="url(#gramaCp)" stroke="${lc}" stroke-width="1.5"/>
-    <line x1="${W/2}" y1="${pad}" x2="${W/2}" y2="${Hh-pad}" stroke="${lc}" stroke-width="1.5"/>
-    <circle cx="${W/2}" cy="${Hh/2}" r="26" fill="none" stroke="${lc}" stroke-width="1.5"/><circle cx="${W/2}" cy="${Hh/2}" r="2" fill="${lc}"/>
-    <rect x="${pad}" y="${Hh/2-46}" width="44" height="92" fill="none" stroke="${lc}" stroke-width="1.5"/><rect x="${pad}" y="${Hh/2-20}" width="15" height="40" fill="none" stroke="${lc}" stroke-width="1.5"/>
-    <rect x="${W-pad-44}" y="${Hh/2-46}" width="44" height="92" fill="none" stroke="${lc}" stroke-width="1.5"/><rect x="${W-pad-15}" y="${Hh/2-20}" width="15" height="40" fill="none" stroke="${lc}" stroke-width="1.5"/>
+    <image href="img/campo-h.jpg" x="0" y="0" width="${W}" height="${Hh}" preserveAspectRatio="none"/>
     <defs><clipPath id="cpClip"><circle r="11.8"/></clipPath></defs>${pE.map((pt,i)=>bolaJ(pt,uEu,xiEu[i],i,true,slE[i])).join("")}
     ${pD.map((pt,i)=>bolaJ(pt,uAd,xiAd[i],i,false,slA[i])).join("")}
   </svg></div>`;
@@ -10621,11 +10615,11 @@ function leiCampo(c,w,big,fx){ // campinho vertical: bolinha "?" até comprar; d
   const form=c.form,sl=LEI_FORM[form],cnt={},id="lc"+(++LEI_CID);let h="";
   sl.forEach((pos,i)=>{const n=sl.filter(x=>x===pos).length,k=cnt[pos]=(cnt[pos]||0)+1,xy=n===1?LEI_XY[pos][0]:[LEI_XY[pos][1][(k-1)*2],LEI_XY[pos][1][(k-1)*2+1]],[x,y]=xy,j=c.slots[i],[bg,fg]=LEI_COR[pos];
     const f=j&&leiFotoSrc(j[0]);
-    h+=`<g transform="translate(${x} ${y})"><circle r="9" fill="${j?"#0d1d3a":"rgba(255,255,255,.18)"}" stroke="${j?fg:"rgba(255,255,255,.7)"}" stroke-width="1.6"/>${j?(f?`<image href="${f}" x="-8.2" y="-8.2" width="16.4" height="18.4" clip-path="url(#${id})"/>`:`<text y="3.2" text-anchor="middle" font-size="8" font-weight="800" fill="#fff" font-family="Archivo,Arial">${esc(leiIni(j[0]))}</text>`):`<text y="3.3" text-anchor="middle" font-size="9" font-weight="800" fill="#fff" font-family="Archivo,Arial">?</text>`}
+    h+=`<g transform="translate(${x} ${(y*1.0785).toFixed(1)})"><circle r="9" fill="${j?"#0d1d3a":"rgba(255,255,255,.18)"}" stroke="${j?fg:"rgba(255,255,255,.7)"}" stroke-width="1.6"/>${j?(f?`<image href="${f}" x="-8.2" y="-8.2" width="16.4" height="18.4" clip-path="url(#${id})"/>`:`<text y="3.2" text-anchor="middle" font-size="8" font-weight="800" fill="#fff" font-family="Archivo,Arial">${esc(leiIni(j[0]))}</text>`):`<text y="3.3" text-anchor="middle" font-size="9" font-weight="800" fill="#fff" font-family="Archivo,Arial">?</text>`}
       ${(()=>{const t=fx&&fx[i];if(!t)return "";const n=t==="mvp"?14:11;return `<g class="lei-fx">${Array.from({length:n},(_,q)=>{const an=q/n*Math.PI*2,x=(Math.cos(an)*11.2).toFixed(1),y=(Math.sin(an)*11.2).toFixed(1);return `<circle cx="${x}" cy="${y}" r="${q%2?1.1:1.5}" class="lei-fa" fill="${q%3?"#ffe066":"#ff9a1f"}" style="--dx:${(Math.cos(an)*5).toFixed(1)}px;--dy:${(Math.sin(an)*5).toFixed(1)}px;animation-delay:${(q*.13%1).toFixed(2)}s"/>`}).join("")}</g>`})()}
       <g transform="translate(0 12.2)">${fx&&fx[i]==="mvp"?`<rect x="-10.5" y="-3.4" width="21" height="6.8" rx="2" fill="#ffd23f" stroke="#7a4b00" stroke-width=".6"/><text y="2.1" text-anchor="middle" font-size="5.6" font-weight="900" fill="#3a2200" font-family="Archivo,Arial">MVP</text>`:`<rect x="-9" y="-3.3" width="18" height="6.6" rx="2" fill="${bg}"/><text y="1.9" text-anchor="middle" font-size="5.2" font-weight="800" fill="${fg}" font-family="Archivo,Arial">${pos}</text>`}</g>
       ${j?`<text y="-11" text-anchor="middle" font-size="${big?6:7}" font-weight="800" fill="#fff" stroke="#0a1a12" stroke-width="1.6" paint-order="stroke" font-family="Archivo,Arial">${esc(leiCurto(j[0]))}</text>`:""}</g>`});
-  return `<svg class="lei-campo" viewBox="0 0 100 135" width="${w}" height="${Math.round(w*1.35)}" aria-hidden="true"><defs><clipPath id="${id}"><circle r="9"/></clipPath></defs><rect width="100" height="135" rx="6" fill="#1f7a3e"/>${[0,1,2,3,4,5,6].map(i=>`<rect y="${i*19.3}" width="100" height="9.6" fill="#22853f"/>`).join("")}<g fill="none" stroke="rgba(255,255,255,.55)" stroke-width=".9"><rect x="4" y="4" width="92" height="127" rx="2"/><line x1="4" y1="67.5" x2="96" y2="67.5"/><circle cx="50" cy="67.5" r="11"/><rect x="26" y="108" width="48" height="23"/><rect x="38" y="122" width="24" height="9"/><rect x="26" y="4" width="48" height="23"/></g>${h}</svg>`}
+  return `<svg class="lei-campo" viewBox="0 0 100 145.6" width="${w}" height="${Math.round(w*1.456)}" aria-hidden="true"><defs><clipPath id="${id}"><circle r="9"/></clipPath></defs><image href="img/campo.jpg" width="100" height="145.6" preserveAspectRatio="none"/>${h}</svg>`}
 function leiNovoComp(nome,time,av,bot,form){return {nome,time,av,bot,form,din:5000,slots:LEI_FORM[form].map(()=>null),est:bot?leiPick(LEI_ESTILOS):null,v:0,e:0,d:0,gp:0,gc:0}}
 function leiMontar(n){const nomes=[...LEI_BOTS].sort(()=>Math.random()-.5),avs=typeof AVATARES!=="undefined"?AVATARES.map((_,i)=>i).sort(()=>Math.random()-.5):[];
   const eu=leiNovoComp(G.user.coach||"Você",LEI.time,avatarSrc(),0,LEI.form);const cs=[eu];
