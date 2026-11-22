@@ -5147,7 +5147,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795310238";
+const VERSAO="1795310812";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -6960,8 +6960,8 @@ const NATAL_CURTO={"Víctor Valdés":"Valdés","Éric Abidal":"Abidal","Gerard P
  "Raphaël Varane":"Varane","Dani Carvajal":"Carvajal","Toni Kroos":"Kroos","Luka Modrić":"Modrić","Karim Benzema":"Benzema","Cristiano Ronaldo":"C. Ronaldo"};
 const natalCurto=n=>NATAL_CURTO[n]||r9Curto(n);
 const NATAL_FOTO_ALIAS={"Ronaldinho Gaúcho":"Ronaldinho"};
-function natalFotoK(n){if(typeof ROSTOS_REAIS==="undefined")return null;const a=NATAL_FOTO_ALIAS[n]||n;return ["Lenda|"+n,"Leilao|"+n,"Lenda|"+a,"Leilao|"+a].find(k=>ROSTOS_REAIS[k])||null}
-function natalFoto(n){const k=natalFotoK(n);return k?ROSTOS_REAIS[k]:null}
+function natalFotoK(n,k){if(typeof ROSTOS_REAIS==="undefined")return null;const a=NATAL_FOTO_ALIAS[n]||n;return ["Natal|"+k+"|"+n,"Lenda|"+n,"Leilao|"+n,"Lenda|"+a,"Leilao|"+a].find(k=>ROSTOS_REAIS[k])||null}
+function natalFoto(n,t){const k=natalFotoK(n,t);return k?ROSTOS_REAIS[k]:null} // foto da época daquele time (Natal|time|Nome) ou, se faltar, a do jogo
 function natalJog(T,i){const j=T.jog[i];return {id:960000+i,n:j[0],pos:j[1],ov:j[2],age:j[3],lenda:1,bInt:0,nat:j[4]}}
 function natalMed(T){return Math.round(T.jog.reduce((a,j)=>a+j[2],0)/11)}
 function natalEscudo(T){const ei=T.escR&&typeof ESCUDOS_IMG!=="undefined"&&ESCUDOS_IMG[T.escR];return ei?{img:ei}:{forma:2,estampa:T.k==="r9"?0:9,c1:T.c1,c2:T.c2,c3:T.k==="r9"?"#ffd23f":"#002776"}}
@@ -6989,7 +6989,7 @@ function natalMontar(i){const T=NATAL[i];if(!T)return "Time não encontrado.";if
   limparAmigo();const uid=G.user.club,med=natalMed(T),h=[...T.k].reduce((a,c)=>a+c.charCodeAt(0),0);
   G.clubs[AMG_CID]={id:AMG_CID,name:T.nome,short:T.sigla,rating:med,rep:med,pais:G.country,tier:userTier(),c1:T.c1,c2:T.c2,cap:80000,form:T.form,est:T.est,escudo:natalEscudo(T),amigo:true,natal:T.k,
     tecIA:{n:T.tec,q:T.tq},bt:0,evPosse:T.posse};
-  const ids=T.jog.map(([n,pos,ov,age])=>{const pid=novoJogador(pos,ov,AMG_CID,age),p=G.players[pid];Object.assign(p,{n,pos,ov,pot:ov,sal:0,lenda:1,evF:natalFotoK(n),inj:0,susp:0,fis:100});return pid});
+  const ids=T.jog.map(([n,pos,ov,age])=>{const pid=novoJogador(pos,ov,AMG_CID,age),p=G.players[pid];Object.assign(p,{n,pos,ov,pot:ov,sal:0,lenda:1,evF:natalFotoK(n,T.k),inj:0,susp:0,fis:100});return pid});
   const c=G.clubs[AMG_CID];c.ids=ids;c.xiAmg=ids.slice();
   const bak={};jogadoresDo(uid).forEach(p=>{bak[p.id]=JSON.parse(JSON.stringify(p))});
   G.amgBak={pl:bak,user:{form:G.user.form,est:G.user.est,lineup:(G.user.lineup||[]).slice()}};
@@ -7027,14 +7027,14 @@ function modalNatal(){const tot=natalTotal();
 /* card do time: escalação no campo vertical (cards de lenda), desafios e Jogar */
 function modalNatalTime(i){const T=NATAL[i],P=POS_FORM[T.form],fe=natalFeitos(T.k),n=fe.filter(Boolean).length;
   modal(`<div class="r9 nt"><p class="r9-tag">🎄 Feliz Natal · Desafio</p><h2 class="r9-tit">${esc(T.nome)}</h2><p class="r9-sub">${esc(T.sub)}<br>${T.form} · técnico ${esc(T.tec)} · força média <b class="num">${natalMed(T)}</b></p>
-    <div class="r9-campo"><i class="r9-linhas"></i>${T.jog.map((j,k)=>{const [d,l]=P[k],f=natalFoto(j[0]);
+    <div class="r9-campo"><i class="r9-linhas"></i>${T.jog.map((j,k)=>{const [d,l]=P[k],f=natalFoto(j[0],T.k);
       return `<button class="r9-card" data-a="ntjog" data-v="${i}:${k}" style="left:${(l*100).toFixed(1)}%;top:${(91-d/.45*78).toFixed(1)}%"><span class="r9-ov num">${j[2]}</span><span class="r9-f">${f?`<img src="${f}" alt="">`:"★"}</span><b>${esc(natalCurto(j[0]))}</b><small>${j[1]} ${R9_BAND[j[4]]||""}</small></button>`}).join("")}</div>
     <div class="nt-geral"><div class="nt-gl"><b>Desafios</b><span class="num">${n}/3</span></div><div class="nt-barra"><i style="width:${n/3*100}%"></i></div>
       <div class="nt-des">${T.des.map((d,j)=>`<div class="nt-di${fe[j]?" on":""}"><span>${fe[j]?"✅":"⬜"}</span><p>${esc(d[2])}</p></div>`).join("")}</div>
       <p class="nt-def">🎁 Bônus por completar os 3: ${n===3?"<b>conquistado!</b>":"prêmio em breve"}</p></div>
     <p class="nt-dica">💡 ${esc(T.dica)} Desafio feito fica salvo: jogue de novo para completar os outros.</p>
     <div class="botoes"><button class="btn" data-a="ntevento">‹ Evento</button><button class="btn prim" data-a="ntjogar" data-v="${i}">⚽ Jogar</button></div></div>`);natalFolha()}
-function modalNatalJog(i,k){const T=NATAL[i],p=natalJog(T,k),f=natalFoto(p.n);
+function modalNatalJog(i,k){const T=NATAL[i],p=natalJog(T,k),f=natalFoto(p.n,T.k);
   modal(`<div class="lc"><div class="lc-topo"><span class="lc-selo">★ LENDA ★</span><b class="ov ov-lenda num lc-ov">${p.ov}</b></div>
     <div class="lc-foto">${f?`<svg viewBox="0 0 100 112" width="150" height="168" aria-hidden="true"><image href="${f}" width="100" height="112"/></svg>`:`<span class="lenda-sel lc-sem">★</span>`}<span class="posb ${p.pos}">${p.pos}</span></div>
     <b class="lc-nome">${esc(p.n)}</b><span class="lc-sub">${R9_BAND[p.nat]||""} · ${esc(T.nome)} · ${p.age} anos</span></div>
@@ -11276,7 +11276,7 @@ setTimeout(()=>{try{amgSync(true)}catch(e){}},2500); // cria o ID do dono (1ª v
 try{somIniciar();somModo(modoDesejado())}catch(e){}
 try{carregarKits()}catch(e){}
 // imagens que não aparecem na abertura carregam logo depois da 1ª tela (abre mais rápido no celular); quando chegam, redesenha a tela
-const IMG_TARDE=["img/cartas-re.js?v=6bdf0053","img/escudos-img.js?v=655f7708","img/patro-logos.js?v=3e44eabc","img/rostos-reais.js?v=84c67dc5","img/titulos.js?v=9ecffff6","dados/titulos.js?v=a01a43e3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=67cfbd62","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
+const IMG_TARDE=["img/cartas-re.js?v=6bdf0053","img/escudos-img.js?v=655f7708","img/patro-logos.js?v=3e44eabc","img/rostos-reais.js?v=f8d2cba7","img/titulos.js?v=9ecffff6","dados/titulos.js?v=a01a43e3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=67cfbd62","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
 // 27/10: redesenha a cada arquivo que chega (logos dos patrocinadores não esperam as fotos); com aviso aberto, redesenha quando ele fechar
 let TARDE_T=null,TARDE_PEND=false;
 function tardeRender(){clearTimeout(TARDE_T);TARDE_T=setTimeout(()=>{if(!G||abertura||G.live||aba==="prejogo")return;if(document.querySelector(".veu")){TARDE_PEND=true;return}TARDE_PEND=false;render()},250)}
