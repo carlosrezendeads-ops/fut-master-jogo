@@ -1120,7 +1120,7 @@ nav.abas button{font-size:11px}
 .ntt-volta{width:40px;height:40px;border-radius:12px;border:1.5px solid rgba(255,210,63,.5);background:rgba(0,0,0,.4);color:#fff;font-size:24px;line-height:1;cursor:pointer}
 .ntt-tit{text-align:center;font-family:var(--f-display);font-weight:900;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:#fff;text-shadow:0 0 12px rgba(255,210,63,.6)}
 .ntt-li{display:flex;align-items:center;gap:6px;padding:4px 12px 4px 4px;border-radius:999px;background:linear-gradient(120deg,rgba(255,210,63,.3),rgba(0,0,0,.45));border:1.5px solid #ffd23f;box-shadow:0 0 12px rgba(255,210,63,.35)}.ntt-li b{font-size:18px;color:#ffd23f}
-.ntt-corpo{display:flex;flex-direction:column;gap:12px;max-width:520px;margin:0 auto}
+.ntt{display:flex;flex-direction:column}.ntt-corpo{flex:1;display:flex;flex-direction:column;justify-content:center;gap:12px;width:100%;max-width:520px;margin:0 auto;padding-bottom:40px}
 .ntt-prog{background:rgba(5,11,31,.75)}
 .ntt-bts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .ntt-bt{display:flex;flex-direction:column;align-items:center;gap:3px;padding:14px 8px;border-radius:16px;border:1.5px solid rgba(255,255,255,.25);background:linear-gradient(150deg,#14532d,#0b2a18);color:#fff;font:inherit;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.4)}
@@ -5214,7 +5214,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795402517";
+const VERSAO="1795429105";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7150,8 +7150,7 @@ function telaNatal(){if(!reLiberado()||!G||!G.user){aba="jogar";return telaInici
   return `<div class="ntt"><div class="ntt-fundo" aria-hidden="true"><i class="ntt-luz l1"></i><i class="ntt-luz l2"></i><i class="ntt-campo"></i><i class="ntt-neve"></i><i class="ntt-neve n2"></i><i class="nt-luzes ntt-pisca"></i></div>
     <div class="ntt-topo"><button class="ntt-volta" data-a="ntsair" aria-label="Voltar">‹</button><span class="ntt-tit">🎄 Feliz Natal</span><span class="ntt-li" title="Lionetas">${icoLioneta(30)}<b class="num">${lionetas()}</b></span></div>
     <div class="ntt-corpo"><div class="nt-av-arte ntt-arte"><img src="${NATAL_CAPA}" alt="Feliz Natal com o Lio Noel Messi"><button class="nt-av-jogar" data-a="ntsortear">JOGAR</button></div>
-      <div class="nt-geral ntt-prog"><div class="nt-gl"><b>Desafios concluídos</b><span class="num">${tot}/15</span></div><div class="nt-barra"><i style="width:${tot/15*100}%"></i></div></div>
-      <div class="ntt-bts"><button class="ntt-bt" data-a="nttimes"><span>🏟️</span><b>Times e desafios</b><small>5 times lendários</small></button><button class="ntt-bt loja" data-a="ntloja"><span>🛍️</span><b>Loja do evento</b><small>Troque suas Lionetas</small></button></div></div></div>`}
+</div></div>`}
 /* aviso do evento toda vez que o jogador entra no jogo (1 vez por abertura), na tela Jogar e sem outro quadro aberto */
 let NT_AVISO=0;
 function natalAviso(){if(NT_AVISO||!reLiberado()||!G||!G.user||G.live||G.amgM||abertura||aba!=="jogar"||document.querySelector(".veu"))return;NT_AVISO=1;modalNatalCapa()}
