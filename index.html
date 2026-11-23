@@ -5288,7 +5288,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795453932";
+const VERSAO="1795461451";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7253,7 +7253,8 @@ function modalNatalPremios(){const P=perfil(),N=P.natal||{},tot=natalTotal(),com
     <div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div></div>`);natalFolha()}
 /* aviso do evento toda vez que o jogador entra no jogo (1 vez por abertura), na tela Jogar e sem outro quadro aberto */
 let NT_AVISO=0;
-function natalAviso(){try{if(!window._ntPre){window._ntPre=new Image();window._ntPre.src=NATAL_CAPA}}catch(e){}if(NT_AVISO||natalAcabou()||!reLiberado()||!G||!G.user||G.live||G.amgM||abertura||aba!=="jogar"||document.querySelector(".veu"))return;NT_AVISO=1;modalNatalCapa()}
+function natalAviso(){if(G&&perfil().natalAviso)return; // 23/11: o banner aparece só 1 vez por perfil
+  try{if(!window._ntPre){window._ntPre=new Image();window._ntPre.src=NATAL_CAPA}}catch(e){}if(NT_AVISO||natalAcabou()||!reLiberado()||!G||!G.user||G.live||G.amgM||abertura||aba!=="jogar"||document.querySelector(".veu"))return;NT_AVISO=1;perfil().natalAviso=1;salvar();modalNatalCapa()}
 let NT_ULT=null;
 function natalSortear(){let i,j,g=0;do{i=Math.floor(Math.random()*NATAL.length);j=Math.floor(Math.random()*3)}while(NT_ULT&&NT_ULT[0]===i&&NT_ULT[1]===j&&g++<20);NT_ULT=[i,j];return [i,j]}
 /* card (banner) de cada time: arte de fundo img/natal-arte-<k>.jpg (mesmo design, muda a cor) + escudo, nome e elenco por cima */
