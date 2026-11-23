@@ -1136,6 +1136,17 @@ nav.abas button{font-size:11px}
 .ntt-sortear{align-self:center;display:flex;flex-direction:column;align-items:center;gap:4px;padding:22px 34px;border-radius:20px;border:2px solid #fff1a8;background:linear-gradient(180deg,rgba(185,28,28,.92),rgba(91,15,23,.92));color:#fff;font:inherit;cursor:pointer;box-shadow:0 0 30px rgba(255,210,63,.45),0 10px 24px rgba(0,0,0,.5);animation:ntJogarB 1.6s ease-in-out infinite}
 .ntt-sortear span{font-size:46px}.ntt-sortear b{font-family:var(--f-display);font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#ffd23f}.ntt-sortear small{font-size:12px;color:#fde68a}
 @keyframes ntJogarB{50%{transform:scale(1.04);box-shadow:0 0 44px rgba(255,210,63,.75),0 10px 24px rgba(0,0,0,.5)}}
+.ntc{position:relative;flex:none;width:100%;aspect-ratio:2/3;border-radius:18px;overflow:hidden;background:linear-gradient(160deg,var(--c1),#0b1533 55%,var(--c2));background-size:cover;background-position:center;border:2px solid rgba(255,255,255,.35);box-shadow:0 8px 22px rgba(0,0,0,.5);color:#fff;display:flex;flex-direction:column;align-items:center;text-align:center;padding:7% 5% 5%}
+.ntc>*{position:relative}
+.ntc-esc{filter:drop-shadow(0 4px 12px rgba(0,0,0,.7))}.ntc-esc svg{width:clamp(56px,20vw,96px);height:auto}
+.ntc-tit{display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:4px}.ntc-tit small{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#fde68a;text-shadow:0 1px 3px #000}
+.ntc-tit>b{font-family:var(--f-display);font-size:clamp(17px,5vw,25px);line-height:1.02;text-transform:uppercase;text-shadow:0 2px 0 rgba(0,0,0,.6),0 0 14px rgba(0,0,0,.7)}.ntc-tit span{font-size:10px;color:#e5e7eb;text-shadow:0 1px 3px #000}.ntc-tit span b{color:#ffd23f}
+.ntc-elenco{margin-top:auto;display:flex;flex-wrap:wrap;justify-content:center;gap:5px 4px;width:100%}.ntc-j{width:22%;display:flex;flex-direction:column;align-items:center;min-width:0}
+.ntc-j img,.ntc-j i{width:100%;aspect-ratio:100/112;object-fit:cover;border-radius:7px;background:rgba(0,0,0,.35);border:1.5px solid rgba(255,255,255,.55);box-shadow:0 2px 6px rgba(0,0,0,.5);display:grid;place-items:center;font-style:normal;font-size:12px}
+.ntc-j small{font-size:8px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;margin-top:1px;text-shadow:0 1px 2px #000}
+.ntr{position:relative;width:100%;overflow:hidden;padding:6px 0}.ntr-trilho{display:flex;gap:12px;will-change:transform}.ntr .ntc{width:62%}
+.ntr-seta{position:absolute;left:50%;top:0;width:0;height:0;margin-left:-10px;border:10px solid transparent;border-top-color:#ffd23f;filter:drop-shadow(0 0 6px #ffd23f);z-index:2}
+.ntc.ganhou{border-color:#ffd23f;box-shadow:0 0 30px rgba(255,210,63,.8);animation:leiEntra .5s ease-out}
 .modo.r9-ev{border-color:#e11d48;background:linear-gradient(120deg,rgba(225,29,72,.25),rgba(17,31,69,.9) 60%);margin-top:6px}
 .lc{position:relative;overflow:hidden;text-align:center;border-radius:16px;padding:12px 12px 16px;background:linear-gradient(120deg,#6b4500,#ffd23f 30%,#fff1a8 45%,#e3a514 60%,#6b4500);background-size:250% 100%;border:1.5px solid #fff1a8;box-shadow:0 0 24px rgba(255,210,63,.6)}
 .lc::after{content:"";position:absolute;top:-40%;bottom:-40%;left:-60%;width:38%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);pointer-events:none}
@@ -5219,7 +5230,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795432437";
+const VERSAO="1795433909";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7082,7 +7093,8 @@ function natalFotoK(n,k){if(typeof ROSTOS_REAIS==="undefined")return null;const 
 function natalFoto(n,t){const k=natalFotoK(n,t);return k?ROSTOS_REAIS[k]:null} // foto da época daquele time (Natal|time|Nome) ou, se faltar, a do jogo
 function natalJog(T,i){const j=T.jog[i];return {id:960000+i,n:j[0],pos:j[1],ov:j[2],age:j[3],lenda:1,bInt:0,nat:j[4]}}
 function natalMed(T){return Math.round(T.jog.reduce((a,j)=>a+j[2],0)/11)}
-function natalEscudo(T){const ei=T.escR&&typeof ESCUDOS_IMG!=="undefined"&&ESCUDOS_IMG[T.escR];return ei?{img:ei}:{forma:2,estampa:T.k==="r9"?0:9,c1:T.c1,c2:T.c2,c3:T.k==="r9"?"#ffd23f":"#002776"}}
+const NATAL_ESC={r9:"img/natal-esc-r9.png",bra70:"img/natal-esc-bra70.png",bra02:"img/natal-esc-bra02.png"}; // escudos feitos para o evento (Barça e Real usam o real)
+function natalEscudo(T){if(NATAL_ESC[T.k])return {img:NATAL_ESC[T.k]};const ei=T.escR&&typeof ESCUDOS_IMG!=="undefined"&&ESCUDOS_IMG[T.escR];return ei?{img:ei}:{forma:2,estampa:T.k==="r9"?0:9,c1:T.c1,c2:T.c2,c3:T.k==="r9"?"#ffd23f":"#002776"}}
 function natalEsc(T,px){return escudoSVG(natalEscudo(T),T.sigla,px,T.sigla)}
 function natalFeitos(k){const N=perfil().natal||{};return N[k]||[0,0,0]}
 function natalTotal(){return NATAL.reduce((a,T)=>a+natalFeitos(T.k).filter(Boolean).length,0)}
@@ -7159,16 +7171,20 @@ let NT_AVISO=0;
 function natalAviso(){if(NT_AVISO||!reLiberado()||!G||!G.user||G.live||G.amgM||abertura||aba!=="jogar"||document.querySelector(".veu"))return;NT_AVISO=1;modalNatalCapa()}
 let NT_ULT=null;
 function natalSortear(){let i,j,g=0;do{i=Math.floor(Math.random()*NATAL.length);j=Math.floor(Math.random()*3)}while(NT_ULT&&NT_ULT[0]===i&&NT_ULT[1]===j&&g++<20);NT_ULT=[i,j];return [i,j]}
-function natalRoleta(){const [i,j]=natalSortear(),T=NATAL[i],d=T.des[j];
-  modal(`<div class="nt nt-sort"><p class="nt-tag">🎲 Sorteando o desafio...</p><div class="nt-rol" id="nt-rol">${natalEsc(NATAL[0],70)}<b>${esc(NATAL[0].nome)}</b></div>
+/* card (banner) de cada time: arte de fundo img/natal-arte-<k>.jpg (mesmo design, muda a cor) + escudo, nome e elenco por cima */
+function natalCard(T){return `<div class="ntc" style="--c1:${T.c1};--c2:${T.c2};background-image:url(img/natal-arte-${T.k}.jpg)" role="img" aria-label="${esc(T.nome)}"></div>`} // arte única do time (cenário + 5 destaques + nome), montada em squads/squad-jogos/rascunhos/natal/compor.py
+/* sorteio: os 5 cards passam de lado como roleta (desacelerando) até parar no time; depois aparece o desafio */
+function natalRoleta(){const [i,j]=natalSortear(),T=NATAL[i],d=T.des[j],V=4,seq=[];for(let v=0;v<V;v++)NATAL.forEach(t=>seq.push(t));seq.push(...NATAL.slice(0,i+2));const alvo=V*NATAL.length+i;
+  modal(`<div class="nt nt-sort"><p class="nt-tag">🎲 Sorteando o desafio...</p>
+    <div class="ntr"><div class="ntr-trilho" id="ntr">${seq.map(t=>natalCard(t)).join("")}</div><i class="ntr-seta"></i></div>
     <div class="nt-sort-r" id="nt-sr" hidden><div class="nt-di on nt-sort-d"><span>🎯</span><p>${esc(d[2])}</p><b class="nt-li num">+${d[3]}${icoLioneta(18)}</b></div>
       <p class="nt-dica">💡 ${esc(T.dica)}</p>
       <div class="botoes"><button class="btn" data-a="ntver" data-v="${i}">Ver escalação</button><button class="btn prim" data-a="ntjogar" data-v="${i}:${j}">⚽ Jogar</button></div>
       <button class="btn mini nt-outro" data-a="fechar">‹ Voltar</button></div></div>`);natalFolha();
-  const el=document.getElementById("nt-rol");let k=0,n=15+i; // para no time sorteado (15 é múltiplo de 5 times)try{somCaixaCarga(1.6)}catch(e){}
-  const passo=()=>{const e=document.getElementById("nt-rol");if(!e)return;const t=NATAL[k%NATAL.length];e.innerHTML=`${natalEsc(t,70)}<b>${esc(t.nome)}</b>`;e.classList.remove("pula");void e.offsetWidth;e.classList.add("pula");
-    if(k>=n){e.classList.add("fim");const tg=document.querySelector(".nt-sort .nt-tag");if(tg)tg.textContent="🎄 Seu desafio";const r=document.getElementById("nt-sr");if(r)r.hidden=false;try{somCaixaBoom()}catch(x){}return}
-    k++;setTimeout(passo,60+k*k*1.6)};if(el)passo()}
+  const tr=document.getElementById("ntr");if(!tr)return;const cs=tr.children,box=tr.parentElement,W=box.clientWidth,cw=cs[0].offsetWidth,gap=12,x=-(alvo*(cw+gap))+(W-cw)/2;
+  tr.style.transform=`translateX(${(W-cw)/2}px)`;try{if(!somArquivo("roleta",false,.8))somCaixaCarga(3)}catch(e){}
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{tr.style.transition="transform 3.6s cubic-bezier(.1,.62,.12,1)";tr.style.transform=`translateX(${x}px)`}));
+  setTimeout(()=>{const c=cs[alvo];if(c)c.classList.add("ganhou");const tg=document.querySelector(".nt-sort .nt-tag");if(tg)tg.textContent="🎄 Seu desafio";const r=document.getElementById("nt-sr");if(r)r.hidden=false;try{somCaixaBoom()}catch(e){}},3700)}
 function modalNatal(){const tot=natalTotal();
   modal(`<div class="nt"><div class="nt-topo"><i class="nt-luzes"></i><p class="nt-tag">🎄 Evento especial</p><h2>Feliz Natal</h2><p>Supere os desafios e ganhe prêmios lendários</p></div>
     <div class="nt-geral"><div class="nt-gl"><b>Progresso do evento</b><span class="num">${tot}/15 desafios</span></div><div class="nt-barra"><i style="width:${tot/15*100}%"></i></div>
