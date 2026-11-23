@@ -1163,6 +1163,17 @@ nav.abas button{font-size:11px}
 .nt-emb{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px;border-radius:14px;background:radial-gradient(circle at 50% 30%,rgba(255,210,63,.25),rgba(0,0,0,.2) 70%);border:1px solid rgba(255,210,63,.5)}
 .nt-emb img{width:110px;height:110px;filter:drop-shadow(0 0 16px rgba(255,210,63,.7));animation:leiEntra .6s ease-out}.nt-emb b{font-size:16px;color:#ffd23f}.nt-emb small{font-size:11.5px;color:#fde68a;text-align:center}
 .nt-emb.off img{filter:grayscale(1) brightness(.5);animation:none}.nt-emb.off b{color:#cfd8ee}
+.mj-bt{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border-radius:16px;border:1.5px solid rgba(255,210,63,.45);background:linear-gradient(120deg,#5b0f17,#0d1b3d 55%,#0f3d1f);color:#fff;font:inherit;text-align:left;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+.mj-bt.on{border-color:#ffd23f}.mj-ic{font-size:30px}.mj-t{flex:1;display:flex;flex-direction:column;gap:2px}.mj-t b{font-family:var(--f-display);font-size:18px;letter-spacing:1px;text-transform:uppercase}.mj-t small{font-size:12px;color:#cfd8ee}
+.mj-novo{font-style:normal;color:#ffd23f;font-weight:800;animation:leiPisca 1.4s infinite}.mj-seta{font-size:14px;color:#ffd23f}
+.mj-scroll{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:12px 2px 8px;-webkit-overflow-scrolling:touch;animation:leiEntra .35s ease-out}
+.mj-card{position:relative;flex:none;width:42%;max-width:180px;aspect-ratio:2/3;border-radius:14px;overflow:hidden;border:1.5px solid rgba(255,255,255,.3);padding:0;background:#0b1533;cursor:pointer;scroll-snap-align:start;box-shadow:0 6px 16px rgba(0,0,0,.45)}
+.mj-card img{width:100%;height:100%;object-fit:cover;display:block}.mj-card.ev{border-color:#ffd23f;box-shadow:0 0 16px rgba(255,210,63,.55)}
+.mj-luz{position:absolute;top:-30%;bottom:-30%;left:-70%;width:40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);animation:diaBrilho 3s ease-in-out infinite;pointer-events:none}
+.mj-tag{position:absolute;right:8px;top:8px;padding:2px 8px;border-radius:6px;background:#e11d48;color:#fff;font-size:10px;font-weight:900;letter-spacing:1px;animation:leiPisca 1.4s infinite}
+.mj-rod{position:absolute;left:0;right:0;bottom:0;padding:22px 8px 8px;background:linear-gradient(transparent,rgba(0,0,0,.85));display:flex;flex-direction:column;gap:1px;text-align:left;color:#fff}.mj-rod b{font-size:13px;line-height:1.1}.mj-rod small{font-size:10.5px;color:#fde68a}
+.mj-card.bloq img{filter:grayscale(.7) brightness(.55)}.mj-cad{position:absolute;inset:0;display:grid;place-items:center;font-weight:900;font-size:13px;color:#fff;text-shadow:0 1px 4px #000}
+.mj-card.pulsa{animation:leiBt 1.6s ease-in-out infinite}
 .modo.r9-ev{border-color:#e11d48;background:linear-gradient(120deg,rgba(225,29,72,.25),rgba(17,31,69,.9) 60%);margin-top:6px}
 .lc{position:relative;overflow:hidden;text-align:center;border-radius:16px;padding:12px 12px 16px;background:linear-gradient(120deg,#6b4500,#ffd23f 30%,#fff1a8 45%,#e3a514 60%,#6b4500);background-size:250% 100%;border:1.5px solid #fff1a8;box-shadow:0 0 24px rgba(255,210,63,.6)}
 .lc::after{content:"";position:absolute;top:-40%;bottom:-40%;left:-60%;width:38%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);pointer-events:none}
@@ -5256,7 +5267,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795440360";
+const VERSAO="1795441107";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -11079,9 +11090,17 @@ function cartaoLeilao(){if(!reLiberado())return modoBanner("leilao","Leilão FUT
 
 /* cards dos modos com a arte do Carlos (21/11): img/modo-<nome>.jpg 1000x~120 (faixa fina, 21/11); info = faixa embaixo (opcional) */
 function modoBanner(nome,alt,a,info,bloq,extra){return `<button class="modo-ban${bloq?" bloq":""}${extra||""}" data-a="${a}"><img src="img/modo-${nome}.jpg" alt="${alt}"><i class="modo-ban-luz" style="--d:${{jornada:0,leilao:1.3,quiz:2.6}[nome]||0}s"></i>${info?`<span class="modo-ban-info">${info}</span>`:""}${bloq?'<span class="modo-ban-cad">🔒 Em breve</span>':""}</button>`}
-function cartaoModos(){reLer();const c=RE.car,cl=G.clubs[G.user.club];
-  return `<div class="modos"><div class="mini-div"><span>Mini Jogos</span></div>
-    ${modoBanner("jornada","Jornada de Craque",reLiberado()?"re_abrir":"re_breve",!reLiberado()?"":c&&c.fase!=="fim"?`${esc(c.nome)} · ${c.idade} anos · ${esc(c.clube?c.clube.name:"peneira")}`:"",!reLiberado())}${cartaoLeilao()}${cartaoQuiz()}${reLiberado()?`<button class="modo r9-ev" data-a="ntevento"><span class="modo-ic">🎄</span><div><b>Feliz Natal · prévia</b><small>5 times históricos, 15 desafios (só você vê)</small></div></button>`:""}</div>`}
+/* 23/11: Mini Jogos e Eventos fechados num botão; tocando, abre uma faixa com cards verticais (capas) que rola de lado */
+let MJ_ABERTO=false;
+function cartaoModos(){reLer();const c=RE.car,lib=reLiberado(),q=lib?quizEstado():{},pend=q.caixa&&!q.aberta,qfeito=q.fase==="fim"&&!pend;
+  const itens=[
+    lib&&{img:"img/natal-capa2.jpg",n:"Feliz Natal",tag:"EVENTO",a:"ntevento",ev:1,info:"5 times lendários · Lionetas"},
+    {img:"img/jornada-capa.jpg",n:"Jornada de Craque",a:lib?"re_abrir":"re_breve",bloq:!lib,info:lib&&c&&c.fase!=="fim"?`${c.nome} · ${c.idade} anos`:""},
+    {img:"img/leilao-capa.jpg",n:"Leilão FUT Master",a:lib?"lei_abrir":"lei_breve",bloq:!lib,info:lib&&LEI.cs&&LEI.fase!=="fim"&&LEI.fase!=="capa"?"🔨 Em andamento":""},
+    {img:"img/quiz-capa.jpg",n:"Quiz do Dia",a:lib?"qz_abrir_modo":"qz_breve",bloq:!lib,info:pend?"🎁 Caixa esperando!":qfeito?"✓ Feito hoje":"",pulsa:pend}].filter(Boolean);
+  const nEv=itens.filter(x=>x.ev).length;
+  return `<div class="modos"><button class="mj-bt${MJ_ABERTO?" on":""}" data-a="mjtoggle" aria-expanded="${MJ_ABERTO}"><span class="mj-ic">🎮</span><span class="mj-t"><b>Mini Jogos${nEv?" e Eventos":""}</b><small>${itens.length} modos${nEv?` · <i class="mj-novo">🎄 Evento de Natal</i>`:""}</small></span><span class="mj-seta">${MJ_ABERTO?"▲":"▼"}</span></button>
+    ${MJ_ABERTO?`<div class="mj-scroll">${itens.map(x=>`<button class="mj-card${x.bloq?" bloq":""}${x.ev?" ev":""}${x.pulsa?" pulsa":""}" data-a="${x.a}"><img src="${x.img}" alt="" loading="lazy"><i class="mj-luz"></i>${x.tag?`<span class="mj-tag">${x.tag}</span>`:""}${x.bloq?'<span class="mj-cad">🔒 Em breve</span>':""}<span class="mj-rod"><b>${esc(x.n)}</b>${x.info?`<small>${esc(x.info)}</small>`:""}</span></button>`).join("")}</div>`:""}</div>`}
 
 function acao(a,v,el){
   if(a&&a.startsWith("re_")){reAcao(a,v,el);return}
@@ -11346,6 +11365,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "ntcoletar":fecharModal();if(aba!=="natal"){aba="natal";NT_FASE="sala";render()}setTimeout(()=>natalVoar(+v),60);return;
     case "ntentrar":try{somLancamento();vibrar("premio")}catch(e){}fecharModal();NT_FASE="capa";aba="natal";window.scrollTo(0,0);render();return;
     case "ntregras":modalNatalRegras();return;
+    case "mjtoggle":MJ_ABERTO=!MJ_ABERTO;render();if(MJ_ABERTO)setTimeout(()=>{const e=document.querySelector(".mj-scroll");if(e)e.scrollIntoView({behavior:"smooth",block:"nearest"})},50);return;
     case "ntpremios":modalNatalPremios();return;
     case "ntsala":try{somClique()}catch(e){}NT_FASE="sala";render();return;
     case "ntsair":aba="jogar";window.scrollTo(0,0);render();return;
