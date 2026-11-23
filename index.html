@@ -3742,7 +3742,7 @@ function contratarTec(i,fonte){
   const multa=G.tec&&!G.tec.interino?Math.round(G.tec.sal*6):0;
   if(t.luvas+multa>G.cash)return `Faltam ${dinheiro(t.luvas+multa-G.cash)} para essa contratação.`;
   G.cash-=t.luvas+multa;
-  const antigo=G.tec;G.tec={n:t.n,q:t.q,sal:t.sal,desde:G.year};lista.splice(i,1);
+  const antigo=G.tec;G.tec={n:t.n,q:t.q,sal:t.sal,desde:G.year};if(t.lenda)G.tec.lenda=1;lista.splice(i,1);
   G.inbox.unshift({t:"bom",m:`${t.n} é o novo técnico do clube.${multa?` A saída de ${antigo.n} custou ${dinheiro(multa)} de multa.`:""}`});
   addNoticia(`${t.n} assume o comando do ${G.clubs[G.user.club].name}.`,"clube");
   xpBonus(300,"novo técnico");
@@ -4624,15 +4624,22 @@ function destaqueLoja(jog){const res=reservadosMercado(),outros=Object.keys(PAIS
     else{const k=pick(outros),T=(PAISES[k].t[0]||[]).slice().sort((a,b)=>+b.split("|")[1]-+a.split("|")[1]).slice(0,6);if(!T.length)continue;el=jogadoresDo(clubeExterior(k,0,pick(T)))}
     const c=el.filter(ok).sort((a,b)=>b.ov-a.ov).slice(0,3);if(c.length){const p=pick(c);G.destVistos=[p.n,...vistos].slice(0,12);return p.id}}
   return null}
+/* loja da Série A (23/11, Carlos): chance por renovação. lenda = jogador lenda; tecLenda/tecA/tecB = o técnico do dia */
+const LOJA_A={lenda:.4,tecLenda:.4,tecA:.5,tecB:.1};
+function tecLojaA(){const r=rnd(),fora=t=>!G.tec||t.n!==G.tec.n;
+  if(r<LOJA_A.tecLenda){const L=TEC_LENDAS.filter(l=>fora({n:l[0]}));if(L.length){const l=pick(L);return {n:l[0],q:l[1],sal:salTecLenda(l),luvas:precoTecLenda(l),lenda:1}}}
+  const A=r<LOJA_A.tecLenda+LOJA_A.tecA,L=listaTec().filter(t=>fora(t)&&(A?t.q>=76:t.q>=68&&t.q<76)),t=pick(L.length?L:listaTec().filter(fora)),sal=Math.round(salarioDe(t.q)*1.5*10)/10;
+  return {...t,sal,luvas:Math.round(sal*LUVAS_TEC)}}
 function diario(){
   const k=cicloLoja();
   if(!G.diario||G.diario.dia!==k){
     G.lojaN=(G.lojaN||0)+1;
     const jog=sortearJogadoresMercado(3);
-    const iv=intervaloLenda();let lenda=null;if(iv&&G.lojaN%iv===0){const L=LENDAS.map((l,i)=>i).filter(i=>!(G.lendas&&G.lendas[LENDAS[i][0]]!=null));if(L.length)lenda=pick(L)}
+    const iv=intervaloLenda(),serA=minhaSerie()===0;let lenda=null;if(serA?rnd()<LOJA_A.lenda:iv&&G.lojaN%iv===0){const L=LENDAS.map((l,i)=>i).filter(i=>!(G.lendas&&G.lendas[LENDAS[i][0]]!=null));if(L.length)lenda=pick(L)}
     let tec=gerarTecnicos(1);
-    {const d=tecDemitidoLoja();if(d)tec=[d]} // técnico demitido nas notícias aparece na loja
-    if(G.lojaN%5===0){if(rnd()<.5){const f=jogadorExterior();if(f!=null)jog[0]=f}else{const t=tecExterior();if(t)tec=[t]}} // a cada 5 renovações: alguém de outro país do jogo
+    if(serA)tec=[tecLojaA()]; // Série A (23/11): 40% técnico lenda, 50% técnico de Série A, 10% de Série B, nunca de Série C
+    else{const d=tecDemitidoLoja();if(d)tec=[d]} // técnico demitido nas notícias aparece na loja
+    if(G.lojaN%5===0){if(rnd()<.5){const f=jogadorExterior();if(f!=null)jog[0]=f}else if(!serA){const t=tecExterior();if(t)tec=[t]}} // a cada 5 renovações: alguém de outro país do jogo
     // a cada 3 trocas da loja: um jogador um pouco melhor, da série de cima, com bom preço (lendas não entram)
     let promo=null;if(G.lojaN%3===0){const t=minhaSerie(),de=Math.max(0,t-1),b=G.tierBase[t],lim=t>=2?75:t===1?80:999,res=reservadosMercado();
       const ok=p=>!p.lenda&&!jog.includes(p.id)&&!res.has(p.id)&&p.inj<=0&&jogadoresDo(p.club).length>18&&p.ov>=b+3&&p.ov<=Math.min(b+9,lim);
@@ -5246,7 +5253,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795439344";
+const VERSAO="1795439613";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
