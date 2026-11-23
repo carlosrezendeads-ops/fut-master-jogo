@@ -1106,7 +1106,8 @@ nav.abas button{font-size:11px}
 @keyframes ntJogar{50%{transform:translate(-50%,-50%) scale(1.07);box-shadow:0 0 34px rgba(255,210,63,1),0 4px 0 #8a5a00}}
 .nt-av-pe{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:14px;background:rgba(13,27,61,.92);border:1px solid rgba(255,210,63,.4)}.nt-av-li{flex:1;display:flex;align-items:center;gap:6px}.nt-av-li b{font-size:18px;color:#ffd23f}
 .ntt{position:relative;min-height:100vh;min-height:100dvh;padding:calc(10px + env(safe-area-inset-top,0px)) 12px 24px;overflow:hidden}
-.ntt-fundo{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 115%,#1f7a3a 0,#14532d 28%,transparent 52%),linear-gradient(180deg,#050b1f 0%,#0b1533 30%,#3b0a14 62%,#0d3a1e 100%)}
+.ntt-fundo{position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,11,31,.25),rgba(5,11,31,.1) 40%,rgba(5,11,31,.35)),url(img/natal-fundo.jpg) center bottom/cover #050b1f} /* arte gerada no ChatGPT/Codex (22/11) */
+.ntt-fundo .ntt-luz,.ntt-fundo .ntt-campo{display:none}.ntt-neve{opacity:.45!important}
 .ntt-fundo .nt-luzes{top:0;z-index:2}
 .ntt-luz{position:absolute;top:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,250,220,.55),rgba(255,210,63,.12) 40%,transparent 70%)}.ntt-luz.l1{left:-80px}.ntt-luz.l2{right:-80px}
 .ntt-campo{position:absolute;left:-10%;right:-10%;bottom:0;height:34%;background:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 44px,transparent 44px 88px),linear-gradient(180deg,#14532d,#0f3d1f);transform:perspective(500px) rotateX(38deg);transform-origin:bottom;border-top:2px solid rgba(255,255,255,.35)}
@@ -5213,7 +5214,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795402043";
+const VERSAO="1795402517";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
