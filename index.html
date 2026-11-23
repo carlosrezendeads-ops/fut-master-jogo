@@ -1178,6 +1178,11 @@ nav.abas button{font-size:11px}
 .ntt-fim{display:flex;flex-direction:column;align-items:center;gap:4px;padding:16px 20px;border-radius:16px;background:rgba(0,0,0,.6);border:1.5px solid #ffd23f;text-align:center}.ntt-fim b{font-size:18px;color:#ffd23f}.ntt-fim small{color:#fde68a}
 .nt-it-ic.pac-img{background:none;height:76px}.nt-it-ic.pac-img img{width:54px;height:76px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
 .nt-pac.nt-pac-img{width:170px;height:auto;border:0;background:none;box-shadow:none;border-radius:12px;filter:drop-shadow(0 0 24px rgba(255,210,63,.75))}.nt-pac-img img{display:block;width:100%;height:auto}
+.nt-loja-g{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.nt-gi{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 8px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(0,0,0,.25));border:1px solid rgba(255,210,63,.3);text-align:center}
+.nt-gi.pode{border-color:#ffd23f;box-shadow:0 0 12px rgba(255,210,63,.3)}
+.nt-gi-img{height:110px;display:grid;place-items:center}.nt-gi-img img{max-height:110px;max-width:100%;filter:drop-shadow(0 4px 10px rgba(0,0,0,.6))}.nt-gi-img img.red{width:96px;height:96px;border-radius:50%;border:2px solid #ffd23f}.nt-gi-img i{font-style:normal;font-size:64px}
+.nt-gi b{font-size:13.5px;line-height:1.15}.nt-gi small{font-size:10.5px;color:#cfd8ee;line-height:1.25;flex:1}.nt-gi .btn{display:flex;align-items:center;gap:4px;margin-top:2px}
 .modo.r9-ev{border-color:#e11d48;background:linear-gradient(120deg,rgba(225,29,72,.25),rgba(17,31,69,.9) 60%);margin-top:6px}
 .lc{position:relative;overflow:hidden;text-align:center;border-radius:16px;padding:12px 12px 16px;background:linear-gradient(120deg,#6b4500,#ffd23f 30%,#fff1a8 45%,#e3a514 60%,#6b4500);background-size:250% 100%;border:1.5px solid #fff1a8;box-shadow:0 0 24px rgba(255,210,63,.6)}
 .lc::after{content:"";position:absolute;top:-40%;bottom:-40%;left:-60%;width:38%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);pointer-events:none}
@@ -5271,7 +5276,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795442540";
+const VERSAO="1795444909";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7091,9 +7096,9 @@ const NATAL_LOJA=[
  {k:"tec",n:"Técnico lenda aleatório",d:"Um técnico lenda aleatório assume o seu time (sem multa do atual).",p:750,pac:"tec",pimg:"img/pac-tec.png"}];
 function modalNatalLoja(){const sal=lionetas(),P=perfil();
   modal(`<div class="nt"><div class="nt-saldo">${icoLioneta(54)}<div><small>Suas Lionetas</small><b class="num">${sal}</b></div></div><h2 style="margin:0">🛍️ Loja do Evento</h2>
-    <div class="nt-loja">${NATAL_LOJA.map(it=>{const ja=it.k==="foto"&&P.avNatal,pode=!ja&&sal>=it.p;
-      return `<div class="nt-it"><span class="nt-it-ic${it.pac&&!it.pimg?" pac-"+it.pac:""}${it.pimg?" pac-img":""}">${it.pimg?`<img src="${it.pimg}" alt="">`:it.img?`<img src="${it.img}" alt="">`:it.pac?`<b>${it.pac==="prime"?"PRIME":it.pac==="tec"?"TÉC":"LENDA"}</b>`:it.ic}</span>
-        <div class="nt-it-t"><b>${esc(it.n)}</b><small>${esc(it.d)}</small></div>
+    <div class="nt-loja-g">${NATAL_LOJA.map(it=>{const ja=it.k==="foto"&&P.avNatal,pode=!ja&&sal>=it.p;
+      return `<div class="nt-gi${pode?" pode":""}"><span class="nt-gi-img">${it.pimg?`<img src="${it.pimg}" alt="">`:it.img?`<img class="red" src="${it.img}" alt="">`:`<i>${it.ic||"🎁"}</i>`}</span>
+        <b>${esc(it.n)}</b><small>${esc(it.d)}</small>
         <button class="btn mini ${pode?"prim-mini":""}" data-a="ntcompra" data-v="${it.k}" ${ja?"disabled":""}>${ja?"Comprado":`<span class="num">${it.p}</span> ${icoLioneta(14)}`}</button></div>`}).join("")}</div>
     <div class="botoes"><button class="btn" data-a="ntevento">‹ Evento</button></div></div>`);natalFolha()}
 function natalComprar(k){const it=NATAL_LOJA.find(x=>x.k===k),P=perfil();if(!it)return;
