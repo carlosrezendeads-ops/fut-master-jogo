@@ -1092,6 +1092,11 @@ nav.abas button{font-size:11px}
 .nt-pac.abre{animation:ntAbre .45s ease-in forwards}@keyframes ntTreme{25%{transform:rotate(-3deg) scale(1.02)}75%{transform:rotate(3deg) scale(1.04)}}@keyframes ntAbre{to{transform:scale(1.6);opacity:0;filter:brightness(3)}}
 .nt-rv-p{display:flex;flex-direction:column;align-items:center;gap:4px;animation:leiEntra .5s ease-out}.nt-rv-p>b{font-size:20px}.nt-rv-p small{color:#e9d5ff}.nt-rv-av{width:130px;height:130px;border-radius:50%;border:3px solid #ffd23f;box-shadow:0 0 24px #ffd23f}
 .nt-rv-f{display:block;border-radius:14px;overflow:hidden;box-shadow:0 0 26px #c084fc}.nt-rv-n{font-family:var(--f-display);font-size:24px!important;text-transform:uppercase}
+.nt-capa{gap:12px}.nt-capa-img{width:100%;border-radius:16px;display:block;box-shadow:0 0 24px rgba(255,210,63,.35)}.nt-topo-g{padding:46px 12px 40px}.nt-topo-g h2{font-size:40px}.nt-capa-bola{display:block;font-size:40px;margin-top:8px;animation:ntTreme 1.6s ease-in-out infinite}
+.nt-jogar{font-size:22px;padding:16px;letter-spacing:2px;animation:leiBt 1.6s ease-in-out infinite}.nt-capa-bt{display:grid;grid-template-columns:1fr auto;gap:8px}
+.nt-sort{align-items:center;min-height:340px}.nt-rol{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px;min-width:220px;border-radius:16px;background:rgba(0,0,0,.3);border:2px solid rgba(255,210,63,.4)}.nt-rol b{font-size:17px}
+.nt-rol.pula{animation:ntPula .12s ease-out}.nt-rol.fim{border-color:#ffd23f;box-shadow:0 0 26px rgba(255,210,63,.6);animation:leiEntra .5s ease-out}@keyframes ntPula{from{transform:translateY(-8px);opacity:.5}}
+.nt-sort-r{display:flex;flex-direction:column;gap:10px;width:100%;animation:leiEntra .5s ease-out}.nt-sort-d{font-size:15px!important;font-weight:800}.nt-outro{align-self:center}
 .modo.r9-ev{border-color:#e11d48;background:linear-gradient(120deg,rgba(225,29,72,.25),rgba(17,31,69,.9) 60%);margin-top:6px}
 .lc{position:relative;overflow:hidden;text-align:center;border-radius:16px;padding:12px 12px 16px;background:linear-gradient(120deg,#6b4500,#ffd23f 30%,#fff1a8 45%,#e3a514 60%,#6b4500);background-size:250% 100%;border:1.5px solid #fff1a8;box-shadow:0 0 24px rgba(255,210,63,.6)}
 .lc::after{content:"";position:absolute;top:-40%;bottom:-40%;left:-60%;width:38%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);pointer-events:none}
@@ -5175,7 +5180,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795400566";
+const VERSAO="1795400708";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7057,9 +7062,9 @@ function natalEstado(d,st,fim){const [t,x]=d,ok=c=>c?2:fim?0:1;
     case "gf1":return st.g1f>=x?2:st.ht||fim?0:1;case "max":return st.gs>x?0:fim?2:1}return 1}
 function natalFaixa(V){if(!V||!V.m.ev)return "";const T=NATAL.find(t=>t.k===V.m.ev),st=natalStats(V),fe=natalFeitos(T.k);
   return `<div class="nt-live" id="lv-natal"><div class="nt-lp"><span>Posse de bola</span><b class="num">${st.posse}%</b><i><em style="width:${st.posse}%"></em></i></div>
-    ${T.des.map((d,j)=>{const e=natalEstado(d,st,false);return `<div class="nt-ld e${e}"><span>${e===2?"✅":e===0?"❌":"⏳"}</span>${esc(d[2])} <small>+${d[3]}</small>${fe[j]?" <small>⭐</small>":""}</div>`}).join("")}</div>`}
+    ${T.des.map((d,j)=>{if(V.m.evDes!=null&&V.m.evDes!==j)return "";const e=natalEstado(d,st,false);return `<div class="nt-ld e${e}"><span>${e===2?"✅":e===0?"❌":"⏳"}</span>${esc(d[2])} <small>+${d[3]}</small>${fe[j]?" <small>⭐</small>":""}</div>`}).join("")}</div>`}
 /* monta a partida: clube temporário com os 11 lendários, força relativa ao seu time */
-function natalMontar(i){const T=NATAL[i];if(!T)return "Time não encontrado.";if(!G||!G.user)return "Crie uma carreira primeiro.";if(G.live)return "Termine a partida atual primeiro.";
+function natalMontar(i,dj){const T=NATAL[i];if(!T)return "Time não encontrado.";if(!G||!G.user)return "Crie uma carreira primeiro.";if(G.live)return "Termine a partida atual primeiro.";
   limparAmigo();const uid=G.user.club,med=natalMed(T),h=[...T.k].reduce((a,c)=>a+c.charCodeAt(0),0);
   G.clubs[AMG_CID]={id:AMG_CID,name:T.nome,short:T.sigla,rating:med,rep:med,pais:G.country,tier:userTier(),c1:T.c1,c2:T.c2,cap:80000,form:T.form,est:T.est,escudo:natalEscudo(T),amigo:true,natal:T.k,
     tecIA:{n:T.tec,q:T.tq},bt:0,evPosse:T.posse};
@@ -7069,27 +7074,46 @@ function natalMontar(i){const T=NATAL[i];if(!T)return "Time não encontrado.";if
   G.amgBak={pl:bak,user:{form:G.user.form,est:G.user.est,lineup:(G.user.lineup||[]).slice()}};
   const xiU=(G.user.cmd||"tec")==="tec"?melhorXI(uid,G.user.form):G.user.lineup,uF=forcasCfg(xiU,G.user.form,G.user.est,uid),eF=forcasCfg(ids,T.form,T.est,AMG_CID);
   c.evA=uF.def-eF.att+T.dA;c.evD=uF.att-eF.def+T.dD;
-  G.amgM={tipo:"A",h:uid,a:AMG_CID,neutro:true,ko:false,econ:eRec(userTier()),rot:`🎄 Feliz Natal · ${T.nome}`,ev:T.k};
+  G.amgM={tipo:"A",h:uid,a:AMG_CID,neutro:true,ko:false,econ:eRec(userTier()),rot:`🎄 Feliz Natal · ${T.nome}`,ev:T.k,evDes:dj>=0?dj:null};
   tocou();salvar();return null}
 function concluirNatal(){const V=G.live,T=NATAL.find(t=>t.k===V.m.ev),st=natalStats(V),P=perfil();P.natal=P.natal||{};
   const fe=(P.natal[T.k]||[0,0,0]).slice(),antes=natalTotal(),novos=[],feitos=[]; // feitos = cumpridos nesta partida (dão Lionetas toda vez); novos = 1ª vez (progresso)
-  T.des.forEach((d,j)=>{if(natalEstado(d,st,true)===2){feitos.push(j);if(!fe[j]){fe[j]=1;novos.push(j)}}});P.natal[T.k]=fe;P.natal.j=(P.natal.j||0)+1;
+  const so=V.m.evDes;T.des.forEach((d,j)=>{if((so==null||so===j)&&natalEstado(d,st,true)===2){feitos.push(j);if(!fe[j]){fe[j]=1;novos.push(j)}}});P.natal[T.k]=fe;P.natal.j=(P.natal.j||0)+1;
   const xp=XP_AMG[st.gf>st.gs?"v":st.gf<st.gs?"d":"e"]+novos.length*30,bonus=novos.length&&fe.every(Boolean)?NATAL_BONUS:0,moedas=feitos.reduce((a,j)=>a+(T.des[j][3]||0),0)+bonus;
   P.lioneta=(P.lioneta||0)+moedas;
-  const r={k:T.k,st,novos,feitos,fe,antes,depois:natalTotal(),xp,moedas,bonus,eu:G.clubs[G.user.club].short};
+  const r={k:T.k,so,st,novos,feitos,fe,antes,depois:natalTotal(),xp,moedas,bonus,eu:G.clubs[G.user.club].short};
   G.live=null;limparAmigo();somarXP(xp);salvar();return r}
 function modalResNatal(r){const T=NATAL.find(t=>t.k===r.k),st=r.st,v=st.gf>st.gs,rec=NATAL_REC.filter(([q])=>r.antes<q&&r.depois>=q);
   modal(`<div class="nt nt-res"><p class="nt-tag">🎄 Feliz Natal · ${esc(T.nome)}</p><div style="font-size:44px">${r.novos.length?"🎁":v?"🏆":st.gf<st.gs?"😓":"🤝"}</div>
     <p class="num nt-placar">${esc(r.eu)} ${st.gf} × ${st.gs} ${esc(T.sigla)}</p><p class="muted peq" style="margin:0">Posse de bola: <b class="num">${st.posse}%</b></p>
-    <h3>${r.feitos.length?`${r.feitos.length} desafio${r.feitos.length>1?"s":""} cumprido${r.feitos.length>1?"s":""} nesta partida!`:"Nenhum desafio cumprido desta vez"}</h3>
-    <div class="nt-des">${T.des.map((d,j)=>`<div class="nt-di${r.fe[j]?" on":""}${r.novos.includes(j)?" novo":""}"><span>${r.fe[j]?"✅":"⬜"}</span><p>${esc(d[2])}</p>${r.novos.includes(j)?"<em>NOVO</em>":r.feitos.includes(j)?"<em>DE NOVO</em>":""}${r.feitos.includes(j)?`<b class="nt-li num">+${d[3]}${icoLioneta(16)}</b>`:""}</div>`).join("")}</div>
+    <h3>${r.so!=null?(r.feitos.length?"Desafio cumprido!":"Desafio não cumprido desta vez"):r.feitos.length?`${r.feitos.length} desafio${r.feitos.length>1?"s":""} cumprido${r.feitos.length>1?"s":""} nesta partida!`:"Nenhum desafio cumprido desta vez"}</h3>
+    <div class="nt-des">${T.des.map((d,j)=>r.so!=null&&r.so!==j?"":`<div class="nt-di${r.fe[j]?" on":""}${r.novos.includes(j)?" novo":""}"><span>${r.fe[j]?"✅":"⬜"}</span><p>${esc(d[2])}</p>${r.novos.includes(j)?"<em>NOVO</em>":r.feitos.includes(j)?"<em>DE NOVO</em>":""}${r.feitos.includes(j)?`<b class="nt-li num">+${d[3]}${icoLioneta(16)}</b>`:""}</div>`).join("")}</div>
     ${r.bonus?`<p class="nt-ok">🏅 Você completou os 3 desafios do ${esc(T.nome)}! Bônus de ${r.bonus} Lionetas</p>`:""}
     ${r.moedas?`<div class="nt-ganho">${icoLioneta(44)}<div><b class="num">+${r.moedas}</b><small>Lionetas · saldo <b class="num">${lionetas()}</b></small></div></div>`:""}
     <div class="nt-geral"><div class="nt-gl"><b>Progresso do evento</b><span class="num">${r.depois}/15</span></div><div class="nt-barra"><i style="width:${r.depois/15*100}%"></i></div></div>
     <div class="premio-recomp"><span>+${r.xp} XP</span></div>
-    <div class="botoes"><button class="btn" data-a="fechar">Fechar</button><button class="btn prim" data-a="ntevento">Ver evento</button></div></div>`);natalFolha()}
+    <div class="botoes"><button class="btn" data-a="fechar">Fechar</button><button class="btn prim" data-a="ntsortear">🎲 Jogar de novo</button></div></div>`);natalFolha()}
 function natalFolha(){const fo=document.querySelector(".veu .folha");if(fo)fo.classList.add("folha-natal")}
 /* tela do evento: progresso geral, recompensas e os 5 cards */
+/* 22/11: entrar no evento = capa → Jogar → sorteio de time + desafio (natalSortear/natalRoleta) → pré-jogo. Times e desafios: modalNatal */
+const NATAL_CAPA=null; // arte da capa (o Carlos vai mandar): caminho da imagem, ex. "img/natal-capa.jpg"
+function modalNatalCapa(){const tot=natalTotal();
+  modal(`<div class="nt nt-capa">${NATAL_CAPA?`<img class="nt-capa-img" src="${NATAL_CAPA}" alt="Feliz Natal">`:`<div class="nt-topo nt-topo-g"><i class="nt-luzes"></i><p class="nt-tag">🎄 Evento especial</p><h2>Feliz Natal</h2><p>Supere os desafios e ganhe prêmios lendários</p><span class="nt-capa-bola">⚽</span></div>`}
+    <button class="btn prim nt-jogar" data-a="ntsortear">⚽ JOGAR</button>
+    <div class="nt-saldo">${icoLioneta(46)}<div><small>Suas Lionetas</small><b class="num">${lionetas()}</b></div><button class="btn mini prim-mini" data-a="ntloja">🛍️ Loja</button></div>
+    <div class="nt-capa-bt"><button class="btn" data-a="nttimes">Times e desafios · <span class="num">${tot}/15</span></button><button class="btn" data-a="fechar">Sair</button></div></div>`);natalFolha()}
+let NT_ULT=null;
+function natalSortear(){let i,j,g=0;do{i=Math.floor(Math.random()*NATAL.length);j=Math.floor(Math.random()*3)}while(NT_ULT&&NT_ULT[0]===i&&NT_ULT[1]===j&&g++<20);NT_ULT=[i,j];return [i,j]}
+function natalRoleta(){const [i,j]=natalSortear(),T=NATAL[i],d=T.des[j];
+  modal(`<div class="nt nt-sort"><p class="nt-tag">🎲 Sorteando o desafio...</p><div class="nt-rol" id="nt-rol">${natalEsc(NATAL[0],70)}<b>${esc(NATAL[0].nome)}</b></div>
+    <div class="nt-sort-r" id="nt-sr" hidden><div class="nt-di on nt-sort-d"><span>🎯</span><p>${esc(d[2])}</p><b class="nt-li num">+${d[3]}${icoLioneta(18)}</b></div>
+      <p class="nt-dica">💡 ${esc(T.dica)}</p>
+      <div class="botoes"><button class="btn" data-a="ntver" data-v="${i}">Ver escalação</button><button class="btn prim" data-a="ntjogar" data-v="${i}:${j}">⚽ Jogar</button></div>
+      <button class="btn mini nt-outro" data-a="ntcapa">‹ Voltar</button></div></div>`);natalFolha();
+  const el=document.getElementById("nt-rol");let k=0,n=15+i; // para no time sorteado (15 é múltiplo de 5 times)try{somCaixaCarga(1.6)}catch(e){}
+  const passo=()=>{const e=document.getElementById("nt-rol");if(!e)return;const t=NATAL[k%NATAL.length];e.innerHTML=`${natalEsc(t,70)}<b>${esc(t.nome)}</b>`;e.classList.remove("pula");void e.offsetWidth;e.classList.add("pula");
+    if(k>=n){e.classList.add("fim");const tg=document.querySelector(".nt-sort .nt-tag");if(tg)tg.textContent="🎄 Seu desafio";const r=document.getElementById("nt-sr");if(r)r.hidden=false;try{somCaixaBoom()}catch(x){}return}
+    k++;setTimeout(passo,60+k*k*1.6)};if(el)passo()}
 function modalNatal(){const tot=natalTotal();
   modal(`<div class="nt"><div class="nt-topo"><i class="nt-luzes"></i><p class="nt-tag">🎄 Evento especial</p><h2>Feliz Natal</h2><p>Supere os desafios e ganhe prêmios lendários</p></div>
     <div class="nt-geral"><div class="nt-gl"><b>Progresso do evento</b><span class="num">${tot}/15 desafios</span></div><div class="nt-barra"><i style="width:${tot/15*100}%"></i></div>
@@ -7098,7 +7122,7 @@ function modalNatal(){const tot=natalTotal();
     <div class="nt-times">${NATAL.map((T,i)=>{const fe=natalFeitos(T.k),n=fe.filter(Boolean).length;
       return `<button class="nt-card${n===3?" full":""}" data-a="ntver" data-v="${i}" style="--c1:${T.c1};--c2:${T.c2}"><span class="nt-ce">${natalEsc(T,38)}</span><span class="nt-ct"><b>${esc(T.nome)}</b><small>${T.form} · força média <b class="num">${natalMed(T)}</b></small></span>
         <span class="nt-dots"><span>${[0,1,2].map(j=>`<i class="${fe[j]?"on":""}"></i>`).join("")}</span><small class="num">${n}/3</small></span></button>`}).join("")}</div>
-    <div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div></div>`);natalFolha()}
+    <div class="botoes"><button class="btn" data-a="ntcapa">‹ Voltar</button><button class="btn prim" data-a="ntsortear">⚽ Jogar</button></div></div>`);natalFolha()}
 /* card do time: escalação no campo vertical (cards de lenda), desafios e Jogar */
 function modalNatalTime(i){const T=NATAL[i],P=POS_FORM[T.form],fe=natalFeitos(T.k),n=fe.filter(Boolean).length;
   // linhas do campo: posições com profundidade parecida ficam na mesma linha, e as linhas são espaçadas por igual (card nenhum encosta em outro)
@@ -7111,7 +7135,7 @@ function modalNatalTime(i){const T=NATAL[i],P=POS_FORM[T.form],fe=natalFeitos(T.
       <div class="nt-des">${T.des.map((d,j)=>`<div class="nt-di${fe[j]?" on":""}"><span>${fe[j]?"✅":"⬜"}</span><p>${esc(d[2])}</p><b class="nt-li num">${d[3]}${icoLioneta(16)}</b></div>`).join("")}</div>
       <p class="nt-def">🏅 Bônus por completar os 3: ${n===3?"<b>conquistado!</b>":`+${NATAL_BONUS} ${icoLioneta(14)}`}</p></div>
     <p class="nt-dica">💡 ${esc(T.dica)} Cada desafio dá Lionetas toda vez que você cumprir: jogue quantas vezes quiser!</p>
-    <div class="botoes"><button class="btn" data-a="ntevento">‹ Evento</button><button class="btn prim" data-a="ntjogar" data-v="${i}">⚽ Jogar</button></div></div>`);natalFolha()}
+    <div class="botoes"><button class="btn" data-a="nttimes">‹ Times</button><button class="btn prim" data-a="ntsortear">⚽ Jogar</button></div></div>`);natalFolha()}
 function modalNatalJog(i,k){const T=NATAL[i],p=natalJog(T,k),f=natalFoto(p.n,T.k);
   modal(`<div class="lc dia"><i class="dia-fa"></i><div class="lc-topo"><span class="lc-selo">◆ PRIME ◆</span><b class="ov ov-lenda num lc-ov">${p.ov}</b></div>
     <div class="lc-foto">${f?`<svg viewBox="0 0 100 112" width="150" height="168" aria-hidden="true"><image href="${f}" width="100" height="112"/></svg>`:`<span class="lenda-sel lc-sem">★</span>`}<span class="posb ${p.pos}">${p.pos}</span></div>
@@ -11198,12 +11222,14 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "fimresumo":FLUXO_FIM=false;fecharModal();if(G.over)modalFim();else modalTemporada();return;
     case "teclenda":{const er=contratarTecLenda(+v,el.dataset.i);if(er){toastErro(er);return}fecharModal();salvar();confete();toast(`${TEC_LENDAS[+v][0]} contratado!`);break;}
     case "lendaver":modalLenda(+v);return;
-    case "r9ver":case "ntevento":modalNatal();return;
+    case "r9ver":case "ntevento":case "ntcapa":modalNatalCapa();return;
+    case "nttimes":modalNatal();return;
+    case "ntsortear":if(!G||!G.user){toastErro("Crie uma carreira primeiro.");return}natalRoleta();return;
     case "ntver":modalNatalTime(+v);return;
     case "ntloja":modalNatalLoja();return;
     case "ntcompra":natalComprar(v);return;
     case "ntjog":{const [a1,b1]=String(v).split(":");modalNatalJog(+a1,+b1);return}
-    case "ntjogar":{const er=natalMontar(+v);if(er){toastErro(er);return}fecharModal();aba="prejogo";window.scrollTo(0,0);render();return}
+    case "ntjogar":{const [ti,dj]=String(v).split(":"),er=natalMontar(+ti,dj!=null?+dj:-1);if(er){toastErro(er);return}fecharModal();aba="prejogo";window.scrollTo(0,0);render();return}
     case "lendacomp":pagarLenda(+v);return;
     case "lenda":{const er=comprarLenda(+v,el.dataset.i);if(er){if(er!==RECUSA)toastErro(er);return}fecharModal();avisoElencoCheio();salvar();confete();toast(`${LENDAS[+v][0]} contratado!`);break;}
     case "tecrosto":if(!editorOn)return;modalRostoTec(el.dataset.n);return;
