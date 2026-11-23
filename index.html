@@ -1148,16 +1148,27 @@ nav.abas button{font-size:11px}
 .ntr-seta{position:absolute;left:50%;top:0;width:0;height:0;margin-left:-10px;border:10px solid transparent;border-top-color:#ffd23f;filter:drop-shadow(0 0 6px #ffd23f);z-index:2}
 .ntc.ganhou{border-color:#ffd23f;box-shadow:0 0 30px rgba(255,210,63,.8);animation:leiEntra .5s ease-out}
 .ntt-img{background-size:cover;background-position:center}.ntt-blur{background-size:cover;background-position:center;filter:blur(18px) brightness(.55);transform:scale(1.15)}.ntt-ct{background:no-repeat center/contain}.ntt-capa{cursor:pointer}.ntt-capa .ntt-topo .ntt-tit{visibility:hidden}
+.ntt-capa .ntt-img{background-size:cover;background-position:center}
+.ntt-capa-pe{position:absolute;z-index:3;left:0;right:0;bottom:0;padding:60px 24px calc(22px + env(safe-area-inset-bottom,0px));background:linear-gradient(transparent,rgba(0,0,0,.8) 45%);text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px}
+.ntt-capa-pe p{margin:0;max-width:340px;font-size:14px;line-height:1.4;font-weight:700;color:#fde68a;text-shadow:0 1px 4px #000}
+.ntt-carr{font-family:var(--f-display);font-weight:900;font-size:20px;letter-spacing:3px;text-transform:uppercase;color:#fff;text-shadow:0 0 10px rgba(255,210,63,.8)}
+.ntt-carr i{font-style:normal;opacity:0;animation:ntPonto 1.5s infinite}.ntt-carr i:nth-child(2){animation-delay:.5s}.ntt-carr i:nth-child(3){animation-delay:1s}
+@keyframes ntPonto{0%,20%{opacity:0}30%,100%{opacity:1}}
 .ntt-toque{position:absolute;left:0;right:0;bottom:calc(6% + env(safe-area-inset-bottom,0px));z-index:3;margin:0;text-align:center;font-family:var(--f-display);font-weight:900;font-size:20px;letter-spacing:3px;text-transform:uppercase;color:#fff;text-shadow:0 0 12px rgba(255,210,63,.9),0 2px 4px #000;animation:leiPisca 1.4s ease-in-out infinite}
 .ntt-sala .ntt-corpo{justify-content:flex-end;align-items:center;padding-bottom:calc(14vh + env(safe-area-inset-bottom,0px))}
 .ntt-jogar{position:relative;overflow:hidden;padding:16px 70px;border-radius:18px;border:2.5px solid #fff1a8;background:linear-gradient(180deg,#fff27a,#ffcc1a 45%,#e39b00);color:#3a2200;font-family:var(--f-display);font-weight:900;font-style:italic;font-size:40px;letter-spacing:5px;line-height:1;cursor:pointer;box-shadow:0 0 30px rgba(255,210,63,.9),0 6px 0 #8a5a00;animation:ntJogarS 1.6s ease-in-out infinite}
 .ntt-jogar::after{content:"";position:absolute;top:-40%;bottom:-40%;left:-70%;width:40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent);transform:skewX(-20deg);animation:diaBrilho 1.8s ease-in-out infinite}
 @keyframes ntJogarS{0%,100%{transform:scale(1) rotate(0)}8%{transform:scale(1.08) rotate(-2.5deg)}16%{transform:scale(1.08) rotate(2.5deg)}24%{transform:scale(1.08) rotate(-2deg)}32%{transform:scale(1.02) rotate(1.5deg)}40%{transform:scale(1)}52%{transform:scale(1.06);filter:brightness(1.2)}64%{transform:scale(1)}}
 .ntt-sub{margin-top:12px;font-size:12.5px;color:#fde68a;text-shadow:0 1px 4px #000;text-align:center}
-.ntt-sala .ntt-corpo{padding-bottom:calc(4vh + 110px)}
-.ntt-ics{position:absolute;z-index:3;left:0;right:0;bottom:calc(10px + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:0 10px;max-width:520px;margin:0 auto}
+.ntt-sala .ntt-corpo{padding-bottom:calc(9vh + 130px)}
+.ntt-ics{position:absolute;z-index:3;left:0;right:0;bottom:calc(9vh + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:0 10px;max-width:520px;margin:0 auto}
 .ntt-ics button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px 8px;border-radius:16px;border:1.5px solid rgba(255,210,63,.45);background:linear-gradient(180deg,rgba(91,15,23,.82),rgba(5,11,31,.88));color:#fff;font:inherit;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.5)}
-.ntt-ics img{width:56px;height:56px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.6));transition:transform .2s}.ntt-ics button:active img{transform:scale(.9)}.ntt-ics b{font-size:12px;letter-spacing:.3px}
+.ntt-ics button{position:relative;overflow:hidden;animation:ntIcBrilho 2.4s ease-in-out infinite}.ntt-ics button:nth-child(2){animation-delay:.6s}.ntt-ics button:nth-child(3){animation-delay:1.2s}.ntt-ics button:nth-child(4){animation-delay:1.8s}
+.ntt-ics button::after{content:"";position:absolute;top:-40%;bottom:-40%;left:-80%;width:45%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:diaBrilho 3s ease-in-out infinite;pointer-events:none}
+.ntt-ics button:nth-child(2)::after{animation-delay:.4s}.ntt-ics button:nth-child(3)::after{animation-delay:.8s}.ntt-ics button:nth-child(4)::after{animation-delay:1.2s}
+@keyframes ntIcBrilho{0%,100%{box-shadow:0 4px 14px rgba(0,0,0,.5),0 0 0 rgba(255,210,63,0)}50%{box-shadow:0 4px 14px rgba(0,0,0,.5),0 0 16px rgba(255,210,63,.6)}}
+.ntt-ics img{width:56px;height:56px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.6)) drop-shadow(0 0 8px rgba(255,210,63,.55));transition:transform .2s;animation:ntIcPula 2.4s ease-in-out infinite}
+@keyframes ntIcPula{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px) scale(1.05)}}.ntt-ics button:active img{transform:scale(.9)}.ntt-ics b{font-size:12px;letter-spacing:.3px}
 .nt-reg-ic{width:84px;height:84px;align-self:center}.nt-regras ol{margin:0;padding-left:20px;text-align:left;display:flex;flex-direction:column;gap:8px;font-size:13.5px;line-height:1.45}.nt-regras b{color:#ffd23f}
 .nt-cq{display:grid;grid-template-columns:1fr 1fr;gap:8px}.nt-cq>div{display:flex;flex-direction:column;align-items:center;padding:10px;border-radius:12px;background:rgba(255,255,255,.06)}.nt-cq b{font-size:22px;color:#ffd23f}.nt-cq small{font-size:11px;color:#cfd8ee}
 .nt-emb{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px;border-radius:14px;background:radial-gradient(circle at 50% 30%,rgba(255,210,63,.25),rgba(0,0,0,.2) 70%);border:1px solid rgba(255,210,63,.5)}
@@ -5277,7 +5288,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795450680";
+const VERSAO="1795453579";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7218,9 +7229,10 @@ const NATAL_FIM=Date.UTC(2027,0,1,3,0,0);
 const natalAcabou=()=>Date.now()>=NATAL_FIM;
 function natalFalta(){const ms=NATAL_FIM-Date.now();if(ms<=0)return "Encerrado";const d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),m=Math.floor(ms%36e5/6e4);return d>0?`${d}d ${h}h`:h>0?`${h}h ${m}min`:`${m}min`}
 function telaNatal(){if(!reLiberado()||!G||!G.user){aba="jogar";return telaInicio()}
-  const topo=`<div class="ntt-topo"><button class="ntt-volta" data-a="ntsair" aria-label="Voltar">‹</button><span class="ntt-tit">🎄 Feliz Natal</span><span class="ntt-li" title="Lionetas">${icoLioneta(30)}<b class="num">${lionetas()}</b></span></div>`;
-  if(NT_FASE==="capa")return `<div class="ntt ntt-capa" data-a="ntsala" role="button" aria-label="Toque para continuar"><div class="ntt-fundo ntt-blur" style="background-image:url(img/natal-capa2.jpg)" aria-hidden="true"></div><div class="ntt-fundo ntt-ct" style="background-image:url(img/natal-capa2.jpg)" aria-hidden="true"><i class="ntt-neve"></i></div>
-    ${topo}<p class="ntt-toque">Toque para continuar</p></div>`;
+  const topo=`<div class="ntt-topo"><button class="ntt-volta" data-a="ntsair" aria-label="Voltar">‹</button><span class="ntt-tit"></span><span class="ntt-li" title="Lionetas">${icoLioneta(30)}<b class="num">${lionetas()}</b></span></div>`;
+  if(NT_FASE==="capa"){clearTimeout(window._ntCapa);window._ntCapa=setTimeout(()=>{if(aba==="natal"&&NT_FASE==="capa")acao("ntsala")},4500); // capa de carregamento: 4,5 s
+    return `<div class="ntt ntt-capa"><div class="ntt-fundo ntt-img" style="background-image:url(img/natal-capa3.jpg)" aria-hidden="true"><i class="ntt-neve"></i></div>
+    <div class="ntt-capa-pe"><p>Enfrente 5 times lendários, cumpra desafios e ganhe Lionetas para trocar por prêmios.</p><b class="ntt-carr">Carregando<i>.</i><i>.</i><i>.</i></b></div></div>`}
   return `<div class="ntt ntt-sala"><div class="ntt-fundo ntt-img" style="background-image:url(img/natal-sala.jpg)" aria-hidden="true"><i class="ntt-neve n2"></i></div>
     ${topo}<p class="ntt-conta">${natalAcabou()?"🎄 Evento encerrado":`⏳ Termina em <b class="num" id="ntt-conta">${natalFalta()}</b>`}</p>
     <div class="ntt-corpo">${natalAcabou()?`<div class="ntt-fim"><b>O Evento Feliz Natal acabou!</b><small>Obrigado por jogar. Suas Lionetas ainda podem ser usadas na Loja.</small></div>`:`<button class="ntt-jogar" data-a="ntsortear">JOGAR</button><small class="ntt-sub">Sorteie um time lendário e um desafio valendo Lionetas</small>`}</div>
