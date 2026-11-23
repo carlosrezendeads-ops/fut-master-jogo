@@ -4628,7 +4628,9 @@ function destaqueLoja(jog){const res=reservadosMercado(),outros=Object.keys(PAIS
 const LOJA_A={lenda:.4,tecLenda:.4,tecA:.5,tecB:.1};
 function tecLojaA(){const r=rnd(),fora=t=>!G.tec||t.n!==G.tec.n;
   if(r<LOJA_A.tecLenda){const L=TEC_LENDAS.filter(l=>fora({n:l[0]}));if(L.length){const l=pick(L);return {n:l[0],q:l[1],sal:salTecLenda(l),luvas:precoTecLenda(l),lenda:1}}}
-  const A=r<LOJA_A.tecLenda+LOJA_A.tecA,L=listaTec().filter(t=>fora(t)&&(A?t.q>=76:t.q>=68&&t.q<76)),t=pick(L.length?L:listaTec().filter(fora)),sal=Math.round(salarioDe(t.q)*1.5*10)/10;
+  const A=r<LOJA_A.tecLenda+LOJA_A.tecA;
+  if(A&&rnd()<.5){for(let k=0;k<6;k++){const t=tecExterior(76);if(t)return t}} // Série A: metade de fora (1ª divisão de outro país), metade do Brasileirão
+  const L=listaTec().filter(t=>fora(t)&&(A?t.q>=76:t.q>=68&&t.q<76)),t=pick(L.length?L:listaTec().filter(fora)),sal=Math.round(salarioDe(t.q)*1.5*10)/10;
   return {...t,sal,luvas:Math.round(sal*LUVAS_TEC)}}
 function diario(){
   const k=cicloLoja();
@@ -4662,8 +4664,9 @@ function jogadorExterior(){const b=G.tierBase[minhaSerie()],outros=Object.keys(P
   for(let i=0;i<15;i++){const k=pick(outros),P=PAISES[k],ti=ri(0,2),L=P.t[ti].filter(s=>{const r=+s.split("|")[1];return r>=b-6&&r<=b+12});if(!L.length)continue;
     const cid=clubeExterior(k,ti,pick(L)),c=jogadoresDo(cid).filter(p=>p.ov>=b-3&&p.ov<=b+10&&p.inj<=0);if(c.length)return pick(c).id}
   return null}
-function tecExterior(){const k=pick(Object.keys(PAISES).filter(x=>x!==G.country)),L=(TECNICOS[k]||"").split(",").filter(Boolean).map(x=>{const [n,q]=x.split("|");return {n,q:+q}});
-  const i=ri(0,L.length-1),t=L[i];if(!t||(G.tec&&G.tec.n===t.n))return null;
+function tecExterior(minQ){const k=pick(Object.keys(PAISES).filter(x=>x!==G.country)),L=(TECNICOS[k]||"").split(",").filter(Boolean).map(x=>{const [n,q]=x.split("|");return {n,q:+q}});
+  const ok=L.map((t,i)=>i).filter(i=>!minQ||L[i].q>=minQ);if(!ok.length)return null; // minQ: só técnicos de 1ª divisão (loja da Série A)
+  const i=pick(ok),t=L[i];if(!t||(G.tec&&G.tec.n===t.n))return null;
   const clubes=PAISES[k].t.flat().map(parseClube).sort((a,b)=>b.rating-a.rating),cl=clubes[Math.min(i,clubes.length-1)]; // time atual: mesma posição no ranking do país
   const sal=Math.round(salarioDe(t.q)*1.5*10)/10;return {...t,sal,luvas:Math.round(sal*LUVAS_TEC),clube:{name:cl.name,pais:k,c1:cl.c1,c2:cl.c2}}}
 /* time atual (escudo + nome) nos cards */
@@ -5253,7 +5256,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795439613";
+const VERSAO="1795440360";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
