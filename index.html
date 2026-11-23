@@ -1105,6 +1105,31 @@ nav.abas button{font-size:11px}
 .nt-av-jogar::after{content:"";position:absolute;top:-30%;bottom:-30%;left:-70%;width:40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);transform:skewX(-20deg);animation:diaBrilho 2.2s ease-in-out infinite}
 @keyframes ntJogar{50%{transform:translate(-50%,-50%) scale(1.07);box-shadow:0 0 34px rgba(255,210,63,1),0 4px 0 #8a5a00}}
 .nt-av-pe{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:14px;background:rgba(13,27,61,.92);border:1px solid rgba(255,210,63,.4)}.nt-av-li{flex:1;display:flex;align-items:center;gap:6px}.nt-av-li b{font-size:18px;color:#ffd23f}
+.ntt{position:relative;min-height:100vh;min-height:100dvh;padding:calc(10px + env(safe-area-inset-top,0px)) 12px 24px;overflow:hidden}
+.ntt-fundo{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 115%,#1f7a3a 0,#14532d 28%,transparent 52%),linear-gradient(180deg,#050b1f 0%,#0b1533 30%,#3b0a14 62%,#0d3a1e 100%)}
+.ntt-fundo .nt-luzes{top:0;z-index:2}
+.ntt-luz{position:absolute;top:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,250,220,.55),rgba(255,210,63,.12) 40%,transparent 70%)}.ntt-luz.l1{left:-80px}.ntt-luz.l2{right:-80px}
+.ntt-campo{position:absolute;left:-10%;right:-10%;bottom:0;height:34%;background:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 44px,transparent 44px 88px),linear-gradient(180deg,#14532d,#0f3d1f);transform:perspective(500px) rotateX(38deg);transform-origin:bottom;border-top:2px solid rgba(255,255,255,.35)}
+.ntt-campo::after{content:"";position:absolute;left:50%;top:-1px;width:180px;height:90px;transform:translateX(-50%);border:2px solid rgba(255,255,255,.35);border-top:0;border-radius:0 0 90px 90px}
+.ntt-neve{position:absolute;inset:-100% 0 0;background-image:radial-gradient(circle,#fff 1.5px,transparent 2.5px),radial-gradient(circle,rgba(255,255,255,.8) 1px,transparent 2px);background-size:90px 90px,55px 55px;background-position:0 0,30px 20px;animation:nttNeve 14s linear infinite;opacity:.7}
+.ntt-neve.n2{background-size:140px 140px,75px 75px;animation-duration:22s;opacity:.45}
+@keyframes nttNeve{to{transform:translateY(50%)}}
+.ntt-topo,.ntt-corpo{position:relative;z-index:3}
+.ntt-topo{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;margin:10px 0 12px}
+.ntt-volta{width:40px;height:40px;border-radius:12px;border:1.5px solid rgba(255,210,63,.5);background:rgba(0,0,0,.4);color:#fff;font-size:24px;line-height:1;cursor:pointer}
+.ntt-tit{text-align:center;font-family:var(--f-display);font-weight:900;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:#fff;text-shadow:0 0 12px rgba(255,210,63,.6)}
+.ntt-li{display:flex;align-items:center;gap:6px;padding:4px 12px 4px 4px;border-radius:999px;background:linear-gradient(120deg,rgba(255,210,63,.3),rgba(0,0,0,.45));border:1.5px solid #ffd23f;box-shadow:0 0 12px rgba(255,210,63,.35)}.ntt-li b{font-size:18px;color:#ffd23f}
+.ntt-corpo{display:flex;flex-direction:column;gap:12px;max-width:520px;margin:0 auto}
+.ntt-prog{background:rgba(5,11,31,.75)}
+.ntt-bts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ntt-bt{display:flex;flex-direction:column;align-items:center;gap:3px;padding:14px 8px;border-radius:16px;border:1.5px solid rgba(255,255,255,.25);background:linear-gradient(150deg,#14532d,#0b2a18);color:#fff;font:inherit;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.4)}
+.ntt-bt.loja{background:linear-gradient(150deg,#b91c1c,#5b0f17);border-color:rgba(255,210,63,.55)}.ntt-bt span{font-size:30px}.ntt-bt b{font-size:14px}.ntt-bt small{font-size:11px;color:#e5e7eb}
+.nt-premio{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 0 6px}.nt-premio .lioneta{position:relative;animation:leiEntra .6s ease-out,ntGira 3s ease-in-out .6s infinite}
+.nt-premio>b{position:relative;font-family:var(--f-display);font-size:40px;color:#ffd23f;line-height:1;text-shadow:0 0 16px rgba(255,210,63,.8)}.nt-premio>small{position:relative;font-weight:800;color:#fde68a;letter-spacing:1px;text-transform:uppercase}
+.nt-premio-raios{position:absolute;left:50%;top:52px;width:260px;height:260px;margin:-130px 0 0 -130px;background:repeating-conic-gradient(rgba(255,210,63,.22) 0 10deg,transparent 10deg 20deg);border-radius:50%;animation:leiGira 10s linear infinite;-webkit-mask:radial-gradient(circle,#000 25%,transparent 68%);mask:radial-gradient(circle,#000 25%,transparent 68%)}
+.nt-coletar{display:flex;align-items:center;justify-content:center;gap:6px;font-size:17px;animation:leiBt 1.4s ease-in-out infinite}
+.nt-voa{position:fixed;width:40px;height:40px;margin:-20px 0 0 -20px;z-index:200;border-radius:50%;pointer-events:none;transition:transform .48s cubic-bezier(.55,0,.75,.45);filter:drop-shadow(0 0 8px rgba(255,210,63,.9))}
+.ntt-li.pulsa{animation:ntPulsa .22s ease-out}@keyframes ntPulsa{50%{transform:scale(1.15);box-shadow:0 0 22px #ffd23f}}
 .modo.r9-ev{border-color:#e11d48;background:linear-gradient(120deg,rgba(225,29,72,.25),rgba(17,31,69,.9) 60%);margin-top:6px}
 .lc{position:relative;overflow:hidden;text-align:center;border-radius:16px;padding:12px 12px 16px;background:linear-gradient(120deg,#6b4500,#ffd23f 30%,#fff1a8 45%,#e3a514 60%,#6b4500);background-size:250% 100%;border:1.5px solid #fff1a8;box-shadow:0 0 24px rgba(255,210,63,.6)}
 .lc::after{content:"";position:absolute;top:-40%;bottom:-40%;left:-60%;width:38%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);pointer-events:none}
@@ -5188,7 +5213,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795401626";
+const VERSAO="1795402043";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -6279,7 +6304,7 @@ function render(){try{if(G&&G.user){perfil();garantirContratos()}}catch(e){}
   if(aba==="inicio")aba="jogar"; // Jogar = tela do próximo jogo (antigo Início)
   if(aba==="tabela"||aba==="copa")aba="liga";
   if(G.amgM&&!G.live&&aba!=="prejogo"&&!VIVO)limparAmigo(); // saiu do pré-jogo do amistoso entre amigos sem jogar
-  if(QZ.on&&aba!=="quiz")quizSaiu();const telaCheia=["visual","partida","resultado","prejogo","estrelato","quiz","leilao"].includes(aba);
+  if(QZ.on&&aba!=="quiz")quizSaiu();const telaCheia=["visual","partida","resultado","prejogo","estrelato","quiz","leilao","natal"].includes(aba);
   nav.hidden=telaCheia;
   nav.classList.remove("some");
   nav.innerHTML=`<div class="wrap">${abasNav().map(k=>`<button data-a="aba" data-v="${k}" aria-current="${aba===k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES[k]}</svg>${k==="copa"?nomeCurtoCopa():ROTULOS[k]}</button>`).join("")}</div>`;
@@ -6287,7 +6312,7 @@ function render(){try{if(G&&G.user){perfil();garantirContratos()}}catch(e){}
   const Pf=perfil(),xpPct=Pf.nivel>=NIVEL_MAX?100:Math.round(Pf.xp/xpParaSubir(Pf.nivel)*100); // topo: foto do dono + nível + nome + XP (leva ao Perfil)
   const dataTopo=new Date(hojeJogo()).toLocaleDateString(FMT_LG[typeof idioma==="function"?idioma():"pt"][0],{day:"numeric",month:"short",year:"numeric"}); // dia do calendário do jogo
   const topo=`<header class="topo"><span class="topo-data" data-notr>${dataTopo}</span><button class="dono-foto" data-a="aba" data-v="perfil" aria-label="Perfil do dono">${avatarSrc()?`<img src="${avatarSrc()}" alt="">`:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">${ICONES.perfil}</svg>`}<b class="num">${Pf.nivel}</b></button><div class="info" data-a="aba" data-v="perfil" style="cursor:pointer"><h1 class="dono-nome">${esc(G.user.coach||"Dono do clube")}</h1><div class="xp-barra dono-xp"><i style="width:${xpPct}%"></i></div></div><div class="topo-grana"><button class="gr-btn" data-a="cambioir" aria-label="Comprar cupons dourados">${ICO_CUPOM}<b class="num">${cupons()}</b></button><button class="gr-btn${G.cash<0?" neg":""}" data-a="cambioir" aria-label="Dinheiro do clube">${ICO_NOTA}<b class="num">${dinheiroCurto(G.cash)}</b></button></div><button class="som-btn msg-btn amg-btn" data-a="amigos" aria-label="Amigos">${ICO_AMIGOS}${amgBadge()}</button><button class="som-btn msg-btn" data-a="caixa" aria-label="Caixa de entrada">${ICO_AVIAO}${naoLidas()?`<span class="msg-badge">${Math.min(naoLidas(),99)}</span>`:""}</button><button class="som-btn" data-a="aba" data-v="config" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONES.config}</svg></button></header>`;
-  const corpo={inicio:telaInicio,elenco:telaElenco,tabela:telaTabela,mercado:telaMercado,clube:telaClube,escudo:telaEscudo,upgrades:telaUpgrades,copa:telaAbaCopa,jogar:telaInicio,liga:telaLiga,perfil:telaPerfil,financas:telaFinancas,config:telaConfig,visual:telaVisual,prejogo:telaPreJogo,partida:telaPartida,resultado:telaResultado,estrelato:telaEstrelato,quiz:telaQuiz,leilao:telaLeilao}[aba]();
+  const corpo={inicio:telaInicio,elenco:telaElenco,tabela:telaTabela,mercado:telaMercado,clube:telaClube,escudo:telaEscudo,upgrades:telaUpgrades,copa:telaAbaCopa,jogar:telaInicio,liga:telaLiga,perfil:telaPerfil,financas:telaFinancas,config:telaConfig,visual:telaVisual,prejogo:telaPreJogo,partida:telaPartida,resultado:telaResultado,estrelato:telaEstrelato,quiz:telaQuiz,natal:telaNatal,leilao:telaLeilao}[aba]();
   app.innerHTML=(telaCheia?"":topo)+corpo+(telaCheia?"":bolaHTML());
   videoVS();ligarCampinho();try{vivoChat()}catch(e){}
   if(G&&!TUTA&&!document.querySelector(".veu")){const ta=G.tutAmi||{},ami1=!(G.history||[]).length;if(aba==="prejogo"&&ami1&&!ta.pre&&partidaAtual()&&partidaAtual().amistoso)setTimeout(()=>tutAmistoso("pre"),600);else if(aba==="jogar"&&tvPendente()&&!ta["tv"+userTier()])setTimeout(()=>{if(!TUTA&&aba==="jogar"&&!document.querySelector(".veu")&&tvPendente())tutAmistoso("tv"+userTier())},700);else if(aba==="partida"&&ami1&&G.live&&G.live.m.amistoso&&!ta.vivo)setTimeout(()=>tutAmistoso("vivo"),500);else if(aba==="jogar"&&!ta.tela&&G.amistoso==="feito"&&!tvPendente()&&!((G.st[G.user.club]||{}).j)&&ami1)setTimeout(()=>{if(!TUTA&&!document.querySelector(".veu")&&aba==="jogar")tutAmistoso("tela")},900);else if(aba==="perfil"&&!ta.perfil&&!perfil().avatar)setTimeout(()=>{if(!TUTA&&!document.querySelector(".veu")&&aba==="perfil")tutAmistoso("perfil")},600)}if(aba==="financas")ligarGrafico();{const b=document.querySelector('.lg-abas [aria-pressed="true"]');if(b)b.scrollIntoView({inline:"center",block:"nearest"})}
@@ -7027,7 +7052,7 @@ function natalComprar(k){const it=NATAL_LOJA.find(x=>x.k===k),P=perfil();if(!it)
     const [T,x]=pick(L),[n,pos,ov,age]=T.jog[x],uid=G.user.club,id=novoJogador(pos,ov,uid,age),p=G.players[id];
     Object.assign(p,{n,ov,pot:ov,age,ct:3,lenda:1,prime:T.k,evF:natalFotoK(n,T.k),inj:0,susp:0,fis:100});p.sal=salarioLenda(p);G.primes[n]=id;
     G.inbox.unshift({t:"bom",m:`${n} (Prime · ${T.nome}) chegou ao ${G.clubs[uid].name}!`});res={t:"prime",id,tn:T.nome}}
-  P.lioneta=lionetas()-it.p;P.natalCompras=(P.natalCompras||0)+1;salvar();if(k==="foto")try{fotoMudou()}catch(e){}
+  P.lioneta=lionetas()-it.p;P.natalCompras=(P.natalCompras||0)+1;salvar();if(aba==="natal")render();if(k==="foto")try{fotoMudou()}catch(e){}
   natalRevela(it,res)}
 /* abertura: pacote treme e brilha, depois mostra o que saiu */
 function natalRevela(it,r){const P=G&&r.id!=null?G.players[r.id]:null;
@@ -7097,10 +7122,18 @@ function modalResNatal(r){const T=NATAL.find(t=>t.k===r.k),st=r.st,v=st.gf>st.gs
     <h3>${r.so!=null?(r.feitos.length?"Desafio cumprido!":"Desafio não cumprido desta vez"):r.feitos.length?`${r.feitos.length} desafio${r.feitos.length>1?"s":""} cumprido${r.feitos.length>1?"s":""} nesta partida!`:"Nenhum desafio cumprido desta vez"}</h3>
     <div class="nt-des">${T.des.map((d,j)=>r.so!=null&&r.so!==j?"":`<div class="nt-di${r.fe[j]?" on":""}${r.novos.includes(j)?" novo":""}"><span>${r.fe[j]?"✅":"⬜"}</span><p>${esc(d[2])}</p>${r.novos.includes(j)?"<em>NOVO</em>":r.feitos.includes(j)?"<em>DE NOVO</em>":""}${r.feitos.includes(j)?`<b class="nt-li num">+${d[3]}${icoLioneta(16)}</b>`:""}</div>`).join("")}</div>
     ${r.bonus?`<p class="nt-ok">🏅 Você completou os 3 desafios do ${esc(T.nome)}! Bônus de ${r.bonus} Lionetas</p>`:""}
-    ${r.moedas?`<div class="nt-ganho">${icoLioneta(44)}<div><b class="num">+${r.moedas}</b><small>Lionetas · saldo <b class="num">${lionetas()}</b></small></div></div>`:""}
+    ${r.moedas?`<div class="nt-premio"><i class="nt-premio-raios"></i>${icoLioneta(96)}<b class="num">+${r.moedas}</b><small>Lionetas</small></div>`:""}
     <div class="nt-geral"><div class="nt-gl"><b>Progresso do evento</b><span class="num">${r.depois}/15</span></div><div class="nt-barra"><i style="width:${r.depois/15*100}%"></i></div></div>
     <div class="premio-recomp"><span>+${r.xp} XP</span></div>
-    <div class="botoes"><button class="btn" data-a="fechar">Fechar</button><button class="btn prim" data-a="ntsortear">🎲 Jogar de novo</button></div></div>`);natalFolha()}
+    <div class="botoes">${r.moedas?`<button class="btn prim nt-coletar" data-a="ntcoletar" data-v="${r.moedas}">Coletar ${icoLioneta(20)}</button>`:`<button class="btn" data-a="fechar">Fechar</button><button class="btn prim" data-a="ntsortear">🎲 Jogar de novo</button>`}</div></div>`);natalFolha();
+  if(r.moedas)try{somConquista()}catch(e){}}
+/* Lionetas voando, uma atrás da outra, até o saldo no canto superior direito (o número sobe a cada moeda que chega) */
+function natalVoar(ganho){const alvo=document.querySelector(".ntt-li");if(!alvo||!ganho)return;const b=alvo.querySelector("b"),fim=lionetas(),ini=Math.max(0,fim-ganho);b.textContent=ini;
+  const r=alvo.getBoundingClientRect(),tx=r.left+19,ty=r.top+r.height/2,n=Math.min(16,Math.max(6,Math.round(ganho/4)));
+  for(let k=0;k<n;k++)setTimeout(()=>{const c=document.createElement("img");c.src="img/lioneta.webp";c.className="nt-voa";c.alt="";
+    const x0=innerWidth/2+(Math.random()-.5)*90,y0=innerHeight*.55+(Math.random()-.5)*90;c.style.left=x0+"px";c.style.top=y0+"px";document.body.appendChild(c);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{c.style.transform=`translate(${tx-x0}px,${ty-y0}px) scale(.6) rotate(360deg)`}));
+    setTimeout(()=>{c.remove();b.textContent=k===n-1?fim:Math.round(ini+ganho*(k+1)/n);alvo.classList.remove("pulsa");void alvo.offsetWidth;alvo.classList.add("pulsa");if(k%3===0||k===n-1)try{somDinheiro()}catch(e){}},480)},k*85)}
 function natalFolha(){const fo=document.querySelector(".veu .folha");if(fo)fo.classList.add("folha-natal")}
 /* tela do evento: progresso geral, recompensas e os 5 cards */
 /* 22/11: entrar no evento = capa → Jogar → sorteio de time + desafio (natalSortear/natalRoleta) → pré-jogo. Times e desafios: modalNatal */
@@ -7111,6 +7144,13 @@ function modalNatalCapa(){const tot=natalTotal();
       <button class="nt-av-jogar" data-a="ntsortear">JOGAR</button></div>
     <div class="nt-av-pe"><span class="nt-av-li">${icoLioneta(26)}<b class="num">${lionetas()}</b></span><button class="btn mini" data-a="ntloja">🛍️ Loja</button><button class="btn mini" data-a="nttimes">Times · <span class="num">${tot}/15</span></button></div></div>`);
   const v=document.querySelector(".veu");if(v){v.classList.add("veu-aviso");v.querySelector(".folha").classList.add("folha-aviso")}}
+/* 22/11: tela própria do evento (aba "natal"): fundo de Natal + futebol (neve, luzes, gramado), moeda única = Lioneta no canto superior direito */
+function telaNatal(){if(!reLiberado()||!G||!G.user){aba="jogar";return telaInicio()}const tot=natalTotal();
+  return `<div class="ntt"><div class="ntt-fundo" aria-hidden="true"><i class="ntt-luz l1"></i><i class="ntt-luz l2"></i><i class="ntt-campo"></i><i class="ntt-neve"></i><i class="ntt-neve n2"></i><i class="nt-luzes ntt-pisca"></i></div>
+    <div class="ntt-topo"><button class="ntt-volta" data-a="ntsair" aria-label="Voltar">‹</button><span class="ntt-tit">🎄 Feliz Natal</span><span class="ntt-li" title="Lionetas">${icoLioneta(30)}<b class="num">${lionetas()}</b></span></div>
+    <div class="ntt-corpo"><div class="nt-av-arte ntt-arte"><img src="${NATAL_CAPA}" alt="Feliz Natal com o Lio Noel Messi"><button class="nt-av-jogar" data-a="ntsortear">JOGAR</button></div>
+      <div class="nt-geral ntt-prog"><div class="nt-gl"><b>Desafios concluídos</b><span class="num">${tot}/15</span></div><div class="nt-barra"><i style="width:${tot/15*100}%"></i></div></div>
+      <div class="ntt-bts"><button class="ntt-bt" data-a="nttimes"><span>🏟️</span><b>Times e desafios</b><small>5 times lendários</small></button><button class="ntt-bt loja" data-a="ntloja"><span>🛍️</span><b>Loja do evento</b><small>Troque suas Lionetas</small></button></div></div></div>`}
 /* aviso do evento toda vez que o jogador entra no jogo (1 vez por abertura), na tela Jogar e sem outro quadro aberto */
 let NT_AVISO=0;
 function natalAviso(){if(NT_AVISO||!reLiberado()||!G||!G.user||G.live||G.amgM||abertura||aba!=="jogar"||document.querySelector(".veu"))return;NT_AVISO=1;modalNatalCapa()}
@@ -11097,7 +11137,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "lvvel":velocidade=velocidade===2?1:2;if(G.live&&G.live.est==="rodando")iniciarTimer();break;
     case "lvvel3":if(perfil().nivel<NIVEL_3X){toastErro(`🔒 Bloqueado. Libera no nível ${NIVEL_3X}.`);return}velocidade=velocidade===3?1:3;if(G.live&&G.live.est==="rodando")iniciarTimer();break;
     case "lvamgsair":fecharModal();pararTimer();G.live=null;limparAmigo();aba="jogar";salvar();window.scrollTo(0,0);break;
-    case "lvconcluir":if(G.live&&G.live.m.ev){pararTimer();const r=concluirNatal();aba="jogar";window.scrollTo(0,0);render();setTimeout(()=>{somResultado();modalResNatal(r)},300);return}
+    case "lvconcluir":if(G.live&&G.live.m.ev){pararTimer();const r=concluirNatal();aba="natal";window.scrollTo(0,0);render();setTimeout(()=>{somResultado();modalResNatal(r)},300);return}
       if(G.live&&G.live.m.amg){pararTimer();const r=concluirAmigo();aba="jogar";window.scrollTo(0,0);render();setTimeout(()=>{somResultado();modalResAmigo(r)},300);return}
     if(G.live&&G.live.m.amistoso){pararTimer();const r=concluirAmistoso();aba="jogar";window.scrollTo(0,0);render();setTimeout(()=>{somResultado();modalAmistoso(r)},300);return}
     {pararTimer();concluirAoVivo();if(G.ultimoJogo)G.ultimoJogo.pendente=true;aba="resultado";salvar();window.scrollTo(0,0);setTimeout(somResultado,300);break;}
@@ -11234,7 +11274,9 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "fimresumo":FLUXO_FIM=false;fecharModal();if(G.over)modalFim();else modalTemporada();return;
     case "teclenda":{const er=contratarTecLenda(+v,el.dataset.i);if(er){toastErro(er);return}fecharModal();salvar();confete();toast(`${TEC_LENDAS[+v][0]} contratado!`);break;}
     case "lendaver":modalLenda(+v);return;
-    case "r9ver":case "ntevento":case "ntcapa":modalNatalCapa();return;
+    case "r9ver":case "ntevento":case "ntcapa":fecharModal();aba="natal";window.scrollTo(0,0);render();return;
+    case "ntcoletar":fecharModal();if(aba!=="natal"){aba="natal";render()}setTimeout(()=>natalVoar(+v),60);return;
+    case "ntsair":aba="jogar";window.scrollTo(0,0);render();return;
     case "nttimes":modalNatal();return;
     case "ntsortear":if(!G||!G.user){toastErro("Crie uma carreira primeiro.");return}natalRoleta();return;
     case "ntver":modalNatalTime(+v);return;
