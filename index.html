@@ -1149,6 +1149,9 @@ nav.abas button{font-size:11px}
 .ntc.ganhou{border-color:#ffd23f;box-shadow:0 0 30px rgba(255,210,63,.8);animation:leiEntra .5s ease-out}
 .ntt-img{background-size:cover;background-position:center}.ntt-blur{background-size:cover;background-position:center;filter:blur(18px) brightness(.55);transform:scale(1.15)}.ntt-ct{background:no-repeat center/contain}.ntt-capa{cursor:pointer}.ntt-capa .ntt-topo .ntt-tit{visibility:hidden}
 .ntt-capa .ntt-img{background-size:cover;background-position:center}
+.ntt-capa-tit{position:fixed;z-index:3;left:0;right:0;top:calc(2.5vh + env(safe-area-inset-top,0px));display:flex;flex-direction:column;align-items:center;text-align:center;animation:leiEntra .7s ease-out}
+.ntt-capa-tit b{font-family:var(--f-display);font-style:italic;font-weight:900;font-size:clamp(40px,12vw,64px);line-height:1;letter-spacing:.03em;background:linear-gradient(180deg,#fff6c0,#ffd23f 45%,#c98a00);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 10px rgba(225,29,72,.8)) drop-shadow(0 3px 2px rgba(0,0,0,.5))}
+.ntt-capa-tit small{margin-top:6px;padding:3px 14px;border-radius:999px;background:rgba(185,28,28,.85);color:#fff;font-weight:900;letter-spacing:4px;font-size:12px;box-shadow:0 0 12px rgba(22,163,74,.7)}
 .ntt-capa-pe{position:fixed;z-index:3;left:0;right:0;bottom:0;padding:70px 24px calc(22px + env(safe-area-inset-bottom,0px));background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.55) 35%,rgba(0,0,0,.85));text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px}
 .ntt-capa-pe p{margin:0;max-width:340px;font-size:14px;line-height:1.4;font-weight:700;color:#fde68a;text-shadow:0 1px 4px #000}
 .ntt-carr{display:inline-flex;font-family:var(--f-display);font-weight:900;font-size:20px;letter-spacing:3px;padding-left:1.2em;text-transform:uppercase;color:#fff;text-shadow:0 0 10px rgba(255,210,63,.8)}
@@ -5288,7 +5291,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795470513";
+const VERSAO="1795475154";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -6109,7 +6112,7 @@ function somIniciar(){
   SOM.mus=c.createGain();SOM.mus.gain.value=0;SOM.mus.connect(SOM.master);
   SOM.fx=c.createGain();SOM.fx.gain.value=1;{const lim=c.createDynamicsCompressor();lim.threshold.value=-6;lim.knee.value=4;lim.ratio.value=12;lim.attack.value=.002;lim.release.value=.15;SOM.fx.connect(lim);lim.connect(SOM.master)} // limitador: efeitos altos sem estourar
   trilhaIniciar();
-  SOM.buf={};["clique","erro","derrota","vitoria","transicao","roleta","carga","intro"].forEach(n=>fetch(`sons/${n}.mp3`).then(r=>r.arrayBuffer()).then(b=>new Promise((ok,er)=>c.decodeAudioData(b,ok,er))).then(buf=>SOM.buf[n]=buf).catch(()=>{}));
+  SOM.buf={};["clique","erro","derrota","vitoria","transicao","roleta","carga","intro","natal"].forEach(n=>fetch(`sons/${n}.mp3`).then(r=>r.arrayBuffer()).then(b=>new Promise((ok,er)=>c.decodeAudioData(b,ok,er))).then(buf=>SOM.buf[n]=buf).catch(()=>{}));
   // ruído base
   const b=c.createBuffer(1,c.sampleRate*3,c.sampleRate),d=b.getChannelData(0);
   let last=0;for(let i=0;i<d.length;i++){const w=Math.random()*2-1;last=(last+.02*w)/1.02;d[i]=w*.6+last*3}
@@ -7230,8 +7233,9 @@ const natalAcabou=()=>Date.now()>=NATAL_FIM;
 function natalFalta(){const ms=NATAL_FIM-Date.now();if(ms<=0)return "Encerrado";const d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),m=Math.floor(ms%36e5/6e4);return d>0?`${d}d ${h}h`:h>0?`${h}h ${m}min`:`${m}min`}
 function telaNatal(){if(!reLiberado()||!G||!G.user){aba="jogar";return telaInicio()}
   const topo=`<div class="ntt-topo"><button class="ntt-volta" data-a="ntsair" aria-label="Voltar">‹</button><span class="ntt-tit"></span><span class="ntt-li" title="Lionetas">${icoLioneta(30)}<b class="num">${lionetas()}</b></span></div>`;
-  if(NT_FASE==="capa"){clearTimeout(window._ntCapa);window._ntCapa=setTimeout(()=>{if(aba==="natal"&&NT_FASE==="capa")acao("ntsala")},4500); // capa de carregamento: 4,5 s
+  if(NT_FASE==="capa"){clearTimeout(window._ntCapa);if(!window._ntSom){window._ntSom=1;setTimeout(()=>{try{somArquivo("natal",true,.9)}catch(e){}window._ntSom=0},100)} // vinheta de Natal (sons/natal.mp3)window._ntCapa=setTimeout(()=>{if(aba==="natal"&&NT_FASE==="capa")acao("ntsala")},4500); // capa de carregamento: 4,5 s
     return `<div class="ntt ntt-capa"><div class="ntt-fundo ntt-img" style="background-image:url(img/natal-capa3.jpg)" aria-hidden="true"><i class="ntt-neve"></i></div>
+    <div class="ntt-capa-tit"><b>FELIZ NATAL</b><small>EVENTO ESPECIAL</small></div>
     <div class="ntt-capa-pe"><p>Enfrente 5 times lendários, cumpra desafios e ganhe Lionetas para trocar por prêmios.</p><b class="ntt-carr">Carregando<i>.</i><i>.</i><i>.</i></b></div></div>`}
   return `<div class="ntt ntt-sala"><div class="ntt-fundo ntt-img" style="background-image:url(img/natal-sala.jpg)" aria-hidden="true"><i class="ntt-neve n2"></i></div>
     ${topo}<p class="ntt-conta">${natalAcabou()?"🎄 Evento encerrado":`⏳ Termina em <b class="num" id="ntt-conta">${natalFalta()}</b>`}</p>
@@ -11557,7 +11561,7 @@ setTimeout(()=>{try{amgSync(true)}catch(e){}},2500); // cria o ID do dono (1ª v
 try{somIniciar();somModo(modoDesejado())}catch(e){}
 try{carregarKits()}catch(e){}
 // imagens que não aparecem na abertura carregam logo depois da 1ª tela (abre mais rápido no celular); quando chegam, redesenha a tela
-const IMG_TARDE=["img/cartas-re.js?v=6bdf0053","img/escudos-img.js?v=655f7708","img/patro-logos.js?v=3e44eabc","img/rostos-reais.js?v=32f2de16","img/titulos.js?v=9ecffff6","dados/titulos.js?v=a01a43e3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=67cfbd62","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
+const IMG_TARDE=["img/cartas-re.js?v=6bdf0053","img/escudos-img.js?v=655f7708","img/patro-logos.js?v=3e44eabc","img/rostos-reais.js?v=e929a575","img/titulos.js?v=9ecffff6","dados/titulos.js?v=a01a43e3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=67cfbd62","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
 // 27/10: redesenha a cada arquivo que chega (logos dos patrocinadores não esperam as fotos); com aviso aberto, redesenha quando ele fechar
 let TARDE_T=null,TARDE_PEND=false;
 function tardeRender(){clearTimeout(TARDE_T);TARDE_T=setTimeout(()=>{if(!G||abertura||G.live||aba==="prejogo")return;if(document.querySelector(".veu")){TARDE_PEND=true;return}TARDE_PEND=false;render()},250)}
