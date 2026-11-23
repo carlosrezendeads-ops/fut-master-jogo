@@ -1131,6 +1131,9 @@ nav.abas button{font-size:11px}
 .nt-coletar{display:flex;align-items:center;justify-content:center;gap:6px;font-size:17px;animation:leiBt 1.4s ease-in-out infinite}
 .nt-voa{position:fixed;width:40px;height:40px;margin:-20px 0 0 -20px;z-index:200;border-radius:50%;pointer-events:none;transition:transform .48s cubic-bezier(.55,0,.75,.45);filter:drop-shadow(0 0 8px rgba(255,210,63,.9))}
 .ntt-li.pulsa{animation:ntPulsa .22s ease-out}@keyframes ntPulsa{50%{transform:scale(1.15);box-shadow:0 0 22px #ffd23f}}
+.ntt-sortear{align-self:center;display:flex;flex-direction:column;align-items:center;gap:4px;padding:22px 34px;border-radius:20px;border:2px solid #fff1a8;background:linear-gradient(180deg,rgba(185,28,28,.92),rgba(91,15,23,.92));color:#fff;font:inherit;cursor:pointer;box-shadow:0 0 30px rgba(255,210,63,.45),0 10px 24px rgba(0,0,0,.5);animation:ntJogarB 1.6s ease-in-out infinite}
+.ntt-sortear span{font-size:46px}.ntt-sortear b{font-family:var(--f-display);font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#ffd23f}.ntt-sortear small{font-size:12px;color:#fde68a}
+@keyframes ntJogarB{50%{transform:scale(1.04);box-shadow:0 0 44px rgba(255,210,63,.75),0 10px 24px rgba(0,0,0,.5)}}
 .modo.r9-ev{border-color:#e11d48;background:linear-gradient(120deg,rgba(225,29,72,.25),rgba(17,31,69,.9) 60%);margin-top:6px}
 .lc{position:relative;overflow:hidden;text-align:center;border-radius:16px;padding:12px 12px 16px;background:linear-gradient(120deg,#6b4500,#ffd23f 30%,#fff1a8 45%,#e3a514 60%,#6b4500);background-size:250% 100%;border:1.5px solid #fff1a8;box-shadow:0 0 24px rgba(255,210,63,.6)}
 .lc::after{content:"";position:absolute;top:-40%;bottom:-40%;left:-60%;width:38%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);pointer-events:none}
@@ -5214,7 +5217,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795429105";
+const VERSAO="1795432131";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7149,8 +7152,7 @@ function modalNatalCapa(){const tot=natalTotal();
 function telaNatal(){if(!reLiberado()||!G||!G.user){aba="jogar";return telaInicio()}const tot=natalTotal();
   return `<div class="ntt"><div class="ntt-fundo" aria-hidden="true"><i class="ntt-luz l1"></i><i class="ntt-luz l2"></i><i class="ntt-campo"></i><i class="ntt-neve"></i><i class="ntt-neve n2"></i><i class="nt-luzes ntt-pisca"></i></div>
     <div class="ntt-topo"><button class="ntt-volta" data-a="ntsair" aria-label="Voltar">‹</button><span class="ntt-tit">🎄 Feliz Natal</span><span class="ntt-li" title="Lionetas">${icoLioneta(30)}<b class="num">${lionetas()}</b></span></div>
-    <div class="ntt-corpo"><div class="nt-av-arte ntt-arte"><img src="${NATAL_CAPA}" alt="Feliz Natal com o Lio Noel Messi"><button class="nt-av-jogar" data-a="ntsortear">JOGAR</button></div>
-</div></div>`}
+    <div class="ntt-corpo"><button class="ntt-sortear" data-a="ntsortear"><span>🎲</span><b>Sortear desafio</b><small>Um time lendário e um desafio valendo Lionetas</small></button></div></div>`}
 /* aviso do evento toda vez que o jogador entra no jogo (1 vez por abertura), na tela Jogar e sem outro quadro aberto */
 let NT_AVISO=0;
 function natalAviso(){if(NT_AVISO||!reLiberado()||!G||!G.user||G.live||G.amgM||abertura||aba!=="jogar"||document.querySelector(".veu"))return;NT_AVISO=1;modalNatalCapa()}
@@ -7161,7 +7163,7 @@ function natalRoleta(){const [i,j]=natalSortear(),T=NATAL[i],d=T.des[j];
     <div class="nt-sort-r" id="nt-sr" hidden><div class="nt-di on nt-sort-d"><span>🎯</span><p>${esc(d[2])}</p><b class="nt-li num">+${d[3]}${icoLioneta(18)}</b></div>
       <p class="nt-dica">💡 ${esc(T.dica)}</p>
       <div class="botoes"><button class="btn" data-a="ntver" data-v="${i}">Ver escalação</button><button class="btn prim" data-a="ntjogar" data-v="${i}:${j}">⚽ Jogar</button></div>
-      <button class="btn mini nt-outro" data-a="ntcapa">‹ Voltar</button></div></div>`);natalFolha();
+      <button class="btn mini nt-outro" data-a="fechar">‹ Voltar</button></div></div>`);natalFolha();
   const el=document.getElementById("nt-rol");let k=0,n=15+i; // para no time sorteado (15 é múltiplo de 5 times)try{somCaixaCarga(1.6)}catch(e){}
   const passo=()=>{const e=document.getElementById("nt-rol");if(!e)return;const t=NATAL[k%NATAL.length];e.innerHTML=`${natalEsc(t,70)}<b>${esc(t.nome)}</b>`;e.classList.remove("pula");void e.offsetWidth;e.classList.add("pula");
     if(k>=n){e.classList.add("fim");const tg=document.querySelector(".nt-sort .nt-tag");if(tg)tg.textContent="🎄 Seu desafio";const r=document.getElementById("nt-sr");if(r)r.hidden=false;try{somCaixaBoom()}catch(x){}return}
@@ -11274,11 +11276,11 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "fimresumo":FLUXO_FIM=false;fecharModal();if(G.over)modalFim();else modalTemporada();return;
     case "teclenda":{const er=contratarTecLenda(+v,el.dataset.i);if(er){toastErro(er);return}fecharModal();salvar();confete();toast(`${TEC_LENDAS[+v][0]} contratado!`);break;}
     case "lendaver":modalLenda(+v);return;
-    case "r9ver":case "ntevento":case "ntcapa":fecharModal();aba="natal";window.scrollTo(0,0);render();return;
+    case "r9ver":case "ntevento":case "ntcapa":if(aba!=="jogar"){aba="jogar";window.scrollTo(0,0);render()}modalNatalCapa();return; // banner por cima da tela Jogar
     case "ntcoletar":fecharModal();if(aba!=="natal"){aba="natal";render()}setTimeout(()=>natalVoar(+v),60);return;
     case "ntsair":aba="jogar";window.scrollTo(0,0);render();return;
     case "nttimes":modalNatal();return;
-    case "ntsortear":if(!G||!G.user){toastErro("Crie uma carreira primeiro.");return}natalRoleta();return;
+    case "ntsortear":if(!G||!G.user){toastErro("Crie uma carreira primeiro.");return}if(aba!=="natal"){fecharModal();aba="natal";window.scrollTo(0,0);render()}natalRoleta();return; // entra na tela do evento (fundo de Natal) e sorteia
     case "ntver":modalNatalTime(+v);return;
     case "ntloja":modalNatalLoja();return;
     case "ntcompra":natalComprar(v);return;
