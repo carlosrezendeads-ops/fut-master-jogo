@@ -1163,10 +1163,10 @@ nav.abas button{font-size:11px}
 .nt-emb{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px;border-radius:14px;background:radial-gradient(circle at 50% 30%,rgba(255,210,63,.25),rgba(0,0,0,.2) 70%);border:1px solid rgba(255,210,63,.5)}
 .nt-emb img{width:110px;height:110px;filter:drop-shadow(0 0 16px rgba(255,210,63,.7));animation:leiEntra .6s ease-out}.nt-emb b{font-size:16px;color:#ffd23f}.nt-emb small{font-size:11.5px;color:#fde68a;text-align:center}
 .nt-emb.off img{filter:grayscale(1) brightness(.5);animation:none}.nt-emb.off b{color:#cfd8ee}
-.mj-bt{position:relative;display:grid;place-items:center;width:100%;aspect-ratio:3/1;max-height:140px;border-radius:16px;border:1.5px solid rgba(25,195,255,.45);background:#050a1c url(img/mj-card.jpg) center/cover;color:#fff;font:inherit;cursor:pointer;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.45),0 0 14px rgba(25,195,255,.2)}
+.mj-bt{position:relative;display:grid;place-items:center;width:100%;aspect-ratio:5/1;max-height:96px;border-radius:14px;border:1.5px solid rgba(255,210,63,.55);background:#050a1c url(img/mj-card.jpg) center/cover;color:#fff;font:inherit;cursor:pointer;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.45),0 0 12px rgba(255,210,63,.18)}
 .mj-bt.on{border-color:#ffd23f;box-shadow:0 0 18px rgba(255,210,63,.4)}
-.mj-tit{font-family:var(--f-display);font-style:italic;font-weight:900;font-size:clamp(26px,8vw,38px);letter-spacing:.08em;text-shadow:0 0 14px rgba(25,195,255,.8),0 2px 4px #000}
-.mj-seta{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);font-size:12px;color:#ffd23f;text-shadow:0 0 6px #000}
+.mj-tit{font-family:var(--f-display);font-style:italic;font-weight:900;font-size:clamp(22px,6.5vw,30px);letter-spacing:.08em;color:#fff;text-shadow:0 0 14px rgba(255,210,63,.65),0 2px 4px #000}
+.mj-seta{position:absolute;left:50%;bottom:3px;transform:translateX(-50%);font-size:12px;color:#ffd23f;text-shadow:0 0 6px #000}
 .mj-scroll{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:12px 2px 8px;-webkit-overflow-scrolling:touch;animation:leiEntra .35s ease-out}
 .mj-card{position:relative;flex:none;width:42%;max-width:180px;aspect-ratio:2/3;border-radius:14px;overflow:hidden;border:1.5px solid rgba(255,255,255,.3);padding:0;background:#0b1533;cursor:pointer;scroll-snap-align:start;box-shadow:0 6px 16px rgba(0,0,0,.45)}
 .mj-card img{width:100%;height:100%;object-fit:cover;display:block}.mj-card.ev{border-color:#ffd23f;box-shadow:0 0 16px rgba(255,210,63,.55)}
@@ -5277,7 +5277,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795450465";
+const VERSAO="1795450680";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
