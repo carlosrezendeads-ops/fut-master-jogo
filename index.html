@@ -5288,7 +5288,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795468364";
+const VERSAO="1795470513";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -10826,7 +10826,12 @@ const LEI_JOG=[ // [nome, posição GOL/ZAG/MEI/ATA, nota]
    (sobrou só R$ 1 por vaga) e ainda tem vaga; aparecem como um lote normal. [nome, posição, nota, clube da foto] */
 const LEI_RES=[["Hugo Souza","GOL",81,"Corinthians"],["Léo Ortiz","ZAG",81,"Flamengo"],["Rodrigo Garro","MEI",82,"Corinthians"],
   ["Andreas Pereira","MEI",82,"Palmeiras"],["Lucas Moura","ATA",83,"São Paulo"],["Bruno Henrique","ATA",82,"Flamengo"],
-  ["Marc-André ter Stegen","GOL",83,""],["Antonio Rüdiger","ZAG",83,""],["Phil Foden","MEI",84,""],["Rodrygo","ATA",84,""]]; // Europa: Barcelona, Real Madrid, Man. City (21/11)
+  ["Marc-André ter Stegen","GOL",83,""],["Antonio Rüdiger","ZAG",83,""],["Phil Foden","MEI",84,""],["Rodrygo","ATA",84,""], // Europa: Barcelona, Real Madrid, Man. City (21/11)
+  /* +5 por posição (23/11): Série A do Brasil (foto do clube) e Espanha/Inglaterra (fotos novas leilao12 → Leilao|) */
+  ["Agustín Rossi","GOL",80,"Flamengo"],["Carlos Miguel","GOL",79,"Palmeiras"],["David Raya","GOL",83,""],["Jan Oblak","GOL",83,""],["Unai Simón","GOL",81,""],
+  ["Gustavo Gómez","ZAG",81,"Palmeiras"],["Léo Pereira","ZAG",80,"Flamengo"],["Fabrício Bruno","ZAG",79,"Cruzeiro"],["Gabriel Magalhães","ZAG",83,""],["Pau Cubarsí","ZAG",82,""],
+  ["Lucas Paquetá","MEI",82,"Flamengo"],["Jorginho","MEI",80,"Flamengo"],["Gerson","MEI",80,"Cruzeiro"],["Bruno Fernandes","MEI",83,""],["Alexis Mac Allister","MEI",82,""],
+  ["Vitor Roque","ATA",81,"Palmeiras"],["Yuri Alberto","ATA",80,"Corinthians"],["Alexander Isak","ATA",83,""],["Nico Williams","ATA",82,""],["Antoine Griezmann","ATA",82,""]];
 const LEI_RES0=LEI_JOG.length;LEI_JOG.push(...LEI_RES.map(x=>x.slice(0,3)));
 const LEI_FORM={"1-2-1":["GOL","ZAG","MEI","MEI","ATA"],"1-1-2":["GOL","ZAG","MEI","ATA","ATA"],"2-1-1":["GOL","ZAG","ZAG","MEI","ATA"]};
 const LEI_XY={GOL:[[50,116.5]],ZAG:[[50,82],[28,82,72,82]],MEI:[[50,51.5],[27,51.5,73,51.5]],ATA:[[50,20],[28,20,72,20]]}; // espaçado para placa e nome não se encostarem (21/11)
@@ -11552,7 +11557,7 @@ setTimeout(()=>{try{amgSync(true)}catch(e){}},2500); // cria o ID do dono (1ª v
 try{somIniciar();somModo(modoDesejado())}catch(e){}
 try{carregarKits()}catch(e){}
 // imagens que não aparecem na abertura carregam logo depois da 1ª tela (abre mais rápido no celular); quando chegam, redesenha a tela
-const IMG_TARDE=["img/cartas-re.js?v=6bdf0053","img/escudos-img.js?v=655f7708","img/patro-logos.js?v=3e44eabc","img/rostos-reais.js?v=59c90a48","img/titulos.js?v=9ecffff6","dados/titulos.js?v=a01a43e3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=67cfbd62","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
+const IMG_TARDE=["img/cartas-re.js?v=6bdf0053","img/escudos-img.js?v=655f7708","img/patro-logos.js?v=3e44eabc","img/rostos-reais.js?v=32f2de16","img/titulos.js?v=9ecffff6","dados/titulos.js?v=a01a43e3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=67cfbd62","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
 // 27/10: redesenha a cada arquivo que chega (logos dos patrocinadores não esperam as fotos); com aviso aberto, redesenha quando ele fechar
 let TARDE_T=null,TARDE_PEND=false;
 function tardeRender(){clearTimeout(TARDE_T);TARDE_T=setTimeout(()=>{if(!G||abertura||G.live||aba==="prejogo")return;if(document.querySelector(".veu")){TARDE_PEND=true;return}TARDE_PEND=false;render()},250)}
