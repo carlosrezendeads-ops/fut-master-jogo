@@ -1174,6 +1174,10 @@ nav.abas button{font-size:11px}
 .mj-rod{position:absolute;left:0;right:0;bottom:0;padding:22px 8px 8px;background:linear-gradient(transparent,rgba(0,0,0,.85));display:flex;flex-direction:column;gap:1px;text-align:left;color:#fff}.mj-rod b{font-size:13px;line-height:1.1}.mj-rod small{font-size:10.5px;color:#fde68a}
 .mj-card.bloq img{filter:grayscale(.7) brightness(.55)}.mj-cad{position:absolute;inset:0;display:grid;place-items:center;font-weight:900;font-size:13px;color:#fff;text-shadow:0 1px 4px #000}
 .mj-card.pulsa{animation:leiBt 1.6s ease-in-out infinite}
+.ntt-conta{position:relative;z-index:3;margin:-4px auto 0;width:max-content;padding:5px 14px;border-radius:999px;background:rgba(0,0,0,.55);border:1px solid rgba(255,210,63,.5);font-size:13px;color:#fde68a}.ntt-conta b{color:#fff}
+.ntt-fim{display:flex;flex-direction:column;align-items:center;gap:4px;padding:16px 20px;border-radius:16px;background:rgba(0,0,0,.6);border:1.5px solid #ffd23f;text-align:center}.ntt-fim b{font-size:18px;color:#ffd23f}.ntt-fim small{color:#fde68a}
+.nt-it-ic.pac-img{background:none;height:76px}.nt-it-ic.pac-img img{width:54px;height:76px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
+.nt-pac.nt-pac-img{width:170px;height:auto;border:0;background:none;box-shadow:none;border-radius:12px;filter:drop-shadow(0 0 24px rgba(255,210,63,.75))}.nt-pac-img img{display:block;width:100%;height:auto}
 .modo.r9-ev{border-color:#e11d48;background:linear-gradient(120deg,rgba(225,29,72,.25),rgba(17,31,69,.9) 60%);margin-top:6px}
 .lc{position:relative;overflow:hidden;text-align:center;border-radius:16px;padding:12px 12px 16px;background:linear-gradient(120deg,#6b4500,#ffd23f 30%,#fff1a8 45%,#e3a514 60%,#6b4500);background-size:250% 100%;border:1.5px solid #fff1a8;box-shadow:0 0 24px rgba(255,210,63,.6)}
 .lc::after{content:"";position:absolute;top:-40%;bottom:-40%;left:-60%;width:38%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);pointer-events:none}
@@ -5267,7 +5271,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795441107";
+const VERSAO="1795442540";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7081,14 +7085,14 @@ const lionetas=()=>perfil().lioneta||0;
 /* Loja do Evento (22/11): artes provisórias (o Carlos vai mandar as definitivas: foto do Messi, pacotes). k → natalComprar */
 const NATAL_LOJA=[
  {k:"foto",n:"Foto do Messi para o perfil",d:"Foto especial de Natal do Messi para usar no seu perfil e no ranking.",p:100,img:"img/avatar-messi.webp"},
- {k:"lenda",n:"Pacote Lenda",d:"Um jogador lenda aleatório para o seu time.",p:500,pac:"ouro"},
- {k:"prime",n:"Jogador Prime",d:"Um craque Prime aleatório dos times do evento, no auge, para o seu time.",p:1000,pac:"prime"},
+ {k:"lenda",n:"Pacote Lenda",d:"Um jogador lenda aleatório para o seu time.",p:500,pac:"ouro",pimg:"img/pac-lenda.png"},
+ {k:"prime",n:"Jogador Prime",d:"Um craque Prime aleatório dos times do evento, no auge, para o seu time.",p:1000,pac:"prime",pimg:"img/pac-prime.png"},
  {k:"pts",n:"10 pontos de atributo",d:"10 pontos de treino para distribuir nos seus jogadores.",p:300,ic:"💪"},
- {k:"tec",n:"Técnico lenda aleatório",d:"Um técnico lenda aleatório assume o seu time (sem multa do atual).",p:750,pac:"tec"}];
+ {k:"tec",n:"Técnico lenda aleatório",d:"Um técnico lenda aleatório assume o seu time (sem multa do atual).",p:750,pac:"tec",pimg:"img/pac-tec.png"}];
 function modalNatalLoja(){const sal=lionetas(),P=perfil();
   modal(`<div class="nt"><div class="nt-saldo">${icoLioneta(54)}<div><small>Suas Lionetas</small><b class="num">${sal}</b></div></div><h2 style="margin:0">🛍️ Loja do Evento</h2>
     <div class="nt-loja">${NATAL_LOJA.map(it=>{const ja=it.k==="foto"&&P.avNatal,pode=!ja&&sal>=it.p;
-      return `<div class="nt-it"><span class="nt-it-ic${it.pac?" pac-"+it.pac:""}">${it.img?`<img src="${it.img}" alt="">`:it.pac?`<b>${it.pac==="prime"?"PRIME":it.pac==="tec"?"TÉC":"LENDA"}</b>`:it.ic}</span>
+      return `<div class="nt-it"><span class="nt-it-ic${it.pac&&!it.pimg?" pac-"+it.pac:""}${it.pimg?" pac-img":""}">${it.pimg?`<img src="${it.pimg}" alt="">`:it.img?`<img src="${it.img}" alt="">`:it.pac?`<b>${it.pac==="prime"?"PRIME":it.pac==="tec"?"TÉC":"LENDA"}</b>`:it.ic}</span>
         <div class="nt-it-t"><b>${esc(it.n)}</b><small>${esc(it.d)}</small></div>
         <button class="btn mini ${pode?"prim-mini":""}" data-a="ntcompra" data-v="${it.k}" ${ja?"disabled":""}>${ja?"Comprado":`<span class="num">${it.p}</span> ${icoLioneta(14)}`}</button></div>`}).join("")}</div>
     <div class="botoes"><button class="btn" data-a="ntevento">‹ Evento</button></div></div>`);natalFolha()}
@@ -7114,7 +7118,7 @@ function natalRevela(it,r){const P=G&&r.id!=null?G.players[r.id]:null;
     :r.t==="pts"?`<span style="font-size:60px">💪</span><b>+10 pontos de atributo</b><small>Distribua no quadro de Pontos de Treino (aba Clube).</small>`
     :r.t==="tec"?`<span style="font-size:60px">🧥</span><b>${esc(r.n)}</b><small>Técnico lenda · nível ${r.q}. Já assumiu o seu time!</small>`
     :P?`<span class="nt-rv-f">${rostoSVG(P,110)}</span><b class="nt-rv-n">${esc(P.n)}</b><small>${r.t==="prime"?`PRIME · ${esc(r.tn)}`:"LENDA"} · ${P.pos} · força <b class="num">${P.ov}</b></small><small>Já está no seu elenco!</small>`:"";
-  modal(`<div class="nt nt-rv"><div class="nt-pac ${it.pac?"pac-"+it.pac:"pac-ouro"}" id="nt-pac"><b>${it.pac==="prime"?"PRIME":it.pac==="tec"?"TÉCNICO":it.pac?"LENDA":"PRESENTE"}</b><i></i></div>
+  modal(`<div class="nt nt-rv">${it.pimg?`<div class="nt-pac nt-pac-img" id="nt-pac"><img src="${it.pimg}" alt=""><i></i></div>`:`<div class="nt-pac ${it.pac?"pac-"+it.pac:"pac-ouro"}" id="nt-pac"><b>${it.pac==="prime"?"PRIME":it.pac==="tec"?"TÉCNICO":it.pac?"LENDA":"PRESENTE"}</b><i></i></div>`}
     <div class="nt-rv-p" id="nt-rvp" hidden>${premio}</div>
     <div class="botoes" id="nt-rvb" hidden><button class="btn" data-a="ntloja">‹ Loja</button>${P?`<button class="btn prim" data-a="perfil" data-v="${P.id}">Ver jogador</button>`:`<button class="btn prim" data-a="fechar">Fechar</button>`}</div></div>`);natalFolha();
   try{somCaixaCarga(1.4)}catch(e){}
@@ -7203,12 +7207,17 @@ function modalNatalCapa(){const tot=natalTotal();
 /* 22/11: tela própria do evento (aba "natal"): fundo de Natal + futebol (neve, luzes, gramado), moeda única = Lioneta no canto superior direito */
 /* 23/11: entrar no evento = capa (img/natal-capa2.jpg, toque para continuar) → sala de entrada (img/natal-sala.jpg, botão JOGAR) → roleta → desafio → partida */
 let NT_FASE="capa";
+/* fim do evento: virada do ano, meia-noite de 01/01/2027 em Brasília (UTC-3) */
+const NATAL_FIM=Date.UTC(2027,0,1,3,0,0);
+const natalAcabou=()=>Date.now()>=NATAL_FIM;
+function natalFalta(){const ms=NATAL_FIM-Date.now();if(ms<=0)return "Encerrado";const d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),m=Math.floor(ms%36e5/6e4);return d>0?`${d}d ${h}h`:h>0?`${h}h ${m}min`:`${m}min`}
 function telaNatal(){if(!reLiberado()||!G||!G.user){aba="jogar";return telaInicio()}
   const topo=`<div class="ntt-topo"><button class="ntt-volta" data-a="ntsair" aria-label="Voltar">‹</button><span class="ntt-tit">🎄 Feliz Natal</span><span class="ntt-li" title="Lionetas">${icoLioneta(30)}<b class="num">${lionetas()}</b></span></div>`;
   if(NT_FASE==="capa")return `<div class="ntt ntt-capa" data-a="ntsala" role="button" aria-label="Toque para continuar"><div class="ntt-fundo ntt-blur" style="background-image:url(img/natal-capa2.jpg)" aria-hidden="true"></div><div class="ntt-fundo ntt-ct" style="background-image:url(img/natal-capa2.jpg)" aria-hidden="true"><i class="ntt-neve"></i></div>
     ${topo}<p class="ntt-toque">Toque para continuar</p></div>`;
   return `<div class="ntt ntt-sala"><div class="ntt-fundo ntt-img" style="background-image:url(img/natal-sala.jpg)" aria-hidden="true"><i class="ntt-neve n2"></i></div>
-    ${topo}<div class="ntt-corpo"><button class="ntt-jogar" data-a="ntsortear">JOGAR</button><small class="ntt-sub">Sorteie um time lendário e um desafio valendo Lionetas</small></div>
+    ${topo}<p class="ntt-conta">${natalAcabou()?"🎄 Evento encerrado":`⏳ Termina em <b class="num" id="ntt-conta">${natalFalta()}</b>`}</p>
+    <div class="ntt-corpo">${natalAcabou()?`<div class="ntt-fim"><b>O Evento Feliz Natal acabou!</b><small>Obrigado por jogar. Suas Lionetas ainda podem ser usadas na Loja.</small></div>`:`<button class="ntt-jogar" data-a="ntsortear">JOGAR</button><small class="ntt-sub">Sorteie um time lendário e um desafio valendo Lionetas</small>`}</div>
     <nav class="ntt-ics">${[["ntloja","loja","Loja"],["nttimes","times","Times"],["ntregras","info","Regras"],["ntpremios","premios","Conquistas"]].map(([a,i,n])=>`<button data-a="${a}"><img src="img/ntic-${i}.png" alt=""><b>${n}</b></button>`).join("")}</nav></div>`}
 /* regras do evento (ícone i da sala) */
 function modalNatalRegras(){modal(`<div class="nt nt-regras"><img class="nt-reg-ic" src="img/ntic-info.png" alt=""><h2 style="margin:0">Como funciona</h2>
@@ -7226,7 +7235,7 @@ function modalNatalPremios(){const P=perfil(),N=P.natal||{},tot=natalTotal(),com
     <div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div></div>`);natalFolha()}
 /* aviso do evento toda vez que o jogador entra no jogo (1 vez por abertura), na tela Jogar e sem outro quadro aberto */
 let NT_AVISO=0;
-function natalAviso(){if(NT_AVISO||!reLiberado()||!G||!G.user||G.live||G.amgM||abertura||aba!=="jogar"||document.querySelector(".veu"))return;NT_AVISO=1;modalNatalCapa()}
+function natalAviso(){if(NT_AVISO||natalAcabou()||!reLiberado()||!G||!G.user||G.live||G.amgM||abertura||aba!=="jogar"||document.querySelector(".veu"))return;NT_AVISO=1;modalNatalCapa()}
 let NT_ULT=null;
 function natalSortear(){let i,j,g=0;do{i=Math.floor(Math.random()*NATAL.length);j=Math.floor(Math.random()*3)}while(NT_ULT&&NT_ULT[0]===i&&NT_ULT[1]===j&&g++<20);NT_ULT=[i,j];return [i,j]}
 /* card (banner) de cada time: arte de fundo img/natal-arte-<k>.jpg (mesmo design, muda a cor) + escudo, nome e elenco por cima */
@@ -11094,7 +11103,7 @@ function modoBanner(nome,alt,a,info,bloq,extra){return `<button class="modo-ban$
 let MJ_ABERTO=false;
 function cartaoModos(){reLer();const c=RE.car,lib=reLiberado(),q=lib?quizEstado():{},pend=q.caixa&&!q.aberta,qfeito=q.fase==="fim"&&!pend;
   const itens=[
-    lib&&{img:"img/natal-capa2.jpg",n:"Feliz Natal",tag:"EVENTO",a:"ntevento",ev:1,info:"5 times lendários · Lionetas"},
+    lib&&{img:"img/natal-capa2.jpg",n:"Feliz Natal",tag:natalAcabou()?"ENCERRADO":"EVENTO",a:natalAcabou()?"ntentrar":"ntevento",ev:1,info:natalAcabou()?"Loja aberta para suas Lionetas":`⏳ Termina em ${natalFalta()}`},
     {img:"img/jornada-capa.jpg",n:"Jornada de Craque",a:lib?"re_abrir":"re_breve",bloq:!lib,info:lib&&c&&c.fase!=="fim"?`${c.nome} · ${c.idade} anos`:""},
     {img:"img/leilao-capa.jpg",n:"Leilão FUT Master",a:lib?"lei_abrir":"lei_breve",bloq:!lib,info:lib&&LEI.cs&&LEI.fase!=="fim"&&LEI.fase!=="capa"?"🔨 Em andamento":""},
     {img:"img/quiz-capa.jpg",n:"Quiz do Dia",a:lib?"qz_abrir_modo":"qz_breve",bloq:!lib,info:pend?"🎁 Caixa esperando!":qfeito?"✓ Feito hoje":"",pulsa:pend}].filter(Boolean);
@@ -11367,10 +11376,10 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "ntregras":modalNatalRegras();return;
     case "mjtoggle":MJ_ABERTO=!MJ_ABERTO;render();if(MJ_ABERTO)setTimeout(()=>{const e=document.querySelector(".mj-scroll");if(e)e.scrollIntoView({behavior:"smooth",block:"nearest"})},50);return;
     case "ntpremios":modalNatalPremios();return;
-    case "ntsala":try{somClique()}catch(e){}NT_FASE="sala";render();return;
+    case "ntsala":clearInterval(window._ntConta);window._ntConta=setInterval(()=>{const e=document.getElementById("ntt-conta");if(!e){clearInterval(window._ntConta);return}e.textContent=natalFalta()},20000);try{somClique()}catch(e){}NT_FASE="sala";render();return;
     case "ntsair":aba="jogar";window.scrollTo(0,0);render();return;
     case "nttimes":modalNatal();return;
-    case "ntsortear":if(!G||!G.user){toastErro("Crie uma carreira primeiro.");return}try{somLancamento();vibrar("premio")}catch(e){}if(aba!=="natal"){fecharModal();aba="natal";NT_FASE="sala";window.scrollTo(0,0);render()}natalRoleta();return; // sorteia (na sala de entrada)
+    case "ntsortear":if(natalAcabou()){toastErro("O Evento Feliz Natal acabou.");return}if(!G||!G.user){toastErro("Crie uma carreira primeiro.");return}try{somLancamento();vibrar("premio")}catch(e){}if(aba!=="natal"){fecharModal();aba="natal";NT_FASE="sala";window.scrollTo(0,0);render()}natalRoleta();return; // sorteia (na sala de entrada)
     case "ntver":modalNatalTime(+v);return;
     case "ntloja":modalNatalLoja();return;
     case "ntcompra":natalComprar(v);return;
