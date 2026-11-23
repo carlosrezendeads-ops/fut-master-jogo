@@ -1171,7 +1171,7 @@ nav.abas button{font-size:11px}
 .mj-card{position:relative;flex:none;width:42%;max-width:180px;aspect-ratio:2/3;border-radius:14px;overflow:hidden;border:1.5px solid rgba(255,255,255,.3);padding:0;background:#0b1533;cursor:pointer;scroll-snap-align:start;box-shadow:0 6px 16px rgba(0,0,0,.45)}
 .mj-card img{width:100%;height:100%;object-fit:cover;display:block}.mj-card.ev{border-color:#ffd23f;box-shadow:0 0 16px rgba(255,210,63,.55)}
 .mj-luz{position:absolute;top:-30%;bottom:-30%;left:-70%;width:40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);animation:diaBrilho 3s ease-in-out infinite;pointer-events:none}
-.mj-tag{position:absolute;right:8px;top:8px;padding:2px 8px;border-radius:6px;background:#e11d48;color:#fff;font-size:10px;font-weight:900;letter-spacing:1px;animation:leiPisca 1.4s infinite}
+.mj-tag{position:absolute;left:50%;transform:translateX(-50%);bottom:34px;padding:2px 8px;border-radius:6px;background:#e11d48;color:#fff;font-size:10px;font-weight:900;letter-spacing:1px;animation:leiPisca 1.4s infinite}
 .mj-rod{position:absolute;left:0;right:0;bottom:0;padding:22px 8px 8px;background:linear-gradient(transparent,rgba(0,0,0,.85));display:flex;flex-direction:column;gap:1px;text-align:left;color:#fff}.mj-rod b{font-size:13px;line-height:1.1}.mj-rod small{font-size:10.5px;color:#fde68a}
 .mj-card.bloq img{filter:grayscale(.7) brightness(.55)}.mj-cad{position:absolute;inset:0;display:grid;place-items:center;font-weight:900;font-size:13px;color:#fff;text-shadow:0 1px 4px #000}
 .mj-card.pulsa{animation:leiBt 1.6s ease-in-out infinite}
@@ -5277,7 +5277,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795449004";
+const VERSAO="1795449208";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -11110,12 +11110,12 @@ let MJ_ABERTO=false;
 function cartaoModos(){reLer();const c=RE.car,lib=reLiberado(),q=lib?quizEstado():{},pend=q.caixa&&!q.aberta,qfeito=q.fase==="fim"&&!pend;
   const itens=[
     lib&&{img:"img/natal-capa2.jpg",n:"Feliz Natal",tag:natalAcabou()?"ENCERRADO":"EVENTO",a:natalAcabou()?"ntentrar":"ntevento",ev:1,info:natalAcabou()?"Loja aberta para suas Lionetas":`⏳ Termina em ${natalFalta()}`},
-    {img:"img/jornada-capa.jpg",n:"Jornada de Craque",a:lib?"re_abrir":"re_breve",bloq:!lib,info:lib&&c&&c.fase!=="fim"?`${c.nome} · ${c.idade} anos`:""},
-    {img:"img/leilao-capa.jpg",n:"Leilão FUT Master",a:lib?"lei_abrir":"lei_breve",bloq:!lib,info:lib&&LEI.cs&&LEI.fase!=="fim"&&LEI.fase!=="capa"?"🔨 Em andamento":""},
-    {img:"img/quiz-capa.jpg",n:"Quiz do Dia",a:lib?"qz_abrir_modo":"qz_breve",bloq:!lib,info:pend?"🎁 Caixa esperando!":qfeito?"✓ Feito hoje":"",pulsa:pend}].filter(Boolean);
+    {img:"img/mj-jornada.jpg",n:"Jornada de Craque",a:lib?"re_abrir":"re_breve",bloq:!lib,info:lib&&c&&c.fase!=="fim"?`${c.nome} · ${c.idade} anos`:""},
+    {img:"img/mj-leilao.jpg",n:"Leilão FUT Master",a:lib?"lei_abrir":"lei_breve",bloq:!lib,info:lib&&LEI.cs&&LEI.fase!=="fim"&&LEI.fase!=="capa"?"🔨 Em andamento":""},
+    {img:"img/mj-quiz.jpg",n:"Quiz do Dia",a:lib?"qz_abrir_modo":"qz_breve",bloq:!lib,info:pend?"🎁 Caixa esperando!":qfeito?"✓ Feito hoje":"",pulsa:pend}].filter(Boolean);
   const nEv=itens.filter(x=>x.ev).length;
   return `<div class="modos"><button class="mj-bt${MJ_ABERTO?" on":""}" data-a="mjtoggle" aria-expanded="${MJ_ABERTO}"><b class="mj-tit">MINI JOGOS</b><span class="mj-seta">${MJ_ABERTO?"▲":"▼"}</span></button>
-    ${MJ_ABERTO?`<div class="mj-scroll">${itens.map(x=>`<button class="mj-card${x.bloq?" bloq":""}${x.ev?" ev":""}${x.pulsa?" pulsa":""}" data-a="${x.a}"><img src="${x.img}" alt="" loading="lazy"><i class="mj-luz"></i>${x.tag?`<span class="mj-tag">${x.tag}</span>`:""}${x.bloq?'<span class="mj-cad">🔒 Em breve</span>':""}<span class="mj-rod"><b>${esc(x.n)}</b>${x.info?`<small>${esc(x.info)}</small>`:""}</span></button>`).join("")}</div>`:""}</div>`}
+    ${MJ_ABERTO?`<div class="mj-scroll">${itens.map(x=>`<button class="mj-card${x.bloq?" bloq":""}${x.ev?" ev":""}${x.pulsa?" pulsa":""}" data-a="${x.a}"><img src="${x.img}" alt="" loading="lazy"><i class="mj-luz"></i>${x.tag?`<span class="mj-tag">${x.tag}</span>`:""}${x.bloq?'<span class="mj-cad">🔒 Em breve</span>':""}${x.info?`<span class="mj-rod"><small>${esc(x.info)}</small></span>`:""}</button>`).join("")}</div>`:""}</div>`}
 
 function acao(a,v,el){
   if(a&&a.startsWith("re_")){reAcao(a,v,el);return}
