@@ -1099,7 +1099,7 @@ nav.abas button{font-size:11px}
 .nt-sort-r{display:flex;flex-direction:column;gap:10px;width:100%;animation:leiEntra .5s ease-out}.nt-sort-d{font-size:15px!important;font-weight:800}.nt-outro{align-self:center}
 .veu.veu-aviso{align-items:center}.folha.folha-aviso{width:min(90vw,410px);max-height:94%;padding:0;background:none;border:0;border-radius:18px;overflow:visible;animation:leiEntra .45s ease-out}
 .nt-aviso{display:flex;flex-direction:column;gap:8px}.nt-av-arte{position:relative;border-radius:18px;overflow:hidden;box-shadow:0 0 30px rgba(255,210,63,.35),0 10px 30px rgba(0,0,0,.6);border:2px solid rgba(255,210,63,.6)}
-.nt-av-arte img{display:block;width:100%;height:auto}
+.nt-av-arte{aspect-ratio:1296/1616;background:#0b1533}.nt-av-arte img{display:block;width:100%;height:100%;object-fit:cover}
 .nt-av-x{position:absolute;right:8px;top:8px;width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(255,255,255,.7);background:rgba(0,0,0,.55);color:#fff;font-size:22px;line-height:1;cursor:pointer}
 .nt-av-jogar{position:absolute;left:50%;top:71.5%;transform:translate(-50%,-50%);padding:14px 62px;border-radius:16px;border:2.5px solid #fff1a8;background:linear-gradient(180deg,#fff27a,#ffcc1a 45%,#e39b00);color:#3a2200;font-family:var(--f-display);font-weight:900;font-style:italic;font-size:34px;letter-spacing:4px;line-height:1;cursor:pointer;box-shadow:0 0 26px rgba(255,210,63,.9),0 5px 0 #8a5a00;animation:ntJogar 1.6s ease-in-out infinite;overflow:hidden;white-space:nowrap}
 .nt-av-jogar::after{content:"";position:absolute;top:-40%;bottom:-40%;left:-70%;width:40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent);transform:skewX(-20deg);animation:diaBrilho 1.8s ease-in-out infinite}
@@ -5277,7 +5277,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795449208";
+const VERSAO="1795450465";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7207,7 +7207,7 @@ function natalFolha(){const fo=document.querySelector(".veu .folha");if(fo)fo.cl
 const NATAL_CAPA="img/natal-capa.jpg"; // banner "Feliz Natal com o Lio Noel Messi" (arte do Carlos, 22/11): aviso ao entrar no jogo e capa do evento
 /* banner do evento (não ocupa a tela toda): botão Jogar embaixo das renas; embaixo, Lionetas/Loja/Times */
 function modalNatalCapa(){const tot=natalTotal();
-  modal(`<div class="nt-aviso"><div class="nt-av-arte"><img src="${NATAL_CAPA}" alt="Feliz Natal com o Lio Noel Messi"><button class="nt-av-x" data-a="fechar" aria-label="Fechar">×</button>
+  modal(`<div class="nt-aviso"><div class="nt-av-arte"><img src="${NATAL_CAPA}" alt="" onerror="if(!this.dataset.r){this.dataset.r=1;this.src=this.src.split('?')[0]+'?r='+Date.now()}"><button class="nt-av-x" data-a="fechar" aria-label="Fechar">×</button>
       <button class="nt-av-jogar" data-a="ntentrar">JOGAR</button></div></div>`);
   const v=document.querySelector(".veu");if(v){v.classList.add("veu-aviso");v.querySelector(".folha").classList.add("folha-aviso")}}
 /* 22/11: tela própria do evento (aba "natal"): fundo de Natal + futebol (neve, luzes, gramado), moeda única = Lioneta no canto superior direito */
@@ -7241,7 +7241,7 @@ function modalNatalPremios(){const P=perfil(),N=P.natal||{},tot=natalTotal(),com
     <div class="botoes"><button class="btn prim" data-a="fechar">Fechar</button></div></div>`);natalFolha()}
 /* aviso do evento toda vez que o jogador entra no jogo (1 vez por abertura), na tela Jogar e sem outro quadro aberto */
 let NT_AVISO=0;
-function natalAviso(){if(NT_AVISO||natalAcabou()||!reLiberado()||!G||!G.user||G.live||G.amgM||abertura||aba!=="jogar"||document.querySelector(".veu"))return;NT_AVISO=1;modalNatalCapa()}
+function natalAviso(){try{if(!window._ntPre){window._ntPre=new Image();window._ntPre.src=NATAL_CAPA}}catch(e){}if(NT_AVISO||natalAcabou()||!reLiberado()||!G||!G.user||G.live||G.amgM||abertura||aba!=="jogar"||document.querySelector(".veu"))return;NT_AVISO=1;modalNatalCapa()}
 let NT_ULT=null;
 function natalSortear(){let i,j,g=0;do{i=Math.floor(Math.random()*NATAL.length);j=Math.floor(Math.random()*3)}while(NT_ULT&&NT_ULT[0]===i&&NT_ULT[1]===j&&g++<20);NT_ULT=[i,j];return [i,j]}
 /* card (banner) de cada time: arte de fundo img/natal-arte-<k>.jpg (mesmo design, muda a cor) + escudo, nome e elenco por cima */
