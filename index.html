@@ -1066,6 +1066,7 @@ nav.abas button{font-size:11px}
 .nt-ld{display:flex;gap:6px;align-items:center;font-size:12px;text-align:left}.nt-ld.e0{opacity:.55;text-decoration:line-through}.nt-ld.e3{opacity:.6}.nt-ld small{color:#9fb3da}
 /* cards diamante do Evento de Natal (roxo brilhante + brilho passando) */
 .r9-card.dia{width:16%;overflow:hidden;color:#fff;border-color:#f3e8ff;background:linear-gradient(125deg,#2e0854,#7c3aed 28%,#e9d5ff 44%,#a855f7 56%,#4c1d95 78%,#2e0854);background-size:260% 100%;box-shadow:0 0 12px rgba(192,132,252,.85),0 0 3px #fff,0 3px 8px rgba(0,0,0,.5)}
+.dia-tag{position:absolute;left:50%;top:-1px;transform:translateX(-50%);font-style:normal;font-size:7px;font-weight:900;letter-spacing:1px;padding:0 4px;border-radius:0 0 4px 4px;background:#f3e8ff;color:#4c1d95;z-index:1}
 .r9-card.dia .r9-ov{color:#fff;text-shadow:0 0 6px #c084fc}.r9-card.dia b{text-shadow:0 1px 2px rgba(0,0,0,.7)}.r9-card.dia small{color:#f3e8ff}.r9-card.dia .r9-f{background:rgba(46,8,84,.55)}
 .r9-card.dia::after,.lc.dia .dia-fa{content:"";position:absolute;top:-30%;bottom:-30%;left:-70%;width:45%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);transform:skewX(-20deg);pointer-events:none}
 .r9-card.dia::before{content:"✦";position:absolute;right:3px;top:1px;font-size:10px;color:#fff;text-shadow:0 0 6px #fff,0 0 10px #c084fc}
@@ -5165,7 +5166,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795312838";
+const VERSAO="1795398370";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -6948,27 +6949,27 @@ const r9Curto=n=>({"Gianluigi Buffon":"Buffon","Fabio Cannavaro":"Cannavaro","Pa
    amgBak/limparAmigo devolvem elenco, energia e cartões). Força mostrada = a da época; a dificuldade real é relativa ao seu time (evA/evD = sua força + dA/dD).
    Progresso em perfil().natal[k] = [d1,d2,d3]. Prêmios: a definir (NATAL_REC). ===== */
 const NATAL=[
- {k:"r9",nome:"Time dos Sonhos de Ronaldo",sigla:"R9",sub:"O time perfeito escolhido por Ronaldo Fenômeno",form:"4-3-3",est:"of",tec:"Ronaldo Fenômeno",tq:95,c1:"#111827",c2:"#ffd23f",escR:null,dA:5,dD:2,posse:.04,jog:R9_SEL.jog,
+ {k:"r9",nome:"Time dos Sonhos de Ronaldo",sigla:"R9",sub:"O time perfeito escolhido por Ronaldo Fenômeno",form:"4-3-3",est:"of",tec:"Ronaldo Fenômeno",tq:95,c1:"#111827",c2:"#ffd23f",escR:null,dA:18,dD:16,posse:.04,jog:R9_SEL.jog,
   dica:"O time mais forte do evento. Feche a zaga quando estiver ganhando.",
   des:[["cs",0,"Terminar a partida sem sofrer gols",30],["v",0,"Vencer a partida",25],["gf",3,"Marcar pelo menos 3 gols",40]]},
- {k:"barca",nome:"Barcelona de Messi",sigla:"BAR",sub:"Campeão da Champions 2010/11 · final contra o Manchester United (3 × 1)",form:"4-3-3",est:"eq",tec:"Pep Guardiola",tq:96,c1:"#a50044",c2:"#004d98",escR:"Barcelona",dA:3,dD:3,posse:.06,
-  jog:[["Víctor Valdés","GOL",89,29,"ESP"],["Éric Abidal","LAT",86,31,"FRA"],["Gerard Piqué","ZAG",89,24,"ESP"],["Javier Mascherano","ZAG",87,26,"ARG"],["Daniel Alves","LAT",90,28,"BRA"],
-   ["Sergio Busquets","VOL",89,22,"ESP"],["Xavi","MEI",95,31,"ESP"],["Andrés Iniesta","MEI",95,27,"ESP"],["David Villa","ATA",91,29,"ESP"],["Lionel Messi","ATA",98,23,"ARG"],["Pedro","ATA",87,23,"ESP"]],
+ {k:"barca",nome:"Barcelona de Messi",sigla:"BAR",sub:"Campeão da Champions 2010/11 · final contra o Manchester United (3 × 1)",form:"4-3-3",est:"eq",tec:"Pep Guardiola",tq:96,c1:"#a50044",c2:"#004d98",escR:"Barcelona",dA:11,dD:12,posse:.06,
+  jog:[["Víctor Valdés","GOL",95,29,"ESP"],["Éric Abidal","LAT",94,31,"FRA"],["Gerard Piqué","ZAG",95,24,"ESP"],["Javier Mascherano","ZAG",95,26,"ARG"],["Daniel Alves","LAT",96,28,"BRA"],
+   ["Sergio Busquets","VOL",95,22,"ESP"],["Xavi","MEI",98,31,"ESP"],["Andrés Iniesta","MEI",98,27,"ESP"],["David Villa","ATA",96,29,"ESP"],["Lionel Messi","ATA",99,23,"ARG"],["Pedro","ATA",95,23,"ESP"]],
   dica:"Eles ficam com a bola. Use o comando “Domina o meio-campo!” e uma formação com mais meias.",
   des:[["semDe","Lionel Messi","Não sofrer gol do Messi",10],["posse",50,"Terminar com pelo menos 50% de posse de bola",30],["v",0,"Vencer a partida",25]]},
- {k:"bra70",nome:"Brasil 1970 — Tricampeão",sigla:"BRA",sub:"Final da Copa de 1970 contra a Itália (4 × 1)",form:"4-2-4",est:"of",tec:"Zagallo",tq:93,c1:"#ffdf00",c2:"#009c3b",escR:null,dA:4,dD:0,posse:.03,
-  jog:[["Félix","GOL",80,32,"BRA"],["Everaldo","LAT",84,26,"BRA"],["Brito","ZAG",86,30,"BRA"],["Piazza","ZAG",87,27,"BRA"],["Carlos Alberto Torres","LAT",92,25,"BRA"],
-   ["Clodoaldo","VOL",89,20,"BRA"],["Gérson","MEI",93,29,"BRA"],["Rivellino","ATA",93,24,"BRA"],["Tostão","ATA",92,23,"BRA"],["Pelé","ATA",99,29,"BRA"],["Jairzinho","ATA",94,25,"BRA"]],
+ {k:"bra70",nome:"Brasil 1970 — Tricampeão",sigla:"BRA",sub:"Final da Copa de 1970 contra a Itália (4 × 1)",form:"4-2-4",est:"of",tec:"Zagallo",tq:93,c1:"#ffdf00",c2:"#009c3b",escR:null,dA:15,dD:10,posse:.03,
+  jog:[["Félix","GOL",93,32,"BRA"],["Everaldo","LAT",93,26,"BRA"],["Brito","ZAG",94,30,"BRA"],["Piazza","ZAG",95,27,"BRA"],["Carlos Alberto Torres","LAT",96,25,"BRA"],
+   ["Clodoaldo","VOL",95,20,"BRA"],["Gérson","MEI",97,29,"BRA"],["Rivellino","ATA",97,24,"BRA"],["Tostão","ATA",96,23,"BRA"],["Pelé","ATA",99,29,"BRA"],["Jairzinho","ATA",97,25,"BRA"]],
   dica:"Ataque fortíssimo, mas a defesa deixa espaço. Segure o 1º tempo e vá para cima no 2º.",
   des:[["cs1",0,"Não sofrer gol no 1º tempo",10],["vpor",2,"Vencer por 2 ou mais gols de diferença",30],["maisQue","Pelé","Marcar mais gols que o Pelé",15]]},
- {k:"bra02",nome:"Brasil 2002 — Pentacampeão",sigla:"BRA",sub:"Final da Copa de 2002 contra a Alemanha (2 × 0)",form:"3-4-1-2",est:"of",tec:"Luiz Felipe Scolari",tq:90,c1:"#009c3b",c2:"#ffdf00",escR:null,dA:4,dD:1,posse:-.02,
-  jog:[["Marcos","GOL",89,28,"BRA"],["Roque Júnior","ZAG",86,25,"BRA"],["Edmílson","ZAG",87,25,"BRA"],["Lúcio","ZAG",89,24,"BRA"],["Roberto Carlos","LAT",93,29,"BRA"],["Cafu","LAT",92,32,"BRA"],
-   ["Gilberto Silva","VOL",87,25,"BRA"],["Kléberson","VOL",86,23,"BRA"],["Ronaldinho Gaúcho","MEI",92,22,"BRA"],["Rivaldo","ATA",94,30,"BRA"],["Ronaldo Fenômeno","ATA",97,25,"BRA"]],
+ {k:"bra02",nome:"Brasil 2002 — Pentacampeão",sigla:"BRA",sub:"Final da Copa de 2002 contra a Alemanha (2 × 0)",form:"3-4-1-2",est:"of",tec:"Luiz Felipe Scolari",tq:90,c1:"#009c3b",c2:"#ffdf00",escR:null,dA:14,dD:12,posse:-.02,
+  jog:[["Marcos","GOL",95,28,"BRA"],["Roque Júnior","ZAG",94,25,"BRA"],["Edmílson","ZAG",95,25,"BRA"],["Lúcio","ZAG",95,24,"BRA"],["Roberto Carlos","LAT",97,29,"BRA"],["Cafu","LAT",96,32,"BRA"],
+   ["Gilberto Silva","VOL",95,25,"BRA"],["Kléberson","VOL",94,23,"BRA"],["Ronaldinho Gaúcho","MEI",96,22,"BRA"],["Rivaldo","ATA",97,30,"BRA"],["Ronaldo Fenômeno","ATA",98,25,"BRA"]],
   dica:"Contra-ataque mortal pelas laterais. Mande no meio-campo e comece pressionando.",
   des:[["posse",60,"Terminar com pelo menos 60% de posse de bola",25],["gf1",2,"Marcar pelo menos 2 gols no 1º tempo",30],["semDe","Ronaldo Fenômeno","Não sofrer gol do Ronaldo Fenômeno",10]]},
- {k:"real",nome:"Real Madrid de CR7",sigla:"RMA",sub:"Campeão da Champions 2016/17 · final contra a Juventus (4 × 1)",form:"4-3-1-2",est:"eq",tec:"Zinédine Zidane",tq:92,c1:"#ffffff",c2:"#febe10",escR:"Real Madrid",dA:4,dD:0,posse:0,
-  jog:[["Keylor Navas","GOL",88,30,"CRC"],["Marcelo","LAT",89,29,"BRA"],["Sergio Ramos","ZAG",91,31,"ESP"],["Raphaël Varane","ZAG",87,24,"FRA"],["Dani Carvajal","LAT",86,25,"ESP"],
-   ["Casemiro","VOL",88,25,"BRA"],["Toni Kroos","MEI",91,27,"GER"],["Luka Modrić","MEI",92,31,"CRO"],["Isco","MEI",89,25,"ESP"],["Karim Benzema","ATA",88,29,"FRA"],["Cristiano Ronaldo","ATA",97,32,"POR"]],
+ {k:"real",nome:"Real Madrid de CR7",sigla:"RMA",sub:"Campeão da Champions 2016/17 · final contra a Juventus (4 × 1)",form:"4-3-1-2",est:"eq",tec:"Zinédine Zidane",tq:92,c1:"#ffffff",c2:"#febe10",escR:"Real Madrid",dA:12,dD:9,posse:0,
+  jog:[["Keylor Navas","GOL",95,30,"CRC"],["Marcelo","LAT",95,29,"BRA"],["Sergio Ramos","ZAG",96,31,"ESP"],["Raphaël Varane","ZAG",95,24,"FRA"],["Dani Carvajal","LAT",94,25,"ESP"],
+   ["Casemiro","VOL",95,25,"BRA"],["Toni Kroos","MEI",96,27,"GER"],["Luka Modrić","MEI",96,31,"CRO"],["Isco","MEI",95,25,"ESP"],["Karim Benzema","ATA",95,29,"FRA"],["Cristiano Ronaldo","ATA",98,32,"POR"]],
   dica:"Letal no contra-ataque e na bola aérea. Cuidado com o Cristiano Ronaldo no fim do jogo.",
   des:[["max",1,"Sofrer no máximo 1 gol",10],["gf",3,"Marcar pelo menos 3 gols",30],["semDe","Cristiano Ronaldo","Não sofrer gol do Cristiano Ronaldo",10]]}];
 const NATAL_REC=[[3,"Inicial"],[6,"Bronze"],[9,"Prata"],[12,"Ouro"],[15,"Especial de Natal"]]; // (sem uso desde 21/11: prêmios viraram Lionetas + loja)
@@ -6993,7 +6994,7 @@ function natalTotal(){return NATAL.reduce((a,T)=>a+natalFeitos(T.k).filter(Boole
 /* números da partida do evento */
 function natalPosse(V,F){const me=V.lado,o=me==="h"?"a":"h",mid=s=>{const L=V.L[s],sl=FORMACOES[L.form].s;return L.xi.filter((id,i)=>id!=null&&(sl[i]==="VOL"||sl[i]==="MEI")).length};
   const gm=gritoAtivo(V.L[me]),perde=me==="h"?V.ga-V.gh:V.gh-V.ga,c=G.clubs[V.L[o].cid]||{};
-  let x=.5+((F[me].att+F[me].def)-(F[o].att+F[o].def))/120+(mid(me)-mid(o))*.015-(c.evPosse||0)+(gm&&gm.k==="meio"?.14:gm&&(gm.k==="fechar"||gm.k==="segurar")?-.05:0)+clamp(perde,-2,2)*.02+(rnd()-.5)*.12;
+  let x=.5+((F[me].att+F[me].def)-(F[o].att+F[o].def))/200+(mid(me)-mid(o))*.015-(c.evPosse||0)+(gm&&gm.k==="meio"?.14:gm&&(gm.k==="fechar"||gm.k==="segurar")?-.05:0)+clamp(perde,-2,2)*.02+(rnd()-.5)*.12;
   V.po=V.po||{s:0,n:0};V.po.s+=clamp(x,.2,.8);V.po.n++}
 function natalStats(V){const me=V.lado,o=me==="h"?"a":"h",g1=V.g1||{h:0,a:0},de={};
   (o==="h"?V.sh:V.sa).forEach(([pid])=>{const p=pid!=null&&G.players[pid];if(p)de[p.n]=(de[p.n]||0)+1});
@@ -7054,14 +7055,14 @@ function modalNatalTime(i){const T=NATAL[i],P=POS_FORM[T.form],fe=natalFeitos(T.
   const topo=k=>nr>1?90-row[k]*80/(nr-1):50;
   modal(`<div class="r9 nt"><p class="r9-tag">🎄 Feliz Natal · Desafio</p><h2 class="r9-tit">${esc(T.nome)}</h2><p class="r9-sub">${esc(T.sub)}<br>${T.form} · técnico ${esc(T.tec)} · força média <b class="num">${natalMed(T)}</b></p>
     <div class="r9-campo"><i class="r9-linhas"></i>${T.jog.map((j,k)=>{const [d,l]=P[k],f=natalFoto(j[0],T.k);
-      return `<button class="r9-card dia" data-a="ntjog" data-v="${i}:${k}" style="--d:${(k*.27).toFixed(2)}s;left:${(l*100).toFixed(1)}%;top:${topo(k).toFixed(1)}%"><span class="r9-ov num">${j[2]}</span><span class="r9-f">${f?`<img src="${f}" alt="">`:"★"}</span><b>${esc(natalCurto(j[0]))}</b><small>${j[1]} ${R9_BAND[j[4]]||""}</small></button>`}).join("")}</div>
+      return `<button class="r9-card dia" data-a="ntjog" data-v="${i}:${k}" style="--d:${(k*.27).toFixed(2)}s;left:${(l*100).toFixed(1)}%;top:${topo(k).toFixed(1)}%"><span class="r9-ov num">${j[2]}</span><span class="r9-f">${f?`<img src="${f}" alt="">`:"★"}</span><i class="dia-tag">PRIME</i><b>${esc(natalCurto(j[0]))}</b><small>${j[1]} ${R9_BAND[j[4]]||""}</small></button>`}).join("")}</div>
     <div class="nt-geral"><div class="nt-gl"><b>Desafios</b><span class="num">${n}/3</span></div><div class="nt-barra"><i style="width:${n/3*100}%"></i></div>
       <div class="nt-des">${T.des.map((d,j)=>`<div class="nt-di${fe[j]?" on":""}"><span>${fe[j]?"✅":"⬜"}</span><p>${esc(d[2])}</p><b class="nt-li num">${d[3]}${icoLioneta(16)}</b></div>`).join("")}</div>
       <p class="nt-def">🏅 Bônus por completar os 3: ${n===3?"<b>conquistado!</b>":`+${NATAL_BONUS} ${icoLioneta(14)}`}</p></div>
     <p class="nt-dica">💡 ${esc(T.dica)} Desafio feito fica salvo: jogue de novo para completar os outros.</p>
     <div class="botoes"><button class="btn" data-a="ntevento">‹ Evento</button><button class="btn prim" data-a="ntjogar" data-v="${i}">⚽ Jogar</button></div></div>`);natalFolha()}
 function modalNatalJog(i,k){const T=NATAL[i],p=natalJog(T,k),f=natalFoto(p.n,T.k);
-  modal(`<div class="lc dia"><i class="dia-fa"></i><div class="lc-topo"><span class="lc-selo">◆ DIAMANTE ◆</span><b class="ov ov-lenda num lc-ov">${p.ov}</b></div>
+  modal(`<div class="lc dia"><i class="dia-fa"></i><div class="lc-topo"><span class="lc-selo">◆ PRIME ◆</span><b class="ov ov-lenda num lc-ov">${p.ov}</b></div>
     <div class="lc-foto">${f?`<svg viewBox="0 0 100 112" width="150" height="168" aria-hidden="true"><image href="${f}" width="100" height="112"/></svg>`:`<span class="lenda-sel lc-sem">★</span>`}<span class="posb ${p.pos}">${p.pos}</span></div>
     <b class="lc-nome">${esc(p.n)}</b><span class="lc-sub">${R9_BAND[p.nat]||""} · ${esc(T.nome)} · ${p.age} anos</span></div>
     <div class="extrato num lc-ficha"><div><span>Posição</span><span>${posDetalhe(p)}</span></div><div><span>Melhor pé</span><span>${peDe(p)}</span></div>
