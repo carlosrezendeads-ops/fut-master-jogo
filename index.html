@@ -1097,6 +1097,14 @@ nav.abas button{font-size:11px}
 .nt-sort{align-items:center;min-height:340px}.nt-rol{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px;min-width:220px;border-radius:16px;background:rgba(0,0,0,.3);border:2px solid rgba(255,210,63,.4)}.nt-rol b{font-size:17px}
 .nt-rol.pula{animation:ntPula .12s ease-out}.nt-rol.fim{border-color:#ffd23f;box-shadow:0 0 26px rgba(255,210,63,.6);animation:leiEntra .5s ease-out}@keyframes ntPula{from{transform:translateY(-8px);opacity:.5}}
 .nt-sort-r{display:flex;flex-direction:column;gap:10px;width:100%;animation:leiEntra .5s ease-out}.nt-sort-d{font-size:15px!important;font-weight:800}.nt-outro{align-self:center}
+.veu.veu-aviso{align-items:center}.folha.folha-aviso{width:min(90vw,410px);max-height:94%;padding:0;background:none;border:0;border-radius:18px;overflow:visible;animation:leiEntra .45s ease-out}
+.nt-aviso{display:flex;flex-direction:column;gap:8px}.nt-av-arte{position:relative;border-radius:18px;overflow:hidden;box-shadow:0 0 30px rgba(255,210,63,.35),0 10px 30px rgba(0,0,0,.6);border:2px solid rgba(255,210,63,.6)}
+.nt-av-arte img{display:block;width:100%;height:auto}
+.nt-av-x{position:absolute;right:8px;top:8px;width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(255,255,255,.7);background:rgba(0,0,0,.55);color:#fff;font-size:22px;line-height:1;cursor:pointer}
+.nt-av-jogar{position:absolute;left:50%;top:71.5%;transform:translate(-50%,-50%);padding:11px 44px;border-radius:14px;border:2px solid #fff1a8;background:linear-gradient(180deg,#ffe066,#f5b301 55%,#d48a00);color:#3a2200;font-family:var(--f-display);font-weight:900;font-size:22px;letter-spacing:3px;cursor:pointer;box-shadow:0 0 22px rgba(255,210,63,.8),0 4px 0 #8a5a00;animation:ntJogar 1.4s ease-in-out infinite;overflow:hidden}
+.nt-av-jogar::after{content:"";position:absolute;top:-30%;bottom:-30%;left:-70%;width:40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);transform:skewX(-20deg);animation:diaBrilho 2.2s ease-in-out infinite}
+@keyframes ntJogar{50%{transform:translate(-50%,-50%) scale(1.07);box-shadow:0 0 34px rgba(255,210,63,1),0 4px 0 #8a5a00}}
+.nt-av-pe{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:14px;background:rgba(13,27,61,.92);border:1px solid rgba(255,210,63,.4)}.nt-av-li{flex:1;display:flex;align-items:center;gap:6px}.nt-av-li b{font-size:18px;color:#ffd23f}
 .modo.r9-ev{border-color:#e11d48;background:linear-gradient(120deg,rgba(225,29,72,.25),rgba(17,31,69,.9) 60%);margin-top:6px}
 .lc{position:relative;overflow:hidden;text-align:center;border-radius:16px;padding:12px 12px 16px;background:linear-gradient(120deg,#6b4500,#ffd23f 30%,#fff1a8 45%,#e3a514 60%,#6b4500);background-size:250% 100%;border:1.5px solid #fff1a8;box-shadow:0 0 24px rgba(255,210,63,.6)}
 .lc::after{content:"";position:absolute;top:-40%;bottom:-40%;left:-60%;width:38%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);pointer-events:none}
@@ -5180,7 +5188,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795400708";
+const VERSAO="1795401328";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -6296,7 +6304,7 @@ function render(){try{if(G&&G.user){perfil();garantirContratos()}}catch(e){}
   if(!telaCheia&&!G.over&&!G.tradOferta&&!document.querySelector(".veu")){const P=perfil();if(G.lembSave==null)G.lembSave=P.j; // a cada 8 partidas: lembrete de salvar o arquivo
     if(P.j-G.lembSave>=8){G.lembSave=P.j;salvar();modal(`<div class="aviso-box"><b>💾 Salve o progresso da carreira</b><p>Você já jogou mais 8 partidas! O jogo salva sozinho no aparelho, mas se limpar os dados do navegador ou trocar de celular a carreira se perde. Salve uma cópia em arquivo (fica na pasta Downloads) para nunca perder.</p></div><div class="botoes"><button class="btn" data-a="fechar">Depois</button><button class="btn prim" data-a="lembsalvar">Salvar agora</button></div>`)}}
   if(!G.over&&!G.tradOferta&&(G.tut??TUTORIAL.length)<TUTORIAL.length&&aba==="jogar"&&!document.querySelector(".veu"))mostrarTutorial();
-  if(!telaCheia){clearTimeout(window._dirT);window._dirT=setTimeout(diretorChecar,1800);setTimeout(novidadesEntregar,1200)} // diretor: oferta no começo da carreira e avisos depois
+  if(!telaCheia){clearTimeout(window._dirT);window._dirT=setTimeout(diretorChecar,1800);setTimeout(novidadesEntregar,1200);setTimeout(natalAviso,2600)} // diretor: oferta no começo da carreira e avisos depois
   if(G.seasonEnd&&!document.querySelector(".veu")&&!G.seasonEnd.visto){G.seasonEnd.visto=true;FLUXO_FIM=true;if(G.seasonEnd.pos<=5&&!G.seasonEnd.podioVisto)celebrarPodio();else modalFimCamp()}
   else if(G.over&&!FLUXO_FIM)modalFim();
   {const ab=document.querySelector('nav [aria-current="true"]');if(ab&&ab.scrollIntoView)ab.scrollIntoView({block:"nearest",inline:"nearest"})}
@@ -7096,12 +7104,16 @@ function modalResNatal(r){const T=NATAL.find(t=>t.k===r.k),st=r.st,v=st.gf>st.gs
 function natalFolha(){const fo=document.querySelector(".veu .folha");if(fo)fo.classList.add("folha-natal")}
 /* tela do evento: progresso geral, recompensas e os 5 cards */
 /* 22/11: entrar no evento = capa → Jogar → sorteio de time + desafio (natalSortear/natalRoleta) → pré-jogo. Times e desafios: modalNatal */
-const NATAL_CAPA=null; // arte da capa (o Carlos vai mandar): caminho da imagem, ex. "img/natal-capa.jpg"
+const NATAL_CAPA="img/natal-capa.jpg"; // banner "Feliz Natal com o Lio Noel Messi" (arte do Carlos, 22/11): aviso ao entrar no jogo e capa do evento
+/* banner do evento (não ocupa a tela toda): botão Jogar embaixo das renas; embaixo, Lionetas/Loja/Times */
 function modalNatalCapa(){const tot=natalTotal();
-  modal(`<div class="nt nt-capa">${NATAL_CAPA?`<img class="nt-capa-img" src="${NATAL_CAPA}" alt="Feliz Natal">`:`<div class="nt-topo nt-topo-g"><i class="nt-luzes"></i><p class="nt-tag">🎄 Evento especial</p><h2>Feliz Natal</h2><p>Supere os desafios e ganhe prêmios lendários</p><span class="nt-capa-bola">⚽</span></div>`}
-    <button class="btn prim nt-jogar" data-a="ntsortear">⚽ JOGAR</button>
-    <div class="nt-saldo">${icoLioneta(46)}<div><small>Suas Lionetas</small><b class="num">${lionetas()}</b></div><button class="btn mini prim-mini" data-a="ntloja">🛍️ Loja</button></div>
-    <div class="nt-capa-bt"><button class="btn" data-a="nttimes">Times e desafios · <span class="num">${tot}/15</span></button><button class="btn" data-a="fechar">Sair</button></div></div>`);natalFolha()}
+  modal(`<div class="nt-aviso"><div class="nt-av-arte"><img src="${NATAL_CAPA}" alt="Feliz Natal com o Lio Noel Messi"><button class="nt-av-x" data-a="fechar" aria-label="Fechar">×</button>
+      <button class="nt-av-jogar" data-a="ntsortear">JOGAR</button></div>
+    <div class="nt-av-pe"><span class="nt-av-li">${icoLioneta(26)}<b class="num">${lionetas()}</b></span><button class="btn mini" data-a="ntloja">🛍️ Loja</button><button class="btn mini" data-a="nttimes">Times · <span class="num">${tot}/15</span></button></div></div>`);
+  const v=document.querySelector(".veu");if(v){v.classList.add("veu-aviso");v.querySelector(".folha").classList.add("folha-aviso")}}
+/* aviso do evento toda vez que o jogador entra no jogo (1 vez por abertura), na tela Jogar e sem outro quadro aberto */
+let NT_AVISO=0;
+function natalAviso(){if(NT_AVISO||!reLiberado()||!G||!G.user||G.live||G.amgM||abertura||aba!=="jogar"||document.querySelector(".veu"))return;NT_AVISO=1;modalNatalCapa()}
 let NT_ULT=null;
 function natalSortear(){let i,j,g=0;do{i=Math.floor(Math.random()*NATAL.length);j=Math.floor(Math.random()*3)}while(NT_ULT&&NT_ULT[0]===i&&NT_ULT[1]===j&&g++<20);NT_ULT=[i,j];return [i,j]}
 function natalRoleta(){const [i,j]=natalSortear(),T=NATAL[i],d=T.des[j];
