@@ -5175,7 +5175,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795400170";
+const VERSAO="1795400566";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7057,7 +7057,7 @@ function natalEstado(d,st,fim){const [t,x]=d,ok=c=>c?2:fim?0:1;
     case "gf1":return st.g1f>=x?2:st.ht||fim?0:1;case "max":return st.gs>x?0:fim?2:1}return 1}
 function natalFaixa(V){if(!V||!V.m.ev)return "";const T=NATAL.find(t=>t.k===V.m.ev),st=natalStats(V),fe=natalFeitos(T.k);
   return `<div class="nt-live" id="lv-natal"><div class="nt-lp"><span>Posse de bola</span><b class="num">${st.posse}%</b><i><em style="width:${st.posse}%"></em></i></div>
-    ${T.des.map((d,j)=>{const e=fe[j]?3:natalEstado(d,st,false);return `<div class="nt-ld e${e}"><span>${e===3?"⭐":e===2?"✅":e===0?"❌":"⏳"}</span>${esc(d[2])}${e===3?" <small>(já feito)</small>":""}</div>`}).join("")}</div>`}
+    ${T.des.map((d,j)=>{const e=natalEstado(d,st,false);return `<div class="nt-ld e${e}"><span>${e===2?"✅":e===0?"❌":"⏳"}</span>${esc(d[2])} <small>+${d[3]}</small>${fe[j]?" <small>⭐</small>":""}</div>`}).join("")}</div>`}
 /* monta a partida: clube temporário com os 11 lendários, força relativa ao seu time */
 function natalMontar(i){const T=NATAL[i];if(!T)return "Time não encontrado.";if(!G||!G.user)return "Crie uma carreira primeiro.";if(G.live)return "Termine a partida atual primeiro.";
   limparAmigo();const uid=G.user.club,med=natalMed(T),h=[...T.k].reduce((a,c)=>a+c.charCodeAt(0),0);
@@ -7072,17 +7072,17 @@ function natalMontar(i){const T=NATAL[i];if(!T)return "Time não encontrado.";if
   G.amgM={tipo:"A",h:uid,a:AMG_CID,neutro:true,ko:false,econ:eRec(userTier()),rot:`🎄 Feliz Natal · ${T.nome}`,ev:T.k};
   tocou();salvar();return null}
 function concluirNatal(){const V=G.live,T=NATAL.find(t=>t.k===V.m.ev),st=natalStats(V),P=perfil();P.natal=P.natal||{};
-  const fe=(P.natal[T.k]||[0,0,0]).slice(),antes=natalTotal(),novos=[];
-  T.des.forEach((d,j)=>{if(!fe[j]&&natalEstado(d,st,true)===2){fe[j]=1;novos.push(j)}});P.natal[T.k]=fe;P.natal.j=(P.natal.j||0)+1;
-  const xp=XP_AMG[st.gf>st.gs?"v":st.gf<st.gs?"d":"e"]+novos.length*30,bonus=novos.length&&fe.every(Boolean)?NATAL_BONUS:0,moedas=novos.reduce((a,j)=>a+(T.des[j][3]||0),0)+bonus;
+  const fe=(P.natal[T.k]||[0,0,0]).slice(),antes=natalTotal(),novos=[],feitos=[]; // feitos = cumpridos nesta partida (dão Lionetas toda vez); novos = 1ª vez (progresso)
+  T.des.forEach((d,j)=>{if(natalEstado(d,st,true)===2){feitos.push(j);if(!fe[j]){fe[j]=1;novos.push(j)}}});P.natal[T.k]=fe;P.natal.j=(P.natal.j||0)+1;
+  const xp=XP_AMG[st.gf>st.gs?"v":st.gf<st.gs?"d":"e"]+novos.length*30,bonus=novos.length&&fe.every(Boolean)?NATAL_BONUS:0,moedas=feitos.reduce((a,j)=>a+(T.des[j][3]||0),0)+bonus;
   P.lioneta=(P.lioneta||0)+moedas;
-  const r={k:T.k,st,novos,fe,antes,depois:natalTotal(),xp,moedas,bonus,eu:G.clubs[G.user.club].short};
+  const r={k:T.k,st,novos,feitos,fe,antes,depois:natalTotal(),xp,moedas,bonus,eu:G.clubs[G.user.club].short};
   G.live=null;limparAmigo();somarXP(xp);salvar();return r}
 function modalResNatal(r){const T=NATAL.find(t=>t.k===r.k),st=r.st,v=st.gf>st.gs,rec=NATAL_REC.filter(([q])=>r.antes<q&&r.depois>=q);
   modal(`<div class="nt nt-res"><p class="nt-tag">🎄 Feliz Natal · ${esc(T.nome)}</p><div style="font-size:44px">${r.novos.length?"🎁":v?"🏆":st.gf<st.gs?"😓":"🤝"}</div>
     <p class="num nt-placar">${esc(r.eu)} ${st.gf} × ${st.gs} ${esc(T.sigla)}</p><p class="muted peq" style="margin:0">Posse de bola: <b class="num">${st.posse}%</b></p>
-    <h3>${r.novos.length?`${r.novos.length} desafio${r.novos.length>1?"s":""} novo${r.novos.length>1?"s":""}!`:"Nenhum desafio novo desta vez"}</h3>
-    <div class="nt-des">${T.des.map((d,j)=>`<div class="nt-di${r.fe[j]?" on":""}${r.novos.includes(j)?" novo":""}"><span>${r.fe[j]?"✅":"⬜"}</span><p>${esc(d[2])}</p>${r.novos.includes(j)?"<em>NOVO</em>":""}<b class="nt-li num">+${d[3]}${icoLioneta(16)}</b></div>`).join("")}</div>
+    <h3>${r.feitos.length?`${r.feitos.length} desafio${r.feitos.length>1?"s":""} cumprido${r.feitos.length>1?"s":""} nesta partida!`:"Nenhum desafio cumprido desta vez"}</h3>
+    <div class="nt-des">${T.des.map((d,j)=>`<div class="nt-di${r.fe[j]?" on":""}${r.novos.includes(j)?" novo":""}"><span>${r.fe[j]?"✅":"⬜"}</span><p>${esc(d[2])}</p>${r.novos.includes(j)?"<em>NOVO</em>":r.feitos.includes(j)?"<em>DE NOVO</em>":""}${r.feitos.includes(j)?`<b class="nt-li num">+${d[3]}${icoLioneta(16)}</b>`:""}</div>`).join("")}</div>
     ${r.bonus?`<p class="nt-ok">🏅 Você completou os 3 desafios do ${esc(T.nome)}! Bônus de ${r.bonus} Lionetas</p>`:""}
     ${r.moedas?`<div class="nt-ganho">${icoLioneta(44)}<div><b class="num">+${r.moedas}</b><small>Lionetas · saldo <b class="num">${lionetas()}</b></small></div></div>`:""}
     <div class="nt-geral"><div class="nt-gl"><b>Progresso do evento</b><span class="num">${r.depois}/15</span></div><div class="nt-barra"><i style="width:${r.depois/15*100}%"></i></div></div>
@@ -7094,7 +7094,7 @@ function modalNatal(){const tot=natalTotal();
   modal(`<div class="nt"><div class="nt-topo"><i class="nt-luzes"></i><p class="nt-tag">🎄 Evento especial</p><h2>Feliz Natal</h2><p>Supere os desafios e ganhe prêmios lendários</p></div>
     <div class="nt-geral"><div class="nt-gl"><b>Progresso do evento</b><span class="num">${tot}/15 desafios</span></div><div class="nt-barra"><i style="width:${tot/15*100}%"></i></div>
       <div class="nt-saldo">${icoLioneta(54)}<div><small>Suas Lionetas</small><b class="num">${lionetas()}</b></div><button class="btn prim mini" data-a="ntloja">🛍️ Loja</button></div>
-      <p class="nt-def">Cada desafio cumprido dá Lionetas · completar os 3 de um time dá +${NATAL_BONUS}</p></div>
+      <p class="nt-def">Cada desafio dá Lionetas <b>toda vez</b> que você cumprir · completar os 3 de um time pela 1ª vez dá +${NATAL_BONUS}</p></div>
     <div class="nt-times">${NATAL.map((T,i)=>{const fe=natalFeitos(T.k),n=fe.filter(Boolean).length;
       return `<button class="nt-card${n===3?" full":""}" data-a="ntver" data-v="${i}" style="--c1:${T.c1};--c2:${T.c2}"><span class="nt-ce">${natalEsc(T,38)}</span><span class="nt-ct"><b>${esc(T.nome)}</b><small>${T.form} · força média <b class="num">${natalMed(T)}</b></small></span>
         <span class="nt-dots"><span>${[0,1,2].map(j=>`<i class="${fe[j]?"on":""}"></i>`).join("")}</span><small class="num">${n}/3</small></span></button>`}).join("")}</div>
@@ -7110,7 +7110,7 @@ function modalNatalTime(i){const T=NATAL[i],P=POS_FORM[T.form],fe=natalFeitos(T.
     <div class="nt-geral"><div class="nt-gl"><b>Desafios</b><span class="num">${n}/3</span></div><div class="nt-barra"><i style="width:${n/3*100}%"></i></div>
       <div class="nt-des">${T.des.map((d,j)=>`<div class="nt-di${fe[j]?" on":""}"><span>${fe[j]?"✅":"⬜"}</span><p>${esc(d[2])}</p><b class="nt-li num">${d[3]}${icoLioneta(16)}</b></div>`).join("")}</div>
       <p class="nt-def">🏅 Bônus por completar os 3: ${n===3?"<b>conquistado!</b>":`+${NATAL_BONUS} ${icoLioneta(14)}`}</p></div>
-    <p class="nt-dica">💡 ${esc(T.dica)} Desafio feito fica salvo: jogue de novo para completar os outros.</p>
+    <p class="nt-dica">💡 ${esc(T.dica)} Cada desafio dá Lionetas toda vez que você cumprir: jogue quantas vezes quiser!</p>
     <div class="botoes"><button class="btn" data-a="ntevento">‹ Evento</button><button class="btn prim" data-a="ntjogar" data-v="${i}">⚽ Jogar</button></div></div>`);natalFolha()}
 function modalNatalJog(i,k){const T=NATAL[i],p=natalJog(T,k),f=natalFoto(p.n,T.k);
   modal(`<div class="lc dia"><i class="dia-fa"></i><div class="lc-topo"><span class="lc-selo">◆ PRIME ◆</span><b class="ov ov-lenda num lc-ov">${p.ov}</b></div>
