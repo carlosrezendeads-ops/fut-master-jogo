@@ -5175,7 +5175,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795398970";
+const VERSAO="1795400170";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -6960,27 +6960,27 @@ const r9Curto=n=>({"Gianluigi Buffon":"Buffon","Fabio Cannavaro":"Cannavaro","Pa
 const NATAL=[
  {k:"r9",nome:"Time dos Sonhos de Ronaldo",sigla:"R9",sub:"O time perfeito escolhido por Ronaldo Fenômeno",form:"4-3-3",est:"of",tec:"Ronaldo Fenômeno",tq:95,c1:"#111827",c2:"#ffd23f",escR:null,dA:18,dD:16,posse:.04,jog:R9_SEL.jog,
   dica:"O time mais forte do evento. Feche a zaga quando estiver ganhando.",
-  des:[["cs",0,"Terminar a partida sem sofrer gols",30],["v",0,"Vencer a partida",25],["gf",3,"Marcar pelo menos 3 gols",40]]},
+  des:[["cs",0,"Terminar a partida sem sofrer gols",40],["v",0,"Vencer a partida",40],["gf",3,"Marcar pelo menos 3 gols",50]]},
  {k:"barca",nome:"Barcelona de Messi",sigla:"BAR",sub:"Campeão da Champions 2010/11 · final contra o Manchester United (3 × 1)",form:"4-3-3",est:"eq",tec:"Pep Guardiola",tq:96,c1:"#a50044",c2:"#004d98",escR:"Barcelona",dA:11,dD:12,posse:.06,
   jog:[["Víctor Valdés","GOL",95,29,"ESP"],["Éric Abidal","LAT",94,31,"FRA"],["Gerard Piqué","ZAG",95,24,"ESP"],["Javier Mascherano","ZAG",95,26,"ARG"],["Daniel Alves","LAT",96,28,"BRA"],
    ["Sergio Busquets","VOL",95,22,"ESP"],["Xavi","MEI",98,31,"ESP"],["Andrés Iniesta","MEI",98,27,"ESP"],["David Villa","ATA",96,29,"ESP"],["Lionel Messi","ATA",99,23,"ARG"],["Pedro","ATA",95,23,"ESP"]],
   dica:"Eles ficam com a bola. Use o comando “Domina o meio-campo!” e uma formação com mais meias.",
-  des:[["semDe","Lionel Messi","Não sofrer gol do Messi",10],["posse",50,"Terminar com pelo menos 50% de posse de bola",30],["v",0,"Vencer a partida",25]]},
+  des:[["semDe","Lionel Messi","Não sofrer gol do Messi",10],["posse",50,"Terminar com pelo menos 50% de posse de bola",40],["v",0,"Vencer a partida",50]]},
  {k:"bra70",nome:"Brasil 1970 — Tricampeão",sigla:"BRA",sub:"Final da Copa de 1970 contra a Itália (4 × 1)",form:"4-2-4",est:"of",tec:"Zagallo",tq:93,c1:"#ffdf00",c2:"#009c3b",escR:null,dA:15,dD:10,posse:.03,
   jog:[["Félix","GOL",93,32,"BRA"],["Everaldo","LAT",93,26,"BRA"],["Brito","ZAG",94,30,"BRA"],["Piazza","ZAG",95,27,"BRA"],["Carlos Alberto Torres","LAT",96,25,"BRA"],
    ["Clodoaldo","VOL",95,20,"BRA"],["Gérson","MEI",97,29,"BRA"],["Rivellino","ATA",97,24,"BRA"],["Tostão","ATA",96,23,"BRA"],["Pelé","ATA",99,29,"BRA"],["Jairzinho","ATA",97,25,"BRA"]],
   dica:"Ataque fortíssimo, mas a defesa deixa espaço. Segure o 1º tempo e vá para cima no 2º.",
-  des:[["cs1",0,"Não sofrer gol no 1º tempo",10],["vpor",2,"Vencer por 2 ou mais gols de diferença",30],["maisQue","Pelé","Marcar mais gols que o Pelé",15]]},
+  des:[["cs1",0,"Não sofrer gol no 1º tempo",20],["vpor",2,"Vencer por 2 ou mais gols de diferença",50],["maisQue","Pelé","Marcar mais gols que o Pelé",20]]},
  {k:"bra02",nome:"Brasil 2002 — Pentacampeão",sigla:"BRA",sub:"Final da Copa de 2002 contra a Alemanha (2 × 0)",form:"3-4-1-2",est:"of",tec:"Luiz Felipe Scolari",tq:90,c1:"#009c3b",c2:"#ffdf00",escR:null,dA:14,dD:12,posse:-.02,
   jog:[["Marcos","GOL",95,28,"BRA"],["Roque Júnior","ZAG",94,25,"BRA"],["Edmílson","ZAG",95,25,"BRA"],["Lúcio","ZAG",95,24,"BRA"],["Roberto Carlos","LAT",97,29,"BRA"],["Cafu","LAT",96,32,"BRA"],
    ["Gilberto Silva","VOL",95,25,"BRA"],["Kléberson","VOL",94,23,"BRA"],["Ronaldinho Gaúcho","MEI",96,22,"BRA"],["Rivaldo","ATA",97,30,"BRA"],["Ronaldo Fenômeno","ATA",98,25,"BRA"]],
   dica:"Contra-ataque mortal pelas laterais. Mande no meio-campo e comece pressionando.",
-  des:[["posse",60,"Terminar com pelo menos 60% de posse de bola",25],["gf1",2,"Marcar pelo menos 2 gols no 1º tempo",30],["semDe","Ronaldo Fenômeno","Não sofrer gol do Ronaldo Fenômeno",10]]},
+  des:[["posse",60,"Terminar com pelo menos 60% de posse de bola",50],["gf1",2,"Marcar pelo menos 2 gols no 1º tempo",50],["semDe","Ronaldo Fenômeno","Não sofrer gol do Ronaldo Fenômeno",10]]},
  {k:"real",nome:"Real Madrid de CR7",sigla:"RMA",sub:"Campeão da Champions 2016/17 · final contra a Juventus (4 × 1)",form:"4-3-1-2",est:"eq",tec:"Zinédine Zidane",tq:92,c1:"#ffffff",c2:"#febe10",escR:"Real Madrid",dA:12,dD:9,posse:0,
   jog:[["Keylor Navas","GOL",95,30,"CRC"],["Marcelo","LAT",95,29,"BRA"],["Sergio Ramos","ZAG",96,31,"ESP"],["Raphaël Varane","ZAG",95,24,"FRA"],["Dani Carvajal","LAT",94,25,"ESP"],
    ["Casemiro","VOL",95,25,"BRA"],["Toni Kroos","MEI",96,27,"GER"],["Luka Modrić","MEI",96,31,"CRO"],["Isco","MEI",95,25,"ESP"],["Karim Benzema","ATA",95,29,"FRA"],["Cristiano Ronaldo","ATA",98,32,"POR"]],
   dica:"Letal no contra-ataque e na bola aérea. Cuidado com o Cristiano Ronaldo no fim do jogo.",
-  des:[["max",1,"Sofrer no máximo 1 gol",10],["gf",3,"Marcar pelo menos 3 gols",30],["semDe","Cristiano Ronaldo","Não sofrer gol do Cristiano Ronaldo",10]]}];
+  des:[["max",1,"Sofrer no máximo 1 gol",20],["gf",3,"Marcar pelo menos 3 gols",40],["semDe","Cristiano Ronaldo","Não sofrer gol do Cristiano Ronaldo",10]]}];
 const NATAL_REC=[[3,"Inicial"],[6,"Bronze"],[9,"Prata"],[12,"Ouro"],[15,"Especial de Natal"]]; // (sem uso desde 21/11: prêmios viraram Lionetas + loja)
 /* Lioneta = moeda do evento (img/lioneta.webp): cada desafio dá o 4º item de des; completar os 3 de um time dá NATAL_BONUS. Saldo em perfil().lioneta */
 const NATAL_BONUS=50;
