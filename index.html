@@ -1212,6 +1212,10 @@ nav.abas button{font-size:11px}
 .nt-loja .nt-gi .btn{position:relative;overflow:hidden;box-shadow:0 0 10px rgba(255,210,63,.5)}
 .nt-loja .nt-gi .btn::after{content:"";position:absolute;top:-40%;bottom:-40%;left:-70%;width:40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);transform:skewX(-20deg);animation:diaBrilho 2.6s ease-in-out infinite;pointer-events:none}
 .nt-loja .nt-gi:nth-child(2) .btn::after{animation-delay:.4s}.nt-loja .nt-gi:nth-child(3) .btn::after{animation-delay:.8s}.nt-loja .nt-gi:nth-child(4) .btn::after{animation-delay:1.2s}.nt-loja .nt-gi:nth-child(5) .btn::after{animation-delay:1.6s}
+.nt-frase{position:relative;display:flex;gap:10px;align-items:center;margin:8px 0 2px;padding:12px 14px;border-radius:14px;background:linear-gradient(135deg,rgba(255,210,63,.22),rgba(255,210,63,.06));border:1.5px solid #ffd23f;box-shadow:0 0 18px rgba(255,210,63,.35);text-align:left;animation:ntFrase .5s cubic-bezier(.2,1.4,.4,1) both}
+.nt-frase span{font-size:30px;flex:none}.nt-frase p{margin:0;font-family:"Cinzel",serif;font-weight:700;font-size:14.5px;line-height:1.35;color:#fff3c4;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.nt-frase.boa{border-color:#7ee39a;box-shadow:0 0 18px rgba(126,227,154,.4);background:linear-gradient(135deg,rgba(126,227,154,.22),rgba(126,227,154,.06))}
+@keyframes ntFrase{0%{opacity:0;transform:scale(.7) rotate(-3deg)}100%{opacity:1;transform:none}}
 .nt-gi.pode{border-color:#ffd23f;box-shadow:0 0 12px rgba(255,210,63,.3)}
 .nt-gi-img{height:110px;display:grid;place-items:center}.nt-gi-img img{max-height:110px;max-width:100%;filter:drop-shadow(0 4px 10px rgba(0,0,0,.6))}.nt-gi-img img.red{width:96px;height:96px;border-radius:50%;border:2px solid #ffd23f}.nt-gi-img i{font-style:normal;font-size:64px}
 .nt-gi b{font-size:13.5px;line-height:1.15}.nt-gi small{font-size:10.5px;color:#f5dfc0;line-height:1.25;flex:1}.nt-gi .btn{display:flex;align-items:center;gap:4px;margin-top:2px}
@@ -5315,7 +5319,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795522115";
+const VERSAO="1795522427";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7223,11 +7227,48 @@ function concluirNatal(){const V=G.live,T=NATAL.find(t=>t.k===V.m.ev),st=natalSt
   const xp=XP_AMG[st.gf>st.gs?"v":st.gf<st.gs?"d":"e"]+novos.length*30,bonus=novos.length&&fe.every(Boolean)?NATAL_BONUS:0,moedas=feitos.reduce((a,j)=>a+(T.des[j][3]||0),0)+bonus;
   P.lioneta=(P.lioneta||0)+moedas;P.natalGanho=(P.natalGanho||0)+moedas;
   let emb=0;if(natalTotal()>=15&&!P.natalEmb){P.natalEmb=1;emb=1} // completou os 15: emblema Lenda do Natal
-  const r={k:T.k,emb,so,st,novos,feitos,fe,antes,depois:natalTotal(),xp,moedas,bonus,eu:G.clubs[G.user.club].short};
+  const lado=V.m.a===AMG_CID?V.sa:V.sh,cont={};(lado||[]).forEach(([id])=>{const p=G.players[id];if(p)cont[p.n]=(cont[p.n]||0)+1});
+  const top=Object.entries(cont).sort((a,b)=>b[1]-a[1])[0],art=top?{n:top[0],g:top[1]}:null; // artilheiro do time do evento (frase do resultado)
+  const r={k:T.k,emb,so,st,novos,feitos,fe,antes,depois:natalTotal(),xp,moedas,bonus,eu:G.clubs[G.user.club].short,euN:G.clubs[G.user.club].name,art};
   G.live=null;limparAmigo();somarXP(xp);salvar();return r}
+/* 24/11: frases engraçadas na tela de resultado do evento ({eu}=seu time, {n}=artilheiro deles, {g}=gols dele, {t}=time do evento, {p}=placar) */
+const NATAL_FRASES={
+ craque:{ // perdeu e o craque fez 2+ gols
+  "Ronaldo Fenômeno":["Infelizmente não teve jeito: o Fenômeno passou o carro por cima do {eu} e ainda deu ré várias vezes.","{g} gols do Ronaldo. Seus zagueiros vão precisar de fisioterapia só de lembrar daquela pedalada.","O R9 entrou em campo, olhou pra sua zaga e pensou: \"isso aqui é treino?\"","Seu goleiro ainda está procurando a bola do último gol do Fenômeno.","Ronaldo sorriu com aquele dentinho e fez {g}. Contra o Fenômeno, até o VAR pede desculpa."],
+  "Pelé":["Quem é rei nunca perde a coroa: o Pelé nem está mais entre nós e mesmo assim fez {g} no {eu}.","O Rei avisou que ia fazer {g}... e fez. Majestade é majestade.","Mais de mil gols na carreira e o Pelé ainda achou espaço pra mais {g} no seu time.","Seu zagueiro tentou parar o Pelé. Agora ele vai contar pros netos que tomou drible do Rei.","Pelé fez {g} e ainda acenou pra torcida. O {eu} virou só mais um número na conta dele."],
+  "Lionel Messi":["O Messi nem suou: {g} gols, 3 dribles e um bocejo.","Sua zaga marcou o Messi direitinho... a sombra dele, no caso.","O Messi pediu desculpas pelos {g} gols. Mentira, ele nem olhou pra trás.","Contra o Messi não existe esquema tático, existe reza. E hoje não funcionou.","O baixinho driblou meio time do {eu} e ainda voltou pra driblar de novo. {g} gols da Pulga."],
+  "Cristiano Ronaldo":["SIUUUU! O Cristiano fez {g} e comemorou na cara da sua torcida.","O CR7 subiu tão alto no cabeceio que seu zagueiro ainda está no chão olhando pra cima.","Cristiano fez {g}, tirou a camisa e mostrou o tanquinho. Humilhação completa.","Seu goleiro estudou as cobranças do CR7 a semana toda. Não adiantou nada: {g} gols.","O Robozão não erra. {g} gols, zero piedade com o {eu}."],
+  "Diego Maradona":["O Maradona fez {g} e um deles foi com a mão de Deus. O juiz? Nem viu.","Dom Diego driblou seu time inteiro, o técnico e o gandula. {g} gols do Pibe.","Contra o Maradona, a bola obedece. Seus jogadores, nem tanto."],
+  "Ronaldinho Gaúcho":["O Ronaldinho fez {g} sorrindo. Seu time ficou só olhando o elástico.","Bruxaria pura: o Bruxo fez {g} e ainda deu um chapéu no seu volante.","O Ronaldinho jogou olhando pro outro lado e mesmo assim fez {g}. Respeita o samba."],
+  "Zinedine Zidane":["O Zidane deu um balãozinho no seu camisa 10 e ainda fez {g}. Classe pura.","Zizou passeou em campo como se estivesse num jantar de gala. {g} gols e zero suor."]},
+ goleada:{ // perdeu por 3+
+  r9:["O Time dos Sonhos virou o seu pesadelo: {p}.","Você enfrentou a seleção mais absurda da história. Normal sair com {p} nas costas.","Até a torcida deles pediu pra parar. {p}, sem dó."],
+  barca:["Tiki-taka por 90 minutos: seu time não viu a cor da bola. {p}.","O Barça trocou tanto passe que seus jogadores ficaram tontos. {p}.","Xavi e Iniesta brincaram de bobinho com o {eu} o jogo inteiro."],
+  bra70:["O Brasil de 70 deu uma aula de futebol arte, e o {eu} foi o quadro-negro. {p}.","Tricampeões do mundo não brincam em serviço: {p} e muito samba.","Foi tanto drible que o jogo parecia filme em preto e branco: lindo pra eles, triste pra você."],
+  bra02:["O Penta não perdoa: {p} e o Felipão ainda mandou o time tirar o pé.","Os três R's passaram feito trator: Ronaldo, Rivaldo e Ronaldinho, e o {eu} na frente.","Família Scolari em festa: {p} no placar."],
+  real:["Hala Madrid! O {eu} foi atropelado pelo time das Champions: {p}.","O Real Madrid não joga, ele coleciona vitórias. Hoje foi a sua: {p}.","Modrić e Kroos passaram o jogo tomando chá enquanto o {eu} corria atrás da bola."]},
+ perdeu:{ // perdeu apertado
+  r9:["Foi por pouco! Mas o Time dos Sonhos é dos sonhos por algum motivo.","Seu time lutou, mas contra Pelé, Maradona e Fenômeno juntos, perder de pouco já é vitória moral."],
+  barca:["Quase! Mas o Barça de 2011 não é qualquer time: tem Messi, Xavi e Iniesta no auge.","Perdeu de pouco pro melhor Barça da história. Pode contar isso com orgulho."],
+  bra70:["Por pouco! Mas tirar a bola do Brasil de 70 é missão quase impossível.","O Tri sofreu, mas ganhou. Seu time vai entrar pra história como o que deu trabalho."],
+  bra02:["Quase o {eu} estragou a festa do Penta! Faltou pouco.","Perdeu de pouco pro Penta. O Felipão até ficou preocupado na beira do campo."],
+  real:["Foi por um detalhe. Mas o Real de 2017 vive de detalhes, e de Cristiano.","O Real sofreu, mas ganhou. É o DNA da Champions."]},
+ empate:["Empate contra lendas? Seu time já pode pedir música no Fantástico!","Segurou um empate contra um dos maiores times da história. O Papai Noel está orgulhoso.","Um pontinho contra os gênios. Tem gente que não consegue nem isso na vida.","Empate com cara de vitória: até os craques deles saíram de campo coçando a cabeça."],
+ venceu:["NÃO ACREDITO! O {eu} derrubou o {t}! Isso vai pro museu do clube.","Papai Noel trouxe presente adiantado: vitória sobre o {t}!","Seu time fez o impossível. Os craques deles vão passar o Natal pensando nesse jogo.","Pode soltar os fogos: o {eu} venceu uma lenda do futebol por {p}!","Avisa a imprensa: o {t} perdeu, e foi pro {eu}! Que noite de Natal!","Tem vitória que vale título. Essa vale uma árvore de Natal inteira cheia de presentes."],
+ cumpriu:["Missão cumprida! Pode não ter sido bonito, mas as Lionetas estão no bolso.","Desafio feito! O Messi Noel já está separando as suas Lionetas.","Perdeu o jogo, mas ganhou o desafio. Isso é que é saber escolher a batalha.","Desafio cumprido contra lendas. Pode colocar no currículo de técnico!","As renas aprovaram: desafio cumprido e Lionetas a caminho!"]};
+function natalFrase(r){const st=r.st,F=NATAL_FRASES,pk=a=>a&&a.length?a[Math.floor(Math.random()*a.length)]:"",dif=st.gs-st.gf;
+  let f="";
+  if(st.gf>st.gs)f=pk(F.venceu);
+  else if(st.gf===st.gs)f=r.feitos.length&&Math.random()<.5?pk(F.cumpriu):pk(F.empate);
+  else if(r.feitos.length&&Math.random()<.6)f=pk(F.cumpriu);
+  else if(r.art&&r.art.g>=2&&F.craque[r.art.n])f=pk(F.craque[r.art.n]);
+  else f=pk(dif>=3?F.goleada[r.k]:F.perdeu[r.k]);
+  const T=NATAL.find(t=>t.k===r.k);
+  return f.replace(/\{eu\}/g,r.euN||r.eu).replace(/\{n\}/g,r.art?r.art.n:"").replace(/\{g\}/g,r.art?r.art.g:"").replace(/\{t\}/g,T?T.nome:"").replace(/\{p\}/g,`${st.gf} × ${st.gs}`)}
 function modalResNatal(r){const T=NATAL.find(t=>t.k===r.k),st=r.st,v=st.gf>st.gs,rec=NATAL_REC.filter(([q])=>r.antes<q&&r.depois>=q);
   modal(`<div class="nt nt-res"><p class="nt-tag">🎄 Feliz Natal · ${esc(T.nome)}</p><div style="font-size:44px">${r.novos.length?"🎁":v?"🏆":st.gf<st.gs?"😓":"🤝"}</div>
     <p class="num nt-placar">${esc(r.eu)} ${st.gf} × ${st.gs} ${esc(T.sigla)}</p><p class="muted peq" style="margin:0">Posse de bola: <b class="num">${st.posse}%</b></p>
+    ${(()=>{const f=natalFrase(r);return f?`<div class="nt-frase${st.gf>st.gs||r.feitos.length?" boa":""}"><span>${st.gf>st.gs?"🎉":r.feitos.length?"🎁":st.gf<st.gs?"😂":"🤝"}</span><p>“${esc(f)}”</p></div>`:""})()}
     <h3>${r.so!=null?(r.feitos.length?"Desafio cumprido!":"Desafio não cumprido desta vez"):r.feitos.length?`${r.feitos.length} desafio${r.feitos.length>1?"s":""} cumprido${r.feitos.length>1?"s":""} nesta partida!`:"Nenhum desafio cumprido desta vez"}</h3>
     <div class="nt-des">${T.des.map((d,j)=>r.so!=null&&r.so!==j?"":`<div class="nt-di${r.fe[j]?" on":""}${r.novos.includes(j)?" novo":""}"><span>${r.fe[j]?"✅":"⬜"}</span><p>${esc(d[2])}</p>${r.novos.includes(j)?"<em>NOVO</em>":r.feitos.includes(j)?"<em>DE NOVO</em>":""}${r.feitos.includes(j)?`<b class="nt-li num">+${d[3]}${icoLioneta(16)}</b>`:""}</div>`).join("")}</div>
     ${r.bonus?`<p class="nt-ok">🏅 Você completou os 3 desafios do ${esc(T.nome)}! Bônus de ${r.bonus} Lionetas</p>`:""}
