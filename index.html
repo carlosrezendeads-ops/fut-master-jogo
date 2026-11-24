@@ -1774,14 +1774,14 @@ nav.abas button{font-size:11px}
 .splash.arte.carga::after{background:linear-gradient(180deg,rgba(3,10,40,0) 42%,rgba(3,10,40,.75) 62%,#030a28 82%,#020719 100%)}
 .splash.arte.carga img.capa-logo{top:calc(3vh + env(safe-area-inset-top,0px));width:min(56vw,26vh,300px)}
 .splash.arte.carga.capa-natal img:not(.capa-logo):not(.capa-fundo){object-fit:cover;object-position:center top}
-.splash.arte.carga.capa-natal img.capa-logo{top:calc(10px + env(safe-area-inset-top,0px));left:10px;width:min(36vw,170px);transform:none;filter:drop-shadow(0 3px 8px rgba(0,0,0,.8))}
+.splash.arte.carga.capa-natal img.capa-logo{top:calc(10px + env(safe-area-inset-top,0px));left:10px;width:min(44vw,210px);transform:none;filter:drop-shadow(0 3px 8px rgba(0,0,0,.8))}
 .splash.carga-sai{z-index:41;pointer-events:none;will-change:clip-path,transform;animation:cgSai .62s cubic-bezier(.75,0,.25,1) forwards}
 @keyframes cgSai{0%{clip-path:polygon(0 0,100% 0,100% 100%,0 130%);transform:scale(1)}100%{clip-path:polygon(0 0,100% 0,100% -30%,0 0);transform:scale(1.08);filter:brightness(1.3)}}
 .splash.carga-entra{animation:cgEntra .7s cubic-bezier(.2,.7,.2,1) both}
 @keyframes cgEntra{0%{transform:scale(1.12);filter:brightness(1.8) blur(4px)}100%{transform:none;filter:none}}
 @media (prefers-reduced-motion:reduce){.splash.carga-sai{animation:spSaiR .3s forwards}.splash.carga-entra{animation:none}}
 .splash.arte.capa-natal:not(.carga) img:not(.capa-logo):not(.capa-fundo){object-fit:cover;object-position:center top}
-.splash.arte.capa-natal:not(.carga) img.capa-logo{top:calc(10px + env(safe-area-inset-top,0px));left:10px;width:min(36vw,170px);transform:none;filter:drop-shadow(0 3px 8px rgba(0,0,0,.8))}
+.splash.arte.capa-natal:not(.carga) img.capa-logo{top:calc(14px + env(safe-area-inset-top,0px));left:50%;width:min(58vw,280px);transform:translateX(-50%);filter:drop-shadow(0 3px 8px rgba(0,0,0,.8))}
 .beta-tag{position:fixed;z-index:3;left:-999px;top:0;opacity:0;font-family:var(--f-display);font-weight:800;letter-spacing:.12em;color:#031026;background:#19c3ff;padding:.12em .5em .1em;border-radius:.35em;transform:rotate(-8deg);box-shadow:0 2px 8px rgba(0,0,0,.45);pointer-events:none;transition:opacity .3s}
 .beta-tag.on{opacity:.92}
 .intro-mega{position:relative;display:block;line-height:0}.intro-games{display:block;margin-top:2px;text-align:center;font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-weight:300;font-size:min(7vw,30px);letter-spacing:.62em;padding-left:.62em;text-transform:uppercase;
@@ -5326,7 +5326,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795558107";
+const VERSAO="1795563068";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
