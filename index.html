@@ -1216,6 +1216,8 @@ nav.abas button{font-size:11px}
 .nt-loja .nt-gi .btn::after{content:"";position:absolute;top:-40%;bottom:-40%;left:-70%;width:40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);transform:skewX(-20deg);animation:diaBrilho 2.6s ease-in-out infinite;pointer-events:none}
 .nt-loja .nt-gi:nth-child(2) .btn::after{animation-delay:.4s}.nt-loja .nt-gi:nth-child(3) .btn::after{animation-delay:.8s}.nt-loja .nt-gi:nth-child(4) .btn::after{animation-delay:1.2s}.nt-loja .nt-gi:nth-child(5) .btn::after{animation-delay:1.6s}
 .nt-rcab .time{min-width:0}.nt-rcab .time b{font-size:13px;line-height:1.2;overflow-wrap:anywhere}.nt-rcab .titulo-res{font-size:clamp(36px,11vw,56px)}
+.nt-fala img{flex:none;width:64px;height:64px;border-radius:50%;object-fit:cover;object-position:top;border:2.5px solid #ffd23f;background:#0b1533;box-shadow:0 0 12px rgba(255,210,63,.5)}
+.nt-fala>div{display:flex;flex-direction:column;gap:3px;min-width:0}.nt-fala b{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#ffd23f}
 .nt-rcab{border:0!important;background:none!important;padding:4px 0!important;margin:0!important;box-shadow:none!important}
 .nt-frase{position:relative;display:flex;gap:10px;align-items:center;margin:8px 0 2px;padding:12px 14px;border-radius:14px;background:linear-gradient(135deg,rgba(255,210,63,.22),rgba(255,210,63,.06));border:1.5px solid #ffd23f;box-shadow:0 0 18px rgba(255,210,63,.35);text-align:left;animation:ntFrase .5s cubic-bezier(.2,1.4,.4,1) both}
 .nt-frase span{font-size:30px;flex:none}.nt-frase p{margin:0;font-family:"Cinzel",serif;font-weight:700;font-size:14.5px;line-height:1.35;color:#fff3c4;text-shadow:0 1px 3px rgba(0,0,0,.6)}
@@ -5324,7 +5326,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795535449";
+const VERSAO="1795558107";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7274,11 +7276,37 @@ function natalFrase(r){const st=r.st,F=NATAL_FRASES,pk=a=>a&&a.length?a[Math.flo
   else f=pk(dif>=3?F.goleada[r.k]:F.perdeu[r.k]);
   const T=NATAL.find(t=>t.k===r.k);
   return f.replace(/\{eu\}/g,r.euN||r.eu).replace(/\{n\}/g,r.art?r.art.n:"").replace(/\{g\}/g,r.art?r.art.g:"").replace(/\{t\}/g,T?T.nome:"").replace(/\{p\}/g,`${st.gf} × ${st.gs}`)}
+/* 24/11: falas dos craques quando você perde (foto + frase em 1ª pessoa; {eu}=seu time, {p}=placar, {g}=gols dele) */
+const NATAL_FALAS={
+ "Ronaldo Fenômeno":["Desculpa, {eu}... quando eu vejo um goleiro na minha frente, eu esqueço de ter pena.","Fiz uma pedalada, seu zagueiro foi pra um lado e a bola pro outro. Tô rindo até agora.","Joelho operado três vezes e mesmo assim nenhum zagueiro seu me alcançou. Treina mais, hein!","Vocês jogaram bem... pra quem estava enfrentando o Fenômeno, né? Kkkk"],
+ "Pelé":["Já fiz mais de mil gols. Os seus nem vão entrar pra contagem, de tão fácil que foi.","Eu sou o Rei, meu filho. E o Rei não perde pro {eu}, nem lá de cima.","Bonito o esforço de vocês. Agora vai pra casa e treina, que o Natal é longo."],
+ "Lionel Messi":["Perdão, {eu}... é que a bola gosta de mim. Eu não consigo evitar.","Driblei tanta gente que perdi a conta. Feliz Natal pra vocês, de verdade!","Eu nem tava num dia tão bom hoje. Imagina se estivesse. Kkk"],
+ "Cristiano Ronaldo":["SIUUUU! Esse grito foi pra torcida do {eu}, com carinho.","Eu treino desde as cinco da manhã. Vocês acordaram que horas hoje?","Fiz {g} e ainda saí sem suar o cabelo. Próximo!","Não é arrogância, é estatística: eu sempre ganho."],
+ "Diego Maradona":["Um dos gols foi com a mão? Pode ser... mas o juiz não viu, então valeu!","Driblei o {eu} inteiro, igual em 86. Tem coisa que não se esquece."],
+ "Ronaldinho Gaúcho":["Eu só queria me divertir... e acabei fazendo uma festa no seu campo. Kkkkk","Dei um elástico no seu lateral que ele tá procurando a bola até agora.","Sorri o jogo todo. Desculpa, é que vocês são muito engraçados."],
+ "Zinedine Zidane":["Muito educado o seu time. Me deixou jogar à vontade a partida inteira.","Fiz um balãozinho, olhei pra torcida e pensei: hoje vai ser fácil."],
+ "Rivaldo":["Bicicleta, chute de fora da área, de canhota... escolhe aí qual gol você mais gostou."],
+ "Cafu":["Corri a lateral 90 minutos e seu ponta não me acompanhou nem no aquecimento.","Já levantei a taça da Copa, levantar um {p} contra o {eu} foi moleza."],
+ "Roberto Carlos":["Aquela falta? A bola fez a curva sozinha. Seu goleiro só olhou passar.","Eu chuto tão forte que a rede de vocês vai precisar de conserto."],
+ "Xavi":["Dei 150 passes e errei um. Foi de propósito, pra vocês verem a bola um pouco.","Vocês correram atrás da bola o jogo todo. Isso cansa, né? Eu sei."],
+ "Andrés Iniesta":["Silêncio... eu falo com a bola, não com o adversário. Hoje ela gostou de mim."],
+ "Jairzinho":["Fiz gol em todos os jogos da Copa de 70. Achou que ia escapar logo do {eu}?"],
+ "Rivellino":["Aquele elástico fui eu que inventei. Seu volante virou estátua."],
+ "Luka Modrić":["Bola de Ouro não é à toa. Toquei de trivela só pra ficar mais bonito."],
+ "Sergio Ramos":["Gol aos 92? Não, hoje nem precisei. Já estava resolvido bem antes."],
+ "Karim Benzema":["Eu faço o trabalho sujo e ainda sobra tempo pra fazer gol em vocês."]};
+/* quem fala: o artilheiro deles, senão um craque do time com fala */
+function natalFala(r){const T=NATAL.find(t=>t.k===r.k);if(!T)return null;let n=r.art&&NATAL_FALAS[r.art.n]?r.art.n:null;
+  if(!n){const op=T.jog.map(j=>j[0]).filter(x=>NATAL_FALAS[x]);if(!op.length)return null;n=op[Math.floor(Math.random()*op.length)]}
+  const L=NATAL_FALAS[n],g=r.art&&r.art.n===n?r.art.g:1;let f=L[Math.floor(Math.random()*L.length)];
+  if(f.includes("{g}")&&g<2)f=L.find(x=>!x.includes("{g}"))||f;
+  return {n,f:f.replace(/\{eu\}/g,r.euN||r.eu).replace(/\{g\}/g,g).replace(/\{p\}/g,`${r.st.gs} × ${r.st.gf}`)}}
 function modalResNatal(r){const T=NATAL.find(t=>t.k===r.k),st=r.st,v=st.gf>st.gs,rec=NATAL_REC.filter(([q])=>r.antes<q&&r.depois>=q);
   const cl=st.gf>st.gs?"v":st.gf<st.gs?"d":"e",eu=G.clubs[G.user.club];
   modal(`<div class="nt nt-res"><p class="nt-tag">🎄 Feliz Natal · ${esc(T.nome)}</p><div class="resultado nt-rcab ${cl}"><div class="titulo-res">${cl==="v"?"Vitória":cl==="d"?"Derrota":"Empate"}</div>
     <div class="confronto" style="margin-top:12px"><div class="time">${marcaDe(eu,72)}<b>${esc(r.euN||r.eu)}</b></div><div class="placar num">${st.gf}<span class="x">×</span>${st.gs}</div><div class="time">${natalEsc(T,72)}<b>${esc(T.nome)}</b></div></div></div><p class="muted peq" style="margin:0">Posse de bola: <b class="num">${st.posse}%</b></p>
-    ${(()=>{const f=natalFrase(r);return f?`<div class="nt-frase${st.gf>st.gs||r.feitos.length?" boa":""}"><span>${st.gf>st.gs?"🎉":r.feitos.length?"🎁":st.gf<st.gs?"😂":"🤝"}</span><p>“${esc(f)}”</p></div>`:""})()}
+    ${(()=>{const fl=st.gf<st.gs&&!r.feitos.length&&Math.random()<.6?natalFala(r):null;if(fl){const ft=natalFoto(fl.n,r.k);
+      return `<div class="nt-frase nt-fala">${ft?`<img src="${ft}" alt="">`:`<span>🗣️</span>`}<div><b>${esc(fl.n)}</b><p>“${esc(fl.f)}”</p></div></div>`}const f=natalFrase(r);return f?`<div class="nt-frase${st.gf>st.gs||r.feitos.length?" boa":""}"><span>${st.gf>st.gs?"🎉":r.feitos.length?"🎁":st.gf<st.gs?"😂":"🤝"}</span><p>“${esc(f)}”</p></div>`:""})()}
     <h3>${r.so!=null?(r.feitos.length?"Desafio cumprido!":"Desafio não cumprido desta vez"):r.feitos.length?`${r.feitos.length} desafio${r.feitos.length>1?"s":""} cumprido${r.feitos.length>1?"s":""} nesta partida!`:"Nenhum desafio cumprido desta vez"}</h3>
     <div class="nt-des">${T.des.map((d,j)=>r.so!=null&&r.so!==j?"":`<div class="nt-di${r.fe[j]?" on":""}${r.novos.includes(j)?" novo":""}"><span>${r.fe[j]?"✅":"⬜"}</span><p>${esc(d[2])}</p>${r.novos.includes(j)?"<em>NOVO</em>":r.feitos.includes(j)?"<em>DE NOVO</em>":""}${r.feitos.includes(j)?`<b class="nt-li num">+${d[3]}${icoLioneta(16)}</b>`:""}</div>`).join("")}</div>
     ${r.bonus?`<p class="nt-ok">🏅 Você completou os 3 desafios do ${esc(T.nome)}! Bônus de ${r.bonus} Lionetas</p>`:""}
