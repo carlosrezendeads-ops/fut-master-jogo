@@ -2554,7 +2554,7 @@ function artilheiro(f){
   const pesos={GOL:0,LAT:1,ZAG:1,VOL:1.2,MEI:3,ATA:6};
   let tot=0;const l=[];
   const ev=G.amgM&&G.amgM.ev; // 24/11: no evento de Natal os craques (R9, Pelé, Messi, CR7...) marcam bem mais
-  f.xi.forEach((id,i)=>{const p=G.players[id];if(!p)return;const w=pesos[f.slots[i]]*Math.pow(p.ov/60,3)*(ev&&NATAL_CRAQUES.test(p.n)?3:1);tot+=w;l.push([p,w])});
+  f.xi.forEach((id,i)=>{const p=G.players[id];if(!p)return;const w=pesos[f.slots[i]]*Math.pow(p.ov/60,3)*(!ev?1:G.amgM.evDia==="ruim"?(p.n===G.amgM.evDest?5:1):NATAL_CRAQUES.test(p.n)?3:1);tot+=w;l.push([p,w])});
   let r=rnd()*tot;for(const [p,w] of l){r-=w;if(r<=0)return p}return l.length?l[l.length-1][0]:null;
 }
 function simular(h,a,neutro,contaGols){
@@ -3379,6 +3379,8 @@ function passoMinuto(){
       else aplicarGol(s,F,p).pre=preChute(p,nomeT);
     }else if(r<lam[s]/90*2.4&&rnd()<.75){
       const p=artilheiro(F[s]);if(p){narrar("chance",`Quase! ${p.n} (${nomeT}) ${pick(FR_CHANCE)}.`);ultLance().pre=preChute(p,nomeT)}
+    }else if(V.m.ev&&V.m.evDia==="ruim"&&V.m.a===AMG_CID&&s==="a"&&rnd()<.03){ // 24/11: dia ruim do time do evento: só o destaque tenta, quase gol
+      const p=F[s].xi.map(id=>G.players[id]).find(x=>x&&x.n===V.m.evDest);if(p){narrar("chance",`Quase! ${p.n} (${nomeT}) ${pick(FR_CHANCE)}.`);ultLance().pre=preChute(p,nomeT)}
     }else if(rnd()<.003){ // pênalti: ~1 a cada 2 jogos (metade passa pelo VAR)
       const ps=F[s].xi.map(id=>G.players[id]).filter(Boolean),bat=ps.filter(p=>p.pos!=="GOL").sort((a,b)=>penChance(b,null)-penChance(a,null))[0]||artilheiro(F[s]);
       narrar("penal",`PÊNALTI para o ${nomeT}! Jogador derrubado dentro da área.`);ultLance().pre=`Lance na área... o árbitro vai marcar?`;
@@ -5300,7 +5302,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795518353";
+const VERSAO="1795518648";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7198,9 +7200,9 @@ function natalMontar(i,dj){const T=NATAL[i];if(!T)return "Time não encontrado."
   G.amgBak={pl:bak,user:{form:G.user.form,est:G.user.est,lineup:(G.user.lineup||[]).slice()}};
   const xiU=(G.user.cmd||"tec")==="tec"?melhorXI(uid,G.user.form):G.user.lineup,uF=forcasCfg(xiU,G.user.form,G.user.est,uid),eF=forcasCfg(ids,T.form,T.est,AMG_CID);
   // 24/11: ataque com "dia" — na maioria dos jogos inspirado (+5), às vezes normal, às vezes num dia ruim (−4): só defesa muito boa segura
-  const r=Math.random(),dia=r<.55?5:r<.85?1:-4;
+  const r=Math.random(),dia=r<.4?5:r<.7?1:-6,evDia=r<.4?"insp":r<.7?"normal":"ruim"; // 24/11: 40% inspirado, 30% normal, 30% dia ruim
   c.evA=uF.def-eF.att+T.dA+dia;c.evD=uF.att-eF.def+T.dD;
-  G.amgM={tipo:"A",h:uid,a:AMG_CID,neutro:true,ko:false,econ:eRec(userTier()),rot:`🎄 Feliz Natal · ${T.nome}`,ev:T.k,evDes:dj>=0?dj:null};
+  G.amgM={tipo:"A",h:uid,a:AMG_CID,neutro:true,ko:false,econ:eRec(userTier()),rot:`🎄 Feliz Natal · ${T.nome}`,ev:T.k,evDes:dj>=0?dj:null,evDia,evDest:NATAL_DEST[T.k]};
   tocou();salvar();return null}
 function concluirNatal(){const V=G.live,T=NATAL.find(t=>t.k===V.m.ev),st=natalStats(V),P=perfil();P.natal=P.natal||{};
   const fe=(P.natal[T.k]||[0,0,0]).slice(),antes=natalTotal(),novos=[],feitos=[]; // feitos = cumpridos nesta partida (dão Lionetas toda vez); novos = 1ª vez (progresso)
@@ -7241,6 +7243,7 @@ function modalNatalCapa(){const tot=natalTotal();
 /* 22/11: tela própria do evento (aba "natal"): fundo de Natal + futebol (neve, luzes, gramado), moeda única = Lioneta no canto superior direito */
 /* 23/11: entrar no evento = capa (img/natal-capa2.jpg, toque para continuar) → sala de entrada (img/natal-sala.jpg, botão JOGAR) → roleta → desafio → partida */
 let NT_FASE="capa";
+const NATAL_DEST={r9:"Ronaldo Fenômeno",barca:"Lionel Messi",bra70:"Pelé",bra02:"Ronaldo Fenômeno",real:"Cristiano Ronaldo"}; // destaque de cada time: no dia ruim só ele aparece
 const NATAL_CRAQUES=/Ronaldo Fenômeno|Pelé|Messi|Cristiano Ronaldo|Maradona|Ronaldinho|Romário|Rivaldo|Jairzinho/;
 /* fim do evento: virada do ano, meia-noite de 01/01/2027 em Brasília (UTC-3) */
 const NATAL_FIM=Date.UTC(2027,0,1,3,0,0);
