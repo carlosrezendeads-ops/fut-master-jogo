@@ -1062,7 +1062,10 @@ nav.abas button{font-size:11px}
 .nt-di.on{background:rgba(22,163,74,.22);border:1px solid rgba(74,222,128,.45)}.nt-di em{font-style:normal;font-size:10px;font-weight:900;padding:2px 6px;border-radius:5px;background:#ffd23f;color:#2a1a00;animation:leiPisca 1s infinite}
 .nt-dica{margin:0;font-size:12px;color:#fde68a;text-align:left}.nt-placar{font-family:var(--f-display);font-size:26px;margin:0}.nt-res h3{margin:4px 0 0}.nt-ok{margin:0;font-weight:800;color:#ffd23f}
 .nt-live{margin:8px 0 0;padding:8px 10px;border-radius:12px;background:linear-gradient(120deg,rgba(185,28,28,.25),rgba(20,83,45,.25));border:1px solid rgba(255,210,63,.4);display:flex;flex-direction:column;gap:4px}
-.nt-lp{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:8px;font-size:12px}.nt-lp b{color:#ffd23f}.nt-lp i{height:6px;border-radius:4px;background:rgba(255,255,255,.15);overflow:hidden}.nt-lp em{display:block;height:100%;background:#ffd23f}
+.nt-pt{text-align:center;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:#fde68a;font-weight:800}
+.nt-lp{display:grid;grid-template-columns:auto auto 1fr auto auto;align-items:center;gap:7px;font-size:13px}.nt-lp b{color:#fff;font-weight:900;min-width:34px}.nt-lp .nt-pb{text-align:right}
+.nt-lp i{position:relative;height:12px;border-radius:8px;background:var(--cb);overflow:hidden;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.35),0 0 8px rgba(0,0,0,.4)}
+.nt-lp em{display:block;height:100%;background:var(--ca);transition:width 1.2s ease-in-out;box-shadow:2px 0 0 #fff}
 .nt-ld{display:flex;gap:6px;align-items:center;font-size:12px;text-align:left}.nt-ld.e0{opacity:.55;text-decoration:line-through}.nt-ld.e3{opacity:.6}.nt-ld small{color:#9fb3da}
 /* cards diamante do Evento de Natal (roxo brilhante + brilho passando) */
 .r9-card.dia{width:16%;overflow:hidden;color:#fff;border-color:#f3e8ff;background:linear-gradient(125deg,#2e0854,#7c3aed 28%,#e9d5ff 44%,#a855f7 56%,#4c1d95 78%,#2e0854);background-size:260% 100%;box-shadow:0 0 12px rgba(192,132,252,.85),0 0 3px #fff,0 3px 8px rgba(0,0,0,.5)}
@@ -1212,6 +1215,8 @@ nav.abas button{font-size:11px}
 .nt-loja .nt-gi .btn{position:relative;overflow:hidden;box-shadow:0 0 10px rgba(255,210,63,.5)}
 .nt-loja .nt-gi .btn::after{content:"";position:absolute;top:-40%;bottom:-40%;left:-70%;width:40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);transform:skewX(-20deg);animation:diaBrilho 2.6s ease-in-out infinite;pointer-events:none}
 .nt-loja .nt-gi:nth-child(2) .btn::after{animation-delay:.4s}.nt-loja .nt-gi:nth-child(3) .btn::after{animation-delay:.8s}.nt-loja .nt-gi:nth-child(4) .btn::after{animation-delay:1.2s}.nt-loja .nt-gi:nth-child(5) .btn::after{animation-delay:1.6s}
+.nt-rcab .time{min-width:0}.nt-rcab .time b{font-size:13px;line-height:1.2;overflow-wrap:anywhere}.nt-rcab .titulo-res{font-size:clamp(36px,11vw,56px)}
+.nt-rcab{border:0!important;background:none!important;padding:4px 0!important;margin:0!important;box-shadow:none!important}
 .nt-frase{position:relative;display:flex;gap:10px;align-items:center;margin:8px 0 2px;padding:12px 14px;border-radius:14px;background:linear-gradient(135deg,rgba(255,210,63,.22),rgba(255,210,63,.06));border:1.5px solid #ffd23f;box-shadow:0 0 18px rgba(255,210,63,.35);text-align:left;animation:ntFrase .5s cubic-bezier(.2,1.4,.4,1) both}
 .nt-frase span{font-size:30px;flex:none}.nt-frase p{margin:0;font-family:"Cinzel",serif;font-weight:700;font-size:14.5px;line-height:1.35;color:#fff3c4;text-shadow:0 1px 3px rgba(0,0,0,.6)}
 .nt-frase.boa{border-color:#7ee39a;box-shadow:0 0 18px rgba(126,227,154,.4);background:linear-gradient(135deg,rgba(126,227,154,.22),rgba(126,227,154,.06))}
@@ -5319,7 +5324,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795522427";
+const VERSAO="1795535449";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7203,9 +7208,13 @@ function natalEstado(d,st,fim){const [t,x]=d,ok=c=>c?2:fim?0:1;
   switch(t){case "cs":return st.gs?0:fim?2:1;case "v":return ok(st.gf>st.gs);case "gf":return st.gf>=x?2:fim?0:1;case "semDe":return (st.de[x]||0)?0:fim?2:1;
     case "posse":return ok(st.posse>=x);case "cs1":return st.g1s?0:st.ht||fim?2:1;case "vpor":return ok(st.gf-st.gs>=x);case "maisQue":return ok(st.gf>(st.de[x]||0));
     case "gf1":return st.g1f>=x?2:st.ht||fim?0:1;case "max":return st.gs>x?0:fim?2:1}return 1}
-function natalFaixa(V){if(!V||!V.m.ev)return "";const T=NATAL.find(t=>t.k===V.m.ev),st=natalStats(V),fe=natalFeitos(T.k);
-  return `<div class="nt-live" id="lv-natal"><div class="nt-lp"><span>Posse de bola</span><b class="num">${st.posse}%</b><i><em style="width:${st.posse}%"></em></i></div>
-    ${T.des.map((d,j)=>{if(V.m.evDes!=null&&V.m.evDes!==j)return "";const e=natalEstado(d,st,false);return `<div class="nt-ld e${e}"><span>${e===2?"✅":e===0?"❌":"⏳"}</span>${esc(d[2])} <small>+${d[3]}</small>${fe[j]?" <small>⭐</small>":""}</div>`}).join("")}</div>`}
+/* cores da barra de posse do evento: cor principal de cada time (se forem parecidas, o time do evento usa a 2ª cor) */
+function natalCores(T){const c=G.clubs[G.user.club]||{},eu=(c.escudo&&c.escudo.c1)||c.c1||"#1e6bd6",h=x=>parseInt((x||"#000").slice(1,7).padEnd(6,"0"),16),dist=(a,b)=>{const A=h(a),B=h(b);return Math.abs((A>>16)-(B>>16))+Math.abs((A>>8&255)-(B>>8&255))+Math.abs((A&255)-(B&255))};
+  return [eu,dist(eu,T.c1)<120?(T.c2||"#ffd23f"):T.c1]}
+function natalDesHTML(V,T,st,fe){return T.des.map((d,j)=>{if(V.m.evDes!=null&&V.m.evDes!==j)return "";const e=natalEstado(d,st,false);return `<div class="nt-ld e${e}"><span>${e===2?"✅":e===0?"❌":"⏳"}</span>${esc(d[2])} <small>+${d[3]}</small>${fe[j]?" <small>⭐</small>":""}</div>`}).join("")}
+function natalFaixa(V){if(!V||!V.m.ev)return "";const T=NATAL.find(t=>t.k===V.m.ev),st=natalStats(V),fe=natalFeitos(T.k),[ca,cb]=natalCores(T);
+  return `<div class="nt-live" id="lv-natal"><small class="nt-pt">Posse de bola</small><div class="nt-lp" style="--ca:${ca};--cb:${cb}">${marcaDe(G.clubs[G.user.club],30)}<b class="num nt-pa">${st.posse}%</b><i><em style="width:${st.posse}%"></em></i><b class="num nt-pb">${100-st.posse}%</b>${natalEsc(T,30)}</div>
+    <div class="nt-lds">${natalDesHTML(V,T,st,fe)}</div></div>`}
 /* monta a partida: clube temporário com os 11 lendários, força relativa ao seu time */
 function natalMontar(i,dj){const T=NATAL[i];if(!T)return "Time não encontrado.";if(!G||!G.user)return "Crie uma carreira primeiro.";if(G.live)return "Termine a partida atual primeiro.";
   limparAmigo();const uid=G.user.club,med=natalMed(T),h=[...T.k].reduce((a,c)=>a+c.charCodeAt(0),0);
@@ -7266,8 +7275,9 @@ function natalFrase(r){const st=r.st,F=NATAL_FRASES,pk=a=>a&&a.length?a[Math.flo
   const T=NATAL.find(t=>t.k===r.k);
   return f.replace(/\{eu\}/g,r.euN||r.eu).replace(/\{n\}/g,r.art?r.art.n:"").replace(/\{g\}/g,r.art?r.art.g:"").replace(/\{t\}/g,T?T.nome:"").replace(/\{p\}/g,`${st.gf} × ${st.gs}`)}
 function modalResNatal(r){const T=NATAL.find(t=>t.k===r.k),st=r.st,v=st.gf>st.gs,rec=NATAL_REC.filter(([q])=>r.antes<q&&r.depois>=q);
-  modal(`<div class="nt nt-res"><p class="nt-tag">🎄 Feliz Natal · ${esc(T.nome)}</p><div style="font-size:44px">${r.novos.length?"🎁":v?"🏆":st.gf<st.gs?"😓":"🤝"}</div>
-    <p class="num nt-placar">${esc(r.eu)} ${st.gf} × ${st.gs} ${esc(T.sigla)}</p><p class="muted peq" style="margin:0">Posse de bola: <b class="num">${st.posse}%</b></p>
+  const cl=st.gf>st.gs?"v":st.gf<st.gs?"d":"e",eu=G.clubs[G.user.club];
+  modal(`<div class="nt nt-res"><p class="nt-tag">🎄 Feliz Natal · ${esc(T.nome)}</p><div class="resultado nt-rcab ${cl}"><div class="titulo-res">${cl==="v"?"Vitória":cl==="d"?"Derrota":"Empate"}</div>
+    <div class="confronto" style="margin-top:12px"><div class="time">${marcaDe(eu,72)}<b>${esc(r.euN||r.eu)}</b></div><div class="placar num">${st.gf}<span class="x">×</span>${st.gs}</div><div class="time">${natalEsc(T,72)}<b>${esc(T.nome)}</b></div></div></div><p class="muted peq" style="margin:0">Posse de bola: <b class="num">${st.posse}%</b></p>
     ${(()=>{const f=natalFrase(r);return f?`<div class="nt-frase${st.gf>st.gs||r.feitos.length?" boa":""}"><span>${st.gf>st.gs?"🎉":r.feitos.length?"🎁":st.gf<st.gs?"😂":"🤝"}</span><p>“${esc(f)}”</p></div>`:""})()}
     <h3>${r.so!=null?(r.feitos.length?"Desafio cumprido!":"Desafio não cumprido desta vez"):r.feitos.length?`${r.feitos.length} desafio${r.feitos.length>1?"s":""} cumprido${r.feitos.length>1?"s":""} nesta partida!`:"Nenhum desafio cumprido desta vez"}</h3>
     <div class="nt-des">${T.des.map((d,j)=>r.so!=null&&r.so!==j?"":`<div class="nt-di${r.fe[j]?" on":""}${r.novos.includes(j)?" novo":""}"><span>${r.fe[j]?"✅":"⬜"}</span><p>${esc(d[2])}</p>${r.novos.includes(j)?"<em>NOVO</em>":r.feitos.includes(j)?"<em>DE NOVO</em>":""}${r.feitos.includes(j)?`<b class="nt-li num">+${d[3]}${icoLioneta(16)}</b>`:""}</div>`).join("")}</div>
@@ -7277,7 +7287,7 @@ function modalResNatal(r){const T=NATAL.find(t=>t.k===r.k),st=r.st,v=st.gf>st.gs
     <div class="nt-geral"><div class="nt-gl"><b>Progresso do evento</b><span class="num">${r.depois}/15</span></div><div class="nt-barra"><i style="width:${r.depois/15*100}%"></i></div></div>
     <div class="premio-recomp"><span>+${r.xp} XP</span></div>
     <div class="botoes">${r.moedas?`<button class="btn prim nt-coletar" data-a="ntcoletar" data-v="${r.moedas}">Coletar ${icoLioneta(20)}</button>`:`<button class="btn" data-a="fechar">Fechar</button><button class="btn prim" data-a="ntsortear">🎲 Jogar de novo</button>`}</div></div>`);natalFolha();
-  if(r.moedas)try{somConquista()}catch(e){}}
+  if(r.moedas&&st.gf>=st.gs)try{somConquista()}catch(e){}}
 /* Lionetas voando, uma atrás da outra, até o saldo no canto superior direito (o número sobe a cada moeda que chega) */
 function natalVoar(ganho){const alvo=document.querySelector(".ntt-li");if(!alvo||!ganho)return;const b=alvo.querySelector("b"),fim=lionetas(),ini=Math.max(0,fim-ganho);b.textContent=ini;
   const r=alvo.getBoundingClientRect(),tx=r.left+19,ty=r.top+r.height/2,n=Math.min(16,Math.max(6,Math.round(ganho/4)));
@@ -8566,7 +8576,8 @@ function atualizarLive(n0){
   const pg=$("#lv-prog");if(pg)pg.style.width=Math.min(V.min,90)/90*100+"%";
   const tm=$("#lv-time");if(tm)tm.innerHTML=blocoEmCampo(V);
   const gs=$("#lv-grito");if(gs){const L=V.L[V.lado],at=gritoAtivo(L);gs.textContent=V.fk&&V.fk.s===V.lado?"🦶 Falta a favor: escolha a cobrança":at?`📣 ${at.n} · até os ${L.grito.ate}'`:L.grito&&V.min<L.grito.ate+GRITO_ESPERA?`Novo comando a partir dos ${L.grito.ate+GRITO_ESPERA}'`:"Fale com o time"}
-  const nt=$("#lv-natal");if(nt)nt.outerHTML=natalFaixa(V);
+  const nt=$("#lv-natal");if(nt){const T=NATAL.find(t=>t.k===V.m.ev),st=natalStats(V),em=nt.querySelector(".nt-lp em");
+    if(T&&em){em.style.width=st.posse+"%";nt.querySelector(".nt-pa").textContent=st.posse+"%";nt.querySelector(".nt-pb").textContent=100-st.posse+"%";nt.querySelector(".nt-lds").innerHTML=natalDesHTML(V,T,st,natalFeitos(T.k))}else nt.outerHTML=natalFaixa(V)}
   const fd=$("#lv-feed");
   if(fd&&V.feed.length>n0){V.feed.slice(n0).forEach((f,i)=>{fd.insertAdjacentHTML("afterbegin",linhaFeed(f,true,i));if(f.t==="gol"&&pl){pl.classList.remove("gol");void pl.offsetWidth;pl.classList.add("gol")}})}
 }
@@ -11337,7 +11348,7 @@ if(v!=="tabela"){}window.scrollTo(0,0);break;
     case "lvvel":velocidade=velocidade===2?1:2;if(G.live&&G.live.est==="rodando")iniciarTimer();break;
     case "lvvel3":if(perfil().nivel<NIVEL_3X){toastErro(`🔒 Bloqueado. Libera no nível ${NIVEL_3X}.`);return}velocidade=velocidade===3?1:3;if(G.live&&G.live.est==="rodando")iniciarTimer();break;
     case "lvamgsair":fecharModal();pararTimer();G.live=null;limparAmigo();aba="jogar";salvar();window.scrollTo(0,0);break;
-    case "lvconcluir":if(G.live&&G.live.m.ev){pararTimer();const r=concluirNatal();aba="natal";NT_FASE="sala";window.scrollTo(0,0);render();setTimeout(()=>{somResultado();modalResNatal(r)},300);return}
+    case "lvconcluir":if(G.live&&G.live.m.ev){pararTimer();const r=concluirNatal();aba="natal";NT_FASE="sala";window.scrollTo(0,0);render();setTimeout(()=>{const st=r.st;vibrar(st.gf>st.gs?"vitoria":st.gf<st.gs?"derrota":"premio");if(st.gf!==st.gs)somArquivo(st.gf>st.gs?"vitoria":"derrota",true);modalResNatal(r)},300);return}
       if(G.live&&G.live.m.amg){pararTimer();const r=concluirAmigo();aba="jogar";window.scrollTo(0,0);render();setTimeout(()=>{somResultado();modalResAmigo(r)},300);return}
     if(G.live&&G.live.m.amistoso){pararTimer();const r=concluirAmistoso();aba="jogar";window.scrollTo(0,0);render();setTimeout(()=>{somResultado();modalAmistoso(r)},300);return}
     {pararTimer();concluirAoVivo();if(G.ultimoJogo)G.ultimoJogo.pendente=true;aba="resultado";salvar();window.scrollTo(0,0);setTimeout(somResultado,300);break;}
