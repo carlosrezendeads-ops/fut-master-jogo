@@ -5302,7 +5302,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795518648";
+const VERSAO="1795518996";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7200,13 +7200,13 @@ function natalMontar(i,dj){const T=NATAL[i];if(!T)return "Time não encontrado."
   G.amgBak={pl:bak,user:{form:G.user.form,est:G.user.est,lineup:(G.user.lineup||[]).slice()}};
   const xiU=(G.user.cmd||"tec")==="tec"?melhorXI(uid,G.user.form):G.user.lineup,uF=forcasCfg(xiU,G.user.form,G.user.est,uid),eF=forcasCfg(ids,T.form,T.est,AMG_CID);
   // 24/11: ataque com "dia" — na maioria dos jogos inspirado (+5), às vezes normal, às vezes num dia ruim (−4): só defesa muito boa segura
-  const r=Math.random(),dia=r<.4?5:r<.7?1:-6,evDia=r<.4?"insp":r<.7?"normal":"ruim"; // 24/11: 40% inspirado, 30% normal, 30% dia ruim
+  const NJ=(perfil().natal||{}).jt||{},r=NJ[T.k]?Math.random():0,dia=r<.4?5:r<.7?1:-6,evDia=r<.4?"insp":r<.7?"normal":"ruim"; // 24/11: 40% inspirado, 30% normal, 30% dia ruim
   c.evA=uF.def-eF.att+T.dA+dia;c.evD=uF.att-eF.def+T.dD;
   G.amgM={tipo:"A",h:uid,a:AMG_CID,neutro:true,ko:false,econ:eRec(userTier()),rot:`🎄 Feliz Natal · ${T.nome}`,ev:T.k,evDes:dj>=0?dj:null,evDia,evDest:NATAL_DEST[T.k]};
   tocou();salvar();return null}
 function concluirNatal(){const V=G.live,T=NATAL.find(t=>t.k===V.m.ev),st=natalStats(V),P=perfil();P.natal=P.natal||{};
   const fe=(P.natal[T.k]||[0,0,0]).slice(),antes=natalTotal(),novos=[],feitos=[]; // feitos = cumpridos nesta partida (dão Lionetas toda vez); novos = 1ª vez (progresso)
-  const so=V.m.evDes;T.des.forEach((d,j)=>{if((so==null||so===j)&&natalEstado(d,st,true)===2){feitos.push(j);if(!fe[j]){fe[j]=1;novos.push(j)}}});P.natal[T.k]=fe;P.natal.j=(P.natal.j||0)+1;
+  const so=V.m.evDes;T.des.forEach((d,j)=>{if((so==null||so===j)&&natalEstado(d,st,true)===2){feitos.push(j);if(!fe[j]){fe[j]=1;novos.push(j)}}});P.natal[T.k]=fe;P.natal.j=(P.natal.j||0)+1;P.natal.jt=P.natal.jt||{};P.natal.jt[T.k]=(P.natal.jt[T.k]||0)+1; // jogos contra cada time (o 1º é sempre com o time inspirado)
   const xp=XP_AMG[st.gf>st.gs?"v":st.gf<st.gs?"d":"e"]+novos.length*30,bonus=novos.length&&fe.every(Boolean)?NATAL_BONUS:0,moedas=feitos.reduce((a,j)=>a+(T.des[j][3]||0),0)+bonus;
   P.lioneta=(P.lioneta||0)+moedas;P.natalGanho=(P.natalGanho||0)+moedas;
   let emb=0;if(natalTotal()>=15&&!P.natalEmb){P.natalEmb=1;emb=1} // completou os 15: emblema Lenda do Natal
