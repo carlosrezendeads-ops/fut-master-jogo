@@ -1747,6 +1747,8 @@ nav.abas button{font-size:11px}
 /* tela de carregamento (29/10): capa + degradê azul escuro embaixo, frase e barra */
 .splash.arte.carga::after{background:linear-gradient(180deg,rgba(3,10,40,0) 42%,rgba(3,10,40,.75) 62%,#030a28 82%,#020719 100%)}
 .splash.arte.carga img.capa-logo{top:calc(3vh + env(safe-area-inset-top,0px));width:min(56vw,26vh,300px)}
+.splash.arte.carga.capa-natal img:not(.capa-logo):not(.capa-fundo){object-fit:cover;object-position:center top}
+.splash.arte.carga.capa-natal img.capa-logo{top:calc(10px + env(safe-area-inset-top,0px));left:10px;width:min(36vw,170px);transform:none;filter:drop-shadow(0 3px 8px rgba(0,0,0,.8))}
 .splash.carga-sai{z-index:41;pointer-events:none;will-change:clip-path,transform;animation:cgSai .62s cubic-bezier(.75,0,.25,1) forwards}
 @keyframes cgSai{0%{clip-path:polygon(0 0,100% 0,100% 100%,0 130%);transform:scale(1)}100%{clip-path:polygon(0 0,100% 0,100% -30%,0 0);transform:scale(1.08);filter:brightness(1.3)}}
 .splash.carga-entra{animation:cgEntra .7s cubic-bezier(.2,.7,.2,1) both}
@@ -5295,7 +5297,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795476057";
+const VERSAO="1795484627";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -5640,9 +5642,11 @@ function cargaTransicao(){ // 02/11: cortina diagonal sobe levando o carregament
   document.body.appendChild(v);CARGA.musAte=0;setTimeout(()=>{try{somModo(modoDesejado())}catch(e){}},50);CARGA.on=false;if(abertura)render(); // 02/11: som de transição foi pra tela da logo
   sp.classList.add("carga-entra");setTimeout(()=>{v.remove();sp.classList.remove("carga-entra")},800);
 }
+const CARGA_IMG="img/natal-capa3.jpg"; // 23/11: carregamento de Natal TEMPORÁRIO (Messi na rena; o normal é img/carga.jpg)
 function telaCarga(sp,c){
-  if(!CARGA.t0){CARGA.t0=performance.now();CARGA.ordem=frasesCarga(c)}
-  sp.innerHTML=`${typeof ARTE_CAPA!=="undefined"?`<img class="capa-fundo" src="img/carga.jpg" alt=""><img src="img/carga.jpg" alt="Ronaldo e Messi">${typeof LOGO_CAPA!=="undefined"?`<img class="capa-logo" src="${LOGO_CAPA}" alt="FUT Master 26" onload="posBeta()"><span class="beta-tag" aria-label="Versão beta">BETA</span>`:""}`:""}
+  const NAT=CARGA_IMG.includes("natal");sp.classList.toggle("capa-natal",NAT);
+  if(!CARGA.t0){CARGA.t0=performance.now();CARGA.ordem=frasesCarga(c);if(NAT)setTimeout(()=>somArquivo("natal",false,.9),300)} // 23/11: vinheta de Natal no carregamento
+  sp.innerHTML=`${typeof ARTE_CAPA!=="undefined"?`<img class="capa-fundo" src="${CARGA_IMG}" alt=""><img src="${CARGA_IMG}" alt="Carregando">${typeof LOGO_CAPA!=="undefined"?`<img class="capa-logo" src="${LOGO_CAPA}" alt="FUT Master 26" onload="posBeta()"><span class="beta-tag" aria-label="Versão beta">BETA</span>`:""}`:""}
   <div class="carga-box" role="progressbar" aria-label="Carregando" aria-valuemin="0" aria-valuemax="100">
     <div class="carga-frase">${esc(CARGA.ordem[CARGA.fi%CARGA.ordem.length])}</div>
     <div class="carga-barra"><i></i></div>
@@ -6261,7 +6265,7 @@ function somGol(nosso){
 function somVitoria(){if(!SOM.ctx||SOM.mudo)return;const t=SOM.ctx.currentTime;SOM.mus.gain.cancelScheduledValues(t);SOM.mus.gain.setTargetAtTime(.06,t,.1);SOM.mus.gain.setTargetAtTime(SOM.modo==="musica"?.2:0,t+4.5,.6);SOM.trilha.gain.cancelScheduledValues(t);SOM.trilha.gain.setTargetAtTime(.3,t,.1);SOM.trilha.gain.setTargetAtTime(1,t+4.5,.6);
   gritoTorcida(0,5,.5,true,false);torcidaOnda(.3,.4,2.8,2.2,[1000,800]);palmas(.3,5,30,.38);setTimeout(()=>gritoTorcida(0,2.5,.3,true,false),2400)}
 // efeitos em mp3 (pasta sons/): toca o arquivo; abafar = baixa a música de fundo enquanto ele toca
-function somArquivo(n,abafar,vol){if(abertura&&CARGA.on&&!CARGA.intro&&n!=="carga")return true; // 02/11: carregamento sem som nenhum
+function somArquivo(n,abafar,vol){if(abertura&&CARGA.on&&!CARGA.intro&&n!=="carga"&&n!=="natal")return true; // 02/11: carregamento sem som nenhum
   const b=SOM.ctx&&!SOM.mudo&&SOM.buf&&SOM.buf[n];if(!b)return false;const c=SOM.ctx,t=c.currentTime,s=c.createBufferSource();s.buffer=b;if(vol!=null&&vol!==1){const g=c.createGain();g.gain.value=vol;s.connect(g);g.connect(SOM.fx)}else s.connect(SOM.fx);s.start(t);
   if(abafar){SOM.trilha.gain.cancelScheduledValues(t);SOM.trilha.gain.setTargetAtTime(.2,t,.1);SOM.trilha.gain.setTargetAtTime(1,t+Math.max(1,b.duration-.5),.6)}return true}
 // erro: clicou em algo bloqueado ou que não pode (substitui o clique)
