@@ -9,6 +9,8 @@ self.addEventListener("fetch", e => {
   const chave = url.origin + url.pathname; // sem o ?v= — a versão nova substitui a antiga
   // imagem com versão (?v=): se já está guardada, usa direto sem baixar de novo (abre muito mais rápido)
   if (url.searchParams.has("v")) { e.respondWith(caches.open(CACHE).then(c => c.match(req.url).then(m => m || fetch(req).then(r => { if (r.ok && r.status === 200) { c.put(req.url, r.clone()); c.put(chave, r.clone()); c.keys().then(ks => ks.forEach(k => { const u = new URL(k.url); if (u.pathname === url.pathname && u.search && k.url !== req.url) c.delete(k); })); } return r; }).catch(() => c.match(chave))))); return; }
+  // 24/11: imagens, sons e vídeos soltos (jpg/png/webp/mp3/mp4): usa a cópia guardada na hora e atualiza por trás (antes baixava de novo a cada tela e travava no celular)
+  if (/\.(jpe?g|png|webp|gif|mp3|mp4)$/i.test(url.pathname)) { e.respondWith(caches.open(CACHE).then(c => c.match(chave).then(m => { const rede = fetch(req, { cache: "no-cache" }).then(r => { if (r.ok && r.status === 200) c.put(chave, r.clone()); return r; }).catch(() => m); if (m) { e.waitUntil(rede.catch(() => {})); return m; } return rede; }))); return; }
   // no-cache: confere sempre com o site (o GitHub deixaria a versão velha presa por 10 min)
   e.respondWith(fetch(req, { cache: "no-cache" }).then(r => {
     if (r.ok && r.status === 200) { const cp = r.clone(); caches.open(CACHE).then(c => c.put(chave, cp)); }
