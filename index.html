@@ -5297,7 +5297,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795489367";
+const VERSAO="1795489735";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7113,7 +7113,7 @@ const icoLioneta=(px=18)=>`<img class="lioneta" src="img/lioneta.webp" width="${
 const lionetas=()=>perfil().lioneta||0;
 /* Loja do Evento (22/11): artes provisórias (o Carlos vai mandar as definitivas: foto do Messi, pacotes). k → natalComprar */
 const NATAL_LOJA=[
- {k:"foto",n:"Foto do Messi para o perfil",d:"Foto especial de Natal do Messi para usar no seu perfil e no ranking.",p:100,img:"img/avatar-messi.webp"},
+ {k:"foto",n:"Foto do Messi para o perfil",d:"Foto especial de Natal do Messi para usar no seu perfil e no ranking.",p:100,img:"img/avatar-messi2.webp"},
  {k:"lenda",n:"Pacote Lenda",d:"Um jogador lenda aleatório para o seu time.",p:500,pac:"ouro",pimg:"img/pac-lenda.png"},
  {k:"prime",n:"Jogador Prime",d:"Um craque Prime aleatório dos times do evento, no auge, para o seu time.",p:1000,pac:"prime",pimg:"img/pac-prime.png"},
  {k:"pts",n:"10 pontos de atributo",d:"10 pontos de treino para distribuir nos seus jogadores.",p:300,ic:"💪"},
