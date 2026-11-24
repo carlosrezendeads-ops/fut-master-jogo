@@ -5297,7 +5297,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795487168";
+const VERSAO="1795488343";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7242,7 +7242,7 @@ const natalAcabou=()=>Date.now()>=NATAL_FIM;
 function natalFalta(){const ms=NATAL_FIM-Date.now();if(ms<=0)return "Encerrado";const d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),m=Math.floor(ms%36e5/6e4);return d>0?`${d}d ${h}h`:h>0?`${h}h ${m}min`:`${m}min`}
 function telaNatal(){if(!reLiberado()||!G||!G.user){aba="jogar";return telaInicio()}
   const topo=`<div class="ntt-topo"><button class="ntt-volta" data-a="ntsair" aria-label="Voltar">‹</button><span class="ntt-tit"></span><span class="ntt-li" title="Lionetas">${icoLioneta(30)}<b class="num">${lionetas()}</b></span></div>`;
-  if(NT_FASE==="capa"){clearTimeout(window._ntCapa);if(!window._ntSom){window._ntSom=1;setTimeout(()=>{try{somArquivo("natal",true,.9)}catch(e){}window._ntSom=0},100)} // vinheta de Natal (sons/natal.mp3)window._ntCapa=setTimeout(()=>{if(aba==="natal"&&NT_FASE==="capa")acao("ntsala")},4500); // capa de carregamento: 4,5 s
+  if(NT_FASE==="capa"){clearTimeout(window._ntCapa);if(!window._ntSom){window._ntSom=1;setTimeout(()=>{try{somArquivo("natal",true,.9)}catch(e){}window._ntSom=0},100)} /* vinheta de Natal (sons/natal.mp3) */window._ntCapa=setTimeout(()=>{if(aba==="natal"&&NT_FASE==="capa")acao("ntsala")},4500); // capa de carregamento: 4,5 s
     return `<div class="ntt ntt-capa"><div class="ntt-fundo ntt-img" style="background-image:url(img/natal-capa3.jpg)" aria-hidden="true"><i class="ntt-neve"></i></div>
     ${typeof LOGO_CAPA!=="undefined"?`<div class="ntt-logo"><img src="${LOGO_CAPA}" alt="FUT Master 26"><span>BETA</span></div>`:""}
     <div class="ntt-capa-tit"><b>FELIZ NATAL</b><small>EVENTO ESPECIAL</small></div>
