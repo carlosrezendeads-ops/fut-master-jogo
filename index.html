@@ -5297,7 +5297,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795489735";
+const VERSAO="1795490065";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -7121,7 +7121,7 @@ const NATAL_LOJA=[
 function modalNatalLoja(){const sal=lionetas(),P=perfil();
   modal(`<div class="nt"><div class="nt-saldo">${icoLioneta(54)}<div><small>Suas Lionetas</small><b class="num">${sal}</b></div></div><h2 style="margin:0">🛍️ Loja do Evento</h2>
     <div class="nt-loja-g">${NATAL_LOJA.map(it=>{const ja=it.k==="foto"&&P.avNatal,pode=!ja&&sal>=it.p;
-      return `<div class="nt-gi${pode?" pode":""}"><span class="nt-gi-img">${it.pimg?`<img src="${it.pimg}" alt="">`:it.img?`<img class="red" src="${it.img}" alt="">`:`<i>${it.ic||"🎁"}</i>`}</span>
+      return `<div class="nt-gi${pode?" pode":""}"><span class="nt-gi-img">${it.pimg?`<img src="${it.pimg}" alt="">`:it.img?`<img class="red" src="${it.img}" alt="" onerror="if(!this.dataset.r){this.dataset.r=1;setTimeout(()=>this.src='${it.img}?r='+Date.now(),1200)}">`:`<i>${it.ic||"🎁"}</i>`}</span>
         <b>${esc(it.n)}</b><small>${esc(it.d)}</small>
         <button class="btn mini ${pode?"prim-mini":""}" data-a="ntcompra" data-v="${it.k}" ${ja?"disabled":""}>${ja?"Comprado":`<span class="num">${it.p}</span> ${icoLioneta(14)}`}</button></div>`}).join("")}</div>
     <div class="botoes"><button class="btn" data-a="ntevento">‹ Evento</button></div></div>`);natalFolha()}
