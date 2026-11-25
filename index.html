@@ -5326,7 +5326,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795641085";
+const VERSAO="1795642372";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -11676,7 +11676,7 @@ setTimeout(()=>{try{amgSync(true)}catch(e){}},2500); // cria o ID do dono (1ª v
 try{somIniciar();somModo(modoDesejado())}catch(e){}
 try{carregarKits()}catch(e){}
 // imagens que não aparecem na abertura carregam logo depois da 1ª tela (abre mais rápido no celular); quando chegam, redesenha a tela
-const IMG_TARDE=["img/cartas-re.js?v=6bdf0053","img/escudos-img.js?v=655f7708","img/patro-logos.js?v=3e44eabc","img/rostos-reais.js?v=2f89c3db","img/titulos.js?v=9ecffff6","dados/titulos.js?v=a01a43e3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=67cfbd62","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
+const IMG_TARDE=["img/cartas-re.js?v=6bdf0053","img/escudos-img.js?v=655f7708","img/patro-logos.js?v=3e44eabc","img/rostos-reais.js?v=6c67b532","img/titulos.js?v=9ecffff6","dados/titulos.js?v=a01a43e3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=67cfbd62","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
 // 27/10: redesenha a cada arquivo que chega (logos dos patrocinadores não esperam as fotos); com aviso aberto, redesenha quando ele fechar
 let TARDE_T=null,TARDE_PEND=false;
 function tardeRender(){clearTimeout(TARDE_T);TARDE_T=setTimeout(()=>{if(!G||abertura||G.live||aba==="prejogo")return;if(document.querySelector(".veu")){TARDE_PEND=true;return}TARDE_PEND=false;render()},250)}
