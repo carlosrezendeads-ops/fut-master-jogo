@@ -2070,7 +2070,7 @@ const MANUT=false;
 <script src="img/fotos.js?v=fbcdc164"></script>
 <script src="img/fotos-vs.js?v=365600e7"></script>
 <script src="img/kit-homens.js?v=0ed6e386"></script>
-<script src="img/tec-fotos.js?v=cedf44dd"></script>
+<script src="img/tec-fotos.js?v=7c096513"></script>
 <script src="dados/elencos.js?v=8b8eff29"></script>
 <script src="dados/regioes.js?v=1d168c1a"></script><script src="dados/pes.js?v=266905da"></script>
 <script src="dados/idiomas.js?v=bb7f71b0"></script>
@@ -5326,7 +5326,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795729102";
+const VERSAO="1795729572";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
