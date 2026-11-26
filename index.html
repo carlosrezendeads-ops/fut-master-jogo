@@ -5326,7 +5326,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795723708";
+const VERSAO="1795728853";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -10855,7 +10855,7 @@ document.addEventListener("visibilitychange",()=>{if(document.hidden)quizSaiu()}
 function quizPremio(n){const din=(a,b)=>({t:"din",n:premioEmDinheiro(ri(a,b)*10)}); // valores em mil (10 = R$ 100 mil)
   if(n===1)return din(10,50);
   if(n===2)return [()=>din(50,100),()=>({t:"cor",n:ri(10,50)}),()=>({t:"pts",n:3}),()=>({t:"cup",n:ri(3,10)})][ri(0,3)]();
-  const r=rnd();return r<.23?din(150,300):r<.46?{t:"cor",n:ri(50,100)}:r<.69?{t:"pts",n:ri(4,6)}:r<.92?{t:"cup",n:ri(10,30)}:{t:"lenda"}} // ouro: lenda 8%
+  const r=rnd();return r<.25?din(300,1000):r<.40?{t:"cup",n:ri(10,30)}:r<.60?{t:"cor",n:ri(50,100)}:r<.80?{t:"lenda"}:{t:"pts",n:ri(4,6)}} // ouro (26/11): dinheiro 25% (3–10 mi), cupons 15%, coroas 20%, lenda 20%, pontos 20%
 function quizAplicar(pr){const P=perfil();
   if(pr.t==="din"){G.cash+=pr.n;try{regCaixa()}catch(e){}}
   else if(pr.t==="cup")G.cupons=cupons()+pr.n;
