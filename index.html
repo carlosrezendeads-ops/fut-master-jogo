@@ -2070,7 +2070,7 @@ const MANUT=false;
 <script src="img/fotos.js?v=fbcdc164"></script>
 <script src="img/fotos-vs.js?v=365600e7"></script>
 <script src="img/kit-homens.js?v=0ed6e386"></script>
-<script src="img/tec-fotos.js?v=7c096513"></script>
+<script src="img/tec-fotos.js?v=99dc1352"></script>
 <script src="dados/elencos.js?v=8b8eff29"></script>
 <script src="dados/regioes.js?v=1d168c1a"></script><script src="dados/pes.js?v=266905da"></script>
 <script src="dados/idiomas.js?v=bb7f71b0"></script>
@@ -5326,7 +5326,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795729572";
+const VERSAO="1795734557";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -5903,7 +5903,20 @@ function fotoComCamisa(p,k){const img=ROSTOS_REAIS[k],b=typeof ROSTOS_CAMISA!=="
   const acima="M0 0H100"+pt.slice().reverse().map(([x,y])=>`L${x} ${y+(pesc(x)?.5:-1.5)}`).join("")+"Z";
   const doad=Object.keys(ROSTOS_CAMISA).filter(x=>x!==k&&x.slice(0,x.indexOf("|"))===c.name),gk=p.pos==="GOL"?1:0,pref=doad.filter(x=>ROSTOS_CAMISA[x][21]===gk),L=pref.length?pref:doad;
   let fundo,dp=0; // gola alinhada: desce a camisa doadora, ou desce o jogador (assim não sobra buraco embaixo)
+  const linhaOk=v=>v&&v.slice(6,15).filter(y=>y>=110).length<3,temRosto=v=>v&&v.length>24;
+  if(temRosto(b)&&linhaOk(b)){ // 26/11: escolhe o dono da camisa cuja gola combina com o pescoço do jogador (sem buraco nem camisa velha aparecendo)
+    const enc=dk=>{const db=ROSTOS_CAMISA[dk],sc=Math.max(.7,Math.min(1.4,db[24]/b[24]));let c=0;
+      for(let i=6;i<=14;i++){const xp=b[22]+(i*5-db[22])/sc,j=Math.max(0,Math.min(20,xp/5)),j0=Math.floor(j),j1=Math.min(20,j0+1),yb=b[j0]+(b[j1]-b[j0])*(j-j0),ym=db[23]+sc*(yb-b[23]);
+        c+=Math.max(0,db[i]-ym)*3+Math.max(0,ym-db[i]-6)}return c+Math.abs(Math.log(sc))*20};
+    const B=L.filter(x=>temRosto(ROSTOS_CAMISA[x])&&linhaOk(ROSTOS_CAMISA[x]));
+    if(B.length){const h=[...String(p.id)].reduce((a,ch)=>a+ch.charCodeAt(0),0),dk=B.map((x,i)=>[enc(x)+((i+h)%B.length)*.01,x]).sort((u,v)=>u[0]-v[0])[0][1];L.length=0;L.push(dk)}}
   if(L.length){const dk=L[[...String(p.id)].reduce((a,ch)=>a+ch.charCodeAt(0),0)%L.length],db=ROSTOS_CAMISA[dk],bp=b[10],bd=db[10],dd=Math.max(0,bp-bd);dp=Math.max(0,bd-bp);
+    if(temRosto(b)&&linhaOk(b)&&temRosto(db)&&linhaOk(db)){ // 26/11: cabeça no tamanho e na posição do rosto do dono da camisa (fotos com zoom diferente ficam enquadradas)
+      const s=Math.max(.7,Math.min(1.4,db[24]/b[24])),ab="M0 112"+db.slice(0,21).map((y,i)=>`L${Math.min(100,i*5)} ${y}`).join("")+"L100 112Z",
+        pesc2=pt.slice().reverse().map(([x,y])=>`L${x} ${y+(pesc(x)?3:-1.5)}`).join(""); // pescoço um pouco mais comprido: a camisa nova cobre a emenda
+      return `<clipPath id="${id}a"><path d="M0 0H100${pesc2}Z"/></clipPath><clipPath id="${id}d"><path d="${ab}"/></clipPath>
+        <g transform="translate(${db[22]} ${db[23]}) scale(${s}) translate(${-b[22]} ${-b[23]})"><image href="${img}" width="100" height="112" clip-path="url(#${id}a)"/></g>
+        <image href="${ROSTOS_REAIS[dk]}" width="100" height="112" clip-path="url(#${id}d)"/>`}
     const abaixo="M0 112"+db.slice(0,21).map((y,i)=>`L${Math.min(100,i*5)} ${y}`).join("")+"L100 112Z";
     fundo=`<clipPath id="${id}d"><path d="${abaixo}"/></clipPath><g transform="translate(0 ${dd})"><image href="${ROSTOS_REAIS[dk]}" width="100" height="112" clip-path="url(#${id}d)"/></g>`}
   else{const u=unisDe(c)[0]||{camisa:c.c1||"#888",detalhe:c.c2||"#fff",estilo:"liso"},pat=padraoUni(u,id+"p")[u.estilo]||"";
@@ -11681,7 +11694,7 @@ setTimeout(()=>{try{amgSync(true)}catch(e){}},2500); // cria o ID do dono (1ª v
 try{somIniciar();somModo(modoDesejado())}catch(e){}
 try{carregarKits()}catch(e){}
 // imagens que não aparecem na abertura carregam logo depois da 1ª tela (abre mais rápido no celular); quando chegam, redesenha a tela
-const IMG_TARDE=["img/cartas-re.js?v=6bdf0053","img/escudos-img.js?v=655f7708","img/patro-logos.js?v=3e44eabc","img/rostos-reais.js?v=f5b6bd34","img/titulos.js?v=9ecffff6","dados/titulos.js?v=a01a43e3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=67cfbd62","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
+const IMG_TARDE=["img/cartas-re.js?v=6bdf0053","img/escudos-img.js?v=655f7708","img/patro-logos.js?v=3e44eabc","img/rostos-reais.js?v=cfa192ba","img/titulos.js?v=9ecffff6","dados/titulos.js?v=a01a43e3","img/premios-icones.js?v=50dc0250","img/trofeus.js?v=9ac9cf11","img/medalhas.js?v=8a6779df","img/estadio-fotos.js?v=f24fdb13","img/super-fotos.js?v=16da8b08","img/tradutores.js?v=b0377e61","img/avatares.js?v=67cfbd62","img/tv-logos.js?v=d187b774","img/fundo-vestiario.js?v=0fd56c5e"];
 // 27/10: redesenha a cada arquivo que chega (logos dos patrocinadores não esperam as fotos); com aviso aberto, redesenha quando ele fechar
 let TARDE_T=null,TARDE_PEND=false;
 function tardeRender(){clearTimeout(TARDE_T);TARDE_T=setTimeout(()=>{if(!G||abertura||G.live||aba==="prejogo")return;if(document.querySelector(".veu")){TARDE_PEND=true;return}TARDE_PEND=false;render()},250)}
