@@ -5326,7 +5326,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795728853";
+const VERSAO="1795729102";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -10855,15 +10855,19 @@ document.addEventListener("visibilitychange",()=>{if(document.hidden)quizSaiu()}
 function quizPremio(n){const din=(a,b)=>({t:"din",n:premioEmDinheiro(ri(a,b)*10)}); // valores em mil (10 = R$ 100 mil)
   if(n===1)return din(10,50);
   if(n===2)return [()=>din(50,100),()=>({t:"cor",n:ri(10,50)}),()=>({t:"pts",n:3}),()=>({t:"cup",n:ri(3,10)})][ri(0,3)]();
-  const r=rnd();return r<.25?din(300,1000):r<.40?{t:"cup",n:ri(10,30)}:r<.60?{t:"cor",n:ri(50,100)}:r<.80?{t:"lenda"}:{t:"pts",n:ri(4,6)}} // ouro (26/11): dinheiro 25% (3–10 mi), cupons 15%, coroas 20%, lenda 20%, pontos 20%
+  const r=rnd();return r<.25?din(300,1000):r<.40?{t:"cup",n:ri(10,30)}:r<.60?{t:"cor",n:ri(50,100)}:r<.80?{t:"lenda",so:"jog"}:r<.95?{t:"lenda",so:"tec"}:{t:"prime"}} // ouro (26/11): dinheiro 25% (3–10 mi), cupons 15%, coroas 20%, jogador lenda 20%, técnico lenda 15%, jogador prime 5%
 function quizAplicar(pr){const P=perfil();
   if(pr.t==="din"){G.cash+=pr.n;try{regCaixa()}catch(e){}}
   else if(pr.t==="cup")G.cupons=cupons()+pr.n;
   else if(pr.t==="cor"){P.coroasPremio=(P.coroasPremio||0)+pr.n;try{amgSync(true)}catch(e){}}
   else if(pr.t==="pts"){const d=distribuirPontos(pr.n),Pt=pontosTreino();for(const k in d)Pt[k]=(Pt[k]||0)+d[k];pr.ks=Object.keys(d)}
-  else if(pr.t==="lenda"){ // Série A: jogador lenda; fora dela: técnico lenda melhor que o atual; senão vira 20 cupons
+  else if(pr.t==="prime"){G.primes=G.primes||{};const L=[];NATAL.forEach(T=>T.jog.forEach((j,x)=>{if(!G.primes[j[0]])L.push([T,x])})); // 26/11: jogador Prime do evento (sem nenhum livre vira jogador lenda)
+    if(L.length){const [T,x]=pick(L),[n,pos,ov,age]=T.jog[x],uid=G.user.club,id=novoJogador(pos,ov,uid,age),p=G.players[id];
+      Object.assign(p,{n,ov,pot:ov,age,ct:3,lenda:1,prime:T.k,evF:natalFotoK(n,T.k),inj:0,susp:0,fis:100});p.sal=salarioLenda(p);G.primes[n]=id;Object.assign(pr,{nome:n,id,tn:T.nome})}
+    else{pr.t="lenda";pr.so="jog"}}
+  if(pr.t==="lenda"){ // 26/11: so "jog" = jogador lenda (qualquer série), "tec" = técnico lenda melhor que o atual; o que não der vira o outro, senão 20–30 cupons
     let ok=false;
-    if(minhaSerie()===0){const L=LENDAS.map((l,i)=>i).filter(i=>!(G.lendas&&G.lendas[LENDAS[i][0]]));if(L.length){const i=pick(L),l=LENDAS[i];G.cupons=cupons()+l[3];const er=comprarLenda(i,"c");if(er){G.cupons-=l[3]}else{ok=true;pr.nome=l[0];pr.jog=1;pr.pos=l[1]}}}
+    if(pr.so!=="tec"){const L=LENDAS.map((l,i)=>i).filter(i=>!(G.lendas&&G.lendas[LENDAS[i][0]]));if(L.length){const i=pick(L),l=LENDAS[i];G.cupons=cupons()+l[3];const er=comprarLenda(i,"c");if(er){G.cupons-=l[3]}else{ok=true;pr.nome=l[0];pr.jog=1;pr.pos=l[1]}}}
     if(!ok){const q0=G.tec?G.tec.q:0,L=TEC_LENDAS.map((l,i)=>i).filter(i=>TEC_LENDAS[i][1]>q0&&!(G.tec&&G.tec.n===TEC_LENDAS[i][0]));
       if(L.length){const i=pick(L),l=TEC_LENDAS[i],multa=G.tec&&!G.tec.interino?Math.round(G.tec.sal*6):0;G.cupons=cupons()+l[2];G.cash+=multa;const er=contratarTecLenda(i,"c");if(er){G.cupons-=l[2];G.cash-=multa}else{ok=true;pr.nome=l[0];pr.tec=1}}}
     if(!ok){pr.t="cup";pr.n=ri(20,30);G.cupons=cupons()+pr.n}}
@@ -10900,7 +10904,8 @@ function quizPremioHTML(pr){if(!pr)return "";
     cup:`<div class="qz-pr-ic">${ICO_CUPOM}</div><b class="num">${pr.n} cupons dourados</b><span>para gastar na loja</span>`,
     cor:`<div class="qz-pr-ic qz-coroa">👑</div><b class="num">${pr.n} coroas</b><span>somadas no Ranking</span>`,
     pts:`<div class="qz-pr-ic qz-coroa">⚽</div><b class="num">${pr.n} atributos</b><span>${(pr.ks||[]).map(k=>{const a=ATRS.find(x=>x[0]===k);return a?a[2]+" "+a[1]:k}).join(" · ")}<br>Use nos seus jogadores em Clube › Pontos de treino</span>`,
-    lenda:pr.jog?`<div class="qz-pr-ic">${fotoLendaG(pr.nome,96)}</div><b>★ ${esc(pr.nome)}</b><span>Lenda contratada de graça! Já está no seu elenco.</span>`:pr.tec?`<div class="qz-pr-ic">${tecRosto(pr.nome,96)}</div><b>★ ${esc(pr.nome)}</b><span>Técnico lenda contratado de graça!</span>`:`<div class="qz-pr-ic">★</div><b>Lenda</b>`}[pr.t]||"";
+    lenda:pr.jog?`<div class="qz-pr-ic">${fotoLendaG(pr.nome,96)}</div><b>★ ${esc(pr.nome)}</b><span>Lenda contratada de graça! Já está no seu elenco.</span>`:pr.tec?`<div class="qz-pr-ic">${tecRosto(pr.nome,96)}</div><b>★ ${esc(pr.nome)}</b><span>Técnico lenda contratado de graça!</span>`:`<div class="qz-pr-ic">★</div><b>Lenda</b>`,
+    prime:pr.id&&G.players[pr.id]?`<div class="qz-pr-ic">${rostoSVG(G.players[pr.id],96)}</div><b>★ ${esc(pr.nome)}</b><span>Jogador Prime (${esc(pr.tn||"")}) contratado de graça!</span>`:`<div class="qz-pr-ic">★</div><b>${esc(pr.nome||"Prime")}</b>`}[pr.t]||"";
   return `<div class="qz-premio ${pr.t}">${nm}</div>`}
 function caixaHTML(tipo,grande){return `<div class="qz-caixa ${tipo}${grande?" grande":""}"${grande?' data-a="qz_abrir" role="button" aria-label="Abrir a caixa"':""}><i class="cx-luz"></i><img class="cx-img" src="img/cx-${tipo}.png" alt="">${grande?'<i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i><i class="cx-p"></i>'+CX_RAIOS.map(([x,y,r,d])=>`<i class="cx-r" style="left:${x}%;top:${y}%;--r:${r}deg;--d:${d}s"></i>`).join("")+'<i class="cx-nuc"></i>':""}</div>`}
 const CX_RAIOS=[[50,22,0,.1],[22,40,-60,.5],[78,42,60,.3],[30,70,-130,.8],[70,72,130,.6],[50,52,-20,1],[15,62,-95,1.2],[86,60,95,1.1],[42,30,-25,1.4],[62,36,30,1.5]]; // 17/11: raios de luz saindo da caixa ao abrir (x%,y%,ângulo,atraso)
