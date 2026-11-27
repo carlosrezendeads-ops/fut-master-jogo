@@ -1334,7 +1334,7 @@ nav.abas button{font-size:11px}
 .lei-prox{font:inherit;font-weight:800;font-size:16px;padding:14px;border:0;border-radius:12px;background:linear-gradient(135deg,#ffd23f,#f0a500);color:#2a1a00;cursor:pointer;width:100%;box-shadow:0 4px 14px rgba(240,165,0,.35)}
 .lei-sair2{font:inherit;background:none;border:0;color:#9fb3da;padding:10px;cursor:pointer;width:100%}
 /* 27/11: tema verde nas telas do leilão (menos a sala de lances): verde escuro + verde-limão, textos brancos */
-.lei:not(.sala){background:radial-gradient(ellipse at 50% 0,#1f6b2c,#0b3a17 58%,#04200b)}
+.lei:not(.sala){background:#04200b url(img/leilao-fundo.jpg) center top/cover no-repeat}
 .lei:not(.sala) .lei-op,.lei:not(.sala) .lei-prox{background:linear-gradient(135deg,#c6ff3d,#7ed321);color:#0b2e12;box-shadow:0 4px 16px rgba(160,255,60,.35)}
 .lei:not(.sala) .lei-op.off{background:#0f4a1d;color:#fff;border:1px solid #2f8a3f;box-shadow:none}
 .lei:not(.sala) .lei-h{color:#c6ff3d}.lei:not(.sala) .lei-dica,.lei:not(.sala) .lei-lb,.lei:not(.sala) .lei-sair2{color:#fff}
@@ -5337,7 +5337,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795820462";
+const VERSAO="1795821973";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
