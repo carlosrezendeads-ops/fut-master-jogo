@@ -5337,7 +5337,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795821973";
+const VERSAO="1795822260";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -11229,9 +11229,9 @@ function leiFim(){leiPagar();const cs=LEI.cs,cl=leiClass(),p=LEI.minha,pr=LEI_PR
     <button class="lei-prox" data-a="lei_denovo">🔨 Jogar de novo</button><button class="lei-sair2" data-a="lei_sair">Sair</button></div>`}
 function telaLeilao(){if(!reLiberado()){aba="jogar";return telaInicio()}const F=LEI.fase;
   if(F==="capa")return `<div class="lei-capa"><div class="lei-art"><img src="img/leilao-capa.jpg" alt="Leilão FUT Master"><button class="lei-hs ir" data-a="lei_jogar" aria-label="Jogar"><img src="img/leilao-botao.png" alt=""><i class="bt-luz" style="--m:url(img/leilao-botao.png)"></i></button></div><button class="re-tb lei-volta" data-a="aba" data-v="jogar">‹ Jogar</button></div>`;
-  const topo=(tit,volta)=>`<div class="re-topo lei-topo">${volta?`<button class="re-tb" data-a="${volta}">‹ Voltar</button>`:"<span></span>"}<b class="re-tit"><i>🔨</i> ${tit}</b><span></span></div>`;
+  const topo=(tit,volta)=>`<div class="re-topo lei-topo">${volta?`<button class="re-tb" data-a="${volta}">‹ Voltar</button>`:"<span></span>"}<b class="re-tit">${tit?`<i>🔨</i> ${tit}`:""}</b><span></span></div>`;
   let h=`<div class="lei${F==="sala"||F==="leilao"?" sala":""}">`;
-  if(F==="modo")h+=topo("Leilão FUT Master","lei_capa")+`<div class="lei-meio"><div class="lei-leila"><img src="img/leilao-leila.jpg" alt="Leila"><p>Olá! Como você quer jogar o leilão de hoje?</p></div><button class="lei-op" data-a="lei_maquina"><span>🤖</span><div><b>Jogar contra a máquina</b><small>Você e até 5 bots</small></div></button><button class="lei-op off" data-a="lei_amigos"><span>👥</span><div><b>Jogar com amigos</b><small>Em breve: sala online com quem estiver no jogo</small></div></button></div>`;
+  if(F==="modo")h+=topo("","lei_capa")+`<div class="lei-meio"><div class="lei-leila"><img src="img/leilao-leila.jpg" alt="Leila"><p>Olá! Como você quer jogar o leilão de hoje?</p></div><button class="lei-op" data-a="lei_maquina"><span>🤖</span><div><b>Jogar contra a máquina</b><small>Você e até 5 bots</small></div></button><button class="lei-op off" data-a="lei_amigos"><span>👥</span><div><b>Jogar com amigos</b><small>Em breve: sala online com quem estiver no jogo</small></div></button></div>`;
   else if(F==="qtd")h+=topo("Contra a máquina","lei_modo")+`<div class="lei-meio"><h3 class="lei-h">Quantos competidores?</h3><p class="lei-dica">Contando você. Os outros são bots.</p><div class="lei-qtd">${[2,3,4,5,6].map(n=>`<button data-a="lei_qtd" data-v="${n}">${n}</button>`).join("")}</div></div>`;
   else if(F==="prep"){const fake={form:LEI.form,slots:LEI_FORM[LEI.form].map(()=>null)};
     h+=topo("Monte seu time","lei_modo")+`<div class="lei-meio"><label class="lei-lb">Dono<input value="${esc(G.user.coach||"")}" disabled></label><label class="lei-lb">Nome do time<input id="lei-time" maxlength="22" placeholder="Ex.: Galáticos FC" value="${esc(LEI.time||"")}"></label>
