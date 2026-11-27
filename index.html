@@ -1333,6 +1333,16 @@ nav.abas button{font-size:11px}
 .lei-prox{position:relative;overflow:hidden}.lei-prox::after{mix-blend-mode:overlay}
 .lei-prox{font:inherit;font-weight:800;font-size:16px;padding:14px;border:0;border-radius:12px;background:linear-gradient(135deg,#ffd23f,#f0a500);color:#2a1a00;cursor:pointer;width:100%;box-shadow:0 4px 14px rgba(240,165,0,.35)}
 .lei-sair2{font:inherit;background:none;border:0;color:#9fb3da;padding:10px;cursor:pointer;width:100%}
+/* 27/11: tema verde nas telas do leilão (menos a sala de lances): verde escuro + verde-limão, textos brancos */
+.lei:not(.sala){background:radial-gradient(ellipse at 50% 0,#1f6b2c,#0b3a17 58%,#04200b)}
+.lei:not(.sala) .lei-op,.lei:not(.sala) .lei-prox{background:linear-gradient(135deg,#c6ff3d,#7ed321);color:#0b2e12;box-shadow:0 4px 16px rgba(160,255,60,.35)}
+.lei:not(.sala) .lei-op.off{background:#0f4a1d;color:#fff;border:1px solid #2f8a3f;box-shadow:none}
+.lei:not(.sala) .lei-h{color:#c6ff3d}.lei:not(.sala) .lei-dica,.lei:not(.sala) .lei-lb,.lei:not(.sala) .lei-sair2{color:#fff}
+.lei:not(.sala) .lei-qtd button{background:#0f4a1d;border-color:#c6ff3d;color:#fff}
+.lei:not(.sala) .lei-lb input{background:#0a3415;border-color:#2f8a3f}
+.lei:not(.sala) .lei-forms button{background:#0f4a1d;border-color:#2f8a3f;color:#fff}.lei:not(.sala) .lei-forms button.sel{background:#c6ff3d;border-color:#c6ff3d;color:#0b2e12}
+.lei:not(.sala) .lei-leila img{border-color:#c6ff3d;box-shadow:0 0 12px rgba(198,255,61,.5)}
+.lei:not(.sala) .re-tit{color:#fff;text-shadow:0 0 10px rgba(198,255,61,.6)}.lei:not(.sala) .re-tb{background:#0f4a1d;border-color:#c6ff3d;color:#fff}
 .lei.sala{padding:8px 6px 14px;display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden}
 .lei-sala{display:flex;flex-direction:column;gap:6px;flex:1;min-height:0}
 .lei-top{display:flex;justify-content:center;gap:6px}.lei-top .lei-comp{flex:1;max-width:120px}
@@ -1371,17 +1381,17 @@ nav.abas button{font-size:11px}
 .lei-tempo{width:min(150px,100%);text-align:center}.lei-tempo b{font-size:26px;color:#ffd23f}
 .lei-tempo div{height:7px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden}.lei-tempo i{display:block;height:100%;background:linear-gradient(90deg,#ff5a4a,#ffd23f);transition:width .2s linear}
 .lei-espera{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12.5px;color:#c9d6f2}.lei-espera b{color:#ffd23f}
-.lei-eu{display:grid;grid-template-columns:auto auto 1fr;gap:8px;align-items:center;background:rgba(255,210,63,.08);border:1px solid rgba(255,210,63,.35);border-radius:14px;padding:7px}
+.lei-eu{display:grid;grid-template-columns:auto auto 1fr;gap:8px;align-items:center;background:rgba(255,210,63,.08);border:1px solid rgba(255,210,63,.35);border-radius:14px;padding:14px 8px;min-height:200px}
 .lei-eu-info{display:flex;flex-direction:column;align-items:center;gap:1px;text-align:center;max-width:84px}.lei-eu-info b{font-size:12.5px}.lei-eu-info small{font-size:10px;color:#9fb3da}
 .lei-eu-ac{display:flex;flex-direction:column;align-items:stretch;justify-content:center;min-width:0}
 .lei-placa-bt{font:inherit;font-weight:900;font-size:15px;border:0;border-radius:12px;padding:10px 6px;background:linear-gradient(135deg,#ffd23f,#f0a500);color:#2a1a00;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;animation:leiBt 1.2s ease-in-out infinite}
 .lei-pl-ic{display:flex;flex-direction:column;align-items:center}.lei-pl-ic b{background:#fff;border:3px solid #c0392b;border-radius:8px;padding:3px 9px;font-size:15px;color:#14213d}.lei-pl-ic i{width:5px;height:16px;background:#8a5a2b;border-radius:2px}
-.lei-painel{display:flex;flex-direction:column;gap:5px}
-.lei-val{display:grid;grid-template-columns:auto auto 1fr auto auto;gap:3px;align-items:center}.lei-val b{text-align:center;font-size:16px;color:#ffd23f}
-.lei-val button,.lei-val2 button{font:inherit;font-size:11.5px;font-weight:800;padding:7px 4px;border-radius:8px;border:1px solid #2e4370;background:#13254a;color:#fff;cursor:pointer}
+.lei-painel{display:flex;flex-direction:column;gap:12px}.lei-valor{text-align:center;font-size:26px;color:#ffd23f;line-height:1}
+.lei-val{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;align-items:center}.lei-val b{text-align:center;font-size:16px;color:#ffd23f}
+.lei-val button,.lei-val2 button{font:inherit;font-size:13.5px;font-weight:800;padding:11px 4px;border-radius:8px;border:1px solid #2e4370;background:#13254a;color:#fff;cursor:pointer}
 .lei-val2{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-.lei-barra{-webkit-appearance:none;appearance:none;width:100%;height:12px;border-radius:8px;margin:10px 0 6px;background:linear-gradient(90deg,#ffd23f var(--p,0%),#13254a var(--p,0%));border:1px solid #2e4370;touch-action:none}.lei-barra::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:#ffd23f;border:3px solid #fff;box-shadow:0 2px 6px #0008}.lei-barra::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:#ffd23f;border:3px solid #fff}
-.lei-levanta{font:inherit;font-weight:900;font-size:14px;padding:9px;border:0;border-radius:10px;background:#c0392b;color:#fff;cursor:pointer}
+.lei-barra{-webkit-appearance:none;appearance:none;width:100%;height:12px;border-radius:8px;margin:2px 0;background:linear-gradient(90deg,#ffd23f var(--p,0%),#13254a var(--p,0%));border:1px solid #2e4370;touch-action:none}.lei-barra::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:#ffd23f;border:3px solid #fff;box-shadow:0 2px 6px #0008}.lei-barra::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:#ffd23f;border:3px solid #fff}
+.lei-levanta{font:inherit;font-weight:900;font-size:15px;padding:12px;border:0;border-radius:10px;background:#c0392b;color:#fff;cursor:pointer}
 .lei-ok,.lei-fora{margin:0;font-size:12.5px;text-align:center;color:#c9d6f2}.lei-ok b{color:#ffd23f;font-size:16px}
 .lei-tut{position:fixed;inset:0;z-index:50;background:rgba(3,8,20,.78);display:flex;align-items:center;justify-content:center;padding:16px}
 .lei-tut-box{background:#fff;color:#14213d;border-radius:18px;padding:16px;max-width:340px;text-align:center;border:3px solid #ffd23f;animation:leiEntra .35s ease-out}
@@ -5327,7 +5337,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795819795";
+const VERSAO="1795820462";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -11174,11 +11184,11 @@ function leiSala(){const cs=LEI.cs,R=LEI.rod,n=cs.length,eu=cs[0],areas={2:["t2"
   const euPart=R&&R.part.includes(0),meu=R&&R.lances[0],max=leiMax(eu);
   let acao="";if(R&&R.fase==="lance"){if(!euPart)acao=`<p class="lei-fora">${leiVagas(eu,j[1])?"Você está fora deste lote.":`Você está fora desta rodada: ${LEI_POSN[j[1]]} completo ✔`}</p>`;
     else if(meu!=null)acao=`<p class="lei-ok">✋ Placa levantada: <b class="num">${leiR(meu)}</b></p>`;
-    else if(LEI.painel)acao=`<div class="lei-painel"><div class="lei-val"><button data-a="lei_mais" data-v="-100">−1</button><button data-a="lei_mais" data-v="-10">−0,10</button><b class="num">${leiR(LEI.val)}</b><button data-a="lei_mais" data-v="10">+0,10</button><button data-a="lei_mais" data-v="100">+1</button></div><input type="range" class="lei-barra" min="100" max="${max}" step="10" value="${LEI.val}" oninput="LEI.val=+this.value;const b=this.closest('.lei-painel').querySelector('.lei-val b');if(b)b.textContent=leiR(LEI.val);this.style.setProperty('--p',((LEI.val-100)/Math.max(1,${max}-100)*100)+'%')" style="--p:${(LEI.val-100)/Math.max(1,max-100)*100}%"><button class="lei-levanta" data-a="lei_lance">✋ Levantar placa</button></div>`;
+    else if(LEI.painel)acao=`<div class="lei-painel"><b class="num lei-valor">${leiR(LEI.val)}</b><div class="lei-val"><button data-a="lei_mais" data-v="-100">−1</button><button data-a="lei_mais" data-v="-10">−0,10</button><button data-a="lei_mais" data-v="10">+0,10</button><button data-a="lei_mais" data-v="100">+1</button></div><input type="range" class="lei-barra" min="100" max="${max}" step="10" value="${LEI.val}" oninput="LEI.val=+this.value;const b=this.closest('.lei-painel').querySelector('.lei-valor');if(b)b.textContent=leiR(LEI.val);this.style.setProperty('--p',((LEI.val-100)/Math.max(1,${max}-100)*100)+'%')" style="--p:${(LEI.val-100)/Math.max(1,max-100)*100}%"><button class="lei-levanta" data-a="lei_lance">✋ Levantar placa</button></div>`;
     else acao=`<button class="lei-placa-bt" data-a="lei_placa"><span class="lei-pl-ic"><b>R$</b><i></i></span>Dar lance</button>`}
   const meuPl=euPart&&meu!=null?`<span class="lei-placa${R.fase!=="lance"?" vira":""}"><b>${leiR(meu)}</b><i>✋</i></span>`:"";
   return `<div class="lei-sala">${top?`<div class="lei-top">${top}</div>`:""}<div class="lei-mid">${L?leiCardComp(L[0],"l"):"<span></span>"}${centro}${Rr?leiCardComp(Rr[0],"r"):"<span></span>"}</div>
-    <div class="lei-eu${R&&R.fase==="vendido"&&R.venc===0?" ganhou":""}"><div class="lei-eu-info"><div class="lei-comp-f">${leiAv(eu,46)}${meuPl}</div><b>${esc(eu.nome)}</b><small>${esc(eu.time)} · ${eu.form}</small><span class="lei-din num">${leiR(eu.din)}</span></div><div class="lei-eu-campo" data-a="lei_ver" data-v="0" role="button">${leiCampo(eu,92,1)}</div><div class="lei-eu-ac">${acao}</div></div></div>`}
+    <div class="lei-eu${R&&R.fase==="vendido"&&R.venc===0?" ganhou":""}"><div class="lei-eu-info"><div class="lei-comp-f">${leiAv(eu,46)}${meuPl}</div><b>${esc(eu.nome)}</b><small>${esc(eu.time)} · ${eu.form}</small><span class="lei-din num">${leiR(eu.din)}</span></div><div class="lei-eu-campo" data-a="lei_ver" data-v="0" role="button">${leiCampo(eu,112,1)}</div><div class="lei-eu-ac">${acao}</div></div></div>`}
 function leiTutorial(){const k=LEI.tut;return `<div class="lei-tut"><div class="lei-tut-box"><img src="img/leilao-leila.jpg" alt="Leila"><p>${LEI_TUT[k]}</p><small>${k+1} de ${LEI_TUT.length}</small><div><button class="lei-tut-pular" data-a="lei_tutfim">Pular</button><button class="lei-tut-ok" data-a="lei_tutprox">${k<LEI_TUT.length-1?"Próximo ›":"Começar o leilão!"}</button></div></div></div>`}
 function leiTabela(fim){const cs=LEI.cs;return `<div class="lei-tab"><div class="lei-tl cab"><span>#</span><span>Time</span><span>V</span><span>E</span><span>D</span><span>SG</span></div>${leiClass().map((i,p)=>{const c=cs[i];return `<div class="lei-tl${i===0?" eu":""}${fim&&p<3?" m"+(p+1):""}"><span class="num">${p+1}</span><span><span class="lei-tk" data-a="lei_perfil" data-v="${i}">${leiAv(c,22)}</span><span class="lei-tk" data-a="lei_ver" data-v="${i}">${esc(c.time)}</span></span><b class="num">${c.v}</b><span class="num">${c.e}</span><span class="num">${c.d}</span><span class="num">${c.gp-c.gc>0?"+":""}${c.gp-c.gc}</span></div>`}).join("")}</div>`}
 function leiJogos(){const cs=LEI.cs;
