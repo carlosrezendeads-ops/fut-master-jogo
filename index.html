@@ -1380,6 +1380,7 @@ nav.abas button{font-size:11px}
 .lei-val{display:grid;grid-template-columns:auto auto 1fr auto auto;gap:3px;align-items:center}.lei-val b{text-align:center;font-size:16px;color:#ffd23f}
 .lei-val button,.lei-val2 button{font:inherit;font-size:11.5px;font-weight:800;padding:7px 4px;border-radius:8px;border:1px solid #2e4370;background:#13254a;color:#fff;cursor:pointer}
 .lei-val2{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.lei-barra{-webkit-appearance:none;appearance:none;width:100%;height:12px;border-radius:8px;margin:10px 0 6px;background:linear-gradient(90deg,#ffd23f var(--p,0%),#13254a var(--p,0%));border:1px solid #2e4370;touch-action:none}.lei-barra::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:#ffd23f;border:3px solid #fff;box-shadow:0 2px 6px #0008}.lei-barra::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:#ffd23f;border:3px solid #fff}
 .lei-levanta{font:inherit;font-weight:900;font-size:14px;padding:9px;border:0;border-radius:10px;background:#c0392b;color:#fff;cursor:pointer}
 .lei-ok,.lei-fora{margin:0;font-size:12.5px;text-align:center;color:#c9d6f2}.lei-ok b{color:#ffd23f;font-size:16px}
 .lei-tut{position:fixed;inset:0;z-index:50;background:rgba(3,8,20,.78);display:flex;align-items:center;justify-content:center;padding:16px}
@@ -5326,7 +5327,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795799120";
+const VERSAO="1795819795";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -10985,7 +10986,14 @@ const LEI_TUT=["Bem-vindo ao <b>Leilão FUT Master</b>! Você tem <b>R$ 50</b> p
 let LEI={fase:"capa"};
 const leiR=c=>"R$ "+(c%100?(c/100).toFixed(2).replace(".",","):String(c/100));
 const leiPick=a=>a[Math.floor(Math.random()*a.length)];
-function leiFotoSrc(n){if(typeof ROSTOS_REAIS==="undefined")return null;const r=LEI_RES.find(x=>x[0]===n);return (r&&r[3]?ROSTOS_REAIS[r[3]+"|"+n]:ROSTOS_REAIS["Lenda|"+n]||ROSTOS_REAIS["Leilao|"+n])||null} // Leilao| = fotos do leilão (fotos-jogadores.py)
+const LEI_EURO=["Real Madrid","Barcelona","Paris Saint-Germain","Chelsea","Manchester City","Manchester United","Atlético de Madrid","Bayern München"];
+let LEI_FIDX=null; // nome -> {clube, natal}: foto atual do time real e foto do Evento de Natal (Prime)
+function leiFotoIdx(){if(LEI_FIDX)return LEI_FIDX;const I={},nn=x=>semAc(x).toLowerCase().trim();
+  Object.keys(ROSTOS_REAIS).forEach(k=>{const p=k.split("|"),n=nn(p[p.length-1]),o=I[n]||(I[n]={});
+    if(p[0]==="Natal")o.natal=o.natal||k;else if(p[0]!=="Lenda"&&p[0]!=="Leilao"&&p.length===2){o.clube=o.clube||k;if(LEI_EURO.includes(p[0]))o.euro=k}});return LEI_FIDX=I}
+function leiFotoSrc(n){if(typeof ROSTOS_REAIS==="undefined")return null;const r=LEI_RES.find(x=>x[0]===n);if(r&&r[3]&&ROSTOS_REAIS[r[3]+"|"+n])return ROSTOS_REAIS[r[3]+"|"+n];
+  const o=leiFotoIdx()[semAc(n).toLowerCase().trim()]||{},um=semAc(n).includes(" "),k=um?(o.euro||o.clube||o.natal):(o.natal||o.euro); // foto do time (padrão novo) ou do evento (Prime); nome de 1 palavra só de clube europeu feito (Alisson ≠ Alisson do Flu)
+  return (k&&ROSTOS_REAIS[k])||ROSTOS_REAIS["Lenda|"+n]||ROSTOS_REAIS["Leilao|"+n]||null} // Leilao| = fotos do leilão (fotos-jogadores.py)
 const leiQuebrado=c=>leiVagas(c)>0&&leiMax(c)<=150; // gastou tudo: só sobrou o mínimo pras vagas
 function leiIni(n){const p=n.split(" ");return (p[0][0]+(p.length>1?p[p.length-1][0]:"")).toUpperCase()}
 function leiAv(c,px){const s=c.av;return `<span class="lei-av${c.bot?" bot":""}" style="width:${px}px;height:${px}px">${s?`<img src="${s}" alt="">`:`<b>${esc(leiIni(c.nome))}</b>`}${c.bot?'<i class="lei-robo">🤖</i>':""}</span>`}
@@ -11166,7 +11174,7 @@ function leiSala(){const cs=LEI.cs,R=LEI.rod,n=cs.length,eu=cs[0],areas={2:["t2"
   const euPart=R&&R.part.includes(0),meu=R&&R.lances[0],max=leiMax(eu);
   let acao="";if(R&&R.fase==="lance"){if(!euPart)acao=`<p class="lei-fora">${leiVagas(eu,j[1])?"Você está fora deste lote.":`Você está fora desta rodada: ${LEI_POSN[j[1]]} completo ✔`}</p>`;
     else if(meu!=null)acao=`<p class="lei-ok">✋ Placa levantada: <b class="num">${leiR(meu)}</b></p>`;
-    else if(LEI.painel)acao=`<div class="lei-painel"><div class="lei-val"><button data-a="lei_mais" data-v="-100">−1</button><button data-a="lei_mais" data-v="-10">−0,10</button><b class="num">${leiR(LEI.val)}</b><button data-a="lei_mais" data-v="10">+0,10</button><button data-a="lei_mais" data-v="100">+1</button></div><div class="lei-val2"><button data-a="lei_mais" data-v="500">+5</button><button data-a="lei_mais" data-v="max">Máx ${leiR(max)}</button></div><button class="lei-levanta" data-a="lei_lance">✋ Levantar placa</button></div>`;
+    else if(LEI.painel)acao=`<div class="lei-painel"><div class="lei-val"><button data-a="lei_mais" data-v="-100">−1</button><button data-a="lei_mais" data-v="-10">−0,10</button><b class="num">${leiR(LEI.val)}</b><button data-a="lei_mais" data-v="10">+0,10</button><button data-a="lei_mais" data-v="100">+1</button></div><input type="range" class="lei-barra" min="100" max="${max}" step="10" value="${LEI.val}" oninput="LEI.val=+this.value;const b=this.closest('.lei-painel').querySelector('.lei-val b');if(b)b.textContent=leiR(LEI.val);this.style.setProperty('--p',((LEI.val-100)/Math.max(1,${max}-100)*100)+'%')" style="--p:${(LEI.val-100)/Math.max(1,max-100)*100}%"><button class="lei-levanta" data-a="lei_lance">✋ Levantar placa</button></div>`;
     else acao=`<button class="lei-placa-bt" data-a="lei_placa"><span class="lei-pl-ic"><b>R$</b><i></i></span>Dar lance</button>`}
   const meuPl=euPart&&meu!=null?`<span class="lei-placa${R.fase!=="lance"?" vira":""}"><b>${leiR(meu)}</b><i>✋</i></span>`:"";
   return `<div class="lei-sala">${top?`<div class="lei-top">${top}</div>`:""}<div class="lei-mid">${L?leiCardComp(L[0],"l"):"<span></span>"}${centro}${Rr?leiCardComp(Rr[0],"r"):"<span></span>"}</div>
