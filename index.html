@@ -1182,10 +1182,9 @@ nav.abas button{font-size:11px}
 .nt-emb{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px;border-radius:14px;background:radial-gradient(circle at 50% 30%,rgba(255,210,63,.25),rgba(0,0,0,.2) 70%);border:1px solid rgba(255,210,63,.5)}
 .nt-emb img{width:110px;height:110px;filter:drop-shadow(0 0 16px rgba(255,210,63,.7));animation:leiEntra .6s ease-out}.nt-emb b{font-size:16px;color:#ffd23f}.nt-emb small{font-size:11.5px;color:#fde68a;text-align:center}
 .nt-emb.off img{filter:grayscale(1) brightness(.5);animation:none}.nt-emb.off b{color:#cfd8ee}
-.mj-bt{position:relative;display:grid;place-items:center;width:100%;aspect-ratio:5/1;max-height:96px;border-radius:14px;border:1.5px solid rgba(255,210,63,.55);background:#050a1c url(img/mj-card.jpg) center/cover;color:#fff;font:inherit;cursor:pointer;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.45),0 0 12px rgba(255,210,63,.18)}
-.mj-bt.on{border-color:#ffd23f;box-shadow:0 0 18px rgba(255,210,63,.4)}
-.mj-tit{font-family:var(--f-display);font-style:italic;font-weight:900;font-size:clamp(22px,6.5vw,30px);letter-spacing:.08em;color:#fff;text-shadow:0 0 14px rgba(255,210,63,.65),0 2px 4px #000}
-.mj-seta{position:absolute;left:50%;bottom:3px;transform:translateX(-50%);font-size:12px;color:#ffd23f;text-shadow:0 0 6px #000}
+.mj-bt{position:relative;display:flex;align-items:center;gap:10px;width:100%;padding:12px;border-radius:18px;background:rgba(10,20,48,.72);border:1.5px solid var(--ok);box-shadow:0 8px 24px rgba(0,0,0,.35);color:#fff;font:inherit;text-align:left;cursor:pointer}
+.mj-bt>span{font-size:30px}.mj-bt h2{margin:0;font-size:24px;line-height:1.1;color:#fff}.mj-bt small{color:var(--cal-2);font-size:12.5px}
+.mj-seta{margin-left:auto;font-size:14px;color:var(--cal-2)}
 .mj-scroll{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:12px 2px 8px;-webkit-overflow-scrolling:touch;animation:leiEntra .35s ease-out}
 .mj-card{position:relative;flex:none;width:42%;max-width:180px;aspect-ratio:2/3;border-radius:14px;overflow:hidden;border:1.5px solid rgba(255,255,255,.3);padding:0;background:#0b1533;cursor:pointer;scroll-snap-align:start;box-shadow:0 6px 16px rgba(0,0,0,.45)}
 .mj-card img{width:100%;height:100%;object-fit:cover;display:block}.mj-card.ev{border-color:#ffd23f;box-shadow:0 0 16px rgba(255,210,63,.55)}
@@ -5341,7 +5340,7 @@ function abrirSeletorCor(inp){
 }
 document.addEventListener("click",ev=>{const i=ev.target.closest&&ev.target.closest('input[type="color"]');if(!i)return;ev.preventDefault();abrirSeletorCor(i)},true);
 /* app instalado: confere se o site tem versão nova e recarrega (o número é trocado pelo publicar-site.sh) */
-const VERSAO="1795832538";
+const VERSAO="1795835959";
 function versaoOk(){if(CARGA.verOk)return;CARGA.verOk=true;if(abertura&&CARGA.intro)render()} // 02/11: a logo só aparece depois de conferir a versão (sem logo dobrada)
 function checarVersao(){
   if(VERSAO.startsWith("__")||!/^https?:/.test(location.protocol)){versaoOk();return}
@@ -11291,7 +11290,7 @@ function cartaoModos(){reLer();const c=RE.car,lib=reLiberado(),q=lib?quizEstado(
     {img:"img/mj-leilao.jpg",n:"Leilão FUT Master",a:lib?"lei_abrir":"lei_breve",bloq:!lib,info:lib&&LEI.cs&&LEI.fase!=="fim"&&LEI.fase!=="capa"?"🔨 Em andamento":""},
     {img:"img/mj-quiz.jpg",n:"Quiz do Dia",a:lib?"qz_abrir_modo":"qz_breve",bloq:!lib,info:pend?"🎁 Caixa esperando!":qfeito?"✓ Feito hoje":"",pulsa:pend}].filter(Boolean);
   const nEv=itens.filter(x=>x.ev).length;
-  return `<div class="modos"><button class="mj-bt${MJ_ABERTO?" on":""}" data-a="mjtoggle" aria-expanded="${MJ_ABERTO}"><b class="mj-tit">MINI JOGOS</b><span class="mj-seta">${MJ_ABERTO?"▲":"▼"}</span></button>
+  return `<div class="modos"><button class="mj-bt${MJ_ABERTO?" on":""}" data-a="mjtoggle" aria-expanded="${MJ_ABERTO}"><span>🎮</span><div><h2>Mini Jogos</h2><small>Leilão, Quiz e Jornada de Craque</small></div><span class="mj-seta">${MJ_ABERTO?"▲":"▼"}</span></button>
     ${MJ_ABERTO?`<div class="mj-scroll">${itens.map(x=>`<button class="mj-card${x.bloq?" bloq":""}${x.ev?" ev":""}${x.pulsa?" pulsa":""}" data-a="${x.a}"><img src="${x.img}" alt="" loading="lazy"><i class="mj-luz"></i>${x.tag?`<span class="mj-tag">${x.tag}</span>`:""}${x.bloq?'<span class="mj-cad">🔒 Em breve</span>':""}${x.info?`<span class="mj-rod"><small>${esc(x.info)}</small></span>`:""}</button>`).join("")}</div>`:""}</div>`}
 
 function acao(a,v,el){
